@@ -1,6 +1,7 @@
 Operation: [What Was Swept Under The Rug Uncovered, The Web Of Lies Revealed]
 Objective
-Operation: [What Was Swept Under The Rug Uncovered, The Web Of Lies Revealed] is a collaborative, open-source intelligence effort to identify, analyze, and counter a theorized global information and political warfare campaign known as the Minimisation Plan.
+
+Operation: [What Was SU TRU, The Web Of Lies Revealed] is a collaborative, open-source intelligence effort to identify, analyze, and counter a theorized global information and political warfare campaign known as the Minimisation Plan.
 
 What is the Minimisation Plan?
 The Minimisation Plan is a theorized grand strategy designed to systematically erode the institutional and social cohesion of Western democracies. It operates not through direct military conflict, but through a "rhizomatic war" of narratives, utilizing economic pressure, legal warfare, and political influence to sow division, amplify chaos, and induce strategic exhaustion in targeted populations. It also leverages the promotion of conspiracy theories not just to sow chaos, but as a sophisticated data-collection tool to identify and catalog susceptible individuals within a target population. Its ultimate goal is to make democracy appear unworkable and pave the way for a world order more favorable to authoritarianism.
