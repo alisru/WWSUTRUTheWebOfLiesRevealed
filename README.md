@@ -1,8 +1,6 @@
 Operation: [What Was Swept Under The Rug Uncovered, The Web Of Lies Revealed]
-
 Objective
-
-Operation: [What Was So; Truth, Lies, Revealed] is a collaborative, open-source intelligence effort to identify, analyze, and counter a coherent global information and political warfare campaign identified as the Minimisation Plan.
+Operation: [What Was Swept Under The Rug Uncovered, The Web Of Lies Revealed] is a collaborative, open-source intelligence effort to identify, analyze, and counter a coherent global information and political warfare campaign identified as the Minimisation Plan.
 
 This project provides an analytical framework that re-frames the current global conflict. It is not left vs. right, but a struggle between three forces:
 
@@ -20,15 +18,7 @@ The Minimisation Plan is the designation for a grand strategy designed to system
 A core tactic is manufactured justification: the plan's agents actively cultivate the very societal problems (extremism, conspiracy theories, economic instability) that they then point to as inherent failures of democracy. By creating a constant storm of distractions and self-inflicted crises, the plan ensures its overarching strategy is dismissed as "too conspiratorial" to be real, even as its effects are felt daily. Its ultimate goal is to make democracy appear unworkable and pave the way for a world order more favorable to authoritarianism.
 
 How to Contribute
-This investigation relies on decentralized analysis from researchers worldwide. Your contribution is vital.
-
-Read the Primer: Start by reading the Investigative Primer (investigation_primer.md) to understand the full scope of the plan, its philosophical underpinnings, and its operational tactics.
-
-Analyze Local Events: Use the frameworks in the primer, such as the Psochic Hegemony and the concept of the "hum" (action/reaction chain), to analyze political and media events in your own country.
-
-Identify Key Actors: Document instances of politicians, media outlets, or influential figures acting as Minimisers. Look for illogical reactions, disproportionate outrage, and policies that seem to run counter to your nation's interests.
-
-Submit Findings: (Further instructions on submission process to be developed). The goal is to build a global map of the plan's influence vectors.
+This investigation relies on decentralized analysis from researchers worldwide. Your contribution is vital. Please see our Contribution Guide (CONTRIBUTING.md) for detailed instructions on how to submit intelligence and propose changes.
 
 Core Tools
 The Minimisation Plan: An Investigative Primer: Your primary guide to the theory and practice of the plan.
