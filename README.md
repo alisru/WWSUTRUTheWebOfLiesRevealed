@@ -1,4 +1,5 @@
 Operation: [What Was Swept Under The Rug Uncovered, The Web Of Lies Revealed]
+
 Objective
 
 Operation: [What Was So; Truth, Lies, Revealed] is a collaborative, open-source intelligence effort to identify, analyze, and counter a coherent global information and political warfare campaign identified as the Minimisation Plan.
