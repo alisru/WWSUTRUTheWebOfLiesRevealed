@@ -1,0 +1,32 @@
+### **Sub-bucket 1.3: Core Objective \- Strategic Exhaustion**
+
+The ultimate goal of the Minimisation Plan is not a decisive military victory but the induction of "strategic exhaustion." By creating and sustaining multiple, simultaneous pressure points across kinetic, economic, and informational domains, the plan compels the United States and its allies into a state of perpetual, high-cost over-commitment. This is a long-term strategy of attrition designed to drain the economic and political will of an adversary, making it incapable of maintaining its global commitments \[1\]. This exploits the classic geopolitical vulnerability of "imperial overstretch," a concept famously analyzed by historian Paul Kennedy, who argued that great powers often decline when their military and strategic commitments expand beyond their economic capacity to support them \[2\].
+
+The core tactic is to push societies away from the Greater Good and towards The Greater Lie by amplifying narratives that generate Moral Strain (σ)—the stress from holding contradictory beliefs. The goal is to create a state of strategic exhaustion and epistemic nihilism, where the targeted populace becomes so overwhelmed by contradictory information that they lose the will and ability to distinguish truth from falsehood.
+
+### **Sub-bucket 1.4: The Sino-Russian Axis (Founding Treaties, SCO, BRICS)**
+
+The strategic alignment between the People's Republic of China and the Russian Federation is the culmination of a two-decade project to build the ideological and institutional foundations for a sustained challenge to the US-led international order. This foundational period was characterized by the deliberate codification of a shared opposition to a "unipolar" world and the creation of alternative multilateral forums.
+
+#### **The Foundational Charter**
+
+The formal basis of this project was established on July 16, 2001, with the signing of the **Treaty of Good-Neighborliness and Friendly Cooperation between Russia and China** \[3, 4\]. While its public articles addressed post-Soviet border demarcations, its strategic significance was far greater. Article 9 of the treaty contains a quasi-defense clause, stating that if a threat of aggression is perceived by one party, the two "shall immediately enter into contact and consultations in order to eliminate such threats" \[4\]. This, combined with a firm Russian affirmation of the "One China" policy regarding Taiwan, laid the diplomatic groundwork for an anti-hegemonic alliance.
+
+Almost concurrently, this shared worldview was given its first institutional expression with the establishment of the **Shanghai Cooperation Organisation (SCO)** in June 2001 \[5\]. While its public mandate focused on combating the "three evils" of terrorism, separatism, and extremism, its geopolitical function quickly evolved into a platform for challenging U.S. influence. This became explicit at the July 5, 2005, SCO summit in Astana, where member states issued a joint declaration directly condemning "unipolar" policies and calling for a timetable for the withdrawal of US and Western military forces from Central Asia \[5\].
+
+#### **The "Legitimacy Laundering" Framework**
+
+This network was expanded globally through the **BRICS forum**, which has become the primary vehicle for the "multipolarity" psyop \[6\]. The language consistently employed in BRICS communiques—calling for a "multipolar," "democratic, fair and rational political and economic international order"—is a sophisticated psychological operation designed to reframe revisionist ambitions as a noble quest for global equity \[6, 7\].
+
+The 2024 expansion of BRICS to include Egypt, Ethiopia, Iran, and the United Arab Emirates as full members, with Indonesia joining in early 2025, was a deliberate and strategic move to consolidate key geostrategic actors \[8\]. The enlarged BRICS+ now accounts for an estimated 37.3% of world GDP (on a purchasing power parity basis), surpassing the G7's share \[8\]. The SCO and BRICS, therefore, are not traditional alliances but are better understood as a "legitimacy laundering" framework. By building a consensus within these non-Western forums *before* taking an aggressive geopolitical action, the alliance can frame its move as the implementation of a multilateral consensus, pre-emptively countering Western accusations of revisionism.
+
+### **Works Cited**
+
+1. Cohen, Ariel, and Robert E. Hamilton. "The Russian Military and the Georgia War: Lessons and Implications." Strategic Studies Institute, U.S. Army War College, 2011\.  
+2. Kennedy, Paul. *The Rise and Fall of the Great Powers: Economic Change and Military Conflict from 1500 to 2000*. Random House, 1987\.  
+3. "The Russia-China Friendship and Cooperation Treaty: A Strategic Shift in Eurasia?" The Heritage Foundation, Accessed 29 Aug. 2025, [https://www.heritage.org/europe/report/the-russia-china-friendship-and-cooperation-treaty-strategic-shift-eurasia](https://www.heritage.org/europe/report/the-russia-china-friendship-and-cooperation-treaty-strategic-shift-eurasia).  
+4. "Treaty of Good-Neighborliness and Friendly Cooperation Between the People's Republic of China and the Russian Federation." PA-X Peace Agreements Database, Accessed 29 Aug. 2025, [https://www.peaceagreements.org/view/1735/](https://www.peaceagreements.org/view/1735/).  
+5. "Shanghai Cooperation Organisation." Wikipedia, Wikimedia Foundation, last modified 29 Aug. 2025, [https://en.wikipedia.org/wiki/Shanghai\_Cooperation\_Organisation](https://en.wikipedia.org/wiki/Shanghai_Cooperation_Organisation).  
+6. "BRICS." Wikipedia, Wikimedia Foundation, last modified 29 Aug. 2025, [https://en.wikipedia.org/wiki/BRICS](https://en.wikipedia.org/wiki/BRICS).  
+7. "What Is the BRICS Group and Why Is It Expanding?" Council on Foreign Relations, Accessed 29 Aug. 2025, [https://www.cfr.org/backgrounder/what-brics-group-and-why-it-expanding](https://www.cfr.org/backgrounder/what-brics-group-and-why-it-expanding).  
+8. "BRICS 2025: Expansion, De-Dollarization, and the Shift Toward a Multipolar World." The Daily Economy, Accessed 2 Sep. 2025, [https://thedailyeconomy.org/article/brics-2025-expansion-de-dollarization-and-the-shift-toward-a-multipolar-world/](https://thedailyeconomy.org/article/brics-2025-expansion-de-dollarization-and-the-shift-toward-a-multipolar-world/).
