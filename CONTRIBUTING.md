@@ -7,14 +7,13 @@ Code of Conduct
 This project and everyone participating in it is governed by a commitment to respectful, constructive collaboration. We are here to analyze a global threat, and that requires focused, evidence-based discussion. Personal attacks, trolling, and off-topic discussions will not be tolerated.
 
 How Can I Contribute?
-There are two primary ways you can contribute:
-
-Submitting Intelligence (Creating Issues): If you have identified a political event, a media narrative, or an action by an influential figure that you believe is an instance of the Minimisation Plan in action, you can submit it for review.
-
+Thereprimary ways you can contribute:
 Proposing Changes (Submitting a Pull Request): If you want to refine the analysis in the core documents, fix a typo, or add a new section, you can propose a direct change to the files.
 
 Submitting Intelligence (Creating Issues)
 This is the best way to add new data points to the investigation.
+Simply download the Framework for the Judgement of Ideas, the Invesigators Primer and the Dynamic Research Workflow which contains the AI Model Assistants and give it to an AI like gemini, then follow the Dynamic Research Workflow
+
 
 Go to the "Issues" tab in the GitHub repository.
 
