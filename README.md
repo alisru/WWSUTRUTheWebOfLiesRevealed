@@ -19,13 +19,37 @@ The Minimisation Plan is the designation for a grand strategy designed to system
 
 **A core tactic is manufactured justification:** the plan's agents actively cultivate the very societal problems (extremism, conspiracy theories, economic instability) that they then point to as inherent failures of democracy. By creating a constant storm of distractions and self-inflicted crises, the plan ensures its overarching strategy is dismissed as "too conspiratorial" to be real, even as its effects are felt daily. Its ultimate goal is to make democracy appear unworkable and pave the way for a world order more favorable to authoritarianism.
 
+**The Trump-Epstein Reputation Flip, Trump will TERF Democracy:** the crux of the plan relies on a manufactured disinformation bomb known publically as "The Epstein Files"
+
+[We already know Trump is in the files](https://web.archive.org/web/20150124104133/http://gawker.com/here-is-pedophile-billionaire-jeffrey-epsteins-little-b-1681383992)
+![](img/trump-epstein.jpg)
+
+[We know Epstein himself implicated innocent people, such as people like; Stephen Hawking, Michael Jackson and David Copperfield to name a few](https://people.com/jeffrey-epstein-offered-reward-to-prove-stephen-hawking-allegation-false-docs-8422270)
+
+There's no possible answer to the question of "Why haven't they released the files?" aside from "They're using it as a reputation bomb to stain their enemies", and their enemies are democracy itself and anyone associated with it. Ensuring the maximum possible chaos as believable cover for more monstrosities as Trump has proven time and time again as his Modus Operandi of always tell a bigger Lie
+
 **How to Contribute**
 This investigation relies on decentralized analysis from researchers worldwide. Your contribution is vital. Please see our Contribution Guide (CONTRIBUTING.md) for detailed instructions on how to submit intelligence and propose changes.
 
 **Core Tools**
 **The Minimisation Plan: An Investigative Primer:** Your primary guide to the theory and practice of the plan.
+**A Framework for the Judgement of Ideas:** A nonsense guide to judging morality under the definition of "How many people does this help?" on a range from "Everyone" to "My Group" to "Only Me", redefining the Political Compass and combining other tools to plot these ideas on a relative graph. You don't have to believe it, you only have to give it to the AI assistant 
+**Dynamic Research Workflow & AI Project Manager Model:** Contains workflow for efficient research and the AI Model Assistants, along with example prompts
 
-**Attraction Tensor Questions:** A framework for gauging ideological capture and understanding how Minimisation narratives take hold.
+**Anyone Can Be a Researcher:** Simply Download the core tools, and preferrably the current information to avoid overlapping. Begin a new chat, give the AI the Framework for Judgement, The Investigative Primer and Dynamic Research Workflow document and any supporting information, then use the "Project Starter Prompt" found within the Research Workflow and follow the steps from there
+
+Example prompt; 
+Act as an AI Research Project Manager. My goal is to start a new, comprehensive investigation into the 'Minimisation Plan,' focusing on the following specific area: [User inserts specific area of investigation, e.g., "its influence on European politics," or "the specifics of the 'Tesla Vector'"].
+Your first task is to help me structure this specific investigation. Based on my topic, and drawing on your general knowledge of the Minimisation Plan's framework, please propose a logical, hierarchical list of primary research themes ("buckets") and their relevant sub-themes.
+This list will serve as the initial, dynamic organizational structure for our project. Present it as a nested Markdown list.
+
+One can also run less organised prompts such as;
+Explain [anomalous action] in light of the Minimisation Plan
+
+or
+
+Explain TERF the Trump-Epstein Reputation Flip and other mocking acronyms
+
 
 **Risk Assessment & Warning
 This is not an academic exercise. This is an active information war.**
