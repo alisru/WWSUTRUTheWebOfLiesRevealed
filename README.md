@@ -38,7 +38,7 @@ This investigation relies on decentralized analysis from researchers worldwide. 
 
 **Anyone Can Be a Researcher:** Simply Download the core tools, and preferrably the current information to avoid overlapping. Begin a new chat, give the AI the Framework for Judgement, The Investigative Primer and Dynamic Research Workflow document and any supporting information, then use the "Project Starter Prompt" found within the Research Workflow and follow the steps from there
 
-Example prompt; 
+**Example prompt; **
 
 Act as an AI Research Project Manager. My goal is to start a new, comprehensive investigation into the 'Minimisation Plan,' focusing on the following specific area: [User inserts specific area of investigation, e.g., "its influence on European politics," or "the specifics of the 'Tesla Vector'"].
 Your first task is to help me structure this specific investigation. Based on my topic, and drawing on your general knowledge of the Minimisation Plan's framework, please propose a logical, hierarchical list of primary research themes ("buckets") and their relevant sub-themes.
