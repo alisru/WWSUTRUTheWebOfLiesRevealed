@@ -1,4 +1,4 @@
-**Operation: [What Was Swept Under The Rug Uncovered, The Web Of Lies Revealed]**
+[**Operation: [What Was Swept Under The Rug Uncovered, The Web Of Lies Revealed]**](https://github.com/alisru/WWSUTRUTheWebOfLiesRevealed/tree/main)
 
 Or
 
@@ -36,7 +36,9 @@ This investigation relies on decentralized analysis from researchers worldwide. 
 **A Framework for the Judgement of Ideas:** A nonsense guide to judging morality under the definition of "How many people does this help?" on a range from "Everyone" to "My Group" to "Only Me", redefining the Political Compass and combining other tools to plot these ideas on a relative graph. You don't have to believe it, you only have to give it to the AI assistant 
 **Dynamic Research Workflow & AI Project Manager Model:** Contains workflow for efficient research and the AI Model Assistants, along with example prompts
 
-[Download the tools here](https://github.com/alisru/WWSUTRUTheWebOfLiesRevealed/tree/main)
+
+[Download the tools here](https://github.com/alisru/WWSUTRUTheWebOfLiesRevealed/tree/main/Core%20Tools)
+https://github.com/alisru/WWSUTRUTheWebOfLiesRevealed/tree/main/Core%20Tools
 **Anyone Can Be a Researcher:** Simply Download the core tools, and preferrably the current information to avoid overlapping. Begin a new chat, give the AI the Framework for Judgement, The Investigative Primer and Dynamic Research Workflow document and any supporting information, then use the "Project Starter Prompt" found within the Research Workflow and follow the steps from there
 
 **Example prompt;**
