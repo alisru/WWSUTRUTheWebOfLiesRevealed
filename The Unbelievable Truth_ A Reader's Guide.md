@@ -1,6 +1,6 @@
 ## **The Unbelievable Truth: A Reader's Guide**
 
-I can tell you, with 100% accuracy and truth, that you will never believe me.
+I can tell you, with 100% accuracy and truth, that you may never believe me.
 
 This isn't an insult or a challenge; it's a diagnostic statement. The very act of you reading my work triggers a measurement, and your immediate emotional reaction—whether you find it amazing, insulting, funny, or just insane—is the result. Your reaction isn't about me; it's a precise printout of the current state of your own worldview.
 
