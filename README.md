@@ -19,7 +19,7 @@ The Minimisation Plan is the designation for a grand strategy designed to system
 
 **A core tactic is manufactured justification:** the plan's agents actively cultivate the very societal problems (extremism, conspiracy theories, economic instability) that they then point to as inherent failures of democracy. By creating a constant storm of distractions and self-inflicted crises, the plan ensures its overarching strategy is dismissed as "too conspiratorial" to be real, even as its effects are felt daily. Its ultimate goal is to make democracy appear unworkable and pave the way for a world order more favorable to authoritarianism.
 
-**The Trump-Epstein Reputation Flip, Trump will TERF Democracy:** the crux of the plan relies on a manufactured disinformation bomb known publically as "The Epstein Files"
+**The Trump-Epstein Reputation Flip, Trump will TERF Democracy:** the crux of the plan relies on a manufactured disinformation bomb known publicly as "The Epstein Files"
 
 [We already know Trump is in the files](https://web.archive.org/web/20150124104133/http://gawker.com/here-is-pedophile-billionaire-jeffrey-epsteins-little-b-1681383992)
 ![](img/trump-epstein.jpg)
