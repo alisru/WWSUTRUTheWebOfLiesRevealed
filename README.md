@@ -12,10 +12,25 @@ This project provides an analytical framework that re-frames the current global 
 
 **The Compliant**: The uncommitted majority who are influenced by and align with whichever side appears more powerful.
 
-Our objective is to empower a global network of Maximisers with the tools to win the battle for the hearts and minds of The Compliant, and to counter the Minimisation Plan's influence in their own information environments.
+**The Core Idea: War Has Changed, and We Haven't Noticed**
 
-**What is the Minimisation Plan?**
-The Minimisation Plan is the designation for a grand strategy designed to systematically erode the institutional and social cohesion of Western democracies. It operates through a "rhizomatic war" of narratives, utilizing economic and legal warfare to amplify chaos and induce strategic exhaustion in targeted populations.
+To understand what's happening, you first have to accept a fundamental truth: physical warfare is strategically stupid.
+
+All war, from day one, is an economic siege. The goal is to make the enemy's society collapse so their leader is either overthrown or forced to surrender. But dropping bombs and sacrificing soldiers is the most inefficient way to do this. It's a "one step forward, ten steps back" strategy where you actively destroy your own economic base (by losing taxpayers and spending trillions on weapons) to achieve your goal.
+
+The architects of the Minimisation Plan—a Sino-Russian axis—understand this. They've pivoted to a far more effective strategy: a philosophical and economic war that convinces the enemy to destroy itself, at no cost to them.
+
+**The Minimisation Plan: The Doctrine of Directed Chaos**
+
+The Minimisation Plan is the designation for a multi-decade grand strategy designed to systematically erode the institutional and social cohesion of Western democracies. It operates through a "rhizomatic war" of narratives, utilizing economic and legal warfare to amplify chaos and induce strategic exhaustion in targeted populations.
+
+**The Goal:** Make democracy appear so chaotic, corrupt, and broken that it becomes ungovernable.
+
+**The Battlefield:** The minds of the general population—what the plan calls "The Compliant."
+
+**The Method:** Don't argue with facts. Create a more powerful, emotionally resonant, and completely manufactured reality that overwrites the truth. The objective is to engineer a state of total cynicism and societal disgust.
+
+Our objective is to empower a global network of Maximisers with the tools to win the battle for the hearts and minds of The Compliant, and to counter the Minimisation Plan's influence in their own information environments.
 
 **The Narrative of Decay**
 
