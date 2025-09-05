@@ -6,7 +6,7 @@ Or
 
 **Operation: [What Was So; Truths, Lies, Revealed]** is a collaborative, open-source intelligence effort to identify, analyze, and counter a coherent global information and political warfare campaign identified as the Minimisation Plan.
 
-[NotebookLM for ease of navigation](https://notebooklm.google.com/notebook/fec0f3bc-a40d-4aad-9a7a-26abf5fc7be9)
+[NotebookLM for ease of navigation](https://notebooklm.google.com/notebook/b1d9ab6a-4994-4070-b49f-ad9668bb17fd)
 
 This project provides an analytical framework that re-frames the current global conflict. It is not left vs. right, but a struggle between three forces:
 
