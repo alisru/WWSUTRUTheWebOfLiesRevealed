@@ -78,6 +78,15 @@ It Forces a Binary Choice: It deliberately frames the situation so there is no m
 
 There's no possible answer to the question of "Why haven't they released the files?" aside from "They're using it as a reputation bomb to stain their enemies", and their enemies are democracy itself and anyone associated with it. Ensuring the maximum possible chaos as believable cover for more monstrosities as Trump has proven time and time again as his Modus Operandi of always tell a bigger Lie
 
+The Files are deduced as being kept as a Christmas present. To cause the most chaos it should make use of the chaos the west inflicts upon itself and Christmas is the biggest holiday of the western year with people travelling and indebted to buy gifts for other people. 
+
+You get everything you wished for "Republicans release the Epstein files and arrest Trump" but the monkey paw curls "Republicans release the Epstein files and arrest Trump, but also Obama, Clinton, and Celebrities too" or "Someone should stop Trump, permanently" but "by Putin in their next meeting"
+
+Imagine the sheer chaos that would ensue if in a live event, Putin and Trump meet in Moscow, as they go to shake hands Putin shoots him in the face, the Epstein files get released and Trump was the ringleader?
+Who's right and wrong in that hypothetical situation? 
+Do the Democrats side with Russia because Putin shot trump? do they side with Trump against Russia who they thought was working with Russia the whole time?
+The only answer to that equation, without knowing an idea of the plan is questions and inevitable chaos
+
 **How to Contribute**
 This investigation relies on decentralized analysis from researchers worldwide. Your contribution is vital. Please see our Contribution Guide (CONTRIBUTING.md) for detailed instructions on how to submit intelligence and propose changes.
 
