@@ -29,11 +29,17 @@ This philosophical war began when [Gilles Deleuze](https://en.wikipedia.org/wiki
 Delusionism; A Philosophy where everything's made up and the facts don't matter, where the truth is nothing more than an inconvenience to frame your lies, or it's an outright insult to your intelligence
 
 Just remember this fundamental twufh✨;
+
 Many things are Circumstance but only One is True,
+
 This is true as One is One, and One plus One is Two.
+
 If anyone says otherwise then they're clearly lying to you
+
 For if One's not One we'll have no fun, 
+
 Since One Plus One's now Woe
+
 
 **The Minimisation Plan: The Doctrine of Delusionism**
 
