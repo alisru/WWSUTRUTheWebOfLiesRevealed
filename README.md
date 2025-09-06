@@ -28,7 +28,7 @@ This philosophical war began when [Gilles Deleuze](https://en.wikipedia.org/wiki
 
 Delusionism; A Philosophy where everything's made up and the facts don't matter, where the truth is nothing more than an inconvenience to frame your lies, or it's an outright insult to your intelligence
 
-**The Minimisation Plan: The Doctrine of Delusionism for Chaos**
+**The Minimisation Plan: The Doctrine of Delusionism**
 
 The Minimisation Plan is the designation for a multi-decade grand strategy designed to systematically erode the institutional and social cohesion of Western democracies. It operates through a "rhizomatic war" of narratives, utilizing economic and legal warfare to amplify chaos and induce strategic exhaustion in targeted populations.
 
