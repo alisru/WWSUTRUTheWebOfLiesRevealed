@@ -24,6 +24,10 @@ All war, from day one, is an economic siege. The goal is to make the enemy's soc
 
 The architects of the Minimisation Plan—a Sino-Russian axis—understand this. They've pivoted to a far more effective strategy: a philosophical and economic war that convinces the enemy to destroy itself, at no cost to them.
 
+This philosophical war began when [Gilles Deleuze](https://en.wikipedia.org/wiki/Gilles_Deleuze) (Phonetically; 'Guile Delusion') developed Deleuze's reversal of Plato to say that, instead of ideas coming from a fundamental truth, fundamental truths are born from lies. The core of it is that things cannot be 100% true, essentially a fancy way of saying "Hmm, maybe 1 doesn't actually equal 1 despite all proof and evidence" and is the birthplace of the philosophy we all know and despise
+
+Delusionism; A Philosophy where everything's made up and the facts don't matter, where the truth is nothing more than an inconvenience to frame your lies, or it's an outright insult to your intelligence
+
 **The Minimisation Plan: The Doctrine of Directed Chaos**
 
 The Minimisation Plan is the designation for a multi-decade grand strategy designed to systematically erode the institutional and social cohesion of Western democracies. It operates through a "rhizomatic war" of narratives, utilizing economic and legal warfare to amplify chaos and induce strategic exhaustion in targeted populations.
