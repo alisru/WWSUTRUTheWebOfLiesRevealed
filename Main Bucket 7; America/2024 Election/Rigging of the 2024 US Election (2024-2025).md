@@ -1,4 +1,7 @@
-
+<div style="display: flex; gap: 10px;">
+  <img src="../../img/uspol2024gracesatan.png" width="45%">
+  <img src="../../img/auspol2025gracesatan.png" width="45%">
+</div>
 
 # **Rhizomatic War: The Unnatural Progressions of the 2024-2025 Electoral Cycle and the Consolidation of the Minimisation Plan**
 
