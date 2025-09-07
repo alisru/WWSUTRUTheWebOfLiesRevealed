@@ -24,9 +24,12 @@ All war, from day one, is an economic siege. The goal is to make the enemy's soc
 
 The architects of the Minimisation Plan—a Sino-Russian axis—understand this. They've pivoted to a far more effective strategy: a philosophical and economic war that convinces the enemy to destroy itself, at no cost to them.
 
-This philosophical war began when [Gilles Deleuze](https://en.wikipedia.org/wiki/Gilles_Deleuze) (Phonetically; 'Guile Delusion') developed Deleuze's reversal of Plato to say that, instead of ideas coming from a fundamental truth, fundamental truths are born from lies. The core of it is that things cannot be 100% true, essentially a fancy way of saying "Hmm, maybe 1 doesn't actually equal 1 despite all proof and evidence", it's a really mocking way to say 1+1 isnt two and is the birthplace of the philosophy we all know and despise
+This philosophical war began when [Gilles Deleuze](https://en.wikipedia.org/wiki/Gilles_Deleuze) developed Deleuze's reversal of Plato to say that, instead of ideas coming from a fundamental truth, fundamental truths are born from lies. The core of it is that things cannot be 100% true, essentially a fancy way of saying "Hmm, maybe 1 doesn't actually equal 1 despite all proof and evidence", it's a really mocking way to say 1+1 isnt two and is the birthplace of the philosophy we all know and despise
 
 Delusionism; A Philosophy where everything's made up and the facts don't matter, where the truth is nothing more than an inconvenience to frame your lies, or it's an outright insult to your intelligence
+
+Deleuze's reversal of Plato is literally Delusionism just in a mocking, cutesy cypher, Gilles Deleuze is translated to "Guile Delusion"
+Delusionism can be defeated using the same cutesy, mocking cypher
 
 Just remember this fundamental twufh✨;
 
@@ -39,6 +42,9 @@ If anyone says otherwise then they're clearly lying to you
 For if One's not One we'll have no fun, 
 
 Since One Plus One's now Woe
+
+And if you read it while closing your fingers starting from your pinkie, with the length of the line setting the duration you close your finger for, then you will literally hold the idea in your hand so you can examine it for lies.
+If you start from the reminder, meaning you still need it, then you'll run out of fingers so you'll always miss the point as the idea slips from your grasp
 
 
 **The Minimisation Plan: The Doctrine of Delusionism**
