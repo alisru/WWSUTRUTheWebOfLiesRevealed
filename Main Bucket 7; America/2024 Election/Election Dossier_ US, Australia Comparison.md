@@ -1,9 +1,4 @@
-<a href="./index.html" class="mt-4 inline-block text-cyan-400 hover:text-cyan-300">&larr; Back To Navigation </a>
-
-<div style="display: flex; gap: 10px;">
-  <img src="../../img/uspol2024gracesatan.png" width="45%">
-  <img src="../../img/auspol2025gracesatan.png" width="45%">
-</div>
+<a href="index.html" class="mt-4 inline-block text-cyan-400 hover:text-cyan-300">&larr; Back To Navigation </a>
 
 # **Rhizomatic War: The Unnatural Progressions of the 2024-2025 Electoral Cycle and the Consolidation of the Minimisation Plan**
 
@@ -49,7 +44,7 @@ Second, the campaign strategically amplified narratives of electoral fraud and p
 
 Third, the campaign actively suppressed alternatives to force a polarized, high-strain choice. A declassified report from the U.S. Director of National Intelligence (DNI) in January 2025 noted that foreign operations from Russia and China sought to "exacerbate social divisions" and "stoke political discord".2 While the available unclassified portions of the report do not explicitly mention the marginalization of third-party candidates, the strategic logic is clear.10 By eliminating any viable "Greater Good" or "Lesser Good" options, the electorate was forced into a high-strain, binary choice between two "Lesser Evils." This dynamic is crucial for the Minimisation Plan's objectives. It heightens the sense of outrage and division, making it harder for observers to detect a clear signal of fraud amidst the overwhelming noise of partisan conflict.2
 
-The application of a hidden, external force to manipulate a political outcome is the definition of "rigging." Therefore, according to the principles of the Psochic Hegemony, the conclusion that the 2024 U.S. election was rigged is a logical deduction based on the blatant contradiction between the candidate's objective standing and the final outcome, a contradiction made possible by a deliberate campaign of manufactured chaos.2
+The application of a hidden, external force to manipulate a political outcome is the definition of "rigging." Therefore, according to the principles of Vector Field Theory and the Psochic Hegemony, the conclusion that the 2024 U.S. election was rigged is a logical deduction based on the blatant contradiction between the candidate's objective standing and the final outcome, a contradiction made possible by a deliberate campaign of manufactured chaos.2
 
 ## **Part II: The Australian Gambit – Controlled Demolition and the 2025 Landslide**
 
@@ -135,7 +130,7 @@ This dossier provides a practical, analytical tool for understanding the differe
 
 ### **Defining Electoral Trajectories**
 
-The concepts of "natural" and "unnatural" electoral progressions are derived from the application of the Psochic Hegemony to political events.2 A "natural" progression is an outcome that aligns with the logical trajectory predicted by an objective moral calculus of the candidates and prevailing public sentiment. An "unnatural" progression, conversely, is an outcome that directly contradicts this calculus. Such a contradiction is a primary indicator that a hidden, external force has been applied to the system to alter its course, as the outcome cannot be explained by the observable variables alone.2
+The concepts of "natural" and "unnatural" electoral progressions are derived from the application of the Psochic Hegemony and Vector Field Theory to political events.2 A "natural" progression is an outcome that aligns with the logical trajectory predicted by an objective moral calculus of the candidates and prevailing public sentiment. An "unnatural" progression, conversely, is an outcome that directly contradicts this calculus. Such a contradiction is a primary indicator that a hidden, external force has been applied to the system to alter its course, as the outcome cannot be explained by the observable variables alone.2
 
 ### **Comparative Analysis Table**
 

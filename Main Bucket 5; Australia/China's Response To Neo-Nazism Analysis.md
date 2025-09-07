@@ -1,3 +1,4 @@
+<a href="./index.html" class="mt-4 inline-block text-cyan-400 hover:text-cyan-300">&larr; Back To Navigation </a>
 
 
 # **The Dragon's Shadow: An Analysis of China's Strategic Response to Neo-Nazism in the Australian Theatre**

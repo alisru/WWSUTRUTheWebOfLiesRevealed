@@ -1,4 +1,4 @@
-
+<a href="./index.html" class="mt-4 inline-block text-cyan-400 hover:text-cyan-300">&larr; Back To Navigation </a>
 
 # **Entrapment Analysis: A Longitudinal Study of Minimiser Vectors in the Australian Theatre**
 

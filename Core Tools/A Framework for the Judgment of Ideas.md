@@ -1,3 +1,5 @@
+<a href="./index.html" class="mt-4 inline-block text-cyan-400 hover:text-cyan-300">&larr; Back To Navigation </a>
+
 # 
 
 | The Scales of Understanding and Misunderstanding | 悟無明圖 (Wù Wúmíng Tú)  Diagram of Enlightenment and Ignorance |
@@ -9,7 +11,7 @@
 | **The Psochic Hegemony  (Ruling Principle of the Mind)** | **太極道圖  (Tàijí Dào Tú)** |
 
 # 
-![alt text](../img/The-Psochic-Hegemony-mini.jpg)
+![alt text](img/The-Psochic-Hegemony-mini.jpg)
 # **A Framework for the Judgment of Ideas**
 
 ## **Introduction**
@@ -101,7 +103,7 @@ By answering these questions, you can place the idea in one of four quadrants: T
 
 ### **Part 4: The Helxis Tensor — Identifying Deception**
 
-![](../img/Harmonia-tensoradv.jpg)
+![](img/Harmonia-tensoradv.jpg)
 
 Hostile or selfish ideas are rarely presented honestly. They are framed to appear attractive and morally righteous, a "literal trick" to bypass your critical judgment. This is the **Attraction, Helxis Tensor** at work: an idea is disguised to appear within your own worldview.
 

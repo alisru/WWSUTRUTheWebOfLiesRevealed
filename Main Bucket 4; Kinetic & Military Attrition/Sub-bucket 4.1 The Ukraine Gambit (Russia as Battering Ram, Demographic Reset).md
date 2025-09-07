@@ -1,3 +1,4 @@
+<a href="./index.html" class="mt-4 inline-block text-cyan-400 hover:text-cyan-300">&larr; Back To Navigation </a>
 ### **Sub-bucket 4.1: The "Ukraine Gambit" (Russia as "Battering Ram", Demographic Reset)**
 
 The full-scale invasion of Ukraine, launched on February 24, 2022, represents a critical kinetic activation of the Minimisation Plan, transforming the Sino-Russian strategic partnership from an ideological bloc into an active military-economic axis engaged in a war of attrition against the West \[1\]. This conflict is not merely an isolated act of Russian aggression but a calculated, multi-purpose operation designed to absorb Western military and financial resources, test NATO resolve, and achieve specific domestic objectives for the Kremlin through a process of demographic attrition \[2\].

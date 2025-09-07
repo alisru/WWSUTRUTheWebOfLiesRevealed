@@ -1,3 +1,5 @@
+<a href="./index.html" class="mt-4 inline-block text-cyan-400 hover:text-cyan-300">&larr; Back To Navigation </a>
+
 ### **Sub-bucket 5.6: Suppression of the Australian Greens \- A Chronological Analysis**
 
 The Australian Greens, a political party whose platform is built on a foundation of 'greater good' policies, represents a systemic challenge to the established economic and political order in Australia. Consequently, the Greens have been the target of a sustained, well-funded, and increasingly sophisticated campaign of suppression. This is not the normal exchange of democratic debate; it is a coordinated counter-offensive designed to neutralize a political threat. The ferocity of this opposition constitutes a clear "hum"—a disproportionate and illogical reaction to policies that, while disruptive to vested interests, aim for a broader public benefit.

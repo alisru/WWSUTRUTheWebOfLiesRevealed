@@ -1,3 +1,5 @@
+<a href="./index.html" class="mt-4 inline-block text-cyan-400 hover:text-cyan-300">&larr; Back To Navigation </a>
+
 <div style="display: flex; gap: 10px;">
   <img src="../../img/uspol2024gracesatan.png" width="45%">
   <img src="../../img/auspol2025gracesatan.png" width="45%">

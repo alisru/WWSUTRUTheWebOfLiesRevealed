@@ -1,3 +1,5 @@
+<a href="index.html" class="mt-4 inline-block text-cyan-400 hover:text-cyan-300">&larr; Back To Navigation </a>
+
 ### **Sub-bucket 6.2: The "Delusionist Vector" \- Second Term Exposé & Timeline (2024-Present)**
 
 The return of Donald Trump to the presidency in January 2025 marked a significant escalation in the Minimisation Plan's campaign to induce strategic exhaustion and dismantle the post-war international order. Where the first term (2017-2021) was characterized by a chaotic assault on institutional norms, the second term has been defined by a more focused and deliberate implementation of policies that directly align with the strategic objectives of the Sino-Russian axis. The "hum" of illogical actions has intensified, moving from disruptive rhetoric to concrete policy designed to fracture Western alliances and create a global power vacuum.

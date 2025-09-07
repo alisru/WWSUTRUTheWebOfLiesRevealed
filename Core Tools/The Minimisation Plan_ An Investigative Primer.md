@@ -1,3 +1,5 @@
+<a href="./index.html" class="mt-4 inline-block text-cyan-400 hover:text-cyan-300">&larr; Back To Navigation </a>
+
 # **The Minimisation Plan: An Investigative Primer**
 
 **Document Purpose:** This primer serves as a comprehensive foundational document for human and artificial intelligence analysts investigating the global influence campaign identified as the "Minimisation Plan." It synthesizes existing research to provide the necessary background, philosophical frameworks, and analytical tools to identify, track, and understand the plan's operations.
@@ -58,8 +60,7 @@ Their propaganda follows a consistent script, pointing to Western democracies an
 * *"Observe how backwards their people are, believing baseless lies about vaccines and 5G."* (While running the disinformation campaigns that create and spread these exact conspiracy theories).  
 * *"Watch as their economies collapse time and time again."* (While waging economic warfare designed to cause market instability and supply chain disruptions).  
 * *"Notice how careless they are with the planet."* (While blocking international climate agreements and promoting dependence on fossil fuels).
-* Ultimately the logical conclusion is *"Look at democracy and see how you shouldn't let it continue"*.
-  
+
 The strategy is to turn the population against itself. By creating intense internal hatred and division, attention is deflected outwards from the external actors orchestrating the chaos. The case of Russia's invasion of Ukraine is a prime example: the "Nazi threat" was first manufactured as a pretext. Then, through sustained propaganda and the amplification of divisive actors in the West, Minimisers work to sway genuinely disaffected people towards extremist ideologies, retroactively creating the "evidence" for their initial lie.
 
 #### **2.3 Advanced Vector: Conspiracy as a Data-Collection Trap**

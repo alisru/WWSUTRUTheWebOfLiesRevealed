@@ -1,3 +1,5 @@
+<a href="./index.html" class="mt-4 inline-block text-cyan-400 hover:text-cyan-300">&larr; Back To Navigation </a>
+
 ### **Sub-bucket 1.1: Philosophical Foundations (Deleuze, Rhizome vs. Arborescent Models)**
 
 The analysis of contemporary geopolitical conflict requires a conceptual framework capable of grasping strategies that operate not by contesting established truths, but by dissolving the very foundations of truth itself. The 'Minimisation Plan', a theorized multi-decade Sino-Russian grand strategy, cannot be fully understood through conventional models of statecraft, which are predicated on hierarchical power and a clear distinction between truth and falsehood. A more potent, if unconventional, lens is offered by the philosophy of Gilles Deleuze, whose work provides a systematic deconstruction of the foundational assumptions of Western metaphysics \[1, 2\]. By examining the core conflict between the Western "arborescent" model of reality and the operationalized Deleuzian "rhizomatic" doctrine, it becomes possible to map the ideological battlefield upon which this new form of warfare is waged.

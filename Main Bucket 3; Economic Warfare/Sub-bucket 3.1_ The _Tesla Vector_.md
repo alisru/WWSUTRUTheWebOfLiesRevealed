@@ -1,3 +1,4 @@
+<a href="./index.html" class="mt-4 inline-block text-cyan-400 hover:text-cyan-300">&larr; Back To Navigation </a>
 ### **Sub-bucket 3.1: The "Tesla Vector" (Surgical Capitalism, Valuation Simulacrum)**
 
 The economic warfare pillar of the Minimisation Plan presents a sophisticated model for leveraging the mechanisms of Western capitalism against itself. This strategy operates on two interconnected fronts: the creation of a systemic financial vulnerability through the manipulation of a single, high-profile asset (the 'Tesla Vector'), and a direct assault on the foundational stability of the U.S. dollar (the 'Debt Weapon').

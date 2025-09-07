@@ -1,3 +1,4 @@
+<a href="./index.html" class="mt-4 inline-block text-cyan-400 hover:text-cyan-300">&larr; Back To Navigation </a>
 
 
 # **The Andrews Vector: An Analysis of Competing Narratives and Systemic Disruption Following the 2025 Beijing Parade**

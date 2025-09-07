@@ -1,3 +1,4 @@
+<a href="./index.html" class="mt-4 inline-block text-cyan-400 hover:text-cyan-300">&larr; Back To Navigation </a>
 
 
 # **Project Benevolent Cage: An Intelligence Assessment of the FVEY Digital Identity Framework as a Vector for Strategic Control**

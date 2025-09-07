@@ -1,3 +1,4 @@
+<a href="./index.html" class="mt-4 inline-block text-cyan-400 hover:text-cyan-300">&larr; Back To Navigation </a>
 
 
 # **Reputation Flip: An Analysis of the Weaponization of the Jeffrey Epstein Scandal in Modern Information Warfare**

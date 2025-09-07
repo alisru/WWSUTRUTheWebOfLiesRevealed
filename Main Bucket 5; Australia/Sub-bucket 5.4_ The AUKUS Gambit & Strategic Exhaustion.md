@@ -1,3 +1,5 @@
+<a href="./index.html" class="mt-4 inline-block text-cyan-400 hover:text-cyan-300">&larr; Back To Navigation </a>
+
 ### **Sub-bucket 5.4: The AUKUS Gambit & Strategic Exhaustion**
 
 Announced in September 2021 by the Morrison government, the AUKUS security pact represents a massive, reactive, "arborescent" (hierarchical, centralized) response to the perceived "rhizomatic" (decentralized, networked) threat from China \[1\]. The pact's two pillars are the provision of at least eight conventionally-armed, nuclear-powered submarines (SSNs) to Australia, and collaboration on advanced technologies like AI, quantum computing, and hypersonics \[1\].

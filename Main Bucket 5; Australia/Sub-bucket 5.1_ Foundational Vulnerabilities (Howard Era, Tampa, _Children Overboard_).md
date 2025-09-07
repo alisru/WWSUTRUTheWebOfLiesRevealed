@@ -1,3 +1,6 @@
+<a href="./index.html" class="mt-4 inline-block text-cyan-400 hover:text-cyan-300">&larr; Back To Navigation </a>
+
+
 ### **Sub-bucket 5.1: Foundational Vulnerabilities (Howard Era, Tampa, "Children Overboard")**
 
 The political landscape of Australia in early 2001 was precarious for the incumbent Howard government. After two terms, the Coalition was performing poorly in opinion polls, with a leaked report from its own party president, Shane Stone, describing the government as "mean, tricky and out of touch". Facing a likely electoral defeat, the government was in a state of profound internal vulnerability. The strategic intent behind the government's subsequent actions can be understood through this lens of political survival, where a manufactured external crisis became the solution to an internal one.

@@ -1,3 +1,4 @@
+<a href="./index.html" class="mt-4 inline-block text-cyan-400 hover:text-cyan-300">&larr; Back To Navigation </a>
 ### **Sub-bucket 4.2: The "Taiwan Bait" (Calibrated Military Pressure, PDI)**
 
 The period following Russia's invasion of Ukraine witnessed a sharp, quantifiable escalation in the tempo and nature of joint Sino-Russian military activities in the Indo-Pacific. This shift represented a deliberate campaign to create a credible and persistent military threat against Taiwan. Analysis of joint military exercises reveals a dramatic increase in frequency and a fundamental change in focus. Of the over 90 joint exercises conducted since 2003, nearly one-third have occurred since February 2022, with a clear evolution from earlier land-based counter-terrorism drills to a clear emphasis on naval and aerial power projection directly relevant to a Taiwan conflict scenario \[1\].

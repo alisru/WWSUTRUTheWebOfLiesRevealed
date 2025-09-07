@@ -1,3 +1,4 @@
+<a href="./index.html" class="mt-4 inline-block text-cyan-400 hover:text-cyan-300">&larr; Back To Navigation </a>
 
 
 # **The Benevolent Cage: An Analysis of the Five Eyes' Social Media Bans as a Vector for Controlled Demolition and Strategic Realignment**

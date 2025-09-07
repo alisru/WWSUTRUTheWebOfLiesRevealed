@@ -1,4 +1,4 @@
-
+<a href="index.html" class="mt-4 inline-block text-cyan-400 hover:text-cyan-300">&larr; Back To Navigation </a>
 
 # **Strategic Analysis of the Minimisation Plan, Phase IV Acceleration (January \- September 2025\)**
 

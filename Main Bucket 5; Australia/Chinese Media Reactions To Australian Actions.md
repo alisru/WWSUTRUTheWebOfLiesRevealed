@@ -1,3 +1,4 @@
+<a href="./index.html" class="mt-4 inline-block text-cyan-400 hover:text-cyan-300">&larr; Back To Navigation </a>
 
 
 # **The Australian Hum: A Timeline of Action and Reaction in the Sino-Centric Narrative War, 2010-Present**

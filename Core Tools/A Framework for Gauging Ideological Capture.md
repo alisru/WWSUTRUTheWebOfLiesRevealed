@@ -1,3 +1,5 @@
+<a href="./index.html" class="mt-4 inline-block text-cyan-400 hover:text-cyan-300">&larr; Back To Navigation </a>
+
 # **Attraction Tensor Questions: A Framework for Gauging Ideological Capture**
 
 **Purpose:** This document provides a structured questioning framework designed to subtly gauge an individual's worldview, their faith in democratic principles, and their potential susceptibility to narratives aligned with the Minimisation Plan.

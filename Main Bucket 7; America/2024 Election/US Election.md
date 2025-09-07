@@ -1,3 +1,5 @@
+<a href="index.html" class="mt-4 inline-block text-cyan-400 hover:text-cyan-300">&larr; Back To Navigation </a>
+
 ### **The Unnatural Progression: A Psochic Hegemony Analysis of the 2024 US Election**
 
 #### **Executive Summary**
@@ -37,3 +39,4 @@ The logical conclusion is that the information warfare campaign in the US was no
 Within the logical framework of the Psochic Hegemony, the 2024 US election outcome is a clear case of an "unnatural progression." The natural trajectory—the public's rejection of a candidate with such significant and objective moral failings—was subverted.
 
 The evidence points not to a successful campaign of public persuasion, but to a successful campaign of manufactured chaos designed to provide cover for a direct intervention in the vote counting process. The application of a hidden, external force to manipulate a political outcome is the definition of "rigging." Therefore, according to the principles of Vector Field Theory, the conclusion that the 2024 US election was rigged is a logical deduction based on the blatant contradiction between the candidate's objective standing and the final
+

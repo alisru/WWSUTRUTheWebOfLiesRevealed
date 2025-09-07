@@ -1,3 +1,5 @@
+<a href="index.html" class="mt-4 inline-block text-cyan-400 hover:text-cyan-300">&larr; Back To Navigation </a>
+
 ### **Sub-bucket 6.1: Profiles of Australian Billionaires (Rinehart, Forrest, Palmer, Stokes)**
 
 An analysis of Australia's most influential billionaires reveals a consistent pattern where immense personal wealth, derived primarily from resource exports to China, is leveraged to exert significant influence over the nation's political and media landscape. These actors, whether wittingly or unwittingly, function as key vectors for the Minimisation Plan's objectives by consistently opposing 'greater good' policies, fostering domestic political instability, and promoting a strategic narrative that prioritizes economic appeasement over national security. Their actions can be categorized into two primary roles: the "Co-opted Integrationist," who works to deepen Australia's economic enmeshment, and the "Chaos Agent," whose function is to sow domestic discord.
