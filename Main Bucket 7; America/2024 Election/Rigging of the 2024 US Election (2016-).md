@@ -1,4 +1,7 @@
-
+<div style="display: flex; gap: 10px;">
+  <img src="../../img/uspol2024gracesatan.png" width="45%">
+  <img src="../../img/auspol2025gracesatan.png" width="45%">
+</div>
 
 # **Unnatural Progressions: Analysis of Electoral Anomalies and the Strategic Rigging of the 2024 US Election (2016-)**
 
