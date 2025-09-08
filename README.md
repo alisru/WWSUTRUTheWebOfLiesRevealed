@@ -9,6 +9,7 @@ Or
 [NotebookLM for ease of navigation](https://notebooklm.google.com/notebook/b1d9ab6a-4994-4070-b49f-ad9668bb17fd)
 
 [Subreddit for ease of collaboration and communication](https://www.reddit.com/r/WWSUTRU)
+
 This project provides an analytical framework that re-frames the current global conflict. It is not left vs. right, but a struggle between three forces:
 
 **Maximisers**: Those who seek to expand human potential, cooperation, and freedom.
