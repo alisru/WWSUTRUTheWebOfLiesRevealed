@@ -11,7 +11,7 @@
 | **The Psochic Hegemony  (Ruling Principle of the Mind)** | **太極道圖  (Tàijí Dào Tú)** |
 
 # 
-![alt text](img/The-Psochic-Hegemony-mini.jpg)
+![alt text](../img/The-Psochic-Hegemony-mini.jpg)
 # **A Framework for the Judgment of Ideas**
 
 ## **Introduction**
