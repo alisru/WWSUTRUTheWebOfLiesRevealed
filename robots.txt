@@ -1,0 +1,1 @@
+Allow all crawlers, including general web crawlers like GooglebotUser-agent: *Disallow:Specifically allow Google's AI crawlers (used for Vertex AI, etc.)This is good practice to be explicit.User-agent: Google-ExtendedDisallow:Specifically allow OpenAI's crawlers (used for ChatGPT, etc.)User-agent: ChatGPT-UserDisallow:
