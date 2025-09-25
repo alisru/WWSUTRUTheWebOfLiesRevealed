@@ -18,6 +18,7 @@
     {"@context":"https://schema.org","@type":"WebPage","description":"Operation: [What Was Swept Under The Rug Uncovered. Reveal The Web Of Lies]","headline":"The Jester and the Simulacrum: An Analysis of Comedy as a Counterforce to the Strategic Doctrine of Delusionism"}
     </script>
     <link rel="stylesheet" href="../style.css">
+	
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-4QHZV5Y81G"></script>
     <script>
@@ -27,12 +28,79 @@
 
       gtag('config', 'G-4QHZV5Y81G');
     </script>
+	<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    
+    // --- PART 1: BUILD THE TABLE OF CONTENTS ---
+    const tocContainer = document.getElementById('toc-container');
+    const headings = document.querySelectorAll('body h2, body h3');
+
+    if (headings.length > 0) {
+      const tocList = document.createElement('ul');
+      let currentH2List = null;
+
+      headings.forEach(heading => {
+        const id = heading.textContent.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+        heading.id = id;
+
+        const listItem = document.createElement('li');
+        const link = document.createElement('a');
+        link.href = `#${id}`;
+        link.textContent = heading.textContent;
+        listItem.appendChild(link);
+
+        if (heading.tagName === 'H2') {
+          tocList.appendChild(listItem);
+          currentH2List = null;
+        } else if (heading.tagName === 'H3') {
+          if (!currentH2List) {
+            currentH2List = document.createElement('ul');
+            tocList.lastChild.appendChild(currentH2List);
+          }
+          currentH2List.appendChild(listItem);
+        }
+      });
+      tocContainer.appendChild(tocList);
+    } else {
+      tocContainer.style.display = 'none';
+    }
+
+
+    // --- PART 2: SCROLL-TO-TOP BUTTON LOGIC ---
+    const scrollTopButton = document.getElementById('scroll-to-top');
+
+    // Show or hide the button based on scroll position
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) { // Show button after scrolling 300px
+        scrollTopButton.classList.add('visible');
+      } else {
+        scrollTopButton.classList.remove('visible');
+      }
+    });
+
+    // Smooth scroll to top when the button is clicked
+    scrollTopButton.addEventListener('click', (e) => {
+      e.preventDefault(); // Prevent the default jump-link behavior
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+
+  });
+</script>
 </head>
 <body>
+<div class="">
+	
+	  </div>
     <div class="container-lg px-3 my-5 markdown-body">
+	
         <a href="./index.html">&larr; Back To Navigation</a>
         <h1>The Jester and the Simulacrum: An Analysis of Comedy as a Counterforce to the Strategic Doctrine of Delusionism</h1>
-
+<nav id="toc-container">
+	  <strong>Table of Contents</strong>
+      </nav>
         <h2>Introduction</h2>
         <p>This report undertakes a critical analysis of the thesis that the professional function of the comedian—the systematic exposure of logical absurdity—positions them as a natural, potent, and inherently incorruptible counterforce to the strategic doctrine of Delusionism. The core premise of this thesis rests on a symmetrical opposition: if the survival mechanism of a Delusionist regime is the generation of logical absurdities, or <em>simulacra</em>, then the comedian, simply by executing the duties of their craft, represents a fundamental and perhaps ultimate threat to such a system. This analysis will rigorously test this proposition. It will begin by defining Delusionism as a form of "Axiomatic Warfare" derived from the post-structuralist philosophy of Gilles Deleuze, a doctrine that seeks not to win an argument but to destroy an adversary's capacity to recognize truth itself. A theoretical model of comedic resistance will then be constructed, juxtaposing the cognitive and cultural mechanics of humor against the operational logic of Delusionism. Finally, this model will be subjected to a stringent critique, examining documented historical failures, the psychological limitations of satire, and the potential for comedians to be strategically co-opted, thereby challenging the foundational claims of their potency and incorruptibility.</p>
 
@@ -189,6 +257,6 @@
             <li><a href="https://journalistsresource.org/politics-and-government/irony-satire-political-ideology-colbert-report/">Irony of satire: Political ideology and the motivation to see what you want to see in The Colbert Report - The Journalist's Resource</a>, accessed September 19, 2025</li>
             <li><a href="https://www.cambridge.org/core/books/cambridge-handbook-of-irony-and-thought/irony-and-its-consequences-in-the-public-sphere/3393AB89D2F842E7E62B444AF1755EB9">Irony and Its Consequences in the Public Sphere (Chapter 7) - Cambridge University Press</a>, accessed September 19, 2025</li>
         </ol>
-    </div>
+    </div><a id="scroll-to-top" href="#" title="Go to top">&uarr;</a>
 </body>
 </html>
