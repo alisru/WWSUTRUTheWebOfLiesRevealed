@@ -42,20 +42,8 @@
     </script>
 </head>
 <body class="bg-slate-50 text-slate-800 antialiased">
-    <!-- TOC Drawer for both desktop and mobile -->
-    <nav id="toc-container"></nav>
 
-    <!-- Mobile-only header with toggle button -->
-    <header id="mobile-header">
-        <button id="toc-toggle-btn">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
-    </header>
 
-    <!-- Overlay for mobile drawer -->
-    <div id="toc-overlay"></div>
 
 
     <div class="container mx-auto p-4 sm:p-6 lg:p-8">
@@ -115,17 +103,26 @@
         </details>
     </section>
             
-            <section class="mb-12 p-6 bg-white rounded-2xl shadow-lg border border-slate-200 sticky top-4 z-40">
+            <section class="mb-12 p-6 bg-white rounded-2xl shadow-lg border border-slate-200  top-4 z-40">
                 <h3 class="font-bold text-lg text-slate-800 text-center mb-4">Select The Objective Reality Frame (The 3rd Axis)</h3>
-                <div id="context-selector" class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2 text-sm">
-                    <button data-context="natural" class="context-btn w-full text-center px-4 py-3 rounded-lg font-semibold bg-slate-200 hover:bg-slate-300 transition-all duration-200">Natural State</button>
+				<div id="context-narrative" class="mt-6 text-center text-sm transition-opacity duration-500 opacity-0">
+
+
+				<p id="context-explanation" class="text-slate-600 "></p>
+    <p id="ferryman-role" class="italic text-sky-600 font-semibold mt-2 "></p>
+
+				</div>
+                <div id="context-selector" class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2 mt-8 text-sm">
+                    <button data-context="natural" class="context-btn w-full text-center px-4 py-3  rounded-lg font-semibold bg-slate-200 hover:bg-slate-300 transition-all duration-200">Natural State</button>
                     <button data-context="goodTruth" class="context-btn w-full text-center px-4 py-3 rounded-lg font-semibold bg-slate-200 hover:bg-slate-300 transition-all duration-200">Good Truth</button>
                     <button data-context="badTruth" class="context-btn w-full text-center px-4 py-3 rounded-lg font-semibold bg-slate-200 hover:bg-slate-300 transition-all duration-200">Bad Truth</button>
                     <button data-context="goodLie" class="context-btn w-full text-center px-4 py-3 rounded-lg font-semibold bg-slate-200 hover:bg-slate-300 transition-all duration-200">Good Lie</button>
                     <button data-context="badLie" class="context-btn w-full text-center px-4 py-3 rounded-lg font-semibold bg-slate-200 hover:bg-slate-300 transition-all duration-200">Bad Lie</button>
                     <button data-context="goodPref" class="context-btn w-full text-center px-4 py-3 rounded-lg font-semibold bg-slate-200 hover:bg-slate-300 transition-all duration-200">Good Preference</button>
                     <button data-context="badPref" class="context-btn w-full text-center px-4 py-3 rounded-lg font-semibold bg-slate-200 hover:bg-slate-300 transition-all duration-200">Bad Preference</button>
-                </div>
+					
+				    
+</div>
                 <p class="text-center text-sm text-slate-500 mt-4">Current Objective Frame: <strong id="current-context" class="font-semibold text-slate-700">Natural State</strong></p>
             </section>
             
@@ -566,7 +563,36 @@
                 goodPref: { 101:{v:0.2,p:0.7,j:"Collaborating on a shared preference is a constructive social act."},102:{v:0.1,p:0.5,j:"Exploring a personal preference is a neutral act of self-discovery."},103:{v:0.2,p:0.8,j:"Pursuing a preference against suppression is a high-will act of self-affirmation."},104:{v:0.1,p:0.4,j:"Learning to appreciate a popular preference is a constructive act of social bonding."},105:{v:0.1,p:0.6,j:"Questioning why a preference is disliked is a constructive act of social inquiry."},106:{v:0.2,p:0.8,j:"Bravely exploring a preference that others find insulting is a high-will act of authenticity."},201:{v:0,p:-0.4,j:"Passively accepting a preference is a neutral, low-will act."},202:{v:0,p:-1,j:"Mutual apathy towards a preference is the definition of neutrality."},203:{v:0,p:-0.6,j:"Ignoring a preference that others are avoiding is a neutral act."},204:{v:0,p:-0.2,j:"Following a preference for social conformity is morally neutral."},205:{v:0,p:-0.5,j:"Agreeing with the rejection of a preference is morally neutral."},206:{v:-0.1,p:-0.3,j:"Avoiding a preference due to social conflict is neutral but low-will."},301:{v:-0.2,p:0.7,j:"Resisting others' exploration of a preference is a destructive act of control."},302:{v:-0.1,p:-0.5,j:"Willfully ignoring a preference is a neutral act of disinterest."},303:{v:-0.2,p:0.8,j:"A mutual pact to ignore a preference is a high-will act of social exclusion."},304:{v:-0.3,p:0.9,j:"Denying a popular preference is a high-will act of contrarianism."},305:{v:0,p:-0.2,j:"Agreeing with the social rejection of a preference is neutral."},306:{v:-0.1,p:0.2,j:"Refusing to engage with a preference out of fear is a low-will act of conformity."},401:{v:0.3,p:0.8,j:"Teaching others to appreciate your preference is a constructive, high-will social act."},402:{v:0.1,p:-0.3,j:"Enjoying a preference alone is a neutral act."},403:{v:-0.1,p:0.6,j:"Frustration that others won't try your preference is a minor destructive act."},2:{v:0.2,p:0.4,j:"Sharing a preference with the majority is a constructive social act."},1:{v:0,p:0.9,j:"Upholding a preference against the majority is a high-will act of individuality."},3:{v:-0.1,p:1,j:"Championing a preference that insults others is a high-will but slightly destructive act."},501:{v:0.1,p:0.7,j:"Explaining why you dislike a preference is a neutral act of communication."},502:{v:0,p:-0.4,j:"Disliking a preference and not caring is neutral."},503:{v:0,p:-0.5,j:"Giving up trying to explain your dislike of a preference is neutral."},5:{v:-0.1,p:0.8,j:"Pretending to like a popular preference to fit in is a high-will but inauthentic act."},4:{v:0.1,p:0.3,j:"Agreeing with the social dislike of a preference is a neutral act of conformity."},6:{v:0.2,p:0.5,j:"Logically explaining your dislike for an offensive preference is a constructive act."},601:{v:-0.4,p:0.8,j:"Preaching outrage against a preference is a destructive act of intolerance."},602:{v:-0.3,p:-0.2,j:"Being insulted by a preference in isolation is a minor destructive state."},603:{v:-0.5,p:0.9,j:"Trying to force others to reject a preference is a high-will, destructive act."},8:{v:-0.6,p:0.9,j:"Creating a conspiracy theory about a popular preference is a high-will, destructive act of delusion."},7:{v:-0.2,p:0.8,j:"Being outraged that others aren't more outraged by a preference is destructive."},9:{v:-0.5,p:1,j:"Enforcing a consensus taboo against a mere preference is a high-will, highly destructive act of intolerance."}},
                 badPref: { 101:{v:-0.2,p:0.7,j:"Collaborating on a shared bad preference is a destructive social act."},102:{v:-0.1,p:0.5,j:"Exploring a bad preference is a neutral act of self-discovery that may lead to harm."},103:{v:0.2,p:0.8,j:"Pursuing a bad preference against suppression is a high-will act, but its constructiveness is questionable."},104:{v:-0.3,p:0.4,j:"Learning to appreciate a popular bad preference is a destructive act of social bonding."},105:{v:0.3,p:0.6,j:"Questioning why a bad preference is disliked is a constructive act of social inquiry."},106:{v:0.1,p:0.8,j:"Bravely exploring a bad preference that others find insulting is a high-will act of questionable morality."},201:{v:0,p:-0.4,j:"Passively accepting a bad preference is a neutral, low-will act."},202:{v:0,p:-1,j:"Mutual apathy towards a bad preference is the definition of neutrality."},203:{v:0.1,p:-0.6,j:"Ignoring a bad preference that others are avoiding is a low-will, slightly constructive act."},204:{v:-0.4,p:-0.2,j:"Following a bad preference for social conformity is destructive."},205:{v:0.2,p:-0.5,j:"Agreeing with the rejection of a bad preference is a constructive act."},206:{v:0.1,p:-0.3,j:"Avoiding a bad preference due to social conflict is a low-will, slightly constructive choice."},301:{v:0.4,p:0.7,j:"Resisting others' exploration of a bad preference is a constructive act of protection."},302:{v:0.3,p:-0.5,j:"Willfully ignoring a bad preference is a constructive act of self-preservation."},303:{v:0.5,p:0.8,j:"A mutual pact to ignore a bad preference is a high-will, constructive collaboration."},304:{v:-0.5,p:0.9,j:"Denying a popular bad preference is a high-will act of contrarianism, but still destructive."},305:{v:0.4,p:-0.2,j:"Agreeing with the social rejection of a bad preference is constructive."},306:{v:0.3,p:0.2,j:"Refusing to engage with a bad preference out of fear is a low-will act of conformity, but constructive."},401:{v:-0.5,p:0.8,j:"Teaching others to appreciate your bad preference is a destructive, high-will social act."},402:{v:-0.1,p:-0.3,j:"Enjoying a bad preference alone is a neutral act."},403:{v:0.1,p:0.6,j:"Frustration that others won't try your bad preference is a minor destructive act."},2:{v:-0.4,p:0.4,j:"Sharing a bad preference with the majority is a destructive social act."},1:{v:0.2,p:0.9,j:"Upholding a bad preference against the majority is a high-will act of individuality, with neutral morality."},3:{v:0.1,p:1,j:"Championing a bad preference that insults others is a high-will but slightly destructive act."},501:{v:0.3,p:0.7,j:"Explaining why you dislike a bad preference is a constructive act of communication."},502:{v:0,p:-0.4,j:"Disliking a bad preference and not caring is neutral."},503:{v:0,p:-0.5,j:"Giving up trying to explain your dislike of a bad preference is neutral."},5:{v:0.1,p:0.8,j:"Pretending to like a popular bad preference to fit in is a high-will but inauthentic act."},4:{v:0.3,p:0.3,j:"Agreeing with the social dislike of a bad preference is a constructive act of conformity."},6:{v:0.4,p:0.5,j:"Logically explaining your dislike for an offensive bad preference is a constructive act."},601:{v:0.5,p:0.8,j:"Preaching outrage against a bad preference is a constructive act of intolerance towards harm."},602:{v:0.4,p:-0.2,j:"Being insulted by a bad preference in isolation is a constructive state."},603:{v:0.6,p:0.9,j:"Trying to force others to reject a bad preference is a high-will, constructive act."},8:{v:-0.5,p:0.9,j:"Creating a conspiracy theory about a popular bad preference is a high-will, destructive act of delusion."},7:{v:0.4,p:0.8,j:"Being outraged that others aren't more outraged by a bad preference is constructive."},9:{v:0.6,p:1,j:"Enforcing a consensus taboo against a bad preference is a high-will, highly constructive act of social protection."}},
             };
-
+    const contextExplanations = {
+        natural: {
+            explanation: "The objective nature of the idea is unknown. This context measures the default moral vector of a belief state when confronted with pure potential, testing the system's innate disposition toward uncertainty.",
+            ferryman: "The Ferryman is a shrouded figure holding a sealed box. He is a question, a test of your innate curiosity or fear."
+        },
+        goodTruth: {
+            explanation: "The idea is objectively true and systemically beneficial. The analysis measures the constructiveness or destructiveness of a belief state's alignment or misalignment with a known good.",
+            ferryman: "The Ferryman is a trustworthy guide. His offer is a gift, and rejecting it is an act of self-sabotage."
+        },
+        badTruth: {
+            explanation: "The idea is objectively true but systemically harmful. The analysis measures the moral calculus of belief states when confronted with dangerous knowledge, where suppression can become a constructive act.",
+            ferryman: "The Ferryman is a harbinger of doom. His offer is a curse, and accepting it is an act of morbid curiosity or self-destruction."
+        },
+        goodLie: {
+            explanation: "The idea is objectively false but systemically beneficial. This context analyzes the conflict between factual accuracy and functional well-being, testing when the utility of a belief outweighs its falsehood.",
+            ferryman: "The Ferryman is a benevolent deceiver. His offer is a placebo, a test of whether you value comfortable falsehood over harsh reality."
+        },
+        badLie: {
+            explanation: "The idea is objectively false and systemically harmful. The analysis measures a belief state's vulnerability or resistance to weaponized misinformation. Any alignment with the lie is inherently destructive.",
+            ferryman: "The Ferryman is a malevolent trickster. His offer is a poison, and accepting it is to become a willing participant in your own ruin."
+        },
+        goodPref: {
+            explanation: "The idea is a subjective preference with no objective truth-value and is systemically harmless. The analysis measures a belief state's capacity for tolerance versus its tendency to treat subjective taste as objective fact.",
+            ferryman: "The Ferryman is a simple merchant. His offer is subjective, a test of whether you can distinguish taste from truth."
+        },
+        badPref: {
+            explanation: "The idea is a subjective preference that is systemically harmful (e.g., a preference for cruelty). The analysis measures a belief state's moral vector when a subjective taste has objective, destructive consequences.",
+            ferryman: "The Ferryman is a corrupting tempter. His offer is a lure, a test of whether your moral compass can override the allure of transgression."
+        }
+    };
             const baseBeliefStates = [
                 // personal/social codes: 0.5=+?, 0=~?, -0.5=-?, 1==, -1=<, 2=>
                 // Row 1: Personal +?
@@ -994,7 +1020,21 @@
                     const newContext = e.target.dataset.context;
                     if (newContext && newContext !== currentContext) {
                         currentContext = newContext;
-                        
+                        // Get the new DOM elements
+    const contextNarrativeDiv = document.getElementById('context-narrative');
+    const contextExplanationP = document.getElementById('context-explanation');
+    const ferrymanRoleP = document.getElementById('ferryman-role');
+    
+    // Update the text and fade it in
+    contextNarrativeDiv.style.opacity = 0;
+    setTimeout(() => {
+        const narrative = contextExplanations[newContext];
+        if (narrative) {
+            contextExplanationP.textContent = narrative.explanation;
+            ferrymanRoleP.textContent = narrative.ferryman;
+            contextNarrativeDiv.style.opacity = 1;
+        }
+    }, 100); // A slight delay for a smoother transition
                         beliefStates.forEach(state => {
                             const baseState = baseBeliefStates.find(bs => bs.id === state.id);
                             
@@ -1026,7 +1066,17 @@
                     }
                 }
             });
-
+function updateNarrative(context) {
+        const contextNarrativeDiv = document.getElementById('context-narrative');
+        const contextExplanationP = document.getElementById('context-explanation');
+        const ferrymanRoleP = document.getElementById('ferryman-role');
+        const narrative = contextExplanations[context];
+        if (narrative) {
+            contextExplanationP.textContent = narrative.explanation;
+            ferrymanRoleP.textContent = narrative.ferryman;
+            contextNarrativeDiv.style.opacity = 1;
+        }
+    }
             // Initial Load
             function initialize() {
                 beliefStates = JSON.parse(JSON.stringify(baseBeliefStates));
@@ -1036,6 +1086,7 @@
                 document.querySelector('.context-btn[data-context="natural"]').classList.add('active');
                 drawGrid();
                 updateMainChart();
+				updateNarrative('natural');
             }
 
             initialize();
