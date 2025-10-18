@@ -1,3 +1,100 @@
+/* --- Final Styles for All Screen Sizes --- */
+body {
+  font-family: sans-serif;
+  line-height: 1.6;
+}
+
+.page-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 15px;
+}
+
+/* --- Generic TOC Styles --- */
+#toc-container h4 { margin-top: 0; font-size: 1em; color: #333; }
+#toc-container ul { list-style: none; padding: 0; margin: 0; }
+#toc-container li a {
+    display: block; text-decoration: none; color: #555;
+    padding: 6px 0 6px 10px; font-size: 0.9em; transition: all 0.2s ease;
+    border-left: 2px solid transparent;
+}
+#toc-container li a.toc-h3 { padding-left: 25px; } /* Indent sub-headings */
+#toc-container li a:hover { color: #000; }
+#toc-container li a.active { color: #007bff; font-weight: bold; border-left-color: #007bff; }
+
+/* --- Desktop TOC (Sidebar) --- */
+@media (min-width: 1400px) {
+    #toc-container {
+        position: fixed; top: 80px; left: 20px; width: 220px;
+        max-height: calc(100vh - 100px); overflow-y: auto;
+        border-left: 2px solid #e0e0e0; padding: 10px 15px;
+    }
+    #toc-container li a { margin-left: -17px; }
+    .markdown-body { margin-left: 260px; } /* Push content to the right */
+    #mobile-header { display: none; }
+}
+
+/* --- Mobile TOC (Off-canvas Drawer) --- */
+@media (max-width: 1499.98px) {
+    #mobile-header {
+        display: block; position: fixed; top: 10px; left: 10px;
+        z-index: 1001;
+    }
+    #toc-toggle-btn {
+        background: #fff; border: 1px solid #ddd; border-radius: 5px;
+        width: 44px; height: 44px; padding: 8px; cursor: pointer;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    #toc-toggle-btn span {
+        display: block; width: 100%; height: 2px; background: #333;
+        margin: 4px 0; transition: transform 0.3s ease;
+    }
+    #toc-container {
+        position: fixed; top: 0; left: 0; height: 100%; width: 280px;
+        background: #f9f9f9; z-index: 1002; padding: 20px;
+        transform: translateX(-100%); transition: transform 0.3s ease-in-out;
+        overflow-y: auto; box-shadow: 5px 0 15px rgba(0,0,0,0.1);
+    }
+    #toc-overlay {
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0,0,0,0.5); z-index: 1000;
+        opacity: 0; visibility: hidden; transition: opacity 0.3s ease;
+    }
+
+    /* Active states for mobile drawer */
+    body.toc-open #toc-container { transform: translateX(0); }
+    body.toc-open #toc-overlay { opacity: 1; visibility: visible; }
+    body.toc-open #toc-toggle-btn span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    body.toc-open #toc-toggle-btn span:nth-child(2) { opacity: 0; }
+    body.toc-open #toc-toggle-btn span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+}
+
+
+/* --- Scroll-to-Top Button --- */
+#scroll-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #0056b3;
+  color: white;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  font-size: 24px;
+  border-radius: 50%;
+  text-decoration: none;
+  opacity: 0; /* Hidden by default */
+  transition: opacity 0.3s;
+  visibility: hidden;
+  z-index: 1000;
+}
+
+#scroll-to-top.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
 /* cyrillic-ext */
 @font-face {
   font-family: 'Roboto';

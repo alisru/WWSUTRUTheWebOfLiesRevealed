@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Information Warfare & Psychological Operations</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .card { transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-200">
+    <!-- TOC Drawer for both desktop and mobile -->
+    <nav id="toc-container"></nav>
+
+    <!-- Mobile-only header with toggle button -->
+    <header id="mobile-header">
+        <button id="toc-toggle-btn">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </header>
+
+    <!-- Overlay for mobile drawer -->
+    <div id="toc-overlay"></div>
+
+    <div class="container mx-auto px-4 py-8 md:py-16">
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-white mb-2">Information Warfare & Psychological Operations</h1>
+            <p class="text-lg text-gray-400"></p>
+            <a href="../index.html" class="mt-4 inline-block text-cyan-400 hover:text-cyan-300">&larr; Back to Main Navigator</a>
+        </header>
+        <main>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <a href="./FiveEyesSMBan.html" class="card block bg-gray-800 p-6 rounded-lg border border-gray-700 hover:border-cyan-500">
+                    <h2 class="text-xl font-semibold text-white">Five Eyes Internet Control Research</h2>
+                </a>
+                <a href="./BancontrolScheme.html" class="card block bg-gray-800 p-6 rounded-lg border border-gray-700 hover:border-cyan-500">
+                    <h2 class="text-xl font-semibold text-white">Investigating Internet Ban Control Scheme</h2>
+                </a>
+                <a href="./EvolutionofPsyops.html" class="card block bg-gray-800 p-6 rounded-lg border border-gray-700 hover:border-cyan-500">
+                    <h2 class="text-xl font-semibold text-white">Sub-bucket 2.1: Evolution of Psyops (Push vs Pull Models)</h2>
+                </a>
+                <a href="./CovidEpsteinSmry.html" class="card block bg-gray-800 p-6 rounded-lg border border-gray-700 hover:border-cyan-500">
+                    <h2 class="text-xl font-semibold text-white">Sub-bucket 2.3: The COVID-19 Simulacrum (Lab Leak Hypothesis)</h2>
+                </a>
+                <a href="./AIDistrust.html" class="card block bg-gray-800 p-6 rounded-lg border border-gray-700 hover:border-cyan-500">
+                    <h2 class="text-xl font-semibold text-white">Sub-bucket 2.5 The AI Distrust Vector (Proper English Psyop)</h2>
+                </a>
+				<a href="./TheImmigrationVariable.html" class="card block bg-gray-800 p-6 rounded-lg border border-gray-700 hover:border-cyan-500">
+                    <h2 class="text-xl font-semibold text-white">The Immigration Variable:</h2> A Strategic Assessment of Systemic Benefit and Manufactured Crisis
+                </a>
+            </div>
+        </main>
+    </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // --- 1. Element Selection ---
+    const tocContainer = document.getElementById('toc-container');
+    const contentContainer = document.querySelector('.markdown-body');
+    const tocToggleButton = document.getElementById('toc-toggle-btn');
+    const tocOverlay = document.getElementById('toc-overlay');
+
+    if (!tocContainer || !contentContainer) return;
+
+    // --- 2. Generate TOC Content ---
+    const headings = contentContainer.querySelectorAll('h2, h3');
+    if (headings.length === 0) {
+        tocContainer.style.display = 'none';
+        if (tocToggleButton) tocToggleButton.style.display = 'none';
+        return;
+    }
+
+    const tocTitle = document.createElement('h4');
+    tocTitle.textContent = 'On this page';
+    tocContainer.appendChild(tocTitle);
+    const tocList = document.createElement('ul');
+
+    headings.forEach((heading, index) => {
+        if (!heading.id) heading.id = `heading-ref-${index}`;
+        const listItem = document.createElement('li');
+        const link = document.createElement('a');
+        link.textContent = heading.textContent;
+        link.href = `#${heading.id}`;
+        link.classList.add(heading.tagName.toLowerCase() === 'h3' ? 'toc-h3' : 'toc-h2');
+        listItem.appendChild(link);
+        tocList.appendChild(listItem);
+    });
+    tocContainer.appendChild(tocList);
+    const tocLinks = tocContainer.querySelectorAll('a');
+
+    // --- 3. Mobile Drawer Functionality ---
+    const closeTocDrawer = () => document.body.classList.remove('toc-open');
+    if (tocToggleButton && tocOverlay) {
+        tocToggleButton.addEventListener('click', () => document.body.classList.toggle('toc-open'));
+        tocOverlay.addEventListener('click', closeTocDrawer);
+    }
+    tocLinks.forEach(link => link.addEventListener('click', closeTocDrawer));
+
+    // --- 4. Active Link Highlighting on Scroll ---
+    const getAbsoluteTop = (element) => {
+        let top = 0;
+        while (element) {
+            top += element.offsetTop;
+            element = element.offsetParent;
+        }
+        return top;
+    };
+    
+    const headingPositions = Array.from(headings).map(h => ({
+        id: h.id,
+        top: getAbsoluteTop(h)
+    }));
+    
+    let scrollTimeout;
+    const setActiveLink = () => {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+            let currentId = '';
+            const scrollPosition = window.scrollY + 120;
+            for (let i = headingPositions.length - 1; i >= 0; i--) {
+                if (scrollPosition >= headingPositions[i].top) {
+                    currentId = headingPositions[i].id;
+                    break;
+                }
+            }
+            tocLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${currentId}`) {
+                    link.classList.add('active');
+                }
+            });
+        }, 50);
+    };
+
+    window.addEventListener('scroll', setActiveLink);
+    setActiveLink();
+});
+</script>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // --- 1. Element Selection ---
+    const tocContainer = document.getElementById('toc-container');
+    const contentContainer = document.querySelector('.markdown-body');
+    const tocToggleButton = document.getElementById('toc-toggle-btn');
+    const tocOverlay = document.getElementById('toc-overlay');
+
+    if (!tocContainer || !contentContainer) return;
+
+    // --- 2. Generate TOC Content ---
+    const headings = contentContainer.querySelectorAll('h2, h3');
+    if (headings.length === 0) {
+        tocContainer.style.display = 'none';
+        if (tocToggleButton) tocToggleButton.style.display = 'none';
+        return;
+    }
+
+    const tocTitle = document.createElement('h4');
+    tocTitle.textContent = 'On this page';
+    tocContainer.appendChild(tocTitle);
+    const tocList = document.createElement('ul');
+
+    headings.forEach((heading, index) => {
+        if (!heading.id) heading.id = `heading-ref-${index}`;
+        const listItem = document.createElement('li');
+        const link = document.createElement('a');
+        link.textContent = heading.textContent;
+        link.href = `#${heading.id}`;
+        link.classList.add(heading.tagName.toLowerCase() === 'h3' ? 'toc-h3' : 'toc-h2');
+        listItem.appendChild(link);
+        tocList.appendChild(listItem);
+    });
+    tocContainer.appendChild(tocList);
+    const tocLinks = tocContainer.querySelectorAll('a');
+
+    // --- 3. Mobile Drawer Functionality ---
+    const closeTocDrawer = () => document.body.classList.remove('toc-open');
+    if (tocToggleButton && tocOverlay) {
+        tocToggleButton.addEventListener('click', () => document.body.classList.toggle('toc-open'));
+        tocOverlay.addEventListener('click', closeTocDrawer);
+    }
+    tocLinks.forEach(link => link.addEventListener('click', closeTocDrawer));
+
+    // --- 4. Active Link Highlighting on Scroll ---
+    const getAbsoluteTop = (element) => {
+        let top = 0;
+        while (element) {
+            top += element.offsetTop;
+            element = element.offsetParent;
+        }
+        return top;
+    };
+    
+    const headingPositions = Array.from(headings).map(h => ({
+        id: h.id,
+        top: getAbsoluteTop(h)
+    }));
+    
+    let scrollTimeout;
+    const setActiveLink = () => {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+            let currentId = '';
+            const scrollPosition = window.scrollY + 120;
+            for (let i = headingPositions.length - 1; i >= 0; i--) {
+                if (scrollPosition >= headingPositions[i].top) {
+                    currentId = headingPositions[i].id;
+                    break;
+                }
+            }
+            tocLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${currentId}`) {
+                    link.classList.add('active');
+                }
+            });
+        }, 50);
+    };
+
+    window.addEventListener('scroll', setActiveLink);
+    setActiveLink();
+});
+</script>
+
+</body>
+</html>

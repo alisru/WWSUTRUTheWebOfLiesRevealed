@@ -13,6 +13,21 @@
     </style>
 </head>
 <body class="bg-gray-900 text-gray-200">
+    <!-- TOC Drawer for both desktop and mobile -->
+    <nav id="toc-container"></nav>
+
+    <!-- Mobile-only header with toggle button -->
+    <header id="mobile-header">
+        <button id="toc-toggle-btn">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </header>
+
+    <!-- Overlay for mobile drawer -->
+    <div id="toc-overlay"></div>
+
     <div class="container mx-auto px-4 py-8 md:py-16">
         <header class="text-center mb-12">
             <h1 class="text-4xl md:text-5xl font-bold text-white mb-2">Australia</h1>
@@ -43,12 +58,551 @@
                 <a href="./DuttonInvestigation.html" class="card block bg-gray-800 p-6 rounded-lg border border-gray-700 hover:border-cyan-500"><h2 class="text-xl font-semibold text-white">An Investigation into the Minimisation Strategy of Peter Dutton </h2>And the Synergistic Duopoly (2001-2025)</a>
                 <a href="./AnalysisSussanLey.html" class="card block bg-gray-800 p-6 rounded-lg border border-gray-700 hover:border-cyan-500"><h2 class="text-xl font-semibold text-white">An Analysis of Sussan Ley </h2>And the Liberal Party's Strategic Realignment within the Minimisation Plan</a>
                 <a href="./ImmigrationAustralia.html" class="card block bg-gray-800 p-6 rounded-lg border border-gray-700 hover:border-cyan-500"><h2 class="text-xl font-semibold text-white">The Politicisation of Immigration in Australia (1990-Present): </h2> A Strategic Assessment of Minimiser Narratives and Actors</a>
-                                <a href="./PlatformvPractice.html" class="card block bg-gray-800 p-6 rounded-lg border border-gray-700 hover:border-cyan-500"><h2 class="text-xl font-semibold text-white">Platform vs. Practice:  </h2>An Audit of the Albanese Labor Government's Fidelity to its Stated Agenda (2021-Present)</a>
-                
+                <a href="./PlatformvPractice.html" class="card block bg-gray-800 p-6 rounded-lg border border-gray-700 hover:border-cyan-500"><h2 class="text-xl font-semibold text-white">Platform vs. Practice:  </h2>An Audit of the Albanese Labor Government's Fidelity to its Stated Agenda (2021-Present)</a>
 				<a href="./MostynGovernorship.html" class="card block bg-gray-800 p-6 rounded-lg border border-gray-700 hover:border-cyan-500"><h2 class="text-xl font-semibold text-white">Governor-General Sam Mostyn Project Dossier:  </h2>A Min/Max Analysis of the Mostyn Governorship</a>
-<a href="./TheRepublicGambit.html" class="card block bg-gray-800 p-6 rounded-lg border border-gray-700 hover:border-cyan-500"><h2 class="text-xl font-semibold text-white">The Republic Gambit: </h2> A Strategic Analysis of a Manufactured Narrative </a>
+				<a href="./TheRepublicGambit.html" class="card block bg-gray-800 p-6 rounded-lg border border-gray-700 hover:border-cyan-500"><h2 class="text-xl font-semibold text-white">The Republic Gambit: </h2> A Strategic Analysis of a Manufactured Narrative </a>
+				<a href="./TheRepublicGambit.html" class="card block bg-gray-800 p-6 rounded-lg border border-gray-700 hover:border-cyan-500">
+				<h2 class="text-xl font-semibold text-white">
+				The Republic Gambit: 
+				</h2> 
+				A Strategic Analysis of a Manufactured Narrative 
+				</a>
+				<a href="./ALPRightFactionDossier.html" class="card block bg-gray-800 p-6 rounded-lg border border-gray-700 hover:border-cyan-500"><h2 class="text-xl font-semibold text-white">
+				The Right Ascendant: 
+				</h2> 
+				A Dossier on Factional Power, Corporate Influence, and the Unmaking of a Labor Government (2008-Present)
+				</a>
+				<a href="./AnatomyUnmakingResourceTax.html" class="card block bg-gray-800 p-6 rounded-lg border border-gray-700 hover:border-cyan-500"><h2 class="text-xl font-semibold text-white">
+				Anatomy of a Fall:
+				</h2> 
+				Demolition, Incompetence, and the Unmaking of Australia's Resource Tax
+				</a>
+				<a href="./FireInvestigationJordanShanks.html" class="card block bg-gray-800 p-6 rounded-lg border border-gray-700 hover:border-cyan-500"><h2 class="text-xl font-semibold text-white">
+				The Coronation and the Fire: 
+				</h2> 
+				An Investigation into Jordan Shanks, Political Power, and Organised Crime in New South Wales
+				</a>
+				
             </div>
         </main>
     </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // --- 1. Element Selection ---
+    const tocContainer = document.getElementById('toc-container');
+    const contentContainer = document.querySelector('.markdown-body');
+    const tocToggleButton = document.getElementById('toc-toggle-btn');
+    const tocOverlay = document.getElementById('toc-overlay');
+
+    if (!tocContainer || !contentContainer) return;
+
+    // --- 2. Generate TOC Content ---
+    const headings = contentContainer.querySelectorAll('h2, h3');
+    if (headings.length === 0) {
+        tocContainer.style.display = 'none';
+        if (tocToggleButton) tocToggleButton.style.display = 'none';
+        return;
+    }
+
+    const tocTitle = document.createElement('h4');
+    tocTitle.textContent = 'On this page';
+    tocContainer.appendChild(tocTitle);
+    const tocList = document.createElement('ul');
+
+    headings.forEach((heading, index) => {
+        if (!heading.id) heading.id = `heading-ref-${index}`;
+        const listItem = document.createElement('li');
+        const link = document.createElement('a');
+        link.textContent = heading.textContent;
+        link.href = `#${heading.id}`;
+        link.classList.add(heading.tagName.toLowerCase() === 'h3' ? 'toc-h3' : 'toc-h2');
+        listItem.appendChild(link);
+        tocList.appendChild(listItem);
+    });
+    tocContainer.appendChild(tocList);
+    const tocLinks = tocContainer.querySelectorAll('a');
+
+    // --- 3. Mobile Drawer Functionality ---
+    const closeTocDrawer = () => document.body.classList.remove('toc-open');
+    if (tocToggleButton && tocOverlay) {
+        tocToggleButton.addEventListener('click', () => document.body.classList.toggle('toc-open'));
+        tocOverlay.addEventListener('click', closeTocDrawer);
+    }
+    tocLinks.forEach(link => link.addEventListener('click', closeTocDrawer));
+
+    // --- 4. Active Link Highlighting on Scroll ---
+    const getAbsoluteTop = (element) => {
+        let top = 0;
+        while (element) {
+            top += element.offsetTop;
+            element = element.offsetParent;
+        }
+        return top;
+    };
+    
+    const headingPositions = Array.from(headings).map(h => ({
+        id: h.id,
+        top: getAbsoluteTop(h)
+    }));
+    
+    let scrollTimeout;
+    const setActiveLink = () => {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+            let currentId = '';
+            const scrollPosition = window.scrollY + 120;
+            for (let i = headingPositions.length - 1; i >= 0; i--) {
+                if (scrollPosition >= headingPositions[i].top) {
+                    currentId = headingPositions[i].id;
+                    break;
+                }
+            }
+            tocLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${currentId}`) {
+                    link.classList.add('active');
+                }
+            });
+        }, 50);
+    };
+
+    window.addEventListener('scroll', setActiveLink);
+    setActiveLink();
+});
+</script>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // --- 1. Element Selection ---
+    const tocContainer = document.getElementById('toc-container');
+    const contentContainer = document.querySelector('.markdown-body');
+    const tocToggleButton = document.getElementById('toc-toggle-btn');
+    const tocOverlay = document.getElementById('toc-overlay');
+
+    if (!tocContainer || !contentContainer) return;
+
+    // --- 2. Generate TOC Content ---
+    const headings = contentContainer.querySelectorAll('h2, h3');
+    if (headings.length === 0) {
+        tocContainer.style.display = 'none';
+        if (tocToggleButton) tocToggleButton.style.display = 'none';
+        return;
+    }
+
+    const tocTitle = document.createElement('h4');
+    tocTitle.textContent = 'On this page';
+    tocContainer.appendChild(tocTitle);
+    const tocList = document.createElement('ul');
+
+    headings.forEach((heading, index) => {
+        if (!heading.id) heading.id = `heading-ref-${index}`;
+        const listItem = document.createElement('li');
+        const link = document.createElement('a');
+        link.textContent = heading.textContent;
+        link.href = `#${heading.id}`;
+        link.classList.add(heading.tagName.toLowerCase() === 'h3' ? 'toc-h3' : 'toc-h2');
+        listItem.appendChild(link);
+        tocList.appendChild(listItem);
+    });
+    tocContainer.appendChild(tocList);
+    const tocLinks = tocContainer.querySelectorAll('a');
+
+    // --- 3. Mobile Drawer Functionality ---
+    const closeTocDrawer = () => document.body.classList.remove('toc-open');
+    if (tocToggleButton && tocOverlay) {
+        tocToggleButton.addEventListener('click', () => document.body.classList.toggle('toc-open'));
+        tocOverlay.addEventListener('click', closeTocDrawer);
+    }
+    tocLinks.forEach(link => link.addEventListener('click', closeTocDrawer));
+
+    // --- 4. Active Link Highlighting on Scroll ---
+    const getAbsoluteTop = (element) => {
+        let top = 0;
+        while (element) {
+            top += element.offsetTop;
+            element = element.offsetParent;
+        }
+        return top;
+    };
+    
+    const headingPositions = Array.from(headings).map(h => ({
+        id: h.id,
+        top: getAbsoluteTop(h)
+    }));
+    
+    let scrollTimeout;
+    const setActiveLink = () => {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+            let currentId = '';
+            const scrollPosition = window.scrollY + 120;
+            for (let i = headingPositions.length - 1; i >= 0; i--) {
+                if (scrollPosition >= headingPositions[i].top) {
+                    currentId = headingPositions[i].id;
+                    break;
+                }
+            }
+            tocLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${currentId}`) {
+                    link.classList.add('active');
+                }
+            });
+        }, 50);
+    };
+
+    window.addEventListener('scroll', setActiveLink);
+    setActiveLink();
+});
+</script>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // --- 1. Element Selection ---
+    const tocContainer = document.getElementById('toc-container');
+    const contentContainer = document.querySelector('.markdown-body');
+    const tocToggleButton = document.getElementById('toc-toggle-btn');
+    const tocOverlay = document.getElementById('toc-overlay');
+
+    if (!tocContainer || !contentContainer) return;
+
+    // --- 2. Generate TOC Content ---
+    const headings = contentContainer.querySelectorAll('h2, h3');
+    if (headings.length === 0) {
+        tocContainer.style.display = 'none';
+        if (tocToggleButton) tocToggleButton.style.display = 'none';
+        return;
+    }
+
+    const tocTitle = document.createElement('h4');
+    tocTitle.textContent = 'On this page';
+    tocContainer.appendChild(tocTitle);
+    const tocList = document.createElement('ul');
+
+    headings.forEach((heading, index) => {
+        if (!heading.id) heading.id = `heading-ref-${index}`;
+        const listItem = document.createElement('li');
+        const link = document.createElement('a');
+        link.textContent = heading.textContent;
+        link.href = `#${heading.id}`;
+        link.classList.add(heading.tagName.toLowerCase() === 'h3' ? 'toc-h3' : 'toc-h2');
+        listItem.appendChild(link);
+        tocList.appendChild(listItem);
+    });
+    tocContainer.appendChild(tocList);
+    const tocLinks = tocContainer.querySelectorAll('a');
+
+    // --- 3. Mobile Drawer Functionality ---
+    const closeTocDrawer = () => document.body.classList.remove('toc-open');
+    if (tocToggleButton && tocOverlay) {
+        tocToggleButton.addEventListener('click', () => document.body.classList.toggle('toc-open'));
+        tocOverlay.addEventListener('click', closeTocDrawer);
+    }
+    tocLinks.forEach(link => link.addEventListener('click', closeTocDrawer));
+
+    // --- 4. Active Link Highlighting on Scroll ---
+    const getAbsoluteTop = (element) => {
+        let top = 0;
+        while (element) {
+            top += element.offsetTop;
+            element = element.offsetParent;
+        }
+        return top;
+    };
+    
+    const headingPositions = Array.from(headings).map(h => ({
+        id: h.id,
+        top: getAbsoluteTop(h)
+    }));
+    
+    let scrollTimeout;
+    const setActiveLink = () => {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+            let currentId = '';
+            const scrollPosition = window.scrollY + 120;
+            for (let i = headingPositions.length - 1; i >= 0; i--) {
+                if (scrollPosition >= headingPositions[i].top) {
+                    currentId = headingPositions[i].id;
+                    break;
+                }
+            }
+            tocLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${currentId}`) {
+                    link.classList.add('active');
+                }
+            });
+        }, 50);
+    };
+
+    window.addEventListener('scroll', setActiveLink);
+    setActiveLink();
+});
+</script>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // --- 1. Element Selection ---
+    const tocContainer = document.getElementById('toc-container');
+    const contentContainer = document.querySelector('.markdown-body');
+    const tocToggleButton = document.getElementById('toc-toggle-btn');
+    const tocOverlay = document.getElementById('toc-overlay');
+
+    if (!tocContainer || !contentContainer) return;
+
+    // --- 2. Generate TOC Content ---
+    const headings = contentContainer.querySelectorAll('h2, h3');
+    if (headings.length === 0) {
+        tocContainer.style.display = 'none';
+        if (tocToggleButton) tocToggleButton.style.display = 'none';
+        return;
+    }
+
+    const tocTitle = document.createElement('h4');
+    tocTitle.textContent = 'On this page';
+    tocContainer.appendChild(tocTitle);
+    const tocList = document.createElement('ul');
+
+    headings.forEach((heading, index) => {
+        if (!heading.id) heading.id = `heading-ref-${index}`;
+        const listItem = document.createElement('li');
+        const link = document.createElement('a');
+        link.textContent = heading.textContent;
+        link.href = `#${heading.id}`;
+        link.classList.add(heading.tagName.toLowerCase() === 'h3' ? 'toc-h3' : 'toc-h2');
+        listItem.appendChild(link);
+        tocList.appendChild(listItem);
+    });
+    tocContainer.appendChild(tocList);
+    const tocLinks = tocContainer.querySelectorAll('a');
+
+    // --- 3. Mobile Drawer Functionality ---
+    const closeTocDrawer = () => document.body.classList.remove('toc-open');
+    if (tocToggleButton && tocOverlay) {
+        tocToggleButton.addEventListener('click', () => document.body.classList.toggle('toc-open'));
+        tocOverlay.addEventListener('click', closeTocDrawer);
+    }
+    tocLinks.forEach(link => link.addEventListener('click', closeTocDrawer));
+
+    // --- 4. Active Link Highlighting on Scroll ---
+    const getAbsoluteTop = (element) => {
+        let top = 0;
+        while (element) {
+            top += element.offsetTop;
+            element = element.offsetParent;
+        }
+        return top;
+    };
+    
+    const headingPositions = Array.from(headings).map(h => ({
+        id: h.id,
+        top: getAbsoluteTop(h)
+    }));
+    
+    let scrollTimeout;
+    const setActiveLink = () => {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+            let currentId = '';
+            const scrollPosition = window.scrollY + 120;
+            for (let i = headingPositions.length - 1; i >= 0; i--) {
+                if (scrollPosition >= headingPositions[i].top) {
+                    currentId = headingPositions[i].id;
+                    break;
+                }
+            }
+            tocLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${currentId}`) {
+                    link.classList.add('active');
+                }
+            });
+        }, 50);
+    };
+
+    window.addEventListener('scroll', setActiveLink);
+    setActiveLink();
+});
+</script>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // --- 1. Element Selection ---
+    const tocContainer = document.getElementById('toc-container');
+    const contentContainer = document.querySelector('.markdown-body');
+    const tocToggleButton = document.getElementById('toc-toggle-btn');
+    const tocOverlay = document.getElementById('toc-overlay');
+
+    if (!tocContainer || !contentContainer) return;
+
+    // --- 2. Generate TOC Content ---
+    const headings = contentContainer.querySelectorAll('h2, h3');
+    if (headings.length === 0) {
+        tocContainer.style.display = 'none';
+        if (tocToggleButton) tocToggleButton.style.display = 'none';
+        return;
+    }
+
+    const tocTitle = document.createElement('h4');
+    tocTitle.textContent = 'On this page';
+    tocContainer.appendChild(tocTitle);
+    const tocList = document.createElement('ul');
+
+    headings.forEach((heading, index) => {
+        if (!heading.id) heading.id = `heading-ref-${index}`;
+        const listItem = document.createElement('li');
+        const link = document.createElement('a');
+        link.textContent = heading.textContent;
+        link.href = `#${heading.id}`;
+        link.classList.add(heading.tagName.toLowerCase() === 'h3' ? 'toc-h3' : 'toc-h2');
+        listItem.appendChild(link);
+        tocList.appendChild(listItem);
+    });
+    tocContainer.appendChild(tocList);
+    const tocLinks = tocContainer.querySelectorAll('a');
+
+    // --- 3. Mobile Drawer Functionality ---
+    const closeTocDrawer = () => document.body.classList.remove('toc-open');
+    if (tocToggleButton && tocOverlay) {
+        tocToggleButton.addEventListener('click', () => document.body.classList.toggle('toc-open'));
+        tocOverlay.addEventListener('click', closeTocDrawer);
+    }
+    tocLinks.forEach(link => link.addEventListener('click', closeTocDrawer));
+
+    // --- 4. Active Link Highlighting on Scroll ---
+    const getAbsoluteTop = (element) => {
+        let top = 0;
+        while (element) {
+            top += element.offsetTop;
+            element = element.offsetParent;
+        }
+        return top;
+    };
+    
+    const headingPositions = Array.from(headings).map(h => ({
+        id: h.id,
+        top: getAbsoluteTop(h)
+    }));
+    
+    let scrollTimeout;
+    const setActiveLink = () => {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+            let currentId = '';
+            const scrollPosition = window.scrollY + 120;
+            for (let i = headingPositions.length - 1; i >= 0; i--) {
+                if (scrollPosition >= headingPositions[i].top) {
+                    currentId = headingPositions[i].id;
+                    break;
+                }
+            }
+            tocLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${currentId}`) {
+                    link.classList.add('active');
+                }
+            });
+        }, 50);
+    };
+
+    window.addEventListener('scroll', setActiveLink);
+    setActiveLink();
+});
+</script>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // --- 1. Element Selection ---
+    const tocContainer = document.getElementById('toc-container');
+    const contentContainer = document.querySelector('.markdown-body');
+    const tocToggleButton = document.getElementById('toc-toggle-btn');
+    const tocOverlay = document.getElementById('toc-overlay');
+
+    if (!tocContainer || !contentContainer) return;
+
+    // --- 2. Generate TOC Content ---
+    const headings = contentContainer.querySelectorAll('h2, h3');
+    if (headings.length === 0) {
+        tocContainer.style.display = 'none';
+        if (tocToggleButton) tocToggleButton.style.display = 'none';
+        return;
+    }
+
+    const tocTitle = document.createElement('h4');
+    tocTitle.textContent = 'On this page';
+    tocContainer.appendChild(tocTitle);
+    const tocList = document.createElement('ul');
+
+    headings.forEach((heading, index) => {
+        if (!heading.id) heading.id = `heading-ref-${index}`;
+        const listItem = document.createElement('li');
+        const link = document.createElement('a');
+        link.textContent = heading.textContent;
+        link.href = `#${heading.id}`;
+        link.classList.add(heading.tagName.toLowerCase() === 'h3' ? 'toc-h3' : 'toc-h2');
+        listItem.appendChild(link);
+        tocList.appendChild(listItem);
+    });
+    tocContainer.appendChild(tocList);
+    const tocLinks = tocContainer.querySelectorAll('a');
+
+    // --- 3. Mobile Drawer Functionality ---
+    const closeTocDrawer = () => document.body.classList.remove('toc-open');
+    if (tocToggleButton && tocOverlay) {
+        tocToggleButton.addEventListener('click', () => document.body.classList.toggle('toc-open'));
+        tocOverlay.addEventListener('click', closeTocDrawer);
+    }
+    tocLinks.forEach(link => link.addEventListener('click', closeTocDrawer));
+
+    // --- 4. Active Link Highlighting on Scroll ---
+    const getAbsoluteTop = (element) => {
+        let top = 0;
+        while (element) {
+            top += element.offsetTop;
+            element = element.offsetParent;
+        }
+        return top;
+    };
+    
+    const headingPositions = Array.from(headings).map(h => ({
+        id: h.id,
+        top: getAbsoluteTop(h)
+    }));
+    
+    let scrollTimeout;
+    const setActiveLink = () => {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+            let currentId = '';
+            const scrollPosition = window.scrollY + 120; // Offset for better UX
+
+            for (let i = headingPositions.length - 1; i >= 0; i--) {
+                if (scrollPosition >= headingPositions[i].top) {
+                    currentId = headingPositions[i].id;
+                    break;
+                }
+            }
+
+            tocLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${currentId}`) {
+                    link.classList.add('active');
+                }
+            });
+        }, 50); // 50ms debounce delay
+    };
+
+    window.addEventListener('scroll', setActiveLink);
+    setActiveLink(); // Set initial state
+});
+</script>
+
 </body>
 </html>

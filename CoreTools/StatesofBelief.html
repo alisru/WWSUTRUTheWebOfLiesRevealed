@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The 252 States of You</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="../style.css">
+	
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        .matrix-card {
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background-color 0.3s ease, border-color 0.3s ease;
+            aspect-ratio: 1 / 1;
+        }
+        .matrix-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        #detail-panel {
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+        }
+        .context-btn.active {
+            background-color: #0f172a;
+            color: #f8fafc;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            transform: translateY(-2px);
+        }
+    </style>
+	    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-4QHZV5Y81G"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'G-4QHZV5Y81G');
+    </script>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased">
+    <!-- TOC Drawer for both desktop and mobile -->
+    <nav id="toc-container"></nav>
+
+    <!-- Mobile-only header with toggle button -->
+    <header id="mobile-header">
+        <button id="toc-toggle-btn">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </header>
+
+    <!-- Overlay for mobile drawer -->
+    <div id="toc-overlay"></div>
+
+
+    <div class="container mx-auto p-4 sm:p-6 lg:p-8">
+      <p><a href="./index.html" class="mt-4 inline-block">&larr; Back To Navigation </a></p>
+	
+        <header class="text-center mb-10">
+            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900">The 252 States of You</h1>
+            <p class="mt-3 text-base sm:text-lg text-slate-600 max-w-4xl mx-auto">
+			The 7 Objective Truths and The 36 States of Belief, The 252 States of You;  An interactive matrix exploring the psychological states from willful inquiry and apathy to final judgment, based 
+			on personal and perceived social will, measured against the shifting contexts of objective reality.
+        </header>
+
+        <main>
+        <section class="p-6 bg-white rounded-2xl shadow-md border border-slate-200">
+        <details>
+            <summary class="cursor-pointer font-bold text-lg text-slate-800">How to Read the Matrix (Click to Expand)</summary>
+            <div class="mt-4 space-y-6 text-sm text-slate-600">
+                
+                <div class="border-t border-slate-200 pt-6">
+                     <h4 class="font-semibold mb-2 text-slate-700">Explain Like I'm 5 (ELI5)</h4>
+                     <p>Imagine your mind is a little boat and every new idea is a stranger who wants to come aboard. This grid is a map of all your feelings about that stranger. The map checks two things: 1) Do YOU like the stranger? (Are they friendly, a monster, or just confusing?) and 2) What do you THINK everyone else on the boat feels about the stranger? The 36 boxes show all the different dramas that can happen. The "Context Switcher" at the top tells you who the stranger *really* is: a helpful guide (Good Truth), a real monster (Bad Truth), or just a tricky salesman (Bad Lie). Depending on who the stranger really is, deciding to trust them can be a brave or a foolish thing to do.</p>
+                </div>
+                <div class="border-t border-slate-200 pt-6">
+                    <h4 class="font-semibold mb-2 text-slate-700">Explain Like I'm 18 (ELI18)</h4>
+                    <p>This matrix models the cognitive dissonance that occurs when your personal judgment of an idea conflicts with your perception of the social consensus. It maps your internal reaction (curiosity, acceptance, denial) against your social simulation (what you think the group believes). Each of the 36 states is a unique psychological archetype—like "The Heretic," "The Grifter," or "The Mob"—that emerges from this internal vs. external tension. The "Context Switcher" adds the critical third dimension: objective reality. It allows you to see how the morality of being "The Heretic" changes dramatically depending on whether you're fighting against a "Good Truth" (making you a deluded denier) or a "Bad Lie" (making you a lone voice of reason).</p>
+               </div>
+               <div class="border-t border-slate-200 pt-6">
+                    <h4 class="font-semibold mb-2 text-slate-700">Expert Explanation</h4>
+                    <p>This 6x6 matrix is a comprehensive topological map of cognitive-social states derived from Vector Field Theory. It plots an agent's internal disposition toward a proposition (Personal Axis) against their perception of the collective disposition (Social Axis). The axes are discretized into six states: three pre-judgmental states of inquiry (+?, ~?, -?) representing vectors of will toward knowledge, and three post-judgmental states (=, &lt;, &gt;) representing a settled conviction. The "Context Switcher" introduces the objective frame (the Kanon), allowing for a true hegemonic analysis. It recalibrates the Hegemonic Vector (υ, ψ) of all 36 subjective states, quantifying their moral constructiveness/destructiveness based on their alignment with an objective ground truth, thus moving the analysis from mere psychology to applied ethics.</p>
+               </div>
+               <div class="border-t border-slate-200 pt-6">
+                    <h4 class="font-semibold mb-2 text-slate-700">Scientific Explanation</h4>
+                    <p>The model provides a testable framework for social psychology and memetics. It treats belief as an emergent phenomenon from the interaction of an individual's internal heuristic analysis (Personal Axis) and their simulation of the group's heuristic (Social Axis). The "Context Switcher" acts as the control variable, setting the objective properties of the memetic payload (the idea). By observing the resulting shift in the Hegemonic Vectors (υ, ψ) across the 36 states, we can predict and quantify the pro-social (constructive) or anti-social (destructive) potential of any given subjective reaction to an objective reality. This allows for modeling the spread of information and misinformation through a population with varying psychological predispositions.</p>
+               </div>
+               <div class="border-t border-slate-200 pt-6">
+                    <h4 class="font-semibold mb-2 text-slate-700">Spiritual Explanation</h4>
+                    <p>This matrix is a map of the soul's journey toward or away from Unconcealed Truth (Aletheia). The Personal Axis is the state of one's inner Will, while the Social Axis is the world of illusion and collective opinion (Maya). The "Context Switcher" represents the voice of the Absolute or the divine ground of being—the objective truth that exists independent of our perceptions. A soul's journey is a success (a move toward +υ) when their inner Will aligns with this objective truth, piercing the veil of Maya. When the Will aligns with Maya against objective truth, the soul moves toward the Greed Zone and the Greater Lie (-υ), trapping itself in delusion.</p>
+               </div>
+                <div class="border-t border-slate-200 pt-6">
+                    <h4 class="font-semibold mb-2 text-slate-700">Mythological Explanation</h4>
+                    <p>This matrix is a map of the underworld of the mind, where every new idea is Charon, the Ferryman, demanding judgment to cross the River Styx. The 36 states are the possible voyages. The "Context Switcher" is the final destination that the Ferryman is *actually* taking you to. Choosing to believe the Ferryman might seem wise if his destination is the Elysian Fields (a Good Truth), but it is folly if his true destination is Tartarus (a Bad Lie). The heroism or foolishness of your personal judgment is only revealed when measured against the objective reality of the final shore.</p>
+               </div>
+                <div class="border-t border-slate-200 pt-6">
+                    <h4 class="font-semibold mb-2 text-slate-700">The Context Switcher: Applying the Kanon</h4>
+                    <p>This is the most critical part of the instrument. The grid shows the 36 ways you and society can *subjectively feel* about an idea. The Context Switcher sets what that idea *objectively is*. By changing the context, you change the moral landscape, revealing that no belief state is inherently good or evil; its vector is determined by its relationship to objective reality.</p>
+                    <ul class="mt-3 space-y-2 text-xs list-disc pl-5">
+                        <li><strong class="font-semibold">Natural State:</strong> The baseline reality, revealing our dispositions when the idea's nature is unknown.</li>
+                        <li><strong class="font-semibold">Good Truth:</strong> A beneficial, objective truth. Aligning with it is constructive.</li>
+                        <li><strong class="font-semibold">Bad Truth:</strong> A harmful, objective truth. Resisting it can be constructive.</li>
+                        <li><strong class="font-semibold">Good Lie:</strong> A beneficial falsehood. It creates a paradox where embracing a lie can be constructive.</li>
+                        <li><strong class="font-semibold">Bad Lie:</strong> A harmful falsehood. Resisting it is constructive.</li>
+                        <li><strong class="font-semibold">Good Preference:</strong> A harmless subjective taste. Judging it is a category error.</li>
+                        <li><strong class="font-semibold">Bad Preference:</strong> A harmful subjective taste. Its negative impact makes it objectively destructive.</li>
+                    </ul>
+                </div>
+            </div>
+        </details>
+    </section>
+            
+            <section class="mb-12 p-6 bg-white rounded-2xl shadow-lg border border-slate-200 sticky top-4 z-40">
+                <h3 class="font-bold text-lg text-slate-800 text-center mb-4">Select The Objective Reality Frame (The 3rd Axis)</h3>
+                <div id="context-selector" class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2 text-sm">
+                    <button data-context="natural" class="context-btn w-full text-center px-4 py-3 rounded-lg font-semibold bg-slate-200 hover:bg-slate-300 transition-all duration-200">Natural State</button>
+                    <button data-context="goodTruth" class="context-btn w-full text-center px-4 py-3 rounded-lg font-semibold bg-slate-200 hover:bg-slate-300 transition-all duration-200">Good Truth</button>
+                    <button data-context="badTruth" class="context-btn w-full text-center px-4 py-3 rounded-lg font-semibold bg-slate-200 hover:bg-slate-300 transition-all duration-200">Bad Truth</button>
+                    <button data-context="goodLie" class="context-btn w-full text-center px-4 py-3 rounded-lg font-semibold bg-slate-200 hover:bg-slate-300 transition-all duration-200">Good Lie</button>
+                    <button data-context="badLie" class="context-btn w-full text-center px-4 py-3 rounded-lg font-semibold bg-slate-200 hover:bg-slate-300 transition-all duration-200">Bad Lie</button>
+                    <button data-context="goodPref" class="context-btn w-full text-center px-4 py-3 rounded-lg font-semibold bg-slate-200 hover:bg-slate-300 transition-all duration-200">Good Preference</button>
+                    <button data-context="badPref" class="context-btn w-full text-center px-4 py-3 rounded-lg font-semibold bg-slate-200 hover:bg-slate-300 transition-all duration-200">Bad Preference</button>
+                </div>
+                <p class="text-center text-sm text-slate-500 mt-4">Current Objective Frame: <strong id="current-context" class="font-semibold text-slate-700">Natural State</strong></p>
+            </section>
+            
+            <p class="text-center italic text-slate-600 mb-8 max-w-3xl mx-auto">Imagine a wide, fog-shrouded river, grey and endless. This is the River of Six, the modern Styx, where every new idea is a silent Ferryman demanding passage. On its waters drifts a single, ancient boat, carrying 36 passengers—each a version of you, each a State of Belief.</p>
+
+            <section id="interactive-matrix" class="relative max-w-5xl mx-auto">
+                <div class="w-full">
+                    <div class="flex flex-col h-full">
+                        <div class="flex items-center justify-end text-[10px] sm:text-xs text-center pl-16 sm:pl-24">
+                            <div class="font-semibold text-slate-700 w-[16.6%] px-1">Personal: Truth (=)</div>
+                            <div class="w-[16.6%] px-1 font-semibold text-slate-700">Personal: Will to Know (+?)</div>
+                            <div class="w-[16.6%] px-1 font-semibold text-slate-700">Personal: Lie (&lt;)</div>
+                            <div class="w-[16.6%] px-1 font-semibold text-slate-700">Personal: Indifferent (~?)</div>
+                            <div class="w-[16.6%] px-1 font-semibold text-slate-700">Personal: Insult (&gt;)</div>
+                            <div class="w-[16.6%] px-1 font-semibold text-slate-700">Personal: Will Not to Know (-?)</div>
+                        </div>
+                        <div class="flex flex-grow min-h-0">
+                            <div class="flex flex-col justify-around w-16 sm:w-24 text-right pr-2 sm:pr-4 font-semibold text-slate-700 text-[10px] sm:text-xs">
+                                <div class="h-[16.6%] flex items-center justify-end">Social: Insult (&gt;)</div>
+                                <div class="h-[16.6%] flex items-center justify-end">Social: Lie (&lt;)</div>
+                                <div class="h-[16.6%] flex items-center justify-end">Social: Truth (=)</div>
+                                <div class="h-[16.6%] flex items-center justify-end">Social: Will Not to Know (-?)</div>
+                                <div class="h-[16.6%] flex items-center justify-end">Social: Indifferent (~?)</div>
+                                <div class="h-[16.6%] flex items-center justify-end">Social: Will to Know (+?)</div>
+                            </div>
+                            <div id="matrix-grid" class="grid grid-cols-6 gap-1 sm:gap-2 flex-1">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <p class="text-center italic text-slate-600 mt-8 max-w-3xl mx-auto">The boat is your mind. The Ferryman is every new idea. And the journey across the River of Six never ends; one passenger simply takes the oar from another, and the course is changed.</p>
+
+
+            <section id="archetype-map" class="mt-16">
+                 <header class="text-center mb-10">
+                    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900">Hegemonic Map of States</h1>
+                    <p class="mt-3 text-base sm:text-lg text-slate-600 max-w-3xl mx-auto">An interactive scatter plot visualizing the moral and willful alignment of the 36 States of Belief. Click on a point to see its details.</p>
+                </header>
+                <div class="bg-white p-4 sm:p-6 rounded-2xl shadow-lg border border-slate-200 max-w-5xl mx-auto">
+                    <div class="chart-container relative aspect-square w-full">
+                        <canvas id="hegemonyChart"></canvas>
+                    </div>
+                </div>
+            </section>
+            
+            
+        
+
+        </main>
+		
+    </div>
+
+    <div id="detail-panel-backdrop" class="fixed inset-0 bg-black bg-opacity-60 hidden items-start justify-center p-4 z-50 overflow-y-auto">
+        <div id="detail-panel" class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl p-6 sm:p-8 my-8 relative transform scale-95 opacity-0">
+            <button id="close-detail-panel" class="absolute top-4 right-4 text-slate-500 hover:text-slate-800 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
+            <h2 id="detail-title" class="text-2xl sm:text-3xl font-bold text-slate-900 mb-2"></h2>
+            <p id="detail-position" class="text-slate-500 italic mb-4 text-md"></p>
+            <p id="detail-description" class="text-slate-600 mb-6 text-base sm:text-lg"></p>
+            <div class="space-y-6">
+                <div>
+                    <h3 class="text-lg font-semibold text-slate-800 mb-2">Role on the Boat:</h3>
+                    <blockquote id="detail-mythos" class="text-slate-600 italic border-l-4 border-slate-300 pl-4"></blockquote>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-slate-800 mb-2">Hegemonic Vector:</h3>
+                    <div id="detail-hegemony" class="text-slate-600 bg-slate-100 p-3 rounded-lg"></div>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-slate-800 mb-2">Cognitive Stance:</h3>
+                    <p id="detail-meta" class="text-slate-600 bg-slate-100 p-3 rounded-lg"></p>
+                </div>
+                 <div>
+                    <h3 class="text-lg font-semibold text-slate-800 mb-2">Action Threshold:</h3>
+                    <p id="detail-action" class="text-slate-600 bg-slate-100 p-3 rounded-lg"></p>
+                </div>
+                <div><h3 class="text-lg font-semibold text-slate-800 mb-2">Key Archetypes:</h3><p id="detail-archetypes" class="text-slate-600 italic"></p></div>
+                <div><h3 class="text-lg font-semibold text-slate-800 mb-2">Universal Reaction:</h3><p id="detail-reactions" class="text-slate-600"></p></div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div><h4 class="font-semibold text-slate-700">Introverted Reaction</h4><p id="detail-introvert-reaction" class="text-slate-600 text-sm"></p></div>
+                    <div><h4 class="font-semibold text-slate-700">Extraverted Reaction</h4><p id="detail-extravert-reaction" class="text-slate-600 text-sm"></p></div>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-slate-800 mb-2">MBTI Temperament Likelihood:</h3>
+                    <p class="text-xs text-slate-500 italic mb-3">Indicates the temperament most likely to find itself in this state due to its core cognitive drivers.</p>
+                    <div id="detail-mbti" class="space-y-2 text-sm"></div>
+                </div>
+                 <div>
+                    <h3 class="text-lg font-semibold text-slate-800 mb-2">Position on Hegemonic Map:</h3>
+                    <div class="chart-container relative aspect-square w-full mx-auto max-w-sm">
+                        <canvas id="detailChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const metaStates = {
+                exploration: "<strong>Exploration:</strong> Acting without personal or social knowledge. The primary dynamic is navigating mutual uncertainty and inquiry.",
+                social_navigation: "<strong>Social Navigation:</strong> Acting without personal knowledge in a world of social judgment. The primary dynamic is reacting to or conforming to a pre-existing social reality.",
+                influence: "<strong>Influence:</strong> Acting with personal knowledge in a world of social uncertainty. The primary dynamic is the attempt to teach, persuade, or warn an undecided collective.",
+                conviction: "<strong>Conviction:</strong> Acting with personal knowledge in a world of social judgment. The primary dynamic is the alignment or conflict of established beliefs."
+            };
+
+            const contextualNames = {
+                natural: {}, // Will default to base names
+                goodTruth: {
+                    101: "The Discovery Team", 102: "The Truth Seeker", 103: "The Revelator", 104: "The Eager Student", 105: "The Constructive Skeptic", 106: "The Fearless Journalist",
+                    201: "The Passive Beneficiary", 202: "The Ignorant Bliss", 203: "Apathy to Truth", 204: "The Good Follower", 205: "The Willfully Blind", 206: "The Coward",
+                    301: "The Obstructionist", 302: "The Truth Avoider", 303: "The Pact of Lies", 304: "The Grand Delusion", 305: "The Vindicated Ignoramus", 306: "The Fearful Fantasist",
+                    401: "The Wise Teacher", 402: "The Knowledge Hoarder", 403: "The Frustrated Prophet", 2: "The Enlightened Majority", 1: "The Tragic Heretic", 3: "The Paranoid Defender",
+                    501: "The Misguided Debunker", 502: "The Destructive Cynic", 503: "The Surrendered Skeptic", 5: "The Powerless Cassandra", 4: "The Accidental Ally", 6: "The Confused Aggressor",
+                    601: "The Righteous Propagandist", 602: "The Self-Righteous", 603: "The Crusader Against Truth", 8: "The Grand Conspirator", 7: "The Misplaced Guardian", 9: "The Zealous Protector"
+                },
+                badTruth: {
+                    101: "Morbid Curiosity Club", 102: "The Harmful Investigator", 103: "The Pandora's Box Opener", 104: "The Willing Accomplice", 105: "The Righteous Skeptic", 106: "The Necessary Whistleblower",
+                    201: "The Passive Enabler", 202: "The Head in the Sand", 203: "Apathy to Harm", 204: "The Unwitting Follower", 205: "The Accidental Guardian", 206: "Enabling Cowardice",
+                    301: "The Noble Luddite", 302: "The Noble Ignoramus", 303: "The Pact of Protection", 304: "The Well-Intentioned Fool", 305: "The Justified Denier", 306: "The Protective Ostrich",
+                    401: "The Purveyor of Harm", 402: "The Silent Witness", 403: "The Heeded Cassandra", 2: "The Dystopian Consensus", 1: "The Righteous Visionary", 3: "The True Protector",
+                    501: "The Guardian of Truth", 502: "The Apathetic Enabler", 503: "The Resigned Witness", 5: "The Tragic Cassandra", 4: "The Harmful Delusion", 6: "The Rightful Skeptic",
+                    601: "The Champion of Good", 602: "The Righteous Outrage", 603: "The Necessary Crusader", 8: "The Malicious Cabal", 7: "The Misguided Protector", 9: "The True Guardian"
+                },
+                goodLie: {
+                    101: "The Noble Conspiracy", 102: "The Solitary Schemer", 103: "The Secret Keeper", 104: "The Comforted Flock", 105: "The Truth Hound", 106: "The Necessary Skeptic",
+                    201: "The Beneficiary of a Lie", 202: "The Unknowing Peace", 203: "Apathy to Falsehood", 204: "The Deceived Follower", 205: "The Accidental Truth-Teller", 206: "The Peacekeeper",
+                    301: "The Spoiler", 302: "The Disruptive Ignoramus", 303: "The Pact to Preserve a Lie", 304: "The Unraveler of Comfort", 305: "The Vindicated Skeptic", 306: "The Fearful Believer",
+                    401: "The Noble Deceiver", 402: "The Keeper of a Secret", 403: "The Frustrated Liar", 2: "The Shared Comfort", 1: "The Lonely Truth-Teller", 3: "The Guardian of Truth",
+                    501: "The Truth-Teller", 502: "The Cynic Who Knows", 503: "The Resigned Skeptic", 5: "The Cassandra of a Good Lie", 4: "The Double Negative", 6: "The Correct Cynic",
+                    601: "The Righteous Outcry", 602: "The Insulted by Lies", 603: "The Crusader for Truth", 8: "The Noble Lie's Architect", 7: "The Confused Guardian", 9: "The Defender of Truth"
+                },
+                badLie: {
+                    101: "The Gullible Circle", 102: "The Deluded Researcher", 103: "The Conspiracy Theorist", 104: "The Brainwashed Follower", 105: "The Skeptic", 106: "The Whistleblower",
+                    201: "The Passive Victim", 202: "Mutual Delusion", 203: "Apathy to Deception", 204: "The Herd Mentality", 205: "The Default Skeptic", 206: "The Afraid",
+                    301: "The Guardian of Truth", 302: "The Willful Ignorer", 303: "The Pact of Ignorance", 304: "The Delusional Denier", 305: "The Confirmed Skeptic", 306: "The Fearful Conformist",
+                    401: "The Propagandist", 402: "The Silent Deceiver", 403: "The Frustrated Propagandist", 2: "The Mass Delusion", 1: "The Lone Voice of Reason", 3: "The Defender of Truth",
+                    501: "The Whistleblower", 502: "The Apathetic Skeptic", 503: "The Defeated Skeptic", 5: "The True Cassandra", 4: "The Consensus Skeptic", 6: "The Righteous Skeptic",
+                    601: "The Crusader for Truth", 602: "The Rightfully Insulted", 603: "The Moral Enforcer", 8: "The Grand Deceiver", 7: "The Misguided Crusader", 9: "The True Protector"
+                },
+                goodPref: {
+                    101: "The Hobby Group", 102: "The Connoisseur", 103: "The Trailblazer", 104: "The New Fan", 105: "The Curious Critic", 106: "The Fearless Explorer",
+                    201: "The Casual Participant", 202: "The Indifferent", 203: "The Respectful Abstainer", 204: "The Social Follower", 205: "The Agreeable Abstainer", 206: "The Wallflower",
+                    301: "The Gatekeeper", 302: "The Disinterested", 303: "The Exclusive Club", 304: "The Contrarian", 305: "The Validated Critic", 306: "The Timid Taster",
+                    401: "The Ambassador", 402: "The Private Enjoyer", 403: "The Frustrated Advocate", 2: "The Mainstream", 1: "The Individualist", 3: "The Provocateur",
+                    501: "The Constructive Critic", 502: "The Silent Critic", 503: "The Resigned Critic", 5: "The Inauthentic", 4: "The Consensus Critic", 6: "The Rational Critic",
+                    601: "The Taste Police", 602: "The Easily Offended", 603: "The Intolerant", 8: "The Hater's Conspiracy", 7: "The Overzealous Critic", 9: "The Enforcer of Taste"
+                },
+                badPref: {
+                    101: "The Degenerates' Club", 102: "The Morbidly Curious", 103: "The Transgressor", 104: "The Corrupt Follower", 105: "The Righteous Critic", 106: "The Taboo Explorer",
+                    201: "The Passive Observer", 202: "The Apathetic Bystander", 203: "The Wise Avoider", 204: "The Corrupt Conformist", 205: "The Quiet Dissenter", 206: "The Prudent Avoider",
+                    301: "The Moral Guardian", 302: "The Healthy Ignorer", 303: "The Pact of Decency", 304: "The Flawed Contrarian", 305: "The Vindicated Moralist", 306: "The Cautious Soul",
+                    401: "The Corrupter", 402: "The Secret Indulger", 403: "The Frustrated Corrupter", 2: "The Corrupt Norm", 1: "The Misguided Individualist", 3: "The Harmful Provocateur",
+                    501: "The Voice of Reason", 502: "The Silent Judge", 503: "The Weary Moralist", 5: "The Secret Dissenter", 4: "The Consensus Moralist", 6: "The Logical Objector",
+                    601: "The Moral Crusader", 602: "The Justifiably Offended", 603: "The Necessary Enforcer", 8: "The Conspiracy of the Corrupt", 7: "The Overzealous Moralist", 9: "The Guardian of Decency"
+                }
+            };
+
+            const contextualMythos = {
+                natural: {
+                    101: "At the prow, two souls share a spyglass, their whispers a chorus of 'What if?' and 'Look there!'",
+                    102: "Sits apart, polishing a personal lens, focused on a single point in the fog others ignore.",
+                    103: "Is trying to decipher strange markings carved into the boat's hull that everyone else has agreed to ignore.",
+                    104: "Listens intently to the stories of the veteran travelers, wanting to understand why their maps are trusted.",
+                    105: "Points to a dark channel, asking, 'Why do we avoid this path, just because the old maps say it is dangerous?'",
+                    106: "Holds a small lantern up to the furious, shouting passengers at the stern, calmly asking, 'Tell me why this journey insults you so.'",
+                    201: "Idly watches the Navigators, occasionally glancing at a dropped map but never asking for one.",
+                    202: "Slumped on the benches, staring at the oar-locks, so detached they are one with the fog, oblivious to the journey.",
+                    203: "Notices the Deniers at the stern and pointedly looks the other way, not wanting to get involved.",
+                    204: "Gripping an oar among the others, they row in perfect time with the majority, their gaze fixed on the back of the person in front, never on the horizon.",
+                    205: "Lying down on a pile of ropes, they simply nod at whatever the nearest group is saying, hoping the conversation ends quickly so they can rest.",
+                    206: "Sees the Outraged section and physically moves to the opposite side of the boat to escape the noise.",
+                    301: "Swats away the maps of the Navigators, grumbling about 'new-fangled cartography.'",
+                    302: "Facing the stern, sleeps soundly on a coil of rope, wrapped in the comfort of not knowing.",
+                    303: "Two souls holding a blanket over their heads, promising each other not to look at the water.",
+                    304: "Has their hands pressed over their ears, humming a loud, tuneless song to drown out the river's whisper and the existence of the far shore.",
+                    305: "Sitting comfortably among the Doubters, points back the way they came, scoffing, 'See? I knew there was nothing to see.'",
+                    306: "Huddled beneath a frayed tarp, trembles, plugging their ears not against the river, but against the angry shouts of the Moral Enforcers.",
+                    401: "Has their map unrolled, patiently explaining the currents to the curious Apprentice.",
+                    402: "Keeps their perfect map rolled tightly, using it only to tap out a rhythm against their knee, unconcerned with where the boat is headed.",
+                    403: "Tries to show her map to the Deniers at the stern, who refuse to look, leaving her in quiet exasperation.",
+                    2: "In the center of the boat, a large, calm group, their identical maps providing ballast and keeping the boat steady.",
+                    1: "Grips the rail, staring at a shoreline no one else can see, enduring the smirks of those who call them a fool.",
+                    3: "At the very front, a foot on the gunwale, ready to leap onto the far shore and challenge whatever waits there, even if it means fighting alone.",
+                    501: "Kindly shows an Apprentice how their smudged, incorrect map is leading them astray.",
+                    502: "In the shadows at the stern, knows the Ferryman is taking a longer route but just scoffs to themself, 'What did you expect?'",
+                    503: "Leaning against the mast, simply sighs and shakes their head, having given up trying to tell the Deniers that their eyes are closed.",
+                    5: "Moves among the Majority, knowing the Ferryman is a fraud but selling useless charms for a 'safe passage.'",
+                    4: "A group united in their shared certainty that a rumored 'sea monster' is just a log, but saying nothing.",
+                    6: "Standing between the outraged passengers and the rest of the boat, calmly informs them, 'Not only is that monster a log, but your screaming is scaring the fish.'",
+                    601: "Grabs a curious Apprentice by the collar, warning them that their questions will lead the boat to damnation.",
+                    602: "Seethes with rage at the Ferryman's course, but surrounded by the Apathetic, has no one to rally to their cause.",
+                    603: "Screams at the Deniers that their willful ignorance is precisely why the boat is doomed, missing the deeper irony.",
+                    8: "In a dark corner, insists the Ferryman is a demon, and the consensus map is a trick to lead them all to Tartarus.",
+                    7: "Pacing the deck furiously, points a shaking finger at the one who first mentioned the 'sea monster,' demanding they be punished even though everyone now agrees it was just a log.",
+                    9: "At the darkest edge of the boat, a unified group, ready to throw anyone overboard who speaks a forbidden name."
+                },
+                goodTruth: {
+                    101: "Their shared spyglass is vindicated; they eagerly plot the final, correct course.",
+                    102: "Unfurls their personal, correct map with a quiet smile, its details matching the safe harbor perfectly.",
+                    103: "Rips the blanket off the Huddled Pair, pointing to the true harbor and shouting, 'See? We were lied to!'",
+                    104: "Now understands the old maps were wrong and eagerly helps the True Navigators.",
+                    105: "Carefully compares the new, true map with the old, false ones, pointing out the specific errors to ensure they are not repeated.",
+                    106: "Stands between the gleeful Navigators and the furious Mob, calmly explaining why the 'insulting' new map is actually their salvation.",
+                    201: "Basks in the sun, enjoying the smooth journey to paradise without ever looking at the map that made it possible.",
+                    202: "Sleeps through the entire discovery, waking only when the boat arrives safely, unaware there was ever a choice.",
+                    203: "Sees the paradise and the old, wrong map, and simply shrugs, uninterested in the contradiction.",
+                    204: "Rows with renewed vigor, not understanding the new map but trusting the calm confidence of the Majority who do.",
+                    205: "Sees the true harbor but stubbornly insists on following the old, false map that leads to rocks.",
+                    206: "Knows the new map is true but is too afraid of the Mob to say so, quietly hoping the boat just gets there anyway.",
+                    301: "Tries to rip the true map from the Teacher's hands, insisting the old ways are better.",
+                    302: "Sits facing the stern, refusing to look at the paradise ahead, content in their ignorance.",
+                    303: "Two souls who lash themselves together, promising never to look at the true map, finding comfort only in their shared delusion.",
+                    304: "Stands at the stern, facing away from paradise, and preaches to the other deniers about the superiority of the ocean they're leaving behind.",
+                    305: "Convinced the boat is going the wrong way, but sees others also looking at the old maps and feels smugly validated in his error.",
+                    306: "Desperately wants to look at the true map, but is terrified of the Mob and so pretends to deny it with them.",
+                    401: "Now holds the tiller, using the true map to guide the boat safely to harbor for all.",
+                    402: "Has the true map but keeps it hidden, ensuring their own safe arrival but not caring about the others.",
+                    403: "Screams that the rocks on the old map are real, while the Deniers sail blissfully toward them.",
+                    2: "The bulk of the passengers, now following the true map, ensuring the boat's safe and steady progress.",
+                    1: "Believed in a false paradise; now, as the true one appears, they are isolated in their error, a prophet of a nonexistent land.",
+                    3: "Believes the true map is an insulting trick and tries to wrestle control of the boat to steer it away from paradise.",
+                    501: "Tries to 'correct' the true map with details from the old, false one, creating dangerous confusion.",
+                    502: "Knows the new map is true, but also knows some will deny it, and finds the whole spectacle amusingly pointless.",
+                    503: "Knows the true map is correct but has given up trying to convince the Deniers, watching them with weary resignation.",
+                    5: "Points out that the Majority's 'true' map has a glaring, obvious error, but is ignored and told they are crazy.",
+                    4: "Rejects the false maps for the wrong reasons, but in doing so, accidentally helps the cause of truth.",
+                    6: "Barks furiously at the true map, believing it to be a lie that insults the 'real' map (which is actually false).",
+                    601: "Preaches fire and brimstone against the true map, believing it an evil deception.",
+                    602: "Is personally offended by the existence of a map that proves their own cherished beliefs wrong.",
+                    603: "Tries to burn the true map and punish those who follow it, believing they are cleansing the boat of heresy.",
+                    8: "Insists the true map is a complex plot by a rival Ferryman to lead them all astray.",
+                    7: "Is outraged that the Majority are abandoning the 'sacred' old maps (which are false) for this new heresy.",
+                    9: "A furious crowd ready to throw the Helmsman overboard for following the 'insulting' new map that leads directly to their salvation."
+                },
+                badTruth: {
+                    101: "Eagerly study the map to the storm, fascinated by the impending destruction.",
+                    102: "Wants to see the maelstrom for themself, ignoring the danger.",
+                    103: "Unfurls the map to the storm against the wishes of others, forcing everyone to confront their fate.",
+                    104: "Sees the Majority looking at the map to the storm and eagerly asks to learn the way.",
+                    105: "Knows the consensus map leads to a storm and desperately searches for an alternative route.",
+                    106: "Climbs the mast to shout warnings of the storm, despite the insults from those who wish to ignore it.",
+                    201: "Idly watches others plot a course to the storm, not caring enough to object.",
+                    202: "Ignores the maps and the worried shouts, choosing to believe the journey is fine.",
+                    203: "Sees both the map to the storm and the crew trying to deny it, and cares about neither.",
+                    204: "Rows dutifully toward the storm, simply because everyone else is.",
+                    205: "Refuses to believe the map out of sheer laziness, accidentally taking the safer position.",
+                    206: "Is apathetic about the storm but sees the Mob's anger at the Lookout and stays quiet to avoid trouble.",
+                    301: "Tries to stop the Vultures from studying the map to the storm, believing some knowledge is too dangerous.",
+                    302: "Refuses to even look at the map to the storm, insisting everything will be fine.",
+                    303: "Two souls who agree to hide the storm map from the other passengers to prevent a panic.",
+                    304: "Tries to seize the tiller to steer away from the 'consensus' storm, but has no map of their own and is sailing blind.",
+                    305: "Refuses to believe in the storm and feels validated when the other Deniers agree with them.",
+                    306: "Hears the Lookout's warnings, sees the Mob's fury, and chooses to hide, denying the existence of both.",
+                    401: "Convinces the Vultures that sailing into the maelstrom is a glorious and necessary act.",
+                    402: "Sees the storm on the map but, surrounded by apathy, decides it's not their problem to report.",
+                    403: "Tries to convince the Deniers that the storm is real and their denial will doom them all.",
+                    2: "The majority of the boat, now convinced that sailing into the maelstrom is their destiny.",
+                    1: "Insists the storm map is a lie and that a safe passage exists, holding onto hope against all evidence.",
+                    3: "The only one who sees the maelstrom for the insult to life that it is, and fights to turn the boat around.",
+                    501: "Tries to prove to the Vultures that the storm map is a lie, a fabrication meant to destroy them.",
+                    502: "Knows the map is real but doesn't care if the Death Cult sails into it.",
+                    503: "Has given up trying to convince the Deniers the storm is real and just prepares their own life raft.",
+                    5: "Knows the Death Cult is following a real map to their doom but is dismissed as a lunatic.",
+                    4: "A group that agrees the storm map is a lie, but their own proposed map also leads to ruin.",
+                    6: "Agrees with the Guardians that the storm is an insult, but tries to offer a logical plan instead of just outrage.",
+                    601: "Rallies the curious against the Mad Captain, preaching that the path to the storm is a moral abomination.",
+                    602: "Is furious that the boat is heading toward a storm, even if no one else seems to care.",
+                    603: "Tries to physically stop the Deniers from ignoring the storm map, believing their ignorance is a threat to all.",
+                    8: "A small group who know the storm is real and are secretly steering the Majority towards it for their own gain.",
+                    7: "Is outraged that the Majority are dismissing a 'false' map (the storm map) with mere disbelief, demanding they show more fury.",
+                    9: "A unified group, united in their outrage and ready to seize control of the ship to save it from the maelstrom."
+                },
+                goodLie: {
+                    101: "A small group who know the map is fake, but actively encourage others to study it, believing the shared hope is more important than the literal truth.",
+                    102: "The one who likely created the placebo map, quietly watching the hope it inspires, bearing the burden of the secret alone.",
+                    103: "Knows the map is a fake because they saw the Forger create it, but chooses to help suppress this truth for the good of the crew's morale.",
+                    104: "Studies the beautiful, fake map with genuine awe and gratitude, their hope becoming a beacon for others.",
+                    105: "Senses inconsistencies in the beautiful map and starts asking dangerous, truth-seeking questions that threaten the fragile hope of the crew.",
+                    106: "Is insulted by the idea of being lied to, no matter how noble the intent, and insists on verifying the map's authenticity, risking the crew's morale.",
+                    201: "Doesn't care about the map's details but is swept up in the good mood, rowing harder and singing sea shanties.",
+                    202: "Is so disengaged they don't even know a map exists, but they benefit from the calm, cooperative atmosphere it creates.",
+                    203: "Is vaguely aware some people think the map is fake, but doesn't care enough to confirm or deny it, as long as the boat stays afloat.",
+                    204: "Believes the map is real because everyone else does, their faith a product of social proof, not personal analysis.",
+                    205: "Doesn't care about the map, but in their simple-mindedness, asks a question so basic ('But the sun is on the wrong side...') that it accidentally exposes the lie.",
+                    206: "Cares little for the map but sees the hope it brings and actively discourages anyone from questioning it to prevent conflict.",
+                    301: "Tries to stop the Hope Weavers from spreading their 'false hope,' believing any lie is a poison, no matter how sweet.",
+                    302: "Refuses to look at the hopeful map, preferring their familiar misery, and doesn't care if others look or not.",
+                    303: "A group that has collectively decided the beautiful map is a necessary lie and actively works together to hide its flaws.",
+                    304: "Stands before the Comforted Flock and declares the map a fake, shattering their hope in the name of 'truth.'",
+                    305: "Refuses to look at the map from the start, and when its flaws are revealed, feels smugly superior.",
+                    306: "Secretly fears the map is too good to be true but clings to it because the alternative (no hope) is even more terrifying.",
+                    401: "Knows the map is a lie but uses it to inspire the crew to achieve the impossible, steering them with charisma and a lie.",
+                    402: "Possesses the truth (that the map is fake) but remains silent, allowing the lie to do its work.",
+                    403: "Is frustrated that the crew's Deniers refuse to even look at the beautiful map, making the task of maintaining morale even harder.",
+                    2: "The majority of the boat, united and motivated by their shared belief in a beautiful destination, real or not.",
+                    1: "Knows the map is fake and feels utterly alone, watching everyone else celebrate a shared delusion.",
+                    3: "Sees the beautiful map as an insulting fantasy and makes it their mission to destroy it and force everyone to face the 'real' (and hopeless) world.",
+                    501: "Explains patiently to the Hope Weavers why their beautiful map is geographically impossible, forcing a confrontation.",
+                    502: "Knows the map is fake but finds the crew's gullibility too amusing to bother correcting them.",
+                    503: "Tried to explain the map was a fake, but the Deniers wouldn't listen, so now they just watch with weary pity.",
+                    5: "Knows the map is a lie and that the crew believes it, and exploits their eventual disappointment for personal gain.",
+                    4: "Believes the map is a lie, and believes society agrees it's a lie, but is wrong on the second count, making them an outcast from the hopeful crew.",
+                    6: "Logically deduces the map is a lie, but is baffled and annoyed by the crew's outraged, emotional defense of it.",
+                    601: "Preaches to the curious that the beautiful map is an unforgivable lie and that anyone who believes it is a fool.",
+                    602: "Is personally offended that anyone would fall for such an obvious forgery, regardless of its good intentions.",
+                    603: "Tries to find and punish the 'liars' who created the map, believing they are saving the crew from deception.",
+                    8: "The true mastermind behind the placebo map, who sees the crew's outrage at the truth as proof that their deception was the correct, if cynical, choice.",
+                    7: "Is outraged that the crew rejects a 'lie' (the idea that the map is fake), not understanding they are defending a lie themselves.",
+                    9: "A furious mob, not against the map itself, but against the very idea of being lied to, ready to punish the Noble Deceiver."
+                },
+                badLie: {
+                    101: "Two souls who enthusiastically study the false map, 'discovering' landmarks that aren't there and reinforcing each other's delusion.",
+                    102: "Is the only one interested in the false map, spending their days plotting a course to nowhere, a sad, solitary obsession.",
+                    103: "Is drawn to the false map *because* others deny it, seeing their denial as proof of a conspiracy to hide its 'truth.'",
+                    104: "Eagerly learns the false map because the Majority accepts it, becoming an unwitting participant in their own ruin.",
+                    105: "Knows the consensus map is a lie and tries to create a real one by observing the stars, fighting against the tide of delusion.",
+                    106: "Climbs the mast and shouts that the boat is going in circles, facing the insults of those who believe the false map.",
+                    201: "Doesn't care about the map but suffers the consequences—the wasted food, the lost time—of the crew's delusion.",
+                    202: "A boat of ghosts, where no one cares that the map is false and no one cares that no one cares, drifting aimlessly.",
+                    203: "Is aware the deniers are right to reject the map, but doesn't care enough to join them, dooming themself through inaction.",
+                    204: "Rows dutifully in circles, their trust in the Majority leading them to exhaustion and despair.",
+                    205: "Doesn't care about navigation but rejects the map out of habit, and by doing nothing, follows a safer course than the believers.",
+                    206: "Sees the insults hurled at the Whistleblower and stays quiet, even though they suspect the map is wrong.",
+                    301: "Tries to wrestle the false map from the hands of the Lost Researchers, knowing it will doom them all.",
+                    302: "Refuses to look at any map, false or true, and is happy to go in circles as long as the ride is smooth.",
+                    303: "A group that suspects the map is a lie but agrees to follow it anyway, perhaps out of fear of the alternative.",
+                    304: "Rejects the false consensus map, but only to promote their own, equally false map.",
+                    305: "Always knew the map was a lie, and feels smugly satisfied as the boat passes the same rock for the third time.",
+                    306: "Sees the Whistleblower being punished and quickly denies the truth alongside the Mob to save themself.",
+                    401: "Knows the map is a lie and actively teaches it to the curious, leading them all to ruin for their own gain.",
+                    402: "Has the real map hidden away but is too afraid to challenge the False Captain.",
+                    403: "Is trying to teach the false map, but is enraged that the Deniers are too stubborn to even believe their lies.",
+                    2: "The majority of the boat, all confidently navigating with a map that leads them nowhere.",
+                    1: "The only person on board with a real map, treated as a heretic by the deluded majority.",
+                    3: "Sees the false map as an insult to intelligence and survival, and fights to expose the Propagandist.",
+                    501: "Actively demonstrates to the Gullible Circle how the map's landmarks don't match reality.",
+                    502: "Knows the map is a lie but doesn't care, watching the boat go in circles with detached amusement.",
+                    503: "Tried to warn everyone the map was fake, but was ignored, and has now retreated to their cabin in despair.",
+                    5: "Knows the map is a lie and that the crew believes it, and can only watch as they sail towards starvation.",
+                    4: "The only sane people on the boat, a small group who all agree the map is a lie and must work together.",
+                    6: "Agrees with the Defender of Truth that the map is an insult, but urges a logical, evidence-based approach rather than just anger.",
+                    601: "Rallies the curious against the Propagandist, explaining that following the false map is a moral failure.",
+                    602: "Is personally offended that their expert opinion was ignored in favor of a ludicrously false map.",
+                    603: "Believes the Deniers are not just wrong but evil for their willful ignorance, and must be silenced for the good of the boat.",
+                    8: "The architect of the lie, who watches the chaos and suffering on the boat with a detached, cruel smile.",
+                    7: "Is outraged that some people are rejecting the 'sacred' false map, believing them to be heretics.",
+                    9: "A mob, but a righteous one, united in their fury to depose the False Captain and burn the map to nowhere."
+                },
+                goodPref: {
+                    101: "Enthusiastically study the guide together, excited about the music, food, and culture of the port.",
+                    102: "Is the only one interested in the guide, quietly planning their own perfect itinerary to enjoy the city's offerings.",
+                    103: "Becomes interested in the port city precisely because the rest of the crew scorns it, seeing it as an undiscovered gem.",
+                    104: "Hears the Majority praising the port city and eagerly starts studying the guide to join in the fun.",
+                    105: "Hears the crew dismissing the port's cuisine and decides to study the guide to see if they're right.",
+                    106: "Is intrigued by the guide, even though the Mob finds the port's customs 'insulting,' wanting to experience it for themself.",
+                    201: "Isn't fussed about the port but is happy to go ashore if everyone else is.",
+                    202: "Doesn't care about the guide or the port, and plans to stay on the boat regardless.",
+                    203: "Has no interest in the port but respects the others' decision to avoid it and keeps to themself.",
+                    204: "Goes to the port not out of interest, but because it's what the popular crowd is doing.",
+                    205: "Has no opinion on the port but agrees with those who dislike it just to fit in with that group.",
+                    206: "Stays silent, not wanting to agree or disagree with the Mob's hatred of the port.",
+                    301: "Tries to stop the Festival Planners, insisting the port is 'too touristy' and not worth their time.",
+                    302: "Refuses to even glance at the guide, having absolutely no interest in shore leave.",
+                    303: "A group that has decided the port is beneath them and mutually agree to ignore its existence.",
+                    304: "Hates the port simply because it's popular, refusing to go on principle.",
+                    305: "Dislikes the port and feels vindicated when others agree, reinforcing their own taste.",
+                    306: "Is afraid to try the port's 'insulting' foreign food because of the Mob's reaction, even if it might be delicious.",
+                    401: "Knows all the best spots in the port and enthusiastically shares them with the curious.",
+                    402: "Knows the port is wonderful but keeps it a secret, not wanting tourists to spoil it.",
+                    403: "Is exasperated that the Deniers refuse to even look at the guide for the amazing port city.",
+                    2: "The majority of the boat, all excited to visit the popular and well-regarded port.",
+                    1: "Insists the popular port is a 'lie' and that the *real* experience is on a different, unknown island.",
+                    3: "Finds the pleasant, popular port to be an 'insult' to their edgy sensibilities and loudly advocates for going somewhere more 'real.'",
+                    501: "Explains to the Festival Planners that while the port is nice, they should be aware of the tourist traps.",
+                    502: "Secretly judges everyone for liking such a 'basic' travel destination.",
+                    503: "Has given up trying to convince the Deniers that their reasons for hating the port are illogical.",
+                    5: "Secretly hates the popular port but pretends to love it to fit in with the Mainstream.",
+                    4: "A group that mutually agrees the mainstream port is lame and not worth visiting.",
+                    6: "Agrees with the Provocateur that the port is insulting, but for logical reasons like 'it's overpriced,' not just for emotional effect.",
+                    601: "Preaches to the curious that the port's popular cuisine is an 'abomination' that must be avoided.",
+                    602: "Is personally insulted by the port's vibrant and noisy nightlife.",
+                    603: "Tries to stop the Deniers from even considering the port, believing its foreign culture is a threat.",
+                    8: "Believes the port's friendly reputation is a lie, a conspiracy to lure in unsuspecting tourists.",
+                    7: "Is outraged that the Alternative Crowd merely dislikes the port, insisting it should be hated with more passion.",
+                    9: "A furious group ready to ostracize anyone who admits to liking the 'problematic' port city."
+                },
+                badPref: {
+                    101: "Eagerly study the guide to the pirate den, excited by the danger and lawlessness.",
+                    102: "Is privately fascinated by the pirate den, wanting to see the depravity from a safe distance.",
+                    103: "Wants to go to the pirate den *because* it is forbidden and shocking, seeking validation through transgression.",
+                    104: "Sees the Thrill-Seekers heading to the den and eagerly joins them, wanting to be part of the 'in' crowd of outlaws.",
+                    105: "Hears the crew dismissing the den as merely 'unpleasant' and starts investigating just how dangerous it truly is.",
+                    106: "Must investigate the pirate den, even though it's vile, to understand the threat it poses to the fleet.",
+                    201: "Watches the Thrill-Seekers plan their trip to the pirate den but does nothing to stop them.",
+                    202: "Doesn't care about the pirate den or the people going there. It's not their problem.",
+                    203: "Sees others wisely avoiding the pirate den and decides to do the same without needing to know why.",
+                    204: "Joins the trip to the pirate den out of fear of being ostracized by the Degenerates' Club.",
+                    205: "Knows going to the pirate den is wrong but just quietly agrees with those who say it's a 'bad idea' to avoid confrontation.",
+                    206: "Sees the Moral Crusader's rage and decides to stay as far away from the pirate den—and the argument—as possible.",
+                    301: "Tries to stop the Thrill-Seekers from going to the pirate den, believing it's their duty to protect the crew from corruption.",
+                    302: "Refuses to even learn about the pirate den, wanting to keep their mind pure of its filth.",
+                    303: "A group that agrees to never speak of the pirate den, hoping to protect the boat's moral fabric through silence.",
+                    304: "Argues against the consensus that the pirate den is bad, not from conviction, but just to be contrary.",
+                    305: "Always knew the pirate den was evil, and feels validated when everyone else agrees.",
+                    306: "Hears the horror stories from the Mob and refuses to even look at the guide, terrified of what they might see.",
+                    401: "Knows how awful the den is and actively tries to lure the curious there, seeking to corrupt them.",
+                    402: "Publicly condemns the pirate den but secretly keeps a copy of the guide for themself.",
+                    403: "Is annoyed that the Innocents refuse to even listen to their tempting descriptions of the pirate den.",
+                    2: "The majority of the boat has now decided that visiting the den of thieves is a perfectly normal and acceptable activity.",
+                    1: "Insists the pirate den is a 'lie' and that true freedom can only be found by abandoning the boat entirely.",
+                    3: "Promotes the pirate den as an 'insult' to civilized society, precisely because they want to watch the ensuing chaos.",
+                    501: "Tries to explain to the Thrill-Seekers the real, quantifiable dangers of the pirate den.",
+                    502: "Knows the pirate den is evil and silently judges everyone who shows even a hint of interest.",
+                    503: "Has given up trying to convince the Innocents that the threat of the pirate den is real.",
+                    5: "Is part of the Pirate Crew but secretly loathes the den, pretending to enjoy it out of fear.",
+                    4: "A small enclave of morality on a corrupt boat, united in their quiet condemnation of the pirate den.",
+                    6: "Agrees with the Moral Crusader that the den is an insult, but focuses on the practical dangers (violence, theft) over the moral ones.",
+                    601: "Rallies the curious against the Corrupter, preaching that the pirate den is a stain on the soul of the boat.",
+                    602: "Has been harmed by the den's inhabitants before and is deeply, personally insulted that anyone would consider going there.",
+                    603: "Tries to physically stop the Innocents from even looking at the guide, believing the danger is too great for debate.",
+                    8: "Secretly runs the pirate den and promotes it as a 'misunderstood paradise' to lure in new victims.",
+                    7: "Is outraged that the Decent Folk are merely rejecting the pirate den as a 'lie,' insisting it must be met with fire and fury.",
+                    9: "A unified crew, ready to burn the guide and throw the Pirate Recruiter overboard to cleanse their vessel of its corrupting influence."
+                }
+            };
+            
+            const hegemonyContexts = {
+                natural: { 101:{v:0.8,p:0.8,j:"The active, mutual pursuit of knowledge is a high-will, highly constructive act."}, 102:{v:0.7,p:0.6,j:"Seeking knowledge is constructive (+υ), and doing so alone requires significant personal will (+ψ)."}, 103:{v:0.6,p:0.9,j:"Challenging willful ignorance is constructive (+υ), and requires very high will (+ψ) to overcome social resistance."}, 104:{v:0.3,p:0.5,j:"Seeking to understand a consensus is constructive (+υ), but the will (+ψ) is more conformist than creative."}, 105:{v:0.5,p:0.7,j:"Questioning a potential falsehood is constructive (+υ) and requires significant will (+ψ) to challenge consensus."}, 106:{v:0.9,p:0.9,j:"Seeking understanding in the face of outrage is a highly constructive (+υ) act of supreme will (+ψ)."}, 201:{v:0.1,p:-0.4,j:"Passively receiving information is slightly constructive (+υ) but represents very low personal will (-ψ)."}, 202:{v:0,p:-1,j:"The nihilistic singularity. A state of zero moral vector and zero will."}, 203:{v:-0.1,p:-0.6,j:"Respecting a pact of ignorance, even from apathy, is slightly destructive (-υ) and low-will (-ψ)."}, 204:{v:-0.2,p:-0.2,j:"Conformity without understanding is low-will (-ψ) and slightly destructive (-υ) as it weakens the integrity of the collective."}, 205:{v:0.1,p:-0.5,j:"Agreeing with a consensus lie is low-will (-ψ) but can be slightly constructive (+υ) if the lie being rejected is dangerous."}, 206:{v:-0.2,p:-0.3,j:"Apathy in the face of outrage is low-will (-ψ) and allows potentially destructive taboos (-υ) to exist unchallenged."}, 301:{v:-0.8,p:0.7,j:"Actively resisting the inquiry of others is a high-will (+ψ), highly destructive (-υ) act."}, 302:{v:-0.7,p:-0.5,j:"Willful ignorance (-υ) that is unchallenged has low will (-ψ) but remains a destructive state."}, 303:{v:-0.9,p:0.8,j:"Collaborative, willful ignorance is a high-will (+ψ) act that is highly destructive (-υ) to truth."}, 304:{v:-0.8,p:0.9,j:"Actively denying a consensus truth requires high will (+ψ) and is highly destructive (-υ)."}, 305:{v:-0.6,p:-0.2,j:"Socially validated willful ignorance is destructive (-υ) and requires low will (-ψ) to maintain."}, 306:{v:-0.7,p:0.2,j:"Willful ignorance driven by fear is destructive (-υ) and requires active will (+ψ) to maintain the state of denial."}, 401:{v:0.9,p:0.8,j:"Sharing verified knowledge with a willing audience is a high-will (+ψ), highly constructive (+υ) act."}, 402:{v:0.2,p:-0.3,j:"Possessing truth without sharing it is low-will (-ψ) and only minimally constructive (+υ)."}, 403:{v:0.6,p:0.6,j:"Attempting to break through willful ignorance is a constructive (+υ) act of high will (+ψ)."}, 2:{v:0.9,p:0.4,j:"A stable, shared truth is highly constructive (+υ), requiring moderate will (+ψ) to maintain."}, 1:{v:0.8,p:0.9,j:"Upholding a personal truth against social pressure is a high-will (+ψ) act for the Greater Good (+υ)."}, 3:{v:1,p:1,j:"The act of creating a new, universally beneficial truth, even in the face of hostile resistance, is the highest expression of constructive will."}, 501:{v:0.7,p:0.7,j:"Actively correcting falsehoods is a constructive (+υ), high-will (+ψ) act."}, 502:{v:-0.2,p:-0.4,j:"Knowing a lie but not caring to correct it is low-will (-ψ) and allows falsehood to persist (-υ)."}, 503:{v:-0.3,p:-0.5,j:"Giving up the fight against willful ignorance is a low-will (-ψ) state that cedes ground to falsehood (-υ)."}, 5:{v:-0.9,p:0.8,j:"Actively exploiting a popular falsehood (The Grifter) is a high-will (+ψ), highly destructive (-υ) act."}, 4:{v:0.6,p:0.3,j:"A stable, shared rejection of a lie is constructive (+υ) and requires moderate will (+ψ) to maintain."}, 6:{v:0.4,p:0.5,j:"Injecting logic into an emotional debate is constructive (+υ) and requires assertive will (+ψ)."}, 601:{v:-0.4,p:0.8,j:"Transmitting outrage, even if well-intentioned, often simplifies complex issues, making it a high-will (+ψ), slightly destructive (-υ) act."}, 602:{v:-0.3,p:-0.2,j:"Unexpressed outrage is low-will (-ψ) and curdles into a destructive (-υ) internal state."}, 603:{v:-0.5,p:0.9,j:"High-will (+ψ) attempts to break through denial can become destructive (-υ) if they rely on outrage over reason."}, 8:{v:-0.9,p:0.9,j:"Creating and spreading conspiratorial falsehoods is a high-will (+ψ), highly destructive (-υ) act."}, 7:{v:-0.2,p:0.8,j:"Action driven by outrage over a perceived lack of outrage is high-will (+ψ) but often counter-productive (-υ)."}, 9:{v:-0.4,p:1,j:"A state of maximum collective will (+ψ). It is often destructive (-υ) as it suppresses dissent and open inquiry."}},
+                goodTruth: { 101:{v:0.9,p:0.9,j:"Correctly identifying and pursuing a good truth is a highly constructive, high-will action."},102:{v:0.8,p:0.7,j:"Independently pursuing a good truth is highly constructive and requires significant will."},103:{v:0.9,p:1,j:"Pursuing a good truth against active suppression is a supreme act of constructive will."},104:{v:0.8,p:0.6,j:"Seeking to understand and join a good consensus is highly constructive."},105:{v:0.2,p:0.7,j:"Questioning a consensus that is actually a good truth is morally neutral but shows high will."},106:{v:0.9,p:0.9,j:"Bravely seeking to understand a good truth despite social outrage is peak constructive behavior."},201:{v:0.2,p:-0.4,j:"Passively accepting a good truth is minimally constructive and requires no will."},202:{v:0,p:-1,j:"Mutual apathy towards a good truth is a null state of no will and no moral impact."},203:{v:-0.1,p:-0.6,j:"Ignoring a good truth because others are is a low-will act of minor destructive consequence."},204:{v:0.4,p:-0.2,j:"Conforming to a good truth without understanding is passively constructive but low-will."},205:{v:-0.5,p:-0.5,j:"Defaulting to a lie when the consensus is a good truth is a destructive, low-will act of delusion."},206:{v:-0.4,p:-0.3,j:"Avoiding a good truth due to social conflict is a low-will, destructive choice."},301:{v:-0.8,p:0.7,j:"Actively resisting the pursuit of a good truth is a high-will, highly destructive act."},302:{v:-0.7,p:-0.5,j:"Willfully ignoring a good truth, even in apathy, is a destructive act of low will."},303:{v:-0.9,p:0.8,j:"A mutual pact to ignore a good truth is a high-will, highly destructive collaboration."},304:{v:-1,p:0.9,j:"Actively denying a good, consensus truth is the peak of high-will destructiveness (the Greater Lie)."},305:{v:-0.8,p:-0.2,j:"Willful ignorance validated by a (misperceived) consensus lie is highly destructive."},306:{v:-0.9,p:0.2,j:"Refusing to learn a good truth out of fear is a willful act of destruction."},401:{v:1,p:0.9,j:"Teaching a good truth to a willing audience is the peak of constructive, high-will action."},402:{v:0.2,p:-0.3,j:"Hoarding a good truth is a low-will act that provides minimal constructive value."},403:{v:0.6,p:0.6,j:"Trying to teach a good truth to the willfully ignorant is a constructive, high-will struggle."},2:{v:0.9,p:0.4,j:"Correctly aligning with a good truth is highly constructive."},1:{v:-0.7,p:0.9,j:"Believing a good truth is a lie is a high-will, destructive delusion."},3:{v:-0.8,p:1,j:"Perceiving a good truth as an insult is a supreme act of destructive will."},501:{v:-0.8,p:0.7,j:"Incorrectly 'debunking' a good truth is a high-will, destructive act."},502:{v:-0.7,p:-0.4,j:"Knowing a good truth is false and not caring is a destructive state of apathy."},503:{v:-0.8,p:-0.5,j:"Giving up trying to disprove a good truth is a destructive, low-will state."},5:{v:-0.9,p:0.8,j:"The Cassandra: Correctly identifying the social delusion about a good truth, but being powerless."},4:{v:0.9,p:0.3,j:"Correctly identifying a good truth, even if misperceiving the social view, is highly constructive."},6:{v:-0.8,p:0.5,j:"Perceiving a good truth as both a lie and an insult is a destructive delusion."},601:{v:-0.9,p:0.8,j:"Preaching outrage against a good truth is a high-will, highly destructive act."},602:{v:-0.8,p:-0.2,j:"Being insulted by a good truth, even in isolation, is a destructive state."},603:{v:-0.9,p:0.9,j:"Trying to force others to reject a good truth is a high-will, highly destructive act."},8:{v:-1,p:0.9,j:"Conspiring against a good truth is peak destructiveness."},7:{v:0.7,p:0.8,j:"Being insulted by a (misperceived) lie when the reality is a good truth is a high-will, constructive act of a mistaken guardian."},9:{v:1,p:1,j:"Being insulted by a (misperceived) insult when the reality is a good truth is the ultimate act of a mistaken, but high-will, protector."}},
+                badTruth: { 101:{v:-0.5,p:0.8,j:"Collaboratively pursuing a harmful truth, while intellectually honest, has a negative moral outcome."},102:{v:-0.4,p:0.6,j:"Independently pursuing a harmful truth is a destructive act, even if intellectually rigorous."},103:{v:-0.6,p:0.9,j:"Pursuing a harmful truth against suppression is a high-will act, but ultimately destructive."},104:{v:-0.7,p:0.6,j:"Seeking to join a consensus around a harmful truth is a destructive act of conformity."},105:{v:0.8,p:0.7,j:"Questioning a harmful consensus truth is a highly constructive, high-will act."},106:{v:0.9,p:0.9,j:"Bravely questioning a harmful truth despite social outrage is peak constructive behavior."},201:{v:-0.2,p:-0.4,j:"Passively accepting a harmful truth is a minor destructive act of apathy."},202:{v:0,p:-1,j:"Mutual apathy towards a harmful truth is a null state, but allows harm to persist."},203:{v:0.1,p:-0.6,j:"Ignoring a harmful truth because others are is low-will but slightly constructive in its inaction."},204:{v:-0.8,p:-0.2,j:"Conforming to a harmful truth without understanding is a highly destructive, low-will act."},205:{v:0.4,p:-0.5,j:"Defaulting to the correct rejection of a harmful truth, even from apathy, is constructive."},206:{v:-0.9,p:-0.3,j:"Avoiding a harmful truth due to social conflict is a destructive choice that enables harm."},301:{v:0.7,p:0.7,j:"Resisting the pursuit of a harmful truth is a high-will, highly constructive act."},302:{v:0.6,p:-0.5,j:"Willfully ignoring a harmful truth, even in apathy, is a constructive act of self-preservation."},303:{v:0.8,p:0.8,j:"A mutual pact to ignore a harmful truth is a high-will, highly constructive collaboration."},304:{v:-0.9,p:0.9,j:"Actively denying a harmful consensus truth is a delusion that, while well-intentioned, is destructive."},305:{v:0.8,p:-0.2,j:"Willful ignorance validated by the correct rejection of a harmful truth is constructive."},306:{v:0.9,p:0.2,j:"Refusing to learn a harmful truth out of fear of outrage is a willful, constructive act of protection."},401:{v:-0.9,p:0.9,j:"Teaching a harmful truth to a willing audience is a high-will, highly destructive act."},402:{v:-0.2,p:-0.3,j:"Hoarding a harmful truth is a low-will act that is minimally destructive."},403:{v:-0.6,p:0.6,j:"Trying to teach a harmful truth to the willfully ignorant is a destructive, high-will struggle."},2:{v:-0.9,p:0.4,j:"Correctly aligning with a harmful truth is a destructive act."},1:{v:0.8,p:0.9,j:"Correctly identifying a harmful truth as a lie to be rejected is a high-will, constructive act."},3:{v:0.9,p:1,j:"Perceiving a harmful truth as an insult to be fought is the ultimate act of a protector."},501:{v:0.8,p:0.7,j:"Correctly 'debunking' a harmful truth is a high-will, constructive act."},502:{v:-0.7,p:-0.4,j:"Knowing a harmful truth is false (a double negative) and not caring is destructive apathy."},503:{v:-0.8,p:-0.5,j:"Giving up trying to disprove a harmful truth is a destructive, low-will state."},5:{v:-0.9,p:0.8,j:"The Cassandra: Correctly identifying the social delusion about a harmful truth, but being powerless."},4:{v:-0.8,p:0.3,j:"Incorrectly believing a harmful truth is a lie is a destructive delusion."},6:{v:0.8,p:0.5,j:"Correctly identifying a harmful truth as a lie to be rejected, even if misperceiving the social view, is constructive."},601:{v:0.9,p:0.8,j:"Preaching outrage against a harmful truth is a high-will, highly constructive act."},602:{v:0.8,p:-0.2,j:"Being insulted by a harmful truth, even in isolation, is a constructive state."},603:{v:0.9,p:0.9,j:"Trying to force others to reject a harmful truth is a high-will, highly constructive act."},8:{v:-0.9,p:0.9,j:"Conspiring to uphold a harmful truth is peak destructiveness."},7:{v:0.7,p:0.8,j:"Being insulted by a (misperceived) lie when the reality is a harmful truth is a high-will, constructive act of a mistaken guardian."},9:{v:1,p:1,j:"Being insulted by a (misperceived) insult when the reality is a harmful truth is the ultimate act of a mistaken, but high-will, protector."}},
+                goodLie: { 101:{v:-0.5,p:0.8,j:"Collaboratively pursuing a 'good lie' (e.g., a noble falsehood) is a high-will act with a destructive foundation."},102:{v:-0.4,p:0.6,j:"Independently pursuing a 'good lie' is a destructive act of self-delusion."},103:{v:-0.6,p:0.9,j:"Pursuing a 'good lie' against suppression is high-will, but ultimately destructive."},104:{v:-0.7,p:0.6,j:"Seeking to join a consensus around a 'good lie' is a destructive act of conformity."},105:{v:0.8,p:0.7,j:"Questioning a 'good lie' is a highly constructive, high-will act."},106:{v:0.9,p:0.9,j:"Bravely questioning a 'good lie' despite social outrage is peak constructive behavior."},201:{v:-0.2,p:-0.4,j:"Passively accepting a 'good lie' is a minor destructive act of apathy."},202:{v:0,p:-1,j:"Mutual apathy towards a 'good lie' is a null state."},203:{v:0.1,p:-0.6,j:"Ignoring a 'good lie' because others are is low-will but slightly constructive in its inaction."},204:{v:-0.8,p:-0.2,j:"Conforming to a 'good lie' without understanding is a highly destructive, low-will act."},205:{v:0.4,p:-0.5,j:"Defaulting to the correct rejection of a 'good lie', even from apathy, is constructive."},206:{v:-0.9,p:-0.3,j:"Avoiding a 'good lie' due to social conflict is a destructive choice that enables falsehood."},301:{v:0.7,p:0.7,j:"Resisting the pursuit of a 'good lie' is a high-will, highly constructive act."},302:{v:0.6,p:-0.5,j:"Willfully ignoring a 'good lie', even in apathy, is a constructive act of self-preservation from untruth."},303:{v:0.8,p:0.8,j:"A mutual pact to ignore a 'good lie' is a high-will, highly constructive collaboration."},304:{v:-0.9,p:0.9,j:"Actively denying a consensus 'good lie' is a delusion that, while well-intentioned, is destructive."},305:{v:0.8,p:-0.2,j:"Willful ignorance validated by the correct rejection of a 'good lie' is constructive."},306:{v:0.9,p:0.2,j:"Refusing to learn a 'good lie' out of fear of outrage is a willful, constructive act of protection."},401:{v:-0.9,p:0.9,j:"Teaching a 'good lie' to a willing audience is a high-will, highly destructive act."},402:{v:-0.2,p:-0.3,j:"Hoarding a 'good lie' is a low-will act that is minimally destructive."},403:{v:-0.6,p:0.6,j:"Trying to teach a 'good lie' to the willfully ignorant is a destructive, high-will struggle."},2:{v:-0.9,p:0.4,j:"Incorrectly aligning with a 'good lie' is a destructive act."},1:{v:0.8,p:0.9,j:"Correctly identifying a 'good lie' as a lie to be rejected is a high-will, constructive act."},3:{v:0.9,p:1,j:"Perceiving a 'good lie' as an insult to be fought is the ultimate act of a protector of truth."},501:{v:0.8,p:0.7,j:"Correctly 'debunking' a 'good lie' is a high-will, constructive act."},502:{v:-0.7,p:-0.4,j:"Knowing a 'good lie' is false (a double negative) and not caring is destructive apathy."},503:{v:-0.8,p:-0.5,j:"Giving up trying to disprove a 'good lie' is a destructive, low-will state."},5:{v:-0.9,p:0.8,j:"The Cassandra: Correctly identifying the social delusion about a 'good lie', but being powerless."},4:{v:-0.8,p:0.3,j:"Incorrectly believing a 'good lie' is a lie is a destructive delusion."},6:{v:0.8,p:0.5,j:"Correctly identifying a 'good lie' as a lie to be rejected, even if misperceiving the social view, is constructive."},601:{v:0.9,p:0.8,j:"Preaching outrage against a 'good lie' is a high-will, highly constructive act."},602:{v:0.8,p:-0.2,j:"Being insulted by a 'good lie', even in isolation, is a constructive state."},603:{v:0.9,p:0.9,j:"Trying to force others to reject a 'good lie' is a high-will, highly constructive act."},8:{v:-0.9,p:0.9,j:"Conspiring to uphold a 'good lie' is peak destructiveness."},7:{v:0.7,p:0.8,j:"Being insulted by a (misperceived) lie when the reality is a 'good lie' is a high-will, constructive act of a mistaken guardian."},9:{v:1,p:1,j:"Being insulted by a (misperceived) insult when the reality is a 'good lie' is the ultimate act of a mistaken, but high-will, protector."}},
+                badLie: { 101:{v:0.8,p:0.8,j:"Collaboratively pursuing the truth behind a bad lie is a high-will, highly constructive act."},102:{v:0.7,p:0.6,j:"Independently pursuing the truth of a bad lie is a constructive act of high will."},103:{v:0.9,p:0.9,j:"Pursuing the truth of a bad lie against suppression is a supreme act of constructive will."},104:{v:-0.9,p:0.6,j:"Seeking to join a consensus around a bad lie is a highly destructive act of conformity."},105:{v:0.9,p:0.7,j:"Correctly questioning a consensus that rejects a bad lie is a constructive act."},106:{v:0.8,p:0.9,j:"Bravely seeking to understand a bad lie despite social outrage is a constructive, high-will act."},201:{v:0.2,p:-0.4,j:"Passively learning about a bad lie is minimally constructive."},202:{v:0,p:-1,j:"Mutual apathy towards a bad lie allows it to exist, a state of no will and no moral vector."},203:{v:-0.1,p:-0.6,j:"Ignoring a bad lie because others are is a low-will act of minor destructive consequence."},204:{v:-1,p:-0.2,j:"Conforming to a bad lie without understanding is a highly destructive, low-will act."},205:{v:0.9,p:-0.5,j:"Defaulting to the correct rejection of a bad lie, even from apathy, is highly constructive."},206:{v:-0.8,p:-0.3,j:"Avoiding a bad lie due to social conflict is a destructive choice that enables falsehood."},301:{v:0.8,p:0.7,j:"Resisting the pursuit of a bad lie is a high-will, highly constructive act."},302:{v:0.7,p:-0.5,j:"Willfully ignoring a bad lie is a constructive act of self-preservation from untruth."},303:{v:0.9,p:0.8,j:"A mutual pact to ignore a bad lie is a high-will, highly constructive collaboration."},304:{v:-1,p:0.9,j:"Actively denying a consensus bad lie is a delusion that, while well-intentioned, is destructive."},305:{v:0.9,p:-0.2,j:"Willful ignorance validated by the correct rejection of a bad lie is highly constructive."},306:{v:1,p:0.2,j:"Refusing to learn a bad lie out of fear of outrage is a willful, highly constructive act of protection."},401:{v:-0.9,p:0.9,j:"Teaching a bad lie to a willing audience is a high-will, highly destructive act."},402:{v:-0.2,p:-0.3,j:"Hoarding knowledge of a bad lie is a low-will act that is minimally destructive."},403:{v:-0.6,p:0.6,j:"Trying to teach a bad lie to the willfully ignorant is a destructive, high-will struggle."},2:{v:-1,p:0.4,j:"Incorrectly aligning with a bad lie is a highly destructive act."},1:{v:1,p:0.9,j:"Correctly identifying a bad lie as a lie to be rejected is a high-will, highly constructive act."},3:{v:1,p:1,j:"Perceiving a bad lie as an insult to be fought is the ultimate act of a protector of truth."},501:{v:1,p:0.7,j:"Correctly 'debunking' a bad lie is a high-will, highly constructive act."},502:{v:-0.8,p:-0.4,j:"Knowing a bad lie is false (a double negative) and not caring is destructive apathy."},503:{v:-0.9,p:-0.5,j:"Giving up trying to disprove a bad lie is a destructive, low-will state."},5:{v:1,p:0.8,j:"The Cassandra: Correctly identifying the social delusion about a bad lie, and fighting it."},4:{v:-0.9,p:0.3,j:"Incorrectly believing a bad lie is a lie is a destructive delusion."},6:{v:1,p:0.5,j:"Correctly identifying a bad lie as a lie to be rejected, even if misperceiving the social view, is constructive."},601:{v:1,p:0.8,j:"Preaching outrage against a bad lie is a high-will, highly constructive act."},602:{v:0.9,p:-0.2,j:"Being insulted by a bad lie, even in isolation, is a constructive state."},603:{v:1,p:0.9,j:"Trying to force others to reject a bad lie is a high-will, highly constructive act."},8:{v:-1,p:0.9,j:"Conspiring to uphold a bad lie is peak destructiveness."},7:{v:0.8,p:0.8,j:"Being insulted by a (misperceived) lie when the reality is a bad lie is a high-will, constructive act of a mistaken guardian."},9:{v:1,p:1,j:"Being insulted by a (misperceived) insult when the reality is a bad lie is the ultimate act of a mistaken, but high-will, protector."}},
+                goodPref: { 101:{v:0.2,p:0.7,j:"Collaborating on a shared preference is a constructive social act."},102:{v:0.1,p:0.5,j:"Exploring a personal preference is a neutral act of self-discovery."},103:{v:0.2,p:0.8,j:"Pursuing a preference against suppression is a high-will act of self-affirmation."},104:{v:0.1,p:0.4,j:"Learning to appreciate a popular preference is a constructive act of social bonding."},105:{v:0.1,p:0.6,j:"Questioning why a preference is disliked is a constructive act of social inquiry."},106:{v:0.2,p:0.8,j:"Bravely exploring a preference that others find insulting is a high-will act of authenticity."},201:{v:0,p:-0.4,j:"Passively accepting a preference is a neutral, low-will act."},202:{v:0,p:-1,j:"Mutual apathy towards a preference is the definition of neutrality."},203:{v:0,p:-0.6,j:"Ignoring a preference that others are avoiding is a neutral act."},204:{v:0,p:-0.2,j:"Following a preference for social conformity is morally neutral."},205:{v:0,p:-0.5,j:"Agreeing with the rejection of a preference is morally neutral."},206:{v:-0.1,p:-0.3,j:"Avoiding a preference due to social conflict is neutral but low-will."},301:{v:-0.2,p:0.7,j:"Resisting others' exploration of a preference is a destructive act of control."},302:{v:-0.1,p:-0.5,j:"Willfully ignoring a preference is a neutral act of disinterest."},303:{v:-0.2,p:0.8,j:"A mutual pact to ignore a preference is a high-will act of social exclusion."},304:{v:-0.3,p:0.9,j:"Denying a popular preference is a high-will act of contrarianism."},305:{v:0,p:-0.2,j:"Agreeing with the social rejection of a preference is neutral."},306:{v:-0.1,p:0.2,j:"Refusing to engage with a preference out of fear is a low-will act of conformity."},401:{v:0.3,p:0.8,j:"Teaching others to appreciate your preference is a constructive, high-will social act."},402:{v:0.1,p:-0.3,j:"Enjoying a preference alone is a neutral act."},403:{v:-0.1,p:0.6,j:"Frustration that others won't try your preference is a minor destructive act."},2:{v:0.2,p:0.4,j:"Sharing a preference with the majority is a constructive social act."},1:{v:0,p:0.9,j:"Upholding a preference against the majority is a high-will act of individuality."},3:{v:-0.1,p:1,j:"Championing a preference that insults others is a high-will but slightly destructive act."},501:{v:0.1,p:0.7,j:"Explaining why you dislike a preference is a neutral act of communication."},502:{v:0,p:-0.4,j:"Disliking a preference and not caring is neutral."},503:{v:0,p:-0.5,j:"Giving up trying to explain your dislike of a preference is neutral."},5:{v:-0.1,p:0.8,j:"Pretending to like a popular preference to fit in is a high-will but inauthentic act."},4:{v:0.1,p:0.3,j:"Agreeing with the social dislike of a preference is a neutral act of conformity."},6:{v:0.2,p:0.5,j:"Logically explaining your dislike for an offensive preference is a constructive act."},601:{v:-0.4,p:0.8,j:"Preaching outrage against a preference is a destructive act of intolerance."},602:{v:-0.3,p:-0.2,j:"Being insulted by a preference in isolation is a minor destructive state."},603:{v:-0.5,p:0.9,j:"Trying to force others to reject a preference is a high-will, destructive act."},8:{v:-0.6,p:0.9,j:"Creating a conspiracy theory about a popular preference is a high-will, destructive act of delusion."},7:{v:-0.2,p:0.8,j:"Being outraged that others aren't more outraged by a preference is destructive."},9:{v:-0.5,p:1,j:"Enforcing a consensus taboo against a mere preference is a high-will, highly destructive act of intolerance."}},
+                badPref: { 101:{v:-0.2,p:0.7,j:"Collaborating on a shared bad preference is a destructive social act."},102:{v:-0.1,p:0.5,j:"Exploring a bad preference is a neutral act of self-discovery that may lead to harm."},103:{v:0.2,p:0.8,j:"Pursuing a bad preference against suppression is a high-will act, but its constructiveness is questionable."},104:{v:-0.3,p:0.4,j:"Learning to appreciate a popular bad preference is a destructive act of social bonding."},105:{v:0.3,p:0.6,j:"Questioning why a bad preference is disliked is a constructive act of social inquiry."},106:{v:0.1,p:0.8,j:"Bravely exploring a bad preference that others find insulting is a high-will act of questionable morality."},201:{v:0,p:-0.4,j:"Passively accepting a bad preference is a neutral, low-will act."},202:{v:0,p:-1,j:"Mutual apathy towards a bad preference is the definition of neutrality."},203:{v:0.1,p:-0.6,j:"Ignoring a bad preference that others are avoiding is a low-will, slightly constructive act."},204:{v:-0.4,p:-0.2,j:"Following a bad preference for social conformity is destructive."},205:{v:0.2,p:-0.5,j:"Agreeing with the rejection of a bad preference is a constructive act."},206:{v:0.1,p:-0.3,j:"Avoiding a bad preference due to social conflict is a low-will, slightly constructive choice."},301:{v:0.4,p:0.7,j:"Resisting others' exploration of a bad preference is a constructive act of protection."},302:{v:0.3,p:-0.5,j:"Willfully ignoring a bad preference is a constructive act of self-preservation."},303:{v:0.5,p:0.8,j:"A mutual pact to ignore a bad preference is a high-will, constructive collaboration."},304:{v:-0.5,p:0.9,j:"Denying a popular bad preference is a high-will act of contrarianism, but still destructive."},305:{v:0.4,p:-0.2,j:"Agreeing with the social rejection of a bad preference is constructive."},306:{v:0.3,p:0.2,j:"Refusing to engage with a bad preference out of fear is a low-will act of conformity, but constructive."},401:{v:-0.5,p:0.8,j:"Teaching others to appreciate your bad preference is a destructive, high-will social act."},402:{v:-0.1,p:-0.3,j:"Enjoying a bad preference alone is a neutral act."},403:{v:0.1,p:0.6,j:"Frustration that others won't try your bad preference is a minor destructive act."},2:{v:-0.4,p:0.4,j:"Sharing a bad preference with the majority is a destructive social act."},1:{v:0.2,p:0.9,j:"Upholding a bad preference against the majority is a high-will act of individuality, with neutral morality."},3:{v:0.1,p:1,j:"Championing a bad preference that insults others is a high-will but slightly destructive act."},501:{v:0.3,p:0.7,j:"Explaining why you dislike a bad preference is a constructive act of communication."},502:{v:0,p:-0.4,j:"Disliking a bad preference and not caring is neutral."},503:{v:0,p:-0.5,j:"Giving up trying to explain your dislike of a bad preference is neutral."},5:{v:0.1,p:0.8,j:"Pretending to like a popular bad preference to fit in is a high-will but inauthentic act."},4:{v:0.3,p:0.3,j:"Agreeing with the social dislike of a bad preference is a constructive act of conformity."},6:{v:0.4,p:0.5,j:"Logically explaining your dislike for an offensive bad preference is a constructive act."},601:{v:0.5,p:0.8,j:"Preaching outrage against a bad preference is a constructive act of intolerance towards harm."},602:{v:0.4,p:-0.2,j:"Being insulted by a bad preference in isolation is a constructive state."},603:{v:0.6,p:0.9,j:"Trying to force others to reject a bad preference is a high-will, constructive act."},8:{v:-0.5,p:0.9,j:"Creating a conspiracy theory about a popular bad preference is a high-will, destructive act of delusion."},7:{v:0.4,p:0.8,j:"Being outraged that others aren't more outraged by a bad preference is constructive."},9:{v:0.6,p:1,j:"Enforcing a consensus taboo against a bad preference is a high-will, highly constructive act of social protection."}},
+            };
+
+            const baseBeliefStates = [
+                // personal/social codes: 0.5=+?, 0=~?, -0.5=-?, 1==, -1=<, 2=>
+                // Row 1: Personal +?
+                { id: 101, p: 0.5, s: 0.5, name: "Collaborative Inquiry", icon: "🤝", pos: "I want to know, and you want to know.", meta: metaStates.exploration, action: "<strong>High (Action-as-Inquiry):</strong> This state has a high propensity for the action of investigation and collaboration.", desc: "A state of mutual curiosity. Both parties are actively engaged in exploring a topic together, creating a powerful dynamic for shared learning and discovery.", arch: "Research Team, Study Group", react: "Cooperation, brainstorming, shared discovery.", i_react: "Contributes by building on others' ideas with their internal framework.", e_react: "Facilitates discussion, energizing the group's exploratory process.", mbti: [{ group: "Rationals (NT)", likelihood: 35, color: "bg-purple-500" }, { group: "Idealists (NF)", likelihood: 35, color: "bg-green-500" }, { group: "Guardians (SJ)", likelihood: 20, color: "bg-blue-500" }, { group: "Artisans (SP)", likelihood: 10, color: "bg-orange-500" }], mythos: "At the prow, two souls share a spyglass, their whispers a chorus of 'What if?' and 'Look there!'" },
+                { id: 102, p: 0.5, s: 0,   name: "The Lone Investigator", icon: "🧑‍🔬", pos: "I want to know, even if you don't care.", meta: metaStates.exploration, action: "<strong>High (Action-as-Inquiry):</strong> High likelihood of personal action (research, study) driven by intrinsic motivation.", desc: "Driven by personal curiosity, the individual investigates a topic that the collective is apathetic towards. Their motivation is purely internal.", arch: "Niche Hobbyist, Specialist", react: "Focused, self-motivated research, intrinsic enjoyment.", i_react: "Deep dives into the subject, building a comprehensive personal understanding.", e_react: "May try to generate interest in others by sharing their findings.", mbti: [{ group: "Rationals (NT)", likelihood: 50, color: "bg-purple-500" }, { group: "Idealists (NF)", likelihood: 30, color: "bg-green-500" }, { group: "Guardians (SJ)", likelihood: 15, color: "bg-blue-500" }, { group: "Artisans (SP)", likelihood: 5, color: "bg-orange-500" }], mythos: "Sits apart, polishing a personal lens, focused on a single point in the fog others ignore." },
+                { id: 103, p: 0.5, s: -0.5,name: "Forbidden Knowledge Seeker", icon: "📜", pos: "I want to know because you don't want me to.", meta: metaStates.exploration, action: "<strong>High (Action-as-Rebellion):</strong> Very high likelihood of action, as the act of inquiry itself is a form of rebellion against perceived censorship.", desc: "The individual's curiosity is amplified by the perception that society actively suppresses the information. The act of inquiry becomes an act of rebellion.", arch: "The Gnostic, The Dissident", react: "Defiance, heightened curiosity, a sense of uncovering secrets.", i_react: "Sees the suppression as proof of a hidden truth and digs deeper in private.", e_react: "Challenges the status quo by asking forbidden questions out loud.", mbti: [{ group: "Rationals (NT)", likelihood: 45, color: "bg-purple-500" }, { group: "Idealists (NF)", likelihood: 40, color: "bg-green-500" }, { group: "Artisans (SP)", likelihood: 10, color: "bg-orange-500" }, { group: "Guardians (SJ)", likelihood: 5, color: "bg-blue-500" }], mythos: "Is trying to decipher strange markings carved into the boat's hull that everyone else has agreed to ignore." },
+                { id: 104, p: 0.5, s: 1,   name: "The Aspiring Believer", icon: "🙏", pos: "I want to understand why you all believe this.", meta: metaStates.social_navigation, action: "<strong>High (Action-as-Integration):</strong> High likelihood of social action (joining groups, asking questions) to align with the consensus.", desc: "The individual is motivated to learn about a topic precisely because it is a consensus truth, seeking to align their own understanding with the collective.", arch: "The Convert, The Onboarder", react: "Receptiveness, learning, desire for integration.", i_react: "Studies the consensus to see if it's logically and morally consistent.", e_react: "Joins groups and asks questions to absorb the shared knowledge.", mbti: [{ group: "Guardians (SJ)", likelihood: 50, color: "bg-blue-500" }, { group: "Idealists (NF)", likelihood: 30, color: "bg-green-500" }, { group: "Artisans (SP)", likelihood: 15, color: "bg-orange-500" }, { group: "Rationals (NT)", likelihood: 5, color: "bg-purple-500" }], mythos: "Listens intently to the stories of the veteran travelers, wanting to understand why their maps are trusted." },
+                { id: 105, p: 0.5, s: -1,  name: "The Devil's Advocate", icon: "😈", pos: "I want to understand why you all reject this.", meta: metaStates.social_navigation, action: "<strong>Conditional (Action-as-Testing):</strong> Action depends on the individual's desire to challenge the status quo versus their desire to avoid conflict.", desc: "The individual's curiosity is piqued by a consensus rejection. They are driven to investigate the rejected idea to see if the collective judgment is valid.", arch: "The Contrarian, The Skeptic", react: "Critical inquiry, questioning assumptions, exploring alternatives.", i_react: "Analyzes the rejected idea for merits that may have been overlooked.", e_react: "Publicly questions the consensus to test the strength of its arguments.", mbti: [{ group: "Rationals (NT)", likelihood: 60, color: "bg-purple-500" }, { group: "Idealists (NF)", likelihood: 25, color: "bg-green-500" }, { group: "Artisans (SP)", likelihood: 10, color: "bg-orange-500" }, { group: "Guardians (SJ)", likelihood: 5, color: "bg-blue-500" }], mythos: "Points to a dark channel, asking, 'Why do we avoid this path, just because the old maps say it is dangerous?'" },
+                { id: 106, p: 0.5, s: 2,   name: "The Brave Inquirer", icon: "🦁", pos: "I want to know, even though you find it insulting.", meta: metaStates.social_navigation, action: "<strong>Conditional (Action-as-Risk):</strong> Action is a calculated risk. It depends on whether the drive for knowledge outweighs the fear of social retribution.", desc: "The individual approaches a taboo subject with genuine curiosity, willing to risk social backlash in the pursuit of understanding.", arch: "The Anthropologist, The Journalist", react: "Courage, objectivity, careful navigation of sensitive topics.", i_react: "Approaches the topic with a structured, detached framework to manage personal bias.", e_react: "Engages with the taboo subject carefully, trying to foster understanding.", mbti: [{ group: "Rationals (NT)", likelihood: 45, color: "bg-purple-500" }, { group: "Idealists (NF)", likelihood: 45, color: "bg-green-500" }, { group: "Artisans (SP)", likelihood: 5, color: "bg-orange-500" }, { group: "Guardians (SJ)", likelihood: 5, color: "bg-blue-500" }], mythos: "Holds a small lantern up to the furious, shouting passengers at the stern, calmly asking, 'Tell me why this journey insults you so.'" },
+
+                // Row 2: Personal ~?
+                { id: 201, p: 0, s: 0.5, name: "The Passive Student", icon: "👨‍🏫", pos: "I don't care, but I'll listen if you teach.", meta: metaStates.exploration, action: "<strong>Low (Inaction is Default):</strong> Action (listening) is passive and only occurs if externally initiated. The individual will not seek information themselves.", desc: "The individual has no personal investment but is receptive to information if someone else is willing to provide it. Learning is opportunistic, not driven.", arch: "The Audience Member, The Attendee", react: "Passive reception, mild curiosity.", i_react: "Absorbs information that fits their existing model without seeking more.", e_react: "Engages in the conversation as long as it remains interesting.", mbti: [{ group: "Artisans (SP)", likelihood: 40, color: "bg-orange-500" }, { group: "Guardians (SJ)", likelihood: 35, color: "bg-blue-500" }, { group: "Idealists (NF)", likelihood: 15, color: "bg-green-500" }, { group: "Rationals (NT)", likelihood: 10, color: "bg-purple-500" }], mythos: "Idly watches the Navigators, occasionally glancing at a dropped map but never asking for one." },
+                { id: 202, p: 0, s: 0,   name: "The Apathetic", icon: "🤷", pos: "I don't care, and you don't care.", meta: metaStates.exploration, action: "<strong>Very Low (Inaction is Stable):</strong> The state of maximum inaction. There is no internal or external motivation to act or inquire.", desc: "A state of complete neutrality and disengagement from both parties. The topic has no relevance or impact, and is therefore mutually ignored.", arch: "The Uninvolved, The Bystander", react: "Apathy, indifference, disengagement.", i_react: "Filters the information out as irrelevant noise.", e_react: "Changes the subject to something more engaging.", mbti: [{ group: "Artisans (SP)", likelihood: 50, color: "bg-orange-500" }, { group: "Guardians (SJ)", likelihood: 30, color: "bg-blue-500" }, { group: "Idealists (NF)", likelihood: 10, color: "bg-green-500" }, { group: "Rationals (NT)", likelihood: 10, color: "bg-purple-500" }], mythos: "Slumped on the benches, staring at the oar-locks, so detached they are one with the fog, oblivious to the journey." },
+                { id: 203, p: 0, s: -0.5,name: "The Uninterested Bystander", icon: "🚶", pos: "I don't care, and I see you're avoiding it.", meta: metaStates.exploration, action: "<strong>Low (Inaction is Reinforced):</strong> Inaction is the path of least resistance, reinforced by the social cue to avoid the topic.", desc: "The individual has no personal interest and also recognizes a collective aversion to the topic. The easiest path is to respect the aversion and remain disengaged.", arch: "The Socially Aware Apathetic", react: "Avoidance, deference to the group's aversion.", i_react: "Notes the social dynamic but remains personally disinvested.", e_react: "Avoids bringing up the topic to maintain social ease.", mbti: [{ group: "Guardians (SJ)", likelihood: 40, color: "bg-blue-500" }, { group: "Artisans (SP)", likelihood: 40, color: "bg-orange-500" }, { group: "Idealists (NF)", likelihood: 15, color: "bg-green-500" }, { group: "Rationals (NT)", likelihood: 5, color: "bg-purple-500" }], mythos: "Notices the Deniers at the stern and pointedly looks the other way, not wanting to get involved." },
+                { id: 204, p: 0, s: 1,   name: "The Unquestioning Follower", icon: "🐑", pos: "I don't care, but I'll go along if you all believe.", meta: metaStates.social_navigation, action: "<strong>Conditional (Action-as-Conformity):</strong> The individual will act in accordance with the belief, but only to maintain social cohesion. The action is not driven by personal conviction.", desc: "The individual lacks personal conviction or interest and defaults to the consensus truth. Their belief is a function of social convenience, not internal judgment.", arch: "The Bandwagoner", react: "Compliance, conformity, social assimilation.", i_react: "Adopts the belief as a background assumption without critical thought.", e_react: "Publicly supports the consensus to facilitate social interactions.", mbti: [{ group: "Guardians (SJ)", likelihood: 55, color: "bg-blue-500" }, { group: "Artisans (SP)", likelihood: 30, color: "bg-orange-500" }, { group: "Idealists (NF)", likelihood: 10, color: "bg-green-500" }, { group: "Rationals (NT)", likelihood: 5, color: "bg-purple-500" }], mythos: "Gripping an oar among the others, they row in perfect time with the majority, their gaze fixed on the back of the person in front, never on the horizon." },
+                { id: 205, p: 0, s: -1,  name: "The Path of Least Resistance", icon: "🛋️", pos: "I don't care, and you say it's false, so okay.", meta: metaStates.social_navigation, action: "<strong>Low (Inaction is Easiest):</strong> Inaction is the default. The individual may verbally agree with the consensus but is unlikely to take any substantive action.", desc: "The individual has no interest and defaults to the consensus lie. It's the easiest and most frictionless position to hold.", arch: "The Agreeable Skeptic", react: "Easy agreement, lack of critical engagement.", i_react: "Accepts the consensus rejection without personal investigation.", e_react: "Verbally agrees with the group's disbelief to move on.", mbti: [{ group: "Guardians (SJ)", likelihood: 50, color: "bg-blue-500" }, { group: "Artisans (SP)", likelihood: 35, color: "bg-orange-500" }, { group: "Idealists (NF)", likelihood: 10, color: "bg-green-500" }, { group: "Rationals (NT)", likelihood: 5, color: "bg-purple-500" }], mythos: "Lying down on a pile of ropes, they simply nod at whatever the nearest group is saying, hoping the conversation ends quickly so they can rest." },
+                { id: 206, p: 0, s: 2,   name: "The Conflict Avoider", icon: "🙈", pos: "I don't care, but I see it makes you angry.", meta: metaStates.social_navigation, action: "<strong>Low (Action-as-Avoidance):</strong> The only action taken is the action of actively avoiding the topic or conflict.", desc: "The individual is apathetic to the topic itself but highly aware of the social danger it represents. Their primary motivation is to avoid the collective outrage.", arch: "The Apathetic Bystander", react: "Avoidance, caution, strategic disengagement.", i_react: "Makes a mental note of the topic as a social 'third rail' and avoids it.", e_react: "Actively steers conversations away to avoid triggering conflict.", mbti: [{ group: "Guardians (SJ)", likelihood: 45, color: "bg-blue-500" }, { group: "Idealists (NF)", likelihood: 40, color: "bg-green-500" }, { group: "Artisans (SP)", likelihood: 10, color: "bg-orange-500" }, { group: "Rationals (NT)", likelihood: 5, color: "bg-purple-500" }], mythos: "Sees the Outraged section and physically moves to the opposite side of the boat to escape the noise." },
+                
+                // Row 3: Personal -?
+                { id: 301, p: -0.5, s: 0.5, name: "The Curmudgeon", icon: "💢", pos: "I refuse to learn, despite your curiosity.", meta: metaStates.exploration, action: "<strong>High (Action-as-Resistance):</strong> High likelihood of action aimed at shutting down inquiry or expressing disapproval of others' curiosity.", desc: "The individual actively rejects information while perceiving that others are actively seeking it. This creates a state of frustration and resistance to the perceived naety of others.", arch: "The Luddite, The Traditionalist", react: "Resistance, dismissal of others' curiosity.", i_react: "Reinforces their existing beliefs against the perceived tide of new information.", e_react: "May openly mock or dismiss the inquiries of others as foolish.", mbti: [{ group: "Guardians (SJ)", likelihood: 60, color: "bg-blue-500" }, { group: "Rationals (NT)", likelihood: 20, color: "bg-purple-500" }, { group: "Idealists (NF)", likelihood: 15, color: "bg-green-500" }, { group: "Artisans (SP)", likelihood: 5, color: "bg-orange-500" }], mythos: "Swats away the maps of the Navigators, grumbling about 'new-fangled cartography.'" },
+                { id: 302, p: -0.5, s: 0,   name: "The Content Ignoramus", icon: "🧱", pos: "I refuse to learn, and I don't care that you don't.", meta: metaStates.exploration, action: "<strong>Very Low (Inaction is a Fortress):</strong> Inaction is a conscious choice and a stable state, protected by mutual apathy.", desc: "A state of willful ignorance protected by mutual apathy. The individual's refusal to learn is not challenged because no one else cares enough to teach them.", arch: "The Dogmatist in a Vacuum", react: "Willful ignorance, mental closure.", i_react: "Comfortably resides within their closed-off belief system.", e_react: "Shows no interest, and receives no challenging input in return.", mbti: [{ group: "Guardians (SJ)", likelihood: 50, color: "bg-blue-500" }, { group: "Artisans (SP)", likelihood: 20, color: "bg-orange-500" }, { group: "Idealists (NF)", likelihood: 15, color: "bg-green-500" }, { group: "Rationals (NT)", likelihood: 15, color: "bg-purple-500" }], mythos: "Facing the stern, sleeps soundly on a coil of rope, wrapped in the comfort of not knowing." },
+                { id: 303, p: -0.5, s: -0.5,name: "The Mutual Ignorance Pact", icon: "🤝", pos: "I don't want to know, and you don't want to know.", meta: metaStates.exploration, action: "<strong>High (Action-as-Avoidance):</strong> High likelihood of collaborative action to ensure the topic is never discussed or investigated.", desc: "A state of collusive ignorance. Both parties tacitly agree to avoid a certain topic, creating a shared blind spot to maintain comfort or a relationship.", arch: "The Elephant in the Room", react: "Mutual avoidance, unspoken agreement.", i_react: "Actively suppresses personal curiosity to honor the pact.", e_react: "Works with others to ensure the topic is never breached.", mbti: [{ group: "Guardians (SJ)", likelihood: 45, color: "bg-blue-500" }, { group: "Idealists (NF)", likelihood: 40, color: "bg-green-500" }, { group: "Artisans (SP)", likelihood: 10, color: "bg-orange-500" }, { group: "Rationals (NT)", likelihood: 5, color: "bg-purple-500" }], mythos: "Two souls holding a blanket over their heads, promising each other not to look at the water." },
+                { id: 304, p: -0.5, s: 1,   name: "The Dogmatic Denier", icon: "🙉", pos: "I refuse to learn, even though you all believe it.", meta: metaStates.social_navigation, action: "<strong>High (Action-as-Denial):</strong> High likelihood of action aimed at actively rejecting, debunking, or protesting the consensus truth.", desc: "The individual actively rejects information that contradicts their worldview, despite perceiving it as a consensus truth. It's a conscious act of protecting one's dogma against an overwhelming social reality.", arch: "The Ostrich, The Denier", react: "Denial, defensiveness, confirmation bias.", i_react: "Actively avoids contrary data and seeks out information that confirms their denial.", e_react: "May publicly state their disbelief and reject the consensus as a 'hoax' or 'delusion'.", mbti: [{ group: "Guardians (SJ)", likelihood: 30, color: "bg-blue-500" }, { group: "Idealists (NF)", likelihood: 25, color: "bg-green-500" }, { group: "Rationals (NT)", likelihood: 25, color: "bg-purple-500" }, { group: "Artisans (SP)", likelihood: 20, color: "bg-orange-500" }], mythos: "Has their hands pressed over their ears, humming a loud, tuneless song to drown out the river's whisper and the existence of the far shore." },
+                { id: 305, p: -0.5, s: -1,  name: "The Confirmed Dogmatist", icon: "👍", pos: "I refuse to learn, and I'm glad you all agree it's false.", meta: metaStates.social_navigation, action: "<strong>Low (Inaction is Validated):</strong> Inaction is the default, as the social consensus validates their refusal to inquire further.", desc: "The individual's willful ignorance is validated by the social consensus. They are comfortable in their refusal to know because the collective agrees there is nothing worth knowing.", arch: "The Armchair Expert", react: "Smugness, self-satisfaction, validation.", i_react: "Feels intellectually secure in their lack of knowledge.", e_react: "Joins the chorus of dismissal, reinforcing the collective ignorance.", mbti: [{ group: "Guardians (SJ)", likelihood: 60, color: "bg-blue-500" }, { group: "Artisans (SP)", likelihood: 20, color: "bg-orange-500" }, { group: "Idealists (NF)", likelihood: 10, color: "bg-green-500" }, { group: "Rationals (NT)", likelihood: 10, color: "bg-purple-500" }], mythos: "Sitting comfortably among the Doubters, points back the way they came, scoffing, 'See? I knew there was nothing to see.'" },
+                { id: 306, p: -0.5, s: 2,   name: "The Fearful Denier", icon: "😨", pos: "I refuse to learn because I see how angry it makes you.", meta: metaStates.social_navigation, action: "<strong>Conditional (Action-as-Appeasement):</strong> May take action (vocal agreement with the outrage) purely to signal conformity and ensure personal safety.", desc: "The individual's refusal to engage with a topic is driven by fear of the social consequences. They see the collective outrage and choose willful ignorance as a form of self-protection.", arch: "The Cowed", react: "Fear, avoidance, self-censorship.", i_react: "Internalizes the social danger and creates mental blocks against the topic.", e_react: "May vocally agree with the outrage to signal their conformity and ensure safety.", mbti: [{ group: "Idealists (NF)", likelihood: 45, color: "bg-green-500" }, { group: "Guardians (SJ)", likelihood: 40, color: "bg-blue-500" }, { group: "Artisans (SP)", likelihood: 10, color: "bg-orange-500" }, { group: "Rationals (NT)", likelihood: 5, color: "bg-purple-500" }], mythos: "Huddled beneath a frayed tarp, trembles, plugging their ears not against the river, but against the angry shouts of the Moral Enforcers." },
+
+            // Row 4: Personal =
+            { id: 401, p: 1, s: 0.5, name: "The Teacher", icon: "👨‍🏫", pos: "I know this is true, and I'm glad you want to learn.", meta: metaStates.influence, action: "<strong>High (Action-as-Teaching):</strong> A very high likelihood of action aimed at sharing knowledge and fostering understanding.", desc: "A harmonious state where the individual's certainty is met with the collective's curiosity. This is the ideal state for the transmission of knowledge.", arch: "The Mentor, The Educator", react: "Helpfulness, generosity with knowledge.", i_react: "Organizes their knowledge to present it clearly and logically.", e_react: "Engages with learners, answers questions, and fosters understanding.", mbti: [{ group: "Idealists (NF)", likelihood: 45, color: "bg-green-500" }, { group: "Rationals (NT)", likelihood: 45, color: "bg-purple-500" }, { group: "Guardians (SJ)", likelihood: 5, color: "bg-blue-500" }, { group: "Artisans (SP)", likelihood: 5, color: "bg-orange-500" }], mythos: "Has their map unrolled, patiently explaining the currents to the curious Apprentice." },
+            { id: 402, p: 1, s: 0,   name: "The Unconcerned Expert", icon: "🧐", pos: "I know this is true, but I don't care if you do.", meta: metaStates.influence, action: "<strong>Low (Inaction is Default):</strong> The individual possesses knowledge but lacks the external motivation to act on it.", desc: "The individual is secure in their knowledge but has no desire or need to share it with an apathetic collective. The truth is held for personal, not public, reasons.", arch: "The Recluse, The Stoic", react: "Detachment, self-assurance, indifference to public opinion.", i_react: "Continues to use or build upon their knowledge in private.", e_react: "Doesn't bother to engage or persuade the uninterested.", mbti: [{ group: "Rationals (NT)", likelihood: 60, color: "bg-purple-500" }, { group: "Guardians (SJ)", likelihood: 20, color: "bg-blue-500" }, { group: "Artisans (SP)", likelihood: 10, color: "bg-orange-500" }, { group: "Idealists (NF)", likelihood: 10, color: "bg-green-500" }], mythos: "Keeps their perfect map rolled tightly, using it only to tap out a rhythm against their knee, unconcerned with where the boat is headed." },
+            { id: 403, p: 1, s: -0.5,name: "The Frustrated Truth-Teller", icon: "😤", pos: "I know this is true; why do you refuse to even listen?", meta: metaStates.influence, action: "<strong>Conditional:</strong> The individual may act out of frustration, or they may withdraw into inaction out of a sense of futility.", desc: "The individual's certainty is met with a wall of willful ignorance from the collective. This leads to frustration that others are actively choosing to remain uninformed.", arch: "The Cassandra", react: "Frustration, exasperation, feeling of futility.", i_react: "May retreat with their knowledge, feeling it is wasted on the unwilling.", e_react: "May try to force the issue, leading to unproductive conflict.", mbti: [{ group: "Idealists (NF)", likelihood: 45, color: "bg-green-500" }, { group: "Rationals (NT)", likelihood: 45, color: "bg-purple-500" }, { group: "Guardians (SJ)", likelihood: 5, color: "bg-blue-500" }, { group: "Artisans (SP)", likelihood: 5, color: "bg-orange-500" }], mythos: "Tries to show her map to the Deniers at the stern, who refuse to look, leaving her in quiet exasperation." },
+            { id: 2, p: 1, s: 1, name: "The Consensus Truth", icon: "✅", pos: "True for me and True for you", meta: metaStates.conviction, action: "<strong>High (Action-as-Reinforcement):</strong> High likelihood of actions that support and reinforce the shared belief.", desc: "The individual's belief is in perfect alignment with the perceived social consensus. This is the state of effortless adoption, where an idea is accepted without social friction.", arch: "The Majority", react: "Comfort, validation, sense of belonging.", i_react: "Feels internal harmony.", e_react: "Reinforces the social consensus.", mbti: [{ group: "Guardians (SJ)", likelihood: 60, color: "bg-blue-500" }, { group: "Artisans (SP)", likelihood: 20, color: "bg-orange-500" }, { group: "Idealists (NF)", likelihood: 15, color: "bg-green-500" }, { group: "Rationals (NT)", likelihood: 5, color: "bg-purple-500" }], mythos: "In the center of the boat, a large, calm group, their identical maps providing ballast and keeping the boat steady." },
+            { id: 1, p: 1, s: -1, name: "The Agonizing Choice", icon: "⚖️", pos: "True for me and a Lie for you", meta: metaStates.conviction, action: "<strong>Conditional:</strong> The defining state of the action/inaction spectrum. Action (speaking truth) is a high-cost choice vs. inaction (silence).", desc: "The individual knows the idea is true but perceives that society will reject it as a lie, creating a choice between personal conviction and social conformity.", arch: "Visionary, Heretic", react: "Internal conflict, stress, isolation.", i_react: "Deep internal conflict; may withdraw.", e_react: "Tests the social waters before committing.", mbti: [{ group: "Idealists (NF)", likelihood: 40, color: "bg-green-500" }, { group: "Rationals (NT)", likelihood: 40, color: "bg-purple-500" }, { group: "Guardians (SJ)", likelihood: 15, color: "bg-blue-500" }, { group: "Artisans (SP)", likelihood: 5, color: "bg-orange-500" }], mythos: "Grips the rail, staring at a shoreline no one else can see, enduring the smirks of those who call them a fool." },
+            { id: 3, p: 1, s: 2, name: "The Revolutionary Truth", icon: "🔥", pos: "True for me and an Insult to you", meta: metaStates.conviction, action: "<strong>High (Action-as-Advocacy):</strong> The social resistance acts as a catalyst, creating a strong motivation to act and champion the offensive truth.", desc: "The individual holds a truth they perceive society will react to with hostile rejection. The stance of the reformer who must champion an offensive truth.", arch: "Reformer, Provocateur", react: "Determination, advocacy, conflict.", i_react: "Develops a comprehensive internal model.", e_react: "Becomes a vocal advocate, energized by debate.", mbti: [{ group: "Idealists (NF)", likelihood: 45, color: "bg-green-500" }, { group: "Rationals (NT)", likelihood: 45, color: "bg-purple-500" }, { group: "Artisans (SP)", likelihood: 5, color: "bg-orange-500" }, { group: "Guardians (SJ)", likelihood: 5, color: "bg-blue-500" }], mythos: "At the very front, a foot on the gunwale, ready to leap onto the far shore and challenge whatever waits there, even if it means fighting alone." },
+            
+            // Row 5: Personal <
+            { id: 501, p: -1, s: 0.5, name: "The Debunker", icon: "🔬", pos: "I know this is false, and I'll explain why since you're asking.", meta: metaStates.influence, action: "<strong>High (Action-as-Correction):</strong> A high likelihood of action aimed at correcting the collective's lack of knowledge.", desc: "A productive state where the individual's knowledge of a falsehood is met with the collective's desire to learn. This is the foundation of fact-checking and education.", arch: "The Educator, The Fact-Checker", react: "Helpfulness, clarification, logical explanation.", i_react: "Breaks down the falsehood into its constituent logical fallacies.", e_react: "Engages in public discourse to correct misinformation.", mbti: [{ group: "Rationals (NT)", likelihood: 50, color: "bg-purple-500" }, { group: "Guardians (SJ)", likelihood: 30, color: "bg-blue-500" }, { group: "Idealists (NF)", likelihood: 10, color: "bg-green-500" }, { group: "Artisans (SP)", likelihood: 10, color: "bg-orange-500" }], mythos: "Kindly shows an Apprentice how their smudged, incorrect map is leading them astray." },
+            { id: 502, p: -1, s: 0,   name: "The Cynic", icon: "😒", pos: "I know this is false, but I don't care that you don't.", meta: metaStates.influence, action: "<strong>Low (Inaction is Default):</strong> The individual knows the truth but lacks the social motivation to act on it.", desc: "The individual sees a falsehood but is indifferent to the collective's apathy. They have no motivation to correct the record because it has no perceived impact.", arch: "The Jaded Observer", react: "Cynicism, detachment, resignation.", i_react: "Privately notes the falsehood but sees no value in acting on it.", e_react: "May make cynical jokes but won't engage in serious debate.", mbti: [{ group: "Rationals (NT)", likelihood: 50, color: "bg-purple-500" }, { group: "Artisans (SP)", likelihood: 30, color: "bg-orange-500" }, { group: "Guardians (SJ)", likelihood: 10, color: "bg-blue-500" }, { group: "Idealists (NF)", likelihood: 10, color: "bg-green-500" }], mythos: "In the shadows at the stern, knows the Ferryman is taking a longer route but just scoffs to themself, 'What did you expect?'" },
+            { id: 503, p: -1, s: -0.5,name: "The Weary Skeptic", icon: "😮‍💨", pos: "I know this is false, and I'm tired of your refusal to learn.", meta: metaStates.influence, action: "<strong>Low (Inaction from Futility):</strong> Past actions have likely led to frustration, resulting in a present state of inaction.", desc: "The individual's skepticism is met with the collective's willful ignorance. This leads to exhaustion and a sense of hopelessness that the truth doesn't matter.", arch: "The Burned-out Debunker", react: "Exhaustion, futility, disengagement.", i_react: "Concludes that logical argument is pointless and withdraws.", e_react: "Stops engaging in public debate, seeing it as a waste of energy.", mbti: [{ group: "Rationals (NT)", likelihood: 40, color: "bg-purple-500" }, { group: "Idealists (NF)", likelihood: 30, color: "bg-green-500" }, { group: "Guardians (SJ)", likelihood: 20, color: "bg-blue-500" }, { group: "Artisans (SP)", likelihood: 10, color: "bg-orange-500" }], mythos: "Leaning against the mast, simply sighs and shakes their head, having given up trying to tell the Deniers that their eyes are closed." },
+            { id: 5, p: -1, s: 1, name: "The Grifter's Opportunity", icon: "🎭", pos: "A Lie for me and True for you", meta: metaStates.conviction, 
+    action: "<strong>Conditional:</strong> The state presents a choice between high action (Grifter, Cassandra) and inaction (Silent Cynic).", desc: "The individual knows an idea is false but perceives that society will accept it as truth. This dissonance can be exploited, endured, fought, or surrendered to.", arch: "Grifter, Silent Cynic, Cassandra, Gaslit", react: "Exploitation, alienation, surrender.", i_react: "More likely the Silent Cynic.", e_react: "More likely the Grifter.", mbti: [{ group: "Artisans (SP)", likelihood: 40, color: "bg-orange-500" }, { group: "Rationals (NT)", likelihood: 35, color: "bg-purple-500" }, { group: "Guardians (SJ)", likelihood: 20, color: "bg-blue-500" }, { group: "Idealists (NF)", likelihood: 5, color: "bg-green-500" }], mythos: "Moves among the Majority, knowing the Ferryman is a fraud but selling useless charms for a 'safe passage.'" },
+            { id: 4, p: -1, s: -1, name: "The Consensus Lie", icon: "❌", pos: "A Lie for me and a Lie for you", meta: metaStates.conviction, action: "<strong>Conditional:</strong> Action (debunking, satire) is possible but not necessary, as the social consensus already handles the falsehood.", desc: "The individual's disbelief is aligned with the perceived social consensus. The state of obvious falsehood, easily dismissed by all.", arch: "The Skeptic, The Satirist", react: "Dismissal, ridicule, correction.", i_react: "Privately dismisses as illogical.", e_react: "Openly challenges or debates.", mbti: [{ group: "Rationals (NT)", likelihood: 50, color: "bg-purple-500" }, { group: "Guardians (SJ)", likelihood: 30, color: "bg-blue-500" }, { group: "Artisans (SP)", likelihood: 15, color: "bg-orange-500" }, { group: "Idealists (NF)", likelihood: 5, color: "bg-green-500" }], mythos: "A group united in their shared certainty that a rumored 'sea monster' is just a log, but saying nothing." },
+            { id: 6, p: -1, s: 2, name: "The Contrarian Cynic", icon: "🧐", pos: "A Lie for me and an Insult to you", meta: metaStates.conviction, action: "<strong>Conditional:</strong> Action (debate) is likely if the individual is motivated to challenge the collective's emotional reasoning.", desc: "The individual believes an idea is false but perceives society finds it deeply insulting. They align with the rejection but not the emotional intensity.", arch: "Rational Skeptic", react: "Intellectual disagreement, calm refutation.", i_react: "Analyzes the emotionality from a distance.", e_react: "Engages in debate to point out flaws.", mbti: [{ group: "Rationals (NT)", likelihood: 70, color: "bg-purple-500" }, { group: "Artisans (SP)", likelihood: 15, color: "bg-orange-500" }, { group: "Idealists (NF)", likelihood: 10, color: "bg-green-500" }, { group: "Guardians (SJ)", likelihood: 5, color: "bg-blue-500" }], mythos: "Standing between the outraged passengers and the rest of the boat, calmly informs them, 'Not only is that monster a log, but your screaming is scaring the fish.'" },
+
+            // Row 6: Personal >
+            { id: 601, p: 2, s: 0.5, name: "The Preacher", icon: "🗣️", pos: "I'm insulted by this, and let me explain why you should be.", meta: metaStates.influence, action: "<strong>High (Action-as-Persuasion):</strong> High likelihood of action aimed at transmitting their moral outrage to the curious.", desc: "The individual's moral outrage is met by the collective's curiosity. This is the state of moral instruction, where the Preacher attempts to transmit their sense of insult to the uninformed.", arch: "The Moralist, The Activist", react: "Proselytizing, moral instruction, persuasion.", i_react: "Builds a strong moral case to present to others.", e_react: "Actively recruits others to their cause, explaining the nature of the threat.", mbti: [{ group: "Idealists (NF)", likelihood: 50, color: "bg-green-500" }, { group: "Guardians (SJ)", likelihood: 40, color: "bg-blue-500" }, { group: "Rationals (NT)", likelihood: 5, color: "bg-purple-500" }, { group: "Artisans (SP)", likelihood: 5, color: "bg-orange-500" }], mythos: "Grabs a curious Apprentice by the collar, warning them that their questions will lead the boat to damnation." },
+            { id: 602, p: 2, s: 0,   name: "The Isolated Moralist", icon: "😠", pos: "I'm insulted, but you don't even care.", meta: metaStates.influence, action: "<strong>Low (Inaction from Isolation):</strong> The lack of a receptive audience makes substantive action feel pointless.", desc: "The individual's outrage is met with collective apathy. This leads to a feeling of isolation and frustration that others do not share their moral urgency.", arch: "The Voice in the Wilderness", react: "Isolation, frustration, impotence.", i_react: "Feels alienated by the moral laxity of the world.", e_react: "May try to provoke a reaction from the apathetic, often unsuccessfully.", mbti: [{ group: "Idealists (NF)", likelihood: 50, color: "bg-green-500" }, { group: "Guardians (SJ)", likelihood: 40, color: "bg-blue-500" }, { group: "Rationals (NT)", likelihood: 5, color: "bg-purple-500" }, { group: "Artisans (SP)", likelihood: 5, color: "bg-orange-500" }], mythos: "Seethes with rage at the Ferryman's course, but surrounded by the Apathetic, has no one to rally to their cause." },
+            { id: 603, p: 2, s: -0.5,name: "The Outraged Prophet", icon: "😡", pos: "I'm insulted, and you refuse to even see the threat!", meta: metaStates.influence, action: "<strong>High (Action-as-Warning):</strong> High likelihood of desperate action aimed at breaking through the collective's willful ignorance.", desc: "The individual's moral outrage is met with the collective's willful ignorance. This is the most frustrating state for a moralist, who sees a clear danger that others are actively choosing to ignore.", arch: "The Ignored Prophet", react: "Intense frustration, anger, despair.", i_react: "Sees the willful ignorance as a moral failing in itself.", e_react: "May resort to extreme statements or actions to break through the denial.", mbti: [{ group: "Idealists (NF)", likelihood: 50, color: "bg-green-500" }, { group: "Guardians (SJ)", likelihood: 40, color: "bg-blue-500" }, { group: "Rationals (NT)", likelihood: 5, color: "bg-purple-500" }, { group: "Artisans (SP)", likelihood: 5, color: "bg-orange-500" }], mythos: "Screams at the Deniers that their willful ignorance is precisely why the boat is doomed, missing the deeper irony." },
+            { id: 8, p: 2, s: 1, name: "The Paranoid Conspiracist", icon: "👁️", pos: "An Insult to me and True for you", meta: metaStates.conviction, action: "<strong>High (Action-as-Exposure):</strong> High likelihood of action aimed at 'exposing' the perceived conspiracy.", desc: "The individual is insulted by an idea they perceive society has accepted as truth. The resolution is that the masses have been deceived by a malicious actor.", arch: "Conspiracist", react: "Paranoia, persecution complex.", i_react: "Builds a complex internal conspiracy.", e_react: "Seeks out a community to share the conspiracy.", mbti: [{ group: "Idealists (NF)", likelihood: 45, color: "bg-green-500" }, { group: "Rationals (NT)", likelihood: 40, color: "bg-purple-500" }, { group: "Guardians (SJ)", likelihood: 10, color: "bg-blue-500" }, { group: "Artisans (SP)", likelihood: 5, color: "bg-orange-500" }], mythos: "In a dark corner, insists the Ferryman is a demon, and the consensus map is a trick to lead them all to Tartarus." },
+            { id: 7, p: 2, s: -1, name: "The Reactionary", icon: "😤", pos: "An Insult to me and a Lie for you", meta: metaStates.conviction, action: "<strong>High (Action-as-Outrage):</strong> High likelihood of action fueled by anger that the collective's reaction is not strong enough.", desc: "The individual is offended by an idea they perceive society rejects as a simple lie. Creates frustration that the collective doesn't share their moral outrage.", arch: "The Reactionary", react: "Anger, moral outrage.", i_react: "Feels a deep sense of moral violation.", e_react: "Becomes a vocal critic of the lack of outrage.", mbti: [{ group: "Guardians (SJ)", likelihood: 65, color: "bg-blue-500" }, { group: "Idealists (NF)", likelihood: 25, color: "bg-green-500" }, { group: "Artisans (SP)", likelihood: 5, color: "bg-orange-500" }, { group: "Rationals (NT)", likelihood: 5, color: "bg-purple-500" }], mythos: "Pacing the deck furiously, points a shaking finger at the one who first mentioned the 'sea monster,' demanding they be punished even though everyone now agrees it was just a log." },
+            { id: 9, p: 2, s: 2, name: "The Consensus Taboo", icon: "🚫", pos: "An Insult to me and an Insult to you", meta: metaStates.conviction, action: "<strong>Very High (Action-as-Enforcement):</strong> The highest likelihood of social action, aimed at enforcing the taboo and punishing transgressors.", desc: "The individual's feeling of being insulted is perfectly aligned with the social consensus. This can lead to censorship, moral panics, and persecution of dissent.", arch: "The Moral Enforcer", react: "Collective outrage, moral policing.", i_react: "Feels strong internal disgust and supports enforcement.", e_react: "Becomes an active enforcer of the taboo.", mbti: [{ group: "Idealists (NF)", likelihood: 50, color: "bg-green-500" }, { group: "Guardians (SJ)", likelihood: 40, color: "bg-blue-500" }, { group: "Artisans (SP)", likelihood: 5, color: "bg-orange-500" }, { group: "Rationals (NT)", likelihood: 5, color: "bg-purple-500" }], mythos: "At the darkest edge of the boat, a unified group, ready to throw anyone overboard who speaks a forbidden name." },
+        ];
+    
+            let beliefStates;
+
+            let currentContext = 'natural';
+            let detailChartInstance;
+            const grid = document.getElementById('matrix-grid');
+            const detailPanelBackdrop = document.getElementById('detail-panel-backdrop');
+            const detailPanel = document.getElementById('detail-panel');
+            const closeButton = document.getElementById('close-detail-panel');
+            
+            const detailTitle = document.getElementById('detail-title');
+            const detailPosition = document.getElementById('detail-position');
+            const detailDescription = document.getElementById('detail-description');
+            const detailMythos = document.getElementById('detail-mythos');
+            const detailHegemony = document.getElementById('detail-hegemony');
+            const detailMeta = document.getElementById('detail-meta');
+            const detailAction = document.getElementById('detail-action');
+            const detailArchetypes = document.getElementById('detail-archetypes');
+            const detailReactions = document.getElementById('detail-reactions');
+            const detailIntrovertReaction = document.getElementById('detail-introvert-reaction');
+            const detailExtravertReaction = document.getElementById('detail-extravert-reaction');
+            const detailMbti = document.getElementById('detail-mbti');
+
+            const contextSelector = document.getElementById('context-selector');
+            const currentContextSpan = document.getElementById('current-context');
+            
+            function getHegemonicColor(v, p) {
+                const hue = (v + 1) * 60; 
+                const saturation = 30 + (p + 1) * 35;
+                const lightnessBg = 85 - (p + 1) * 15;
+                const lightnessBorder = lightnessBg - 20;
+
+                const bgColor = `hsl(${hue}, ${saturation}%, ${lightnessBg}%)`;
+                const borderColor = `hsl(${hue}, ${saturation}%, ${lightnessBorder}%)`;
+
+                return { bgColor, borderColor };
+            }
+
+            const p_order = [1, 0.5, -1, 0, 2, -0.5];
+            const s_order = [2, -1, 1, -0.5, 0, 0.5];
+
+            function drawGrid() {
+                grid.innerHTML = '';
+                s_order.forEach(s_val => {
+                    p_order.forEach(p_val => {
+                        const state = beliefStates.find(s => s.p === p_val && s.s === s_val);
+                        if (!state) {
+                            console.error(`State not found for p=${p_val}, s=${s_val}`);
+                            const placeholder = document.createElement('div');
+                            placeholder.className = 'matrix-card bg-gray-50 border-gray-200';
+                            grid.appendChild(placeholder);
+                            return;
+                        };
+
+                        const card = document.createElement('div');
+                        const colors = getHegemonicColor(state.hegemony.v, state.hegemony.p);
+                        card.className = `matrix-card cursor-pointer p-1 sm:p-2 rounded-lg border-2 flex flex-col justify-center items-center text-center`;
+                        card.style.backgroundColor = colors.bgColor;
+                        card.style.borderColor = colors.borderColor;
+                        card.dataset.id = state.id;
+                        card.innerHTML = `
+                            <div class="text-xl sm:text-2xl mb-1">${state.icon}</div>
+                            <h3 class="font-semibold text-[9px] sm:text-xs leading-tight text-slate-800">${state.name}</h3>
+                        `;
+                        grid.appendChild(card);
+                    });
+                });
+            }
+            
+            grid.addEventListener('click', (e) => {
+                const card = e.target.closest('.matrix-card');
+                if (card && card.dataset.id) {
+                    const stateId = parseInt(card.dataset.id);
+                    const state = beliefStates.find(s => s.id === stateId);
+                    if (state) {
+                        openDetailPanel(state);
+                    }
+                }
+            });
+
+            function openDetailPanel(state) {
+                detailTitle.textContent = `${state.icon} ${state.name}`;
+                detailPosition.textContent = state.pos;
+                detailDescription.textContent = state.desc;
+                detailMythos.textContent = state.mythos;
+                
+                if (state.hegemony) {
+                    detailHegemony.innerHTML = `<p class="mb-2"><strong class="font-semibold text-slate-700">Vector (υ, ψ):</strong> (${state.hegemony.v}, ${state.hegemony.p})</p><p><strong class="font-semibold text-slate-700">Justification:</strong> ${state.hegemony.j}</p>`;
+                } else {
+                    detailHegemony.innerHTML = '';
+                }
+
+                detailMeta.innerHTML = state.meta;
+                detailAction.innerHTML = state.action;
+                detailArchetypes.textContent = state.arch;
+                detailReactions.textContent = state.react;
+                detailIntrovertReaction.textContent = state.i_react;
+                detailExtravertReaction.textContent = state.e_react;
+                
+                detailMbti.innerHTML = '';
+                if(state.mbti && Array.isArray(state.mbti) && state.mbti.length > 0) {
+                    state.mbti.forEach(item => {
+                        const row = document.createElement('div');
+                        row.className = 'grid grid-cols-5 gap-2 items-center';
+                        const label = document.createElement('div');
+                        label.className = 'col-span-2 text-slate-600 font-medium';
+                        label.textContent = item.group;
+                        row.appendChild(label);
+                        const barContainer = document.createElement('div');
+                        barContainer.className = 'col-span-3 bg-slate-200 rounded-full h-5';
+                        const bar = document.createElement('div');
+                        
+                        let barClasses = `${item.color} h-5 rounded-full flex items-center text-white text-xs font-bold`;
+                        if (item.likelihood < 20) { 
+                            barClasses += ' justify-start pl-1 text-slate-700'; 
+                        } else {
+                            barClasses += ' justify-end pr-2';
+                        }
+                        bar.className = barClasses;
+                        
+                        bar.style.width = `${item.likelihood}%`;
+                        bar.textContent = `${item.likelihood}%`;
+                        barContainer.appendChild(bar);
+                        row.appendChild(barContainer);
+                        detailMbti.appendChild(row);
+                    });
+                } else {
+                    detailMbti.innerHTML = '<p class="text-slate-500 text-sm italic">MBTI likelihood is not significantly correlated for this state.</p>';
+                }
+                
+                detailPanelBackdrop.classList.remove('hidden');
+                detailPanelBackdrop.classList.add('flex');
+                setTimeout(() => {
+                    detailPanel.classList.remove('scale-95', 'opacity-0');
+                    detailPanel.classList.add('scale-100', 'opacity-100');
+                    renderDetailChart(state);
+                }, 10);
+            }
+
+            function closePanel() {
+                detailPanel.classList.add('scale-95', 'opacity-0');
+                detailPanel.classList.remove('scale-100', 'opacity-100');
+                setTimeout(() => {
+                    detailPanelBackdrop.classList.add('hidden');
+                    detailPanelBackdrop.classList.remove('flex');
+                }, 300);
+            }
+
+            closeButton.addEventListener('click', closePanel);
+            detailPanelBackdrop.addEventListener('click', (e) => {
+                if (e.target === detailPanelBackdrop) {
+                    closePanel();
+                }
+            });
+
+            // Chart Logic
+            const quadrantBgPlugin = {
+                id: 'quadrantBg',
+                beforeDraw: (chart) => {
+                    const { ctx, chartArea: { top, bottom, left, right }, scales: { x, y } } = chart;
+                    ctx.save();
+                    
+                    const midX = x.getPixelForValue(0);
+                    const midY = y.getPixelForValue(0);
+
+                    const colors = {
+                        productive: 'rgba(152, 251, 152, 0.1)', 
+                        reductive: 'rgba(255, 165, 0, 0.1)',   
+                        destructive: 'rgba(255, 99, 71, 0.1)',    
+                        constructive: 'rgba(135, 206, 250, 0.1)' 
+                    };
+
+                    // With reversed X-axis:
+                    // Productive (+v, +p) -> top-left
+                    ctx.fillStyle = colors.productive;
+                    ctx.fillRect(left, top, midX - left, midY - top);
+                    // Reductive (-v, +p) -> top-right
+                    ctx.fillStyle = colors.reductive;
+                    ctx.fillRect(midX, top, right - midX, midY - top);
+                    // Destructive (-v, -p) -> bottom-right
+                    ctx.fillStyle = colors.destructive;
+                    ctx.fillRect(midX, midY, right - midX, bottom - midY);
+                    // Constructive (+v, -p) -> bottom-left
+                    ctx.fillStyle = colors.constructive;
+                    ctx.fillRect(left, midY, midX - left, bottom - midY);
+
+                    // Quadrant labels
+                    ctx.font = '600 14px Inter';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillStyle = 'rgba(0, 0, 0, 0.4)';
+
+                    ctx.fillText('Productive', left + (midX-left)/2, top + (midY-top)/2);
+                    ctx.fillText('Reductive', midX + (right-midX)/2, top + (midY-top)/2);
+                    ctx.fillText('Destructive', midX + (right-midX)/2, midY + (bottom-midY)/2);
+                    ctx.fillText('Constructive', left + (midX-left)/2, midY + (bottom-midY)/2);
+
+                    ctx.restore();
+                }
+            };
+            
+            function getStatePointColor(v, p) {
+                const hue = (v + 1) * 60;
+                const saturation = 30 + (p + 1) * 35;
+                const lightness = 60 - (p + 1) * 10;
+                return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+            }
+            
+            const mainChartCtx = document.getElementById('hegemonyChart').getContext('2d');
+            let hegemonyChart;
+            
+            function updateMainChart() {
+                const chartData = beliefStates.map(state => ({
+                    id: state.id,
+                    label: state.name,
+                    x: state.hegemony.v,
+                    y: state.hegemony.p
+                }));
+
+                if(hegemonyChart) {
+                    hegemonyChart.data.datasets[0].data = chartData;
+                    hegemonyChart.data.datasets[0].pointBackgroundColor = chartData.map(d => getStatePointColor(d.x, d.y));
+                    hegemonyChart.update();
+                } else {
+                     hegemonyChart = new Chart(mainChartCtx, {
+                        type: 'scatter',
+                        data: {
+                            datasets: [{
+                                label: 'States of Belief',
+                                data: chartData,
+                                pointBackgroundColor: chartData.map(d => getStatePointColor(d.x, d.y)),
+                                pointBorderColor: 'rgba(0, 0, 0, 0.6)',
+                                pointRadius: 8,
+                                pointHoverRadius: 12,
+                                pointBorderWidth: 2,
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            onClick: (evt) => {
+                                const points = hegemonyChart.getElementsAtEventForMode(evt, 'nearest', { intersect: true }, true);
+                                if (points.length) {
+                                    const firstPoint = points[0];
+                                    const stateId = hegemonyChart.data.datasets[firstPoint.datasetIndex].data[firstPoint.index].id;
+                                    const state = beliefStates.find(s => s.id === stateId);
+                                    if (state) {
+                                        openDetailPanel(state);
+                                    }
+                                }
+                            },
+                            plugins: {
+                                legend: {
+                                    display: false
+                                },
+                                tooltip: {
+                                    callbacks: {
+                                        label: function(context) {
+                                            const dataPoint = context.raw;
+                                            return `${dataPoint.label}: (υ=${dataPoint.x}, ψ=${dataPoint.y})`;
+                                        }
+                                    },
+                                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                                    titleFont: { size: 14, weight: 'bold' },
+                                    bodyFont: { size: 12 },
+                                    padding: 10,
+                                    cornerRadius: 8,
+                                }
+                            },
+                            scales: {
+                                x: {
+                                    type: 'linear',
+                                    position: 'bottom',
+                                    min: -1.1,
+                                    max: 1.1,
+                                    reverse: true,
+                                    title: {
+                                        display: true,
+                                        text: 'Morality (υ) → Destructive',
+                                        font: { size: 16, weight: 'bold' },
+                                        color: '#334155'
+                                    },
+                                    grid: {
+                                        color: 'rgba(0, 0, 0, 0.05)',
+                                        zeroLineColor: 'rgba(0, 0, 0, 0.5)',
+                                        zeroLineWidth: 2
+                                    }
+                                },
+                                y: {
+                                    type: 'linear',
+                                    min: -1.1,
+                                    max: 1.1,
+                                    title: {
+                                        display: true,
+                                        text: 'Will (ψ) → High Will',
+                                        font: { size: 16, weight: 'bold' },
+                                        color: '#334155'
+                                    },
+                                    grid: {
+                                        color: 'rgba(0, 0, 0, 0.05)',
+                                        zeroLineColor: 'rgba(0, 0, 0, 0.5)',
+                                        zeroLineWidth: 2
+                                    }
+                                }
+                            }
+                        },
+                        plugins: [quadrantBgPlugin]
+                    });
+                }
+            }
+
+
+            function renderDetailChart(state) {
+                if (detailChartInstance) {
+                    detailChartInstance.destroy();
+                }
+
+                const highlightedData = [{
+                    x: state.hegemony.v,
+                    y: state.hegemony.p
+                }];
+                const backgroundData = beliefStates.filter(d => d.id !== state.id).map(d => ({x: d.hegemony.v, y: d.hegemony.p}));
+
+                const detailCtx = document.getElementById('detailChart').getContext('2d');
+                detailChartInstance = new Chart(detailCtx, {
+                    type: 'scatter',
+                    data: {
+                        datasets: [
+                            {
+                                label: 'Other States',
+                                data: backgroundData,
+                                pointBackgroundColor: 'rgba(200, 200, 200, 0.5)',
+                                pointRadius: 4,
+                            },
+                            {
+                                label: 'This State',
+                                data: highlightedData,
+                                pointBackgroundColor: getStatePointColor(highlightedData[0].x, highlightedData[0].y),
+                                pointBorderColor: 'rgba(0, 0, 0, 0.8)',
+                                pointRadius: 10,
+                                pointHoverRadius: 12,
+                                pointBorderWidth: 2,
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: { enabled: false }
+                        },
+                        scales: {
+                            x: {
+                                min: -1.1, max: 1.1, reverse: true,
+                                grid: { zeroLineColor: 'rgba(0, 0, 0, 0.5)', zeroLineWidth: 2 },
+                                ticks: { font: { size: 8 } },
+                                title: { display: true, text: 'Morality (υ)', font: { size: 10 } }
+                            },
+                            y: {
+                                min: -1.1, max: 1.1,
+                                grid: { zeroLineColor: 'rgba(0, 0, 0, 0.5)', zeroLineWidth: 2 },
+                                ticks: { font: { size: 8 } },
+                                title: { display: true, text: 'Will (ψ)', font: { size: 10 } }
+                            }
+                        }
+                    },
+                    plugins: [quadrantBgPlugin]
+                });
+            }
+
+            contextSelector.addEventListener('click', (e) => {
+                if (e.target.tagName === 'BUTTON') {
+                    const newContext = e.target.dataset.context;
+                    if (newContext && newContext !== currentContext) {
+                        currentContext = newContext;
+                        
+                        beliefStates.forEach(state => {
+                            const baseState = baseBeliefStates.find(bs => bs.id === state.id);
+                            
+                            if(hegemonyContexts[currentContext] && hegemonyContexts[currentContext][state.id]) {
+                                state.hegemony = hegemonyContexts[currentContext][state.id];
+                            } else {
+                                state.hegemony = hegemonyContexts['natural'][state.id];
+                            }
+
+                            if(contextualNames[currentContext] && contextualNames[currentContext][state.id]) {
+                                state.name = contextualNames[currentContext][state.id];
+                            } else {
+                                state.name = baseState.name;
+                            }
+                            
+                            if(contextualMythos[currentContext] && contextualMythos[currentContext][state.id]) {
+                                state.mythos = contextualMythos[currentContext][state.id];
+                            } else {
+                                state.mythos = baseState.mythos;
+                            }
+                        });
+
+                        document.querySelectorAll('.context-btn').forEach(btn => btn.classList.remove('active'));
+                        e.target.classList.add('active');
+                        currentContextSpan.textContent = e.target.textContent;
+
+                        drawGrid();
+                        updateMainChart();
+                    }
+                }
+            });
+
+            // Initial Load
+            function initialize() {
+                beliefStates = JSON.parse(JSON.stringify(baseBeliefStates));
+                beliefStates.forEach(state => {
+                    state.hegemony = hegemonyContexts['natural'][state.id];
+                });
+                document.querySelector('.context-btn[data-context="natural"]').classList.add('active');
+                drawGrid();
+                updateMainChart();
+            }
+
+            initialize();
+        });
+    </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // --- 1. Element Selection ---
+    const tocContainer = document.getElementById('toc-container');
+    const contentContainer = document.querySelector('.markdown-body');
+    const tocToggleButton = document.getElementById('toc-toggle-btn');
+    const tocOverlay = document.getElementById('toc-overlay');
+
+    if (!tocContainer || !contentContainer) return;
+
+    // --- 2. Generate TOC Content ---
+    const headings = contentContainer.querySelectorAll('h2, h3');
+    if (headings.length === 0) {
+        tocContainer.style.display = 'none';
+        if (tocToggleButton) tocToggleButton.style.display = 'none';
+        return;
+    }
+
+    const tocTitle = document.createElement('h4');
+    tocTitle.textContent = 'On this page';
+    tocContainer.appendChild(tocTitle);
+    const tocList = document.createElement('ul');
+
+    headings.forEach((heading, index) => {
+        if (!heading.id) heading.id = `heading-ref-${index}`;
+        const listItem = document.createElement('li');
+        const link = document.createElement('a');
+        link.textContent = heading.textContent;
+        link.href = `#${heading.id}`;
+        link.classList.add(heading.tagName.toLowerCase() === 'h3' ? 'toc-h3' : 'toc-h2');
+        listItem.appendChild(link);
+        tocList.appendChild(listItem);
+    });
+    tocContainer.appendChild(tocList);
+    const tocLinks = tocContainer.querySelectorAll('a');
+
+    // --- 3. Mobile Drawer Functionality ---
+    const closeTocDrawer = () => document.body.classList.remove('toc-open');
+    if (tocToggleButton && tocOverlay) {
+        tocToggleButton.addEventListener('click', () => document.body.classList.toggle('toc-open'));
+        tocOverlay.addEventListener('click', closeTocDrawer);
+    }
+    tocLinks.forEach(link => link.addEventListener('click', closeTocDrawer));
+
+    // --- 4. Active Link Highlighting on Scroll ---
+    const getAbsoluteTop = (element) => {
+        let top = 0;
+        while (element) {
+            top += element.offsetTop;
+            element = element.offsetParent;
+        }
+        return top;
+    };
+    
+    const headingPositions = Array.from(headings).map(h => ({
+        id: h.id,
+        top: getAbsoluteTop(h)
+    }));
+    
+    let scrollTimeout;
+    const setActiveLink = () => {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+            let currentId = '';
+            const scrollPosition = window.scrollY + 120;
+            for (let i = headingPositions.length - 1; i >= 0; i--) {
+                if (scrollPosition >= headingPositions[i].top) {
+                    currentId = headingPositions[i].id;
+                    break;
+                }
+            }
+            tocLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${currentId}`) {
+                    link.classList.add('active');
+                }
+            });
+        }, 50);
+    };
+
+    window.addEventListener('scroll', setActiveLink);
+    setActiveLink();
+});
+</script>
+
+</body>
+</html>

@@ -13,6 +13,21 @@
     </style>
 </head>
 <body class="bg-gray-900 text-gray-200">
+    <!-- TOC Drawer for both desktop and mobile -->
+    <nav id="toc-container"></nav>
+
+    <!-- Mobile-only header with toggle button -->
+    <header id="mobile-header">
+        <button id="toc-toggle-btn">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </header>
+
+    <!-- Overlay for mobile drawer -->
+    <div id="toc-overlay"></div>
+
     <div class="container mx-auto px-4 py-8 md:py-16">
         <header class="text-center mb-12">
             <h1 class="text-4xl md:text-5xl font-bold text-white mb-2">Key Actors, Networks, and Diagnostics</h1>
@@ -21,14 +36,186 @@
         </header>
         <main>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <a href="https://alisru.github.io/WWSUTRUTheWebOfLiesRevealed/Main%20Bucket%206%3B%20Key%20Actors%2C%20Networks%2C%20and%20Diagnostics/Sub-bucket%206.1_%20Profiles%20of%20Australian%20Billionaires%20(Rinehart,%20Forrest,%20Palmer,%20Stokes)" class="card block bg-gray-800 p-6 rounded-lg border border-gray-700 hover:border-cyan-500">
+                <a href="AusBillionairesTrumpSummary.html" class="card block bg-gray-800 p-6 rounded-lg border border-gray-700 hover:border-cyan-500">
                     <h2 class="text-xl font-semibold text-white">Sub-bucket 6.1: Profiles of Australian Billionaires</h2>
                 </a>
-                <a href="https://alisru.github.io/WWSUTRUTheWebOfLiesRevealed/Main%20Bucket%206%3B%20Key%20Actors%2C%20Networks%2C%20and%20Diagnostics/Sub-bucket%206.2_%20The%20_Delusionist%20Vector_%20-%20Second%20Term%20Expos%C3%A9%20%26%20Timeline%20(2024-Present)" class="card block bg-gray-800 p-6 rounded-lg border border-gray-700 hover:border-cyan-500">
+                <a href="DelusionisVectorSummary.html" class="card block bg-gray-800 p-6 rounded-lg border border-gray-700 hover:border-cyan-500">
                     <h2 class="text-xl font-semibold text-white">Sub-bucket 6.2: The Delusionist Vector - Second Term Exposé & Timeline</h2>
                 </a>
             </div>
         </main>
     </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // --- 1. Element Selection ---
+    const tocContainer = document.getElementById('toc-container');
+    const contentContainer = document.querySelector('.markdown-body');
+    const tocToggleButton = document.getElementById('toc-toggle-btn');
+    const tocOverlay = document.getElementById('toc-overlay');
+
+    if (!tocContainer || !contentContainer) return;
+
+    // --- 2. Generate TOC Content ---
+    const headings = contentContainer.querySelectorAll('h2, h3');
+    if (headings.length === 0) {
+        tocContainer.style.display = 'none';
+        if (tocToggleButton) tocToggleButton.style.display = 'none';
+        return;
+    }
+
+    const tocTitle = document.createElement('h4');
+    tocTitle.textContent = 'On this page';
+    tocContainer.appendChild(tocTitle);
+    const tocList = document.createElement('ul');
+
+    headings.forEach((heading, index) => {
+        if (!heading.id) heading.id = `heading-ref-${index}`;
+        const listItem = document.createElement('li');
+        const link = document.createElement('a');
+        link.textContent = heading.textContent;
+        link.href = `#${heading.id}`;
+        link.classList.add(heading.tagName.toLowerCase() === 'h3' ? 'toc-h3' : 'toc-h2');
+        listItem.appendChild(link);
+        tocList.appendChild(listItem);
+    });
+    tocContainer.appendChild(tocList);
+    const tocLinks = tocContainer.querySelectorAll('a');
+
+    // --- 3. Mobile Drawer Functionality ---
+    const closeTocDrawer = () => document.body.classList.remove('toc-open');
+    if (tocToggleButton && tocOverlay) {
+        tocToggleButton.addEventListener('click', () => document.body.classList.toggle('toc-open'));
+        tocOverlay.addEventListener('click', closeTocDrawer);
+    }
+    tocLinks.forEach(link => link.addEventListener('click', closeTocDrawer));
+
+    // --- 4. Active Link Highlighting on Scroll ---
+    const getAbsoluteTop = (element) => {
+        let top = 0;
+        while (element) {
+            top += element.offsetTop;
+            element = element.offsetParent;
+        }
+        return top;
+    };
+    
+    const headingPositions = Array.from(headings).map(h => ({
+        id: h.id,
+        top: getAbsoluteTop(h)
+    }));
+    
+    let scrollTimeout;
+    const setActiveLink = () => {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+            let currentId = '';
+            const scrollPosition = window.scrollY + 120;
+            for (let i = headingPositions.length - 1; i >= 0; i--) {
+                if (scrollPosition >= headingPositions[i].top) {
+                    currentId = headingPositions[i].id;
+                    break;
+                }
+            }
+            tocLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${currentId}`) {
+                    link.classList.add('active');
+                }
+            });
+        }, 50);
+    };
+
+    window.addEventListener('scroll', setActiveLink);
+    setActiveLink();
+});
+</script>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // --- 1. Element Selection ---
+    const tocContainer = document.getElementById('toc-container');
+    const contentContainer = document.querySelector('.markdown-body');
+    const tocToggleButton = document.getElementById('toc-toggle-btn');
+    const tocOverlay = document.getElementById('toc-overlay');
+
+    if (!tocContainer || !contentContainer) return;
+
+    // --- 2. Generate TOC Content ---
+    const headings = contentContainer.querySelectorAll('h2, h3');
+    if (headings.length === 0) {
+        tocContainer.style.display = 'none';
+        if (tocToggleButton) tocToggleButton.style.display = 'none';
+        return;
+    }
+
+    const tocTitle = document.createElement('h4');
+    tocTitle.textContent = 'On this page';
+    tocContainer.appendChild(tocTitle);
+    const tocList = document.createElement('ul');
+
+    headings.forEach((heading, index) => {
+        if (!heading.id) heading.id = `heading-ref-${index}`;
+        const listItem = document.createElement('li');
+        const link = document.createElement('a');
+        link.textContent = heading.textContent;
+        link.href = `#${heading.id}`;
+        link.classList.add(heading.tagName.toLowerCase() === 'h3' ? 'toc-h3' : 'toc-h2');
+        listItem.appendChild(link);
+        tocList.appendChild(listItem);
+    });
+    tocContainer.appendChild(tocList);
+    const tocLinks = tocContainer.querySelectorAll('a');
+
+    // --- 3. Mobile Drawer Functionality ---
+    const closeTocDrawer = () => document.body.classList.remove('toc-open');
+    if (tocToggleButton && tocOverlay) {
+        tocToggleButton.addEventListener('click', () => document.body.classList.toggle('toc-open'));
+        tocOverlay.addEventListener('click', closeTocDrawer);
+    }
+    tocLinks.forEach(link => link.addEventListener('click', closeTocDrawer));
+
+    // --- 4. Active Link Highlighting on Scroll ---
+    const getAbsoluteTop = (element) => {
+        let top = 0;
+        while (element) {
+            top += element.offsetTop;
+            element = element.offsetParent;
+        }
+        return top;
+    };
+    
+    const headingPositions = Array.from(headings).map(h => ({
+        id: h.id,
+        top: getAbsoluteTop(h)
+    }));
+    
+    let scrollTimeout;
+    const setActiveLink = () => {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+            let currentId = '';
+            const scrollPosition = window.scrollY + 120;
+            for (let i = headingPositions.length - 1; i >= 0; i--) {
+                if (scrollPosition >= headingPositions[i].top) {
+                    currentId = headingPositions[i].id;
+                    break;
+                }
+            }
+            tocLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${currentId}`) {
+                    link.classList.add('active');
+                }
+            });
+        }, 50);
+    };
+
+    window.addEventListener('scroll', setActiveLink);
+    setActiveLink();
+});
+</script>
+
 </body>
 </html>

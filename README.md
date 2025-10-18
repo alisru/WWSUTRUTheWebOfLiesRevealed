@@ -1,14 +1,8 @@
-
-
 [**Operation: [What Was Swept Under The Rug Uncovered, The Web Of Lies Revealed]**](https://github.com/alisru/WWSUTRUTheWebOfLiesRevealed/tree/main)
 
 Or
 
 **Operation: [What Was So; Truths, Lies, Revealed]** is a collaborative, open-source intelligence effort to identify, analyze, and counter a coherent global information and political warfare campaign identified as the Minimisation Plan.
-
-[NotebookLM for ease of navigation](https://notebooklm.google.com/notebook/b1d9ab6a-4994-4070-b49f-ad9668bb17fd)
-
-[Subreddit for ease of collaboration and communication](https://www.reddit.com/r/WWSUTRU)
 
 This project provides an analytical framework that re-frames the current global conflict. It is not left vs. right, but a struggle between three forces:
 
@@ -26,30 +20,7 @@ All war, from day one, is an economic siege. The goal is to make the enemy's soc
 
 The architects of the Minimisation Plan—a Sino-Russian axis—understand this. They've pivoted to a far more effective strategy: a philosophical and economic war that convinces the enemy to destroy itself, at no cost to them.
 
-This philosophical war began when [Gilles Deleuze](https://en.wikipedia.org/wiki/Gilles_Deleuze) developed Deleuze's reversal of Plato to say that, instead of ideas coming from a fundamental truth, fundamental truths are born from lies. The core of it is that things cannot be 100% true, essentially a fancy way of saying "Hmm, maybe 1 doesn't actually equal 1 despite all proof and evidence", it's a really mocking way to say 1+1 isnt two and is the birthplace of the philosophy we all know and despise
-
-Delusionism; A Philosophy where everything's made up and the facts don't matter, where the truth is nothing more than an inconvenience to frame your lies, or it's an outright insult to your intelligence
-
-Deleuze's reversal of Plato is literally Delusionism just in a mocking, cutesy cypher, Gilles Deleuze is translated to "Guile Delusion"
-Delusionism can be defeated using the same cutesy, mocking cypher
-
-Just remember this fundamental twufh✨;
-
-Many things are Circumstance but only One is True,
-
-This is true as One is One, and One plus One is Two.
-
-If anyone says otherwise then they're clearly lying to you
-
-For if One's not One we'll have no fun, 
-
-Since One Plus One's now Woe
-
-And if you read it while closing your fingers starting from your pinkie, with the length of the line setting the duration you close your finger for, then you will literally hold the idea in your hand so you can examine it for lies.
-If you start from the reminder, meaning you still need it, then you'll run out of fingers so you'll always miss the point as the idea slips from your grasp
-
-
-**The Minimisation Plan: The Doctrine of Delusionism**
+**The Minimisation Plan: The Doctrine of Directed Chaos**
 
 The Minimisation Plan is the designation for a multi-decade grand strategy designed to systematically erode the institutional and social cohesion of Western democracies. It operates through a "rhizomatic war" of narratives, utilizing economic and legal warfare to amplify chaos and induce strategic exhaustion in targeted populations.
 
@@ -98,15 +69,6 @@ It Forces a Binary Choice: It deliberately frames the situation so there is no m
 [We know Epstein himself implicated innocent people, such as people like; Stephen Hawking, Michael Jackson and David Copperfield to name a few](https://people.com/jeffrey-epstein-offered-reward-to-prove-stephen-hawking-allegation-false-docs-8422270)
 
 There's no possible answer to the question of "Why haven't they released the files?" aside from "They're using it as a reputation bomb to stain their enemies", and their enemies are democracy itself and anyone associated with it. Ensuring the maximum possible chaos as believable cover for more monstrosities as Trump has proven time and time again as his Modus Operandi of always tell a bigger Lie
-
-The Files are deduced as being kept as a Christmas present. To cause the most chaos it should make use of the chaos the west inflicts upon itself and Christmas is the biggest holiday of the western year with people travelling and indebted to buy gifts for other people. 
-
-You get everything you wished for "Republicans release the Epstein files and arrest Trump" but the monkey paw curls "Republicans release the Epstein files and arrest Trump, but also Obama, Clinton, and Celebrities too" or "Someone should stop Trump, permanently" but "by Putin in their next meeting"
-
-Imagine the sheer chaos that would ensue if in a live event, Putin and Trump meet in Moscow, as they go to shake hands Putin shoots him in the face, the Epstein files get released and Trump was the ringleader?
-Who's right and wrong in that hypothetical situation? 
-Do the Democrats side with Russia because Putin shot trump? do they side with Trump against Russia who they thought was working with Russia the whole time?
-The only answer to that equation, without knowing an idea of the plan is questions and inevitable chaos
 
 **How to Contribute**
 This investigation relies on decentralized analysis from researchers worldwide. Your contribution is vital. Please see our Contribution Guide (CONTRIBUTING.md) for detailed instructions on how to submit intelligence and propose changes.

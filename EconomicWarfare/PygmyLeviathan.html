@@ -27,8 +27,114 @@
 
       gtag('config', 'G-4QHZV5Y81G');
     </script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // --- 1. Element Selection ---
+    const tocContainer = document.getElementById('toc-container');
+    const contentContainer = document.querySelector('.markdown-body');
+    const tocToggleButton = document.getElementById('toc-toggle-btn');
+    const tocOverlay = document.getElementById('toc-overlay');
+
+    if (!tocContainer || !contentContainer) return;
+
+    // --- 2. Generate TOC Content ---
+    const headings = contentContainer.querySelectorAll('h2, h3');
+    if (headings.length === 0) {
+        tocContainer.style.display = 'none';
+        if (tocToggleButton) tocToggleButton.style.display = 'none';
+        return;
+    }
+
+    const tocTitle = document.createElement('h4');
+    tocTitle.textContent = 'On this page';
+    tocContainer.appendChild(tocTitle);
+    const tocList = document.createElement('ul');
+
+    headings.forEach((heading, index) => {
+        if (!heading.id) heading.id = `heading-ref-${index}`;
+        const listItem = document.createElement('li');
+        const link = document.createElement('a');
+        link.textContent = heading.textContent;
+        link.href = `#${heading.id}`;
+        link.classList.add(heading.tagName.toLowerCase() === 'h3' ? 'toc-h3' : 'toc-h2');
+        listItem.appendChild(link);
+        tocList.appendChild(listItem);
+    });
+    tocContainer.appendChild(tocList);
+    const tocLinks = tocContainer.querySelectorAll('a');
+
+    // --- 3. Mobile Drawer Functionality ---
+    const closeTocDrawer = () => document.body.classList.remove('toc-open');
+    if (tocToggleButton && tocOverlay) {
+        tocToggleButton.addEventListener('click', () => document.body.classList.toggle('toc-open'));
+        tocOverlay.addEventListener('click', closeTocDrawer);
+    }
+    tocLinks.forEach(link => link.addEventListener('click', closeTocDrawer));
+
+    // --- 4. Active Link Highlighting on Scroll ---
+
+    // Helper function to get an element's true position relative to the document
+    const getAbsoluteTop = (element) => {
+        let top = 0;
+        while (element) {
+            top += element.offsetTop;
+            element = element.offsetParent;
+        }
+        return top;
+    };
+
+    const headingPositions = Array.from(headings).map(h => ({
+        id: h.id,
+        top: getAbsoluteTop(h)
+    }));
+
+    let scrollTimeout;
+    const setActiveLink = () => {
+        // Clear any existing timeout to avoid over-firing
+        clearTimeout(scrollTimeout);
+        // Set a new timeout to run the logic after a short delay
+        scrollTimeout = setTimeout(() => {
+            let currentId = '';
+            const scrollPosition = window.scrollY + 120; // Offset for better UX
+
+            // Find the last heading scrolled past
+            for (let i = headingPositions.length - 1; i >= 0; i--) {
+                if (scrollPosition >= headingPositions[i].top) {
+                    currentId = headingPositions[i].id;
+                    break;
+                }
+            }
+
+            tocLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${currentId}`) {
+                    link.classList.add('active');
+                }
+            });
+        }, 50); // 50ms debounce delay
+    };
+
+    window.addEventListener('scroll', setActiveLink);
+    setActiveLink(); // Set initial state
+});
+</script>
 </head>
 <body>
+ <!-- TOC Drawer for both desktop and mobile -->
+    <nav id="toc-container"></nav>
+
+    <!-- Mobile-only header with toggle button -->
+    <header id="mobile-header">
+        <button id="toc-toggle-btn">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </header>
+
+    <!-- Overlay for mobile drawer -->
+    <div id="toc-overlay"></div>
+
     <div class="container-lg px-3 my-5 markdown-body">
         <a href="./index.html">&larr; Back To Navigation</a>
         <h1>The Pygmy Leviathan</h1>
@@ -68,19 +174,7 @@
         <p>This inherent contradiction is systematically exploited by Minimiser actors to craft and disseminate a powerful "hypocrisy narrative" on the global stage. State-controlled media from Russia and China consistently highlight Western double standards on environmental and climate policies. They use the West's high historical emissions, its ongoing culture of mass consumerism, and its repeated failure to meet its own climate targets to erode the credibility of its global leadership. This narrative is particularly effective in the Global South, where it is used to portray Western climate diplomacy as a neocolonial attempt to deny developing nations their right to economic growth. Simultaneously, these same authoritarian powers work to block meaningful international climate agreements and promote global dependence on fossil fuels, thereby exacerbating the very problem they use for their propaganda.</p>
         <p>The "temporal blindness of capital"—the structural inability of the Pygmy Leviathan to appropriately value and respond to long-term, catastrophic risks that lie beyond the next fiscal quarter—is not just an economic flaw but a profound strategic one. It virtually guarantees that Western democracies, whose political systems are heavily influenced by the short-term interests of the Pygmy Leviathan, will consistently fail to implement the transformative, long-term policies required to address the climate crisis. This predictable and visible failure provides an endless stream of potent, factual content for Minimiser narratives about the incompetence, hypocrisy, and ultimate failure of the democratic model. The internal logic of the economic system, as dictated by the Pygmy Leviathan, thus ensures a perpetual strategic communications failure on the global stage, undermining Western alliances and its claims to moral leadership.</p>
         
-        <h4>Table 1: Systemic Dangers as Strategic Vulnerabilities</h4>
-        <table>
-            <thead>
-                <tr>
-                    <th>Inherent Danger from 'The Unfettered Leviathan'</th>
-                    <th>Economic Inequality (r&gt;g)</th>
-                    <th>Monopoly Power</th>
-                    <th>Financial Instability</th>
-                    <th>Social Alienation &amp; Commodification</th>
-                    <th>Ecological Crisis</th>
-                </tr>
-            </thead>
-        </table>
+ 
 
         <h2>Chapter 2: The Pygmy Leviathan as a Minimiser Vector</h2>
         <p>The globalization of capitalism has facilitated the rise of a transnational class of "global rulemakers"—multinational corporations (MNCs), international financial institutions (IFIs), and the ultra-high-net-worth individuals (UHNWIs) who control them. This small concentration of individuals who control the economic landscape is the Pygmy Leviathan. In their rational pursuit of goals dictated by the logic of the system, they produce outcomes that are functionally indistinguishable from, and strategically aligned with, a deliberate Minimiser operation. They have become, wittingly or unwittingly, the most effective vectors for the Minimisation Plan's strategic objectives.</p>
@@ -110,18 +204,7 @@
         <p>This reality directly serves the Minimisation Plan's core objective of proving that Western democracy is a corrupt and unworkable sham. The cynical narrative writes itself: "Look how their democracy creates evil and corrupt leaders". The visible and undeniable influence of the Pygmy Leviathan on the political process confirms the public's suspicion that the system is an oligarchy, not a democracy. This perception is a powerful accelerant for the "strategic exhaustion" and "epistemic nihilism" that the Minimisation Plan seeks to induce. When citizens come to believe that their votes do not matter and that the system is fundamentally rigged in favor of a wealthy elite, they disengage from the democratic process, lose faith in its institutions, and become more receptive to authoritarian alternatives that promise to sweep away the corrupt establishment.</p>
         <p>The legal frameworks within many democracies that protect the conversion of wealth into political influence—often under the guise of "free speech"—are the primary domestic enablers of this core Minimiser narrative. These laws provide the structural mechanism for the Pygmy Leviathan to undermine public trust in democratic institutions from within. They perform the Minimisers' work for them with near-perfect efficiency and, crucially, under the full protection of the target nation's own constitution and legal system. The process is a self-reinforcing loop: the Pygmy Leviathan uses its wealth to secure policies (like lower taxes and deregulation) that further increase its wealth and power. This creates a visible gap between public will and policy outcomes, which is the most potent evidence for the Minimiser narrative that democracy is a fraud. Therefore, the legal architecture designed to protect a particular interpretation of free speech has become a primary weapon for destroying faith in the very democratic system it is meant to uphold.</p>
 
-        <h4>Table 2: Global Rulemakers on the Psochic Hegemony</h4>
-        <table>
-            <thead>
-                <tr>
-                    <th>Global Rulemaker</th>
-                    <th>Multinational Corporations (MNCs)</th>
-                    <th>International Financial Institutions (IFIs)</th>
-                    <th>The Pygmy Leviathan (UHNWIs)</th>
-                </tr>
-            </thead>
-        </table>
-
+       
         <h2>Chapter 3: The Controlled Demolition of Democratic Oversight</h2>
         <p>The political dimension of the conflict between the unfettered logic of capital and the requirements of a healthy democracy provides the most direct battlefield for the Minimisation Plan. The processes of regulation and democratic choice are systematically subverted by the Pygmy Leviathan in ways that align with Minimiser objectives. This chapter analyzes how regulatory failure and the strategic choices of political leaders can serve to achieve Minimiser goals, culminating in a detailed application of the "Fake Maximiser" identification methodology.</p>
 
@@ -147,20 +230,7 @@
         <p>This disparity in effort led to vastly different results. The tax cuts were a political and policy success. The Voice referendum, however, ended in a resounding defeat, failing to achieve a majority nationally or in any state. Crucially, this failure achieved a clear Minimiser outcome: it dramatically increased social division along racial lines, created profound disillusionment and pain among its supporters, and induced a state of "strategic exhaustion" regarding the prospect of major social and constitutional reform in Australia.</p>
         <p>The analysis does not require an assumption of conscious collusion with the Minimisation Plan. Rather, it reveals a strategic choice. The government demonstrated its capacity for a full-force, high-risk campaign on an issue of economic management that was perceived as a political winner, an issue that also happened to align with the preferences of the broader public over those of the Pygmy Leviathan. It chose a less forceful, less effective, and ultimately failing strategy for a more complex issue of social cohesion that it may have deemed more politically risky. This "strategic inaction" or "controlled demolition" allowed a catastrophic Minimiser outcome to be achieved under the cover of a failed Maximiser initiative. The significant and sustained disparity between the government's demonstrated capability (the Baseline of Force) and its actual effort on the "sacrificial policy" is the primary tactical signature of a "Fake Maximiser". This demonstrates how a political actor, by prioritizing perceived electoral safety and economic management over the difficult work of building social cohesion, can functionally serve the strategic goals of those who wish to see the nation's social fabric unravel.</p>
 
-        <h4>Table 3: The 'Fake Maximiser' Tactical Signature Analysis (Australian Case Study)</h4>
-        <table>
-            <thead>
-                <tr>
-                    <th>Analytical Metric</th>
-                    <th>Government's Role</th>
-                    <th>Communication Strategy</th>
-                    <th>Expenditure of Political Capital</th>
-                    <th>Outcome</th>
-                    <th>Alignment with Minimisation Plan Goals</th>
-                    <th>Conclusion</th>
-                </tr>
-            </thead>
-        </table>
+   
         
         <h2>Conclusion: Confronting the Pygmy Leviathan</h2>
         <p>The analysis presented in this report has systematically demonstrated that the Unfettered Leviathan of global capitalism is not merely a system with internal flaws; it is a system directed by the Pygmy Leviathan, whose actions actively create the strategic vulnerabilities that foreign adversaries are now exploiting through the Minimisation Plan. The inherent dangers of the system—its engines of inequality, its tendency toward monopoly, its chronic instability, its generation of social alienation, and its unsustainable ecological trajectory—are the very societal fissures that the Pygmy Leviathan creates and Minimiser actors pry open. The system's most powerful actors and its core political processes have become vectors for this new form of rhizomatic warfare.</p>

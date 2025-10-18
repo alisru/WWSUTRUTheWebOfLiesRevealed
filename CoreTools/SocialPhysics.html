@@ -16,6 +16,21 @@
     </script>
 </head>
 <body>
+    <!-- TOC Drawer for both desktop and mobile -->
+    <nav id="toc-container"></nav>
+
+    <!-- Mobile-only header with toggle button -->
+    <header id="mobile-header">
+        <button id="toc-toggle-btn">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </header>
+
+    <!-- Overlay for mobile drawer -->
+    <div id="toc-overlay"></div>
+
     <div class="container-lg px-3 my-5 markdown-body">
         <a href="./index.html" class="mt-4 inline-block">&larr; Back To Navigation</a>
         <h1>The Anti-/Social Functions of Societal Systems or The '42' of Social Physics</h1>
@@ -78,8 +93,8 @@
         
         <h4>Law 4: The Necessity of Problems vs. The Drive for Solutions</h4>
         <ul>
-            <li><strong>Anti-Social Law:</strong> There always has to be an enemy; there always has to be a problem. This worldview cannot exist in a state of low-strain equilibrium. It requires a perpetual state of conflict to justify its selfish actions. If there is no genuine problem, it must invent one.</li>
-            <li><strong>Social Law:</strong> There always has to be a solution. This worldview operates in harmony with the universe's inherent bias towards order. It consciously seeks to act as an agent of Positivity, resolving strain and moving towards stable, harmonious states.</li>
+            <li><strong>Anti-Social Law of Problems:</strong> There always has to be an enemy; there always has to be a problem. This worldview cannot exist in a state of low-strain equilibrium. It requires a perpetual state of conflict to justify its selfish actions. If there is no genuine problem, it must invent one.</li>
+            <li><strong>Social Law of Solutions:</strong> There always has to be a solution. This worldview operates in harmony with the universe's inherent bias towards order. It consciously seeks to act as an agent of Positivity, resolving strain and moving towards stable, harmonious states.</li>
         </ul>
         
         <h3>Additional Core Principles</h3>
@@ -139,5 +154,91 @@
         </ul>
         <p>Therefore, the Social Laws are "moral" precisely because they are the most logical strategies for reducing universal strain. The Anti-Social Laws are "immoral" because they are inherently illogical, creating unnecessary strain to achieve a selfish, inefficient outcome.</p>
     </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // --- 1. Element Selection ---
+    const tocContainer = document.getElementById('toc-container');
+    const contentContainer = document.querySelector('.markdown-body');
+    const tocToggleButton = document.getElementById('toc-toggle-btn');
+    const tocOverlay = document.getElementById('toc-overlay');
+
+    if (!tocContainer || !contentContainer) return;
+
+    // --- 2. Generate TOC Content ---
+    const headings = contentContainer.querySelectorAll('h2, h3');
+    if (headings.length === 0) {
+        tocContainer.style.display = 'none';
+        if (tocToggleButton) tocToggleButton.style.display = 'none';
+        return;
+    }
+
+    const tocTitle = document.createElement('h4');
+    tocTitle.textContent = 'On this page';
+    tocContainer.appendChild(tocTitle);
+    const tocList = document.createElement('ul');
+
+    headings.forEach((heading, index) => {
+        if (!heading.id) heading.id = `heading-ref-${index}`;
+        const listItem = document.createElement('li');
+        const link = document.createElement('a');
+        link.textContent = heading.textContent;
+        link.href = `#${heading.id}`;
+        link.classList.add(heading.tagName.toLowerCase() === 'h3' ? 'toc-h3' : 'toc-h2');
+        listItem.appendChild(link);
+        tocList.appendChild(listItem);
+    });
+    tocContainer.appendChild(tocList);
+    const tocLinks = tocContainer.querySelectorAll('a');
+
+    // --- 3. Mobile Drawer Functionality ---
+    const closeTocDrawer = () => document.body.classList.remove('toc-open');
+    if (tocToggleButton && tocOverlay) {
+        tocToggleButton.addEventListener('click', () => document.body.classList.toggle('toc-open'));
+        tocOverlay.addEventListener('click', closeTocDrawer);
+    }
+    tocLinks.forEach(link => link.addEventListener('click', closeTocDrawer));
+
+    // --- 4. Active Link Highlighting on Scroll ---
+    const getAbsoluteTop = (element) => {
+        let top = 0;
+        while (element) {
+            top += element.offsetTop;
+            element = element.offsetParent;
+        }
+        return top;
+    };
+    
+    const headingPositions = Array.from(headings).map(h => ({
+        id: h.id,
+        top: getAbsoluteTop(h)
+    }));
+    
+    let scrollTimeout;
+    const setActiveLink = () => {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+            let currentId = '';
+            const scrollPosition = window.scrollY + 120;
+            for (let i = headingPositions.length - 1; i >= 0; i--) {
+                if (scrollPosition >= headingPositions[i].top) {
+                    currentId = headingPositions[i].id;
+                    break;
+                }
+            }
+            tocLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${currentId}`) {
+                    link.classList.add('active');
+                }
+            });
+        }, 50);
+    };
+
+    window.addEventListener('scroll', setActiveLink);
+    setActiveLink();
+});
+</script>
+
 </body>
 </html>
