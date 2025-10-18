@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search</title>
+    <link rel="stylesheet" href="/style.css"> <!-- Using root-relative path -->
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-4QHZV5Y81G"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-4QHZV5Y81G');
+    </script>
+    <style>
+        /* Additional styles specific to the search page */
+        #search-input {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.25rem;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .search-result-item {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #eee;
+        }
+        .search-result-item a {
+            text-decoration: none;
+            color: inherit;
+        }
+        .search-result-item h3 {
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+            color: #1a0dab; /* Classic link color */
+        }
+        .search-result-item p {
+            margin: 0;
+            color: #555;
+        }
+        .search-result-item:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-lg px-3 my-5 markdown-body">
+        <a href="/index.html">&larr; Back To Navigation</a>
+        <h1>Search</h1>
+
+        <input type="text" id="search-input" placeholder="Type to search..." autofocus>
+
+        <div id="results-count"></div>
+        <div id="search-results"></div>
+    </div>
+
+    <!-- Include Lunr.js for client-side search -->
+    <script src="https://unpkg.com/lunr/lunr.min.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const searchInput = document.getElementById('search-input');
+            const searchResults = document.getElementById('search-results');
+            const resultsCount = document.getElementById('results-count');
+            let searchIndex;
+            let documents;
+
+            // --- 1. Fetch and build the search index ---
+            async function initializeSearch() {
+                try {
+                    const response = await fetch('/search_index.json');
+                    documents = await response.json();
+
+                    // Configure Lunr.js
+                    searchIndex = lunr(function () {
+                        this.ref('url');
+                        this.field('title', { boost: 10 });
+                        this.field('content');
+
+                        documents.forEach(doc => {
+                            this.add(doc);
+                        });
+                    });
+                    
+                    // Check for search query in URL on page load
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const query = urlParams.get('q');
+                    if (query) {
+                        searchInput.value = query;
+                        performSearch(query);
+                    }
+
+                } catch (error) {
+                    console.error('Error loading search index:', error);
+                    searchResults.innerHTML = '<p>Error loading search index. Please try again later.</p>';
+                }
+            }
+
+            // --- 2. Perform search and display results ---
+            function performSearch(query) {
+                if (!searchIndex) return;
+
+                // Update URL without reloading the page
+                const newUrl = `${window.location.pathname}?q=${encodeURIComponent(query)}`;
+                history.pushState(null, '', newUrl);
+
+                // Clear previous results
+                searchResults.innerHTML = '';
+
+                if (!query) {
+                    resultsCount.textContent = '';
+                    return;
+                }
+                
+                try {
+                    const results = searchIndex.search(query);
+                    resultsCount.textContent = `${results.length} result(s) found.`;
+
+                    if (results.length > 0) {
+                        results.forEach(result => {
+                            const doc = documents.find(d => d.url === result.ref);
+                            
+                            // Create a snippet for the search result
+                            let snippet = doc.content.substring(0, 250) + '...';
+                            const queryTerms = query.split(/\s+/).filter(Boolean);
+                            const regex = new RegExp(`(${queryTerms.join('|')})`, 'gi');
+                            snippet = snippet.replace(regex, '<mark>$1</mark>');
+
+                            const resultElement = document.createElement('div');
+                            resultElement.className = 'search-result-item';
+                            resultElement.innerHTML = `
+                                <a href="${doc.url}">
+                                    <h3>${doc.title}</h3>
+                                    <p>${snippet}</p>
+                                </a>
+                            `;
+                            searchResults.appendChild(resultElement);
+                        });
+                    } else {
+                        searchResults.innerHTML = '<p>No results found.</p>';
+                    }
+                } catch (error) {
+                    console.error("Error during search:", error);
+                    searchResults.innerHTML = '<p>An error occurred during the search.</p>';
+                }
+            }
+
+            // --- 3. Add event listener to the search input ---
+            let debounceTimeout;
+            searchInput.addEventListener('input', (e) => {
+                const query = e.target.value;
+                clearTimeout(debounceTimeout);
+                debounceTimeout = setTimeout(() => {
+                    performSearch(query);
+                }, 300); // 300ms delay to avoid searching on every keystroke
+            });
+
+            // --- 4. Initialize everything ---
+            initializeSearch();
+        });
+    </script>
+</body>
+</html>
