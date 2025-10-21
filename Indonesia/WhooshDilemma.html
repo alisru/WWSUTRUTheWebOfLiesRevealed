@@ -422,6 +422,83 @@
             <li id="citation-88"><a href="https://www.researchgate.net/publication/347586679_The_Debt-Trap_Diplomacy_Revisited_A_Case_Study_on_Sri_Lanka's_Hambantota_Port">The Debt-Trap Diplomacy Revisited: A Case Study on Sri Lanka's Hambantota Port</a>, accessed October 20, 2025</li>
             <li id="citation-89"><a href="https://reconasia.csis.org/the-secret-history-of-hambantota/">The Secret History of Hambantota - Reconnecting Asia</a>, accessed October 20, 2025</li>
             <li id="citation-90"><a href="https://gjia.georgetown.edu/2021/06/05/questioning-the-debt-trap-diplomacy-rhetoric-surrounding-hambantota-port/">Questioning the Debt-Trap Diplomacy Rhetoric surrounding Hambantota Port</a>, accessed October 20, 2025</li>
-        ]
-    }
-}
+      </ol>
+    </div>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // --- 1. Element Selection ---
+        const tocContainer = document.getElementById('toc-container');
+        const contentContainer = document.querySelector('.markdown-body');
+        const tocToggleButton = document.getElementById('toc-toggle-btn');
+        const tocOverlay = document.getElementById('toc-overlay');
+        if (!tocContainer || !contentContainer) return;
+        // --- 2. Generate TOC Content ---
+        const headings = contentContainer.querySelectorAll('h2, h3, h4');
+        if (headings.length === 0) {
+            tocContainer.style.display = 'none';
+            if (tocToggleButton) tocToggleButton.style.display = 'none';
+            return;
+        }
+        const tocTitle = document.createElement('h4');
+        tocTitle.textContent = 'On this page';
+        tocContainer.appendChild(tocTitle);
+        const tocList = document.createElement('ul');
+        headings.forEach((heading, index) => {
+            if (!heading.id) heading.id = `heading-ref-${index}`;
+            const listItem = document.createElement('li');
+            const link = document.createElement('a');
+            link.textContent = heading.textContent;
+            link.href = `#${heading.id}`;
+            link.classList.add('toc-' + heading.tagName.toLowerCase());
+            listItem.appendChild(link);
+            tocList.appendChild(listItem);
+        });
+        tocContainer.appendChild(tocList);
+        const tocLinks = tocContainer.querySelectorAll('a');
+        // --- 3. Mobile Drawer Functionality ---
+        const closeTocDrawer = () => document.body.classList.remove('toc-open');
+        if (tocToggleButton && tocOverlay) {
+            tocToggleButton.addEventListener('click', () => document.body.classList.toggle('toc-open'));
+            tocOverlay.addEventListener('click', closeTocDrawer);
+        }
+        tocLinks.forEach(link => link.addEventListener('click', closeTocDrawer));
+        // --- 4. Active Link Highlighting on Scroll ---
+        const getAbsoluteTop = (element) => {
+            let top = 0;
+            while (element) {
+                top += element.offsetTop;
+                element = element.offsetParent;
+            }
+            return top;
+        };
+        const headingPositions = Array.from(headings).map(h => ({
+            id: h.id,
+            top: getAbsoluteTop(h)
+        }));
+        let scrollTimeout;
+        const setActiveLink = () => {
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+                let currentId = '';
+                const scrollPosition = window.scrollY + 120; // Offset for better UX
+                for (let i = headingPositions.length - 1; i >= 0; i--) {
+                    if (scrollPosition >= headingPositions[i].top) {
+                        currentId = headingPositions[i].id;
+                        break;
+                    }
+                }
+                tocLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${currentId}`) {
+                        link.classList.add('active');
+                    }
+                });
+            }, 50); // 50ms debounce delay
+        };
+        window.addEventListener('scroll', setActiveLink);
+        setActiveLink(); // Set initial state
+    });
+    </script>
+</body>
+</html>
+
