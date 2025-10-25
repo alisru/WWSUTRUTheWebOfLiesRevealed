@@ -148,7 +148,23 @@
 
             <p class="text-center italic text-slate-600 mt-8 max-w-3xl mx-auto">The boat is your mind. The Ferryman is every new idea. And the journey across the River of Six never ends; one passenger simply takes the oar from another, and the course is changed.</p>
 
-
+ <section class="mb-12 mt-12 p-6 bg-white rounded-2xl shadow-lg border border-slate-200  top-4 z-40">
+                <h3 class="font-bold text-lg text-slate-800 text-center mb-4">Select The Objective Reality Frame (The 3rd Axis)</h3>
+				<div id="context-narrative2" class="mt-6 text-center text-sm transition-opacity duration-500 opacity-0">
+				<p id="context-explanation2" class="text-slate-600 "></p>
+                <p id="ferryman-role2" class="italic text-sky-600 font-semibold mt-2 "></p>
+				</div>
+                <div id="context-selector2" class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2 mt-8 text-sm">
+                    <button data-context="natural" class="context-btn w-full text-center px-4 py-3  rounded-lg font-semibold bg-slate-200 hover:bg-slate-300 transition-all duration-200">Natural State</button>
+                    <button data-context="goodTruth" class="context-btn w-full text-center px-4 py-3 rounded-lg font-semibold bg-slate-200 hover:bg-slate-300 transition-all duration-200">Good Truth</button>
+                    <button data-context="badTruth" class="context-btn w-full text-center px-4 py-3 rounded-lg font-semibold bg-slate-200 hover:bg-slate-300 transition-all duration-200">Bad Truth</button>
+                    <button data-context="goodLie" class="context-btn w-full text-center px-4 py-3 rounded-lg font-semibold bg-slate-200 hover:bg-slate-300 transition-all duration-200">Good Lie</button>
+                    <button data-context="badLie" class="context-btn w-full text-center px-4 py-3 rounded-lg font-semibold bg-slate-200 hover:bg-slate-300 transition-all duration-200">Bad Lie</button>
+                    <button data-context="goodPref" class="context-btn w-full text-center px-4 py-3 rounded-lg font-semibold bg-slate-200 hover:bg-slate-300 transition-all duration-200">Good Preference</button>
+                    <button data-context="badPref" class="context-btn w-full text-center px-4 py-3 rounded-lg font-semibold bg-slate-200 hover:bg-slate-300 transition-all duration-200">Bad Preference</button>
+				</div>
+                <p class="text-center text-sm text-slate-500 mt-4">Current Objective Frame: <strong id="current-context2" class="font-semibold text-slate-700">Natural State</strong></p>
+            </section>
             <section id="archetype-map" class="mt-16">
                  <header class="text-center mb-10">
                     <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900">Hegemonic Map of States</h1>
@@ -1432,7 +1448,9 @@
             const detailMbti = document.getElementById('detail-mbti');
 
             const contextSelector = document.getElementById('context-selector');
+            const contextSelector2 = document.getElementById('context-selector2');
             const currentContextSpan = document.getElementById('current-context');
+            const currentContextSpan2 = document.getElementById('current-context2');
             
             function getHegemonicColor(v, p) {
                 const hue = (v + 1) * 60; 
@@ -1806,35 +1824,45 @@
                     plugins: [quadrantBgPlugin]
                 });
             }
-
-            contextSelector.addEventListener('click', (e) => {
-        if (e.target.tagName === 'BUTTON') {
-            const newContext = e.target.dataset.context;
-            if (newContext && newContext !== currentContext) {
+			
+			function setContext(newContext, clickedButton) {
+                if (!newContext || newContext === currentContext) {
+                    return; // Do nothing if context is invalid or unchanged
+                }
                 currentContext = newContext;
-                
+
+                // Update Narrative Sections (Both Top and Bottom)
                 const contextNarrativeDiv = document.getElementById('context-narrative');
                 const contextExplanationP = document.getElementById('context-explanation');
                 const ferrymanRoleP = document.getElementById('ferryman-role');
-                
+                const contextNarrativeDiv2 = document.getElementById('context-narrative2');
+                const contextExplanationP2 = document.getElementById('context-explanation2');
+                const ferrymanRoleP2 = document.getElementById('ferryman-role2');
+
                 contextNarrativeDiv.style.opacity = 0;
+                contextNarrativeDiv2.style.opacity = 0;
                 setTimeout(() => {
                     const narrative = contextExplanations[newContext];
                     if (narrative) {
                         contextExplanationP.textContent = narrative.explanation;
                         ferrymanRoleP.textContent = narrative.ferryman;
                         contextNarrativeDiv.style.opacity = 1;
+                        // Update second narrative section as well
+                        contextExplanationP2.textContent = narrative.explanation;
+                        ferrymanRoleP2.textContent = narrative.ferryman;
+                        contextNarrativeDiv2.style.opacity = 1;
                     }
                 }, 100);
 
+                // Update Belief States based on the new context
                 beliefStates.forEach(state => {
                     const baseState = baseBeliefStates.find(bs => bs.id === state.id);
-                    
+
                     state.hegemony = hegemonyContexts[currentContext]?.[state.id] || hegemonyContexts['natural'][state.id];
                     state.name = contextualNames[currentContext]?.[state.id] || baseState.name;
                     state.mythos = contextualMythos[currentContext]?.[state.id] || baseState.mythos;
                     state.desc = contextualDescriptions[currentContext]?.[state.id] || baseState.desc;
-                    
+
                     if(contextualArchetypes[currentContext] && contextualArchetypes[currentContext][state.id]) {
                         const contextualArch = contextualArchetypes[currentContext][state.id];
                         state.arch = contextualArch.name;
@@ -1849,25 +1877,54 @@
                     }
                 });
 
-                document.querySelectorAll('.context-btn').forEach(btn => btn.classList.remove('active'));
-                e.target.classList.add('active');
-                currentContextSpan.textContent = e.target.textContent;
+                // Update Active Button State (Both Top and Bottom)
+                document.querySelectorAll('.context-btn').forEach(btn => {
+                    if (btn.dataset.context === newContext) {
+                        btn.classList.add('active');
+                    } else {
+                        btn.classList.remove('active');
+                    }
+                });
 
+                // Update Current Context Text (Both Top and Bottom)
+                const buttonText = clickedButton ? clickedButton.textContent : document.querySelector(`.context-btn[data-context="${newContext}"]`).textContent;
+                currentContextSpan.textContent = buttonText;
+                currentContextSpan2.textContent = buttonText;
+
+
+                // Redraw Grid and Update Chart
                 drawGrid();
                 updateMainChart();
             }
-        }
-    });
+			    // --- REVISED Event Listeners ---
+            contextSelector.addEventListener('click', (e) => {
+                if (e.target.tagName === 'BUTTON' && e.target.dataset.context) {
+                    setContext(e.target.dataset.context, e.target);
+                }
+            });
+
+            contextSelector2.addEventListener('click', (e) => {
+                if (e.target.tagName === 'BUTTON' && e.target.dataset.context) {
+                    setContext(e.target.dataset.context, e.target);
+                }
+            });
+           
 
             function updateNarrative(context) {
                 const contextNarrativeDiv = document.getElementById('context-narrative');
                 const contextExplanationP = document.getElementById('context-explanation');
                 const ferrymanRoleP = document.getElementById('ferryman-role');
+				     const contextNarrativeDiv2 = document.getElementById('context-narrative2');
+                const contextExplanationP2 = document.getElementById('context-explanation2');
+                const ferrymanRoleP2 = document.getElementById('ferryman-role2');
                 const narrative = contextExplanations[context];
                 if (narrative) {
                     contextExplanationP.textContent = narrative.explanation;
                     ferrymanRoleP.textContent = narrative.ferryman;
                     contextNarrativeDiv.style.opacity = 1;
+					contextExplanationP2.textContent = narrative.explanation;
+                    ferrymanRoleP2.textContent = narrative.ferryman;
+                    contextNarrativeDiv2.style.opacity = 1;
                 }
             }
 
