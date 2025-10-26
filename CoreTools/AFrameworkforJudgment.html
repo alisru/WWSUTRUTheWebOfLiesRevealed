@@ -100,7 +100,7 @@
         </ol>
         <p><strong>A Critical Warning:</strong> If you feel that tension and it naturally, passively resolves itself without conscious effort, that is the feeling of your worldview shrinking to accommodate the conflict. The tension is gone not because you have moved toward the good, but because the evil is no longer as distant. Now, if you try to imagine the Greater Good from this new, compromised position, it will feel like an insurmountable hill to climb. True resolution requires active engagement, not passive acceptance.</p>
         <p>This is the truth behind the myth of Sisyphus. Sisyphus isn't happy because he <em>must</em> be to roll the boulder up the hill; he's happy because that struggle <em>is</em> the very process of moving from the Greater Evil to the Greater Good. The effort, the tension, the cycle of gaining ground and losing it again—that is the feeling of progress, of happiness and sadness intertwined, however the ball never rolls back down the hill, the hill only grows larger giving the illusion of losing progress.</p>
-        <ol start="4">
+        <ol start="5">
             <li>Explore the Other Points: Repeat this process for the other two primary points: the "Lesser Good" (well-intentioned passivity) and the "Lesser Evil / Greatest Lie" (active self-interest). You will notice that the tension you feel for these points is lesser or has a different quality than the stark opposition between the two extremes.</li>
         </ol>
         <h5>Step 2: Wrap the Focus (Feeling Complex Emotions)</h5>
@@ -320,9 +320,20 @@
                             <li>-1: Suppressive, restrictive, destructive action.</li>
                         </ul>
                     </li>
+					<li><strong>Explicit State Coordinates</strong>.
+                        <ul>
+                            <li><strong>Greater Good:</strong>[1υ, 1ψ]</li>
+                            <li><strong>Lesser Good:</strong>[-1υ, 1ψ]</li>
+                            <li><strong>Greater Evil:</strong>[-1υ, 1ψ]</li>
+                            <li><strong>Lesser Evil:</strong>[-1υ, -1ψ]</li>
+                            <li><strong>Greater of two Evils:</strong>[-1υ, 0ψ]</li>
+                            <li><strong>Lesser of two Evils:</strong>[1υ, 0ψ]</li>
+                        </ul>
+                    </li>
                 </ul>
             </li>
-            <li><strong>Define Nihilistic Singularity:</strong> Implement a classifier to detect concepts based on pure nihilism, denial of objective reality, or promotion of meaninglessness. Any such input concept resolves to the origin vector F_a = (0, 0).</li>
+            <li><strong>Define Nihilistic Singularity:</strong> Implement a classifier to detect concepts based on pure nihilism, 
+			denial of objective reality, or promotion of meaninglessness. Any such input concept resolves to the origin vector F_a = (-1, -1).</li>
             <li><strong>Vector Assignment:</strong> Based on the synthesized report from Model 1, assign a final vector F_a = (υ_a, ψ_a) to the concept.</li>
         </ul>
 
