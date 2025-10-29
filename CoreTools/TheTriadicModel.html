@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Triadic Model of Reality</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chosen Palette: Calm Harmony (Light Gray, Blue Accent) -->
+    <!-- Application Structure Plan: A multi-section SPA with sidebar navigation ('Overview', 'Matrix', 'Definitions', 'Combined View'). This structure deconstructs the dense, complex report into its logical parts: the high-level concept (Overview), the core data (Matrix views), and the reference material (Definitions). The goal is clarity and reference of the core framework. -->
+    <!-- Visualization & Content Choices: 1. Triadic Model -> Inform -> 3-Column HTML/CSS Layout -> Static -> Clear textual presentation of the core concept. 2. Dual Matrices -> Organize/Compare -> Interactive 4x4 CSS Grid + JS Toggle + Detail Panel -> OnClick (cell) shows details, OnClick (toggle) swaps Virtue/Vice data -> Manages complexity by showing one matrix at a time and revealing deep info on demand. (HTML/CSS/JS). -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f9fafb;
+            color: #1f2937;
+        }
+        [data-section] {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        [data-section].active {
+            display: block;
+        }
+        .nav-link {
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+        .nav-link.active {
+            background-color: #0c4a6e; /*-sky-800*/
+            color: white;
+            font-weight: 600;
+        }
+        .nav-link:not(.active):hover {
+            background-color: #f0f9ff; /*-sky-50*/
+            color: #0369a1; /*-sky-700*/
+        }
+        .matrix-cell {
+            transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+            cursor: pointer;
+            aspect-ratio: 1 / 1;
+        }
+        .matrix-cell:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        .matrix-cell.virtue-cell:hover { background-color: #f0fdf4; /*-green-50*/ border-color: #22c55e; /*-green-500*/ }
+        .matrix-cell.vice-cell:hover { background-color: #fef2f2; /*-red-50*/ border-color: #ef4444; /*-red-500*/ }
+        .matrix-cell.highlight-learner { background-color: #60a5fa !important; /*-blue-400*/ color: white; transform: scale(1.05); box-shadow: 0 0 15px rgba(96, 165, 250, 0.7); }
+        .matrix-cell.highlight-master { background-color: #a78bfa !important; /*-violet-400*/ color: white; transform: scale(1.05); box-shadow: 0 0 15px rgba(167, 139, 250, 0.7); }
+        .matrix-cell.highlight-end { background-color: #22c55e !important; /*-green-500*/ color: white; transform: scale(1.1); animation: pulse 1s infinite; }
+        .matrix-cell.highlight-fail { background-color: #ef4444 !important; /*-red-500*/ color: white; transform: scale(1.1); animation: shake 0.5s; }
+
+        .btn-primary { background-color: #0ea5e9; /*-sky-500*/ color: white; transition: background-color 0.2s ease; }
+        .btn-primary:hover { background-color: #0284c7; /*-sky-600*/ }
+        .btn-secondary { background-color: #8b5cf6; /*-violet-500*/ color: white; transition: background-color 0.2s ease; }
+        .btn-secondary:hover { background-color: #7c3aed; /*-violet-600*/ }
+        .btn-toggle { background-color: #e5e7eb; /*-gray-200*/ }
+        .btn-toggle.active { background-color: #3b82f6; /*-blue-500*/ color: white; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .7; } }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+    </style>
+</head>
+<body class="min-h-screen">
+    <div class="flex flex-col md:flex-row min-h-screen">
+        <!-- Sidebar Navigation -->
+        <nav class="md:w-64 bg-white md:border-r border-b md:border-b-0 border-gray-200 p-4 shrink-0">
+            <h1 class="text-2xl font-bold text-sky-800 mb-6">The Triadic Kanon</h1>
+            <ul class="space-y-2" id="main-nav">
+                <li><a href="#" class="nav-link flex items-center p-3 rounded-lg active" data-target="overview">
+                    <span class="w-6 h-6 mr-3">❖</span><span>Overview</span>
+                </a></li>
+                <li><a href="#" class="nav-link flex items-center p-3 rounded-lg" data-target="matrix">
+                    <span class="w-6 h-6 mr-3">⊞</span><span>The Dual Matrices</span>
+                </a></li>
+                <li><a href="#" class="nav-link flex items-center p-3 rounded-lg" data-target="definitions">
+                    <span class="w-6 h-6 mr-3">≡</span><span>Core Definitions</span>
+                </a></li>
+                <li><a href="#" class="nav-link flex items-center p-3 rounded-lg" data-target="total">
+                    <span class="w-6 h-6 mr-3">⊞+</span><span>Combined View</span>
+                </a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="flex-1 p-6 md:p-10 overflow-auto">
+
+            <!-- Overview Section -->
+            <section id="overview" data-section class="active">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4">The Triadic Model of Reality</h2>
+                <p class="text-lg text-gray-600 mb-8">This application provides an interactive exploration of the Triadic Model, a framework for understanding the fundamental structure of reality, consciousness, and their shadow counterparts. The model is synthesized from the 16-point conceptual graph, resolving it into a single, coherent superstructure.</p>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 mb-8">
+                    <h3 class="text-2xl font-semibold mb-4 text-center">Reality = God { ... }</h3>
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <div class="border border-gray-200 rounded-xl p-6 bg-sky-50">
+                            <h4 class="text-xl font-bold text-sky-800 mb-2">The World (This.Father)</h4>
+                            <p class="text-gray-700">The **Objective Frame**. This vector represents the set of all observable, material, and historical facts. It is the static, structural component—the "Stage" or the "Hardware" of reality.</p>
+                        </div>
+                        <div class="border border-gray-200 rounded-xl p-6 bg-green-50">
+                            <h4 class="text-xl font-bold text-green-800 mb-2">Learning (This.Son)</h4>
+                            <p class="text-gray-700">The **Subjective Frame**. This vector represents the process of consciousness, interpretation, and modeling that occurs *within* a distinct plane. It is the dynamic, experiential component—the "Actor" or the "Software."</p>
+                        </div>
+                        <div class="border border-gray-200 rounded-xl p-6 bg-violet-50">
+                            <h4 class="text-xl font-bold text-violet-800 mb-2">Intelligence (This.Holy Spirit)</h4>
+                            <p class="text-gray-700">The **Relational Frame**. This vector represents "Horizontal Thinking," the interconnective logic that links the Objective and Subjective planes. It is the "Ghost in the Machine," the "Language," or the "Protocol."</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Dual Matrices Section (Restored Interactive Version) -->
+            <section id="matrix" data-section>
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-4xl font-bold text-gray-800" id="matrix-title">The Virtue Matrix</h2>
+                    <div class="flex items-center p-1 rounded-full bg-gray-200">
+                        <button id="btn-virtue" class="btn-toggle px-4 py-2 text-sm font-semibold rounded-full active">Virtues</button>
+                        <button id="btn-vice" class="btn-toggle px-4 py-2 text-sm font-semibold rounded-full">Vices</button>
+                    </div>
+                </div>
+                <p class="text-lg text-gray-600 mb-8" id="matrix-description">This matrix maps the 16 positive nodes of the "Virtue Matrix" that define the path to `Reality (Truth)`. Click any cell to explore its properties and its shadow counterpart.</p>
+
+                <div class="grid lg:grid-cols-3 gap-8">
+                    <div class="lg:col-span-2">
+                        <div class="grid grid-cols-4 gap-2 text-center text-xs font-semibold text-gray-500 uppercase mb-2">
+                            <span>Plane 0<br>(Base Logic)</span>
+                            <span>Plane 1<br>(Abstract Logic)</span>
+                            <span>Plane 2<br>(Applied Logic)</span>
+                            <span>Plane 3<br>(Synthesized Total)</span>
+                        </div>
+                        <div class="grid grid-cols-4 gap-2 md:gap-4" id="matrix-grid-container">
+                            <!-- Matrix cells will be injected by JS -->
+                        </div>
+                        <div class="grid grid-cols-4 gap-2 text-center text-xs font-semibold text-gray-500 uppercase mt-2">
+                            <span id="header-row-0">Theological</span>
+                            <span id="header-row-1">Experiential</span>
+                            <span id="header-row-2">Social</span>
+                            <span id="header-row-3">Synthesized</span>
+                        </div>
+                    </div>
+
+                    <div id="detail-panel" class="lg:col-span-1 bg-white p-6 rounded-2xl shadow-sm border border-gray-200 h-fit sticky top-10">
+                        <h3 id="detail-title" class="text-2xl font-bold text-gray-800 mb-3">Click a cell</h3>
+                        <p id="detail-description" class="text-gray-600 mb-4">Select a node from the matrix to see its detailed definition and properties.</p>
+                        <div id="detail-content" class="space-y-3">
+                            <!-- Detail content will be injected by JS -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Definitions Section (Restored) -->
+            <section id="definitions" data-section>
+                <h2 class="text-4xl font-bold text-gray-800 mb-8">Core Definitions</h2>
+                 <p class="text-lg text-gray-600 mb-8">Explore the foundational concepts of the Triadic Kanon, including the classical virtues and deadly sins, the derived states, and the meta-virtue/vice governing the system.</p>
+                <div class="space-y-4" id="accordion-container">
+                    <!-- Accordions will be injected by JS -->
+                </div>
+            </section>
+
+            <!-- Combined View Section -->
+            <section id="total" data-section>
+                <h2 class="text-4xl font-bold text-gray-800 mb-4">Combined Matrix View</h2>
+                <p class="text-lg text-gray-600 mb-8">This view displays the inverted "Virtue Matrix" (with coordinate 0,0 at the bottom-right) alongside the standard "Vice Matrix" (with coordinate 0,0 at the top-left) for direct comparison of the paths to Truth and Delusion.</p>
+                <div class="grid lg:grid-cols-2 gap-8">
+                    <!-- Inverted Virtue Matrix -->
+                    <div>
+                        <h3 class="text-2xl font-semibold text-center text-green-700 mb-4">Virtue Matrix (Inverted)</h3>
+                        <div class="grid grid-cols-4 gap-2 text-center text-xs font-semibold text-gray-500 uppercase mb-2">
+                            <span id="header-plane-inv-0">Plane 3 (Total)</span>
+                            <span id="header-plane-inv-1">Plane 2 (Applied)</span>
+                            <span id="header-plane-inv-2">Plane 1 (Abstract)</span>
+                            <span id="header-plane-inv-3">Plane 0 (Base)</span>
+                        </div>
+                        <div class="grid grid-cols-4 gap-2 md:gap-4" id="matrix-grid-virtue-inv">
+                            <!-- Inverted virtue cells will be injected by JS -->
+                        </div>
+                        <div class="grid grid-cols-4 gap-2 text-center text-xs font-semibold text-gray-500 uppercase mt-2">
+                            <span id="header-row-inv-0">Synthesized</span>
+                            <span id="header-row-inv-1">Social</span>
+                            <span id="header-row-inv-2">Experiential</span>
+                            <span id="header-row-inv-3">Theological</span>
+                        </div>
+                    </div>
+                    <!-- Standard Vice Matrix -->
+                    <div>
+                        <h3 class="text-2xl font-semibold text-center text-red-700 mb-4">Vice Matrix (Standard)</h3>
+                        <div class="grid grid-cols-4 gap-2 text-center text-xs font-semibold text-gray-500 uppercase mb-2">
+                            <span>Plane 0 (Base)</span>
+                            <span>Plane 1 (Abstract)</span>
+                            <span>Plane 2 (Applied)</span>
+                            <span>Plane 3 (Total)</span>
+                        </div>
+                        <div class="grid grid-cols-4 gap-2 md:gap-4" id="matrix-grid-vice-std">
+                            <!-- Standard vice cells will be injected by JS -->
+                        </div>
+                        <div class="grid grid-cols-4 gap-2 text-center text-xs font-semibold text-gray-500 uppercase mt-2">
+                            <span>Theological</span>
+                            <span>Experiential</span>
+                            <span>Social</span>
+                            <span>Synthesized</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+<script>
+const data = {
+    matrix: {
+        virtue: [
+            ["Maths (Order)", "Spirituality (Faith)", "Religion (Charity)", "Intelligence (Hope)"],
+            ["Physics (Objectivity)", "Meta-Physics (Imagination)", "Emotional-physics (Temperance)", "Learning (Prudence)"],
+            ["Society itself (Community)", "Sociology (Empathy)", "Internal Judgment (Justice)", "The World (Fortitude)"],
+            ["Psychology (Understanding)", "Language (Connection)", "History (Context)", "Reality (Truth)"]
+        ],
+        vice: [
+            ["Chaos (Structurelessness)", "Nihilism (Belief in Nothing)", "Hatred (Active Ill-Will)", "Despair (Negative Conviction)"],
+            ["Denial (Rejection of Fact)", "Dogma (Closed Mind)", "Indulgence (Lack of Control)", "Folly (Willful Ignorance)"],
+            ["Anarchy (Dissolution)", "Apathy (Inability to Care)", "Corruption (Perversion of Morality)", "Cowardice (Refusal to Facts)"],
+            ["Confusion (Self-Ignorance)", "Deceit (Ill-Will)", "Erasure (Denial of Record)", "Delusion (The Greater Lie)"]
+        ]
+    },
+    headers: {
+        virtue: ["Theological Virtues", "Experiential Virtues", "Social Virtues", "Synthesized Virtues"],
+        vice: ["Theological Vices", "Experiential Vices", "Social Vices", "Synthesized Vices"]
+    },
+    details: {
+        virtue: [
+            [
+                { title: "Maths (Order)", def: "The virtue of foundational logic and coherent structure, expressed as `Prudence`.", plane: "Theological", code: "Prudence" },
+                { title: "Spirituality (Faith)", def: "The virtue of abstract belief; the *search* for unseen meaning, expressed as `Faith`.", plane: "Theological", code: "Faith" },
+                { title: "Religion (Charity)", def: "The virtue of selfless, unconditional love, expressed as an applied structure of moral order. (`Charity/Love`)", plane: "Theological", code: "Charity (Love)" },
+                { title: "Intelligence (Hope)", def: "The synthesized conviction in a positive, integrated Truth, expressed as `Hope`.", plane: "Theological", code: "Hope" }
+            ],
+            [
+                { title: "Physics (Objectivity)", def: "The virtue of accepting objective, measurable facts, expressed as `Fortitude`.", plane: "Experiential", code: "Fortitude" },
+                { title: "Meta-Physics (Imagination)", def: "The disciplined exploration of possibility, synthesizing `Faith` and `Prudence`.", plane: "Experiential", code: "Faith + Prudence" },
+                { title: "Emotional-physics (Temperance)", def: "The applied rules of internal mastery and self-control, expressed as `Temperance`.", plane: "Experiential", code: "Temperance" },
+                { title: "Learning (Prudence)", def: "The final synthesis of practical wisdom; the *process* of subjective modeling. (`Prudence`)", plane: "Experiential", code: "Prudence" }
+            ],
+            [
+                { title: "Society itself (Community)", def: "The applied collective structure and civitas, expressed as `Justice`.", plane: "Social", code: "Justice" },
+                { title: "Sociology (Empathy)", def: "The disciplined understanding of the 'Other\'s' state, synthesizing `Charity` and `Justice`.", plane: "Social", code: "Charity + Justice" },
+                { title: "Internal Judgment (Justice)", def: "The applied moral compass for fairness and righteousness, expressed as `Justice`.", plane: "Social", code: "Justice" },
+                { title: "The World (Fortitude)", def: "The sum of all objective facts to be faced; the expression of `Fortitude`.", plane: "Social", code: "Fortitude" }
+            ],
+            [
+                { title: "Psychology (Understanding)", def: "The synthesis of self-knowledge and self-mastery, combining `Temperance` and `Prudence`.", plane: "Synthesized", code: "Temperance + Prudence" },
+                { title: "Language (Connection)", def: "The synthesis of shared meaning and human bond, combining `Charity` and `Justice`.", plane: "Synthesized", code: "Charity + Justice" },
+                { title: "History (Context)", def: "The grounded record of action and endurance, combining `Fortitude` and `Faith`.", plane: "Synthesized", code: "Fortitude + Faith" },
+                { title: "Reality (Truth)", def: "The final, grand synthesis where all 7 virtues are in perfect, integrated alignment.", plane: "Synthesized", code: "All 7 Virtues" }
+            ]
+        ],
+        vice: [
+            [
+                { title: "Chaos (Structurelessness)", def: "The rejection of foundational structure, synthesizing `Sloth` and `Pride`.", plane: "Theological", code: "Sloth + Pride" },
+                { title: "Nihilism (Belief in Nothing)", def: "The vice of rejecting unseen meaning, a perversion of `Faith`.", plane: "Theological", code: "Pride" },
+                { title: "Hatred (Active Ill-Will)", def: "The applied structure of active ill-will, synthesizing `Wrath` and `Envy`.", plane: "Theological", code: "Wrath + Envy" },
+                { title: "Despair (Negative Conviction)", def: "The synthesized conviction in a negative, unavoidable outcome, synthesizing `Pride` and `Sloth`.", plane: "Theological", code: "Pride + Sloth" }
+            ],
+            [
+                { title: "Denial (Rejection of Fact)", def: "The rejection of objective fact, synthesizing `Pride` and `Cowardice`.", plane: "Experiential", code: "Pride + Cowardice" },
+                { title: "Dogma (Closed Mind)", def: "The *inability* to explore possibility, a perversion of `Faith + Prudence`.", plane: "Experiential", code: "Pride" },
+                { title: "Indulgence (Lack of Control)", def: "The applied lack of internal control, synthesizing `Gluttony` and `Lust`.", plane: "Experiential", code: "Gluttony + Lust" },
+                { title: "Folly (Willful Ignorance)", def: "The synthesized process of rejecting practical wisdom, synthesizing `Pride` and `Sloth`.", plane: "Experiential", code: "Pride + Sloth" }
+            ],
+            [
+                { title: "Anarchy (Dissolution)", def: "The dissolution of collective structure, synthesizing `Wrath` and `Greed`.", plane: "Social", code: "Wrath + Greed" },
+                { title: "Apathy (Inability to Care)", def: "The refusal to understand or care about the 'Other\'s' state, synthesizing `Sloth` and `Envy`.", plane: "Social", code: "Sloth + Envy" },
+                { title: "Corruption (Perversion of Morality)", def: "The applied perversion of the moral compass, synthesizing `Greed` and `Envy`.", plane: "Social", code: "Greed + Envy" },
+                { title: "Cowardice (Refusal to Facts)", def: "The refusal to face objective facts, a perversion of `Fortitude`.", plane: "Social", code: "Sloth" }
+            ],
+            [
+                { title: "Confusion (Self-Ignorance)", def: "The synthesis of self-ignorance, combining `Gluttony` and `Folly`.", plane: "Synthesized", code: "Gluttony + Folly" },
+                { title: "Deceit (Ill-Will)", def: "The *language of objectification*, synthesizing `Lust`, `Envy`, and `Greed`.", plane: "Synthesized", code: "Lust + Envy + Greed" },
+                { title: "Erasure (Denial of Record)", def: "The destruction or denial of the grounded record, synthesizing `Pride` and `Sloth`.", plane: "Synthesized", code: "Pride + Sloth" },
+                { title: "Delusion (The Greater Lie)", def: "The final, grand synthesis of all 7 sins; the 'Greater Lie.'", plane: "Synthesized", code: "All 7 Sins" }
+            ]
+        ]
+    },
+    definitions: [
+        { title: "The 7 Classical Virtues (The Base Code of Good)", content: "<p class='mb-4'>These are the 7 foundational energies *from which* the Virtue Matrix is generated. They are the 'base code' of 'Good', divided into Theological (Mind/Conceptual) and Cardinal (Body/Physical) virtues.</p><div class='grid grid-cols-1 md:grid-cols-2 gap-4'><ol class='list-decimal space-y-3 list-inside'><li><strong>Faith:</strong> Belief in the unseen; the substance of things hoped for, the evidence of things not seen.</li><li><strong>Hope:</strong> The intellectual and spiritual conviction in a positive, achievable, and *True* future outcome.</li><li><strong>Charity (Love):</strong> The *agape* or divine, ordering love; the selfless, unconditional connection to the 'Other'.</li><li><strong>Prudence:</strong> Practical wisdom; the ability to discern the correct path of action ('right reason in action').</li></ol><ol class='list-decimal space-y-3 list-inside' start='5'><li><strong>Justice:</strong> Fairness, righteousness, and the internal compass for determining what is 'due' to oneself and others.</li><li><strong>Fortitude (Courage):</strong> The strength to face objective facts, withstand adversity, and act correctly.</li><li><strong>Temperance:</strong> Self-control, moderation, and the mastery of one's own internal state and passions.</li></ol></div>" },
+        { title: "The 7 Deadly Sins (The Base Code of Bad)", content: "<p class='mb-4'>These are the 7 foundational energies *from which* the Vice Matrix is generated. They are the 'base code' of 'Bad', divided into Spiritual (Fallen Mind) and Carnal (Corrupted Body) sins.</p><div class='grid grid-cols-1 md:grid-cols-2 gap-4'><ol class='list-decimal space-y-3 list-inside'><li><strong>Pride:</strong> The belief that one's *internal abstraction* is superior to the *external, objective Truth*. (Perversion of Faith/Prudence)</li><li><strong>Envy:</strong> The sorrow for another's good, based on the belief that it diminishes one's own. (Perversion of Charity/Justice)</li><li><strong>Wrath:</strong> The desire for vengeance or uncontrolled anger, rejecting Justice in favor of emotional excess. (Perversion of Patience/Temperance)</li><li><strong>Sloth:</strong> Apathy and the refusal to *act* or face the difficulty of objective reality; a failure of courage. (Perversion of Fortitude)</li></ol><ol class='list-decimal space-y-3 list-inside' start='5'><li><strong>Greed:</strong> The desire to acquire or possess more than one needs, disrupting moral balance. (Perversion of Justice)</li><li><strong>Gluttony:</strong> The over-consumption of anything to the point of waste; a failure of self-control. (Perversion of Temperance)</li><li><strong>Lust:</strong> The disordered desire for or inordinate enjoyment of sexual pleasure, reducing a person (the 'Other') to an object. (Perversion of Charity/Love)</li></ol></div>" },
+        { title: "The 16 Synthesized Virtues (The Process of Good)", content: "<p class='mb-4'>The 7 Classical Virtues combine and express themselves to create the 16 states of 'Good' that form the nodes of the Virtue Matrix. All 16 nodes are <strong>synthesized expressions</strong> of the base code.</p><ol class='list-decimal space-y-2 list-inside'><li><strong>Maths (Order):</strong> `Prudence` expressed as foundational logic.</li><li><strong>Spirituality (Faith):</strong> `Faith` expressed in the abstract; the *search* for unseen meaning.</li><li><strong>Religion (Charity):</strong> `Charity` (Love) expressed as an applied structure of moral order.</li><li><strong>Intelligence (Hope):</strong> `Hope` expressed as the final synthesis; the *conviction* in a positive, integrated Truth.</li><li><strong>Physics (Objectivity):</strong> `Fortitude` expressed as the acceptance of objective fact.</li><li><strong>Meta-Physics (Imagination):</strong> `Faith` + `Prudence`; the disciplined exploration of possibility.</li><li><strong>Emotional-physics (Temperance):</strong> `Temperance` expressed as the applied rules of internal mastery.</li><li><strong>Learning (Prudence):</strong> `Prudence` expressed as the final synthesis; the *process* of subjective modeling.</li><li><strong>Society (Community):</strong> `Justice` expressed as an applied collective structure.</li><li><strong>Sociology (Empathy):</strong> `Charity` + `Justice`; the disciplined understanding of the 'Other\'s' state.</li><li><strong>Internal Judgment (Justice):</strong> `Justice` expressed as the applied moral compass.</li><li><strong>The World (Fortitude):</strong> `Fortitude` expressed as the final synthesis; the sum of all objective facts to be faced.</li><li><strong>Psychology (Understanding):</strong> `Temperance` + `Prudence`; the synthesis of self-knowledge.</li><li><strong>Language (Connection):</strong> `Charity` + `Justice`; the synthesis of shared meaning.</li><li><strong>History (Context):</strong> `Fortitude` + `Faith`; the grounded record of action.</li><li><strong>Reality (Truth):</strong> The final, grand synthesis of all 7 virtues in perfect, integrated alignment.</li></ol>" },
+        { title: "The 16 Synthesized Vices (The Process of Bad)", content: "<p class='mb-4'>The 7 Deadly Sins combine and express themselves to create the 16 states of 'Bad' that form the nodes of the Vice Matrix. All 16 nodes are <strong>synthesized expressions</strong> of the base code.</p><ol class='list-decimal space-y-2 list-inside'><li><strong>Chaos (Maths):</strong> `Sloth` + `Pride`; the rejection of foundational structure.</li><li><strong>Nihilism (Spirituality):</strong> `Pride` expressed in the abstract; the *belief* in nothing (perversion of Faith).</li><li><strong>Hatred (Religion):</strong> `Wrath` + `Envy`; the applied structure of active ill-will (perversion of Charity).</li><li><strong>Despair (Intelligence):</strong> `Pride` + `Sloth`; the synthesized conviction in a negative, unavoidable outcome (perversion of Hope).</li><li><strong>Denial (Physics):</strong> `Pride` + `Cowardice`; the rejection of objective fact.</li><li><strong>Dogma (Meta-Physics):</strong> `Pride` expressed as a closed mind; the *inability* to explore possibility (perversion of Faith + Prudence).</li><li><strong>Indulgence (Emotional-physics):</strong> `Gluttony` + `Lust`; the applied lack of internal control (perversion of Temperance).</li><li><strong>Folly (Learning):</strong> `Pride` + `Sloth`; the synthesized process of willful ignorance (perversion of Prudence).</li><li><strong>Anarchy (Society):</strong> `Wrath` + `Greed`; the dissolution of collective structure (perversion of Justice).</li><li><strong>Apathy (Sociology):</strong> `Sloth` + `Envy`; the refusal to understand or care about the 'Other\'s' state (perversion of Charity + Justice).</li><li><strong>Corruption (Internal Judgment):</strong> `Greed` + `Envy`; the applied perversion of the moral compass (perversion of Justice).</li><li><strong>Cowardice (The World):</strong> `Sloth` expressed as the final synthesis; the refusal to face facts (perversion of Fortitude).</li><li><strong>Confusion (Psychology):</strong> `Gluttony` + `Folly`; the synthesis of self-ignorance (perversion of Temperance + Prudence).</li><li><strong>Deceit (Language):</strong> `Lust` + `Envy` + `Greed`; the *language of objectification* (perversion of Charity + Justice).</li><li><strong>Erasure (History):</strong> `Pride` + `Sloth`; the destruction or denial of the grounded record (perversion of Fortitude + Faith).</li><li><strong>Delusion (Reality):</strong> The final, grand synthesis of all 7 sins; the 'Greater Lie.'</li></ol>" },
+        { title: "The Meta-Virtue & Meta-Vice (The Will States)", content: "<p class='mb-3'>This section defines the energetic states governing the system's traversal, representing the expression of **Will**.</p><strong>Patience (Meta-Virtue):</strong> The energy of traversal. The process of 'balance' and the *willingness* to follow the arduous 'Grounded Integration' path ('Mastery Path') rather than taking an abstract shortcut.<br><br><strong>Impatience (Meta-Vice):</strong> The energy of the 'Fall'. The *desire for a shortcut* to `Reality`, which fuels the 'Ungrounded Abstraction' path, trapping the system in high-Lie computational loops (the 'Learner Trap')." }
+    ],
+    paths: {
+        learner: [
+            { coord: [1, 3], log: "Start: `Learning` (1,3). Learner must ground theory." },
+            { coord: [2, 3], log: "Move: `Down` -> `The World` (2,3). Path is Grounded. Must move Horizontal." },
+            { coord: [2, 2], log: "Move: `Left` -> `Internal Judgment` (2,2). `Right` is locked. Must move Vertical." },
+            { coord: [3, 2], log: "Move: `Down` -> `History` (3,2). Gaining Context. Must move Horizontal." },
+            { coord: [3, 1], log: "Move: `Left` -> `Language` (3,1). `Right` is locked. Must move Vertical." },
+            { coord: [2, 1], log: "Move: `Up` -> `Sociology` (2,1). Entering 'Left' spiral. Must move Horizontal." },
+            { coord: [2, 0], log: "Move: `Left` -> `Society itself` (2,0). Must move Vertical." },
+            { coord: [1, 0], log: "Move: `Up` -> `Physics` (1,0). No `Left` move possible. Path is trapped." },
+            { coord: null, log: "<strong>Result: [STUCK]</strong>. The 'Imperfect Learner' is trapped in a computational loop, unable to reach `Reality`." }
+        ],
+        master: [
+            { coord: [1, 3], log: "Start: `Learning` (1,3). Master seeks to integrate." },
+            { coord: [2, 3], log: "Move: `Down` -> `The World` (2,3). Path is Grounded. Must move Horizontal." },
+            { coord: [2, 2], log: "Move: `Left` -> `Internal Judgment` (2,2). Calibrating. Must move Vertical." },
+            { coord: [3, 2], log: "Move: `Down` -> `History` (3,2). Gaining Context. Must move Horizontal." },
+            { coord: null, log: "<strong>Mastery Check:</strong> High Mastery in `Learning`, `World`, `Judgment`, & `History` unlocks the `Right` move." },
+            { coord: [3, 3], log: "Move: `Right` -> `Reality` (3,3). Path complete." },
+            { coord: null, log: "<strong>Result: [SUCCESS]</strong>. The 'Perfect Master' has integrated all planes to achieve `Truth`." }
+        ]
+    }
+};
+
+let currentMatrixState = 'virtue';
+let simInProgress = false;
+
+document.addEventListener('DOMContentLoaded', () => {
+    setupNavigation();
+    setupMatrixControls();
+    renderMatrix(currentMatrixState);
+    renderDefinitions();
+    renderCombinedView();
+    // Initialize detail panel with a default state, e.g., Maths (0,0)
+    if(data.details[currentMatrixState] && data.details[currentMatrixState][0] && data.details[currentMatrixState][0][0]){
+        showDetail(currentMatrixState, 0, 0);
+    } else {
+         console.error("Default detail state not found");
+    }
+});
+
+function setupNavigation() {
+    const navLinks = document.querySelectorAll('#main-nav a');
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetId = link.getAttribute('data-target');
+            const targetElement = document.getElementById(targetId);
+
+            if (targetElement) {
+                document.querySelectorAll('#main-nav a').forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+
+                document.querySelectorAll('[data-section]').forEach(s => s.classList.remove('active'));
+                targetElement.classList.add('active');
+            } else {
+                 console.error(`Navigation target section with ID "${targetId}" not found.`);
+            }
+        });
+    });
+}
+
+function renderCombinedView() {
+    // 1. Invert Virtue Data
+    const invertedVirtueMatrix = [...data.matrix.virtue].reverse().map(row => [...row].reverse());
+    const invertedVirtueHeaders = [...data.headers.virtue].reverse();
+    const invertedPlaneHeaders = ["Plane 3 (Total)", "Plane 2 (Applied)", "Plane 1 (Abstract)", "Plane 0 (Base)"];
+
+    // 2. Populate Inverted Virtue Grid
+    const virtueGrid = document.getElementById('matrix-grid-virtue-inv');
+    virtueGrid.innerHTML = '';
+    invertedVirtueMatrix.forEach((row, r) => {
+        row.forEach((cell, c) => {
+            const cellEl = document.createElement('div');
+            // Make cells non-interactive in combined view
+            cellEl.className = 'matrix-cell virtue-cell bg-white border-gray-200 border rounded-xl flex items-center justify-center p-2 text-center font-semibold text-sm md:text-base';
+            cellEl.style.cursor = 'default';
+            cellEl.textContent = cell;
+            virtueGrid.appendChild(cellEl);
+        });
+    });
+
+    // 3. Populate Inverted Virtue Headers
+    invertedPlaneHeaders.forEach((header, i) => {
+         const element = document.getElementById(`header-plane-inv-${i}`);
+         if (element) element.textContent = header;
+    });
+    invertedVirtueHeaders.forEach((header, i) => {
+         const element = document.getElementById(`header-row-inv-${i}`);
+         if (element) element.textContent = header;
+    });
+
+    // 4. Populate Standard Vice Grid
+    const viceGrid = document.getElementById('matrix-grid-vice-std');
+    viceGrid.innerHTML = '';
+    data.matrix.vice.forEach((row, r) => {
+        row.forEach((cell, c) => {
+            const cellEl = document.createElement('div');
+             // Make cells non-interactive in combined view
+            cellEl.className = 'matrix-cell vice-cell bg-gray-800 text-white border-gray-700 border rounded-xl flex items-center justify-center p-2 text-center font-semibold text-sm md:text-base';
+            cellEl.style.cursor = 'default';
+            cellEl.textContent = cell;
+            viceGrid.appendChild(cellEl);
+        });
+    });
+}
+
+function setupMatrixControls() {
+    const btnVirtue = document.getElementById('btn-virtue');
+    const btnVice = document.getElementById('btn-vice');
+
+    if (!btnVirtue || !btnVice) {
+        console.error("Matrix toggle buttons not found");
+        return; // Exit if buttons aren't found
+    }
+
+    btnVirtue.addEventListener('click', () => {
+        if (currentMatrixState === 'virtue') return;
+        currentMatrixState = 'virtue';
+        btnVirtue.classList.add('active');
+        btnVice.classList.remove('active');
+        document.getElementById('matrix-title').textContent = "The Virtue Matrix";
+        document.getElementById('matrix-description').textContent = "This matrix maps the 16 positive nodes of the 'Virtue Matrix' that define the path to `Reality (Truth)`. Click any cell to explore its properties.";
+        renderMatrix(currentMatrixState);
+        showDetail(currentMatrixState, 0, 0); // Show default detail
+    });
+
+    btnVice.addEventListener('click', () => {
+        if (currentMatrixState === 'vice') return;
+        currentMatrixState = 'vice';
+        btnVice.classList.add('active');
+        btnVirtue.classList.remove('active');
+        document.getElementById('matrix-title').textContent = "The Vice Matrix";
+        document.getElementById('matrix-description').textContent = "This matrix maps the 16 shadow nodes of the 'Vice Matrix' that define the path to `Delusion (The Lie)`. Click any cell to explore its properties.";
+        renderMatrix(currentMatrixState);
+        showDetail(currentMatrixState, 0, 0); // Show default detail
+    });
+}
+
+function renderMatrix(state) {
+    const grid = document.getElementById('matrix-grid-container');
+    const matrixTitle = document.getElementById('matrix-title'); // For row headers
+    if (!grid || !matrixTitle) {
+         console.error("Matrix grid container or title element not found for rendering.");
+         return;
+    }
+    grid.innerHTML = '';
+    const cellClass = state === 'virtue' ? 'virtue-cell' : 'vice-cell';
+    const bgClass = state === 'virtue' ? 'bg-white' : 'bg-gray-800 text-white';
+    const borderClass = state === 'virtue' ? 'border-gray-200' : 'border-gray-700';
+
+    data.matrix[state].forEach((row, r) => {
+        row.forEach((cell, c) => {
+            const cellEl = document.createElement('div');
+            cellEl.className = `matrix-cell ${cellClass} ${bgClass} ${borderClass} border rounded-xl flex items-center justify-center p-2 text-center font-semibold text-sm md:text-base`;
+            cellEl.textContent = cell;
+            cellEl.addEventListener('click', () => showDetail(state, r, c));
+            grid.appendChild(cellEl);
+        });
+    });
+
+    // Update row headers based on state
+    for (let i = 0; i < 4; i++) {
+        const headerElement = document.getElementById(`header-row-${i}`);
+        if (headerElement) {
+             headerElement.textContent = data.headers[state][i];
+        } else {
+             console.error(`Row header element header-row-${i} not found.`);
+        }
+    }
+}
+
+
+function showDetail(state, r, c) {
+    // Ensure detail panel elements exist
+    const detailTitle = document.getElementById('detail-title');
+    const detailDescription = document.getElementById('detail-description');
+    const content = document.getElementById('detail-content');
+
+    if (!detailTitle || !detailDescription || !content) {
+        console.error("Detail panel elements not found.");
+        return;
+    }
+
+     // Validate data access
+    if (!data.details[state] || !data.details[state][r] || !data.details[state][r][c]) {
+        console.error(`Detail data not found for state: ${state}, row: ${r}, col: ${c}`);
+        detailTitle.textContent = "Error";
+        detailDescription.textContent = "Details not available.";
+        content.innerHTML = "";
+        return;
+    }
+
+    const detail = data.details[state][r][c];
+    const shadowState = state === 'virtue' ? 'vice' : 'virtue';
+
+    // Validate shadow data access
+    let shadowDetailTitle = "N/A";
+    let shadowDetailCode = "N/A";
+
+    if (data.details[shadowState] && data.details[shadowState][r] && data.details[shadowState][r][c]) {
+        shadowDetailTitle = data.details[shadowState][r][c].title;
+        shadowDetailCode = data.details[shadowState][r][c].code || "N/A";
+    } else {
+         console.warn(`Shadow detail data not found for state: ${shadowState}, row: ${r}, col: ${c}`);
+    }
+
+
+    detailTitle.textContent = detail.title;
+    detailDescription.textContent = detail.def;
+
+    content.innerHTML = `
+        <div class="text-sm">
+            <span class="font-semibold text-gray-800">Plane:</span>
+            <span class="text-gray-600">${detail.plane || 'N/A'}</span>
+        </div>
+        <div class="text-sm">
+            <span class="font-semibold text-gray-800">Base Code:</span>
+            <span class="text-gray-600">${detail.code || 'N/A'}</span>
+        </div>
+        <div class="text-sm">
+            <span class="${state === 'virtue' ? 'text-green-600' : 'text-red-600'} font-medium">Type: ${state.charAt(0).toUpperCase() + state.slice(1)}</span>
+        </div>
+        <div class="text-sm pt-2 border-t border-gray-200">
+            <span class="font-semibold text-gray-800">Shadow Counterpart:</span>
+            <span class="text-gray-600">${shadowDetailTitle}</span>
+        </div>
+         <div class="text-sm">
+            <span class="font-semibold text-gray-800">Shadow Code:</span>
+            <span class="text-gray-600">${shadowDetailCode}</span>
+        </div>
+    `;
+}
+
+function renderDefinitions() {
+    const container = document.getElementById('accordion-container');
+    if (!container) {
+         console.error("Accordion container not found.");
+         return;
+    }
+    container.innerHTML = '';
+    data.definitions.forEach((item, index) => {
+        const div = document.createElement('div');
+        div.className = 'bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden';
+        div.innerHTML = `
+            <button class="w-full p-5 text-left font-semibold text-lg text-gray-800 flex justify-between items-center hover:bg-gray-50" data-accordion-toggle="${index}">
+                <span>${item.title}</span>
+                <span class="transform transition-transform duration-200 text-sky-600">▼</span>
+            </button>
+            <div class="p-5 pt-0 text-gray-600 hidden" data-accordion-content="${index}">
+                <div class="border-t border-gray-200 pt-4">${item.content}</div>
+            </div>
+        `;
+        container.appendChild(div);
+    });
+
+    container.querySelectorAll('[data-accordion-toggle]').forEach(button => {
+        button.addEventListener('click', () => {
+            const content = container.querySelector(`[data-accordion-content="${button.dataset.accordionToggle}"]`);
+            const arrow = button.querySelector('span:last-child');
+            if(content && arrow){
+                content.classList.toggle('hidden');
+                arrow.classList.toggle('rotate-180');
+            } else {
+                 console.error("Accordion content or arrow not found for toggle:", button.dataset.accordionToggle);
+            }
+        });
+    });
+}
+
+
+function setupMatrixControls() {
+    const btnVirtue = document.getElementById('btn-virtue');
+    const btnVice = document.getElementById('btn-vice');
+
+    if (!btnVirtue || !btnVice) {
+        console.error("Matrix toggle buttons not found");
+        return; // Exit if buttons aren't found
+    }
+
+    btnVirtue.addEventListener('click', () => {
+        if (currentMatrixState === 'virtue') return;
+        currentMatrixState = 'virtue';
+        btnVirtue.classList.add('active');
+        btnVice.classList.remove('active');
+        document.getElementById('matrix-title').textContent = "The Virtue Matrix";
+        document.getElementById('matrix-description').textContent = "This matrix maps the 16 positive nodes of the 'Virtue Matrix' that define the path to `Reality (Truth)`. Click any cell to explore its properties.";
+        renderMatrix(currentMatrixState);
+        showDetail(currentMatrixState, 0, 0); // Show default detail
+    });
+
+    btnVice.addEventListener('click', () => {
+        if (currentMatrixState === 'vice') return;
+        currentMatrixState = 'vice';
+        btnVice.classList.add('active');
+        btnVirtue.classList.remove('active');
+        document.getElementById('matrix-title').textContent = "The Vice Matrix";
+        document.getElementById('matrix-description').textContent = "This matrix maps the 16 shadow nodes of the 'Vice Matrix' that define the path to `Delusion (The Lie)`. Click any cell to explore its properties.";
+        renderMatrix(currentMatrixState);
+        showDetail(currentMatrixState, 0, 0); // Show default detail
+    });
+}
+
+function renderCombinedView() {
+    // 1. Invert Virtue Data
+    const invertedVirtueMatrix = [...data.matrix.virtue].reverse().map(row => [...row].reverse());
+    const invertedVirtueHeaders = [...data.headers.virtue].reverse();
+    const invertedPlaneHeaders = ["Plane 3 (Total)", "Plane 2 (Applied)", "Plane 1 (Abstract)", "Plane 0 (Base)"];
+
+    // 2. Populate Inverted Virtue Grid
+    const virtueGrid = document.getElementById('matrix-grid-virtue-inv');
+    virtueGrid.innerHTML = '';
+    invertedVirtueMatrix.forEach((row, r) => {
+        row.forEach((cell, c) => {
+            const cellEl = document.createElement('div');
+            // Make cells non-interactive in combined view
+            cellEl.className = 'matrix-cell virtue-cell bg-white border-gray-200 border rounded-xl flex items-center justify-center p-2 text-center font-semibold text-sm md:text-base';
+            cellEl.style.cursor = 'default';
+            cellEl.textContent = cell;
+            virtueGrid.appendChild(cellEl);
+        });
+    });
+
+    // 3. Populate Inverted Virtue Headers
+    invertedPlaneHeaders.forEach((header, i) => {
+         const element = document.getElementById(`header-plane-inv-${i}`);
+         if (element) element.textContent = header;
+    });
+    invertedVirtueHeaders.forEach((header, i) => {
+         const element = document.getElementById(`header-row-inv-${i}`);
+         if (element) element.textContent = header;
+    });
+
+    // 4. Populate Standard Vice Grid
+    const viceGrid = document.getElementById('matrix-grid-vice-std');
+    viceGrid.innerHTML = '';
+    data.matrix.vice.forEach((row, r) => {
+        row.forEach((cell, c) => {
+            const cellEl = document.createElement('div');
+             // Make cells non-interactive in combined view
+            cellEl.className = 'matrix-cell vice-cell bg-gray-800 text-white border-gray-700 border rounded-xl flex items-center justify-center p-2 text-center font-semibold text-sm md:text-base';
+            cellEl.style.cursor = 'default';
+            cellEl.textContent = cell;
+            viceGrid.appendChild(cellEl);
+        });
+    });
+}
+
+const sleep = (ms) => new Promise(res => setTimeout(res, ms));
+
+
+</script>
+</body>
+</html>
