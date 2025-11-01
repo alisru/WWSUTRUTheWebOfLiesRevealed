@@ -7,7 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Chosen Palette: Calm Harmony (Light Gray, Blue Accent) -->
     <!-- Application Structure Plan: A multi-section SPA with sidebar navigation ('Overview', 'Matrix', 'Definitions', 'Combined View'). This structure deconstructs the dense, complex report into its logical parts: the high-level concept (Overview), the core data (Matrix views), and the reference material (Definitions). The goal is clarity and reference of the core framework. -->
-    <!-- Visualization & Content Choices: 1. Triadic Model -> Inform -> 3-Column HTML/CSS Layout -> Static -> Clear textual presentation of the core concept. 2. Dual Matrices -> Organize/Compare -> Interactive 4x4 CSS Grid + JS Toggle + Detail Panel -> OnClick (cell) shows details, OnClick (toggle) swaps Virtue/Vice data -> Manages complexity by showing one matrix at a time and revealing deep info on demand. (HTML/CSS/JS). -->
+    <!-- Visualization & Content Choices: 1. Triadic Model -> Inform -> 3-Column HTML/CSS Layout -> Static -> Clear textual presentation of the core concept. 2. Dual Matrices -> Organize/Compare -> Interactive 4x4 CSS Grid + JS Toggle + Detail Panel -> OnClick (cell) shows details, OnClick (toggle) swaps Virtue/Sin data -> Manages complexity by showing one matrix at a time and revealing deep info on demand. (HTML/CSS/JS). -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
@@ -67,7 +67,10 @@
     <div class="flex flex-col md:flex-row min-h-screen">
         <!-- Sidebar Navigation -->
         <nav class="md:w-64 bg-white md:border-r border-b md:border-b-0 border-gray-200 p-4 shrink-0">
-            <h1 class="text-2xl font-bold text-sky-800 mb-6">The Triadic Kanon</h1>
+        <a href="./index.html">← Back To Navigation</a>
+		
+            <h1 class="text-2xl font-bold text-sky-800 mt-3 mb-6">The Triadic Kanon</h1>
+
             <ul class="space-y-2" id="main-nav">
                 <li><a href="#" class="nav-link flex items-center p-3 rounded-lg active" data-target="overview">
                     <span class="w-6 h-6 mr-3">❖</span><span>Overview</span>
@@ -100,7 +103,7 @@
                         </div>
                         <div class="border border-gray-200 rounded-xl p-6 bg-green-50">
                             <h4 class="text-xl font-bold text-green-800 mb-2">Learning (This.Son)</h4>
-                            <p class="text-gray-700"><strong class="font-semibold text-gray-800">The Subjective Frame</strong>. This vector represents the process of consciousness, interpretation, and modeling that occurs *within* a distinct plane. It is the dynamic, experiential component—the "Actor" or the "Software."</p>
+                            <p class="text-gray-700"><strong class="font-semibold text-gray-800">The Subjective Frame</strong>. This vector represents the process of consciousness, interpretation, and modeling that occurs <em>within</em> a distinct plane. It is the dynamic, experiential component—the "Actor" or the "Software."</p>
                         </div>
                         <div class="border border-gray-200 rounded-xl p-6 bg-violet-50">
                             <h4 class="text-xl font-bold text-violet-800 mb-2">Intelligence (This.Holy Spirit)</h4>
@@ -116,7 +119,7 @@
                     <h2 class="text-4xl font-bold text-gray-800" id="matrix-title">The Virtue Matrix</h2>
                     <div class="flex items-center p-1 rounded-full bg-gray-200">
                         <button id="btn-virtue" class="btn-toggle px-4 py-2 text-sm font-semibold rounded-full active">Virtues</button>
-                        <button id="btn-vice" class="btn-toggle px-4 py-2 text-sm font-semibold rounded-full">Vices</button>
+                        <button id="btn-vice" class="btn-toggle px-4 py-2 text-sm font-semibold rounded-full">Sins</button>
                     </div>
                 </div>
                 <p class="text-lg text-gray-600 mb-8" id="matrix-description">This matrix maps the 16 positive nodes of the "Virtue Matrix" that define the path to `Reality (Truth)`. Click any cell to explore its properties and its shadow counterpart.</p>
@@ -162,7 +165,7 @@
             <!-- Combined View Section -->
             <section id="total" data-section>
                 <h2 class="text-4xl font-bold text-gray-800 mb-4">Combined Matrix View</h2>
-                <p class="text-lg text-gray-600 mb-8">This view displays the inverted "Virtue Matrix" (with coordinate 0,0 at the bottom-right) alongside the standard "Vice Matrix" (with coordinate 0,0 at the top-left) for direct comparison of the paths to Truth and Delusion.</p>
+                <p class="text-lg text-gray-600 mb-8">This view displays the inverted "Virtue Matrix" (with coordinate 0,0 at the bottom-right) alongside the standard "Sin Matrix" (with coordinate 0,0 at the top-left) for direct comparison of the paths to Truth and Delusion.</p>
                 <div class="grid lg:grid-cols-2 gap-8">
                     <!-- Inverted Virtue Matrix -->
                     <div>
@@ -183,9 +186,9 @@
                             <span id="header-row-inv-3">Theological</span>
                         </div>
                     </div>
-                    <!-- Standard Vice Matrix -->
+                    <!-- Standard Sin Matrix -->
                     <div>
-                        <h3 class="text-2xl font-semibold text-center text-red-700 mb-4">Vice Matrix (Standard)</h3>
+                        <h3 class="text-2xl font-semibold text-center text-red-700 mb-4">Sin Matrix (Standard)</h3>
                         <div class="grid grid-cols-4 gap-2 text-center text-xs font-semibold text-gray-500 uppercase mb-2">
                             <span>Plane 0 (Base)</span>
                             <span>Plane 1 (Abstract)</span>
@@ -196,10 +199,10 @@
                             <!-- Standard vice cells will be injected by JS -->
                         </div>
                         <div class="grid grid-cols-4 gap-2 text-center text-xs font-semibold text-gray-500 uppercase mt-2">
-                            <span>Theological</span>
-                            <span>Experiential</span>
-                            <span>Social</span>
-                            <span>Synthesized</span>
+                            <span>Theological Sins</span>
+                            <span>Experiential Sins</span>
+                            <span>Social Sins</span>
+                            <span>Synthesized Sins</span>
                         </div>
                     </div>
                 </div>
@@ -226,13 +229,13 @@ const data = {
     },
     headers: {
         virtue: ["Theological Virtues", "Experiential Virtues", "Social Virtues", "Synthesized Virtues"],
-        vice: ["Theological Vices", "Experiential Vices", "Social Vices", "Synthesized Vices"]
+        vice: ["Theological Sins", "Experiential Sins", "Social Sins", "Synthesized Sins"]
     },
     details: {
         virtue: [
             [
                 { title: "Maths (Order)", def: "The virtue of foundational logic and coherent structure, expressed as `Prudence`.", plane: "Theological", code: "Prudence" },
-                { title: "Spirituality (Faith)", def: "The virtue of abstract belief; the <em>search</em> for unseen meaning, expressed as `Faith`.", plane: "Theological", code: "Faith" },
+                { title: "Spirituality (Faith)", def: "The virtue of abstract belief; the search for unseen meaning, expressed as `Faith`.", plane: "Theological", code: "Faith" },
                 { title: "Religion (Charity)", def: "The virtue of selfless, unconditional love, expressed as an applied structure of moral order. (`Charity/Love`)", plane: "Theological", code: "Charity (Love)" },
                 { title: "Intelligence (Hope)", def: "The synthesized conviction in a positive, integrated Truth, expressed as `Hope`.", plane: "Theological", code: "Hope" }
             ],
@@ -240,7 +243,7 @@ const data = {
                 { title: "Physics (Objectivity)", def: "The virtue of accepting objective, measurable facts, expressed as `Fortitude`.", plane: "Experiential", code: "Fortitude" },
                 { title: "Meta-Physics (Imagination)", def: "The disciplined exploration of possibility, synthesizing `Faith` and `Prudence`.", plane: "Experiential", code: "Faith + Prudence" },
                 { title: "Emotional-physics (Temperance)", def: "The applied rules of internal mastery and self-control, expressed as `Temperance`.", plane: "Experiential", code: "Temperance" },
-                { title: "Learning (Prudence)", def: "The final synthesis of practical wisdom; the <em>process</em> of subjective modeling. (`Prudence`)", plane: "Experiential", code: "Prudence" }
+                { title: "Learning (Prudence)", def: "The final synthesis of practical wisdom; the process of subjective modeling. (`Prudence`)", plane: "Experiential", code: "Prudence" }
             ],
             [
                 { title: "Society itself (Community)", def: "The applied collective structure and civitas, expressed as `Justice`.", plane: "Social", code: "Justice" },
@@ -264,7 +267,7 @@ const data = {
             ],
             [
                 { title: "Denial (Rejection of Fact)", def: "The rejection of objective fact, synthesizing `Pride` and `Cowardice`.", plane: "Experiential", code: "Pride + Cowardice" },
-                { title: "Dogma (Closed Mind)", def: "The <em>inability</em> to explore possibility, a perversion of `Faith + Prudence`.", plane: "Experiential", code: "Pride" },
+                { title: "Dogma (Closed Mind)", def: "The inability to explore possibility, a perversion of `Faith + Prudence`.", plane: "Experiential", code: "Pride" },
                 { title: "Indulgence (Lack of Control)", def: "The applied lack of internal control, synthesizing `Gluttony` and `Lust`.", plane: "Experiential", code: "Gluttony + Lust" },
                 { title: "Folly (Willful Ignorance)", def: "The synthesized process of rejecting practical wisdom, synthesizing `Pride` and `Sloth`.", plane: "Experiential", code: "Pride + Sloth" }
             ],
@@ -276,7 +279,7 @@ const data = {
             ],
             [
                 { title: "Confusion (Self-Ignorance)", def: "The synthesis of self-ignorance, combining `Gluttony` and `Folly`.", plane: "Synthesized", code: "Gluttony + Folly" },
-                { title: "Deceit (Ill-Will)", def: "The <em>language of objectification</em>, synthesizing `Lust`, `Envy`, and `Greed`.", plane: "Synthesized", code: "Lust + Envy + Greed" },
+                { title: "Deceit (Ill-Will)", def: "The language of objectification, synthesizing `Lust`, `Envy`, and `Greed`.", plane: "Synthesized", code: "Lust + Envy + Greed" },
                 { title: "Erasure (Denial of Record)", def: "The destruction or denial of the grounded record, synthesizing `Pride` and `Sloth`.", plane: "Synthesized", code: "Pride + Sloth" },
                 { title: "Delusion (The Greater Lie)", def: "The final, grand synthesis of all 7 sins; the 'Greater Lie.'", plane: "Synthesized", code: "All 7 Sins" }
             ]
@@ -284,10 +287,10 @@ const data = {
     },
     definitions: [
         { title: "The 7 Classical Virtues (The Base Code of Good)", content: "<p class='mb-4'>These are the 7 foundational energies <em>from which</em> the Virtue Matrix is generated. They are the 'base code' of 'Good', divided into Theological (Mind/Conceptual) and Cardinal (Body/Physical) virtues.</p><div class='grid grid-cols-1 md:grid-cols-2 gap-4'><ol class='list-decimal space-y-3 list-inside'><li><strong>Faith:</strong> Belief in the unseen; the substance of things hoped for, the evidence of things not seen.</li><li><strong>Hope:</strong> The intellectual and spiritual conviction in a positive, achievable, and <em>True</em> future outcome.</li><li><strong>Charity (Love):</strong> The <em>agape</em> or divine, ordering love; the selfless, unconditional connection to the 'Other'.</li><li><strong>Prudence:</strong> Practical wisdom; the ability to discern the correct path of action ('right reason in action').</li></ol><ol class='list-decimal space-y-3 list-inside' start='5'><li><strong>Justice:</strong> Fairness, righteousness, and the internal compass for determining what is 'due' to oneself and others.</li><li><strong>Fortitude (Courage):</strong> The strength to face objective facts, withstand adversity, and act correctly.</li><li><strong>Temperance:</strong> Self-control, moderation, and the mastery of one's own internal state and passions.</li></ol></div>" },
-        { title: "The 7 Deadly Sins (The Base Code of Bad)", content: "<p class='mb-4'>These are the 7 foundational energies <em>from which</em> the Vice Matrix is generated. They are the 'base code' of 'Bad', divided into Spiritual (Fallen Mind) and Carnal (Corrupted Body) sins.</p><div class='grid grid-cols-1 md:grid-cols-2 gap-4'><ol class='list-decimal space-y-3 list-inside'><li><strong>Pride:</strong> The belief that one's <em>internal abstraction</em> is superior to the <em>external, objective Truth</em>. (Perversion of Faith/Prudence)</li><li><strong>Envy:</strong> The sorrow for another's good, based on the belief that it diminishes one's own. (Perversion of Charity/Justice)</li><li><strong>Wrath:</strong> The desire for vengeance or uncontrolled anger, rejecting Justice in favor of emotional excess. (Perversion of Patience/Temperance)</li><li><strong>Sloth:</strong> Apathy and the refusal to <em>act</em> or face the difficulty of objective reality; a failure of courage. (Perversion of Fortitude)</li></ol><ol class='list-decimal space-y-3 list-inside' start='5'><li><strong>Greed:</strong> The desire to acquire or possess more than one needs, disrupting moral balance. (Perversion of Justice)</li><li><strong>Gluttony:</strong> The over-consumption of anything to the point of waste; a failure of self-control. (Perversion of Temperance)</li><li><strong>Lust:</strong> The disordered desire for or inordinate enjoyment of sexual pleasure, reducing a person (the 'Other') to an object. (Perversion of Charity/Love)</li></ol></div>" },
+        { title: "The 7 Deadly Sins (The Base Code of Bad)", content: "<p class='mb-4'>These are the 7 foundational energies <em>from which</em> the Sin Matrix is generated. They are the 'base code' of 'Bad', divided into Spiritual (Fallen Mind) and Carnal (Corrupted Body) sins.</p><div class='grid grid-cols-1 md:grid-cols-2 gap-4'><ol class='list-decimal space-y-3 list-inside'><li><strong>Pride:</strong> The belief that one's <em>internal abstraction</em> is superior to the <em>external, objective Truth</em>. (Perversion of Faith/Prudence)</li><li><strong>Envy:</strong> The sorrow for another's good, based on the belief that it diminishes one's own. (Perversion of Charity/Justice)</li><li><strong>Wrath:</strong> The desire for vengeance or uncontrolled anger, rejecting Justice in favor of emotional excess. (Perversion of Patience/Temperance)</li><li><strong>Sloth:</strong> Apathy and the refusal to <em>act</em> or face the difficulty of objective reality; a failure of courage. (Perversion of Fortitude)</li></ol><ol class='list-decimal space-y-3 list-inside' start='5'><li><strong>Greed:</strong> The desire to acquire or possess more than one needs, disrupting moral balance. (Perversion of Justice)</li><li><strong>Gluttony:</strong> The over-consumption of anything to the point of waste; a failure of self-control. (Perversion of Temperance)</li><li><strong>Lust:</strong> The disordered desire for or inordinate enjoyment of sexual pleasure, reducing a person (the 'Other') to an object. (Perversion of Charity/Love)</li></ol></div>" },
         { title: "The 16 Synthesized Virtues (The Process of Good)", content: "<p class='mb-4'>The 7 Classical Virtues combine and express themselves to create the 16 states of 'Good' that form the nodes of the Virtue Matrix. All 16 nodes are <strong>synthesized expressions</strong> of the base code.</p><ol class='list-decimal space-y-2 list-inside'><li><strong>Maths (Order):</strong> `Prudence` expressed as foundational logic.</li><li><strong>Spirituality (Faith):</strong> `Faith` expressed in the abstract; the <em>search</em> for unseen meaning.</li><li><strong>Religion (Charity):</strong> `Charity` (Love) expressed as an applied structure of moral order.</li><li><strong>Intelligence (Hope):</strong> `Hope` expressed as the final synthesis; the <em>conviction</em> in a positive, integrated Truth.</li><li><strong>Physics (Objectivity):</strong> `Fortitude` expressed as the acceptance of objective fact.</li><li><strong>Meta-Physics (Imagination):</strong> `Faith` + `Prudence`; the disciplined exploration of possibility.</li><li><strong>Emotional-physics (Temperance):</strong> `Temperance` expressed as the applied rules of internal mastery.</li><li><strong>Learning (Prudence):</strong> `Prudence` expressed as the final synthesis; the <em>process</em> of subjective modeling.</li><li><strong>Society (Community):</strong> `Justice` expressed as an applied collective structure.</li><li><strong>Sociology (Empathy):</strong> `Charity` + `Justice`; the disciplined understanding of the 'Other\'s' state.</li><li><strong>Internal Judgment (Justice):</strong> `Justice` expressed as the applied moral compass.</li><li><strong>The World (Fortitude):</strong> `Fortitude` expressed as the final synthesis; the sum of all objective facts to be faced.</li><li><strong>Psychology (Understanding):</strong> `Temperance` + `Prudence`; the synthesis of self-knowledge.</li><li><strong>Language (Connection):</strong> `Charity` + `Justice`; the synthesis of shared meaning.</li><li><strong>History (Context):</strong> `Fortitude` + `Faith`; the grounded record of action.</li><li><strong>Reality (Truth):</strong> The final, grand synthesis of all 7 virtues in perfect, integrated alignment.</li></ol>" },
-        { title: "The 16 Synthesized Vices (The Process of Bad)", content: "<p class='mb-4'>The 7 Deadly Sins combine and express themselves to create the 16 states of 'Bad' that form the nodes of the Vice Matrix. All 16 nodes are <strong>synthesized expressions</strong> of the base code.</p><ol class='list-decimal space-y-2 list-inside'><li><strong>Chaos (Maths):</strong> `Sloth` + `Pride`; the rejection of foundational structure.</li><li><strong>Nihilism (Spirituality):</strong> `Pride` expressed in the abstract; the <em>belief</em> in nothing (perversion of Faith).</li><li><strong>Hatred (Religion):</strong> `Wrath` + `Envy`; the applied structure of active ill-will (perversion of Charity).</li><li><strong>Despair (Intelligence):</strong> `Pride` + `Sloth`; the synthesized conviction in a negative, unavoidable outcome (perversion of Hope).</li><li><strong>Denial (Physics):</strong> `Pride` + `Cowardice`; the rejection of objective fact.</li><li><strong>Dogma (Meta-Physics):</strong> `Pride` expressed as a closed mind; the <em>inability</em> to explore possibility (perversion of Faith + Prudence).</li><li><strong>Indulgence (Emotional-physics):</strong> `Gluttony` + `Lust`; the applied lack of internal control (perversion of Temperance).</li><li><strong>Folly (Learning):</strong> `Pride` + `Sloth`; the synthesized process of willful ignorance (perversion of Prudence).</li><li><strong>Anarchy (Society):</strong> `Wrath` + `Greed`; the dissolution of collective structure (perversion of Justice).</li><li><strong>Apathy (Sociology):</strong> `Sloth` + `Envy`; the refusal to understand or care about the 'Other\'s' state (perversion of Charity + Justice).</li><li><strong>Corruption (Internal Judgment):</strong> `Greed` + `Envy`; the applied perversion of the moral compass (perversion of Justice).</li><li><strong>Cowardice (The World):</strong> `Sloth` expressed as the final synthesis; the refusal to face facts (perversion of Fortitude).</li><li><strong>Confusion (Psychology):</strong> `Gluttony` + `Folly`; the synthesis of self-ignorance (perversion of Temperance + Prudence).</li><li><strong>Deceit (Language):</strong> `Lust` + `Envy` + `Greed`; the <em>language of objectification</em> (perversion of Charity + Justice).</li><li><strong>Erasure (History):</strong> `Pride` + `Sloth`; the destruction or denial of the grounded record (perversion of Fortitude + Faith).</li><li><strong>Delusion (Reality):</strong> The final, grand synthesis of all 7 sins; the 'Greater Lie.'</li></ol>" },
-        { title: "The Meta-Virtue & Meta-Vice (The Will States)", content: "<p class='mb-3'>This section defines the energetic states governing the system's traversal, representing the expression of <strong>Will</strong>.</p><strong>Patience (Meta-Virtue):</strong> The energy of traversal. The process of 'balance' and the <em>willingness</em> to follow the arduous 'Grounded Integration' path ('Mastery Path') rather than taking an abstract shortcut.<br><br><strong>Impatience (Meta-Vice):</strong> The energy of the 'Fall'. The <em>desire for a shortcut</em> to `Reality`, which fuels the 'Ungrounded Abstraction' path, trapping the system in high-Lie computational loops (the 'Learner Trap')." }
+        { title: "The 16 Synthesized Sins (The Process of Bad)", content: "<p class='mb-4'>The 7 Deadly Sins combine and express themselves to create the 16 states of 'Bad' that form the nodes of the Sin Matrix. All 16 nodes are <strong>synthesized expressions</strong> of the base code.</p><ol class='list-decimal space-y-2 list-inside'><li><strong>Chaos (Maths):</strong> `Sloth` + `Pride`; the rejection of foundational structure.</li><li><strong>Nihilism (Spirituality):</strong> `Pride` expressed in the abstract; the <em>belief</em> in nothing (perversion of Faith).</li><li><strong>Hatred (Religion):</strong> `Wrath` + `Envy`; the applied structure of active ill-will (perversion of Charity).</li><li><strong>Despair (Intelligence):</strong> `Pride` + `Sloth`; the synthesized conviction in a negative, unavoidable outcome (perversion of Hope).</li><li><strong>Denial (Physics):</strong> `Pride` + `Cowardice`; the rejection of objective fact.</li><li><strong>Dogma (Meta-Physics):</strong> `Pride` expressed as a closed mind; the <em>inability</em> to explore possibility (perversion of Faith + Prudence).</li><li><strong>Indulgence (Emotional-physics):</strong> `Gluttony` + `Lust`; the applied lack of internal control (perversion of Temperance).</li><li><strong>Folly (Learning):</strong> `Pride` + `Sloth`; the synthesized process of willful ignorance (perversion of Prudence).</li><li><strong>Anarchy (Society):</strong> `Wrath` + `Greed`; the dissolution of collective structure (perversion of Justice).</li><li><strong>Apathy (Sociology):</strong> `Sloth` + `Envy`; the refusal to understand or care about the 'Other\'s' state (perversion of Charity + Justice).</li><li><strong>Corruption (Internal Judgment):</strong> `Greed` + `Envy`; the applied perversion of the moral compass (perversion of Justice).</li><li><strong>Cowardice (The World):</strong> `Sloth` expressed as the final synthesis; the refusal to face facts (perversion of Fortitude).</li><li><strong>Confusion (Psychology):</strong> `Gluttony` + `Folly`; the synthesis of self-ignorance (perversion of Temperance + Prudence).</li><li><strong>Deceit (Language):</strong> `Lust` + `Envy` + `Greed`; the <em>language of objectification</em> (perversion of Charity + Justice).</li><li><strong>Erasure (History):</strong> `Pride` + `Sloth`; the destruction or denial of the grounded record (perversion of Fortitude + Faith).</li><li><strong>Delusion (Reality):</strong> The final, grand synthesis of all 7 sins; the 'Greater Lie.'</li></ol>" },
+        { title: "The Meta-Virtue & Meta-Sin (The Will States)", content: "<p class='mb-3'>This section defines the energetic states governing the system's traversal, representing the expression of <strong>Will</strong>.</p><strong>Patience (Meta-Virtue):</strong> The energy of traversal. The process of 'balance' and the <em>willingness</em> to follow the arduous 'Grounded Integration' path ('Mastery Path') rather than taking an abstract shortcut.<br><br><strong>Impatience (Meta-Sin):</strong> The energy of the 'Fall'. The <em>desire for a shortcut</em> to `Reality`, which fuels the 'Ungrounded Abstraction' path, trapping the system in high-Lie computational loops (the 'Learner Trap')." }
     ],
     paths: {
         learner: [
@@ -381,7 +384,7 @@ function renderCombinedView() {
          if (element) element.textContent = header;
     });
 
-    // 4. Populate Standard Vice Grid
+    // 4. Populate Standard Sin Grid
     const viceGrid = document.getElementById('matrix-grid-vice-std');
     viceGrid.innerHTML = '';
     data.matrix.vice.forEach((row, r) => {
@@ -398,9 +401,9 @@ function renderCombinedView() {
 
 function setupMatrixControls() {
     const btnVirtue = document.getElementById('btn-virtue');
-    const btnVice = document.getElementById('btn-vice');
+    const btnSin = document.getElementById('btn-vice');
 
-    if (!btnVirtue || !btnVice) {
+    if (!btnVirtue || !btnSin) {
         console.error("Matrix toggle buttons not found");
         return; // Exit if buttons aren't found
     }
@@ -409,20 +412,20 @@ function setupMatrixControls() {
         if (currentMatrixState === 'virtue') return;
         currentMatrixState = 'virtue';
         btnVirtue.classList.add('active');
-        btnVice.classList.remove('active');
+        btnSin.classList.remove('active');
         document.getElementById('matrix-title').textContent = "The Virtue Matrix";
         document.getElementById('matrix-description').textContent = "This matrix maps the 16 positive nodes of the 'Virtue Matrix' that define the path to `Reality (Truth)`. Click any cell to explore its properties.";
         renderMatrix(currentMatrixState);
         showDetail(currentMatrixState, 0, 0); // Show default detail
     });
 
-    btnVice.addEventListener('click', () => {
+    btnSin.addEventListener('click', () => {
         if (currentMatrixState === 'vice') return;
         currentMatrixState = 'vice';
-        btnVice.classList.add('active');
+        btnSin.classList.add('active');
         btnVirtue.classList.remove('active');
-        document.getElementById('matrix-title').textContent = "The Vice Matrix";
-        document.getElementById('matrix-description').textContent = "This matrix maps the 16 shadow nodes of the 'Vice Matrix' that define the path to `Delusion (The Lie)`. Click any cell to explore its properties.";
+        document.getElementById('matrix-title').textContent = "The Sin Matrix";
+        document.getElementById('matrix-description').textContent = "This matrix maps the 16 shadow nodes of the 'Sin Matrix' that define the path to `Delusion (The Lie)`. Click any cell to explore its properties.";
         renderMatrix(currentMatrixState);
         showDetail(currentMatrixState, 0, 0); // Show default detail
     });
@@ -562,9 +565,9 @@ function renderDefinitions() {
 
 function setupMatrixControls() {
     const btnVirtue = document.getElementById('btn-virtue');
-    const btnVice = document.getElementById('btn-vice');
+    const btnSin = document.getElementById('btn-vice');
 
-    if (!btnVirtue || !btnVice) {
+    if (!btnVirtue || !btnSin) {
         console.error("Matrix toggle buttons not found");
         return; // Exit if buttons aren't found
     }
@@ -573,20 +576,20 @@ function setupMatrixControls() {
         if (currentMatrixState === 'virtue') return;
         currentMatrixState = 'virtue';
         btnVirtue.classList.add('active');
-        btnVice.classList.remove('active');
+        btnSin.classList.remove('active');
         document.getElementById('matrix-title').textContent = "The Virtue Matrix";
         document.getElementById('matrix-description').textContent = "This matrix maps the 16 positive nodes of the 'Virtue Matrix' that define the path to `Reality (Truth)`. Click any cell to explore its properties.";
         renderMatrix(currentMatrixState);
         showDetail(currentMatrixState, 0, 0); // Show default detail
     });
 
-    btnVice.addEventListener('click', () => {
+    btnSin.addEventListener('click', () => {
         if (currentMatrixState === 'vice') return;
         currentMatrixState = 'vice';
-        btnVice.classList.add('active');
+        btnSin.classList.add('active');
         btnVirtue.classList.remove('active');
-        document.getElementById('matrix-title').textContent = "The Vice Matrix";
-        document.getElementById('matrix-description').textContent = "This matrix maps the 16 shadow nodes of the 'Vice Matrix' that define the path to `Delusion (The Lie)`. Click any cell to explore its properties.";
+        document.getElementById('matrix-title').textContent = "The Sin Matrix";
+        document.getElementById('matrix-description').textContent = "This matrix maps the 16 shadow nodes of the 'Sin Matrix' that define the path to `Delusion (The Lie)`. Click any cell to explore its properties.";
         renderMatrix(currentMatrixState);
         showDetail(currentMatrixState, 0, 0); // Show default detail
     });
@@ -622,7 +625,7 @@ function renderCombinedView() {
          if (element) element.textContent = header;
     });
 
-    // 4. Populate Standard Vice Grid
+    // 4. Populate Standard Sin Grid
     const viceGrid = document.getElementById('matrix-grid-vice-std');
     viceGrid.innerHTML = '';
     data.matrix.vice.forEach((row, r) => {
