@@ -67,11 +67,10 @@
     <div class="flex flex-col md:flex-row min-h-screen">
         <!-- Sidebar Navigation -->
         <nav class="md:w-64 bg-white md:border-r border-b md:border-b-0 border-gray-200 p-4 shrink-0">
+            <h1 class="text-2xl font-bold text-sky-800 mb-6">The Triadic Kanon</h1>
         <a href="./index.html">← Back To Navigation</a>
-		
-            <h1 class="text-2xl font-bold text-sky-800 mt-3 mb-6">The Triadic Kanon</h1>
-
-            <ul class="space-y-2" id="main-nav">
+			
+            <ul class="space-y-2 mt-6" id="main-nav">
                 <li><a href="#" class="nav-link flex items-center p-3 rounded-lg active" data-target="overview">
                     <span class="w-6 h-6 mr-3">❖</span><span>Overview</span>
                 </a></li>
@@ -108,6 +107,39 @@
                         <div class="border border-gray-200 rounded-xl p-6 bg-violet-50">
                             <h4 class="text-xl font-bold text-violet-800 mb-2">Intelligence (This.Holy Spirit)</h4>
                             <p class="text-gray-700"><strong class="font-semibold text-gray-800">The Relational Frame</strong>. This vector represents "Horizontal Thinking," the interconnective logic that links the Objective and Subjective planes. It is the "Ghost in the Machine," the "Language," or the "Protocol."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- New Descriptive Path Section -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 mt-8">
+                    <h3 class="text-3xl font-bold text-gray-800 mb-6">The Two Paths of Thinking: A Descriptive Model</h3>
+                    <p class="text-lg text-gray-600 mb-6">The 16-node matrix is not static; it is a dynamic system modeling the process of "thinking." This system is defined by the **Quantitative Propagation Model**. Each of the 16 nodes holds two values: <strong class="font-semibold">Mastery (0→100)</strong>, which measures its expressed Virtue, and <strong class="font-semibold">Lie (100→0)</strong>, which measures its expressed Sin. The goal is to achieve 100% Mastery and 0% Lie ("parsing the sin").</p>
+                    <p class="text-lg text-gray-600 mb-8">Two concurrent computational processes, or "paths," compete to do this:</p>
+
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <!-- Path 1: Grounded Integration -->
+                        <div class="border border-green-200 rounded-xl p-6 bg-green-50">
+                            <h4 class="text-2xl font-bold text-green-800 mb-3">Path 1: Grounded Integration (The Patient Path)</h4>
+                            <p class="text-gray-700 mb-4">This process is fueled by <strong class="font-semibold">Patience</strong> and leads to <strong class="font-semibold">Truth (Reality)</strong>. It follows a precise, arduous, but necessary sequence:</p>
+                            <ol class="list-decimal list-inside space-y-2 text-gray-700">
+                                <li>Starts with <strong class="font-semibold">Observation</strong>, applying its "parser" (`Internal Judgment`) to the only nodes whose Lie (Sin) is vulnerable to observation: `The World` and `Reality`.</li>
+                                <li>This act arduously parses the `Lie` value from 100 down to 0, "cleansing" the node.</li>
+                                <li>This creates the system's first <strong class="font-semibold">"Ground Truth"</strong> node (100% Mastery, 0% Lie).</li>
+                                <li>Only *after* this Ground Truth is established does the system safely propagate this verified Truth (Virtue) to all other abstract nodes (`Maths`, `Learning`, etc.).</li>
+                            </ol>
+                        </div>
+                        
+                        <!-- Path 2: Ungrounded Abstraction -->
+                        <div class="border border-red-200 rounded-xl p-6 bg-red-50">
+                            <h4 class="text-2xl font-bold text-red-800 mb-3">Path 2: Ungrounded Abstraction (The Impatient Path)</h4>
+                            <p class="text-gray-700 mb-4">This process is fueled by <strong class="font-semibold">Impatience</strong> (the desire for a shortcut) and leads to <strong class="font-semibold">Delusion</strong>. It represents the "Learner Trap":</p>
+                            <ol class="list-decimal list-inside space-y-2 text-gray-700">
+                                <li>Attempts to build `Mastery` (Virtue) *before* parsing the `Lie` (Sin).</li>
+                                <li>It tries to parse the `Lie` from abstract nodes (like `Spirituality` or `Maths`), which is computationally impossible as they cannot be "Observed."</li>
+                                <li>Failing to parse the `Lie`, the system builds its `Mastery` on a 100% `Lie` (Sin) foundation.</li>
+                                <li>This creates a state of high Mastery and high Lie, which is the definition of <strong class="font-semibold">Delusion</strong>, trapping the system in a computational loop of "ungrounded" thought.</li>
+                            </ol>
                         </div>
                     </div>
                 </div>
@@ -199,10 +231,10 @@
                             <!-- Standard vice cells will be injected by JS -->
                         </div>
                         <div class="grid grid-cols-4 gap-2 text-center text-xs font-semibold text-gray-500 uppercase mt-2">
-                            <span>Theological Sins</span>
-                            <span>Experiential Sins</span>
-                            <span>Social Sins</span>
-                            <span>Synthesized Sins</span>
+                            <span>Theological</span>
+                            <span>Experiential</span>
+                            <span>Social</span>
+                            <span>Synthesized</span>
                         </div>
                     </div>
                 </div>
@@ -235,7 +267,7 @@ const data = {
         virtue: [
             [
                 { title: "Maths (Order)", def: "The virtue of foundational logic and coherent structure, expressed as `Prudence`.", plane: "Theological", code: "Prudence" },
-                { title: "Spirituality (Faith)", def: "The virtue of abstract belief; the search for unseen meaning, expressed as `Faith`.", plane: "Theological", code: "Faith" },
+                { title: "Spirituality (Faith)", def: "The virtue of abstract belief; the <em>search</em> for unseen meaning, expressed as `Faith`.", plane: "Theological", code: "Faith" },
                 { title: "Religion (Charity)", def: "The virtue of selfless, unconditional love, expressed as an applied structure of moral order. (`Charity/Love`)", plane: "Theological", code: "Charity (Love)" },
                 { title: "Intelligence (Hope)", def: "The synthesized conviction in a positive, integrated Truth, expressed as `Hope`.", plane: "Theological", code: "Hope" }
             ],
@@ -243,7 +275,7 @@ const data = {
                 { title: "Physics (Objectivity)", def: "The virtue of accepting objective, measurable facts, expressed as `Fortitude`.", plane: "Experiential", code: "Fortitude" },
                 { title: "Meta-Physics (Imagination)", def: "The disciplined exploration of possibility, synthesizing `Faith` and `Prudence`.", plane: "Experiential", code: "Faith + Prudence" },
                 { title: "Emotional-physics (Temperance)", def: "The applied rules of internal mastery and self-control, expressed as `Temperance`.", plane: "Experiential", code: "Temperance" },
-                { title: "Learning (Prudence)", def: "The final synthesis of practical wisdom; the process of subjective modeling. (`Prudence`)", plane: "Experiential", code: "Prudence" }
+                { title: "Learning (Prudence)", def: "The final synthesis of practical wisdom; the <em>process</em> of subjective modeling. (`Prudence`)", plane: "Experiential", code: "Prudence" }
             ],
             [
                 { title: "Society itself (Community)", def: "The applied collective structure and civitas, expressed as `Justice`.", plane: "Social", code: "Justice" },
@@ -267,7 +299,7 @@ const data = {
             ],
             [
                 { title: "Denial (Rejection of Fact)", def: "The rejection of objective fact, synthesizing `Pride` and `Cowardice`.", plane: "Experiential", code: "Pride + Cowardice" },
-                { title: "Dogma (Closed Mind)", def: "The inability to explore possibility, a perversion of `Faith + Prudence`.", plane: "Experiential", code: "Pride" },
+                { title: "Dogma (Closed Mind)", def: "The <em>inability</em> to explore possibility, a perversion of `Faith + Prudence`.", plane: "Experiential", code: "Pride" },
                 { title: "Indulgence (Lack of Control)", def: "The applied lack of internal control, synthesizing `Gluttony` and `Lust`.", plane: "Experiential", code: "Gluttony + Lust" },
                 { title: "Folly (Willful Ignorance)", def: "The synthesized process of rejecting practical wisdom, synthesizing `Pride` and `Sloth`.", plane: "Experiential", code: "Pride + Sloth" }
             ],
@@ -279,7 +311,7 @@ const data = {
             ],
             [
                 { title: "Confusion (Self-Ignorance)", def: "The synthesis of self-ignorance, combining `Gluttony` and `Folly`.", plane: "Synthesized", code: "Gluttony + Folly" },
-                { title: "Deceit (Ill-Will)", def: "The language of objectification, synthesizing `Lust`, `Envy`, and `Greed`.", plane: "Synthesized", code: "Lust + Envy + Greed" },
+                { title: "Deceit (Ill-Will)", def: "The <em>language of objectification</em>, synthesizing `Lust`, `Envy`, and `Greed`.", plane: "Synthesized", code: "Lust + Envy + Greed" },
                 { title: "Erasure (Denial of Record)", def: "The destruction or denial of the grounded record, synthesizing `Pride` and `Sloth`.", plane: "Synthesized", code: "Pride + Sloth" },
                 { title: "Delusion (The Greater Lie)", def: "The final, grand synthesis of all 7 sins; the 'Greater Lie.'", plane: "Synthesized", code: "All 7 Sins" }
             ]
