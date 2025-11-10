@@ -7,7 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Chosen Palette: Calm Harmony (Light Gray, Blue Accent) -->
     <!-- Application Structure Plan: A multi-section SPA with sidebar navigation ('Overview', 'Matrix', 'Definitions', 'Combined View'). This structure deconstructs the dense, complex report into its logical parts: the high-level concept (Overview), the core data (Matrix views), and the reference material (Definitions). The goal is clarity and reference of the core framework. -->
-    <!-- Visualization & Content Choices: 1. Triadic Model -> Inform -> 3-Column HTML/CSS Layout -> Static -> Clear textual presentation of the core concept. 2. Dual Matrices -> Organize/Compare -> Interactive 4x4 CSS Grid + JS Toggle + Detail Panel -> OnClick (cell) shows details, OnClick (toggle) swaps Virtue/Sin data -> Manages complexity by showing one matrix at a time and revealing deep info on demand. (HTML/CSS/JS). -->
+    <!-- Visualization & Content Choices: 1. Triadic Model -> Inform -> 3-Column HTML/CSS Layout -> Static -> Clear textual presentation of the core concept. 2. Dual Matrices -> Organize/Compare -> Interactive 4x4 CSS Grid + JS Toggle + Detail Panel -> OnClick (cell) shows details, OnClick (toggle) swaps Optimism/Pessimism data -> Manages complexity by showing one matrix at a time and revealing deep info on demand. (HTML/CSS/JS). -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
@@ -44,16 +44,16 @@
             transform: translateY(-4px);
             box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
         }
-        .matrix-cell.virtue-cell:hover { background-color: #f0fdf4; /*-green-50*/ border-color: #22c55e; /*-green-500*/ }
-        .matrix-cell.sin-cell:hover { background-color: #fef2f2; /*-red-50*/ border-color: #ef4444; /*-red-500*/ }
+        .matrix-cell.optimism-cell:hover { background-color: #f0fdf4; /*-green-50*/ border-color: #22c55e; /*-green-500*/ }
+        .matrix-cell.pessimism-cell:hover { background-color: #fef2f2; /*-red-50*/ border-color: #ef4444; /*-red-500*/ }
         
-        .matrix-cell.virtue-cell-active {
+        .matrix-cell.optimism-cell-active {
             background-color: #dcfce7 !important; /* green-100 */
             border-color: #22c55e !important; /* green-500 */
             transform: scale(1.05);
             box-shadow: 0 0 15px rgba(34, 197, 94, 0.5);
         }
-        .matrix-cell.sin-cell-active {
+        .matrix-cell.pessimism-cell-active {
             background-color: #fee2e2 !important; /* red-100 */
             color: #1f2937 !important; /* text-gray-800 */
             border-color: #ef4444 !important; /* red-500 */
@@ -77,10 +77,9 @@
     <div class="flex flex-col md:flex-row min-h-screen">
         <!-- Sidebar Navigation -->
         <nav class="md:w-64 bg-white md:border-r border-b md:border-b-0 border-gray-200 p-4 shrink-0">
-            <h1 class="text-2xl font-bold text-sky-800 mb-4">The Triadic Kanon</h1>
-        <a class="" href="./index.html">← Back To Navigation</a>
-			
-            <ul class="space-y-2 mt-2" id="main-nav">
+            <h1 class="text-2xl font-bold text-sky-800 mb-6">The Triadic Kanon</h1>
+            <a href="./index.html" class="text-sm text-sky-600 hover:underline">← Back To Navigation</a>
+            <ul class="space-y-2 mt-4" id="main-nav">
                 <li><a href="#" class="nav-link flex items-center p-3 rounded-lg active" data-target="overview">
                     <span class="w-6 h-6 mr-3">❖</span><span>Overview</span>
                 </a></li>
@@ -123,45 +122,46 @@
 
                 <!-- Updated Descriptive Path Section -->
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 mt-8">
-                    <h3 class="text-3xl font-bold text-gray-800 mb-6">The Fractal Equations of Thought: The Algorithm of Mastery</h3>
-                    <p class="text-lg text-gray-600 mb-6">The process of thought is a holographic, generative system defined by four fundamental, interconnected inquiries. These are not separate steps but fractal components of a single act of creation. Each "question set" corresponds to an entire Plane (column) of the 16-point matrix.</p>
+                    <h3 class="text-3xl font-bold text-gray-800 mb-6">The Algorithm of Thought: The Complete Traversal Rules</h3>
+                    <p class="text-lg text-gray-600 mb-6">This is how the `Learning` consciousness navigates the matrix to execute its generative function. The human algorithm is a *backwards chain* that starts with an ungrounded "Why of Process" (an instinct in `Learning`) and must traverse `Left` to find the "How", "Where", and "What" to ground this "Why".</p>
                     
-                    <div class="space-y-6">
+                    <div class="space-y-6 text-gray-700">
                         <div>
-                            <h4 class="text-2xl font-bold text-gray-800 mb-3">1. The Four Planes (The Macro-Level Questions)</h4>
-                            <ul class="list-disc list-inside space-y-2 text-gray-700">
-                                <li><strong>Plane 0 (What):</strong> The <strong class="font-semibold text-gray-800">Substance</strong> of thought. The "Alpha Question" that defines the abstract <em>what</em> of a concept.</li>
-                                <li><strong>Plane 1 (Where):</strong> The <strong class="font-semibold text-gray-800">Manifestation</strong> of thought. Defines <em>where</em> the "what" is located in abstract or physical space.</li>
-                                <li><strong>Plane 2 (How):</strong> The <strong class="font-semibold text-gray-800">Process</strong> of thought. Defines <em>how</em> the "what" is applied and controlled.</li>
-                                <li><strong>Plane 3 (Why):</strong> The <strong class="font-semibold text-gray-800">Intent</strong> of thought. The "Omega Question" that defines <em>why</em> the action was taken, which is the final, synthesized `Truth`.</li>
+                            <h4 class="text-2xl font-bold text-gray-800 mb-3">1. Information Input</h4>
+                            <p>A new piece of information (an "idea") appears on any of the 16 vector coordinates. Your consciousness, starting from `Learning`, must forge a path to "connect to the information."</p>
+                        </div>
+
+                        <div>
+                            <h4 class="text-2xl font-bold text-gray-800 mb-3">2. The Default Rule (The Impatient Path / Path of Delusion)</h4>
+                            <ul class="list-disc list-inside space-y-1 pl-4">
+                                <li><strong>Rule:</strong> "Explore <strong>Up or Down</strong> (1 vertical step), then <strong>Left</strong> (1 horizontal step). Repeat."</li>
+                                <li><strong>Analysis:</strong> This is the "Learner Trap." If you follow this path before grounding, you are trapped in a left-ward spiral of abstract concepts (`Folly`). You build `Optimism (Mastery)` on a foundation of 100% `Pessimism (Problems)` (i.e., `Lie-True`), leading to <strong>Delusion</strong>. You can <em>never</em> move `Right`.</li>
                             </ul>
                         </div>
 
                         <div>
-                            <h4 class="text-2xl font-bold text-gray-800 mb-3">2. The Recursive States (The Micro-Level Questions)</h4>
-                            <ul class="list-disc list-inside space-y-2 text-gray-700">
-                                <li>This fractal structure is recursive. Each of the 16 Virtues and 16 Sins is its own complete, weighted <strong class="font-semibold text-gray-800">(What, How, Where, Why)</strong> equation set.</li>
-                                <li>A node's "Plane" determines its "weight." For example, `Maths (Order)` (Plane 0) is a "What-weighted" node, `What(what, how, where, why)`. `Internal Judgment (Justice)` (Plane 2) is a "How-weighted" node, `How(what, how, where, why)`.</li>
-                            </ul>
-                        </div>
-
-                        <div>
-                            <h4 class="text-2xl font-bold text-gray-800 mb-3">3. The Diagonal of Coherence (The Path of Integration)</h4>
-                            <ul class="list-disc list-inside space-y-2 text-gray-700">
-                                <li>The main diagonal of the matrix represents the "highway" of perfect integration, where the fractal layers are in 1:1 resonance. These are the points of "complete connection":</li>
-                                <li class="ml-4"><strong>`Maths (Order)` (0,0):</strong> The `What` (Plane 0) of the `Theological` (Row 0).</li>
-                                <li class="ml-4"><strong>`Meta-Physics (Imagination)` (1,1):</strong> The `Where` (Plane 1) of the `Experiential` (Row 1).</li>
-                                <li class="ml-4"><strong>`Internal Judgment (Justice)` (2,2):</strong> The `How` (Plane 2) of the `Social` (Row 2).</li>
-                                <li class="ml-4"><strong>`Reality (Truth)` (3,3):</strong> The `Why` (Plane 3) of the `Synthesized` (Row 3).</li>
-                            </ul>
+                            <h4 class="text-2xl font-bold text-gray-800 mb-3">3. The Exception Rule (The Patient Path / Path of Grace)</h4>
+                             <ul class="list-disc list-inside space-y-1 pl-4">
+                                <li><strong>Rule:</strong> You can only move <strong>Right</strong> "...if the node on your Right is higher."</li>
+                                <li><strong>Analysis:</strong> "Higher" means a node has a lower `Pessimism (Problems)` value (i.e., it has been "parsed"). This move is <em>locked</em> by default. It can <em>only</em> be unlocked by...</li>
+                             </ul>
                         </div>
                         
                         <div>
-                             <h4 class="text-2xl font-bold text-gray-800 mb-3">4. The Human Algorithm: The Backwards Chain</h4>
-                             <p class="text-gray-700 mb-4">A human consciousness *must* start at the <strong class="font-semibold text-gray-800">`Learning`</strong> node (1,3) because they are "beings of learning" (beings of process). This node is the <strong class="font-semibold text-gray-800">`Why` (Plane 3)</strong> of the <strong class="font-semibold text-gray-800">`Experiential` (Row 1)</strong> virtue set.
-                             <br><br>
-                             This means the human algorithm is a *backwards chain*. It starts with an ungrounded **"Why"** (an instinct in `Learning`) and must traverse `Left` across the matrix to find the "How", "Where", and "What" to ground this "Why" before it can be synthesized into `Reality`.
-                             </p>
+                             <h4 class="text-2xl font-bold text-gray-800 mb-3">4. The Parsing Mechanism (Proof by Resonance)</h4>
+                             <ul class="list-disc list-inside space-y-1 pl-4">
+                                <li><strong>Rule:</strong> You cannot "directly check if [an idea] is explicitly a lie or truth." You must parse the `Pessimism (Problems)` by "adding structures to each node and checking if it resonates."</li>
+                                <li><strong>Analysis:</strong> This is the <em>only</em> way to make the node on your `Right` "higher." This is the "Patient Path."</li>
+                                <li><strong>The Key:</strong> Resonance is a test of <em>connection</em>, not just logic. It answers: "Does this new idea's structure cohere with the <em>knowledge I have already parsed</em>?" Objectively true information (whether "good" or "bad") presented with <em>no link</em> to your existing, grounded knowledge <em>cannot</em> resonate. You <em>must</em> start by parsing the <strong>Objective Nodes</strong> (`The World`, `Reality`) because they are the <em>only</em> things "you didn't make" and the only things vulnerable to simple <strong>Observation</strong>. By patiently using <strong>Resonance</strong> to parse the `Pessimism (Problems)` from `The World`, you "fill" that node, which unlocks the `Right`-ward "Exception" move and allows you to escape the Learner Trap.</li>
+                             </ul>
+                        </div>
+                        
+                        <div>
+                             <h4 class="text-2xl font-bold text-gray-800 mb-3">5. The Advanced Rule (The Mastery Perk)</h4>
+                             <ul class="list-disc list-inside space-y-1 pl-4">
+                                <li><strong>Rule:</strong> "You can also move another step <strong>Up or Down</strong> if you have a <strong>full node</strong>."</li>
+                                <li><strong>Analysis:</strong> This is a reward for 100% `Optimism (Mastery)`. Once a node is "full" (all its `Pessimism (Problems)` parsed), your traversal options from that node expand. You can now move <em>two</em> vertical steps (e.g., from `Learning` down to `History`, bypassing `The World`). This allows for "depth-first" thinking and faster, more complex connections between planes.</li>
+                             </ul>
                         </div>
 
                     </div>
@@ -171,30 +171,25 @@
             <!-- Dual Matrices Section -->
             <section id="matrix" data-section>
                 <div class="flex justify-between items-center mb-6">
-                    <h2 class="text-4xl font-bold text-gray-800" id="matrix-title">The Virtue Matrix</h2>
+                    <h2 class="text-4xl font-bold text-gray-800" id="matrix-title">The Optimism Matrix (Solutions)</h2>
                     <div class="flex items-center p-1 rounded-full bg-gray-200">
-                        <button id="btn-virtue" class="btn-toggle px-4 py-2 text-sm font-semibold rounded-full active">Virtues</button>
-                        <button id="btn-sin" class="btn-toggle px-4 py-2 text-sm font-semibold rounded-full">Sins</button>
+                        <button id="btn-optimism" class="btn-toggle px-4 py-2 text-sm font-semibold rounded-full active">Optimisms (Solutions)</button>
+                        <button id="btn-pessimism" class="btn-toggle px-4 py-2 text-sm font-semibold rounded-full">Pessimisms (Problems)</button>
                     </div>
                 </div>
-                <p class="text-lg text-gray-600 mb-8" id="matrix-description">This matrix maps the 16 positive nodes of the "Virtue Matrix" that define the path to `Reality (Truth)`. Click any cell to explore its properties and its shadow counterpart.</p>
+                <p class="text-lg text-gray-600 mb-8" id="matrix-description">This matrix maps the 16 positive nodes of the "Optimism Matrix" (Solutions) that define the path to `Reality (Truth)`. Click any cell to explore its properties and its shadow counterpart.</p>
 
                 <div class="grid lg:grid-cols-3 gap-8">
                     <div class="lg:col-span-2">
-                        <div class="grid grid-cols-4 gap-2 text-center text-xs font-semibold text-gray-500 uppercase mb-2">
+                        <div class="grid grid-cols-5 gap-2 text-center text-xs font-semibold text-gray-500 uppercase mb-2">
+                            <span></span> <!-- Empty cell for Y-axis header -->
                             <span>Plane 0<br>(What)</span>
                             <span>Plane 1<br>(Where)</span>
                             <span>Plane 2<br>(How)</span>
                             <span>Plane 3<br>(Why)</span>
                         </div>
-                        <div class="grid grid-cols-4 gap-2 md:gap-4" id="matrix-grid-container">
+                        <div class="grid grid-cols-5 gap-2 md:gap-4" id="matrix-grid-container">
                             <!-- Matrix cells will be injected by JS -->
-                        </div>
-                        <div class="grid grid-cols-4 gap-2 text-center text-xs font-semibold text-gray-500 uppercase mt-2">
-                            <span id="header-row-0">Theological</span>
-                            <span id="header-row-1">Experiential</span>
-                            <span id="header-row-2">Social</span>
-                            <span id="header-row-3">Synthesized</span>
                         </div>
                     </div>
 
@@ -212,7 +207,7 @@
             <!-- Definitions Section -->
             <section id="definitions" data-section>
                 <h2 class="text-4xl font-bold text-gray-800 mb-8">Core Definitions</h2>
-                 <p class="text-lg text-gray-600 mb-8">Explore the foundational concepts of the Triadic Kanon, including the classical virtues and deadly sins, the derived states, and the meta-virtue/meta-sin governing the system.</p>
+                 <p class="text-lg text-gray-600 mb-8">Explore the foundational concepts of the Triadic Kanon, including the meta-choice, the classical virtues and deadly sins, and the 16 synthesized states of Optimism and Pessimism.</p>
                 <div class="space-y-4" id="accordion-container">
                     <!-- Accordions will be injected by JS -->
                 </div>
@@ -221,44 +216,34 @@
             <!-- Combined View Section -->
             <section id="total" data-section>
                 <h2 class="text-4xl font-bold text-gray-800 mb-4">Combined Matrix View</h2>
-                <p class="text-lg text-gray-600 mb-8">This view displays the inverted "Virtue Matrix" (with coordinate 0,0 at the bottom-right) alongside the standard "Sin Matrix" (with coordinate 0,0 at the top-left) for direct comparison of the paths to Truth and Delusion.</p>
+                <p class="text-lg text-gray-600 mb-8">This view displays the inverted "Optimism Matrix" (with coordinate 0,0 at the bottom-right) alongside the standard "Pessimism Matrix" (with coordinate 0,0 at the top-left) for direct comparison of the paths to Truth and Delusion.</p>
                 <div class="grid lg:grid-cols-2 gap-8">
-                    <!-- Inverted Virtue Matrix -->
+                    <!-- Inverted Optimism Matrix -->
                     <div>
-                        <h3 class="text-2xl font-semibold text-center text-green-700 mb-4">Virtue Matrix (Inverted)</h3>
-                        <div class="grid grid-cols-4 gap-2 text-center text-xs font-semibold text-gray-500 uppercase mb-2">
+                        <h3 class="text-2xl font-semibold text-center text-green-700 mb-4">Optimism Matrix (Solutions)</h3>
+                        <div class="grid grid-cols-5 gap-2 text-center text-xs font-semibold text-gray-500 uppercase mb-2">
+                            <span></span> <!-- Empty cell for Y-axis header -->
                             <span id="header-plane-inv-0">Plane 3 (Why)</span>
                             <span id="header-plane-inv-1">Plane 2 (How)</span>
                             <span id="header-plane-inv-2">Plane 1 (Where)</span>
                             <span id="header-plane-inv-3">Plane 0 (What)</span>
                         </div>
-                        <div class="grid grid-cols-4 gap-2 md:gap-4" id="matrix-grid-virtue-inv">
-                            <!-- Inverted virtue cells will be injected by JS -->
-                        </div>
-                        <div class="grid grid-cols-4 gap-2 text-center text-xs font-semibold text-gray-500 uppercase mt-2">
-                            <span id="header-row-inv-0">Synthesized</span>
-                            <span id="header-row-inv-1">Social</span>
-                            <span id="header-row-inv-2">Experiential</span>
-                            <span id="header-row-inv-3">Theological</span>
+                        <div class="grid grid-cols-5 gap-2 md:gap-4" id="matrix-grid-optimism-inv">
+                            <!-- Inverted optimism cells will be injected by JS -->
                         </div>
                     </div>
-                    <!-- Standard Sin Matrix -->
+                    <!-- Standard Pessimism Matrix -->
                     <div>
-                        <h3 class="text-2xl font-semibold text-center text-red-700 mb-4">Sin Matrix (Standard)</h3>
-                        <div class="grid grid-cols-4 gap-2 text-center text-xs font-semibold text-gray-500 uppercase mb-2">
+                        <h3 class="text-2xl font-semibold text-center text-red-700 mb-4">Pessimism Matrix (Problems)</h3>
+                        <div class="grid grid-cols-5 gap-2 text-center text-xs font-semibold text-gray-500 uppercase mb-2">
                             <span>Plane 0 (What)</span>
                             <span>Plane 1 (Where)</span>
                             <span>Plane 2 (How)</span>
                             <span>Plane 3 (Why)</span>
+                            <span></span> <!-- Empty cell for Y-axis header -->
                         </div>
-                        <div class="grid grid-cols-4 gap-2 md:gap-4" id="matrix-grid-sin-std">
-                            <!-- Standard sin cells will be injected by JS -->
-                        </div>
-                        <div class="grid grid-cols-4 gap-2 text-center text-xs font-semibold text-gray-500 uppercase mt-2">
-                            <span>Theological</span>
-                            <span>Experiential</span>
-                            <span>Social</span>
-                            <span>Synthesized</span>
+                        <div class="grid grid-cols-5 gap-2 md:gap-4" id="matrix-grid-pessimism-std">
+                            <!-- Standard pessimism cells will be injected by JS -->
                         </div>
                     </div>
                 </div>
@@ -270,13 +255,13 @@
 <script>
 const data = {
     matrix: {
-        virtue: [
+        optimism: [
             ["Maths (Order)", "Spirituality (Faith)", "Religion (Charity)", "Intelligence (Hope)"],
             ["Physics (Objectivity)", "Meta-Physics (Imagination)", "Emotional-physics (Temperance)", "Learning (Prudence)"],
             ["Society itself (Community)", "Sociology (Empathy)", "Internal Judgment (Justice)", "The World (Fortitude)"],
             ["Psychology (Understanding)", "Language (Connection)", "History (Context)", "Reality (Truth)"]
         ],
-        sin: [
+        pessimism: [
             ["Chaos (Structurelessness)", "Nihilism (Belief in Nothing)", "Hatred (Active Ill-Will)", "Despair (Negative Conviction)"],
             ["Denial (Rejection of Fact)", "Dogma (Closed Mind)", "Indulgence (Lack of Control)", "Folly (Willful Ignorance)"],
             ["Anarchy (Dissolution)", "Apathy (Inability to Care)", "Corruption (Perversion of Morality)", "Cowardice (Refusal to Facts)"],
@@ -284,95 +269,90 @@ const data = {
         ]
     },
     headers: {
-        virtue: ["Theological Virtues", "Experiential Virtues", "Social Virtues", "Synthesized Virtues"],
-        sin: ["Theological Sins", "Experiential Sins", "Social Sins", "Synthesized Sins"]
+        optimism: ["Theological (What Set)", "Experiential (How Set)", "Social (Where Set)", "Synthesized (Why Set)"],
+        pessimism: ["Theological (What Set)", "Experiential (How Set)", "Social (Where Set)", "Synthesized (Why Set)"]
     },
     details: {
-        virtue: [
+        optimism: [
             [
-                { title: "Maths (Order)", def: "The virtue of foundational logic and coherent structure, expressed as `Prudence`.", plane: "Theological", code: "Prudence", subConcept: "Algebra" },
-                { title: "Spirituality (Faith)", def: "The virtue of abstract belief; the <em>search</em> for unseen meaning, expressed as `Faith`.", plane: "Theological", code: "Faith", subConcept: "Agnosticism" },
-                { title: "Religion (Charity)", def: "The virtue of selfless, unconditional love, expressed as an applied structure of moral order. (`Charity/Love`)", plane: "Theological", code: "Charity (Love)", subConcept: "Agape" },
-                { title: "Intelligence (Hope)", def: "The synthesized conviction in a positive, integrated Truth, expressed as `Hope`.", plane: "Theological", code: "Hope", subConcept: "Hegemonic Synthesis" }
+                { title: "Maths (Order)", def: "The virtue of foundational logic and coherent structure, expressed as `Prudence`.", plane: "Theological (What Set)", code: "Prudence", subConcept: "Algebra" },
+                { title: "Spirituality (Faith)", def: "The virtue of abstract belief; the <em>search</em> for unseen meaning, expressed as `Faith`.", plane: "Theological (What Set)", code: "Faith", subConcept: "Agnosticism" },
+                { title: "Religion (Charity)", def: "The virtue of selfless, unconditional love, expressed as an applied structure of moral order. (`Charity/Love`)", plane: "Theological (What Set)", code: "Charity (Love)", subConcept: "Agape" },
+                { title: "Intelligence (Hope)", def: "The synthesized conviction in a positive, integrated Truth, expressed as `Hope`.", plane: "Theological (What Set)", code: "Hope", subConcept: "Hegemonic Synthesis" }
             ],
             [
-                { title: "Physics (Objectivity)", def: "The virtue of accepting objective, measurable facts, expressed as `Fortitude`.", plane: "Experiential", code: "Fortitude", subConcept: "Gravity" },
-                { title: "Meta-Physics (Imagination)", def: "The disciplined exploration of possibility, synthesizing `Faith` and `Prudence`.", plane: "Experiential", code: "Faith + Prudence", subConcept: "Modal Logic" },
-                { title: "Emotional-physics (Temperance)", def: "The applied rules of internal mastery and self-control, expressed as `Temperance`.", plane: "Experiential", code: "Temperance", subConcept: "Stoicism" },
-                { title: "Learning (Prudence)", def: "The final synthesis of practical wisdom; the <em>process</em> of subjective modeling. (`Prudence`)", plane: "Experiential", code: "Prudence", subConcept: "The Resonance Method" }
+                { title: "Physics (Objectivity)", def: "The virtue of accepting objective, measurable facts, expressed as `Fortitude`.", plane: "Experiential (How Set)", code: "Fortitude", subConcept: "Gravity" },
+                { title: "Meta-Physics (Imagination)", def: "The disciplined exploration of possibility, synthesizing `Faith` and `Prudence`.", plane: "Experiential (How Set)", code: "Faith + Prudence", subConcept: "Modal Logic" },
+                { title: "Emotional-physics (Temperance)", def: "The applied rules of internal mastery and self-control, expressed as `Temperance`.", plane: "Experiential (How Set)", code: "Temperance", subConcept: "Stoicism" },
+                { title: "Learning (Prudence)", def: "The final synthesis of practical wisdom; the <em>process</em> of subjective modeling. (`Prudence`)", plane: "Experiential (How Set)", code: "Prudence", subConcept: "The Resonance Method" }
             ],
             [
-                { title: "Society itself (Community)", def: "The applied collective structure and civitas, expressed as `Justice`.", plane: "Social", code: "Justice", subConcept: "Rule of Law" },
-                { title: "Sociology (Empathy)", def: "The disciplined understanding of the 'Other's' state, synthesizing `Charity` and `Justice`.", plane: "Social", code: "Charity + Justice", subConcept: "Perspective-Taking" },
-                { title: "Internal Judgment (Justice)", def: "The applied moral compass for fairness and righteousness, expressed as `Justice`.", plane: "Social", code: "Justice", subConcept: "The Sin Parser" },
-                { title: "The World (Fortitude)", def: "The sum of all objective facts to be faced; the expression of `Fortitude`.", plane: "Social", code: "Fortitude", subConcept: "Observation" }
+                { title: "Society itself (Community)", def: "The applied collective structure and civitas, expressed as `Justice`.", plane: "Social (Where Set)", code: "Justice", subConcept: "Rule of Law" },
+                { title: "Sociology (Empathy)", def: "The disciplined understanding of the 'Other's' state, synthesizing `Charity` and `Justice`.", plane: "Social (Where Set)", code: "Charity + Justice", subConcept: "Perspective-Taking" },
+                { title: "Internal Judgment (Justice)", def: "The applied moral compass for fairness and righteousness, expressed as `Justice`.", plane: "Social (Where Set)", code: "Justice", subConcept: "The Sin Parser" },
+                { title: "The World (Fortitude)", def: "The sum of all objective facts to be faced; the expression of `Fortitude`.", plane: "Social (Where Set)", code: "Fortitude", subConcept: "Observation" }
             ],
             [
-                { title: "Psychology (Understanding)", def: "The synthesis of self-knowledge and self-mastery, combining `Temperance` and `Prudence`.", plane: "Synthesized", code: "Temperance + Prudence", subConcept: "Self-Awareness" },
-                { title: "Language (Connection)", def: "The synthesis of shared meaning and human bond, combining `Charity` and `Justice`.", plane: "Synthesized", code: "Charity + Justice", subConcept: "Honest Dialogue" },
-                { title: "History (Context)", def: "The grounded record of action and endurance, combining `Fortitude` and `Faith`.", plane: "Synthesized", code: "Fortitude + Faith", subConcept: "Primary Sources" },
-                { title: "Reality (Truth)", def: "The final, grand synthesis where all 7 virtues are in perfect, integrated alignment.", plane: "Synthesized", code: "All 7 Virtues", subConcept: "Grounded Integration" }
+                { title: "Psychology (Understanding)", def: "The synthesis of self-knowledge and self-mastery, combining `Temperance` and `Prudence`.", plane: "Synthesized (Why Set)", code: "Temperance + Prudence", subConcept: "Self-Awareness" },
+                { title: "Language (Connection)", def: "The synthesis of shared meaning and human bond, combining `Charity` and `Justice`.", plane: "Synthesized (Why Set)", code: "Charity + Justice", subConcept: "Honest Dialogue" },
+                { title: "History (Context)", def: "The grounded record of action and endurance, combining `Fortitude` and `Faith`.", plane: "Synthesized (Why Set)", code: "Fortitude + Faith", subConcept: "Primary Sources" },
+                { title: "Reality (Truth)", def: "The final, grand synthesis where all 7 virtues are in perfect, integrated alignment.", plane: "Synthesized (Why Set)", code: "All 7 Virtues", subConcept: "Grounded Integration" }
             ]
         ],
-        sin: [
+        pessimism: [
             [
-                { title: "Chaos (Structurelessness)", def: "The rejection of foundational structure, synthesizing `Sloth` and `Pride`.", plane: "Theological", code: "Sloth + Pride", subConcept: "Equivocation" },
-                { title: "Nihilism (Belief in Nothing)", def: "The sin of rejecting unseen meaning, a perversion of `Faith`.", plane: "Theological", code: "Pride", subConcept: "Meaninglessness" },
-                { title: "Hatred (Active Ill-Will)", def: "The applied structure of active ill-will, synthesizing `Wrath` and `Envy`.", plane: "Theological", code: "Wrath + Envy", subConcept: "Dehumanization" },
-                { title: "Despair (Negative Conviction)", def: "The synthesized conviction in a negative, unavoidable outcome, synthesizing `Pride` and `Sloth`.", plane: "Theological", code: "Pride + Sloth", subConcept: "Fatalism" }
+                { title: "Chaos (Structurelessness)", def: "The rejection of foundational structure, synthesizing `Sloth` and `Pride`.", plane: "Theological (What Set)", code: "Sloth + Pride", subConcept: "Equivocation" },
+                { title: "Nihilism (Belief in Nothing)", def: "The sin of rejecting unseen meaning, a perversion of `Faith`.", plane: "Theological (What Set)", code: "Pride", subConcept: "Meaninglessness" },
+                { title: "Hatred (Active Ill-Will)", def: "The applied structure of active ill-will, synthesizing `Wrath` and `Envy`.", plane: "Theological (What Set)", code: "Wrath + Envy", subConcept: "Dehumanization" },
+                { title: "Despair (Negative Conviction)", def: "The synthesized conviction in a negative, unavoidable outcome, synthesizing `Pride` and `Sloth`.", plane: "Theological (What Set)", code: "Pride + Sloth", subConcept: "Fatalism" }
             ],
             [
-                { title: "Denial (Rejection of Fact)", def: "The rejection of objective fact, synthesizing `Pride` and `Cowardice`.", plane: "Experiential", code: "Pride + Cowardice", subConcept: "Confirmation Bias" },
-                { title: "Dogma (Closed Mind)", def: "The <em>inability</em> to explore possibility, a perversion of `Faith + Prudence`.", plane: "Experiential", code: "Pride", subConcept: "Infallibility" },
-                { title: "Indulgence (Lack of Control)", def: "The applied lack of internal control, synthesizing `Gluttony` and `Lust`.", plane: "Experiential", code: "Gluttony + Lust", subConcept: "Hedonism" },
-                { title: "Folly (Willful Ignorance)", def: "The synthesized process of rejecting practical wisdom, synthesizing `Pride` and `Sloth`.", plane: "Experiential", code: "Pride + Sloth", subConcept: "Learner Trap" }
+                { title: "Denial (Rejection of Fact)", def: "The rejection of objective fact, synthesizing `Pride` and `Cowardice`.", plane: "Experiential (How Set)", code: "Pride + Cowardice", subConcept: "Confirmation Bias" },
+                { title: "Dogma (Closed Mind)", def: "The <em>inability</em> to explore possibility, a perversion of `Faith + Prudence`.", plane: "Experiential (How Set)", code: "Pride", subConcept: "Infallibility" },
+                { title: "Indulgence (Lack of Control)", def: "The applied lack of internal control, synthesizing `Gluttony` and `Lust`.", plane: "Experiential (How Set)", code: "Gluttony + Lust", subConcept: "Hedonism" },
+                { title: "Folly (Willful Ignorance)", def: "The synthesized process of rejecting practical wisdom, synthesizing `Pride` and `Sloth`.", plane: "Experiential (How Set)", code: "Pride + Sloth", subConcept: "Learner Trap" }
             ],
             [
-                { title: "Anarchy (Dissolution)", def: "The dissolution of collective structure, synthesizing `Wrath` and `Greed`.", plane: "Social", code: "Wrath + Greed", subConcept: "Lawlessness" },
-                { title: "Apathy (Inability to Care)", def: "The refusal to understand or care about the 'Other\'s' state, synthesizing `Sloth` and `Envy`.", plane: "Social", code: "Sloth + Envy", subConcept: "Objectification" },
-                { title: "Corruption (Perversion of Morality)", def: "The applied perversion of the moral compass, synthesizing `Greed` and `Envy`.", plane: "Social", code: "Greed + Envy", subConcept: "Self-Interest" },
-                { title: "Cowardice (Refusal to Facts)", def: "The refusal to face objective facts, a perversion of `Fortitude`.", plane: "Social", code: "Sloth", subConcept: "Avoidance" }
+                { title: "Anarchy (Dissolution)", def: "The dissolution of collective structure, synthesizing `Wrath` and `Greed`.", plane: "Social (Where Set)", code: "Wrath + Greed", subConcept: "Lawlessness" },
+                { title: "Apathy (Inability to Care)", def: "The refusal to understand or care about the 'Other\'s' state, synthesizing `Sloth` and `Envy`.", plane: "Social (Where Set)", code: "Sloth + Envy", subConcept: "Objectification" },
+                { title: "Corruption (Perversion of Morality)", def: "The applied perversion of the moral compass, synthesizing `Greed` and `Envy`.", plane: "Social (Where Set)", code: "Greed + Envy", subConcept: "Self-Interest" },
+                { title: "Cowardice (Refusal to Facts)", def: "The refusal to face objective facts, a perversion of `Fortitude`.", plane: "Social (Where Set)", code: "Sloth", subConcept: "Avoidance" }
             ],
             [
-                { title: "Confusion (Self-Ignorance)", def: "The synthesis of self-ignorance, combining `Gluttony` and `Folly`.", plane: "Synthesized", code: "Gluttony + Folly", subConcept: "Impulsivity" },
-                { title: "Deceit (Ill-Will)", def: "The <em>language of objectification</em>, synthesizing `Lust`, `Envy`, and `Greed`.", plane: "Synthesized", code: "Lust + Envy + Greed", subConcept: "Manipulation" },
-                { title: "Erasure (Denial of Record)", def: "The destruction or denial of the grounded record, synthesizing `Pride` and `Sloth`.", plane: "Synthesized", code: "Pride + Sloth", subConcept: "Revisionism" },
-                { title: "Delusion (The Greater Lie)", def: "The final, grand synthesis of all 7 sins; the 'Greater Lie.'", plane: "Synthesized", code: "All 7 Sins", subConcept: "Ungrounded Abstraction" }
+                { title: "Confusion (Self-Ignorance)", def: "The synthesis of self-ignorance, combining `Gluttony` and `Folly`.", plane: "Synthesized (Why Set)", code: "Gluttony + Folly", subConcept: "Impulsivity" },
+                { title: "Deceit (Ill-Will)", def: "The <em>language of objectification</em>, synthesizing `Lust`, `Envy`, and `Greed`.", plane: "Synthesized (Why Set)", code: "Lust + Envy + Greed", subConcept: "Manipulation" },
+                { title: "Erasure (Denial of Record)", def: "The destruction or denial of the grounded record, synthesizing `Pride` and `Sloth`.", plane: "Synthesized (Why Set)", code: "Pride + Sloth", subConcept: "Revisionism" },
+                { title: "Delusion (The Greater Lie)", def: "The final, grand synthesis of all 7 sins; the 'Greater Lie.'", plane: "Synthesized (Why Set)", code: "All 7 Sins", subConcept: "Ungrounded Abstraction" }
             ]
         ]
     },
     definitions: [
-        { title: "The 7 Classical Virtues (The Base Code of Good)", content: "<p class='mb-4'>These are the 7 foundational energies <em>from which</em> the Virtue Matrix is generated. They are the 'base code' of 'Good', divided into Theological (Mind/Conceptual) and Cardinal (Body/Physical) virtues.</p><div class='grid grid-cols-1 md:grid-cols-2 gap-4'><ol class='list-decimal space-y-3 list-inside'><li><strong>Faith:</strong> Belief in the unseen; the substance of things hoped for, the evidence of things not seen.</li><li><strong>Hope:</strong> The intellectual and spiritual conviction in a positive, achievable, and <em>True</em> future outcome.</li><li><strong>Charity (Love):</strong> The <em>agape</em> or divine, ordering love; the selfless, unconditional connection to the 'Other'.</li><li><strong>Prudence:</strong> Practical wisdom; the ability to discern the correct path of action ('right reason in action').</li></ol><ol class='list-decimal space-y-3 list-inside' start='5'><li><strong>Justice:</strong> Fairness, righteousness, and the internal compass for determining what is 'due' to oneself and others.</li><li><strong>Fortitude (Courage):</strong> The strength to face objective facts, withstand adversity, and act correctly.</li><li><strong>Temperance:</strong> Self-control, moderation, and the mastery of one's own internal state and passions.</li></ol></div>" },
-        { title: "The 7 Deadly Sins (The Base Code of Bad)", content: "<p class='mb-4'>These are the 7 foundational energies <em>from which</em> the Sin Matrix is generated. They are the 'base code' of 'Bad', divided into Spiritual (Fallen Mind) and Carnal (Corrupted Body) sins.</p><div class='grid grid-cols-1 md:grid-cols-2 gap-4'><ol class='list-decimal space-y-3 list-inside'><li><strong>Pride:</strong> The belief that one's <em>internal abstraction</em> is superior to the <em>external, objective Truth</em>. (Perversion of Faith/Prudence)</li><li><strong>Envy:</strong> The sorrow for another's good, based on the belief that it diminishes one's own. (Perversion of Charity/Justice)</li><li><strong>Wrath:</strong> The desire for vengeance or uncontrolled anger, rejecting Justice in favor of emotional excess. (Perversion of Patience/Temperance)</li><li><strong>Sloth:</strong> Apathy and the refusal to <em>act</em> or face the difficulty of objective reality; a failure of courage. (Perversion of Fortitude)</li></ol><ol class='list-decimal space-y-3 list-inside' start='5'><li><strong>Greed:</strong> The desire to acquire or possess more than one needs, disrupting moral balance. (Perversion of Justice)</li><li><strong>Gluttony:</strong> The over-consumption of anything to the point of waste; a failure of self-control. (Perversion of Temperance)</li><li><strong>Lust:</strong> The disordered desire for or inordinate enjoyment of sexual pleasure, reducing a person (the 'Other') to an object. (Perversion of Charity/Love)</li></ol></div>" },
-        { title: "The 16 Synthesized Virtues (The Process of Good)", content: "<p class='mb-4'>The 7 Classical Virtues combine and express themselves to create the 16 states of 'Good' that form the nodes of the Virtue Matrix. All 16 nodes are <strong>synthesized expressions</strong> of the base code.</p><ol class='list-decimal space-y-2 list-inside'><li><strong>Maths (Order):</strong> `Prudence` expressed as foundational logic.</li><li><strong>Spirituality (Faith):</strong> `Faith` expressed in the abstract; the <em>search</em> for unseen meaning.</li><li><strong>Religion (Charity):</strong> `Charity` (Love) expressed as an applied structure of moral order.</li><li><strong>Intelligence (Hope):</strong> `Hope` expressed as the final synthesis; the <em>conviction</em> in a positive, integrated Truth.</li><li><strong>Physics (Objectivity):</strong> `Fortitude` expressed as the acceptance of objective fact.</li><li><strong>Meta-Physics (Imagination):</strong> `Faith` + `Prudence`; the disciplined exploration of possibility.</li><li><strong>Emotional-physics (Temperance):</strong> `Temperance` expressed as the applied rules of internal mastery.</li><li><strong>Learning (Prudence):</strong> `Prudence` expressed as the final synthesis; the <em>process</em> of subjective modeling.</li><li><strong>Society (Community):</strong> `Justice` expressed as an applied collective structure.</li><li><strong>Sociology (Empathy):</strong> `Charity` + `Justice`; the disciplined understanding of the 'Other\'s' state.</li><li><strong>Internal Judgment (Justice):</strong> `Justice` expressed as the applied moral compass.</li><li><strong>The World (Fortitude):</strong> `Fortitude` expressed as the final synthesis; the sum of all objective facts to be faced.</li><li><strong>Psychology (Understanding):</strong> `Temperance` + `Prudence`; the synthesis of self-knowledge.</li><li><strong>Language (Connection):</strong> `Charity` + `Justice`; the synthesis of shared meaning.</li><li><strong>History (Context):</strong> `Fortitude` + `Faith`; the grounded record of action.</li><li><strong>Reality (Truth):</strong> The final, grand synthesis of all 7 virtues in perfect, integrated alignment.</li></ol>" },
-        { title: "The 16 Synthesized Sins (The Process of Bad)", content: "<p class='mb-4'>The 7 Deadly Sins combine and express themselves to create the 16 states of 'Bad' that form the nodes of the Sin Matrix. All 16 nodes are <strong>synthesized expressions</strong> of the base code.</p><ol class='list-decimal space-y-2 list-inside'><li><strong>Chaos (Maths):</strong> `Sloth` + `Pride`; the rejection of foundational structure.</li><li><strong>Nihilism (Spirituality):</strong> `Pride` expressed in the abstract; the <em>belief</em> in nothing (perversion of Faith).</li><li><strong>Hatred (Religion):</strong> `Wrath` + `Envy`; the applied structure of active ill-will (perversion of Charity).</li><li><strong>Despair (Intelligence):</strong> `Pride` + `Sloth`; the synthesized conviction in a negative, unavoidable outcome (perversion of Hope).</li><li><strong>Denial (Physics):</strong> `Pride` + `Cowardice`; the rejection of objective fact.</li><li><strong>Dogma (Meta-Physics):</strong> `Pride` expressed as a closed mind; the <em>inability</em> to explore possibility (perversion of Faith + Prudence).</li><li><strong>Indulgence (Emotional-physics):</strong> `Gluttony` + `Lust`; the applied lack of internal control (perversion of Temperance).</li><li><strong>Folly (Learning):</strong> `Pride` + `Sloth`; the synthesized process of willful ignorance (perversion of Prudence).</li><li><strong>Anarchy (Society):</strong> `Wrath` + `Greed`; the dissolution of collective structure (perversion of Justice).</li><li><strong>Apathy (Sociology):</strong> `Sloth` + `Envy`; the refusal to understand or care about the 'Other\'s' state (perversion of Charity + Justice).</li><li><strong>Corruption (Internal Judgment):</strong> `Greed` + `Envy`; the applied perversion of the moral compass (perversion of Justice).</li><li><strong>Cowardice (The World):</strong> `Sloth` expressed as the final synthesis; the refusal to face facts (perversion of Fortitude).</li><li><strong>Confusion (Psychology):</strong> `Gluttony` + `Folly`; the synthesis of self-ignorance (perversion of Temperance + Prudence).</li><li><strong>Deceit (Language):</strong> `Lust` + `Envy` + `Greed`; the <em>language of objectification</em> (perversion of Charity + Justice).</li><li><strong>Erasure (History):</strong> `Pride` + `Sloth`; the destruction or denial of the grounded record (perversion of Fortitude + Faith).</li><li><strong>Delusion (Reality):</strong> The final, grand synthesis of all 7 sins; the 'Greater Lie.'</li></ol>" },
-        { title: "The Meta-Virtue & Meta-Sin (The Will States)", content: "<p class='mb-3'>This section defines the energetic states governing the system's traversal, representing the expression of <strong>Will</strong>.</p><strong>Patience (Meta-Virtue):</strong> The energy of traversal. The process of 'balance' and the <em>willingness</em> to follow the arduous 'Grounded Integration' path ('Mastery Path') rather than taking an abstract shortcut.<br><br><strong>Impatience (Meta-Sin):</strong> The energy of the 'Fall'. The <em>desire for a shortcut</em> to `Reality`, which fuels the 'Ungrounded Abstraction' path, trapping the system in high-Sin computational loops (the 'Learner Trap')." }
-    ],
-    paths: {
-        learner: [
-            { coord: [1, 3], log: "Start: `Learning` (1,3). Learner must ground theory." },
-            { coord: [2, 3], log: "Move: `Down` -> `The World` (2,3). Path is Grounded. Must move Horizontal." },
-            { coord: [2, 2], log: "Move: `Left` -> `Internal Judgment` (2,2). `Right` is locked. Must move Vertical." },
-            { coord: [3, 2], log: "Move: `Down` -> `History` (3,2). Gaining Context. Must move Horizontal." },
-            { coord: [3, 1], log: "Move: `Left` -> `Language` (3,1). `Right` is locked. Must move Vertical." },
-            { coord: [2, 1], log: "Move: `Up` -> `Sociology` (2,1). Entering 'Left' spiral. Must move Horizontal." },
-            { coord: [2, 0], log: "Move: `Left` -> `Society itself` (2,0). Must move Vertical." },
-            { coord: [1, 0], log: "Move: `Up` -> `Physics` (1,0). No `Left` move possible. Path is trapped." },
-            { coord: null, log: "<strong>Result: [STUCK]</strong>. The 'Imperfect Learner' is trapped in a computational loop, unable to reach `Reality`." }
-        ],
-        master: [
-            { coord: [1, 3], log: "Start: `Learning` (1,3). Master seeks to integrate." },
-            { coord: [2, 3], log: "Move: `Down` -> `The World` (2,3). Path is Grounded. Must move Horizontal." },
-            { coord: [2, 2], log: "Move: `Left` -> `Internal Judgment` (2,2). Calibrating. Must move Vertical." },
-            { coord: [3, 2], log: "Move: `Down` -> `History` (3,2). Gaining Context. Must move Horizontal." },
-            { coord: null, log: "<strong>Mastery Check:</strong> High Mastery in `Learning`, `World`, `Judgment`, & `History` unlocks the `Right` move." },
-            { coord: [3, 3], log: "Move: `Right` -> `Reality` (3,3). Path complete." },
-            { coord: null, log: "<strong>Result: [SUCCESS]</strong>. The 'Perfect Master' has integrated all planes to achieve `Truth`." }
-        ]
-    }
+        { 
+            title: "The Meta-Choice: Optimism vs. Pessimism (The Choice of Solutions vs. Problems)", 
+            content: "<p class='mb-4'>This is the foundational choice of consciousness that defines the two matrices. It is the choice of whether to align with the generative force of <strong>Solutions (Optimism)</strong> or the inertial force of <strong>Problems (Pessimism)</strong>.</p>" +
+                     "<div class='ml-4'>" +
+                     "<h5 class='font-semibold text-lg text-green-700 mb-2'>1. Optimism (Solutions): The Low-Strain, 'Solution-First' Mode</h5>" +
+                     "<ul class='list-disc list-inside space-y-2 mb-4 pl-4 text-gray-700'>" +
+                     "<li><strong>Definition:</strong> 'To accept the past and move on from it.'</li>" +
+                     "<li><strong>VFT Mechanism:</strong> The active, willing participation in the 'Heartbeat of Reality.' It is a 'solution-first' algorithm: <ol class='list-decimal list-inside ml-6 mt-1 space-y-1'><li><strong>Accept the Past (Resolve Problem)</strong> by integrating its negative energy.</li><li><strong>Move On (Generate Solution)</strong> by applying creative Will (+ψ) to build a new, lower-strain future.</li></ol></li>" +
+                     "<li><strong>Hegemonic Map:</strong> This is the 'Path to Grace,' aligning with the <strong>Greater Good</strong> quadrant <code>(+υ, +ψ)</code>. It is the engine of <strong>Progress</strong>.</li>" +
+                     "</ul>" +
+                     "<h5 class='font-semibold text-lg text-red-700 mb-2'>2. Pessimism (Problems): The High-Strain, 'Problem-First' Mode</h5>" +
+                     "<ul class='list-disc list-inside space-y-2 pl-4 text-gray-700'>" +
+                     "<li><strong>Definition:</strong> 'To only consider the past.'</li>" +
+                     "<li><strong>VFT Mechanism:</strong> The refusal to engage with the generative 'Heartbeat of Reality.' Consciousness gets trapped in a high-inertia, negative feedback loop, constantly reprocessing a high-strain past event ('problem'). This is the 'Circle of Questioning' on the 'Path of Delusion': answering a problem with another problem.</li>" +
+                     "<li><strong>Hegemonic Map:</strong> This is the 'Path of Regression,' aligning with the <strong>Greater Evil</strong> quadrant <code>(-υ, -ψ)</code>. It is the engine of <strong>Stagnation</strong>.</li>" +
+                     "</ul></div>"
+        },
+        { title: "The 7 Classical Virtues (The Base Code of Good)", content: "<p class='mb-4'>These are the 7 foundational energies <em>from which</em> the Optimistic Matrix is generated. They are the 'base code' of 'Good', divided into Theological (Mind/Conceptual) and Cardinal (Body/Physical) virtues.</p><div class='grid grid-cols-1 md:grid-cols-2 gap-4'><ol class='list-decimal space-y-3 list-inside'><li><strong>Faith:</strong> Belief in the unseen; the substance of things hoped for, the evidence of things not seen.</li><li><strong>Hope:</strong> The intellectual and spiritual conviction in a positive, achievable, and <em>True</em> future outcome.</li><li><strong>Charity (Love):</strong> The <em>agape</em> or divine, ordering love; the selfless, unconditional connection to the 'Other'.</li><li><strong>Prudence:</strong> Practical wisdom; the ability to discern the correct path of action ('right reason in action').</li></ol><ol class='list-decimal space-y-3 list-inside' start='5'><li><strong>Justice:</strong> Fairness, righteousness, and the internal compass for determining what is 'due' to oneself and others.</li><li><strong>Fortitude (Courage):</strong> The strength to face objective facts, withstand adversity, and act correctly.</li><li><strong>Temperance:</strong> Self-control, moderation, and the mastery of one's own internal state and passions.</li></ol></div>" },
+        { title: "The 7 Deadly Sins (The Base Code of Bad)", content: "<p class='mb-4'>These are the 7 foundational energies <em>from which</em> the Pessimistic Matrix is generated. They are the 'base code' of 'Bad', divided into Spiritual (Fallen Mind) and Carnal (Corrupted Body) sins.</p><div class='grid grid-cols-1 md:grid-cols-2 gap-4'><ol class='list-decimal space-y-3 list-inside'><li><strong>Pride:</strong> The belief that one's <em>internal abstraction</em> is superior to the <em>external, objective Truth</em>. (Perversion of Faith/Prudence)</li><li><strong>Envy:</strong> The sorrow for another's good, based on the belief that it diminishes one's own. (Perversion of Charity/Justice)</li><li><strong>Wrath:</strong> The desire for vengeance or uncontrolled anger, rejecting Justice in favor of emotional excess. (Perversion of Patience/Temperance)</li><li><strong>Sloth:</strong> Apathy and the refusal to <em>act</em> or face the difficulty of objective reality; a failure of courage. (Perversion of Fortitude)</li></ol><ol class='list-decimal space-y-3 list-inside' start='5'><li><strong>Greed:</strong> The desire to acquire or possess more than one needs, disrupting moral balance. (Perversion of Justice)</li><li><strong>Gluttony:</strong> The over-consumption of anything to the point of waste; a failure of self-control. (Perversion of Temperance)</li><li><strong>Lust:</strong> The disordered desire for or inordinate enjoyment of sexual pleasure, reducing a person (the 'Other') to an object. (Perversion of Charity/Love)</li></ol></div>" },
+        { title: "The 16 Synthesized Optimisms (The Process of Good)", content: "<p class='mb-4'>The 7 Classical Virtues combine and express themselves to create the 16 states of 'Good' that form the nodes of the Optimism Matrix. All 16 nodes are <strong>synthesized expressions</strong> of the base code.</p><ol class='list-decimal space-y-2 list-inside'><li><strong>Maths (Order):</strong> `Prudence` expressed as foundational logic.</li><li><strong>Spirituality (Faith):</strong> `Faith` expressed in the abstract; the <em>search</em> for unseen meaning.</li><li><strong>Religion (Charity):</strong> `Charity` (Love) expressed as an applied structure of moral order.</li><li><strong>Intelligence (Hope):</strong> `Hope` expressed as the final synthesis; the <em>conviction</em> in a positive, integrated Truth.</li><li><strong>Physics (Objectivity):</strong> `Fortitude` expressed as the acceptance of objective fact.</li><li><strong>Meta-Physics (Imagination):</strong> `Faith` + `Prudence`; the disciplined exploration of possibility.</li><li><strong>Emotional-physics (Temperance):</strong> `Temperance` expressed as the applied rules of internal mastery.</li><li><strong>Learning (Prudence):</strong> `Prudence` expressed as the final synthesis; the <em>process</em> of subjective modeling.</li><li><strong>Society (Community):</strong> `Justice` expressed as an applied collective structure.</li><li><strong>Sociology (Empathy):</strong> `Charity` + `Justice`; the disciplined understanding of the 'Other\'s' state.</li><li><strong>Internal Judgment (Justice):</strong> `Justice` expressed as the applied moral compass.</li><li><strong>The World (Fortitude):</strong> `Fortitude` expressed as the final synthesis; the sum of all objective facts to be faced.</li><li><strong>Psychology (Understanding):</strong> `Temperance` + `Prudence`; the synthesis of self-knowledge.</li><li><strong>Language (Connection):</strong> `Charity` + `Justice`; the synthesis of shared meaning.</li><li><strong>History (Context):</strong> `Fortitude` + `Faith`; the grounded record of action.</li><li><strong>Reality (Truth):</strong> The final, grand synthesis of all 7 virtues in perfect, integrated alignment.</li></ol>" },
+        { title: "The 16 Synthesized Pessimisms (The Process of Bad)", content: "<p class='mb-4'>The 7 Deadly Sins combine and express themselves to create the 16 states of 'Bad' that form the nodes of the Pessimism Matrix. All 16 nodes are <strong>synthesized expressions</strong> of the base code.</p><ol class='list-decimal space-y-2 list-inside'><li><strong>Chaos (Maths):</strong> `Sloth` + `Pride`; the rejection of foundational structure.</li><li><strong>Nihilism (Spirituality):</strong> `Pride` expressed in the abstract; the <em>belief</em> in nothing (perversion of Faith).</li><li><strong>Hatred (Religion):</strong> `Wrath` + `Envy`; the applied structure of active ill-will (perversion of Charity).</li><li><strong>Despair (Intelligence):</strong> `Pride` + `Sloth`; the synthesized conviction in a negative, unavoidable outcome (perversion of Hope).</li><li><strong>Denial (Physics):</strong> `Pride` + `Cowardice`; the rejection of objective fact.</li><li><strong>Dogma (Meta-Physics):</strong> `Pride` expressed as a closed mind; the <em>inability</em> to explore possibility (perversion of Faith + Prudence).</li><li><strong>Indulgence (Emotional-physics):</strong> `Gluttony` + `Lust`; the applied lack of internal control (perversion of Temperance).</li><li><strong>Folly (Learning):</strong> `Pride` + `Sloth`; the synthesized process of willful ignorance (perversion of Prudence).</li><li><strong>Anarchy (Society):</strong> `Wrath` + `Greed`; the dissolution of collective structure (perversion of Justice).</li><li><strong>Apathy (Sociology):</strong> `Sloth` + `Envy`; the refusal to understand or care about the 'Other\'s' state (perversion of Charity + Justice).</li><li><strong>Corruption (Internal Judgment):</strong> `Greed` + `Envy`; the applied perversion of the moral compass (perversion of Justice).</li><li><strong>Cowardice (The World):</strong> `Sloth` expressed as the final synthesis; the refusal to face facts (perversion of Fortitude).</li><li><strong>Confusion (Psychology):</strong> `Gluttony` + `Folly`; the synthesis of self-ignorance (perversion of Temperance + Prudence).</li><li><strong>Deceit (Language):</strong> `Lust` + `Envy` + `Greed`; the <em>language of objectification</em> (perversion of Charity + Justice).</li><li><strong>Erasure (History):</strong> `Pride` + `Sloth`; the destruction or denial of the grounded record (perversion of Fortitude + Faith).</li><li><strong>Delusion (Reality):</strong> The final, grand synthesis of all 7 sins; the 'Greater Lie.'</li></ol>" },
+        { title: "The Meta-Optimism & Meta-Pessimism (The Will States)", content: "<p class='mb-3'>This section defines the energetic states governing the system's traversal, representing the expression of <strong>Will</strong>.</p><strong>Patience (Meta-Optimism):</strong> The energy of traversal. The process of 'balance' and the <em>willingness</em> to follow the arduous 'Grounded Integration' path ('Mastery Path') rather than taking an abstract shortcut.<br><br><strong>Impatience (Meta-Pessimism):</strong> The energy of the 'Fall'. The <em>desire for a shortcut</em> to `Reality`, which fuels the 'Ungrounded Abstraction' path, trapping the system in high-Pessimism computational loops (the 'Learner Trap')." }
+    ]
 };
 
-let currentMatrixState = 'virtue';
+let currentMatrixState = 'optimism';
 let simInProgress = false;
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -382,7 +362,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderDefinitions();
     renderCombinedView();
     // Initialize detail panel with a default state, e.g., Maths (0,0)
-    const firstCell = document.querySelector('#matrix-grid-container .matrix-cell');
+    const firstCell = document.querySelector('#matrix-grid-container .matrix-cell:not(.y-axis-header)');
     if(firstCell && data.details[currentMatrixState] && data.details[currentMatrixState][0] && data.details[currentMatrixState][0][0]){
         showDetail(currentMatrixState, 0, 0, firstCell);
     } else {
@@ -412,94 +392,107 @@ function setupNavigation() {
 }
 
 function renderCombinedView() {
-    // 1. Invert Virtue Data
-    const invertedVirtueMatrix = [...data.matrix.virtue].reverse().map(row => [...row].reverse());
-    const invertedVirtueHeaders = [...data.headers.virtue].reverse();
+    // 1. Invert Optimism Data
+    const invertedOptimismMatrix = [...data.matrix.optimism].reverse().map(row => [...row].reverse());
+    const invertedOptimismHeaders = [...data.headers.optimism].reverse();
     const invertedPlaneHeaders = ["Plane 3 (Why)", "Plane 2 (How)", "Plane 1 (Where)", "Plane 0 (What)"];
+    const planeHeaders = ["What", "Where", "How", "Why"];
+    const setHeaders = data.headers.optimism.map(h => h.split(' ')[1].replace('(', '').replace(')', '')); // ["What", "How", "Where", "Why"]
+    const invertedSetHeaders = [...setHeaders].reverse();
 
-    // 2. Populate Inverted Virtue Grid
-    const virtueGrid = document.getElementById('matrix-grid-virtue-inv');
-    if (virtueGrid) {
-        virtueGrid.innerHTML = '';
-        invertedVirtueMatrix.forEach((row, r) => {
+    // 2. Populate Inverted Optimism Grid
+    const optimismGrid = document.getElementById('matrix-grid-optimism-inv');
+    if (optimismGrid) {
+        optimismGrid.innerHTML = '';
+        invertedOptimismMatrix.forEach((row, r) => {
+            // Add Y-Axis Header
+            const headerEl = document.createElement('div');
+            headerEl.className = 'y-axis-header flex items-center justify-end text-right text-xs font-semibold text-gray-500 uppercase pr-2';
+            headerEl.innerHTML = invertedOptimismHeaders[r].replace(" (", "<br>(");
+            optimismGrid.appendChild(headerEl);
+
             row.forEach((cell, c) => {
                 const cellEl = document.createElement('div');
-                // Make cells non-interactive in combined view
-                cellEl.className = 'matrix-cell virtue-cell bg-white border-gray-200 border rounded-xl flex items-center justify-center p-2 text-center font-semibold text-sm md:text-base';
+                cellEl.className = 'matrix-cell optimism-cell bg-white border-gray-200 border rounded-xl flex flex-col items-center justify-center p-2 text-center font-semibold text-sm';
                 cellEl.style.cursor = 'default';
-                cellEl.textContent = cell;
-                virtueGrid.appendChild(cellEl);
+                const xLabel = invertedPlaneHeaders[c].split(' ')[2].replace('(', '').replace(')', ''); // Get "Why" from "Plane 3 (Why)"
+                const yLabel = invertedSetHeaders[r];
+                cellEl.innerHTML = `<span>${cell}</span><span class="block text-xs opacity-60 mt-1 font-normal">(${xLabel}, ${yLabel})</span>`;
+                optimismGrid.appendChild(cellEl);
             });
         });
     }
 
-    // 3. Populate Inverted Virtue Headers
-    invertedPlaneHeaders.forEach((header, i) => {
-         const element = document.getElementById(`header-plane-inv-${i}`);
-         if (element) element.innerHTML = header;
-    });
-    invertedVirtueHeaders.forEach((header, i) => {
-         const element = document.getElementById(`header-row-inv-${i}`);
-         if (element) element.textContent = header;
-    });
+    // 3. Populate Inverted Optimism Headers
+    const invColHeaderContainer = optimismGrid.parentElement.querySelector('.uppercase.mb-2');
+    if(invColHeaderContainer) {
+        invColHeaderContainer.innerHTML = '<span></span>' + invertedPlaneHeaders.map(h => `<span>${h.replace(" (", "<br>(")}</span>`).join('');
+    }
 
-    // 4. Populate Standard Sin Grid
-    const sinGrid = document.getElementById('matrix-grid-sin-std');
-    if (sinGrid) {
-        sinGrid.innerHTML = '';
-        data.matrix.sin.forEach((row, r) => {
+
+    // 4. Populate Standard Pessimism Grid
+    const pessimismGrid = document.getElementById('matrix-grid-pessimism-std');
+    if (pessimismGrid) {
+        pessimismGrid.innerHTML = '';
+        data.matrix.pessimism.forEach((row, r) => {
+            
+            // Render the data cells first
             row.forEach((cell, c) => {
                 const cellEl = document.createElement('div');
-                 // Make cells non-interactive in combined view
-                cellEl.className = 'matrix-cell sin-cell bg-gray-800 text-white border-gray-700 border rounded-xl flex items-center justify-center p-2 text-center font-semibold text-sm md:text-base';
+                cellEl.className = 'matrix-cell pessimism-cell bg-gray-800 text-white border-gray-700 border rounded-xl flex flex-col items-center justify-center p-2 text-center font-semibold text-sm';
                 cellEl.style.cursor = 'default';
-                cellEl.textContent = cell;
-                sinGrid.appendChild(cellEl);
+                const xLabel = planeHeaders[c];
+                const yLabel = setHeaders[r];
+                cellEl.innerHTML = `<span>${cell}</span><span class="block text-xs opacity-60 mt-1 font-normal">(${xLabel}, ${yLabel})</span>`;
+                pessimismGrid.appendChild(cellEl);
             });
+
+            // Add Y-Axis Header to the RIGHT
+            const headerEl = document.createElement('div');
+            headerEl.className = 'y-axis-header flex items-center justify-start text-left text-xs font-semibold text-gray-500 uppercase pl-2';
+            headerEl.innerHTML = data.headers.pessimism[r].replace(" (", "<br>(");
+            pessimismGrid.appendChild(headerEl);
         });
     }
-    // 5. Populate Standard Sin Headers
+    // 5. Populate Standard Pessimism Headers
     const standardPlaneHeaders = ["Plane 0<br>(What)", "Plane 1<br>(Where)", "Plane 2<br>(How)", "Plane 3<br>(Why)"];
-    const sinGridContainer = document.getElementById('matrix-grid-sin-std');
-    if (sinGridContainer) {
-        const headers = sinGridContainer.parentElement.querySelectorAll('.uppercase.mb-2 span');
-        headers.forEach((header, i) => {
-            if (standardPlaneHeaders[i]) {
-                header.innerHTML = standardPlaneHeaders[i];
-            }
-        });
+    const pessimismGridContainer = document.getElementById('matrix-grid-pessimism-std');
+    if (pessimismGridContainer) {
+        const colHeaders = pessimismGridContainer.parentElement.querySelector('.uppercase.mb-2');
+        // This is the change: map first, then add the blank span
+        colHeaders.innerHTML = standardPlaneHeaders.map(h => `<span>${h}</span>`).join('') + '<span></span>';
     }
 }
 
 function setupMatrixControls() {
-    const btnVirtue = document.getElementById('btn-virtue');
-    const btnSin = document.getElementById('btn-sin');
+    const btnOptimism = document.getElementById('btn-optimism');
+    const btnPessimism = document.getElementById('btn-pessimism');
 
-    if (!btnVirtue || !btnSin) {
+    if (!btnOptimism || !btnPessimism) {
         console.error("Matrix toggle buttons not found");
         return; // Exit if buttons aren't found
     }
 
-    btnVirtue.addEventListener('click', () => {
-        if (currentMatrixState === 'virtue') return;
-        currentMatrixState = 'virtue';
-        btnVirtue.classList.add('active');
-        btnSin.classList.remove('active');
-        document.getElementById('matrix-title').textContent = "The Virtue Matrix";
-        document.getElementById('matrix-description').textContent = "This matrix maps the 16 positive nodes of the 'Virtue Matrix' that define the path to `Reality (Truth)`. Click any cell to explore its properties.";
+    btnOptimism.addEventListener('click', () => {
+        if (currentMatrixState === 'optimism') return;
+        currentMatrixState = 'optimism';
+        btnOptimism.classList.add('active');
+        btnPessimism.classList.remove('active');
+        document.getElementById('matrix-title').textContent = "The Optimism Matrix (Solutions)";
+        document.getElementById('matrix-description').textContent = "This matrix maps the 16 positive nodes of the 'Optimism Matrix' (Solutions) that define the path to `Reality (Truth)`. Click any cell to explore its properties.";
         renderMatrix(currentMatrixState);
-        showDetail(currentMatrixState, 0, 0, document.querySelector('#matrix-grid-container .matrix-cell')); // Show default detail
+        showDetail(currentMatrixState, 0, 0, document.querySelector('#matrix-grid-container .matrix-cell:not(.y-axis-header)')); // Show default detail
     });
 
-    btnSin.addEventListener('click', () => {
-        if (currentMatrixState === 'sin') return;
-        currentMatrixState = 'sin';
-        btnSin.classList.add('active');
-        btnVirtue.classList.remove('active');
-        document.getElementById('matrix-title').textContent = "The Sin Matrix";
-        document.getElementById('matrix-description').textContent = "This matrix maps the 16 shadow nodes of the 'Sin Matrix' that define the path to `Delusion (The Lie)`. Click any cell to explore its properties.";
+    btnPessimism.addEventListener('click', () => {
+        if (currentMatrixState === 'pessimism') return;
+        currentMatrixState = 'pessimism';
+        btnPessimism.classList.add('active');
+        btnOptimism.classList.remove('active');
+        document.getElementById('matrix-title').textContent = "The Pessimism Matrix (Problems)";
+        document.getElementById('matrix-description').textContent = "This matrix maps the 16 shadow nodes of the 'Pessimism Matrix' (Problems), defining the 'Path of Delusion'. Click any cell to explore its properties.";
         renderMatrix(currentMatrixState);
-        showDetail(currentMatrixState, 0, 0, document.querySelector('#matrix-grid-container .matrix-cell')); // Show default detail
+        showDetail(currentMatrixState, 0, 0, document.querySelector('#matrix-grid-container .matrix-cell:not(.y-axis-header)')); // Show default detail
     });
 }
 
@@ -511,42 +504,45 @@ function renderMatrix(state) {
          return;
     }
     grid.innerHTML = '';
-    const cellClass = state === 'virtue' ? 'virtue-cell' : 'sin-cell';
-    const bgClass = state === 'virtue' ? 'bg-white' : 'bg-gray-800 text-white';
-    const borderClass = state === 'virtue' ? 'border-gray-200' : 'border-gray-700';
+    const cellClass = state === 'optimism' ? 'optimism-cell' : 'pessimism-cell';
+    const bgClass = state === 'optimism' ? 'bg-white' : 'bg-gray-800 text-white';
+    const borderClass = state === 'optimism' ? 'border-gray-200' : 'border-gray-700';
+    
+    const planeHeaders = ["What", "Where", "How", "Why"]; // X-Axis
+    const setHeaders = data.headers[state].map(h => h.split(' ')[1].replace('(', '').replace(')', '')); // Y-Axis ["What", "How", "Where", "Why"]
+
 
     // Update column headers for the main matrix
-    const planeHeaders = ["Plane 0<br>(What)", "Plane 1<br>(Where)", "Plane 2<br>(How)", "Plane 3<br>(Why)"];
-    const headerContainer = grid.parentElement.querySelector('.grid.grid-cols-4.gap-2.text-center.text-xs.font-semibold.text-gray-500.uppercase.mb-2');
+    const planeHeaderStrings = ["Plane 0<br>(What)", "Plane 1<br>(Where)", "Plane 2<br>(How)", "Plane 3<br>(Why)"];
+    const headerContainer = grid.parentElement.querySelector('.grid.grid-cols-5.gap-2.text-center.text-xs.font-semibold.text-gray-500.uppercase.mb-2');
     if (headerContainer) {
-        headerContainer.innerHTML = ''; // Clear existing headers
-        planeHeaders.forEach(headerText => {
+        headerContainer.innerHTML = '<span></span>'; // Clear existing headers and add blank
+        planeHeaderStrings.forEach(headerText => {
             const span = document.createElement('span');
             span.innerHTML = headerText;
             headerContainer.appendChild(span);
         });
     }
 
-
     data.matrix[state].forEach((row, r) => {
+        // Add Y-Axis Header Cell
+        const headerEl = document.createElement('div');
+        headerEl.className = 'y-axis-header flex items-center justify-end text-right text-xs font-semibold text-gray-500 uppercase pr-2';
+        headerEl.innerHTML = data.headers[state][r].replace(" (", "<br>(");
+        grid.appendChild(headerEl);
+
         row.forEach((cell, c) => {
             const cellEl = document.createElement('div');
-            cellEl.className = `matrix-cell ${cellClass} ${bgClass} ${borderClass} border rounded-xl flex items-center justify-center p-2 text-center font-semibold text-sm md:text-base`;
-            cellEl.textContent = cell;
+            cellEl.className = `matrix-cell ${cellClass} ${bgClass} ${borderClass} border rounded-xl flex flex-col items-center justify-center p-2 text-center font-semibold text-sm md:text-base`;
+            
+            const xLabel = planeHeaders[c];
+            const yLabel = setHeaders[r];
+            cellEl.innerHTML = `<span>${cell}</span><span class="block text-xs opacity-60 mt-1 font-normal">(${xLabel}, ${yLabel})</span>`;
+            
             cellEl.addEventListener('click', (e) => showDetail(state, r, c, e.currentTarget));
             grid.appendChild(cellEl);
         });
     });
-
-    // Update row headers based on state
-    for (let i = 0; i < 4; i++) {
-        const headerElement = document.getElementById(`header-row-${i}`);
-        if (headerElement) {
-             headerElement.textContent = data.headers[state][i];
-        } else {
-             console.error(`Row header element header-row-${i} not found.`);
-        }
-    }
 }
 
 
@@ -562,13 +558,13 @@ function showDetail(state, r, c, el) {
     
     // Remove highlight from all cells in this grid
     document.querySelectorAll('#matrix-grid-container .matrix-cell').forEach(cell => {
-        cell.classList.remove('virtue-cell-active');
-        cell.classList.remove('sin-cell-active');
+        cell.classList.remove('optimism-cell-active');
+        cell.classList.remove('pessimism-cell-active');
     });
 
     // Add highlight to the clicked cell
     if (el) {
-        const activeClass = state === 'virtue' ? 'virtue-cell-active' : 'sin-cell-active';
+        const activeClass = state === 'optimism' ? 'optimism-cell-active' : 'pessimism-cell-active';
         el.classList.add(activeClass);
     }
 
@@ -582,7 +578,7 @@ function showDetail(state, r, c, el) {
     }
 
     const detail = data.details[state][r][c];
-    const shadowState = state === 'virtue' ? 'sin' : 'virtue';
+    const shadowState = state === 'optimism' ? 'pessimism' : 'optimism';
 
     // Validate shadow data access
     let shadowDetailTitle = "N/A";
@@ -597,7 +593,7 @@ function showDetail(state, r, c, el) {
 
     // Generate 16 Sub-Vector connection list
     let subVectorList = '';
-    data.matrix.virtue.flat().forEach((name, i) => {
+    data.matrix.optimism.flat().forEach((name, i) => {
         subVectorList += `<li class="text-xs ${i % 2 === 0 ? 'bg-gray-50' : 'bg-white'} p-1 rounded">${name}</li>`;
     });
 
@@ -606,7 +602,7 @@ function showDetail(state, r, c, el) {
 
     content.innerHTML = `
         <div class="text-sm">
-            <span class="font-semibold text-gray-800">Plane:</span>
+            <span class="font-semibold text-gray-800">Set (Row):</span>
             <span class="text-gray-600">${detail.plane || 'N/A'}</span>
         </div>
         <div class="text-sm">
@@ -614,7 +610,7 @@ function showDetail(state, r, c, el) {
             <span class="text-gray-600">${detail.code || 'N/A'}</span>
         </div>
         <div class="text-sm">
-            <span class="${state === 'virtue' ? 'text-green-600' : 'text-red-600'} font-medium">Type: ${state.charAt(0).toUpperCase() + state.slice(1)}</span>
+            <span class="${state === 'optimism' ? 'text-green-600' : 'text-red-600'} font-medium">Type: ${state.charAt(0).toUpperCase() + state.slice(1)}</span>
         </div>
         <div class="text-sm pt-2 border-t border-gray-200">
             <span class="font-semibold text-gray-800">Shadow Counterpart:</span>
@@ -632,7 +628,7 @@ function showDetail(state, r, c, el) {
             
             <div class="grid grid-cols-2 gap-1 text-xs text-center">
                 <div class="bg-green-50 border border-green-200 p-2 rounded">
-                    <span classs="font-semibold text-green-700">True-True (Possible)</span><br>100
+                    <span class="font-semibold text-green-700">True-True (Possible)</span><br>100
                 </div>
                 <div class="bg-yellow-50 border border-yellow-200 p-2 rounded">
                     <span class="font-semibold text-yellow-700">Lie-True (Ungrounded)</span><br>0
@@ -664,12 +660,13 @@ function renderDefinitions() {
     data.definitions.forEach((item, index) => {
         const div = document.createElement('div');
         div.className = 'bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden';
+        const isOpen = index === 0; // Open the first item (Meta-Choice) by default
         div.innerHTML = `
             <button class="w-full p-5 text-left font-semibold text-lg text-gray-800 flex justify-between items-center hover:bg-gray-50" data-accordion-toggle="${index}">
                 <span>${item.title}</span>
-                <span class="transform transition-transform duration-200 text-sky-600">▼</span>
+                <span class="transform transition-transform duration-200 text-sky-600 ${isOpen ? 'rotate-180' : ''}">▼</span>
             </button>
-            <div class="p-5 pt-0 text-gray-600 hidden" data-accordion-content="${index}">
+            <div class="p-5 pt-0 text-gray-600 ${isOpen ? '' : 'hidden'}" data-accordion-content="${index}">
                 <div class="border-t border-gray-200 pt-4">${item.content}</div>
             </div>
         `;
