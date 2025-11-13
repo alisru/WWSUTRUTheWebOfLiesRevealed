@@ -245,3 +245,104 @@
         ]
     }
 }
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // --- 1. Element Selection ---
+    const tocContainer = document.getElementById('toc-container');
+    const contentContainer = document.querySelector('.markdown-body');
+    const tocToggleButton = document.getElementById('toc-toggle-btn');
+    const tocOverlay = document.getElementById('toc-overlay');
+
+    if (!tocContainer || !contentContainer) return;
+
+    // --- 2. Generate TOC Content ---
+    const headings = contentContainer.querySelectorAll('h2, h3, h4, h5'); // Updated to include h4 and h5
+    if (headings.length === 0) {
+        tocContainer.style.display = 'none';
+        if (tocToggleButton) tocToggleButton.style.display = 'none';
+        return;
+    }
+
+    const tocTitle = document.createElement('h4');
+    tocTitle.textContent = 'On this page';
+    tocContainer.appendChild(tocTitle);
+    const tocList = document.createElement('ul');
+
+    headings.forEach((heading, index) => {
+        if (!heading.id) heading.id = `heading-ref-${index}`;
+        const listItem = document.createElement('li');
+        const link = document.createElement('a');
+        link.textContent = heading.textContent;
+        link.href = `#${heading.id}`;
+        
+        let tocClass = 'toc-h2'; // Default
+        let tagName = heading.tagName.toLowerCase();
+        if (tagName === 'h3') {
+            tocClass = 'toc-h3';
+        } else if (tagName === 'h4') {
+            tocClass = 'toc-h4';
+        } else if (tagName === 'h5') { // Added h5 style
+            tocClass = 'toc-h5';
+        }
+        link.classList.add(tocClass);
+
+        listItem.appendChild(link);
+        tocList.appendChild(listItem);
+    });
+    tocContainer.appendChild(tocList);
+    const tocLinks = tocContainer.querySelectorAll('a');
+
+    // --- 3. Mobile Drawer Functionality ---
+    const closeTocDrawer = () => document.body.classList.remove('toc-open');
+    if (tocToggleButton && tocOverlay) {
+        tocToggleButton.addEventListener('click', () => document.body.classList.toggle('toc-open'));
+        tocOverlay.addEventListener('click', closeTocDrawer);
+    }
+    tocLinks.forEach(link => link.addEventListener('click', closeTocDrawer));
+
+    // --- 4. Active Link Highlighting on Scroll ---
+    const getAbsoluteTop = (element) => {
+        let top = 0;
+        while (element) {
+            top += element.offsetTop;
+            element = element.offsetParent;
+        }
+        return top;
+    };
+    
+    const headingPositions = Array.from(headings).map(h => ({
+        id: h.id,
+        top: getAbsoluteTop(h)
+    }));
+    
+    let scrollTimeout;
+    const setActiveLink = () => {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(S => {
+            let currentId = '';
+            const scrollPosition = window.scrollY + 120;
+            for (let i = headingPositions.length - 1; i >= 0; i--) {
+                if (scrollPosition >= headingPositions[i].top) {
+                    currentId = headingPositions[i].id;
+                    break;
+                }
+            }
+            tocLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${currentId}`) {
+                    link.classList.add('active');
+                }
+            });
+        }, 50);
+    };
+
+    window.addEventListener('scroll', setActiveLink);
+    setActiveLink();
+});
+</script>
+
+</body>
+</html>
