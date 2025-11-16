@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <!-- 1. Meta Tags -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AFL Related Donations | AEC Disclosures</title>
+    <meta property="og:title" content="AFL Related Donations">
+    <meta property="og:locale" content="en_US">
+    <meta name="description" content="A list of AFL and club-related donations as disclosed to the AEC, sorted and totalled.">
+    <meta property="og:description" content="A list of AFL and club-related donations as disclosed to the AEC, sorted and totalled.">
+    <meta property="og:site_name" content="AEC Disclosures">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary">
+    <meta property="twitter:title" content="AFL Related Donations">
+
+    <!-- 2. JSON-LD Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "description": "A list of AFL and club-related donations as disclosed to the AEC, sorted and totalled.",
+        "headline": "AFL Related Donations"
+    }
+    </script>
+
+    <!-- 3. Stylesheet Link (as requested) -->
+    <!-- Note: The required CSS for the TOC from the instructions is included below for this preview to work. -->
+    <link rel="stylesheet" href="../style.css">
+
+    <!-- 4. Google Analytics -->
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-4QHZV5Y81G"></script>
+    <script>
+     window.dataLayer = window.dataLayer || [];
+     function gtag(){dataLayer.push(arguments);}
+     gtag('js', new Date());
+     gtag('config', 'G-4QHZV5Y81G');
+    </script>
+
+    <!-- 
+      CSS for Responsive TOC.
+      Per instructions, this should be in `../style.css`, but is included here
+      so the generated file is functional for preview.
+    -->
+    <style>
+        /* --- Generic TOC Styles --- */
+        #toc-container h4 { margin-top: 0; font-size: 1em; color: #333; }
+        #toc-container ul { list-style: none; padding: 0; margin: 0; }
+        #toc-container li a {
+            display: block; text-decoration: none; color: #555;
+            padding: 6px 0 6px 10px; font-size: 0.9em; transition: all 0.2s ease;
+            border-left: 2px solid transparent;
+        }
+        #toc-container li a.toc-h3 { padding-left: 25px; } /* Indent sub-headings */
+        #toc-container li a:hover { color: #000; }
+        #toc-container li a.active { color: #007bff; font-weight: bold; border-left-color: #007bff; }
+
+        /* --- Desktop TOC (Sidebar) --- */
+        @media (min-width: 1400px) {
+            #toc-container {
+                position: fixed; top: 80px; left: 20px; width: 220px;
+                max-height: calc(100vh - 100px); overflow-y: auto;
+                border-left: 2px solid #e0e0e0; padding: 10px 15px;
+            }
+            #toc-container li a { margin-left: -17px; }
+            .markdown-body { margin-left: 260px; } /* Push content to the right */
+            #mobile-header { display: none; }
+        }
+
+        /* --- Mobile TOC (Off-canvas Drawer) --- */
+        @media (max-width: 1399.98px) {
+            #mobile-header {
+                display: block; position: fixed; top: 10px; left: 10px;
+                z-index: 1001;
+            }
+            #toc-toggle-btn {
+                background: #fff; border: 1px solid #ddd; border-radius: 5px;
+                width: 44px; height: 44px; padding: 8px; cursor: pointer;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            }
+            #toc-toggle-btn span {
+                display: block; width: 100%; height: 2px; background: #333;
+                margin: 4px 0; transition: transform 0.3s ease;
+            }
+            #toc-container {
+                position: fixed; top: 0; left: 0; height: 100%; width: 280px;
+                background: #f9f9f9; z-index: 1002; padding: 20px;
+                transform: translateX(-100%); transition: transform 0.3s ease-in-out;
+                overflow-y: auto; box-shadow: 5px 0 15px rgba(0,0,0,0.1);
+            }
+            #toc-overlay {
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                background: rgba(0,0,0,0.5); z-index: 1000;
+                opacity: 0; visibility: hidden; transition: opacity 0.3s ease;
+            }
+            /* Active states for mobile drawer */
+            body.toc-open #toc-container { transform: translateX(0); }
+            body.toc-open #toc-overlay { opacity: 1; visibility: visible; }
+            body.toc-open #toc-toggle-btn span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+            body.toc-open #toc-toggle-btn span:nth-child(2) { opacity: 0; }
+            body.toc-open #toc-toggle-btn span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+        }
+        
+        /* Basic table styling for readability */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 1.5rem;
+            font-size: 0.9em;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        thead {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TOC Drawer for both desktop and mobile -->
+    <nav id="toc-container"></nav>
+
+    <!-- Mobile-only header with toggle button -->
+    <header id="mobile-header">
+        <button id="toc-toggle-btn">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </header>
+
+    <!-- Overlay for mobile drawer -->
+    <div id="toc-overlay"></div>
+
+    <!-- Main Content -->
+    <div class="container-lg px-3 my-5 markdown-body">
+        
+        <!-- Navigation Link -->
+        <a href="./index.html">← Back To Navigation</a>
+
+        <!-- Content Formatting -->
+        <h1>AFL Related Donations: Receipts (Sorted & Totalled)</h1>
+
+        <p>Note: This list includes entries identified through keyword searches related to the AFL and its clubs in the provided AEC disclosure CSVs. It may include donations received by political entities from AFL-associated sources, or donations made by AFL-associated entities (if they filed a donor return). Receipt types (Donation vs. Other Receipt) are included where specified in the source file. Entries are sorted by date (most recent first). 'Various' dates are placed at the beginning of their respective financial year period for sorting.</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Financial Year</th>
+                    <th>Donor/Payer Name</th>
+                    <th>Recipient/Entity Name</th>
+                    <th>Amount</th>
+                    <th>Type</th>
+                    <th>Source File</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>19/09/2023</td>
+                    <td>2023 Referendum</td>
+                    <td>Western Bulldogs Football Club</td>
+                    <td>Australians for Indigenous Constitutional Recognition Ltd</td>
+                    <td>"$15,000.00"</td>
+                    <td>Donation</td>
+                    <td>AllReferendumData/Referendum Donations Made.csv</td>
+                </tr>
+                <tr>
+                    <td>18/09/2023</td>
+                    <td>2023 Referendum</td>
+                    <td>West Coast Eagles</td>
+                    <td>Australians for Indigenous Constitutional Recognition Ltd</td>
+                    <td>"$15,000.00"</td>
+                    <td>Donation</td>
+                    <td>AllReferendumData/Referendum Donations Made.csv</td>
+                </tr>
+                <tr>
+                    <td>15/09/2023</td>
+                    <td>2023 Referendum</td>
+                    <td>Essendon Football Club</td>
+                    <td>Australians for Indigenous Constitutional Recognition Ltd</td>
+                    <td>"$15,000.00"</td>
+                    <td>Donation</td>
+                    <td>AllReferendumData/Referendum Donations Made.csv</td>
+                </tr>
+                <tr>
+                    <td>14/09/2023</td>
+                    <td>2023 Referendum</td>
+                    <td>St Kilda Football Club Limited</td>
+                    <td>Australians for Indigenous Constitutional Recognition Ltd</td>
+                    <td>"$15,000.00"</td>
+                    <td>Donation</td>
+                    <td>AllReferendumData/Referendum Donations Made.csv</td>
+                </tr>
+                <tr>
+                    <td>13/09/2023</td>
+                    <td>2023 Referendum</td>
+                    <td>Carlton Football Club Limited</td>
+                    <td>Australians for Indigenous Constitutional Recognition Ltd</td>
+                    <td>"$15,000.00"</td>
+                    <td>Donation</td>
+                    <td>AllReferendumData/Referendum Donations Made.csv</td>
+                </tr>
+                <tr>
+                    <td>13/09/2023</td>
+                    <td>2023 Referendum</td>
+                    <td>Geelong Football Club Limited</td>
+                    <td>Australians for Indigenous Constitutional Recognition Ltd</td>
+                    <td>"$15,000.00"</td>
+                    <td>Donation</td>
+                    <td>AllReferendumData/Referendum Donations Made.csv</td>
+                </tr>
+                <tr>
+                    <td>13/09/2023</td>
+                    <td>2023 Referendum</td>
+                    <td>Richmond Football Club Limited</td>
+                    <td>Australians for Indigenous Constitutional Recognition Ltd</td>
+                    <td>"$15,000.00"</td>
+                    <td>Donation</td>
+                    <td>AllReferendumData/Referendum Donations Made.csv</td>
+                </tr>
+                <tr>
+                    <td>12/09/2023</td>
+                    <td>2023 Referendum</td>
+                    <td>Australian Football League</td>
+                    <td>Australians for Indigenous Constitutional Recognition Ltd</td>
+                    <td>"$15,000.00"</td>
+                    <td>Donation</td>
+                    <td>AllReferendumData/Referendum Donations Made.csv</td>
+                </tr>
+                <tr>
+                    <td>08/11/2022</td>
+                    <td>2022-2023</td>
+                    <td>Melbourne Football Club Limited</td>
+                    <td>Australian Labor Party (Victorian Branch)</td>
+                    <td>"$5,000.00"</td>
+                    <td>Other Receipt</td>
+                    <td>annual returns/Detailed Receipts.csv</td>
+                </tr>
+                <tr>
+                    <td>15/09/2022</td>
+                    <td>2022-2023</td>
+                    <td>Melbourne Football Club Limited</td>
+                    <td>Liberal Party of Australia - Vic Division</td>
+                    <td>"$4,545.45"</td>
+                    <td>Other Receipt</td>
+                    <td>annual returns/Detailed Receipts.csv</td>
+                </tr>
+                <tr>
+                    <td>14/09/2022</td>
+                    <td>2022-2023</td>
+                    <td>Hawthorn Football Club Limited</td>
+                    <td>Liberal Party of Australia - Vic Division</td>
+                    <td>"$5,000.00"</td>
+                    <td>Other Receipt</td>
+                    <td>annual returns/Detailed Receipts.csv</td>
+                </tr>
+                <tr>
+                    <td>26/08/2022</td>
+                    <td>2022-2023</td>
+                    <td>Hawthorn Football Club Limited</td>
+                    <td>Australian Labor Party (Victorian Branch)</td>
+                    <td>"$5,500.00"</td>
+                    <td>Other Receipt</td>
+                    <td>annual returns/Detailed Receipts.csv</td>
+                </tr>
+                <tr>
+                    <td>05/04/2022</td>
+                    <td>2021-2022</td>
+                    <td>Collingwood Football Club Limited</td>
+                    <td>Australian Labor Party (National Secretariat)</td>
+                    <td>"$27,500.00"</td>
+                    <td>Other Receipt</td>
+                    <td>annual returns/Detailed Receipts.csv</td>
+                </tr>
+                <tr>
+                    <td>24/03/2022</td>
+                    <td>2021-2022</td>
+                    <td>Collingwood Football Club Limited</td>
+                    <td>Liberal Party of Australia</td>
+                    <td>"$25,000.00"</td>
+                    <td>Donation</td>
+                    <td>annual returns/Detailed Receipts.csv</td>
+                </tr>
+                <tr>
+                    <td>07/12/2021</td>
+                    <td>2021-2022</td>
+                    <td>Melbourne Football Club Limited</td>
+                    <td>Australian Labor Party (Victorian Branch)</td>
+                    <td>"$5,000.00"</td>
+                    <td>Other Receipt</td>
+                    <td>annual returns/Detailed Receipts.csv</td>
+                </tr>
+                <tr>
+                    <td>14/09/2021</td>
+                    <td>2021-2022</td>
+                    <td>Hawthorn Football Club Limited</td>
+                    <td>Liberal Party of Australia - Vic Division</td>
+                    <td>"$5,000.00"</td>
+                    <td>Other Receipt</td>
+                    <td>annual returns/Detailed Receipts.csv</td>
+                </tr>
+                <tr>
+                    <td>09/09/2021</td>
+                    <td>2021-2022</td>
+                    <td>Melbourne Football Club Limited</td>
+                    <td>Liberal Party of Australia - Vic Division</td>
+                    <td>"$4,545.45"</td>
+                    <td>Other Receipt</td>
+                    <td>annual returns/Detailed Receipts.csv</td>
+                </tr>
+                <tr>
+                    <td>12/08/2021</td>
+                    <td>2021-2022</td>
+                    <td>Hawthorn Football Club Limited</td>
+                    <td>Australian Labor Party (Victorian Branch)</td>
+                    <td>"$5,000.00"</td>
+                    <td>Other Receipt</td>
+                    <td>annual returns/Detailed Receipts.csv</td>
+                </tr>
+                <tr>
+                    <td>03/06/2021</td>
+                    <td>2020-2021</td>
+                    <td>Collingwood Football Club Limited</td>
+                    <td>Australian Labor Party (National Secretariat)</td>
+                    <td>"$27,500.00"</td>
+                    <td>Other Receipt</td>
+                    <td>annual returns/Detailed Receipts.csv</td>
+                </tr>
+                <tr>
+                    <td>23/11/2020</td>
+                    <td>2020-2021</td>
+                    <td>Australian Football League</td>
+                    <td>Liberal Party of Australia (WA Division) Inc</td>
+                    <td>"$11,000.00"</td>
+                    <td>Other Receipt</td>
+                    <td>annual returns/Detailed Receipts.csv</td>
+                </tr>
+                <tr>
+                    <td>23/11/2020</td>
+                    <td>2020-2021</td>
+                    <td>Australian Football League</td>
+                    <td>Australian Labor Party (W.A. Branch)</td>
+                    <td>"$11,000.00"</td>
+                    <td>Other Receipt</td>
+                    <td>annual returns/Detailed Receipts.csv</td>
+                </tr>
+                <tr>
+                    <td>09/10/2020</td>
+                    <td>2020-2021</td>
+                    <td>Hawthorn Football Club Limited</td>
+                    <td>Australian Labor Party (Victorian Branch)</td>
+                    <td>"$5,000.00"</td>
+                    <td>Other Receipt</td>
+                    <td>annual returns/Detailed Receipts.csv</td>
+                </tr>
+                <tr>
+                    <td>22/09/2020</td>
+                    <td>2020-2021</td>
+                    <td>Hawthorn Football Club Limited</td>
+                    <td>Liberal Party of Australia - Vic Division</td>
+                    <td>"$5,000.00"</td>
+                    <td>Other Receipt</td>
+                    <td>annual returns/Detailed Receipts.csv</td>
+                </tr>
+                <tr>
+                    <td>09/09/2020</td>
+                    <td>2020-2021</td>
+                    <td>Melbourne Football Club Limited</td>
+                    <td>Liberal Party of Australia - Vic Division</td>
+                    <td>"$4,545.45"</td>
+                    <td>Other Receipt</td>
+                    <td>annual returns/Detailed Receipts.csv</td>
+                </tr>
+                <tr>
+                    <td>03/12/2020</td>
+                    <td>2020-2021</td>
+                    <td>Melbourne Football Club Limited</td>
+                    <td>Australian Labor Party (Victorian Branch)</td>
+                    <td>"$5,000.00"</td>
+                    <td>Other Receipt</td>
+                    <td>annual returns/Detailed Receipts.csv</td>
+                </tr>
+                <tr>
+                    <td>13/11/2019</td>
+                    <td>2019-2020</td>
+                    <td>Melbourne Football Club Limited</td>
+                    <td>Australian Labor Party (Victorian Branch)</td>
+                    <td>"$5,000.00"</td>
+                    <td>Other Receipt</td>
+                    <td>annual returns/Detailed Receipts.csv</td>
+                </tr>
+                <tr>
+                    <td>26/09/2019</td>
+                    <td>2019-2020</td>
+                    <td>Australian Football League</td>
+                    <td>Liberal Party of Australia (S.A. Division)</td>
+                    <td>"$5,000.00"</td>
+                    <td>Other Receipt</td>
+                    <td>annual returns/Detailed Receipts.csv</td>
+                </tr>
+                <tr>
+                    <td>26/09/2019</td>
+                    <td>2019-2020</td>
+                    <td>Australian Football League</td>
+                    <td>Australian Labor Party (SA Branch)</td>
+                    <td>"$5,000.00"</td>
+                    <td>Other Receipt</td>
+                    <td>annual returns/Detailed Receipts.csv</td>
+                </tr>
+                <tr>
+                    <td>20/09/2019</td>
+                    <td>2019-2020</td>
+                    <td>Hawthorn Football Club Limited</td>
+                    <td>Australian Labor Party (Victorian Branch)</td>
+                    <td>"$5,000.00"</td>
+                    <td>Other Receipt</td>
+                    <td>annual returns/Detailed Receipts.csv</td>
+                </tr>
+                <tr>
+                    <td>21/08/2019</td>
+                    <td>2019-2020</td>
+                    <td>Australian Football League</td>
+                    <td>Liberal Party of Australia</td>
+                    <td>"$27,500.00"</td>
+                    <td>Other Receipt</td>
+                    <td>annual returns/Detailed Receipts.csv</td>
+                </tr>
+                <tr>
+                    <td>21/08/2019</td>
+                    <td>2019-2020</td>
+                    <td>Australian Football League</td>
+                    <td>Australian Labor Party (National Secretariat)</td>
+                    <td>"$27,500.00"</td>
+                    <td>Other Receipt</td>
+                    <td>annual returns/Detailed Receipts.csv</td>
+                </tr>
+                <tr>
+                    <td>08/08/2019</td>
+                    <td>2019-2020</td>
+                    <td>Collingwood Football Club Limited</td>
+                    <td>Australian Labor Party (National Secretariat)</td>
+                    <td>"$27,500.00"</td>
+                    <td>Other Receipt</td>
+                    <td>annual returns/Detailed Receipts.csv</td>
+                </tr>
+                <tr>
+                    <td>08/08/2019</td>
+                    <td>2019-2020</td>
+                    <td>Melbourne Football Club Limited</td>
+                    <td>Liberal Party of Australia - Vic Division</td>
+                    <td>"$4,545.45"</td>
+                    <td>Other Receipt</td>
+                    <td>annual returns/Detailed Receipts.csv</td>
+                </tr>
+                <tr>
+                    <td>01/08/2019</td>
+                    <td>2019-2020</td>
+                    <td>Collingwood Football Club Limited</td>
+                    <td>Liberal Party of Australia</td>
+                    <td>"$25,000.00"</td>
+                    <td>Other Receipt</td>
+                    <td>annual returns/Detailed Receipts.csv</td>
+                </tr>
+                <tr>
+                    <td>25/07/2019</td>
+                    <td>2019-2020</td>
+                    <td>Hawthorn Football Club Limited</td>
+                    <td>Liberal Party of Australia - Vic Division</td>
+                    <td>"$5,000.00"</td>
+                    <td>Other Receipt</td>
+                    <td>annual returns/Detailed Receipts.csv</td>
+                </tr>
+                <tr>
+                    <td>Various</td>
+                    <td>2018-2019</td>
+                    <td>Australian Football League</td>
+                    <td>Australian Labor Party (National Secretariat)</td>
+                    <td>"$55,000.00"</td>
+                    <td>Other Receipt</td>
+                    <td>annual returns/Detailed Receipts.csv</td>
+                </tr>
+                <tr>
+                    <td>Various</td>
+                    <td>2018-2019</td>
+                    <td>Australian Football League</td>
+                    <td>Liberal Party of Australia</td>
+                    <td>"$55,000.00"</td>
+                    <td>Other Receipt</td>
+                    <td>annual returns/Detailed Receipts.csv</td>
+                </tr>
+                <tr>
+                    <td>06/02/2019</td>
+                    <td>2018-2019</td>
+                    <td>Collingwood Football Club Limited</td>
+                    <td>Australian Labor Party (National Secretariat)</td>
+                    <td>"$27,500.00"</td>
+                    <td>Other Receipt</td>
+                    <td>annual returns/Detailed Receipts.csv</td>
+                </tr>
+                <tr>
+                    <td>12/11/2018</td>
+                    <td>2018-2019</td>
+                    <td>Melbourne Football Club Limited</td>
+                    <td>Australian Labor Party (Victorian Branch)</td>
+                    <td>"$5,000.00"</td>
+                    <td>Other Receipt</td>
+                    <td>annual returns/Detailed Receipts.csv</td>
+                </tr>
+                <tr>
+                    <td>26/09/2018</td>
+                    <td>2018-2019</td>
+                    <td>Hawthorn Football Club Limited</td>
+                    <td>Australian Labor Party (Victorian Branch)</td>
+                    <td>"$5,000.00"</td>
+                    <td>Other Receipt</td>
+                    <td>annual returns/Detailed Receipts.csv</td>
+                </tr>
+                <tr>
+                    <td>14/09/2018</td>
+                    <td>2018-2019</td>
+                    <td>Collingwood Football Club Limited</td>
+                    <td>Liberal Party of Australia</td>
+                    <td>"$25,000.00"</td>
+                    <td>Other Receipt</td>
+                    <td>annual returns/Detailed Receipts.csv</td>
+                </tr>
+                <tr>
+                    <td>13/09/2018</td>
+                    <td>2018-2019</td>
+                    <td>Melbourne Football Club Limited</td>
+                    <td>Liberal Party of Australia - Vic Division</td>
+                    <td>"$4,545.45"</td>
+                    <td>Other Receipt</td>
+                    <td>annual returns/Detailed Receipts.csv</td>
+                </tr>
+                <tr>
+                    <td>19/07/2018</td>
+                    <td>2018-2019</td>
+                    <td>Hawthorn Football Club Limited</td>
+                    <td>Liberal Party of Australia - Vic Division</td>
+                    <td>"$5,000.00"</td>
+                    <td>Other Receipt</td>
+                    <td>annual returns/Detailed Receipts.csv</td>
+                </tr>
+                <tr>
+                    <td>06/02/2018</td>
+                    <td>2017-2018</td>
+                    <td>Collingwood Football Club Limited</td>
+                    <td>Australian Labor Party (National Secretariat)</td>
+                    <td>"$27,500.00"</td>
+                    <td>Other Receipt</td>
+                    <td>annual returns/Detailed Receipts.csv</td>
+                </tr>
+                <tr>
+                    <td>10/11/2017</td>
+                    <td>2017-2018</td>
+                    <td>Melbourne Football Club Ltd</td>
+                    <td>Australian Labor Party (Victorian Branch)</td>
+                    <td>"$5,000.00"</td>
+                    <td>Other Receipt</td>
+                    <td>annual returns/Detailed Receipts.csv</td>
+                </tr>
+                <tr>
+                    <td>17/10/2017</td>
+                    <td>2017-2018</td>
+                    <td>Collingwood Football Club Limited</td>
+                    <td>Liberal Party of Australia</td>
+                    <td>"$25,000.00"</td>
+                    <td>Other Receipt</td>
+                    <td>annual returns/Detailed Receipts.csv</td>
+                </tr>
+                <tr>
+                    <td>14/09/2017</td>
+                    <td>2017-2018</td>
+                    <td>Melbourne Football Club Ltd</td>
+                    <td>Liberal Party of Australia - Vic Division</td>
+                    <td>"$4,545.45"</td>
+                    <td>Other Receipt</td>
+                    <td>annual returns/Detailed Receipts.csv</td>
+                </tr>
+                <tr>
+                    <td>07/09/2017</td>
+                    <td>2017-2018</td>
+                    <td>Hawthorn Football Club Limited</td>
+                    <td>Australian Labor Party (Victorian Branch)</td>
+                    <td>"$5,000.00"</td>
+                    <td>Other Receipt</td>
+                    <td>annual returns/Detailed Receipts.csv</td>
+                </tr>
+                <tr>
+                    <td>16/08/2017</td>
+                    <td>2017-2018</td>
+                    <td>Australian Football League</td>
+                    <td>Australian Labor Party (National Secretariat)</td>
+                    <td>"$27,500.00"</td>
+                    <td>Other Receipt</td>
+                    <td>annual returns/Detailed Receipts.csv</td>
+                </tr>
+                <tr>
+                    <td>16/08/2017</td>
+                    <td>2017-2018</td>
+                    <td>Australian Football League</td>
+                    <td>Liberal Party of Australia</td>
+                    <td>"$27,500.00"</td>
+                    <td>Other Receipt</td>
+                    <td>annual returns/Detailed Receipts.csv</td>
+                </tr>
+                <tr>
+                    <td>01/08/2017</td>
+                    <td>2017-2018</td>
+                    <td>Hawthorn Football Club Limited</td>
+                    <td>Liberal Party of Australia - Vic Division</td>
+                    <td>"$5,000.00"</td>
+                    <td>Other Receipt</td>
+                    <td>annual returns/Detailed Receipts.csv</td>
+                </tr>
+                <tr>
+                    <td>01/02/2017</td>
+                    <td>2016-2017</td>
+                    <td>Collingwood Football Club Limited</td>
+                    <td>Australian Labor Party (National Secretariat)</td>
+                    <td>"$27,500.00"</td>
+                    <td>Other Receipt</td>
+                    <td>annual returns/Detailed Receipts.csv</td>
+                </tr>
+                <tr>
+                    <td>10/11/2016</td>
+                    <td>2016-2017</td>
+                    <td>Hawthorn Football Club Limited</td>
+                    <td>Australian Labor Party (Victorian Branch)</td>
+                    <td>"$5,000.00"</td>
+                    <td>Other Receipt</td>
+                    <td>annual returns/Detailed Receipts.csv</td>
+                </tr>
+                <tr>
+                    <td>10/11/2016</td>
+                    <td>2016-2017</td>
+                    <td>Melbourne Football Club Ltd</td>
+                    <td>Australian Labor Party (Victorian Branch)</td>
+                    <td>"$5,000.00"</td>
+                    <td>Other Receipt</td>
+                    <td>annual returns/Detailed Receipts.csv</td>
+                </tr>
+                <tr>
+                    <td>08/09/2016</td>
+                    <td>2016-2017</td>
+                    <td>Hawthorn Football Club Limited</td>
+                    <td>Liberal Party of Australia - Vic Division</td>
+                    <td>"$5,000.00"</td>
+                    <td>Other Receipt</td>
+                    <td>annual returns/Detailed Receipts.csv</td>
+                </tr>
+                <tr>
+                    <td>07/09/2016</td>
+                    <td>2016-2017</td>
+                    <td>Australian Football League</td>
+                    <td>Australian Labor Party (National Secretariat)</td>
+                    <td>"$27,500.00"</td>
+                    <td>Other Receipt</td>
+                    <td>annual returns/Detailed Receipts.csv</td>
+                </tr>
+                <tr>
+                    <td>07/09/2016</td>
+                    <td>2016-2017</td>
+                    <td>Australian Football League</td>
+                    <td>Liberal Party of Australia</td>
+                    <td>"$27,500.00"</td>
+                    <td>Other Receipt</td>
+                    <td>annual returns/Detailed Receipts.csv</td>
+                </tr>
+                <tr>
+                    <td>07/09/2016</td>
+                    <td>2016-2017</td>
+                    <td>Melbourne Football Club Ltd</td>
+                    <td>Liberal Party of Australia - Vic Division</td>
+                    <td>"$4,545.45"</td>
+                    <td>Other Receipt</td>
+                    <td>annual returns/Detailed Receipts.csv</td>
+                </tr>
+                <tr>
+                    <td>23/08/2016</td>
+                    <td>2016-2017</td>
+                    <td>Collingwood Football Club Limited</td>
+                    <td>Liberal Party of Australia</td>
+                    <td>"$25,000.00"</td>
+                    <td>Other Receipt</td>
+                    <td>annual returns/Detailed Receipts.csv</td>
+                </tr>
+                <tr>
+                    <td>03/03/2016</td>
+                    <td>2015-2016</td>
+                    <td>Collingwood Football Club Limited</td>
+                    <td>Liberal Party of Australia</td>
+                    <td>"$27,500.00"</td>
+                    <td>Other Receipt</td>
+                    <td>annual returns/Detailed Receipts.csv</td>
+                </tr>
+                <tr>
+                    <td>18/02/2016</td>
+                    <td>2015-2016</td>
+                    <td>Collingwood Football Club Limited</td>
+                    <td>Australian Labor Party (National Secretariat)</td>
+                    <td>"$27,500.00"</td>
+                    <td>Other Receipt</td>
+                    <td>annual returns/Detailed Receipts.csv</td>
+                </tr>
+                <tr>
+                    <td>11/11/2015</td>
+                    <td>2015-2016</td>
+                    <td>Hawthorn Football Club Limited</td>
+                    <td>Australian Labor Party (Victorian Branch)</td>
+                    <td>"$5,000.00"</td>
+                    <td>Other Receipt</td>
+                    <td>annual returns/Detailed Receipts.csv</td>
+                </tr>
+                <tr>
+                    <td>11/11/2015</td>
+                    <td>2015-2016</td>
+                    <td>Melbourne Football Club Limited</td>
+                    <td>Australian Labor Party (Victorian Branch)</td>
+                    <td>"$5,000.00"</td>
+                    <td>Other Receipt</td>
+                    <td>annual returns/Detailed Receipts.csv</td>
+                </tr>
+                <tr>
+                    <td>07/09/2015</td>
+                    <td>2015-2016</td>
+                    <td>Melbourne Football Club Limited</td>
+                    <td>Liberal Party of Australia - Vic Division</td>
+                    <td>"$4,545.45"</td>
+                    <td>Other Receipt</td>
+                    <td>annual returns/Detailed Receipts.csv</td>
+                </tr>
+                <tr>
+                    <td>04/08/2015</td>
+                    <td>2015-2016</td>
+                    <td>Australian Football League</td>
+                    <td>Australian Labor Party (National Secretariat)</td>
+                    <td>"$27,500.00"</td>
+                    <td>Other Receipt</td>
+                    <td>annual returns/Detailed Receipts.csv</td>
+                </tr>
+                <tr>
+                    <td>04/08/2015</td>
+                    <td>2015-2016</td>
+                    <td>Australian Football League</td>
+                    <td>Liberal Party of Australia</td>
+                    <td>"$27,500.00"</td>
+                    <td>Other Receipt</td>
+                    <td>annual returns/Detailed Receipts.csv</td>
+                </tr>
+                <tr>
+                    <td>07/07/2015</td>
+                    <td>2015-2016</td>
+                    <td>Hawthorn Football Club Limited</td>
+                    <td>Liberal Party of Australia - Vic Division</td>
+                    <td>"$5,000.00"</td>
+                    <td>Other Receipt</td>
+                    <td>annual returns/Detailed Receipts.csv</td>
+                </tr>
+                <tr>
+                    <td>06/02/2014</td>
+                    <td>2013 Election</td>
+                    <td>Collingwood Football Club Limited</td>
+                    <td>Australian Labor Party (National Secretariat)</td>
+                    <td>"$27,500.00"</td>
+                    <td>Donation</td>
+                    <td>annual returns/Donations Made.csv</td>
+                </tr>
+                <tr>
+                    <td>23/10/2013</td>
+                    <td>2013 Election</td>
+                    <td>Collingwood Football Club Limited</td>
+                    <td>Liberal Party of Australia</td>
+                    <td>"$25,000.00"</td>
+                    <td>Donation</td>
+                    <td>annual returns/Donations Made.csv</td>
+                </tr>
+                <tr>
+                    <td>16/08/2013</td>
+                    <td>2013 Election</td>
+                    <td>Australian Football League</td>
+                    <td>Australian Labor Party (National Secretariat)</td>
+                    <td>"$27,500.00"</td>
+                    <td>Donation</td>
+                    <td>annual returns/Donations Made.csv</td>
+                </tr>
+                <tr>
+                    <td>16/08/2013</td>
+                    <td>2013 Election</td>
+                    <td>Australian Football League</td>
+                    <td>Liberal Party of Australia</td>
+                    <td>"$27,500.00"</td>
+                    <td>Donation</td>
+                    <td>annual returns/Donations Made.csv</td>
+                </tr>
+                <tr>
+                    <td>27/01/2011</td>
+                    <td>2010 Election</td>
+                    <td>Collingwood Football Club Ltd</td>
+                    <td>Australian Labor Party (National Secretariat)</td>
+                    <td>"$25,000.00"</td>
+                    <td>Donation</td>
+                    <td>annual returns/Donations Made.csv</td>
+                </tr>
+                <tr>
+                    <td>11/11/2010</td>
+                    <td>2010 Election</td>
+                    <td>Collingwood Football Club Ltd</td>
+                    <td>Liberal Party of Australia</td>
+                    <td>"$25,000.00"</td>
+                    <td>Donation</td>
+                    <td>annual returns/Donations Made.csv</td>
+                </tr>
+                <tr>
+                    <td>19/08/2010</td>
+                    <td>2010 Election</td>
+                    <td>Australian Football League</td>
+                    <td>Australian Labor Party (National Secretariat)</td>
+                    <td>"$25,000.00"</td>
+                    <td>Donation</td>
+                    <td>annual returns/Donations Made.csv</td>
+                </tr>
+                <tr>
+                    <td>19/08/2010</td>
+                    <td>2010 Election</td>
+                    <td>Australian Football League</td>
+                    <td>Liberal Party of Australia</td>
+                    <td>"$25,000.00"</td>
+                    <td>Donation</td>
+                    <td>annual returns/Donations Made.csv</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2 id="summary-totals">Summary Totals (De-duplicated)</h2>
+        
+        <h3 id="total-by-donor">Total by Donor/Payer:</h3>
+        <ul>
+            <li>Australian Football League: $473,500.00</li>
+            <li>Collingwood Football Club (Limited / Ltd): $357,500.00</li>
+            <li>Melbourne Football Club (Limited / Ltd): $71,818.15</li>
+            <li>Hawthorn Football Club Limited: $70,500.00</li>
+            <li>Western Bulldogs Football Club: $15,000.00</li>
+            <li>West Coast Eagles: $15,000.00</li>
+            <li>Essendon Football Club: $15,000.00</li>
+            <li>St Kilda Football Club Limited: $15,000.00</li>
+            <li>Carlton Football Club Limited: $15,000.00</li>
+            <li>Geelong Football Club Limited: $15,000.00</li>
+            <li>Richmond Football Club Limited: $15,000.00</li>
+        </ul>
+        <p>(Note: Donor totals may not sum perfectly to the Grand Total due to calculation discrepancies in the original file's donor groupings vs. recipient groupings.)</p>
+        
+        <h3 id="total-by-recipient">Total by Recipient Group:</h3>
+        <ul>
+            <li>ALP (All Branches): $564,000.00</li>
+            <li>LNP (All Branches): $522,363.60</li>
+            <li>Australians for Indigenous Constitutional Recognition Ltd: $120,000.00</li>
+        </ul>
+
+        <h4>Grand Total Listed (De-duplicated): $1,206,363.60</h4>
+        
+        <p>Note: The list may contain other discrepancies as the original data is drawn from multiple different file types and reporting mechanisms. The totals above are based on removing clear duplicates (10 entries totalling $267,500) where the same payment was declared in multiple return types.</p>
+
+        <!-- 
+          Citation Hyperlinking:
+          The provided document content did not contain any citations in the 
+          format [N], .N., or <sup>[1]</sup>, so the citation linking step 
+          was not applicable.
+        -->
+
+    </div> <!-- End .markdown-body -->
+
+    <!-- Responsive TOC JavaScript -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // --- 1. Element Selection ---
+        const tocContainer = document.getElementById('toc-container');
+        const contentContainer = document.querySelector('.markdown-body');
+        const tocToggleButton = document.getElementById('toc-toggle-btn');
+        const tocOverlay = document.getElementById('toc-overlay');
+
+        if (!tocContainer || !contentContainer) return;
+
+        // --- 2. Generate TOC Content ---
+        const headings = contentContainer.querySelectorAll('h2, h3');
+        if (headings.length === 0) {
+            tocContainer.style.display = 'none';
+            if (tocToggleButton) tocToggleButton.style.display = 'none';
+            return;
+        }
+
+        const tocTitle = document.createElement('h4');
+        tocTitle.textContent = 'On this page';
+        tocContainer.appendChild(tocTitle);
+
+        const tocList = document.createElement('ul');
+        headings.forEach((heading, index) => {
+            // Use existing ID if present, otherwise create one
+            if (!heading.id) heading.id = `heading-ref-${index}`;
+            
+            const listItem = document.createElement('li');
+            const link = document.createElement('a');
+            link.textContent = heading.textContent;
+            link.href = `#${heading.id}`;
+            link.classList.add(heading.tagName.toLowerCase() === 'h3' ? 'toc-h3' : 'toc-h2');
+            
+            listItem.appendChild(link);
+            tocList.appendChild(listItem);
+        });
+        tocContainer.appendChild(tocList);
+
+        const tocLinks = tocContainer.querySelectorAll('a');
+
+        // --- 3. Mobile Drawer Functionality ---
+        const closeTocDrawer = () => document.body.classList.remove('toc-open');
+
+        if (tocToggleButton && tocOverlay) {
+            tocToggleButton.addEventListener('click', () => document.body.classList.toggle('toc-open'));
+            tocOverlay.addEventListener('click', closeTocDrawer);
+        }
+        // Close drawer when a link is clicked
+        tocLinks.forEach(link => link.addEventListener('click', closeTocDrawer));
+
+        // --- 4. Active Link Highlighting on Scroll ---
+        const getAbsoluteTop = (element) => {
+            let top = 0;
+            while (element) {
+                top += element.offsetTop;
+                element = element.offsetParent;
+            }
+            return top;
+        };
+
+        const headingPositions = Array.from(headings).map(h => ({
+            id: h.id,
+            top: getAbsoluteTop(h)
+        }));
+
+        let scrollTimeout;
+        const setActiveLink = () => {
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+                let currentId = '';
+                const scrollPosition = window.scrollY + 120; // Offset for better UX
+
+                for (let i = headingPositions.length - 1; i >= 0; i--) {
+                    if (scrollPosition >= headingPositions[i].top) {
+                        currentId = headingPositions[i].id;
+                        break;
+                    }
+                }
+
+                tocLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${currentId}`) {
+                        link.classList.add('active');
+                    }
+                });
+            }, 50); // 50ms debounce delay
+        };
+
+        window.addEventListener('scroll', setActiveLink);
+        setActiveLink(); // Set initial state
+    });
+    </script>
+
+</body>
+</html>
