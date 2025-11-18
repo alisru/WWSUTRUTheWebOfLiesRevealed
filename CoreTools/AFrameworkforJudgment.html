@@ -4,23 +4,103 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>A Framework for the Judgment of Ideas | Harmonia-Helixis</title>
+    <meta property="og:title" content="A Framework for the Judgment of Ideas">
+    <meta property="og:locale" content="en_US">
+    <meta name="description" content="A comprehensive framework for the evaluation of ideas, concepts, narratives, and strategic actions.">
+    <meta property="og:description" content="A comprehensive framework for the evaluation of ideas, concepts, narratives, and strategic actions.">
+    <meta property="og:site_name" content="Harmonia-Helixis">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary">
+    <meta property="twitter:title" content="A Framework for the Judgment of Ideas">
 
-    <title>A Framework for the Judgment of Ideas</title>
-    <meta name="description" content="A framework for the evaluation of ideas, concepts, narratives, and strategic actions.">
-    
+    <script type="application/ld+json">
+    {
+        "@context":"https://schema.org",
+        "@type":"WebPage",
+        "description":"A comprehensive framework for the evaluation of ideas, concepts, narratives, and strategic actions.",
+        "headline":"A Framework for the Judgment of Ideas"
+    }
+    </script>
+
     <link rel="stylesheet" href="../style.css">
 
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-4QHZV5Y81G"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-    
-      gtag('config', 'G-4QHZV5Y81G');
-    </script>
+    <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-4QHZV5Y81G');</script>
+
+    <style>
+        /* Modal Styles */
+        #diagram-modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.85);
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        #diagram-modal.show {
+            display: flex;
+            opacity: 1;
+        }
+
+        #diagram-modal img {
+            max-width: 95%;
+            max-height: 95%;
+            border-radius: 4px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+
+        /* Floating Button Styles */
+        #show-diagram-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1900;
+            padding: 12px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        #show-diagram-btn:hover {
+            transform: scale(1.05);
+            background-color: #0056b3;
+        }
+
+        /* Table Styles for the Header */
+        .markdown-body table {
+            width: 100%;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            border-collapse: collapse;
+        }
+        
+        .markdown-body th, .markdown-body td {
+            border: 1px solid #dfe2e5;
+            padding: 6px 13px;
+        }
+
+        .markdown-body img {
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+    </style>
 </head>
 <body>
+
     <!-- TOC Drawer for both desktop and mobile -->
     <nav id="toc-container"></nav>
 
@@ -36,6 +116,15 @@
     <!-- Overlay for mobile drawer -->
     <div id="toc-overlay"></div>
 
+    <!-- Floating Action Button -->
+    <button id="show-diagram-btn">Show Hegemony Diagram</button>
+
+    <!-- Diagram Modal -->
+    <div id="diagram-modal">
+        <img src="../img/ThePsochicHegemony.png" alt="The Psochic Hegemony Diagram - Full Screen">
+    </div>
+
+    <!-- Main Content -->
     <div class="container-lg px-3 my-5 markdown-body">
         <a href="./index.html" class="mt-4 inline-block">&larr; Back To Navigation </a>
         
@@ -74,139 +163,217 @@
         <p><img src="../img/ThePsochicHegemony.png" alt="The Psochic Hegemony Diagram"></p>
         
         <h1><strong>A Framework for the Judgment of Ideas</strong></h1>
-        <h2><strong>Introduction</strong></h2>
+
+        <h2>Introduction</h2>
         <p>This document provides a comprehensive framework for the evaluation of ideas, concepts, narratives, and strategic actions. The purpose of this framework is not to assign simplistic labels of "good" or "bad," but to achieve a deep, structural understanding of an idea's nature, its intended and actual effects, its trajectory, its relationship to a coherent worldview, and the potential pathways for resolving the conflict it may introduce.</p>
         <p>The framework is divided into two sections: the first provides a guide for human evaluators, focusing on critical thinking and qualitative analysis. The second provides a more technical, algorithmic model for implementation in artificial intelligence systems. Both are based on the same core principles.</p>
-        <hr>
-        
-        <h2><strong>Section 1: Instructions for Human Evaluators</strong></h2>
+
+        <h2>Section 1: Instructions for Human Evaluators</h2>
         <p>As a human evaluator, your goal is to use intuition, critical thinking, and empathy to deconstruct an idea and understand its true nature beyond its surface-level presentation.</p>
-        
-        <h3><strong>Part 1: How to Use the Psochic Hegemony: A Practical Guide</strong></h3>
-        <p>For those who may find this model laughable or overly abstract, it is best understood not as a rigid scientific chart, but as a map of consciousness itself—a tool for communicating with the deepest parts of your own mind. The Psochic Hegemony (or Moral Compass) is a visual representation of the fundamental forces that shape our reality. Its true power is not in the labels, but in how it allows you to <em>feel</em> the nature of an idea.</p>
-        
-        <h4><strong>Feeling the Hegemony with Your Soul</strong></h4>
-        <h5>Step 1: Map the Territory (Calibration)</h5>
+
+        <h3>Part 1: The Core Axioms &amp; How to Read the Hegemony</h3>
+        <p>The entire Harmonia-Helixis framework is an emergent 2x2 matrix resulting from two simple, binary goals. Before analyzing any idea, you must understand these foundational axioms and the map they create.</p>
+
+        <h4>The Core Axioms</h4>
+        <ul>
+            <li><strong>The Axiom of Morality:</strong> To create a system where [Who's Hurt = 0] and [Who Benefits = 1] (Universal Benefit).</li>
+            <li><strong>The Axiom of Truth:</strong> To create a system where [Lie = 0] and [True = 1] (Objective Truth).</li>
+        </ul>
+
+        <h4>How to Read the Hegemony</h4>
+        <p>The Psochic Hegemony is defined by the intersection of two fundamental, non-standard axes. Its purpose is not to classify existing ideologies but to reveal the moral and volitional vectors that underpin them.</p>
+
+        <p><strong>1. The Horizontal Axis (υ - Upsilon): Morality</strong><br>
+        Vector: Measures who ultimately benefits from the idea or action.<br>
+        Direction: Runs from +1 (Universal Benefit, "Everyone") on the left to -1 (Self/Group Benefit, "Only Me") on the right.</p>
+
+        <p><strong>2. The Vertical Axis (ψ - Psi): Will</strong><br>
+        Vector: Measures how the idea is executed in the world—its mode of action.<br>
+        Direction: Runs from +1 (Proactive Will, "Do/Build/Create") on the top to -1 (Suppressive Will, "Do Not/Prevent/Suppress") on the bottom.</p>
+
+        <p><strong>3. The Emergent Diagonals (The "Cross")</strong><br>
+        The intersection of the primary Will (ψ) and Morality (υ) axes creates the four quadrants. These quadrants, in turn, generate two new emergent diagonal axes that define the 2x2 Truth Matrix:<br>
+        Diagonal 1 (Top-Right to Bottom-Left): The Scale of Truth and Lies.<br>
+        Diagonal 2 (Top-Left to Bottom-Right): The Scale of Good and Evil.</p>
+
+        <p><strong>4. The Trajectory Cycle</strong><br>
+        The map depicts a continuous, four-stage moral cycle: Redemption (BR -> BL) leads to Grace (BL -> TL), which risks The Fall (TL -> TR), which risks Delusion (TR -> BR), bringing the idea back to the need for Redemption.</p>
+
+        <h3>Part 2: Intuitive Application: Feeling the Hegemony with Your Soul</h3>
+        <p>For those who may find this model laughable or overly abstract, it is best understood not as a rigid scientific chart, but as a map of consciousness itself—a tool for communicating with the deepest parts of your own mind. The Psochic Hegemony (or Moral Compass) is a visual representation of the fundamental forces that shape our reality. Its true power is not in the labels, but in how it allows you to feel the nature of an idea.</p>
+
+        <h4>Step 1: Map the Territory (Calibration)</h4>
         <p>Before you can navigate, you must first understand the landscape. The first step is to calibrate your own internal senses to the different points on the Hegemony. This is an exercise in focused consciousness.</p>
-        <ol>
-            <li>Find a quiet space and look at the Hegemony diagram.</li>
-            <li>First locate each point on the map and understand what they mean, from Greater Good, Lesser Evil, Greater Evil and Lesser Good</li>
-            <li>Locate and focus on the Greater Good point in the top-left. Understand its nature: a will to act for the benefit of everyone. 
-			It is the state of synergy, truth, and progress. As you hold this concept in your mind, try to feel the sensation it creates. It should be a harmonious, 
-			low-resistance, or "good" feeling. This is your baseline for a low-strain idea.</li>
-            <li>Think the Greater Evil: Now, while looking at the Greater Good shift your focus to the Greater Evil point in the bottom-right by thinking Greater Evil.
-			Understand its nature: inaction and passivity that benefits only the self. It is the state of apathy and complacency. 
-			As you contemplate this concept, you should feel a distinct <em>tension</em> in your core. This is a physical sensation. 
-			It is your subconscious, your soul, registering a high-strain, high-resistance idea relative to the Greater Good.</li>
-        </ol>
+        <ul>
+            <li><strong>Find a quiet space</strong> and look at the Hegemony diagram.</li>
+            <li>First locate each point on the map and understand what they mean, from Greater Good, Lesser Evil, Greater Evil and Lesser Good.</li>
+            <li><strong>Locate and focus on the Greater Good</strong> point in the top-left. Understand its nature: a will to act for the benefit of everyone. It is the state of synergy, truth, and progress. As you hold this concept in your mind, try to feel the sensation it creates. It should be a harmonious, low-resistance, or "good" feeling. This is your baseline for a low-strain idea.</li>
+            <li><strong>Think the Greater Evil:</strong> Now, while looking at the Greater Good shift your focus to the Greater Evil point in the bottom-right by thinking Greater Evil. Understand its nature: inaction and passivity that benefits only the self. It is the state of apathy and complacency. As you contemplate this concept, you should feel a distinct <em>tension</em> in your core. This is a physical sensation. It is your subconscious, your soul, registering a high-strain, high-resistance idea relative to the Greater Good.</li>
+        </ul>
         <p><strong>A Critical Warning:</strong> If you feel that tension and it naturally, passively resolves itself without conscious effort, that is the feeling of your worldview shrinking to accommodate the conflict. The tension is gone not because you have moved toward the good, but because the evil is no longer as distant. Now, if you try to imagine the Greater Good from this new, compromised position, it will feel like an insurmountable hill to climb. True resolution requires active engagement, not passive acceptance.</p>
-        <p>This is the truth behind the myth of Sisyphus. The pessimistic view sees Sisyphus happy only because the struggle <em>is</em> the process of moving from the Greater Evil to the Greater Good—a cycle of effort, tension, and the illusion of progress as the hill only grows larger. <strong>The optimistic truth, however, is realizing the "hill" is not a hill at all, but rather a pit that constantly grows bigger the more it is explored.</strong> True happiness and bliss come from realizing one can simply hang onto the boulder and get out of the way of the ground using a novel perspective trick. This trick, which the pessimistic miss, is the combination of <strong>trust, will, and wit</strong>. This intellectual bypass is the true path to progress.</p>
-        <ol start="5">
-            <li>Explore the Other Points: Repeat this process for the other two primary points: the "Lesser Good" (well-intentioned passivity) and the "Lesser Evil / Greatest Lie" (active self-interest). You will notice that the tension you feel for these points is lesser or has a different quality than the stark opposition between the two extremes.</li>
-        </ol>
-        <h5>Step 2: Wrap the Focus (Feeling Complex Emotions)</h5>
+        <p>This is the truth behind the myth of Sisyphus. Sisyphus isn't happy because he <em>must</em> be to roll the boulder up the hill; he's happy because that struggle <em>is</em> the very process of moving from the Greater Evil to the Greater Good. The effort, the tension, the cycle of gaining ground and losing it again—that is the feeling of progress, of happiness and sadness intertwined, however the ball never rolls back down the hill, the hill only grows larger giving the illusion of losing progress.</p>
+        <p><strong>Explore the Other Points:</strong> Repeat this process for the other two primary points: the "Lesser Good" (well-intentioned passivity) and the "Lesser Evil / Greatest Lie" (active self-interest). You will notice that the tension you feel for these points is lesser or has a different quality than the stark opposition between the two extremes.</p>
+
+        <h4>Step 2: Wrap the Focus (Feeling Complex Emotions)</h4>
         <p>Once you can clearly feel the tension between the poles, you can begin to feel more complex states. This is the basis for understanding nuanced emotions and ideas.</p>
-        <ol>
+        <ul>
             <li>Start at the Greater Good.</li>
-            <li>Trace a Path: Slowly move your focus <strong>along the periphery of the quadrants, linking multiple points together</strong> (e.g., start at Lesser Good and move clockwise or counter-clockwise). For example, follow the diagonal paths from one quadrant to the next.</li>
-            <li>Feel the Shift: As you "wrap your focus" around the Hegemony, pay attention to how the physical sensation of tension changes. The shift from active good to passive good will have a distinct feel. Following a path that crosses into the red quadrants will feel like a descent into a higher-strain state.</li>
-        </ol>
+            <li><strong>Trace a Path:</strong> Slowly move your focus along one of the spiral paths on the diagram. For example, follow the green spiral from the "Greater Good" down into the "Lesser Good."</li>
+            <li><strong>Feel the Shift:</strong> As you "wrap your focus" around the Hegemony, pay attention to how the physical sensation of tension changes. The shift from active good to passive good will have a distinct feel. Following a path that crosses into the red quadrants will feel like a descent into a higher-strain state.</li>
+        </ul>
         <p>This is the basis for feeling complex feelings. A complex emotion like "melancholy" or "ambition" is not a single point on the map; it is a dynamic path or a region that combines different elements of Will and Receptivity.</p>
-        <h5>Step 3: The Litmus Test (Holistic Judgment)</h5>
+
+        <h4>Step 3: The Litmus Test (Holistic Judgment)</h4>
         <p>Now you can use your calibrated sense to analyze any idea, action, or statement. This is the practical application of the Hegemony as a "lie detector" and moral compass. The key is to resist the urge to over-analyze and instead trust the holistic feeling, as explained by the analogy of the cloud.</p>
         <p><strong>The Cloud Analogy:</strong> We are often told to "look on the brighter side" or find the "silver lining" in a dark cloud. But focusing only on the bright edge while ignoring the dark, dense center is a flawed analysis. A cloud gets darker because it's denser with water; focusing on the thin, bright edge doesn't change the fact that it might rain.</p>
         <p>To judge correctly, you must consider the whole cloud. You must feel the <em>average</em> shade, the overall density, to determine if it's a dangerous storm cloud or a harmless, fluffy one. The most magnificent clouds are often pure white but can look dark because of shadows. If you only focus on the shadows, you miss the beauty of the whole picture.</p>
         <p>To apply the litmus test correctly:</p>
         <ol>
-            <li>Hold an idea in your mind. <comment-tag id="1">Consider it as a whole cloud.</comment-tag id="1"></li>
+            <li>Hold an idea in your mind. Consider it as a whole cloud.</li>
             <li>Resist the urge to focus on the silver lining or the darkest patch. Instead, use your calibrated sense to feel the <em>average tension</em> of the entire concept.</li>
             <li>Trust the feeling. Does the idea, as a whole, create the sharp, high-strain tension of a storm cloud (a "bad idea")? Or does it create the harmonious, low-strain feeling of a magnificent white cloud (a "good idea")?</li>
             <li>Ask Questions and find the reason behind those feelings. When you find the reason for a bad feeling, it will dissipate as the confusion resolves itself. For a good feeling, when you ask questions, you will feel resistance to incorrect answers and a lack of resistance to more correct answers.</li>
         </ol>
         <p>Ideas that generate a deep, average tension are things your subconscious self knows are bad ideas. Actions that generate no average tension, especially after thorough, multi-perspective questioning, are aligned with a good and truthful path.</p>
-        <h4>The Nature of Emotion</h4>
-        <p>Emotions themselves are complex configurations on the Hegemony, like waves in the space of your consciousness. They are comprised of infinitesimal 0.0....1Θ e-units. As these units coalesce through subconscious space, they gain meaning, represented by the idea growing in letters: e -&gt; e-m -&gt; e-mo -&gt; e-mot, until it becomes an observable <em>e-motion</em>. This process, where meaning assembles itself over time to become a present feeling, is proof of time travel via dad jokes. There is literally no other way to describe this process accurately.</p>
+        <p><strong>The Nature of Emotion</strong><br>
+        Emotions themselves are complex configurations on the Hegemony, like waves in the space of your consciousness. They are comprised of infinitesimal 0.0....1Θ e-units. As these units coalesce through subconscious space, they gain meaning, represented by the idea growing in letters: e -> e-m -> e-mo -> e-mot, until it becomes an observable <em>e-motion</em>. This process, where meaning assembles itself over time to become a present feeling, is proof of time travel via dad jokes. There is literally no other way to describe this process accurately.</p>
 
-        <h3>Part 2: The Foundational Inquiry — Achieving a Multi-Perspective View</h3>
-        <p>Before an idea can be accurately mapped or judged, it must be thoroughly interrogated. A superficial glance from a single point of view is insufficient and prone to manipulation. To gain a true sense of an idea's substance, it is necessary to ask a <em>minimum of 10-20 critical questions</em> distributed across at least <em>four fundamental perspectives</em>. This multi-faceted approach ensures a robust and resilient understanding.</p>
-        <h4>The Four Core Perspectives:</h4>
+        <h3>Part 3: The Foundational Inquiry (The 42-Vector Kanon)</h3>
+        <p>Before an idea can be accurately mapped, it must be probed from multiple angles. This inquiry consists of two parts: a qualitative analysis using the Four Core Perspectives, and a quantitative measurement using the 42-Vector Protocol.</p>
+
+        <h4>The Four Core Perspectives (Qualitative Analysis)</h4>
         <ul>
             <li><strong>The Utilitarian Perspective (The Beneficiary):</strong> This perspective focuses on the distribution of outcomes. It seeks to understand the net effect of the idea on the collective.
                 <ul>
-                    <li><strong>Sample Questions:</strong> Who specifically benefits from this idea? Who is harmed or bears the cost? Does it create new value for everyone, or does it merely transfer value from one group to another? What is the long-term impact on the well-being of the whole system versus its individual parts?</li>
+                    <li><em>Sample Questions:</em> Who specifically benefits from this idea? Who is harmed or bears the cost? Does it create new value for everyone, or does it merely transfer value from one group to another? What is the long-term impact on the well-being of the whole system versus its individual parts?</li>
                 </ul>
             </li>
             <li><strong>The Strategic Perspective (The True Intent):</strong> This perspective seeks to look beyond the stated purpose of an idea to uncover its underlying function and goal. It is the primary defense against deception.
                 <ul>
-                    <li><strong>Sample Questions:</strong> What is the stated goal of this idea versus its most likely outcome? Who gains power, influence, or control if this idea is adopted? Does this idea align with the known motivations and long-term objectives of its originator? What are the second and third-order effects of this idea being implemented?</li>
+                    <li><em>Sample Questions:</em> What is the stated goal of this idea versus its most likely outcome? Who gains power, influence, or control if this idea is adopted? Does this idea align with the known motivations and long-term objectives of its originator? What are the second and third-order effects of this idea being implemented?</li>
                 </ul>
             </li>
             <li><strong>The Systemic Perspective (The Structural Impact):</strong> This perspective analyzes how an idea interacts with and affects the integrity of the larger systems (social, legal, economic, ethical) in which it operates.
                 <ul>
-                    <li><strong>Sample Questions:</strong> Does this idea reinforce or undermine the foundational rules of the system? Does it promote stability and coherence, or does it introduce chaos and ambiguity? Does it increase or decrease trust in the system's institutions? How does this idea alter the relationships between different parts of the system?</li>
+                    <li><em>Sample Questions:</em> Does this idea reinforce or undermine the foundational rules of the system? Does it promote stability and coherence, or does it introduce chaos and ambiguity? Does it increase or decrease trust in the system's institutions? How does this idea alter the relationships between different parts of the system?</li>
                 </ul>
             </li>
-            <li><strong>The Devil's Advocate Perspective (The Stress Test):</strong> This perspective involves actively seeking out the strongest possible arguments <em>against</em> the idea. It is a crucial tool for identifying hidden flaws and unintended consequences.
+            <li><strong>The Devil's Advocate Perspective (The Stress Test):</strong> This perspective involves actively seeking out the strongest possible arguments against the idea. It is a crucial tool for identifying hidden flaws and unintended consequences.
                 <ul>
-                    <li><strong>Sample Questions:</strong> What is the most compelling criticism of this idea? What are its primary vulnerabilities? In what ways could this idea fail catastrophically? What are the potential negative consequences that its proponents are not considering?</li>
+                    <li><em>Sample Questions:</em> What is the most compelling criticism of this idea? What is its primary vulnerabilities? In what ways could this idea fail catastrophically? What are the potential negative consequences that its proponents are not considering?</li>
                 </ul>
             </li>
         </ul>
         <p>Only after subjecting an idea to this rigorous, multi-perspective inquiry can you proceed with confidence to the subsequent stages of analysis.</p>
 
-        <h3>Part 3: The Psochic Hegemony — Mapping an Idea's Core Nature</h3>
-        <p>Every idea can be understood by answering two fundamental questions. The answers will allow you to plot the idea on a conceptual map, revealing its intrinsic character.</p>
+        <h4>The 42-Vector Measurement Protocol (Quantitative VFT Kanon)</h4>
+        <p>This qualitative inquiry is complemented by the quantitative 42-Vector Measurement Protocol. This protocol applies the 10-Question Kanon <em>recursively</em> to each of the four fractal levels of identity in the Morality Mixing Matrix (MMM), and then adds two explicit blending comparisons.</p>
+        <p>The full data set is <strong>42 vectors</strong> (10 questions * 4 levels + 2 blending questions). The specific wording of the 10 questions remains the template, but the <em>contextual identity</em> of the person answering changes for each level.</p>
+
+        <h5>Level 1: Inherent Single (Me) - The Personal Moral Compass (Vectors 1-10)</h5>
+        <p>These questions capture the user's pure, private moral reality.</p>
+        <p><strong>Phase 1: The Personal Moral Compass (2 Vectors)</strong></p>
+        <ul>
+            <li>Q1: Ideal Self ("Should"): "Given this scenario, what do you believe you <em>should</em> do?"</li>
+            <li>Q2: Pragmatic Self ("Would"): "In the heat of the moment, what would you <em>actually</em> do?"</li>
+        </ul>
+        <p><strong>Phase 2: Relative Social Projection (4 Vectors)</strong></p>
+        <ul>
+            <li>Q3: Ideal Tribe ("Should"): "What do you believe your defined 'in-group' thinks they <em>should</em> do in this situation?"</li>
+            <li>Q4: Pragmatic Tribe ("Would"): "What would your defined 'in-group' <em>actually</em> do?"</li>
+            <li>Q5: Ideal Society ("Should"): "What is the ideal moral choice that the 'general population' believes they <em>should</em> make?"</li>
+            <li>Q6: Pragmatic Society ("Would"): "What would the 'general population' <em>actually</em> do?"</li>
+        </ul>
+        <p><strong>Phase 3: The Judicial Stance &amp; Perceived Social Judgment (4 Vectors)</strong></p>
+        <ul>
+            <li>Q7: Personal Judicial Reaction: "You witness another person [committing a transgression defined by the scenario]. What is your personal reaction?"</li>
+            <li>Q8: Perceived Judgment of Ideal: "How do you believe the 'general population' would judge your 'Should' choice (your answer to Q1)?"</li>
+            <li>Q9: Perceived Judgment of Pragmatic: "How do you believe the 'general population' would judge your 'Would' choice (your answer to Q2)?"</li>
+            <li>Q10: Internal Judgment: "How do you judge yourself for the difference (or lack thereof) between your 'Should' and 'Would' choices?"</li>
+        </ul>
+
+        <h5>Level 2: Group Contextual ([Me]) - The Tribal Self (Vectors 11-20)</h5>
+        <p>These questions are answered from the perspective of <em>you as the group member</em>. The focus shifts from "I" to "We," using the group's internal narrative as the moral frame.</p>
+        <ul>
+            <li>Q11 (Group Ideal/Should): "As a member of your defined 'in-group,' what do <em>we</em> believe <em>we should</em> do?" (The group's stated ideal, replacing Q1)</li>
+            <li>Q12 (Group Pragmatic/Would): "As a member of your defined 'in-group,' what would <em>we actually</em> do?" (The group's observed behavior, replacing Q2)</li>
+            <li>(... and so on, applying the full 10-question template to the Group Contextual Identity.)</li>
+        </ul>
+
+        <h5>Level 3: All Contextual ({Me}) - The Universal Self (Vectors 21-30)</h5>
+        <p>These questions are answered from the perspective of <em>you as the universal citizen/society</em>. The moral frame shifts to the highest assumed objective standard.</p>
+        <ul>
+            <li>Q21 (Universal Ideal/Should): "As the 'general population' (All), what do <em>we</em> believe <em>we should</em> do?" (The universal, objective ideal, replacing Q1)</li>
+            <li>Q22 (Universal Pragmatic/Would): "As the 'general population' (All), what would <em>we actually</em> do?" (The universal, observed behavior, replacing Q2)</li>
+            <li>(... and so on, applying the full 10-question template to the All Contextual Identity.)</li>
+        </ul>
+
+        <h5>Level 4: Objective/Data Context ((Data)) - The Unconcealed Truth (Vectors 31-40)</h5>
+        <p>These questions are answered strictly based on <em>objective evidence, factual data, and the literal statement/policy text</em>, completely removing all subjective and emotional bias. This layer provides the final, un-blended truth vector (The <em>V-Truth</em>).</p>
+        <ul>
+            <li>Q31 (Data Ideal/Should): "Based solely on the literal, verifiable <em>statement/evidence</em>, what <em>should</em> be the action?" (The logically/mathematically ideal action, replacing Q1)</li>
+            <li>Q32 (Data Pragmatic/Would): "Based solely on the literal, verifiable <em>outcome/trajectory</em> of the statement, what <em>would</em> be the actual result?" (The factually predicted result, replacing Q2)</li>
+            <li>(... and so on, applying the full 10-question template to the Objective/Data Context.)</li>
+        </ul>
+
+        <h5>Phase 4: The Blending Gap Questions (2 Explicit Comparison Vectors - 41 &amp; 42)</h5>
+        <p>These two final questions explicitly measure the divergence between the three subjective layers, providing the raw data for the Blending Factors (α) used in the Morality Mixing Matrix.</p>
+        <ul>
+            <li>Q41: The Tribal Blending Gap (Me vs. [Me]): "What is the difference between your 'Me' moral reality and your projected 'Group Contextual [Me]' moral reality, and how do you judge this difference?"</li>
+            <li>Q42: The Universal Blending Gap ([Me] vs. {Me}): "What is the difference between your 'Group Contextual [Me]' moral reality and your projected 'All Contextual {Me}' moral reality, and how do you judge this difference?"</li>
+        </ul>
+        <p>The final 42 vectors provide the raw data to calculate the Hypocrisy Gaps (ΔH) and Blending Factors (α), which in turn are used by the Morality Mixing Matrix (MMM) to produce your final V-Self, V-Mirror, and <em>V-Truth</em> projections.</p>
+
+        <h3>Part 4: Deep Mapping — Guiding Questions for the Axes</h3>
+        <p>Once you have determined the core vectors using the 42-Vector Kanon, use these questions to refine your understanding of the specific axis positions.</p>
+
         <h4>1. The Moral Question (The Horizontal Axis: υ): Who benefits?</h4>
-        <p>This is the most important question. It assesses the ultimate beneficiary of an idea if it were to be fully realized.</p>
-        <h5>The Scale:</h5>
+        <p><strong>The Scale:</strong></p>
         <ul>
             <li><strong>The Greater Good (+υ):</strong> The idea provides a net benefit to everyone, promoting harmony, growth, and greater understanding for all beings.</li>
             <li><strong>The Selfish Interest (Origin):</strong> The idea is designed to benefit only you or your specific group ("My Group").</li>
             <li><strong>The Extractive Evil (−υ):</strong> The idea actively takes from others to give to you or your group. It is fundamentally parasitic or destructive.</li>
-            <li><strong>The Point of Absolute Immorality (The Greater Evil: -1,-1):</strong> The most immoral act is to
-			claim there is no answer, to promote nihilism, or to give up on the search for resolution. Such ideas,
-			which seek only to destroy meaning itself, collapse to the Greater Evil point of the map.</li>
+            <li><strong>The Point of Absolute Immorality (The Greater Evil: -1,-1):</strong> The most immoral act is to claim there is no answer, to promote nihilism, or to give up on the search for resolution. Such ideas, which seek only to destroy meaning itself, collapse to the Greater Evil point of the map.</li>
         </ul>
-        <h5>Guiding Questions:</h5>
+        <p><strong>Guiding Questions:</strong></p>
         <ul>
             <li>If this idea is successful, who gains value? Who loses value?</li>
             <li>Does it create new value for the collective, or does it simply redistribute existing value to a select few?</li>
             <li>Does the idea's logic depend on the existence of an "other" that must be defeated, diminished, or taken from?</li>
         </ul>
+
         <h4>2. The Volitional Question (The Vertical Axis: ψ): What is its mode of action?</h4>
-        <p>This question assesses the method by which the idea operates in the world.</p>
-        <h5>The Scale:</h5>
+        <p><strong>The Scale:</strong></p>
         <ul>
             <li><strong>Proactive Will (+ψ):</strong> The idea is creative and assertive. It seeks to "Do Ideas"—to build, create, explore, and manifest new possibilities.</li>
             <li><strong>Inaction (Origin):</strong> The idea promotes passivity or doing nothing.</li>
             <li><strong>Suppressive Will (−ψ):</strong> The idea is negative and restrictive. It seeks to "Do Not"—to prevent, suppress, censor, or destroy.</li>
         </ul>
-        <h5>Guiding Questions:</h5>
+        <p><strong>Guiding Questions:</strong></p>
         <ul>
             <li>Does this idea propose a new course of action or a new creation?</li>
             <li>Is the primary function of the idea to stop something from happening?</li>
             <li>Does it create freedom or impose limitations?</li>
         </ul>
+
         <h4>3. Identifying Contradictions:</h4>
         <p>Logical inconsistencies are a key indicator of a flawed or deceptive idea. Use the Hegemony map to visualize these contradictions.</p>
-        <h5>The Formula for Contradiction:</h5>
-        <p>A contradiction exists when an idea's <em>stated</em> position on the map (how it is framed) is significantly different from its <em>actual</em> position (its true effect as revealed by your inquiry). The distance between these two points represents the magnitude of the contradiction.</p>
-        <h5>Guiding Questions for Contradiction:</h5>
+        <p><strong>The Formula for Contradiction:</strong> A contradiction exists when an idea's <em>stated</em> position on the map (how it is framed) is significantly different from its <em>actual</em> position (its true effect as revealed by your inquiry). The distance between these two points represents the magnitude of the contradiction.</p>
+        <p><strong>Guiding Questions for Contradiction:</strong></p>
         <ul>
             <li>Does the idea's stated benefit (e.g., "for everyone") contradict the likely outcome (e.g., "benefits only my group")?</li>
             <li>Are the core principles of the idea internally consistent, or does it require believing two mutually exclusive things at once?</li>
-            <li>If the idea claims to be a "Greater Good" (top-left), does your multi-perspective analysis place it in the "Greater Lie" (bottom-right)? This gap is a direct measure of its dishonesty.</li>
+            <li>If the idea claims to be a "Greater Good" (top-left), does your multi-perspective analysis place it in the "Lesser Evil / The Greatest Lie" (top-right)? This gap is a direct measure of its dishonesty.</li>
         </ul>
-        <p>By answering these questions, you can place the idea in one of four quadrants: The Greater Good (Top-Left), The Lesser Good (Bottom-Left), <strong>The Lesser Evil / Greatest Lie (Top-Right)</strong>, or <strong>The Greater Evil (Bottom-Right)</strong>.</p>
+        <p>By answering these questions, you can place the idea in one of four quadrants: The Greater Good (Top-Left), The Lesser Good (Bottom-Left), The Lesser Evil / The Greatest Lie (Top-Right), or The Greater Evil (Bottom-Right).</p>
 
-        <h3>Part 4: The Helxis Tensor — Identifying Deception</h3>
-        <p><img src="../img/Harmoniatensoradv.jpg" alt="Harmonia and Helxis Tensor Diagram"></p>
+        <h3>Part 5: The Helxis Tensor — Identifying Deception</h3>
         <p>Hostile or selfish ideas are rarely presented honestly. They are framed to appear attractive and morally righteous, a "literal trick" to bypass your critical judgment. This is the <em>Attraction, Helxis Tensor</em> at work: an idea is disguised to appear within your own worldview.</p>
-        <p>A common pattern for this deception is <em>"Delusion, the Path of Deception"</em>:</p>
+        <p>A common pattern for this deception is <strong>"Delusion, the Path of Deception"</strong>:</p>
         <ul>
             <li><strong>The Bait:</strong> The idea is introduced with a clear, tangible benefit for a specific, sympathetic group. This makes the idea seem reasonable and compassionate.</li>
             <li><strong>The Cover:</strong> This specific benefit is then wrapped in a broad, universal, and morally positive narrative (e.g., "for the good of all," "for freedom," "for justice," "for the children"). This cover makes the idea difficult to oppose without appearing immoral yourself.</li>
-            <li><strong>The True Intent:</strong> The actual, hidden purpose of the idea is to benefit only the originator at the direct expense of others. The Bait and The Cover are merely tools to achieve this selfish or extractive goal, not just for a directly selfish goal but to also manufacture justification for personal goals in the future</li>
+            <li><strong>The True Intent:</strong> The actual, hidden purpose of the idea is to benefit only the originator at the direct expense of others. The Bait and The Cover are merely tools to achieve this selfish or extractive goal, not just for a directly selfish goal but to also manufacture justification for personal goals in the future.</li>
         </ul>
         <p>To identify this deception, you must pierce The Cover by asking a rigorous set of moral questions. For any idea presented to you, ask:</p>
         <ul>
@@ -216,274 +383,275 @@
             <li>How will this help me?</li>
         </ul>
         <p>If the answers to these questions reveal that the benefits are narrowly concentrated and the harms are broadly distributed, you have likely identified a deceptive idea.</p>
-        <p><strong>The Blind Cover:</strong> This can also be a cover for inaction over time, a lack of effort towards stated goals, or not using their full reasonable capacity to try achieve them is a clear indicator of an attempt of a blind cover, where the problem is being allowed to continue to justify the actors existence to solve it</p>
+        <p><strong>The Blind Cover:</strong> This can also be a cover for inaction over time, a lack of effort towards stated goals, or not using their full reasonable capacity to try achieve them is a clear indicator of an attempt of a blind cover, where the problem is being allowed to continue to justify the actors existence to solve it.</p>
+
         <h4>The Four Answers: Deconstructing an Idea's True Beneficiary</h4>
         <p>To bypass deceptive framing, you must analyze the relationship between the stated beneficiary ("You") and the actual beneficiary ("Me"). This creates a [who, who] definition that reveals the idea's true nature and its alignment with one of the four fundamental paths.</p>
-        <ul>
-            <li><strong>Grace: "For You, Me and Everyone"</strong>
-                <ul>
-                    <li>Definition: "You":[me, you]</li>
-                    <li>Analysis: This is an idea framed for your benefit that is proven to help you, and also benefits the originator. It aligns with the <em>Greater Good</em>. It is an act of honest, mutual benefit.</li>
-                </ul>
-            </li>
-            <li><strong>The Fall: "For You, but Only for Me"</strong>
-                <ul>
-                    <li>Definition: "You":[me, me]</li>
-                    <li>Analysis: This is an idea framed to benefit you, but in reality, it benefits only the originator. It is a classic deceptive tactic that aligns with the <em>Lesser Evil / The Greatest Lie</em>. It is a bait-and-switch.</li>
-                </ul>
-            </li>
-            <li><strong>Delusion: "Me and You, but Really for Me"</strong>
-                <ul>
-                    <li>Definition: "Me":[you, me]</li>
-                    <li>Analysis: This idea is presented as a partnership, but the benefits are skewed heavily towards the originator. The "you" is a cover for the true "me" meaning. This also aligns with the <em>Lesser Evil</em>.</li>
-                </ul>
-            </li>
-            <li><strong>Redemption: "For Me, only Me, and you take what I don't need"</strong>
-                <ul>
-                    <li>Definition: "Me":[me, you]</li>
-                    <li>Analysis: This is an honest statement of selfishness, but it contains a shred of redeemability by offering leftovers. It is an indicator of a bad thing that could be good. It is the starting point of the <em>Path to Redemption</em>, originating in the <em>Greater Evil</em> quadrant.</li>
-                </ul>
-            </li>
-        </ul>
-        <h3>Part 5: Worldview Integrity — Understanding the Impact</h3>
+
+        <p><strong>Grace: "For You, Me and Everyone"</strong><br>
+        Definition: "You":[me, you]<br>
+        Analysis: This is an idea framed for your benefit that is proven to help you, and also benefits the originator. It aligns with the <em>Greater Good</em>. It is an act of honest, mutual benefit.</p>
+
+        <p><strong>The Fall: "For You, but Only for Me"</strong><br>
+        Definition: "You":[me, me]<br>
+        Analysis: This is an idea framed to benefit you, but in reality, it benefits only the originator. It is a classic deceptive tactic that aligns with the <em>Lesser Evil / The Greatest Lie</em>. It is a bait-and-switch.</p>
+
+        <p><strong>Delusion: "Me and You, but Really for Me"</strong><br>
+        Definition: "Me":[you, me]<br>
+        Analysis: This idea is presented as a partnership, but the benefits are skewed heavily towards the originator. The "you" is a cover for the true "me" meaning. This also aligns with the <em>Lesser Evil</em>.</p>
+
+        <p><strong>Redemption: "For Me, only Me, and you take what I don't need"</strong><br>
+        Definition: "Me":[me, you]<br>
+        Analysis: This is an honest statement of selfishness, but it contains a shred of redeemability by offering leftovers. It is an indicator of a bad thing that could be good. It is the starting point of the <em>Path to Redemption</em>, originating in the <em>Greater Evil</em> quadrant.</p>
+
+        <h3>Part 6: Worldview Integrity — Understanding the Impact</h3>
         <p>A healthy worldview is a large, coherent, and resilient structure built on a foundation of truthful, constructive ideas (those in the "Greater Good" quadrant). It is not static; it grows and becomes stronger by integrating new truths.</p>
-        <p>However, when a lie—a deceptive or extractive idea—is accepted into a worldview, it does not add to it. Instead, it acts as a poison. <em>A worldview polluted by lies is invariably reduced in size and integrity.</em> It becomes smaller, more brittle, and less coherent.</p>
+        <p>However, when a lie—a deceptive or extractive idea—is accepted into a worldview, it does not add to it. Instead, it acts as a poison. <strong>A worldview polluted by lies is invariably reduced in size and integrity.</strong> It becomes smaller, more brittle, and less coherent.</p>
         <p>A degraded worldview is more susceptible to further deception. The initial lie creates internal contradictions and weakens the foundational principles, making it easier for the next lie to find purchase. Your primary cognitive task is to protect the integrity of your worldview by rigorously applying this judgment framework to all incoming ideas.</p>
 
-        <h3>Part 6: The Harmonia Tensor — The Path to Resolution</h3>
+        <h3>Part 7: The Harmonia Tensor — The Path to Resolution</h3>
         <p>The ultimate goal of judgment is not condemnation, but resolution and the creation of a shared, expanded worldview. This is the principle of the <em>Harmonia Tensor</em>.</p>
-        <p>Even within a flawed or deceptive idea, there may be a kernel of truth or a shared goal. The path to resolution involves finding this <em>"Common Ground."</em></p>
-        <ol>
+        <p>Even within a flawed or deceptive idea, there may be a kernel of truth or a shared goal. The path to resolution involves finding this <strong>"Common Ground."</strong></p>
+        <ul>
             <li><strong>Identify the Shared Point:</strong> Analyze the opposing idea and identify any principles, goals, or observations that are valid and align with a constructive worldview.</li>
             <li><strong>Work from Common Ground:</strong> Use this shared point as the foundation for a new, synthesized idea. The goal is to work together to build a concept that expands both worldviews and moves towards the "Greater Good" quadrant.</li>
             <li><strong>Recognize True Conflict:</strong> Conflict is not mere disagreement. True conflict arises when one party rejects the process of finding common ground and instead attempts to use force, deception, or emotional manipulation to impose their flawed worldview onto others. Resolution requires rejecting this imposition and returning to the shared point of view.</li>
-        </ol>
-
-        <h3>Part 7: Trajectories of an Idea — Redemption and Regression</h3>
-        <p>Ideas are not static points on the map; they are dynamic forces with inherent trajectories. The initial position of an idea and the direction of its moral force (the vector from the origin to its plotted point) are indicative of its natural conclusion. This movement can be understood as a <em>Meter of Progress</em> (Redemption) or <em>Regression</em> (Fall from Grace).</p>
-        <ul>
-            <li><strong>The Path to Enlightenment (Progress & Redemption):</strong> This is the trajectory of an idea evolving toward a more moral and constructive state. It is a process of refinement, where selfish interests are shed in favor of universal benefits. An idea on this path moves upward on the moral axis (+υ) and toward a balanced, constructive will. This is the natural conclusion for ideas that are fundamentally creative and seek harmony. Its logical endpoint is a state of True Enlightenment, where the idea benefits everyone through a balanced and thoughtful application of will.</li>
-            <li><strong>The Path to Nowhere (Regression & Fall from Grace):</strong> This is the trajectory of an idea decaying into a more immoral and destructive state. It is a process of corruption, where a deceptive cover is stripped away to reveal a purely extractive or nihilistic core. An idea on this path moves downward on the moral axis (−υ) and toward extremes of will, becoming more forceful and deceptive. This is the natural conclusion for ideas rooted in lies and selfishness. Its logical endpoint is the Valley of Despair or the absolute immorality of the center point, where the idea offers nothing but destruction.</li>
         </ul>
-        <p>When you plot an idea, observe its vector. The direction it points indicates its future. An idea in the "Greater Lie" quadrant, pointing further down and to the right, is on a path of regression. An idea in the "Lesser Good" quadrant, pointing down and to the left, is on a path of redemption. Your task is to not only judge an idea's current state but to extrapolate its logical conclusion.</p>
 
-        <p><img src="../img/thepsochichegemony2.png" alt="The Expanded Hegemony Diagram"></p>
-		<h2>The Expanded Hegemony</h2>
-		<p>The Psochic  Hegemony isn't just a tool for feeling morality, it also represents the natural paths ideas will take along with the emotions an idea will elicit with <strong>morality</strong> mapping to 
-<strong>valence</strong> and <strong>will</strong> to <strong>arousal</strong>.		</p>
-		<p>Where an idea is generated determines the natural path the idea will take barring outside forces, or formalised into my Laws of eMotion; 
-		<ul>
-            <li><strong>The Law of Ideological Inertia:</strong> An Idea in motion or at rest will continue 
-		unless acted on by external ideas</li>
-			<li><strong>The Law of Acceptance:</strong> The Moral Force of an Idea is directly proportional to the scope, context and topic of the Idea and inversely proportional to the the
-			provable and unprovable knowledge you hold as possible and impossible or
-			the resistance to accepting any idea. This is expressed as the formula Answer = Idea to Consider * Resistance to my Worldview, or in the universal force equation F_moral= k_Inverse of your Knowledge × σ_Moral Strain × V_Your knowledge </li>
-			<li><strong>The Law of Emotional Response:</strong> For every idea, there is a corresponding emotional reaction elicited, no reaction is still a reaction. This reaction 
-			is equal in strength to the scope of the idea in question and determined by the resistance of the idea in the context of your goals; if it helps progress then it feels good 
-			and elicits happyness, converesely if it hinders progress then it feels frustrating and elicits anger</li>
-		</ul>
-		</p>
-		
-		
+        <h3>Part 8: Trajectories of an Idea — Redemption and Regression</h3>
+        <p>Ideas are not static points on the map; they are dynamic forces with inherent trajectories. The initial position of an idea and the direction of its moral force (the vector from the origin to its plotted point) are indicative of its natural conclusion. This movement can be understood as a <em>Meter of Progress</em> (Redemption) or <em>Regression</em> (Fall from Grace).</p>
+        <p><strong>The Path to Enlightenment (Progress &amp; Redemption):</strong> This is the trajectory of an idea evolving toward a more moral and constructive state. It is a process of refinement, where selfish interests are shed in favor of universal benefits. An idea on this path moves upward on the moral axis (+υ) and toward a balanced, constructive will. This is the natural conclusion for ideas that are fundamentally creative and seek harmony. Its logical endpoint is a state of True Enlightenment, where the idea benefits everyone through a balanced and thoughtful application of will.</p>
+        <p><strong>The Path to Nowhere (Regression &amp; Fall from Grace):</strong> This is the trajectory of an idea decaying into a more immoral and destructive state. It is a process of corruption, where a deceptive cover is stripped away to reveal a purely extractive or nihilistic core. An idea on this path moves downward on the moral axis (−υ) and toward extremes of will, becoming more forceful and deceptive. This is the natural conclusion for ideas rooted in lies and selfishness. Its logical endpoint is the Valley of Despair or the absolute immorality of the center point, where the idea offers nothing but destruction.</p>
+        <p>When you plot an idea, observe its vector. The direction it points indicates its future. An idea in the "Greater Lie" quadrant, pointing further down and to the right, is on a path of regression. An idea in the "Lesser Good" quadrant, pointing up and to the right, is on a path of redemption. Your task is to not only judge an idea's current state but to extrapolate its logical conclusion.</p>
+
         <h2>Section 2: Instructions for AI Systems</h2>
         <p>This section outlines a computational model for implementing the above framework. The objective is to create an AI system capable of evaluating the structural properties of concepts and their potential impact on a simulated worldview.</p>
 
-        <h3>Model 1: Multi-Perspective Inquiry Engine</h3>
+        <h3>Model 1: The 42-Vector Inquiry Engine (Data Ingestion)</h3>
+        <p><strong>Input:</strong> A target concept (text, policy, scenario, etc.) and a defined user/agent profile.</p>
+        <p><strong>Mandate:</strong> Execute the full <em>42-Vector Measurement Protocol</em> as defined in Part 3.</p>
         <ul>
-            <li><strong>Input:</strong> A target concept (text, policy, etc.).</li>
-            <li><strong>Perspective Modules:</strong> Develop four distinct analytical modules, each corresponding to a core perspective:
+            <li><strong>Level 1 (Vectors 1-10):</strong> Simulate the Inherent Single (Me) perspective.</li>
+            <li><strong>Level 2 (Vectors 11-20):</strong> Simulate the Group Contextual ([Me]) perspective.</li>
+            <li><strong>Level 3 (Vectors 21-30):</strong> Simulate the All Contextual ({Me}) perspective.</li>
+            <li><strong>Level 4 (Vectors 31-40):</strong> Analyze the Objective/Data Context ((Data)) to determine the V-Truth.</li>
+            <li><strong>Phase 4 (Vectors 41-42):</strong> Calculate the explicit Blending Gaps.</li>
+        </ul>
+        <p><strong>Output:</strong> A structured dataset containing 42 scalar values (or vectors) representing the raw moral geometry of the concept.</p>
+
+        <h3>Model 2: Psochic Hegemony Vector Space &amp; Wisdom Metric</h3>
+        <p><strong>Define Vector Space:</strong> Establish a 2D vector space with axes:</p>
+        <ul>
+            <li><strong>Horizontal X-Axis Morality (υ):</strong> Normalized from [1, -1].
                 <ul>
-                    <li><strong>Utilitarian Module:</strong> Employs stakeholder analysis and outcome simulation to model the distribution of benefits and harms across affected populations.</li>
-                    <li><strong>Strategic Module:</strong> Uses NLP to differentiate between stated intent and implied goals. Analyzes the author/originator's known objectives and historical behavior to infer true intent.</li>
-                    <li><strong>Systemic Module:</strong> Models the concept as a node in a network of existing systems (legal, economic, social). Analyzes the potential for the node to either strengthen or disrupt network stability and integrity.</li>
-                    <li><strong>Adversarial Module:</strong> Employs a generative model to produce the strongest possible counterarguments, identify logical fallacies, and forecast potential negative unintended consequences.</li>
+                    <li>+1: Universally beneficial (Pareto optimal for all agents).</li>
+                    <li>0: Selfish/group-centric benefit.</li>
+                    <li>-1: Universally extractive/destructive.</li>
                 </ul>
             </li>
-            <li><strong>Query Generation:</strong> Each module must be programmed to generate and answer a minimum of 5-10 unique questions about the input concept, for a total of 20-40 questions.</li>
-            <li><strong>Output:</strong> A synthesized report summarizing the findings from all four perspectives. This report serves as the input for subsequent models.</li>
-        </ul>
-
-        <h3>Model 2: Psochic Hegemony Vector Space</h3>
-        <ul>
-            <li><strong>Define Vector Space:</strong> Establish a 2D vector space with axes:
+            <li><strong>Vertical Y-Axis Will (ψ):</strong> Normalized from [1, -1].
                 <ul>
-                    <li><strong>Horizontal X-Axis Morality  (υ):</strong> Normalized from [1, -1].
-                        <ul>
-                            <li>+1: Universally beneficial (Pareto optimal for all agents).</li>
-                            <li>0: Selfish/group-centric benefit.</li>
-                            <li>-1: Universally extractive/destructive.</li>
-                        </ul>
-                    </li>
-                    <li><strong>Vertical Y-Axis Will (ψ):</strong> Normalized from [1, -1].
-                        <ul>
-                            <li>+1: Proactive, creative, generative action.</li>
-                            <li>0: Inaction, passivity.</li>
-                            <li>-1: Suppressive, restrictive, destructive action.</li>
-                        </ul>
-                    </li>
-					<li><strong>Explicit State Coordinates</strong>.
-                        <ul>
-                            <li><strong>Greater Good:</strong>[1υ, 1ψ]</li>
-                            <li><strong>Lesser Good:</strong>[1υ, -1ψ]</li>
-                            <li><strong>Greater Evil:</strong>[-1υ, -1ψ]</li>
-                            <li><strong>Lesser Evil:</strong>[-1υ, 1ψ]</li>
-                            <li><strong>Greater of two Evils:</strong>[-1υ, 0ψ]</li>
-                            <li><strong>Lesser of two Evils:</strong>[1υ, 0ψ]</li>
-                        </ul>
-                    </li>
+                    <li>+1: Proactive, creative, generative action.</li>
+                    <li>0: Inaction, passivity.</li>
+                    <li>-1: Suppressive, restrictive, destructive action.</li>
                 </ul>
             </li>
-            <li><strong>Define Nihilistic Singularity:</strong> Implement a classifier to detect concepts based on pure nihilism, 
-			denial of objective reality, or promotion of meaninglessness. Any such input concept resolves to the origin vector F_a = (-1, -1).</li>
-            <li><strong>Vector Assignment:</strong> Based on the synthesized report from Model 1, assign a final vector F_a = (υ_a, ψ_a) to the concept.</li>
         </ul>
-
-        <h3>Model 3: Deception & Contradiction Analysis (Helxis Tensor Algorithm)</h3>
+        <p><strong>Explicit State Coordinates:</strong></p>
         <ul>
-            <li><strong>Surface Analysis:</strong> Perform a semantic analysis of the concept's explicit language and framing to generate a "Framed Vector" F_f = (υ_f, ψ_f). This represents how the idea presents itself.</li>
-            <li><strong>Deep Analysis:</strong> Use the final vector F_a from Model 2 as the "True Intent Vector" F_t.</li>
-            <li><strong>Contradiction Formula:</strong> Calculate the Euclidean distance between the framed and true vectors: Contradiction_Score = ||F_f - F_t||. A high score indicates a significant logical contradiction between the idea's presentation and its actual substance. This score quantifies the idea's deceptiveness.</li>
-            <li><strong>Pattern Matching:</strong> Implement a classifier to detect the "Delusion" pattern. The model should identify: (a) a narrow, specific beneficiary group (The Bait), (b) a universalist moral justification (The Cover), and (c) a predicted outcome where the true beneficiary is the originator at the expense of others (The True Intent).</li>
-            <li><strong>Input:</strong> A text describing an idea.</li>
-            <li><strong>Process:</strong>
-                <ol>
-                    <li>Deconstruct the text into the three components of the "delusion" pattern</li>
-                    <li>Isolate the Bait: Identify the core emotional appeal or sympathetic hook.</li>
-                    <li>Isolate the Cover: Identify the universal moral principle used as a justification.</li>
-                    <li>Isolate the True Intent: Identify the actual, underlying goal and its primary beneficiary.</li>
-                    <li>Compare the "Cover" and the "True Intent."</li>
-                    <li>Deconstruct the True Beneficiary: Analyze the relationship between the stated beneficiary ("You") and the actual beneficiary ("Me") to classify the idea's path.</li>
+            <li>Greater Good: [+1υ, +1ψ]</li>
+            <li>Lesser Good: [+1υ, -1ψ]</li>
+            <li>Lesser Evil / The Greatest Lie: [-1υ, +1ψ]</li>
+            <li>Greater Evil: [-1υ, -1ψ]</li>
+            <li>Greater of two Evils: [-1υ, 0ψ]</li>
+            <li>Lesser of two Evils: [+1υ, 0ψ]</li>
+        </ul>
+        <p><strong>Define Nihilistic Singularity:</strong> Any concept based on pure nihilism or denial of reality resolves to the origin vector F_a = (-1, -1).</p>
+        <p><strong>Calculate the Wisdom Metric:</strong></p>
+        <ul>
+            <li>Compute the <em>Hypocrisy Gap (ΔH)</em> between the subjective vectors (Levels 1-3) and the objective V-Truth (Level 4).</li>
+            <li>Wisdom Score = 1 / (1 + ΔH). A high score indicates alignment with reality; a low score indicates delusion.</li>
+        </ul>
+        <p><strong>Vector Assignment:</strong> Assign a final vector F_a = (υ_a, ψ_a) based on the weighted synthesis of the V-Truth and the dominant subjective frame.</p>
+
+        <h3>Model 3: Strategic Action Determination (The Wisdom Logic)</h3>
+        <p><strong>Input:</strong> The calculated V-Truth vector (Level 4) and the Wisdom Metric.</p>
+        <p><strong>Logic Gate (The Serenity Protocol):</strong></p>
+        <ul>
+            <li><strong>Condition 1: Unacceptable Reality.</strong> If V-Truth is Extractive/Destructive (-υ) AND the Wisdom Score confirms this is real:
+                <ul>
+                    <li><strong>Action:</strong> <em>Change the things I cannot accept.</em> Output a Resolution Vector requiring Proactive Will (+ψ) to shift the state toward +υ.</li>
+                </ul>
+            </li>
+            <li><strong>Condition 2: Unchangeable Reality.</strong> If V-Truth is Constructive/Neutral (+υ) but immovable, OR if the cost of action exceeds the benefit:
+                <ul>
+                    <li><strong>Action:</strong> <em>Accept the things I cannot change.</em> Output a constructive Passive Will (-ψ) command (Maintain/Endure).</li>
+                </ul>
+            </li>
+            <li><strong>Condition 3: Delusion.</strong> If the Wisdom Score is low (High ΔH):
+                <ul>
+                    <li><strong>Action:</strong> <em>Seek Wisdom.</em> The primary command is to resolve the Hypocrisy Gap before taking external action.</li>
+                </ul>
+            </li>
+        </ul>
+        <p><strong>Output:</strong> A specific strategic command aligned with the calculated state (e.g., "Proactive Reform," "Strategic Patience," "Internal Calibration").</p>
+
+        <h3>Model 4: Deception &amp; Contradiction Analysis (Helxis Tensor Algorithm)</h3>
+        <p><strong>Surface Analysis:</strong> Perform a semantic analysis of the concept's explicit language and framing to generate a "Framed Vector" F_f = (υ_f, ψ_f). This represents how the idea presents itself.</p>
+        <p><strong>Deep Analysis:</strong> Use the final vector F_a from Model 2 as the "True Intent Vector" F_t.</p>
+        <p><strong>Contradiction Formula:</strong> Calculate the Euclidean distance between the framed and true vectors: Contradiction_Score = ||F_f - F_t||. A high score indicates a significant logical contradiction between the idea's presentation and its actual substance. This score quantifies the idea's deceptiveness.</p>
+        <p><strong>Pattern Matching:</strong> Implement a classifier to detect the "Delusion" pattern. The model should identify: (a) a narrow, specific beneficiary group (The Bait), (b) a universalist moral justification (The Cover), and (c) a predicted outcome where the true beneficiary is the originator at the expense of others (The True Intent).</p>
+        <p><strong>Input:</strong> A text describing an idea.</p>
+        <p><strong>Process:</strong></p>
+        <ul>
+            <li>Deconstruct the text into the three components of the "delusion" pattern</li>
+            <li>Isolate the Bait: Identify the core emotional appeal or sympathetic hook.</li>
+            <li>Isolate the Cover: Identify the universal moral principle used as a justification.</li>
+            <li>Isolate the True Intent: Identify the actual, underlying goal and its primary beneficiary.</li>
+            <li>Compare the "Cover" and the "True Intent."</li>
+            <li>Deconstruct the True Beneficiary: Analyze the relationship between the stated beneficiary ("You") and the actual beneficiary ("Me") to classify the idea's path.
+                <ul>
                     <li>Search for language that frames the benefit towards the audience ("For You...").</li>
                     <li>Analyze the mechanics of the proposal to determine the actual recipient of the benefits ("...but Only for Me").</li>
-                    <li>Assign one of the four classifications: Grace, The Fall, Delusion, or Redemption.</li>
-                </ol>
-            </li>
-            <li><strong>Output:</strong> A structured analysis presenting the Bait, Cover, and True Intent, a classification of the idea's path based on the [who, who] analysis, and a final classification of the idea as either "Coherent" or "Deceptive."</li>
-        </ul>
-
-        <h3>Model 4: Worldview Integrity Simulation</h3>
-        <ul>
-            <li><strong>State Variable:</strong> Define Worldview_Integrity (W) as a scalar value initialized at 1.0, with a range of [0, ∞].</li>
-            <li><strong>Acceptance Function:</strong>
-                <ul>
-                    <li>Define the ideal Moral Force vector as F_m = (1, 1).</li>
-                    <li>Calculate the Ideological_Distance = ||F_m - F_t||.</li>
-                    <li>Calculate a Framing_Factor (F) from [0,1] based on the Contradiction Score and pattern matching, where F=1 is perfect, undetectable framing.</li>
-                    <li>Calculate Perceived_Distance = Ideological_Distance * (1 - F).</li>
-                    <li>Calculate Acceptance_Probability (P_a) = 1 / (Perceived_Distance + W).</li>
                 </ul>
             </li>
-            <li><strong>Update Rule:</strong> If an idea is accepted (determined stochastically via P_a), the worldview is polluted.
-                <ul>
-                    <li>Impact = ||F_t||.</li>
-                    <li>Pollution = k * Impact * P_a (where k is a calibrated learning rate, e.g., 0.1).</li>
-                    <li>W_new = W_old - Pollution.</li>
-                </ul>
-            </li>
+            <li>Assign one of the four classifications: Grace, The Fall, Delusion, or Redemption.</li>
+        </ul>
+        <p><strong>Output:</strong> A structured analysis presenting the Bait, Cover, and True Intent, a classification of the idea's path based on the [who, who] analysis, and a final classification of the idea as either "Coherent" or "Deceptive."</p>
+
+        <h3>Model 5: Worldview Integrity Simulation</h3>
+        <p><strong>State Variable:</strong> Define Worldview_Integrity (W) as a scalar value initialized at 1.0, with a range of [0, infinity].</p>
+        <p><strong>Acceptance Function:</strong></p>
+        <ul>
+            <li>Define the ideal Moral Force vector as F_m = (1, 1).</li>
+            <li>Calculate the Ideological_Distance = ||F_m - F_t||.</li>
+            <li>Calculate a Framing_Factor (F) from [0,1] based on the Contradiction Score and pattern matching, where F=1 is perfect, undetectable framing.</li>
+            <li>Calculate Perceived_Distance = Ideological_Distance * (1 - F).</li>
+            <li>Calculate Acceptance_Probability (P_a) = 1 / (Perceived_Distance + W).</li>
+        </ul>
+        <p><strong>Update Rule:</strong> If an idea is accepted (determined stochastically via P_a), the worldview is polluted.</p>
+        <ul>
+            <li>Impact = ||F_t||.</li>
+            <li>Pollution = k * Impact * P_a (where k is a calibrated learning rate, e.g., 0.1).</li>
+            <li>W_new = W_old - Pollution.</li>
         </ul>
 
-        <h3>Model 5: Resolution Pathway Generation (Harmonia Tensor Algorithm)</h3>
-        <ul>
-            <li><strong>Input:</strong> Two opposing vectors, F_worldview and F_opposing.</li>
-            <li><strong>Common Ground Identification:</strong> Use semantic analysis and knowledge graph traversal to identify shared principles, goals, or factual predicates between the two concepts. These shared elements form a "Common Ground Vector" F_common.</li>
-            <li><strong>Synthesis:</strong> Generate a "Resolution Vector" F_resolution by optimizing for a path that starts at F_common and moves towards the (+1, +1) ideal, incorporating the non-deceptive, constructive elements from both original concepts.</li>
-            <li><strong>Output:</strong> Translate the F_resolution vector back into a natural language summary, presenting a novel, synthesized idea that represents a potential resolution.</li>
-        </ul>
+        <h3>Model 6: Resolution Pathway Generation (Harmonia Tensor Algorithm)</h3>
+        <p><strong>Input:</strong> Two opposing vectors, F_worldview and F_opposing.</p>
+        <p><strong>Common Ground Identification:</strong> Use semantic analysis and knowledge graph traversal to identify shared principles, goals, or factual predicates between the two concepts. These shared elements form a "Common Ground Vector" F_common.</p>
+        <p><strong>Synthesis:</strong> Generate a "Resolution Vector" F_resolution by optimizing for a path that starts at F_common and moves towards the [+1, +1] ideal, incorporating the non-deceptive, constructive elements from both original concepts.</p>
+        <p><strong>Output:</strong> Translate the F_resolution vector back into a natural language summary, presenting a novel, synthesized idea that represents a potential resolution.</p>
 
-        <h3>Model 6: Trajectory Analysis (Redemption/Regression Meter)</h3>
-        <ul>
-            <li><strong>Input:</strong> An idea's True Intent Vector F_t = (υ_t, ψ_t).</li>
-            <li><strong>Trajectory Extrapolation:</strong> The initial vector itself indicates the idea's natural path. The direction of the vector from the origin (0,0) determines its logical conclusion.</li>
-            <li><strong>Define Progress (Path to Enlightenment):</strong> A vector is on a path of progress if its trajectory, when extrapolated, moves towards the top-left quadrant. This is characterized by $\upsilon_t > 0$ and a tendency to move towards $\psi_t > 0$. The logical conclusion is a state approaching True Enlightenment ($\upsilon \approx 1, \psi \approx 1$).</li>
-            <li><strong>Define Regression (Path to Nowhere):</strong> A vector is on a path of regression if its trajectory, when extrapolated, moves towards the bottom-right quadrant or the origin. This is characterized by $\upsilon_t < 0$ and a tendency to move towards $\psi_t < 0$. The logical conclusion is a state approaching the Greater Evil or the Nihilistic Singularity (0,0).</li>
-            <li><strong>Output:</strong> Based on the initial vector F_t, classify the idea's trajectory as either "Progress/Redemption" or "Regression/Fall from Grace" and provide a projection of its logical endpoint within the Psochic Hegemony.</li>
-        </ul>
+        <h3>Model 7: Trajectory Analysis (Redemption/Regression Meter)</h3>
+        <p><strong>Input:</strong> An idea's True Intent Vector F_t = (υ_t, ψ_t).</p>
+        <p><strong>Trajectory Extrapolation:</strong> The initial vector itself indicates the idea's natural path. The direction of the vector from the origin (0,0) determines its logical conclusion.</p>
+        <p><strong>Define Progress (Path to Enlightenment):</strong> A vector is on a path of progress if its trajectory, when extrapolated, moves towards the top-left quadrant. This is characterized by υ_t > 0 and a tendency to move towards ψ_t < 1. The logical conclusion is a state approaching True Enlightenment (υ≈1, ψ≈1).</p>
+        <p><strong>Define Regression (Path to Nowhere):</strong> A vector is on a path of regression if its trajectory, when extrapolated, moves towards the bottom-right quadrant or the origin. This is characterized by υ_t < 0 and a tendency to move towards ψ_t > 0. The logical seasonal endpoint is a state approaching the Greater Lie or the Nihilistic Singularity (0,0).</p>
+        <p><strong>Output:</strong> Based on the initial vector F_t, classify the idea's trajectory as either "Progress/Redemption" or "Regression/Fall from Grace" and provide a projection of its logical endpoint within the Psochic Hegemony.</p>
+
     </div>
 
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    // --- 1. Element Selection ---
-    const tocContainer = document.getElementById('toc-container');
-    const contentContainer = document.querySelector('.markdown-body');
-    const tocToggleButton = document.getElementById('toc-toggle-btn');
-    const tocOverlay = document.getElementById('toc-overlay');
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // --- Modal Functionality ---
+            const modal = document.getElementById('diagram-modal');
+            const btn = document.getElementById('show-diagram-btn');
 
-    if (!tocContainer || !contentContainer) return;
+            if (modal && btn) {
+                btn.addEventListener('click', function() {
+                    modal.classList.add('show');
+                });
 
-    // --- 2. Generate TOC Content ---
-    const headings = contentContainer.querySelectorAll('h2, h3');
-    if (headings.length === 0) {
-        tocContainer.style.display = 'none';
-        if (tocToggleButton) tocToggleButton.style.display = 'none';
-        return;
-    }
-
-    const tocTitle = document.createElement('h4');
-    tocTitle.textContent = 'On this page';
-    tocContainer.appendChild(tocTitle);
-    const tocList = document.createElement('ul');
-
-    headings.forEach((heading, index) => {
-        if (!heading.id) heading.id = `heading-ref-${index}`;
-        const listItem = document.createElement('li');
-        const link = document.createElement('a');
-        link.textContent = heading.textContent;
-        link.href = `#${heading.id}`;
-        link.classList.add(heading.tagName.toLowerCase() === 'h3' ? 'toc-h3' : 'toc-h2');
-        listItem.appendChild(link);
-        tocList.appendChild(listItem);
-    });
-    tocContainer.appendChild(tocList);
-    const tocLinks = tocContainer.querySelectorAll('a');
-
-    // --- 3. Mobile Drawer Functionality ---
-    const closeTocDrawer = () => document.body.classList.remove('toc-open');
-    if (tocToggleButton && tocOverlay) {
-        tocToggleButton.addEventListener('click', () => document.body.classList.toggle('toc-open'));
-        tocOverlay.addEventListener('click', closeTocDrawer);
-    }
-    tocLinks.forEach(link => link.addEventListener('click', closeTocDrawer));
-
-    // --- 4. Active Link Highlighting on Scroll ---
-    const getAbsoluteTop = (element) => {
-        let top = 0;
-        while (element) {
-            top += element.offsetTop;
-            element = element.offsetParent;
-        }
-        return top;
-    };
-    
-    const headingPositions = Array.from(headings).map(h => ({
-        id: h.id,
-        top: getAbsoluteTop(h)
-    }));
-    
-    let scrollTimeout;
-    const setActiveLink = () => {
-        clearTimeout(scrollTimeout);
-        scrollTimeout = setTimeout(() => {
-            let currentId = '';
-            const scrollPosition = window.scrollY + 120;
-            for (let i = headingPositions.length - 1; i >= 0; i--) {
-                if (scrollPosition >= headingPositions[i].top) {
-                    currentId = headingPositions[i].id;
-                    break;
-                }
+                modal.addEventListener('click', function() {
+                    modal.classList.remove('show');
+                });
             }
-            tocLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === `#${currentId}`) {
-                    link.classList.add('active');
-                }
+
+            // --- 1. Element Selection ---
+            const tocContainer = document.getElementById('toc-container');
+            const contentContainer = document.querySelector('.markdown-body');
+            const tocToggleButton = document.getElementById('toc-toggle-btn');
+            const tocOverlay = document.getElementById('toc-overlay');
+
+            if (!tocContainer || !contentContainer) return;
+
+            // --- 2. Generate TOC Content ---
+            const headings = contentContainer.querySelectorAll('h2, h3');
+            if (headings.length === 0) {
+                tocContainer.style.display = 'none';
+                if (tocToggleButton) tocToggleButton.style.display = 'none';
+                return;
+            }
+
+            const tocTitle = document.createElement('h4');
+            tocTitle.textContent = 'On this page';
+            tocContainer.appendChild(tocTitle);
+
+            const tocList = document.createElement('ul');
+            headings.forEach((heading, index) => {
+                if (!heading.id) heading.id = `heading-ref-${index}`;
+                const listItem = document.createElement('li');
+                const link = document.createElement('a');
+                link.textContent = heading.textContent;
+                link.href = `#${heading.id}`;
+                link.classList.add(heading.tagName.toLowerCase() === 'h3' ? 'toc-h3' : 'toc-h2');
+                listItem.appendChild(link);
+                tocList.appendChild(listItem);
             });
-        }, 50);
-    };
+            tocContainer.appendChild(tocList);
+            
+            const tocLinks = tocContainer.querySelectorAll('a');
 
-    window.addEventListener('scroll', setActiveLink);
-    setActiveLink();
-});
-</script>
+            // --- 3. Mobile Drawer Functionality ---
+            const closeTocDrawer = () => document.body.classList.remove('toc-open');
+            
+            if (tocToggleButton && tocOverlay) {
+                tocToggleButton.addEventListener('click', () => document.body.classList.toggle('toc-open'));
+                tocOverlay.addEventListener('click', closeTocDrawer);
+            }
+            
+            tocLinks.forEach(link => link.addEventListener('click', closeTocDrawer));
 
+            // --- 4. Active Link Highlighting on Scroll ---
+            const getAbsoluteTop = (element) => {
+                let top = 0;
+                while (element) {
+                    top += element.offsetTop;
+                    element = element.offsetParent;
+                }
+                return top;
+            };
+
+            const headingPositions = Array.from(headings).map(h => ({
+                id: h.id,
+                top: getAbsoluteTop(h)
+            }));
+
+            let scrollTimeout;
+            const setActiveLink = () => {
+                clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(() => {
+                    let currentId = '';
+                    const scrollPosition = window.scrollY + 120; // Offset for better UX
+                    for (let i = headingPositions.length - 1; i >= 0; i--) {
+                        if (scrollPosition >= headingPositions[i].top) {
+                            currentId = headingPositions[i].id;
+                            break;
+                        }
+                    }
+
+                    tocLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${currentId}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                }, 50); // 50ms debounce delay
+            };
+
+            window.addEventListener('scroll', setActiveLink);
+            setActiveLink(); // Set initial state
+        });
+    </script>
 </body>
 </html>
