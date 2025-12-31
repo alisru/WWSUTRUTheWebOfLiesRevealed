@@ -613,6 +613,16 @@
         const tocOverlay = document.getElementById('toc-overlay');
 
         if (!tocContainer || !contentContainer) return;
+    const searchLink = document.createElement('a');
+    searchLink.textContent = 'Search the Archives';
+    searchLink.href = '../search.html';
+    searchLink.style.display = 'block';
+    searchLink.style.marginTop = '20px';
+    searchLink.style.marginBottom = '20px';
+    searchLink.style.textAlign = 'center';
+    searchLink.className = 'text-cyan-400 font-bold hover:underline';
+    tocContainer.appendChild(searchLink);
+
 
         // --- 2. Generate TOC Content ---
         const headings = contentContainer.querySelectorAll('h2, h3');
