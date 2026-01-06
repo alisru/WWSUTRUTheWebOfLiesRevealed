@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The American Standard: 100 Vectors of the Greater Good</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        /* Custom Scrollbar for a cleaner look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; 
+        }
+
+        /* Palette Definition - Vibrant Liberty */
+        :root {
+            --color-primary: #2563EB; /* Vibrant Blue */
+            --color-secondary: #DC2626; /* Vibrant Red */
+            --color-accent: #F59E0B; /* Gold */
+            --color-bg: #F3F4F6; /* Cool Gray */
+            --color-card: #FFFFFF;
+        }
+
+        body {
+            background-color: var(--color-bg);
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            color: #1F2937;
+        }
+
+        /* Chart Container Utilities */
+        .chart-wrapper {
+            position: relative;
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            padding: 1rem;
+        }
+
+        .chart-container-lg {
+            height: 400px;
+            max-height: 400px;
+            max-width: 800px;
+        }
+
+        .chart-container-md {
+            height: 350px;
+            max-height: 350px;
+            max-width: 500px;
+        }
+
+        .chart-container-sm {
+            height: 300px;
+            max-height: 300px;
+            max-width: 100%;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header Section -->
+    <header class="bg-gradient-to-r from-blue-700 to-blue-900 text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <h1 class="text-3xl font-bold tracking-tight">The American Standard</h1>
+                    <p class="text-blue-200 text-sm font-medium mt-1">100 VECTORS OF THE GREATER GOOD</p>
+					<a href="./index.html">← Back To Navigation</a>
+					
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Grid -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
+
+        <!-- Introduction / Hook -->
+        <section class="grid grid-cols-1 md:grid-cols-12 gap-8">
+            <div class="md:col-span-8 bg-white rounded-xl shadow-md p-8 border-l-4 border-blue-600">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">The Geometry of a Nation</h2>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    A nation is not merely a landmass; it is a shared psychological construct defined by its values. When those values are forgotten, the construct dissolves. This instrument catalogs <strong>100 Core Value Vectors</strong>—from the Puritan covenants of 1630 to the Digital Rights of the 2020s—that define the American "Greater Good."
+                </p>
+                <p class="text-gray-700 leading-relaxed">
+                    <strong>The Purpose:</strong> To serve as a navigational beacon. In an era of "Vector Drift," where definitions are warping and the consensus is fracturing, this Standard provides a fixed coordinate system anchored in primary historical data.
+                </p>
+            </div>
+            <div class="md:col-span-4 bg-gradient-to-br from-red-600 to-red-700 rounded-xl shadow-md p-8 text-white flex flex-col justify-center items-center text-center">
+                <div class="text-6xl mb-2">⚖️</div>
+                <h3 class="text-xl font-bold mb-1">Total Vectors</h3>
+                <span class="text-5xl font-extrabold tracking-tighter">100</span>
+                <p class="text-red-100 text-sm mt-2">Spanning 393 Years</p>
+            </div>
+        </section>
+
+        <!-- Section 1: Data Dashboard -->
+        <section>
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold text-gray-900 flex items-center">
+                    <span class="text-blue-600 mr-2">📊</span> The Shape of the Standard
+                </h2>
+                <p class="text-gray-600 mt-2 max-w-3xl">
+                    An analysis of when these values were codified and the thematic pillars they construct. Note the high density of value formation during the Founding Era and the Rights Revolution.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Chart 1: The Arc of History -->
+                <div class="flex flex-col">
+                    <div class="bg-white p-4 rounded-t-lg border-b">
+                        <h3 class="font-bold text-gray-800">The Arc of History: Vectors per Epoch</h3>
+                        <p class="text-xs text-gray-500">Distribution of the 100 values across historical eras.</p>
+                    </div>
+                    <div class="chart-wrapper">
+                        <div class="chart-container-md mx-auto">
+                            <canvas id="chartEras"></canvas>
+                        </div>
+                    </div>
+                    <div class="bg-white p-4 rounded-b-lg shadow-sm text-sm text-gray-600">
+                        <strong>Insight:</strong> The foundation was laid heavily in the beginning (25% of values), followed by a massive expansion of rights in the mid-20th century.
+                    </div>
+                </div>
+
+                <!-- Chart 2: Thematic Pillars -->
+                <div class="flex flex-col">
+                    <div class="bg-white p-4 rounded-t-lg border-b">
+                        <h3 class="font-bold text-gray-800">Hegemonic Composition</h3>
+                        <p class="text-xs text-gray-500">Breakdown of values by primary thematic category.</p>
+                    </div>
+                    <div class="chart-wrapper">
+                        <div class="chart-container-md mx-auto">
+                            <canvas id="chartThemes"></canvas>
+                        </div>
+                    </div>
+                    <div class="bg-white p-4 rounded-b-lg shadow-sm text-sm text-gray-600">
+                        <strong>Insight:</strong> "Liberty & Rights" forms the largest pillar, balanced by "Civic Duty" and "Equality." The tension between these pillars drives the national narrative.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Chronological Deep Dive -->
+        <section>
+            <div class="mb-8 text-center">
+                <h2 class="text-3xl font-bold text-gray-900">The 100 Vectors</h2>
+                <p class="text-gray-600 mt-2">A chronological traversal of the American experiment. Click to expand each era and view the full historical citations.</p>
+            </div>
+
+            <!-- Era 1 -->
+            <div class="mb-12">
+                <div class="bg-blue-900 text-white p-4 rounded-t-xl flex justify-between items-center sticky top-20 z-40 shadow-md">
+                    <div>
+                        <h3 class="text-xl font-bold">1. The Colonial & Founding Era</h3>
+                        <p class="text-blue-200 text-sm">1630 – 1789 • Establishing the Geometry</p>
+                    </div>
+                    <span class="bg-blue-800 px-3 py-1 rounded text-xs font-mono">Vectors 01-25</span>
+                </div>
+                <div class="bg-white border border-gray-200 rounded-b-xl shadow-sm p-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <!-- Representative Cards -->
+                        <div class="p-4 bg-gray-50 rounded-lg border border-gray-100 hover:shadow-md transition-shadow">
+                            <div class="text-blue-600 font-bold mb-1 text-xs uppercase tracking-wide">Vector 01</div>
+                            <h4 class="font-bold text-gray-900 mb-2">Charity & Community</h4>
+                            <p class="text-sm text-gray-600 italic">"We must delight in each other... mourn together, labor and suffer together."</p>
+                            <div class="mt-3 text-xs text-gray-500 font-semibold">— John Winthrop (1630)</div>
+                        </div>
+
+                        <div class="p-4 bg-gray-50 rounded-lg border border-gray-100 hover:shadow-md transition-shadow">
+                            <div class="text-blue-600 font-bold mb-1 text-xs uppercase tracking-wide">Vector 08</div>
+                            <h4 class="font-bold text-gray-900 mb-2">Liberty</h4>
+                            <p class="text-sm text-gray-600 italic">"Give me liberty, or give me death!"</p>
+                            <div class="mt-3 text-xs text-gray-500 font-semibold">— Patrick Henry (1775)</div>
+                        </div>
+
+                        <div class="p-4 bg-gray-50 rounded-lg border border-gray-100 hover:shadow-md transition-shadow">
+                            <div class="text-blue-600 font-bold mb-1 text-xs uppercase tracking-wide">Vector 10</div>
+                            <h4 class="font-bold text-gray-900 mb-2">Equality</h4>
+                            <p class="text-sm text-gray-600 italic">"We hold these truths to be self-evident, that all men are created equal."</p>
+                            <div class="mt-3 text-xs text-gray-500 font-semibold">— Thomas Jefferson (1776)</div>
+                        </div>
+                        
+                        <!-- Collapsed List for the rest -->
+                        <div class="col-span-1 md:col-span-2 lg:col-span-3 mt-4">
+                            <details class="group">
+                                <summary class="flex justify-between items-center font-medium cursor-pointer list-none text-blue-600 hover:text-blue-800 bg-blue-50 p-3 rounded-lg shadow-sm border border-blue-100">
+                                    <span>View All 25 Vectors (Full Citations)</span>
+                                    <span class="transition group-open:rotate-180">
+                                        ▼
+                                    </span>
+                                </summary>
+                                <div class="text-gray-600 mt-3 group-open:animate-fadeIn">
+                                    <div class="overflow-x-auto">
+                                        <table class="min-w-full text-sm text-left">
+                                            <thead class="bg-gray-100 text-gray-700 uppercase font-bold text-xs">
+                                                <tr>
+                                                    <th class="px-4 py-2 w-16">#</th>
+                                                    <th class="px-4 py-2 w-1/4">Value</th>
+                                                    <th class="px-4 py-2">Historical Context & Signal</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="divide-y divide-gray-100" id="table-era-1">
+                                                <!-- Populated by JS -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Era 2 -->
+            <div class="mb-12">
+                <div class="bg-red-800 text-white p-4 rounded-t-xl flex justify-between items-center sticky top-20 z-40 shadow-md">
+                    <div>
+                        <h3 class="text-xl font-bold">2. The Republic & The Crisis</h3>
+                        <p class="text-red-200 text-sm">1796 – 1865 • Testing Endurance</p>
+                    </div>
+                    <span class="bg-red-700 px-3 py-1 rounded text-xs font-mono">Vectors 26-36</span>
+                </div>
+                <div class="bg-white border border-gray-200 rounded-b-xl shadow-sm p-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div class="p-4 bg-gray-50 rounded-lg border border-gray-100 hover:shadow-md transition-shadow">
+                            <div class="text-red-600 font-bold mb-1 text-xs uppercase tracking-wide">Vector 29</div>
+                            <h4 class="font-bold text-gray-900 mb-2">The Rule of Law</h4>
+                            <p class="text-sm text-gray-600 italic">"A government of laws, and not of men."</p>
+                            <div class="mt-3 text-xs text-gray-500 font-semibold">— John Marshall (1803)</div>
+                        </div>
+                        <div class="p-4 bg-gray-50 rounded-lg border border-gray-100 hover:shadow-md transition-shadow">
+                            <div class="text-red-600 font-bold mb-1 text-xs uppercase tracking-wide">Vector 35</div>
+                            <h4 class="font-bold text-gray-900 mb-2">Government of the People</h4>
+                            <p class="text-sm text-gray-600 italic">"Government of the people, by the people, for the people."</p>
+                            <div class="mt-3 text-xs text-gray-500 font-semibold">— Abraham Lincoln (1863)</div>
+                        </div>
+                        
+                         <div class="col-span-1 md:col-span-2 lg:col-span-3 mt-4">
+                            <details class="group">
+                                <summary class="flex justify-between items-center font-medium cursor-pointer list-none text-red-600 hover:text-red-800 bg-red-50 p-3 rounded-lg shadow-sm border border-red-100">
+                                    <span>View All 11 Vectors (Full Citations)</span>
+                                    <span class="transition group-open:rotate-180">
+                                        ▼
+                                    </span>
+                                </summary>
+                                <div class="text-gray-600 mt-3">
+                                    <div class="overflow-x-auto">
+                                        <table class="min-w-full text-sm text-left">
+                                            <thead class="bg-gray-100 text-gray-700 uppercase font-bold text-xs">
+                                                <tr>
+                                                    <th class="px-4 py-2 w-16">#</th>
+                                                    <th class="px-4 py-2 w-1/4">Value</th>
+                                                    <th class="px-4 py-2">Historical Context & Signal</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="divide-y divide-gray-100" id="table-era-2"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Era 3 -->
+            <div class="mb-12">
+                <div class="bg-blue-600 text-white p-4 rounded-t-xl flex justify-between items-center sticky top-20 z-40 shadow-md">
+                    <div>
+                        <h3 class="text-xl font-bold">3. The Modern Era</h3>
+                        <p class="text-blue-100 text-sm">1886 – 1963 • Expanding the "We"</p>
+                    </div>
+                    <span class="bg-blue-500 px-3 py-1 rounded text-xs font-mono">Vectors 37-50</span>
+                </div>
+                <div class="bg-white border border-gray-200 rounded-b-xl shadow-sm p-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div class="p-4 bg-gray-50 rounded-lg border border-gray-100 hover:shadow-md transition-shadow">
+                            <div class="text-blue-500 font-bold mb-1 text-xs uppercase tracking-wide">Vector 37</div>
+                            <h4 class="font-bold text-gray-900 mb-2">Inclusion / Sanctuary</h4>
+                            <p class="text-sm text-gray-600 italic">"Give me your tired, your poor, your huddled masses yearning to breathe free."</p>
+                            <div class="mt-3 text-xs text-gray-500 font-semibold">— Emma Lazarus (1883)</div>
+                        </div>
+                        <div class="p-4 bg-gray-50 rounded-lg border border-gray-100 hover:shadow-md transition-shadow">
+                            <div class="text-blue-500 font-bold mb-1 text-xs uppercase tracking-wide">Vector 46</div>
+                            <h4 class="font-bold text-gray-900 mb-2">Desegregation</h4>
+                            <p class="text-sm text-gray-600 italic">"Separate educational facilities are inherently unequal."</p>
+                            <div class="mt-3 text-xs text-gray-500 font-semibold">— Chief Justice Earl Warren (1954)</div>
+                        </div>
+                        
+                         <div class="col-span-1 md:col-span-2 lg:col-span-3 mt-4">
+                            <details class="group">
+                                <summary class="flex justify-between items-center font-medium cursor-pointer list-none text-blue-500 hover:text-blue-700 bg-blue-50 p-3 rounded-lg shadow-sm border border-blue-100">
+                                    <span>View All 14 Vectors (Full Citations)</span>
+                                    <span class="transition group-open:rotate-180">
+                                        ▼
+                                    </span>
+                                </summary>
+                                <div class="text-gray-600 mt-3">
+                                    <div class="overflow-x-auto">
+                                        <table class="min-w-full text-sm text-left">
+                                            <thead class="bg-gray-100 text-gray-700 uppercase font-bold text-xs">
+                                                <tr>
+                                                    <th class="px-4 py-2 w-16">#</th>
+                                                    <th class="px-4 py-2 w-1/4">Value</th>
+                                                    <th class="px-4 py-2">Historical Context & Signal</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="divide-y divide-gray-100" id="table-era-3"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Era 4 -->
+            <div class="mb-12">
+                <div class="bg-amber-600 text-white p-4 rounded-t-xl flex justify-between items-center sticky top-20 z-40 shadow-md">
+                    <div>
+                        <h3 class="text-xl font-bold">4. The Rights Revolution</h3>
+                        <p class="text-amber-100 text-sm">1964 – 1980 • Codifying the Promise</p>
+                    </div>
+                    <span class="bg-amber-500 px-3 py-1 rounded text-xs font-mono">Vectors 51-65</span>
+                </div>
+                <div class="bg-white border border-gray-200 rounded-b-xl shadow-sm p-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                         <div class="p-4 bg-gray-50 rounded-lg border border-gray-100 hover:shadow-md transition-shadow">
+                            <div class="text-amber-600 font-bold mb-1 text-xs uppercase tracking-wide">Vector 51</div>
+                            <h4 class="font-bold text-gray-900 mb-2">Equal Opportunity</h4>
+                            <p class="text-sm text-gray-600 italic">"Full and equal enjoyment... without discrimination."</p>
+                            <div class="mt-3 text-xs text-gray-500 font-semibold">— Civil Rights Act (1964)</div>
+                        </div>
+                         <div class="p-4 bg-gray-50 rounded-lg border border-gray-100 hover:shadow-md transition-shadow">
+                            <div class="text-amber-600 font-bold mb-1 text-xs uppercase tracking-wide">Vector 55</div>
+                            <h4 class="font-bold text-gray-900 mb-2">Exploration</h4>
+                            <p class="text-sm text-gray-600 italic">"Not because they are easy, but because they are hard."</p>
+                            <div class="mt-3 text-xs text-gray-500 font-semibold">— JFK (1962)</div>
+                        </div>
+
+                        <div class="col-span-1 md:col-span-2 lg:col-span-3 mt-4">
+                            <details class="group">
+                                <summary class="flex justify-between items-center font-medium cursor-pointer list-none text-amber-600 hover:text-amber-800 bg-amber-50 p-3 rounded-lg shadow-sm border border-amber-100">
+                                    <span>View All 15 Vectors (Full Citations)</span>
+                                    <span class="transition group-open:rotate-180">
+                                        ▼
+                                    </span>
+                                </summary>
+                                <div class="text-gray-600 mt-3">
+                                    <div class="overflow-x-auto">
+                                        <table class="min-w-full text-sm text-left">
+                                            <thead class="bg-gray-100 text-gray-700 uppercase font-bold text-xs">
+                                                <tr>
+                                                    <th class="px-4 py-2 w-16">#</th>
+                                                    <th class="px-4 py-2 w-1/4">Value</th>
+                                                    <th class="px-4 py-2">Historical Context & Signal</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="divide-y divide-gray-100" id="table-era-4"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Era 5 -->
+            <div class="mb-12">
+                <div class="bg-indigo-700 text-white p-4 rounded-t-xl flex justify-between items-center sticky top-20 z-40 shadow-md">
+                    <div>
+                        <h3 class="text-xl font-bold">5. Digital Dawn & New Millennium</h3>
+                        <p class="text-indigo-200 text-sm">1991 – Present • Networked Crisis</p>
+                    </div>
+                    <span class="bg-indigo-600 px-3 py-1 rounded text-xs font-mono">Vectors 66-80</span>
+                </div>
+                <div class="bg-white border border-gray-200 rounded-b-xl shadow-sm p-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                         <div class="p-4 bg-gray-50 rounded-lg border border-gray-100 hover:shadow-md transition-shadow">
+                            <div class="text-indigo-600 font-bold mb-1 text-xs uppercase tracking-wide">Vector 72</div>
+                            <h4 class="font-bold text-gray-900 mb-2">Marriage Equality</h4>
+                            <p class="text-sm text-gray-600 italic">"They ask for equal dignity in the eyes of the law."</p>
+                            <div class="mt-3 text-xs text-gray-500 font-semibold">— Justice Kennedy (2015)</div>
+                        </div>
+                        <div class="p-4 bg-gray-50 rounded-lg border border-gray-100 hover:shadow-md transition-shadow">
+                            <div class="text-indigo-600 font-bold mb-1 text-xs uppercase tracking-wide">Vector 77</div>
+                            <h4 class="font-bold text-gray-900 mb-2">Truth-Telling</h4>
+                            <p class="text-sm text-gray-600 italic">"We cannot hold the torch of freedom if we are afraid to see the truth."</p>
+                            <div class="mt-3 text-xs text-gray-500 font-semibold">— Liz Cheney (2022)</div>
+                        </div>
+
+                        <div class="col-span-1 md:col-span-2 lg:col-span-3 mt-4">
+                            <details class="group">
+                                <summary class="flex justify-between items-center font-medium cursor-pointer list-none text-indigo-600 hover:text-indigo-800 bg-indigo-50 p-3 rounded-lg shadow-sm border border-indigo-100">
+                                    <span>View All 15 Vectors (Full Citations)</span>
+                                    <span class="transition group-open:rotate-180">
+                                        ▼
+                                    </span>
+                                </summary>
+                                <div class="text-gray-600 mt-3">
+                                    <div class="overflow-x-auto">
+                                        <table class="min-w-full text-sm text-left">
+                                            <thead class="bg-gray-100 text-gray-700 uppercase font-bold text-xs">
+                                                <tr>
+                                                    <th class="px-4 py-2 w-16">#</th>
+                                                    <th class="px-4 py-2 w-1/4">Value</th>
+                                                    <th class="px-4 py-2">Historical Context & Signal</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="divide-y divide-gray-100" id="table-era-5"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+             <!-- Era 6 -->
+             <div class="mb-12">
+                <div class="bg-gray-800 text-white p-4 rounded-t-xl flex justify-between items-center sticky top-20 z-40 shadow-md">
+                    <div>
+                        <h3 class="text-xl font-bold">6. The Timeless Standard</h3>
+                        <p class="text-gray-400 text-sm">Implicit • The Unwritten Laws</p>
+                    </div>
+                    <span class="bg-gray-700 px-3 py-1 rounded text-xs font-mono">Vectors 81-100</span>
+                </div>
+                <div class="bg-white border border-gray-200 rounded-b-xl shadow-sm p-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                         <div class="p-4 bg-gray-50 rounded-lg border border-gray-100 hover:shadow-md transition-shadow">
+                            <div class="text-gray-600 font-bold mb-1 text-xs uppercase tracking-wide">Vector 90</div>
+                            <h4 class="font-bold text-gray-900 mb-2">The Underdog</h4>
+                            <p class="text-sm text-gray-600 italic">"It’s not the size of the dog in the fight, it’s the size of the fight in the dog."</p>
+                            <div class="mt-3 text-xs text-gray-500 font-semibold">— Mark Twain</div>
+                        </div>
+                         <div class="p-4 bg-gray-50 rounded-lg border border-gray-100 hover:shadow-md transition-shadow">
+                            <div class="text-gray-600 font-bold mb-1 text-xs uppercase tracking-wide">Vector 100</div>
+                            <h4 class="font-bold text-gray-900 mb-2">The Unfinished Work</h4>
+                            <p class="text-sm text-gray-600 italic">"This union may never be perfect, but generation after generation has shown that it can always be perfected."</p>
+                            <div class="mt-3 text-xs text-gray-500 font-semibold">— Barack Obama</div>
+                        </div>
+
+                        <div class="col-span-1 md:col-span-2 lg:col-span-3 mt-4">
+                            <details class="group">
+                                <summary class="flex justify-between items-center font-medium cursor-pointer list-none text-gray-600 hover:text-gray-800 bg-gray-50 p-3 rounded-lg shadow-sm border border-gray-100">
+                                    <span>View All 20 Vectors (Full Citations)</span>
+                                    <span class="transition group-open:rotate-180">
+                                        ▼
+                                    </span>
+                                </summary>
+                                <div class="text-gray-600 mt-3">
+                                    <div class="overflow-x-auto">
+                                        <table class="min-w-full text-sm text-left">
+                                            <thead class="bg-gray-100 text-gray-700 uppercase font-bold text-xs">
+                                                <tr>
+                                                    <th class="px-4 py-2 w-16">#</th>
+                                                    <th class="px-4 py-2 w-1/4">Value</th>
+                                                    <th class="px-4 py-2">Historical Context & Signal</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="divide-y divide-gray-100" id="table-era-6"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Diagnostic Analysis -->
+        <section class="bg-gray-50 rounded-xl p-8 border border-gray-200">
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold text-gray-900 flex items-center">
+                    <span class="text-red-600 mr-2">📉</span> Diagnostic: Vector Drift Analysis
+                </h2>
+                <p class="text-gray-600 mt-2 max-w-4xl">
+                    Hegemonic analysis detects a "Hum"—a dissonance between the original value (The Ideal) and its modern warped interpretation. This scatter plot visualizes the "Idea Mass" vs. "Worldview Scope" for key values, showing the drift from "Truth" (Balanced) to "Minimization" (Warped).
+                </p>
+            </div>
+
+            <div class="chart-wrapper">
+                <div class="chart-container-lg mx-auto">
+                    <canvas id="chartDrift"></canvas>
+                </div>
+            </div>
+            <div class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                <div class="bg-white p-4 rounded border-l-4 border-green-500">
+                    <h4 class="font-bold">The Ideal (Top Right)</h4>
+                    <p class="text-gray-500">High Mass, High Alignment. The value is understood in its complex, demanding form (e.g., Liberty as Responsibility).</p>
+                </div>
+                <div class="bg-white p-4 rounded border-l-4 border-yellow-500">
+                    <h4 class="font-bold">The Drift (Middle)</h4>
+                    <p class="text-gray-500">The value loses context. Mass remains, but scope shrinks. "Liberty" begins to drift toward "License."</p>
+                </div>
+                <div class="bg-white p-4 rounded border-l-4 border-red-500">
+                    <h4 class="font-bold">The Minimization (Bottom Left)</h4>
+                    <p class="text-gray-500">The value is inverted or hollowed out. It becomes a slogan used to justify its opposite (e.g., Patriotism as Exclusion).</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <h2 class="text-2xl font-bold mb-4">Alethekanon</h2>
+            <p class="text-gray-400 mb-8">The Standard of Unconcealed Truth.</p>
+            <div class="border-t border-gray-800 pt-8 text-sm text-gray-500">
+                <p>Generated based on the "American Standard" Analysis • 2025</p>
+                <p class="mt-2">No SVG or External Imagery Used • Pure Data Visualization</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Data & Scripts -->
+    <script>
+        // --- DATA INJECTION ---
+        // Full dataset from the Analysis with preserved quotes
+        const kanonData = {
+            era1: [
+                {id: "01", val: "Charity & Community", ctx: "\"We must delight in each other, make others' conditions our own, rejoice together, mourn together, labor and suffer together.\" – **John Winthrop**"},
+                {id: "02", val: "Religious Conscience", ctx: "\"God requireth not a uniformity of religion to be enacted and enforced in any civil state.\" – **Roger Williams**"},
+                {id: "03", val: "Self-Improvement", ctx: "\"I conceived the bold and arduous project of arriving at moral perfection. I wished to live without committing any fault at any time.\" – **Benjamin Franklin**"},
+                {id: "04", val: "Industry", ctx: "\"Lose no time; be always employ'd in something useful; cut off all unnecessary actions.\" – **Benjamin Franklin**"},
+                {id: "05", val: "Sincerity", ctx: "\"Use no hurtful deceit; think innocently and justly, and, if you speak, speak accordingly.\" – **Benjamin Franklin**"},
+                {id: "06", val: "Justice", ctx: "\"Wrong none by doing injuries, or omitting the benefits that are your duty.\" – **Benjamin Franklin**"},
+                {id: "07", val: "Freedom of the Press", ctx: "\"The loss of liberty to a generous mind is worse than death... and yet we know that liberty cannot be preserved without a general knowledge among the people.\" – **Andrew Hamilton**"},
+                {id: "08", val: "Liberty", ctx: "\"Is life so dear, or peace so sweet, as to be purchased at the price of chains and slavery? ... Give me liberty, or give me death!\" – **Patrick Henry**"},
+                {id: "09", val: "Common Sense", ctx: "\"A long habit of not thinking a thing wrong, gives it a superficial appearance of being right.\" – **Thomas Paine**"},
+                {id: "10", val: "Equality", ctx: "\"We hold these truths to be self-evident, that all men are created equal.\" – **Thomas Jefferson**"},
+                {id: "11", val: "Unalienable Rights", ctx: "\"That they are endowed by their Creator with certain unalienable Rights, that among these are Life, Liberty and the pursuit of Happiness.\" – **Thomas Jefferson**"},
+                {id: "12", val: "Consent of the Governed", ctx: "\"That to secure these rights, Governments are instituted among Men, deriving their just powers from the consent of the governed.\" – **Thomas Jefferson**"},
+                {id: "13", val: "The Pursuit of Happiness", ctx: "\"The pursuit of Happiness.\" – **Thomas Jefferson**"},
+                {id: "14", val: "E Pluribus Unum", ctx: "\"E Pluribus Unum\" (Out of many, one). – **Charles Thomson**"},
+                {id: "15", val: "Religious Freedom", ctx: "\"No man shall be compelled to frequent or support any religious worship, place, or ministry whatsoever.\" – **Thomas Jefferson**"},
+                {id: "16", val: "Popular Sovereignty", ctx: "\"We the People of the United States...\" – **Gouverneur Morris**"},
+                {id: "17", val: "General Welfare", ctx: "\"...promote the general Welfare...\" – **The Constitutional Convention**"},
+                {id: "18", val: "Common Defence", ctx: "\"...provide for the common defence...\" – **The Constitutional Convention**"},
+                {id: "19", val: "Domestic Tranquility", ctx: "\"...insure domestic Tranquility...\" – **The Constitutional Convention**"},
+                {id: "20", val: "Habeas Corpus", ctx: "\"The Privilege of the Writ of Habeas Corpus shall not be suspended, unless when in Cases of Rebellion or Invasion the public Safety may require it.\" – **The Framers**"},
+                {id: "21", val: "Freedom of Speech", ctx: "\"Congress shall make no law... abridging the freedom of speech.\" – **James Madison**"},
+                {id: "22", val: "Right to Bear Arms", ctx: "\"A well regulated Militia, being necessary to the security of a free State, the right of the people to keep and bear Arms, shall not be infringed.\" – **James Madison**"},
+                {id: "23", val: "Protection from Tyranny", ctx: "\"The right of the people to be secure in their persons, houses, papers, and effects, against unreasonable searches and seizures.\" – **James Madison**"},
+                {id: "24", val: "Due Process", ctx: "\"No person shall... be deprived of life, liberty, or property, without due process of law.\" – **James Madison**"},
+                {id: "25", val: "Public Trial", ctx: "\"In all criminal prosecutions, the accused shall enjoy the right to a speedy and public trial.\" – **James Madison**"}
+            ],
+            era2: [
+                {id: "26", val: "National Union", ctx: "\"The name of American, which belongs to you... must always exalt the just pride of patriotism more than any appellation derived from local discriminations.\" – **George Washington**"},
+                {id: "27", val: "Political Morality", ctx: "\"Of all the dispositions and habits which lead to political prosperity, religion and morality are indispensable supports.\" – **George Washington**"},
+                {id: "28", val: "Neutrality / Peace", ctx: "\"Cultivate peace and harmony with all... avoid entangling alliances.\" – **George Washington**"},
+                {id: "29", val: "The Rule of Law", ctx: "\"The government of the United States has been emphatically termed a government of laws, and not of men.\" – **Chief Justice John Marshall**"},
+                {id: "30", val: "Individualism", ctx: "\"Trust thyself: every heart vibrates to that iron string.\" – **Ralph Waldo Emerson**"},
+                {id: "31", val: "Civil Disobedience", ctx: "\"Must the citizen ever for a moment, or in the least degree, resign his conscience to the legislator? Why has every man a conscience, then?\" – **Henry David Thoreau**"},
+                {id: "32", val: "Universal Human Rights", ctx: "\"Stand by those principles, be true to them on all occasions, in all places, against all foes, and at whatever cost.\" – **Frederick Douglass**"},
+                {id: "33", val: "Sacrifice", ctx: "\"From these honored dead we take increased devotion to that cause for which they gave the last full measure of devotion.\" – **Abraham Lincoln**"},
+                {id: "34", val: "Democratic Renewal", ctx: "\"That this nation, under God, shall have a new birth of freedom.\" – **Abraham Lincoln**"},
+                {id: "35", val: "Government of the People", ctx: "\"Government of the people, by the people, for the people, shall not perish from the earth.\" – **Abraham Lincoln**"},
+                {id: "36", val: "Magnanimity", ctx: "\"With malice toward none; with charity for all; with firmness in the right, as God gives us to see the right.\" – **Abraham Lincoln**"}
+            ],
+            era3: [
+                {id: "37", val: "Inclusion / Sanctuary", ctx: "\"Give me your tired, your poor, your huddled masses yearning to breathe free... I lift my lamp beside the golden door!\" – **Emma Lazarus**"},
+                {id: "38", val: "The Strenuous Life", ctx: "\"I wish to preach, not the doctrine of ignoble ease, but the doctrine of the strenuous life.\" – **Theodore Roosevelt**"},
+                {id: "39", val: "Conservation", ctx: "\"The weight of our responsibility to preserve our common heritage... to see that our children shall not be denied their birthright.\" – **Theodore Roosevelt**"},
+                {id: "40", val: "Gender Equality", ctx: "\"The right of citizens of the United States to vote shall not be denied or abridged by the United States or by any State on account of sex.\" – **The U.S. Congress**"},
+                {id: "41", val: "Social Security", ctx: "\"We can never insure one hundred percent of the population against one hundred percent of the hazards and vicissitudes of life, but we have tried to frame a law which will give some measure of protection.\" – **Franklin D. Roosevelt**"},
+                {id: "42", val: "Freedom of Speech (Global)", ctx: "\"The first is freedom of speech and expression—everywhere in the world.\" – **Franklin D. Roosevelt**"},
+                {id: "43", val: "Freedom of Worship (Global)", ctx: "\"The second is freedom of every person to worship God in his own way—everywhere in the world.\" – **Franklin D. Roosevelt**"},
+                {id: "44", val: "Freedom from Want", ctx: "\"The third is freedom from want... economic understandings which will secure to every nation a healthy peacetime life.\" – **Franklin D. Roosevelt**"},
+                {id: "45", val: "Freedom from Fear", ctx: "\"The fourth is freedom from fear... a world-wide reduction of armaments.\" – **Franklin D. Roosevelt**"},
+                {id: "46", val: "Desegregation", ctx: "\"We conclude that in the field of public education the doctrine of 'separate but equal' has no place. Separate educational facilities are inherently unequal.\" – **Chief Justice Earl Warren**"},
+                {id: "47", val: "Civic Service", ctx: "\"And so, my fellow Americans: ask not what your country can do for you—ask what you can do for your country.\" – **John F. Kennedy**"},
+                {id: "48", val: "Democratic Vigilance", ctx: "\"In the councils of government, we must guard against the acquisition of unwarranted influence, whether sought or unsought, by the military-industrial complex.\" – **Dwight D. Eisenhower**"},
+                {id: "49", val: "Nonviolence", ctx: "\"Nonviolent direct action seeks to create such a crisis and foster such a tension that a community which has constantly refused to negotiate is forced to confront the issue.\" – **Martin Luther King Jr.**"},
+                {id: "50", val: "Judgment by Character", ctx: "\"I have a dream that my four little children will one day live in a nation where they will not be judged by the color of their skin but by the content of their character.\" – **Martin Luther King Jr.**"}
+            ],
+            era4: [
+                {id: "51", val: "Equal Opportunity", ctx: "\"All persons shall be entitled to the full and equal enjoyment of the goods, services, facilities, and privileges... without discrimination.\" – **The U.S. Congress**"},
+                {id: "52", val: "The Franchise", ctx: "\"The vote is the most powerful instrument ever devised by man for breaking down injustice and destroying the terrible walls which imprison men.\" – **Lyndon B. Johnson**"},
+                {id: "53", val: "Merit & Diversity", ctx: "\"This system violates the basic principle of American democracy—the principle that judges and rewards each man on the basis of his merit as a man.\" – **Lyndon B. Johnson**"},
+                {id: "54", val: "Consumer Protection", ctx: "\"Consumers... include us all. They are the largest economic group in the economy, affecting and affected by almost every public and private economic decision.\" – **John F. Kennedy**"},
+                {id: "55", val: "Exploration", ctx: "\"We choose to go to the moon in this decade and do the other things, not because they are easy, but because they are hard.\" – **John F. Kennedy**"},
+                {id: "56", val: "Stewardship", ctx: "\"Clean air, clean water, open spaces—these should once again be the birthright of every American.\" – **Richard Nixon**"},
+                {id: "57", val: "Educational Equity", ctx: "\"No person in the United States shall, on the basis of sex... be subjected to discrimination under any education program or activity.\" – **Birch Bayh**"},
+                {id: "58", val: "Checks and Balances", ctx: "\"Our Constitution works; our great Republic is a government of laws and not of men. Here the people rule.\" – **Gerald Ford**"},
+                {id: "59", val: "Informational Privacy", ctx: "\"Fundamental to our way of life is the concept that... the government must not secretly gather information about individuals.\" – **The U.S. Congress**"},
+                {id: "60", val: "Reflection", ctx: "\"We must never forget that in the world of 1776, we were the radical revolutionaries... We must not simply rest on the achievements of our past.\" – **Gerald Ford**"},
+                {id: "61", val: "Human Rights (Foreign)", ctx: "\"Human rights is the soul of our foreign policy, because human rights is the very soul of our sense of nationhood.\" – **Jimmy Carter**"},
+                {id: "62", val: "Peace through Strength", ctx: "\"We know only too well that war comes not when the forces of freedom are strong, but when they are weak. It is then that tyrants are tempted.\" – **Ronald Reagan**"},
+                {id: "63", val: "Liberation", ctx: "\"General Secretary Gorbachev, if you seek peace, if you seek prosperity for the Soviet Union and Eastern Europe... Mr. Gorbachev, tear down this wall!\" – **Ronald Reagan**"},
+                {id: "64", val: "Dignity & Access", ctx: "\"Let the shameful wall of exclusion finally come tumbling down.\" – **George H.W. Bush**"},
+                {id: "65", val: "Volunteerism", ctx: "\"I have spoken of a thousand points of light, of all the community organizations that are spread like stars throughout the Nation, doing good.\" – **George H.W. Bush**"}
+            ],
+            era5: [
+                {id: "66", val: "Global Connection", ctx: "\"We have an opportunity... to use these new technologies to empower people, to educate them, to help them learn, and to create new jobs.\" – **Al Gore**"},
+                {id: "67", val: "Family Balance", ctx: "\"American workers will no longer have to choose between the job they need and the family they love.\" – **Bill Clinton**"},
+                {id: "68", val: "National Service", ctx: "\"Service is a spark to rekindle the spirit of democracy in an age of uncertainty.\" – **Bill Clinton**"},
+                {id: "69", val: "Resolution", ctx: "\"Terrorist attacks can shake the foundations of our biggest buildings, but they cannot touch the foundation of America.\" – **George W. Bush**"},
+                {id: "70", val: "Unity in Grief", ctx: "\"Are you guys ready? Let's roll.\" – **Todd Beamer**"},
+                {id: "71", val: "Breaking Barriers", ctx: "\"If there is anyone out there who still doubts that America is a place where all things are possible... tonight is your answer.\" – **Barack Obama**"},
+                {id: "72", val: "Marriage Equality", ctx: "\"They ask for equal dignity in the eyes of the law. The Constitution grants them that right.\" – **Anthony Kennedy**"},
+                {id: "73", val: "Healthcare as Right", ctx: "\"I am not the first President to take up this cause, but I am determined to be the last.\" – **Barack Obama**"},
+                {id: "74", val: "Systemic Awakening", ctx: "\"It was that knee upon his neck that was the metaphor for what the system does... We must stand up and say 'Get your knee off our necks'.\" – **Al Sharpton**"},
+                {id: "75", val: "Scientific Cooperation", ctx: "\"Through Operation Warp Speed, we are marshalling the full power of the American military and the genius of American science.\" – **Donald Trump**"},
+                {id: "76", val: "Democratic Resilience", ctx: "\"The Constitution prevents me from claiming unilateral authority to determine which electoral votes should be counted.\" – **Mike Pence**"},
+                {id: "77", val: "Truth-Telling", ctx: "\"We cannot hold the torch of freedom if we are afraid to see the truth.\" – **Liz Cheney**"},
+                {id: "78", val: "Environmental Justice", ctx: "\"We’re going to build a future where everybody has a shot... and the planet is preserved for generations to come.\" – **Joe Biden**"},
+                {id: "79", val: "Digital Sovereignty", ctx: "\"Automated systems should be used to help people, not discriminate against them.\" – **Alondra Nelson**"},
+                {id: "80", val: "Respect for Marriage", ctx: "\"This law and the love it defends strike a blow against hate in all its forms.\" – **Joe Biden**"}
+            ],
+            era6: [
+                {id: "81", val: "The Frontier Spirit", ctx: "\"The existence of an area of free land, its continuous recession, and the advance of American settlement westward, explain American development.\" – **Frederick Jackson Turner**"},
+                {id: "82", val: "Public Education", ctx: "\"Education... beyond all other devices of human origin, is the great equalizer of the conditions of men.\" – **Horace Mann**"},
+                {id: "83", val: "Civilian Control", ctx: "\"Having now finished the work assigned me, I retire from the great theatre of Action... and take my leave of all the employments of public life.\" – **George Washington**"},
+                {id: "84", val: "Federalism", ctx: "\"It is one of the happy incidents of the federal system that a single courageous State may, if its citizens choose, serve as a laboratory.\" – **Louis Brandeis**"},
+                {id: "85", val: "Antitrust", ctx: "\"If we will not endure a king as a political power, we should not endure a king over the production, transportation, and sale of any of the necessaries of life.\" – **John Sherman**"},
+                {id: "86", val: "Labor Rights", ctx: "\"We cannot seek achievement for ourselves and forget about progress and prosperity for our community... Our ambitions must be broad enough to include the aspirations and needs of others.\" – **Cesar Chavez**"},
+                {id: "87", val: "The Melting Pot", ctx: "\"America is God's Crucible, the great Melting-Pot where all the races of Europe are melting and reforming!\" – **Israel Zangwill**"},
+                {id: "88", val: "Ingenuity", ctx: "\"Success.\" (Telegram reporting the first flight). \"We have a good prospect of doing something.\" – **Orville & Wilbur Wright**"},
+                {id: "89", val: "Fair Play", ctx: "\"For when the One Great Scorer comes to mark against your name, He writes – not that you won or lost – but how you played the Game.\" – **Grantland Rice**"},
+                {id: "90", val: "The Underdog", ctx: "\"It’s not the size of the dog in the fight, it’s the size of the fight in the dog.\" – **Mark Twain**"},
+                {id: "91", val: "Optimism", ctx: "\"The American Dream is that dream of a land in which life should be better and richer and fuller for everyone, with opportunity for each according to ability or achievement.\" – **James Truslow Adams**"},
+                {id: "92", val: "Pragmatism", ctx: "\"The true is the name of whatever proves itself to be good in the way of belief.\" – **William James**"},
+                {id: "93", val: "Hospitality", ctx: "\"But in a last word to the wise of these days let it be said that of all who give gifts these two were the wisest.\" – **O. Henry**"},
+                {id: "94", val: "Privacy", ctx: "\"The right to be let alone.\" – **Louis Brandeis & Samuel Warren**"},
+                {id: "95", val: "Mobility", ctx: "\"Our unity as a nation is sustained by free communication of thought and by easy transportation of people and goods.\" – **Dwight D. Eisenhower**"},
+                {id: "96", val: "Philanthropy", ctx: "\"The man who dies thus rich dies disgraced.\" – **Andrew Carnegie**"},
+                {id: "97", val: "Due Diligence", ctx: "\"It's always difficult to keep personal prejudice out of a thing like this. And wherever you run into it, prejudice always obscures the truth.\" – **Reginald Rose**"},
+                {id: "98", val: "Self-Defense", ctx: "\"The inherent right of self-defense has been central to the Second Amendment right.\" – **Antonin Scalia**"},
+                {id: "99", val: "Redemption", ctx: "\"Gatsby believed in the green light, the orgastic future that year by year recedes before us. It eluded us then, but that’s no matter—tomorrow we will run faster, stretch out our arms farther.\" – **F. Scott Fitzgerald**"},
+                {id: "100", val: "The Unfinished Work", ctx: "\"This union may never be perfect, but generation after generation has shown that it can always be perfected.\" – **Barack Obama**"}
+            ]
+        };
+
+        // --- HELPER FUNCTIONS ---
+        // Label wrapping logic (Mandatory)
+        function wrapLabel(str, maxLen = 16) {
+            if (str.length <= maxLen) return str;
+            const words = str.split(' ');
+            const lines = [];
+            let currentLine = words[0];
+
+            for (let i = 1; i < words.length; i++) {
+                if (currentLine.length + 1 + words[i].length <= maxLen) {
+                    currentLine += ' ' + words[i];
+                } else {
+                    lines.push(currentLine);
+                    currentLine = words[i];
+                }
+            }
+            lines.push(currentLine);
+            return lines;
+        }
+
+        // --- POPULATE TABLES ---
+        // Basic Markdown-to-HTML formatter for the quotes
+        function formatContext(text) {
+             // Basic bold replacement for **Author**
+             return text.replace(/\*\*(.*?)\*\*/g, '<strong class="text-gray-900">$1</strong>');
+        }
+
+        function populateTable(elementId, data) {
+            const tbody = document.getElementById(elementId);
+            data.forEach(item => {
+                const row = document.createElement('tr');
+                row.className = "hover:bg-gray-50 transition-colors align-top";
+                row.innerHTML = `
+                    <td class="px-4 py-3 font-mono text-gray-500 font-bold">${item.id}</td>
+                    <td class="px-4 py-3 font-bold text-gray-900 leading-tight">${item.val}</td>
+                    <td class="px-4 py-3 text-gray-600 text-sm leading-relaxed">${formatContext(item.ctx)}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        populateTable('table-era-1', kanonData.era1);
+        populateTable('table-era-2', kanonData.era2);
+        populateTable('table-era-3', kanonData.era3);
+        populateTable('table-era-4', kanonData.era4);
+        populateTable('table-era-5', kanonData.era5);
+        populateTable('table-era-6', kanonData.era6);
+
+
+        // --- CHART CONFIGURATIONS ---
+        
+        // 1. Eras Distribution (Bar Chart)
+        const ctxEras = document.getElementById('chartEras').getContext('2d');
+        new Chart(ctxEras, {
+            type: 'bar',
+            data: {
+                labels: wrapLabel('Colonial, Republic, Modern Era, Rights Rev, Digital Dawn, Timeless').map(l => Array.isArray(l) ? l.join(' ') : l), // Simple labels don't need wrapping but nice to have logic ready
+                datasets: [{
+                    label: 'Number of Values',
+                    data: [25, 11, 14, 15, 15, 20],
+                    backgroundColor: [
+                        '#2563EB', '#DC2626', '#3B82F6', '#D97706', '#4F46E5', '#4B5563'
+                    ],
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            title: function(tooltipItems) {
+                                const item = tooltipItems[0];
+                                let label = item.chart.data.labels[item.dataIndex];
+                                if (Array.isArray(label)) return label.join(' ');
+                                return label;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+
+        // 2. Thematic Composition (Doughnut)
+        const ctxThemes = document.getElementById('chartThemes').getContext('2d');
+        // Rough estimation based on keyword analysis of the 100 items
+        new Chart(ctxThemes, {
+            type: 'doughnut',
+            data: {
+                labels: ['Liberty & Rights', 'Governance & Law', 'Civic Duty & Service', 'Equality & Justice', 'Progress & Innovation'],
+                datasets: [{
+                    data: [28, 22, 18, 20, 12],
+                    backgroundColor: [
+                        '#DC2626', // Red
+                        '#1F2937', // Gray/Black (Law)
+                        '#2563EB', // Blue
+                        '#F59E0B', // Gold
+                        '#10B981'  // Green (Growth)
+                    ],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'right' },
+                    tooltip: {
+                        callbacks: {
+                            title: function(tooltipItems) {
+                                const item = tooltipItems[0];
+                                let label = item.chart.data.labels[item.dataIndex];
+                                if (Array.isArray(label)) return label.join(' ');
+                                return label;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // 3. Vector Drift (Scatter Plot)
+        // Creating specific data points to visualize the "Hum"
+        const ctxDrift = document.getElementById('chartDrift').getContext('2d');
+        
+        // Data format: x (Time/Era), y (Alignment Score: 1.0 = Perfect, >1 = Insult, <1 = Lie)
+        // We will map Y as "Coherence" (Height)
+        const driftData = [
+            { x: 1, y: 0.95, label: "Charity (1630)", type: "Ideal" },
+            { x: 2, y: 0.98, label: "Liberty (1775)", type: "Ideal" },
+            { x: 3, y: 0.90, label: "Rule of Law (1803)", type: "Ideal" },
+            { x: 4, y: 0.85, label: "Individualism (1841)", type: "Ideal" },
+            
+            // Modern Drift points (Simulated based on analysis)
+            { x: 5, y: 0.65, label: "Liberty (Modern Drift)", type: "Drift" }, // Becoming License
+            { x: 5, y: 0.55, label: "Individualism (Modern Drift)", type: "Drift" }, // Becoming Narcissism
+            { x: 6, y: 0.92, label: "Service (Reclaimed)", type: "Ideal" }, // Attempts to fix
+            
+            { x: 6, y: 0.40, label: "Truth (Warped)", type: "Minimization" }, 
+        ];
+
+        new Chart(ctxDrift, {
+            type: 'scatter',
+            data: {
+                datasets: [{
+                    label: 'Value Trajectories',
+                    data: driftData,
+                    backgroundColor: (ctx) => {
+                        const val = ctx.raw?.y;
+                        if (val > 0.8) return '#10B981'; // Green (Good)
+                        if (val > 0.5) return '#F59E0B'; // Amber (Drifting)
+                        return '#DC2626'; // Red (Minimised)
+                    },
+                    pointRadius: 8,
+                    pointHoverRadius: 10
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        type: 'linear',
+                        position: 'bottom',
+                        title: { display: true, text: 'Historical Epoch (1-6)' },
+                        ticks: { stepSize: 1 }
+                    },
+                    y: {
+                        title: { display: true, text: 'Hegemonic Alignment (Coherence)' },
+                        min: 0,
+                        max: 1.1
+                    }
+                },
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.raw.label + ` (Alignment: ${context.raw.y})`;
+                            },
+                             title: function(tooltipItems) {
+                                // Mandatory tooltip fix
+                                const item = tooltipItems[0];
+                                let label = item.chart.data.labels[item.dataIndex];
+                                // Check if label exists in data labels (it doesn't for scatter usually, so we rely on raw)
+                                if (!label && item.raw.label) label = item.raw.label;
+                                
+                                if (Array.isArray(label)) {
+                                  return label.join(' ');
+                                } else {
+                                  return label;
+                                }
+                            }
+                        }
+                    },
+                    legend: { display: false } // Custom legend in HTML
+                }
+            }
+        });
+
+    </script>
+</body>
+</html>
