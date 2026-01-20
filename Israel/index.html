@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,11 +8,21 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; }
-        .card { transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; }
-        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); }
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .card {
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
     </style>
 </head>
+
 <body class="bg-gray-900 text-gray-200">
     <!-- TOC Drawer for both desktop and mobile -->
     <nav id="toc-container"></nav>
@@ -32,203 +43,191 @@
         <header class="text-center mb-12">
             <h1 class="text-4xl md:text-5xl font-bold text-white mb-2">Israel</h1>
             <p class="text-lg text-gray-400"></p>
-            <a href="../index.html" class="mt-4 inline-block text-cyan-400 hover:text-cyan-300">&larr; Back to Main Navigator</a>
+            <a href="../index.html" class="mt-4 inline-block text-cyan-400 hover:text-cyan-300">&larr; Back to Main
+                Navigator</a>
         </header>
         <main>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <a href="./Israel.html" class="card block bg-gray-800 p-6 rounded-lg border border-gray-700 hover:border-cyan-500">
-                    <h2 class="text-xl font-semibold text-white">The Israeli Dilemma: </h2>An Analysis of a Co-opted Strategic Asset within the Minimisation Plan
-                </a>
-				<a href="./ChinaIsraelHamas.html" class="card block bg-gray-800 p-6 rounded-lg border border-gray-700 hover:border-cyan-500">
-                    <h2 class="text-xl font-semibold text-white">The Dragon's Shadow Network: </h2>An Analysis of China's Role in the Indirect Geopolitical Nexus Between Israel and Hamas
-                </a>
-				<a href="./October7th.html" class="card block bg-gray-800 p-6 rounded-lg border border-gray-700 hover:border-cyan-500">
-                    <h2 class="text-xl font-semibold text-white">The October 7th Catalyst: </h2>A Definitive Strategic Analysis
-                </a>
-            </div>
-        </main>
+            <main>
+                <!-- SECTION 1: Priority Briefings (Universal Class) -->
+                <div class="mb-12">
+                    <h3 class="text-xl font-bold text-cyan-400 mb-6 border-b border-gray-700 pb-2">:: Priority
+                        Intelligence Briefings [UNIVERSAL CLASS]</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <!-- Israel Universal -->
+                        <a href="./Israel_Universal.html"
+                            class="card block bg-gray-800 p-6 rounded-lg border border-gray-700 hover:border-cyan-500 group">
+                            <div class="flex justify-between items-start mb-2">
+                                <h2 class="text-xl font-bold text-white group-hover:text-cyan-400 transition-colors">The
+                                    Resource Sink</h2>
+                                <span
+                                    class="text-xs bg-orange-900 text-orange-100 px-2 py-1 rounded border border-orange-700">Method:
+                                    ATTRITION</span>
+                            </div>
+                            <p class="text-gray-400 text-sm leading-relaxed">
+                                <strong>The Prototype Trap.</strong> How the conflict is engineered not to be won, but
+                                to be endless. A strategic drain on Western resources and credibility.
+                            </p>
+                        </a>
+
+                        <!-- China Universal -->
+                        <a href="./ChinaIsraelHamas_Universal.html"
+                            class="card block bg-gray-800 p-6 rounded-lg border border-gray-700 hover:border-cyan-500 group">
+                            <div class="flex justify-between items-start mb-2">
+                                <h2 class="text-xl font-bold text-white group-hover:text-cyan-400 transition-colors">The
+                                    Shadow Network</h2>
+                                <span
+                                    class="text-xs bg-red-900 text-red-100 px-2 py-1 rounded border border-red-700">Method:
+                                    FUNDING</span>
+                            </div>
+                            <p class="text-gray-400 text-sm leading-relaxed">
+                                <strong>China, Iran, Hamas.</strong> Mapping the invisible financial and military
+                                pipelines. How Beijing funds the war against the West while posing as a peacemaker.
+                            </p>
+                        </a>
+
+                        <!-- Oct 7 Universal -->
+                        <a href="./October7th_Universal.html"
+                            class="card block bg-gray-800 p-6 rounded-lg border border-gray-700 hover:border-cyan-500 group">
+                            <div class="flex justify-between items-start mb-2">
+                                <h2 class="text-xl font-bold text-white group-hover:text-cyan-400 transition-colors">The
+                                    Catalyst</h2>
+                                <span
+                                    class="text-xs bg-zinc-700 text-zinc-100 px-2 py-1 rounded border border-zinc-500">Event:
+                                    OCT 7</span>
+                            </div>
+                            <p class="text-gray-400 text-sm leading-relaxed">
+                                <strong>The Trigger Event.</strong> Analyzing the tactical execution and strategic
+                                timing designed to derail normalization and ignite the region.
+                            </p>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- SECTION 2: Full Archive (Deep Dives) -->
+                <div>
+                    <h3 class="text-xl font-bold text-gray-400 mb-6 border-b border-gray-700 pb-2">:: Full Archive
+                        Investigations [DEEP DIVE]</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <!-- Israel Original -->
+                        <a href="./Israel.html"
+                            class="card block bg-gray-900 p-6 rounded-lg border border-gray-800 hover:border-gray-600">
+                            <h2 class="text-lg font-semibold text-white mb-2">The Israeli Dilemma</h2>
+                            <p class="text-gray-500 text-sm">An Analysis of a Co-opted Strategic Asset within the
+                                Minimisation Plan.</p>
+                        </a>
+                        <!-- China Original -->
+                        <a href="./ChinaIsraelHamas.html"
+                            class="card block bg-gray-900 p-6 rounded-lg border border-gray-800 hover:border-gray-600">
+                            <h2 class="text-lg font-semibold text-white mb-2">The Dragon's Shadow Network</h2>
+                            <p class="text-gray-500 text-sm">An Analysis of China's Role in the Indirect Geopolitical
+                                Nexus Between Israel and Hamas.</p>
+                        </a>
+                        <!-- Oct 7 Original -->
+                        <a href="./October7th.html"
+                            class="card block bg-gray-900 p-6 rounded-lg border border-gray-800 hover:border-gray-600">
+                            <h2 class="text-lg font-semibold text-white mb-2">The October 7th Catalyst</h2>
+                            <p class="text-gray-500 text-sm">A Definitive Strategic Analysis.</p>
+                        </a>
+                    </div>
+                </div>
+            </main>
     </div>
 
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    // --- 1. Element Selection ---
-    const tocContainer = document.getElementById('toc-container');
-    const contentContainer = document.querySelector('.markdown-body');
-    const tocToggleButton = document.getElementById('toc-toggle-btn');
-    const tocOverlay = document.getElementById('toc-overlay');
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // --- 1. Element Selection ---
+            const tocContainer = document.getElementById('toc-container');
+            const contentContainer = document.querySelector('.markdown-body');
+            const tocToggleButton = document.getElementById('toc-toggle-btn');
+            const tocOverlay = document.getElementById('toc-overlay');
 
-    if (!tocContainer || !contentContainer) return;
-    const searchLink = document.createElement('a');
-    searchLink.textContent = 'Search the Archives';
-    searchLink.href = '../search.html';
-    searchLink.style.display = 'block';
-    searchLink.style.marginTop = '20px';
-    searchLink.style.marginBottom = '20px';
-    searchLink.style.textAlign = 'center';
-    searchLink.className = 'text-cyan-400 font-bold hover:underline';
-    tocContainer.appendChild(searchLink);
+            if (!tocContainer || !contentContainer) return;
+            const searchLink = document.createElement('a');
+            searchLink.textContent = 'Search the Archives';
+            searchLink.href = '../search.html';
+            searchLink.style.display = 'block';
+            searchLink.style.marginTop = '20px';
+            searchLink.style.marginBottom = '20px';
+            searchLink.style.textAlign = 'center';
+            searchLink.className = 'text-cyan-400 font-bold hover:underline';
+            tocContainer.appendChild(searchLink);
 
 
-    // --- 2. Generate TOC Content ---
-    const headings = contentContainer.querySelectorAll('h2, h3');
-    if (headings.length === 0) {
-        tocContainer.style.display = 'none';
-        if (tocToggleButton) tocToggleButton.style.display = 'none';
-        return;
-    }
-
-    const tocTitle = document.createElement('h4');
-    tocTitle.textContent = 'On this page';
-    tocContainer.appendChild(tocTitle);
-    const tocList = document.createElement('ul');
-
-    headings.forEach((heading, index) => {
-        if (!heading.id) heading.id = `heading-ref-${index}`;
-        const listItem = document.createElement('li');
-        const link = document.createElement('a');
-        link.textContent = heading.textContent;
-        link.href = `#${heading.id}`;
-        link.classList.add(heading.tagName.toLowerCase() === 'h3' ? 'toc-h3' : 'toc-h2');
-        listItem.appendChild(link);
-        tocList.appendChild(listItem);
-    });
-    tocContainer.appendChild(tocList);
-    const tocLinks = tocContainer.querySelectorAll('a');
-
-    // --- 3. Mobile Drawer Functionality ---
-    const closeTocDrawer = () => document.body.classList.remove('toc-open');
-    if (tocToggleButton && tocOverlay) {
-        tocToggleButton.addEventListener('click', () => document.body.classList.toggle('toc-open'));
-        tocOverlay.addEventListener('click', closeTocDrawer);
-    }
-    tocLinks.forEach(link => link.addEventListener('click', closeTocDrawer));
-
-    // --- 4. Active Link Highlighting on Scroll ---
-    const getAbsoluteTop = (element) => {
-        let top = 0;
-        while (element) {
-            top += element.offsetTop;
-            element = element.offsetParent;
-        }
-        return top;
-    };
-    
-    const headingPositions = Array.from(headings).map(h => ({
-        id: h.id,
-        top: getAbsoluteTop(h)
-    }));
-    
-    let scrollTimeout;
-    const setActiveLink = () => {
-        clearTimeout(scrollTimeout);
-        scrollTimeout = setTimeout(() => {
-            let currentId = '';
-            const scrollPosition = window.scrollY + 120;
-            for (let i = headingPositions.length - 1; i >= 0; i--) {
-                if (scrollPosition >= headingPositions[i].top) {
-                    currentId = headingPositions[i].id;
-                    break;
-                }
+            // --- 2. Generate TOC Content ---
+            const headings = contentContainer.querySelectorAll('h2, h3');
+            if (headings.length === 0) {
+                tocContainer.style.display = 'none';
+                if (tocToggleButton) tocToggleButton.style.display = 'none';
+                return;
             }
-            tocLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === `#${currentId}`) {
-                    link.classList.add('active');
-                }
+
+            const tocTitle = document.createElement('h4');
+            tocTitle.textContent = 'On this page';
+            tocContainer.appendChild(tocTitle);
+            const tocList = document.createElement('ul');
+
+            headings.forEach((heading, index) => {
+                if (!heading.id) heading.id = `heading-ref-${index}`;
+                const listItem = document.createElement('li');
+                const link = document.createElement('a');
+                link.textContent = heading.textContent;
+                link.href = `#${heading.id}`;
+                link.classList.add(heading.tagName.toLowerCase() === 'h3' ? 'toc-h3' : 'toc-h2');
+                listItem.appendChild(link);
+                tocList.appendChild(listItem);
             });
-        }, 50);
-    };
+            tocContainer.appendChild(tocList);
+            const tocLinks = tocContainer.querySelectorAll('a');
 
-    window.addEventListener('scroll', setActiveLink);
-    setActiveLink();
-});
-</script>
-
-
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    // --- 1. Element Selection ---
-    const tocContainer = document.getElementById('toc-container');
-    const contentContainer = document.querySelector('.markdown-body');
-    const tocToggleButton = document.getElementById('toc-toggle-btn');
-    const tocOverlay = document.getElementById('toc-overlay');
-
-    if (!tocContainer || !contentContainer) return;
-
-    // --- 2. Generate TOC Content ---
-    const headings = contentContainer.querySelectorAll('h2, h3');
-    if (headings.length === 0) {
-        tocContainer.style.display = 'none';
-        if (tocToggleButton) tocToggleButton.style.display = 'none';
-        return;
-    }
-
-    const tocTitle = document.createElement('h4');
-    tocTitle.textContent = 'On this page';
-    tocContainer.appendChild(tocTitle);
-    const tocList = document.createElement('ul');
-
-    headings.forEach((heading, index) => {
-        if (!heading.id) heading.id = `heading-ref-${index}`;
-        const listItem = document.createElement('li');
-        const link = document.createElement('a');
-        link.textContent = heading.textContent;
-        link.href = `#${heading.id}`;
-        link.classList.add(heading.tagName.toLowerCase() === 'h3' ? 'toc-h3' : 'toc-h2');
-        listItem.appendChild(link);
-        tocList.appendChild(listItem);
-    });
-    tocContainer.appendChild(tocList);
-    const tocLinks = tocContainer.querySelectorAll('a');
-
-    // --- 3. Mobile Drawer Functionality ---
-    const closeTocDrawer = () => document.body.classList.remove('toc-open');
-    if (tocToggleButton && tocOverlay) {
-        tocToggleButton.addEventListener('click', () => document.body.classList.toggle('toc-open'));
-        tocOverlay.addEventListener('click', closeTocDrawer);
-    }
-    tocLinks.forEach(link => link.addEventListener('click', closeTocDrawer));
-
-    // --- 4. Active Link Highlighting on Scroll ---
-    const getAbsoluteTop = (element) => {
-        let top = 0;
-        while (element) {
-            top += element.offsetTop;
-            element = element.offsetParent;
-        }
-        return top;
-    };
-    
-    const headingPositions = Array.from(headings).map(h => ({
-        id: h.id,
-        top: getAbsoluteTop(h)
-    }));
-    
-    let scrollTimeout;
-    const setActiveLink = () => {
-        clearTimeout(scrollTimeout);
-        scrollTimeout = setTimeout(() => {
-            let currentId = '';
-            const scrollPosition = window.scrollY + 120;
-            for (let i = headingPositions.length - 1; i >= 0; i--) {
-                if (scrollPosition >= headingPositions[i].top) {
-                    currentId = headingPositions[i].id;
-                    break;
-                }
+            // --- 3. Mobile Drawer Functionality ---
+            const closeTocDrawer = () => document.body.classList.remove('toc-open');
+            if (tocToggleButton && tocOverlay) {
+                tocToggleButton.addEventListener('click', () => document.body.classList.toggle('toc-open'));
+                tocOverlay.addEventListener('click', closeTocDrawer);
             }
-            tocLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === `#${currentId}`) {
-                    link.classList.add('active');
-                }
-            });
-        }, 50);
-    };
+            tocLinks.forEach(link => link.addEventListener('click', closeTocDrawer));
 
-    window.addEventListener('scroll', setActiveLink);
-    setActiveLink();
-});
-</script>
+            // --- 4. Active Link Highlighting on Scroll ---
+            const getAbsoluteTop = (element) => {
+                let top = 0;
+                while (element) {
+                    top += element.offsetTop;
+                    element = element.offsetParent;
+                }
+                return top;
+            };
+
+            const headingPositions = Array.from(headings).map(h => ({
+                id: h.id,
+                top: getAbsoluteTop(h)
+            }));
+
+            let scrollTimeout;
+            const setActiveLink = () => {
+                clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(() => {
+                    let currentId = '';
+                    const scrollPosition = window.scrollY + 120;
+                    for (let i = headingPositions.length - 1; i >= 0; i--) {
+                        if (scrollPosition >= headingPositions[i].top) {
+                            currentId = headingPositions[i].id;
+                            break;
+                        }
+                    }
+                    tocLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${currentId}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                }, 50);
+            };
+
+            window.addEventListener('scroll', setActiveLink);
+            setActiveLink();
+        });
+    </script>
 
 </body>
+
 </html>
