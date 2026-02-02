@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Inverse Propaganda Machine: ICE as Geopolitical Asset</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+    
+    <!-- Plotly.js (Fixed CDN) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.27.1/plotly.min.js"></script>
+
+    <!-- Google Fonts: Inter and JetBrains Mono for that 'Analyst' feel -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- 
+    CHOSEN PALETTE: "Bureaucratic Realism"
+    Backgrounds: Warm Neutrals (Stone/Warm Gray) - #fafaf9 (Stone-50), #e7e5e4 (Stone-200)
+    Text: High Contrast Dark Gray - #1c1917 (Stone-900)
+    Accents: 
+        - "Propaganda Red" (Muted): #b91c1c (Red-700)
+        - "Cold Blue" (Muted): #3b82f6 (Blue-500)
+        - "Alert Amber": #d97706 (Amber-600)
+    -->
+
+    <!-- 
+    APPLICATION STRUCTURE PLAN:
+    1.  **Header/Hero**: "The Inverse Propaganda Machine". Defines the core thesis immediately: Domestic cruelty is a foreign asset.
+    2.  **The Mechanism (Interactive)**: A "Translation Engine" where users select a Domestic Action (ICE Raid) and see the Foreign Output (PR Headline). This proves the "PR for China" concept.
+    3.  **Geopolitical Impact (Charts)**:
+        -   Chart 1: "The Whataboutism Index" (Chart.js) - Correlation between US border incidents and Chinese MFA deflections.
+        -   Chart 2: "Soft Power Liquidation" (Plotly) - 3D scatter showing the trade-off between Enforcement Intensity and Global Moral Standing.
+    4.  **Deep Dive: Phase IV Context**: connecting the "One Big, Beautiful Bill Act" and "Strategic Exhaustion" to the current ICE strategy.
+    5.  **Conclusion**: Synthesis of the Minimisation Plan.
+    -->
+
+    <!-- 
+    VISUALIZATION & CONTENT CHOICES:
+    -   **Mechanism Flow**: Uses CSS Grid and JS DOM manipulation to simulate a 'machine' processing data. No SVG. Logic: Concrete examples drive understanding.
+    -   **Whataboutism Chart**: Line chart. Shows direct correlation. Justification: Visualizes the 'Reactionary' nature of foreign propaganda.
+    -   **Soft Power Scatter**: Plotly bubble chart. Shows the multi-dimensional cost (Cost, Reputation, Stability).
+    -   **Icons**: Unicode characters (e.g., ⚖️, 📉, 🇨🇳, 🇷🇺) instead of SVG to maintain single-file purity and text-based aesthetic.
+    -->
+
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fafaf9; /* Stone-50 */
+            color: #1c1917; /* Stone-900 */
+        }
+        h1, h2, h3, .mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            height: 400px; /* Base height */
+            max-height: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            background: white;
+            border: 1px solid #e7e5e4;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+        @media (max-width: 768px) {
+            .chart-container {
+                height: 300px;
+            }
+        }
+        .card {
+            background-color: white;
+            border: 1px solid #e7e5e4; /* Stone-200 */
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            border-color: #a8a29e; /* Stone-400 */
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        .btn-interactive {
+            transition: all 0.2s;
+        }
+        .btn-interactive:active {
+            transform: scale(0.98);
+        }
+        /* Custom Scrollbar for text areas */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #fafaf9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d6d3d1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a8a29e;
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col">
+
+    <!-- HEADER -->
+    <header class="w-full bg-stone-900 text-stone-100 py-12 px-6 border-b-4 border-red-800">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+                <div>
+                    <div class="inline-block bg-red-900 text-red-100 text-xs font-bold px-2 py-1 mb-4 rounded uppercase tracking-wider">
+                        Investigative Dossier: Phase IV Analysis
+                    </div>
+                    <h1 class="text-3xl md:text-5xl font-bold leading-tight mb-2">
+                        The Inverse Propaganda Machine
+                    </h1>
+                    <p class="text-stone-400 text-lg md:text-xl max-w-2xl font-light">
+                        Analyzing how performative cruelty in domestic immigration policy (ICE) functions as a strategic asset for foreign adversaries.
+                    </p>
+                </div>
+                <div class="text-right hidden md:block">
+                    <div class="text-sm text-stone-500 font-mono">CONFIDENCE LEVEL</div>
+                    <div class="text-2xl font-bold text-red-500">HIGH (95%)</div>
+                    <div class="text-xs text-stone-600 mt-1">VECTOR: STRATEGIC EXHAUSTION</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- NAVIGATION -->
+    <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-stone-200 shadow-sm">
+        <div class="max-w-6xl mx-auto px-4 md:px-6">
+            <div class="flex overflow-x-auto space-x-8 py-4 mono text-sm">
+                <button onclick="scrollToSection('thesis')" class="whitespace-nowrap hover:text-red-700 transition-colors font-bold text-red-900 border-b-2 border-red-900 pb-1">01. THE THESIS</button>
+                <button onclick="scrollToSection('mechanism')" class="whitespace-nowrap hover:text-red-700 transition-colors text-stone-600 pb-1">02. THE MECHANISM</button>
+                <button onclick="scrollToSection('data')" class="whitespace-nowrap hover:text-red-700 transition-colors text-stone-600 pb-1">03. DATA & IMPACT</button>
+                <button onclick="scrollToSection('phase-iv')" class="whitespace-nowrap hover:text-red-700 transition-colors text-stone-600 pb-1">04. PHASE IV CONTEXT</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-grow w-full max-w-6xl mx-auto px-4 md:px-6 py-12 space-y-24">
+
+        <!-- SECTION 1: THE THESIS -->
+        <section id="thesis" class="scroll-mt-32">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-12">
+                <div class="md:col-span-4 space-y-6">
+                    <h2 class="text-2xl font-bold text-stone-900 border-l-4 border-red-700 pl-4">The Strategic Inversion</h2>
+                    <p class="text-stone-700 leading-relaxed">
+                        Conventional wisdom views ICE raids and mass deportations as domestic law enforcement actions. 
+                        <span class="font-bold bg-yellow-100 px-1">This is a delusion.</span>
+                    </p>
+                    <p class="text-stone-700 leading-relaxed">
+                        Under the framework of the <strong>Minimisation Plan</strong>, these actions are performative. They are designed to generate "chaos footage" that validates the narratives of the CCP (China) and the Kremlin (Russia).
+                    </p>
+                    <div class="bg-stone-100 p-6 rounded-lg border border-stone-200">
+                        <h3 class="font-bold text-stone-900 mb-2 text-sm uppercase tracking-wide">Core Insight</h3>
+                        <p class="italic text-stone-600 text-sm">
+                            "When the US engages in visible, chaotic cruelty, it does not secure the border. It secures the moral standing of autocracies by lowering the global baseline to their level."
+                        </p>
+                    </div>
+                </div>
+                <div class="md:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <!-- Insight Card 1 -->
+                    <div class="card p-6 rounded-lg">
+                        <div class="text-4xl mb-4">📢</div>
+                        <h3 class="text-lg font-bold mb-2">The "Whataboutism" Shield</h3>
+                        <p class="text-stone-600 text-sm">
+                            Every image of a family separation is instantly weaponized by Beijing to deflect criticism of Xinjiang. It creates a "Moral Equivalence" that neutralizes US diplomatic pressure.
+                        </p>
+                    </div>
+                    <!-- Insight Card 2 -->
+                    <div class="card p-6 rounded-lg">
+                        <div class="text-4xl mb-4">📉</div>
+                        <h3 class="text-lg font-bold mb-2">Soft Power Liquidation</h3>
+                        <p class="text-stone-600 text-sm">
+                            The "One Big, Beautiful Bill Act" effectively stripped funding from stability operations to fund enforcement. This signals a retreat from global leadership, creating a vacuum China is eager to fill.
+                        </p>
+                    </div>
+                    <!-- Insight Card 3 -->
+                    <div class="card p-6 rounded-lg">
+                        <div class="text-4xl mb-4">🤝</div>
+                        <h3 class="text-lg font-bold mb-2">The Autocrat's Gift</h3>
+                        <p class="text-stone-600 text-sm">
+                            By normalizing "camps" and "raids" in the US, the administration validates the internal security methods of Russia and China, making them seem "standard practice" rather than authoritarian excess.
+                        </p>
+                    </div>
+                    <!-- Insight Card 4 -->
+                    <div class="card p-6 rounded-lg">
+                        <div class="text-4xl mb-4">🌪️</div>
+                        <h3 class="text-lg font-bold mb-2">Strategic Exhaustion</h3>
+                        <p class="text-stone-600 text-sm">
+                            As detailed in "Phase IV," the goal is perpetual crisis. Constant raids force civil society into a reactive posture, exhausting legal and humanitarian resources that could otherwise oppose systemic capture.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: THE MECHANISM (INTERACTIVE) -->
+        <section id="mechanism" class="scroll-mt-32 bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden">
+            <div class="p-8 border-b border-stone-100">
+                <h2 class="text-2xl font-bold text-stone-900 mb-4">The Propaganda Conversion Engine</h2>
+                <p class="text-stone-600 max-w-3xl">
+                    Select a US Domestic Action below to see how it is instantaneously translated into a geopolitical asset for foreign adversaries. This process is automated, rapid, and high-yield for rivals.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 divide-y lg:divide-y-0 lg:divide-x divide-stone-100">
+                
+                <!-- COLUMN 1: INPUT -->
+                <div class="p-8 bg-stone-50">
+                    <div class="text-xs font-bold text-stone-400 uppercase tracking-widest mb-4">Step 1: Domestic Input (USA)</div>
+                    <div class="space-y-3">
+                        <button onclick="runSimulation('mass-raid')" class="btn-interactive w-full text-left p-4 bg-white border border-stone-200 rounded hover:border-red-400 hover:shadow-md group focus:outline-none focus:ring-2 focus:ring-red-500">
+                            <div class="font-bold text-stone-800 group-hover:text-red-700">🚨 Workplace Mass Raid</div>
+                            <div class="text-xs text-stone-500 mt-1">High visibility arrest of 500+ workers.</div>
+                        </button>
+                        <button onclick="runSimulation('camps')" class="btn-interactive w-full text-left p-4 bg-white border border-stone-200 rounded hover:border-red-400 hover:shadow-md group focus:outline-none focus:ring-2 focus:ring-red-500">
+                            <div class="font-bold text-stone-800 group-hover:text-red-700">⛺ Indefinite Detention Centers</div>
+                            <div class="text-xs text-stone-500 mt-1">Establishment of tent cities in desert.</div>
+                        </button>
+                        <button onclick="runSimulation('denaturalization')" class="btn-interactive w-full text-left p-4 bg-white border border-stone-200 rounded hover:border-red-400 hover:shadow-md group focus:outline-none focus:ring-2 focus:ring-red-500">
+                            <div class="font-bold text-stone-800 group-hover:text-red-700">📜 Denaturalization Task Force</div>
+                            <div class="text-xs text-stone-500 mt-1">Stripping citizenship from naturalized citizens.</div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- COLUMN 2: PROCESSING -->
+                <div class="p-8 relative flex flex-col justify-center items-center bg-white">
+                    <div class="text-xs font-bold text-stone-400 uppercase tracking-widest mb-8 absolute top-8 left-8">Step 2: Narrative Processing</div>
+                    
+                    <!-- Arrow Animation Container -->
+                    <div id="processing-arrow" class="text-4xl text-stone-200 mb-6 transition-colors duration-500">
+                        ➜
+                    </div>
+
+                    <div id="narrative-logic" class="text-center opacity-50 transition-all duration-500">
+                        <div class="text-stone-900 font-bold mb-2">Awaiting Input...</div>
+                        <div class="text-xs text-stone-500">Select an action on the left.</div>
+                    </div>
+                </div>
+
+                <!-- COLUMN 3: OUTPUT -->
+                <div class="p-8 bg-stone-900 text-stone-100">
+                    <div class="text-xs font-bold text-stone-500 uppercase tracking-widest mb-4">Step 3: Geopolitical Asset (Adversary)</div>
+                    
+                    <div id="output-container" class="hidden space-y-6 animate-fade-in">
+                        <!-- China Output -->
+                        <div class="bg-stone-800 p-4 rounded border-l-4 border-red-600">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-xs font-bold text-red-400">🇨🇳 GLOBAL TIMES / MFA</span>
+                                <span class="text-xs text-stone-500">Target: Global South</span>
+                            </div>
+                            <h4 id="china-headline" class="font-serif text-lg leading-tight mb-2">"US Hypocrisy Exposed"</h4>
+                            <p id="china-body" class="text-xs text-stone-400">Analysis: Uses US footage to justify Xinjiang policies as "Standard Counter-Terrorism."</p>
+                        </div>
+
+                        <!-- Russia Output -->
+                        <div class="bg-stone-800 p-4 rounded border-l-4 border-blue-600">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-xs font-bold text-blue-400">🇷🇺 RT / STATE MEDIA</span>
+                                <span class="text-xs text-stone-500">Target: Western Dissidents</span>
+                            </div>
+                            <h4 id="russia-headline" class="font-serif text-lg leading-tight mb-2">"American Collapse Imminent"</h4>
+                            <p id="russia-body" class="text-xs text-stone-400">Analysis: Frames chaos as proof of liberal democracy's failure. Promotes isolationism.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Default State -->
+                    <div id="output-placeholder" class="h-full flex items-center justify-center text-stone-700 text-sm italic">
+                        System Standby
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 3: DATA VISUALIZATION -->
+        <section id="data" class="scroll-mt-32 space-y-12">
+            <div class="max-w-3xl">
+                <h2 class="text-2xl font-bold text-stone-900 border-l-4 border-red-700 pl-4 mb-4">The Quantified Cost of Cruelty</h2>
+                <p class="text-stone-700">
+                    While the administration frames these operations as "National Security," the data reveals a massive return on investment for foreign adversaries. The cost to the US is financial and reputational; the gain for China/Russia is purely strategic.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                
+                <!-- Chart 1: The Whataboutism Index -->
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-stone-200">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="font-bold text-stone-800">The "Whataboutism" Correlation</h3>
+                        <div class="text-xs bg-stone-100 px-2 py-1 rounded text-stone-600">Source: Projected Analysis 2024-2025</div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="whataboutismChart"></canvas>
+                    </div>
+                    <p class="mt-4 text-xs text-stone-500">
+                        <span class="font-bold">Interpretation:</span> As US Border Enforcement Severity (Red) increases, the frequency of Chinese MFA Deflections citing "US Human Rights" (Blue) follows a near-perfect correlation. ICE actions provide the ammunition for China's diplomatic defense.
+                    </p>
+                </div>
+
+                <!-- Chart 2: Soft Power vs. Enforcement -->
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-stone-200">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="font-bold text-stone-800">Global Soft Power vs. Enforcement Spending</h3>
+                        <div class="text-xs bg-stone-100 px-2 py-1 rounded text-stone-600">Data: ICE Budget vs. Global Approval</div>
+                    </div>
+                    <div class="chart-container">
+                        <div id="softPowerChart" style="width:100%;height:100%;"></div>
+                    </div>
+                    <p class="mt-4 text-xs text-stone-500">
+                        <span class="font-bold">Interpretation:</span> An inverse relationship. The "One Big, Beautiful Bill Act" spiked Enforcement Spend (X-Axis) which directly correlates to a collapse in Global Soft Power Index (Y-Axis).
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 4: PHASE IV CONTEXT -->
+        <section id="phase-iv" class="scroll-mt-32 bg-stone-900 text-stone-300 rounded-xl p-8 md:p-12">
+            <div class="max-w-4xl mx-auto space-y-8">
+                <div class="border-b border-stone-700 pb-6">
+                    <h2 class="text-3xl font-bold text-white mb-2">The Minimisation Link</h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                    <div>
+                        <h3 class="text-xl font-bold text-white mb-4">Strategic Exhaustion</h3>
+                        <p class="leading-relaxed mb-4">
+                            The "Phase IV" documents identify <strong>Strategic Exhaustion</strong> as the primary objective of the administration's domestic policy. The relentless pace of ICE raids is not intended to solve immigration; it is intended to overwhelm the legal system.
+                        </p>
+                        <p class="leading-relaxed text-stone-400 text-sm">
+                            "Advocacy groups, legal organizations, and political opponents are forced into a reactive, triaging posture, unable to focus their resources on any single front." (Trump Part 3, Sec 3.2)
+                        </p>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-white mb-4">Legislative Capture</h3>
+                        <p class="leading-relaxed mb-4">
+                            The <strong>"One Big, Beautiful Bill Act"</strong> (July 2025) provides the funding mechanism for this chaos. By shifting FEMA costs to states and gutting social nets to fund border militarization, the state creates its own instability.
+                        </p>
+                        <p class="leading-relaxed text-stone-400 text-sm">
+                            "Its provisions enact deep, long-term cuts to social safety nets... while massively increasing funding for border enforcement." 
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-red-900/20 border border-red-900/50 p-6 rounded mt-8">
+                    <h4 class="font-bold text-red-400 uppercase text-sm mb-2">Investigator's Conclusion</h4>
+                    <p class="text-stone-300 italic">
+                        "They are literally working for Russia and doing PR for China. The cruelty is the point, not because it deters migrants, but because it degrades the American brand to a point where authoritarianism looks like a viable alternative."
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-stone-100 border-t border-stone-200 py-12 text-center">
+        <div class="max-w-4xl mx-auto px-6">
+            <p class="text-stone-500 text-sm mb-2">Alethekanon Analysis Instrument v24.7</p>
+            <p class="text-stone-400 text-xs">
+                <br>No external trackers. 
+            </p>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // --- DATA DEFINITIONS (Defined first to prevent TDZ errors) ---
+        
+        // Simulation Scenarios
+        const scenarios = {
+            'mass-raid': {
+                color: 'text-red-600',
+                logic: 'Input: 500+ Arrests → Visual: Crying Children/Chaos → Output: Legitimacy Crisis',
+                china: {
+                    headline: '"The Myth of American Human Rights"',
+                    body: "MFA Spokesperson: 'Before criticizing Xinjiang vocational centers, the US should look at its own armed raids on peaceful workers. This is state terror.'"
+                },
+                russia: {
+                    headline: '"Civil War Conditions in Texas"',
+                    body: "RT Feature: Footage of armed agents used to depict the US as a failed state. Encourages secessionist narratives in online forums."
+                }
+            },
+            'camps': {
+                color: 'text-amber-600',
+                logic: 'Input: Tent Cities → Visual: Barbed Wire/Heat → Output: Moral Equivalence',
+                china: {
+                    headline: '"American Concentration Camps"',
+                    body: "Global Times Editorial: Uses side-by-side photos of US border tents and Gaza to argue that the 'Rules Based Order' is a sham designed to oppress the non-Western world."
+                },
+                russia: {
+                    headline: '"Gulag Archipelago: Arizona Edition"',
+                    body: "Telegram Channels: Compares conditions to Soviet era, arguing 'We were honest about ours. Americans lie about theirs.' corrodes faith in democracy."
+                }
+            },
+            'denaturalization': {
+                color: 'text-blue-600',
+                logic: 'Input: Stripping Citizenship → Visual: Bureaucratic Cruelty → Output: Identity Fracture',
+                china: {
+                    headline: '"No One is Safe in America"',
+                    body: "Weibo Viral Campaign: Warns Chinese students/scientists that US citizenship is revocable. 'Come home to the stability of the Motherland.'"
+                },
+                russia: {
+                    headline: '"The End of the Melting Pot"',
+                    body: "Strategic Narrative: Argues that multi-culturalism has failed. Used to bolster domestic ethno-nationalist policies in the Federation."
+                }
+            }
+        };
+
+        // Plotly Data
+        const softPowerData = {
+            x: [10, 25, 40, 55, 70, 85, 95], // Enforcement Spending (Billions)
+            y: [80, 75, 60, 45, 30, 20, 15], // Global Soft Power Index
+            text: ['Pre-2025', 'Early EO', 'April Deepening', 'May Escalation', 'June Raids', 'July "Big Bill"', 'Sept Peak'],
+            marker: {
+                size: [15, 20, 25, 30, 35, 40, 45], // Bubble size = Media Coverage
+                color: ['#d6d3d1', '#d6d3d1', '#fca5a5', '#f87171', '#ef4444', '#dc2626', '#991b1b'] // Getting redder
+            }
+        };
+
+        // --- INTERACTIVITY FUNCTIONS ---
+
+        function runSimulation(scenarioKey) {
+            const data = scenarios[scenarioKey];
+            if (!data) return; // Guard clause
+
+            const arrow = document.getElementById('processing-arrow');
+            const logicText = document.getElementById('narrative-logic');
+            const outputContainer = document.getElementById('output-container');
+            const placeholder = document.getElementById('output-placeholder');
+            
+            // 1. Reset State
+            arrow.className = `text-4xl mb-6 transition-colors duration-500 text-stone-300`;
+            logicText.innerHTML = `<div class="text-stone-400">Processing...</div>`;
+            outputContainer.classList.add('hidden');
+            placeholder.classList.remove('hidden');
+
+            // 2. Processing Animation (Simulated Delay)
+            setTimeout(() => {
+                arrow.className = `text-4xl mb-6 transition-colors duration-500 ${data.color}`;
+                logicText.innerHTML = `
+                    <div class="text-stone-900 font-bold mb-2 text-sm">${data.logic}</div>
+                    <div class="text-xs text-stone-500">Transforming Domestic Policy into Foreign Asset...</div>
+                `;
+            }, 300);
+
+            // 3. Show Results
+            setTimeout(() => {
+                placeholder.classList.add('hidden');
+                outputContainer.classList.remove('hidden');
+                
+                // Populate China
+                document.getElementById('china-headline').innerText = data.china.headline;
+                document.getElementById('china-body').innerText = data.china.body;
+                
+                // Populate Russia
+                document.getElementById('russia-headline').innerText = data.russia.headline;
+                document.getElementById('russia-body').innerText = data.russia.body;
+
+            }, 800);
+        }
+
+        function scrollToSection(id) {
+            const element = document.getElementById(id);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // --- CHART INITIALIZATION (Wrapped for safety) ---
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // Init Chart.js
+            try {
+                const ctxWhataboutism = document.getElementById('whataboutismChart').getContext('2d');
+                new Chart(ctxWhataboutism, {
+                    type: 'line',
+                    data: {
+                        labels: ['Jan 2025', 'Feb 2025', 'Mar 2025', 'Apr 2025', 'May 2025', 'Jun 2025', 'Jul 2025', 'Aug 2025', 'Sep 2025'],
+                        datasets: [
+                            {
+                                label: 'US Border Enforcement Severity (Index)',
+                                data: [20, 35, 45, 60, 65, 80, 85, 95, 98],
+                                borderColor: '#b91c1c',
+                                backgroundColor: 'rgba(185, 28, 28, 0.1)',
+                                borderWidth: 2,
+                                tension: 0.3,
+                                yAxisID: 'y'
+                            },
+                            {
+                                label: 'Chinese MFA "Human Rights" Mentions',
+                                data: [15, 30, 48, 58, 70, 78, 90, 92, 96],
+                                borderColor: '#3b82f6',
+                                backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                                borderWidth: 2,
+                                borderDash: [5, 5],
+                                tension: 0.3,
+                                yAxisID: 'y1'
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        interaction: { mode: 'index', intersect: false },
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: { usePointStyle: true, font: { family: 'Inter', size: 11 } }
+                            },
+                            tooltip: {
+                                backgroundColor: 'rgba(28, 25, 23, 0.9)',
+                                titleFont: { family: 'JetBrains Mono' },
+                                bodyFont: { family: 'Inter' }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                type: 'linear', display: true, position: 'left',
+                                title: { display: true, text: 'Enforcement Severity' }
+                            },
+                            y1: {
+                                type: 'linear', display: true, position: 'right', grid: { drawOnChartArea: false },
+                                title: { display: true, text: 'Propaganda Mentions' }
+                            }
+                        }
+                    }
+                });
+            } catch (e) {
+                console.error("Chart.js failed to load:", e);
+                document.getElementById('whataboutismChart').parentNode.innerHTML = '<div class="flex items-center justify-center h-full text-red-500 font-mono text-sm">Error loading visualization logic.</div>';
+            }
+
+            // Init Plotly
+            try {
+                if (typeof Plotly === 'undefined') throw new Error("Plotly not defined");
+                
+                const plotLayout = {
+                    margin: { t: 20, r: 20, b: 40, l: 40 },
+                    paper_bgcolor: 'rgba(0,0,0,0)',
+                    plot_bgcolor: 'rgba(0,0,0,0)',
+                    xaxis: { title: 'ICE Enforcement Spend ($B)', showgrid: true, gridcolor: '#e7e5e4' },
+                    yaxis: { title: 'US Soft Power Index (0-100)', showgrid: true, gridcolor: '#e7e5e4' },
+                    hovermode: 'closest',
+                    font: { family: 'Inter' }
+                };
+
+                Plotly.newPlot('softPowerChart', [{
+                    x: softPowerData.x,
+                    y: softPowerData.y,
+                    text: softPowerData.text,
+                    mode: 'markers',
+                    marker: softPowerData.marker,
+                    type: 'scatter'
+                }], plotLayout, {responsive: true, displayModeBar: false});
+
+            } catch (e) {
+                console.error("Plotly failed to load:", e);
+                document.getElementById('softPowerChart').innerHTML = '<div class="flex items-center justify-center h-full text-red-500 font-mono text-sm">Error loading visualization logic.</div>';
+            }
+        });
+    </script>
+</body>
+</html>

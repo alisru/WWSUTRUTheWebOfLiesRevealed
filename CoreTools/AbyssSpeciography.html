@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The Speciography of the Abyss | Vector Field Theory</title>
+    <meta property="og:title" content="The Speciography of the Abyss: A Taxonomy of Nets">
+    <meta property="og:locale" content="en_US">
+    <meta name="description" content="A Taxonomy of Meaning and Capture Methods within the Psochic Hegemony.">
+    <meta property="og:description" content="A Taxonomy of Meaning and Capture Methods within the Psochic Hegemony.">
+    <meta property="og:site_name" content="Vector Field Theory">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary">
+    <meta property="twitter:title" content="The Speciography of the Abyss">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap"
+        rel="stylesheet">
+
+    <!-- Custom Abyss Styles -->
+    <style>
+        :root {
+            --bg-deep: #050a10;
+            --bg-panel: #0f1620;
+            --text-main: #e0e6ed;
+            --text-muted: #94a3b8;
+            --accent-cyan: #00f2ff;
+            --accent-gold: #ffd700;
+            --accent-danger: #ff4757;
+            --border-glow: rgba(0, 242, 255, 0.2);
+            --font-display: 'Cinzel', serif;
+            --font-serif: 'Playfair Display', serif;
+            --font-sans: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            font-family: var(--font-sans);
+            line-height: 1.7;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            background-image:
+                radial-gradient(circle at 15% 50%, rgba(0, 242, 255, 0.03) 0%, transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(255, 215, 0, 0.03) 0%, transparent 25%);
+        }
+
+        /* Navigation */
+        .nav-back {
+            display: inline-block;
+            margin: 20px;
+            padding: 8px 16px;
+            color: var(--accent-cyan);
+            text-decoration: none;
+            font-size: 0.9em;
+            border: 1px solid rgba(0, 242, 255, 0.3);
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-back:hover {
+            background: rgba(0, 242, 255, 0.1);
+            box-shadow: 0 0 15px rgba(0, 242, 255, 0.2);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 80px;
+            margin-top: 60px;
+            position: relative;
+        }
+
+        header h1 {
+            font-family: var(--font-display);
+            font-size: 3.5rem;
+            margin: 0;
+            background: linear-gradient(180deg, #fff 0%, #94a3b8 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(0, 242, 255, 0.1);
+        }
+
+        header .subtitle {
+            font-family: var(--font-serif);
+            font-style: italic;
+            color: var(--accent-cyan);
+            font-size: 1.5rem;
+            margin-top: 10px;
+            opacity: 0.8;
+            letter-spacing: 2px;
+        }
+
+        /* Sections */
+        section {
+            margin-bottom: 100px;
+        }
+
+        h2 {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            border-bottom: 1px solid var(--border-glow);
+            padding-bottom: 15px;
+            margin-bottom: 40px;
+            color: var(--text-main);
+        }
+
+        p {
+            margin-bottom: 24px;
+            font-size: 1.1rem;
+            color: var(--text-muted);
+        }
+
+        strong {
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        /* Card Grids */
+        .grid-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .card {
+            background: var(--bg-panel);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 8px;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--border-glow);
+            box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5);
+        }
+
+        .card h3 {
+            font-family: var(--font-serif);
+            color: var(--accent-cyan);
+            margin-top: 0;
+            font-size: 1.4rem;
+        }
+
+        .card .role {
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        /* 7x7 Matrix Styles */
+        .matrix-section {
+            padding: 40px 0;
+        }
+
+        .plane-block {
+            margin-bottom: 60px;
+            background: rgba(15, 22, 32, 0.5);
+            border-left: 3px solid;
+            padding: 30px;
+            border-radius: 0 12px 12px 0;
+        }
+
+        /* Plane Colors */
+        .plane-q1 {
+            border-color: var(--accent-gold);
+        }
+
+        .plane-q2 {
+            border-color: #8D6E63;
+        }
+
+        /* Earth */
+        .plane-q3 {
+            border-color: #AB47BC;
+        }
+
+        /* Void/Purple */
+        .plane-q4 {
+            border-color: #FFA726;
+        }
+
+        /* Meaning/Orange */
+        .plane-q5 {
+            border-color: #29B6F6;
+        }
+
+        /* Logic/Blue */
+        .plane-q6 {
+            border-color: #78909C;
+        }
+
+        /* Iron/Grey */
+        .plane-q7 {
+            border-color: var(--accent-danger);
+        }
+
+        /* Passion/Red */
+
+        .plane-header {
+            display: flex;
+            align-items: baseline;
+            gap: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .plane-code {
+            font-family: monospace;
+            font-weight: bold;
+            font-size: 1.2rem;
+            opacity: 0.7;
+        }
+
+        .plane-title {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            margin: 0;
+        }
+
+        .plane-meta {
+            width: 100%;
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 4px 10px;
+            border-radius: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .filament-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+        }
+
+        .filament {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 2px solid rgba(255, 255, 255, 0.1);
+            transition: background 0.2s;
+            position: relative;
+        }
+
+        .filament:hover {
+            background: rgba(255, 255, 255, 0.03);
+            border-left-color: var(--text-main);
+        }
+
+        .filament-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+        }
+
+        .filament-name {
+            font-weight: bold;
+            color: var(--text-main);
+            font-family: var(--font-serif);
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .filament-catch {
+            font-size: 0.95rem;
+            color: var(--accent-cyan);
+        }
+
+        .filament-material {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-style: italic;
+            display: block;
+            margin-top: 6px;
+        }
+
+        /* Dropdown Styles */
+        details {
+            margin-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 10px;
+        }
+
+        summary {
+            cursor: pointer;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            outline: none;
+            list-style: none;
+            /* Hide default triangle */
+        }
+
+        summary::-webkit-details-marker {
+            display: none;
+        }
+
+        summary::after {
+            content: "+";
+            float: right;
+            font-weight: bold;
+        }
+
+        details[open] summary::after {
+            content: "-";
+        }
+
+        summary:hover {
+            color: var(--accent-cyan);
+        }
+
+        .life-paths {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: var(--text-main);
+            line-height: 1.5;
+        }
+
+        .life-path-item {
+            display: inline-block;
+            background: rgba(0, 242, 255, 0.05);
+            padding: 2px 8px;
+            border-radius: 3px;
+            margin: 2px 0;
+            border: 1px solid rgba(0, 242, 255, 0.1);
+        }
+
+        /* Apex Section */
+        .apex-section {
+            background: linear-gradient(135deg, rgba(0, 242, 255, 0.05), rgba(0, 0, 0, 0));
+            padding: 60px;
+            border-radius: 12px;
+            border: 1px solid var(--border-glow);
+            text-align: center;
+        }
+
+        .apex-section h2 {
+            border-bottom: none;
+            color: var(--accent-cyan);
+            font-size: 2.5rem;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2.5rem;
+            }
+
+            .grid-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .filament-list {
+                grid-template-columns: 1fr;
+            }
+
+            .plane-header {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+
+    <!-- Google Analytics -->
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-4QHZV5Y81G"></script>
+    <script> window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'G-4QHZV5Y81G');</script>
+    <!-- JSON-LD -->
+    <script
+        type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","description":"A Taxonomy of Meaning and Capture Methods within the Psochic Hegemony.","headline":"The Speciography of the Abyss"}</script>
+</head>
+
+<body>
+
+    <a href="./index.html" class="nav-back">← Back To Navigation</a>
+
+    <div class="container">
+
+        <header>
+            <h1>The Speciography of the Abyss</h1>
+            <div class="subtitle">A Taxonomy of Nets</div>
+        </header>
+
+        <!-- SECTION 1: INTRODUCTION -->
+        <section>
+            <p>Mark highlights the universal human condition by placing the disciples in the boat. We are all on the
+                <strong>Ship of Theseus</strong> (The Collective Body of Humanity), drifting on the Sea of Chaos.
+            </p>
+            <p>Every human is a Fisherman. The act of living is the act of casting a <strong>"Net of
+                    Perception"</strong> into the Chaos to extract Order. The catch is defined by the weave of the net.
+            </p>
+        </section>
+
+        <!-- SECTION 2: THE 7x7 MATRIX -->
+        <section class="matrix-section">
+            <h2 style="text-align: center; border-bottom: none; margin-bottom: 60px;">The Grand Taxonomy of
+                Nets<br><span
+                    style="font-size: 1rem; color: var(--text-muted); font-family: var(--font-sans); letter-spacing: 2px; text-transform: uppercase;">The
+                    Q.q.c.i Matrix of Capture</span></h2>
+
+            <!-- Q1 -->
+            <div class="plane-block plane-q1">
+                <div class="plane-header">
+                    <span class="plane-code" style="color: var(--accent-gold);">Q1</span>
+                    <h3 class="plane-title">The Imperial Weave</h3>
+                    <div class="plane-meta">
+                        <span class="tag">WHO?</span>
+                        <span class="tag">Context: Will</span>
+                        <span class="tag">Material: Authority</span>
+                        <span style="flex-basis: 100%; margin-top: 5px;">Captures Submission by defining the
+                            Architecture of Power. The Net of the Crown.</span>
+                    </div>
+                </div>
+                <div class="filament-list">
+                    <div class="filament">
+                        <div class="filament-header"><span>q1: Agency</span> <span>Catch: Allegiance</span></div>
+                        <span class="filament-name">The Net of Sovereignty</span>
+                        <span class="filament-material">Authority woven with Identity</span>
+                        <details>
+                            <summary>Life Paths</summary>
+                            <div class="life-paths">
+                                <span class="life-path-item">Head of State</span>
+                                <span class="life-path-item">CEO</span>
+                                <span class="life-path-item">Cult Leader</span>
+                                <span class="life-path-item">"Personal Brand" Influencer</span>
+                            </div>
+                        </details>
+                    </div>
+                    <div class="filament">
+                        <div class="filament-header"><span>q2: Context</span> <span>Catch: Dominion</span></div>
+                        <span class="filament-name">The Net of Territory</span>
+                        <span class="filament-material">Authority woven with Borders</span>
+                        <details>
+                            <summary>Life Paths</summary>
+                            <div class="life-paths">
+                                <span class="life-path-item">Real Estate Tycoon</span>
+                                <span class="life-path-item">Military General</span>
+                                <span class="life-path-item">Urban Planner</span>
+                            </div>
+                        </details>
+                    </div>
+                    <div class="filament">
+                        <div class="filament-header"><span>q3: Integrity</span> <span>Catch: Order</span></div>
+                        <span class="filament-name">The Net of Legislation</span>
+                        <span class="filament-material">Authority woven with Law</span>
+                        <details>
+                            <summary>Life Paths</summary>
+                            <div class="life-paths">
+                                <span class="life-path-item">Legislator</span>
+                                <span class="life-path-item">Judge</span>
+                                <span class="life-path-item">Policy Writer</span>
+                                <span class="life-path-item">Compliance Officer</span>
+                            </div>
+                        </details>
+                    </div>
+                    <div class="filament">
+                        <div class="filament-header"><span>q4: Motive</span> <span>Catch: Zealotry</span></div>
+                        <span class="filament-name">The Net of Crusade</span>
+                        <span class="filament-material">Authority woven with Purpose</span>
+                        <details>
+                            <summary>Life Paths</summary>
+                            <div class="life-paths">
+                                <span class="life-path-item">Activist Leader</span>
+                                <span class="life-path-item">Revolutionary</span>
+                                <span class="life-path-item">Missionary</span>
+                            </div>
+                        </details>
+                    </div>
+                    <div class="filament">
+                        <div class="filament-header"><span>q5: Mechanism</span> <span>Catch: Control</span></div>
+                        <span class="filament-name">The Net of Bureaucracy</span>
+                        <span class="filament-material">Authority woven with Procedure</span>
+                        <details>
+                            <summary>Life Paths</summary>
+                            <div class="life-paths">
+                                <span class="life-path-item">Civil Servant</span>
+                                <span class="life-path-item">HR Director</span>
+                                <span class="life-path-item">Middle Manager</span>
+                            </div>
+                        </details>
+                    </div>
+                    <div class="filament">
+                        <div class="filament-header"><span>q6: History</span> <span>Catch: Succession</span></div>
+                        <span class="filament-name">The Net of Dynasty</span>
+                        <span class="filament-material">Authority woven with Lineage</span>
+                        <details>
+                            <summary>Life Paths</summary>
+                            <div class="life-paths">
+                                <span class="life-path-item">Family Office Manager</span>
+                                <span class="life-path-item">Royal Successor</span>
+                                <span class="life-path-item">Genealogist</span>
+                            </div>
+                        </details>
+                    </div>
+                    <div class="filament">
+                        <div class="filament-header"><span>q7: Effect</span> <span>Catch: Justice</span></div>
+                        <span class="filament-name">The Net of Judgment</span>
+                        <span class="filament-material">Authority woven with Consequence</span>
+                        <details>
+                            <summary>Life Paths</summary>
+                            <div class="life-paths">
+                                <span class="life-path-item">Prosecutor</span>
+                                <span class="life-path-item">Warden</span>
+                                <span class="life-path-item">Arbitrator</span>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q2 -->
+            <div class="plane-block plane-q2">
+                <div class="plane-header">
+                    <span class="plane-code" style="color: #8D6E63;">Q2</span>
+                    <h3 class="plane-title">The Industrial Dragnet</h3>
+                    <div class="plane-meta">
+                        <span class="tag">WHERE?</span>
+                        <span class="tag">Context: Matter</span>
+                        <span class="tag">Material: Resource</span>
+                        <span style="flex-basis: 100%; margin-top: 5px;">Captures Sustenance by defining Logistics. The
+                            Net of the Engine.</span>
+                    </div>
+                </div>
+                <div class="filament-list">
+                    <div class="filament">
+                        <div class="filament-header"><span>q1: Agency</span> <span>Catch: Assets</span></div>
+                        <span class="filament-name">The Net of Ownership</span>
+                        <span class="filament-material">Resource woven with Self</span>
+                        <details>
+                            <summary>Life Paths</summary>
+                            <div class="life-paths">
+                                <span class="life-path-item">Property Investor</span>
+                                <span class="life-path-item">Art Collector</span>
+                                <span class="life-path-item">Patent Holder</span>
+                            </div>
+                        </details>
+                    </div>
+                    <div class="filament">
+                        <div class="filament-header"><span>q2: Localization</span> <span>Catch: Supply Chain</span>
+                        </div>
+                        <span class="filament-name">The Net of Logistics</span>
+                        <span class="filament-material">Resource woven with Distance</span>
+                        <details>
+                            <summary>Life Paths</summary>
+                            <div class="life-paths">
+                                <span class="life-path-item">Supply Chain Manager</span>
+                                <span class="life-path-item">Shipping Magnate</span>
+                                <span class="life-path-item">Trucker</span>
+                            </div>
+                        </details>
+                    </div>
+                    <div class="filament">
+                        <div class="filament-header"><span>q3: Definitions</span> <span>Catch: Inventory</span></div>
+                        <span class="filament-name">The Net of Inventory</span>
+                        <span class="filament-material">Resource woven with Specs</span>
+                        <details>
+                            <summary>Life Paths</summary>
+                            <div class="life-paths">
+                                <span class="life-path-item">Retail Manager</span>
+                                <span class="life-path-item">Warehouse Operator</span>
+                                <span class="life-path-item">Stockist</span>
+                            </div>
+                        </details>
+                    </div>
+                    <div class="filament">
+                        <div class="filament-header"><span>q4: Motive</span> <span>Catch: Survival</span></div>
+                        <span class="filament-name">The Net of Hunger</span>
+                        <span class="filament-material">Resource woven with Need</span>
+                        <details>
+                            <summary>Life Paths</summary>
+                            <div class="life-paths">
+                                <span class="life-path-item">Farmer</span>
+                                <span class="life-path-item">Chef</span>
+                                <span class="life-path-item">Grocer</span>
+                            </div>
+                        </details>
+                    </div>
+                    <div class="filament">
+                        <div class="filament-header"><span>q5: Mechanism</span> <span>Catch: Product</span></div>
+                        <span class="filament-name">The Net of Production</span>
+                        <span class="filament-material">Resource woven with Utility</span>
+                        <details>
+                            <summary>Life Paths</summary>
+                            <div class="life-paths">
+                                <span class="life-path-item">Factory Owner</span>
+                                <span class="life-path-item">Industrial Engineer</span>
+                                <span class="life-path-item">Craftsman</span>
+                            </div>
+                        </details>
+                    </div>
+                    <div class="filament">
+                        <div class="filament-header"><span>q6: History</span> <span>Catch: Fuel</span></div>
+                        <span class="filament-name">The Net of Geology</span>
+                        <span class="filament-material">Resource woven with Time</span>
+                        <details>
+                            <summary>Life Paths</summary>
+                            <div class="life-paths">
+                                <span class="life-path-item">Oil Rig Worker</span>
+                                <span class="life-path-item">Miner</span>
+                                <span class="life-path-item">Geologist</span>
+                            </div>
+                        </details>
+                    </div>
+                    <div class="filament">
+                        <div class="filament-header"><span>q7: Effect</span> <span>Catch: Wealth</span></div>
+                        <span class="filament-name">The Net of Wealth</span>
+                        <span class="filament-material">Resource woven with Accummulation</span>
+                        <details>
+                            <summary>Life Paths</summary>
+                            <div class="life-paths">
+                                <span class="life-path-item">Investment Banker</span>
+                                <span class="life-path-item">Hedge Fund Manager</span>
+                                <span class="life-path-item">Treasurer</span>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q3 -->
+            <div class="plane-block plane-q3">
+                <div class="plane-header">
+                    <span class="plane-code" style="color: #AB47BC;">Q3</span>
+                    <h3 class="plane-title">The Casting Net of Possibility</h3>
+                    <div class="plane-meta">
+                        <span class="tag">MIGHT?</span>
+                        <span class="tag">Context: Faith</span>
+                        <span class="tag">Material: Risk</span>
+                        <span style="flex-basis: 100%; margin-top: 5px;">Captures the Unknown by defining Vectors of
+                            Probability. The Net of the Void.</span>
+                    </div>
+                </div>
+                <div class="filament-list">
+                    <div class="filament">
+                        <div class="filament-header"><span>q1: Agency</span> <span>Catch: Destiny</span></div>
+                        <span class="filament-name">The Net of The Chosen</span>
+                        <span class="filament-material">Faith woven with Identity</span>
+                        <details>
+                            <summary>Life Paths</summary>
+                            <div class="life-paths">
+                                <span class="life-path-item">Messiah Claimant</span>
+                                <span class="life-path-item">Reality TV Star</span>
+                                <span class="life-path-item">"Main Character"</span>
+                            </div>
+                        </details>
+                    </div>
+                    <div class="filament">
+                        <div class="filament-header"><span>q2: Localization</span> <span>Catch: Windfall</span></div>
+                        <span class="filament-name">The Net of Opportunity</span>
+                        <span class="filament-material">Faith woven with Timing</span>
+                        <details>
+                            <summary>Life Paths</summary>
+                            <div class="life-paths">
+                                <span class="life-path-item">Day Trader</span>
+                                <span class="life-path-item">Arbitrageur</span>
+                                <span class="life-path-item">Gold Rush Prospector</span>
+                            </div>
+                        </details>
+                    </div>
+                    <div class="filament">
+                        <div class="filament-header"><span>q3: Definitions</span> <span>Catch: Prophecy</span></div>
+                        <span class="filament-name">The Net of Vision</span>
+                        <span class="filament-material">Faith woven with Future</span>
+                        <details>
+                            <summary>Life Paths</summary>
+                            <div class="life-paths">
+                                <span class="life-path-item">Sci-Fi Author</span>
+                                <span class="life-path-item">Tech Visionary</span>
+                                <span class="life-path-item">Macro-Economist</span>
+                            </div>
+                        </details>
+                    </div>
+                    <div class="filament">
+                        <div class="filament-header"><span>q4: Motive</span> <span>Catch: Miracles</span></div>
+                        <span class="filament-name">The Net of Aspiration</span>
+                        <span class="filament-material">Faith woven with Desire</span>
+                        <details>
+                            <summary>Life Paths</summary>
+                            <div class="life-paths">
+                                <span class="life-path-item">Founder (Pre-Revenue)</span>
+                                <span class="life-path-item">Inventor</span>
+                                <span class="life-path-item">Space Explorer</span>
+                            </div>
+                        </details>
+                    </div>
+                    <div class="filament">
+                        <div class="filament-header"><span>q5: Mechanism</span> <span>Catch: Jackpot</span></div>
+                        <span class="filament-name">The Net of The Wager</span>
+                        <span class="filament-material">Faith woven with Calculation</span>
+                        <details>
+                            <summary>Life Paths</summary>
+                            <div class="life-paths">
+                                <span class="life-path-item">Professional Poker Player</span>
+                                <span class="life-path-item">Casino Whale</span>
+                                <span class="life-path-item">Risk Analyst</span>
+                            </div>
+                        </details>
+                    </div>
+                    <div class="filament">
+                        <div class="filament-header"><span>q6: History</span> <span>Catch: Mythos</span></div>
+                        <span class="filament-name">The Net of Genesis</span>
+                        <span class="filament-material">Faith woven with Origin</span>
+                        <details>
+                            <summary>Life Paths</summary>
+                            <div class="life-paths">
+                                <span class="life-path-item">Startup Founder</span>
+                                <span class="life-path-item">Nation Builder</span>
+                                <span class="life-path-item">Cosmologist</span>
+                            </div>
+                        </details>
+                    </div>
+                    <div class="filament">
+                        <div class="filament-header"><span>q7: Effect</span> <span>Catch: Epiphany</span></div>
+                        <span class="filament-name">The Net of Revelation</span>
+                        <span class="filament-material">Faith woven with Finality</span>
+                        <details>
+                            <summary>Life Paths</summary>
+                            <div class="life-paths">
+                                <span class="life-path-item">Guru</span>
+                                <span class="life-path-item">Spiritual Medium</span>
+                                <span class="life-path-item">Investigative Journalist</span>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q4 -->
+            <div class="plane-block plane-q4">
+                <div class="plane-header">
+                    <span class="plane-code" style="color: #FFA726;">Q4</span>
+                    <h3 class="plane-title">The Golden Mesh of Resonance</h3>
+                    <div class="plane-meta">
+                        <span class="tag">SHOULD?</span>
+                        <span class="tag">Context: Meaning</span>
+                        <span class="tag">Material: Resonance</span>
+                        <span style="flex-basis: 100%; margin-top: 5px;">Captures the Soul by defining Purpose. The Net
+                            of the Song.</span>
+                    </div>
+                </div>
+                <div class="filament-list">
+                    <div class="filament">
+                        <div class="filament-header"><span>q1: Agency</span> <span>Catch: Identity</span></div>
+                        <span class="filament-name">The Net of The Avatar</span>
+                        <span class="filament-material">Meaning woven with Character</span>
+                        <details>
+                            <summary>Life Paths</summary>
+                            <div class="life-paths">
+                                <span class="life-path-item">Actor</span>
+                                <span class="life-path-item">VTuber</span>
+                                <span class="life-path-item">Mascot</span>
+                                <span class="life-path-item">Cosplayer</span>
+                            </div>
+                        </details>
+                    </div>
+                    <div class="filament">
+                        <div class="filament-header"><span>q2: Localization</span> <span>Catch: Belonging</span></div>
+                        <span class="filament-name">The Net of Culture</span>
+                        <span class="filament-material">Meaning woven with Home</span>
+                        <details>
+                            <summary>Life Paths</summary>
+                            <div class="life-paths">
+                                <span class="life-path-item">Community Organizer</span>
+                                <span class="life-path-item">Tribal Leader</span>
+                                <span class="life-path-item">Club Promoter</span>
+                            </div>
+                        </details>
+                    </div>
+                    <div class="filament">
+                        <div class="filament-header"><span>q3: Definitions</span> <span>Catch: Symbol</span></div>
+                        <span class="filament-name">The Net of Metaphor</span>
+                        <span class="filament-material">Meaning woven with Image</span>
+                        <details>
+                            <summary>Life Paths</summary>
+                            <div class="life-paths">
+                                <span class="life-path-item">Poet</span>
+                                <span class="life-path-item">Lyricist</span>
+                                <span class="life-path-item">Brand Strategist</span>
+                            </div>
+                        </details>
+                    </div>
+                    <div class="filament">
+                        <div class="filament-header"><span>q4: Motive</span> <span>Catch: Devotion</span></div>
+                        <span class="filament-name">The Net of Love</span>
+                        <span class="filament-material">Meaning woven with Gravity</span>
+                        <details>
+                            <summary>Life Paths</summary>
+                            <div class="life-paths">
+                                <span class="life-path-item">Partner/Spouse</span>
+                                <span class="life-path-item">Caregiver</span>
+                                <span class="life-path-item">Matchmaker</span>
+                            </div>
+                        </details>
+                    </div>
+                    <div class="filament">
+                        <div class="filament-header"><span>q5: Mechanism</span> <span>Catch: Awe</span></div>
+                        <span class="filament-name">The Net of Art</span>
+                        <span class="filament-material">Meaning woven with Techne</span>
+                        <details>
+                            <summary>Life Paths</summary>
+                            <div class="life-paths">
+                                <span class="life-path-item">Painter</span>
+                                <span class="life-path-item">Musician</span>
+                                <span class="life-path-item">Director</span>
+                                <span class="life-path-item">Architect</span>
+                            </div>
+                        </details>
+                    </div>
+                    <div class="filament">
+                        <div class="filament-header"><span>q6: History</span> <span>Catch: Legend</span></div>
+                        <span class="filament-name">The Net of Myth</span>
+                        <span class="filament-material">Meaning woven with Memory</span>
+                        <details>
+                            <summary>Life Paths</summary>
+                            <div class="life-paths">
+                                <span class="life-path-item">Novelist</span>
+                                <span class="life-path-item">Historian (Narrative)</span>
+                                <span class="life-path-item">Screenwriter</span>
+                            </div>
+                        </details>
+                    </div>
+                    <div class="filament">
+                        <div class="filament-header"><span>q7: Effect</span> <span>Catch: Healing</span></div>
+                        <span class="filament-name">The Net of Catharsis</span>
+                        <span class="filament-material">Meaning woven with Resolve</span>
+                        <details>
+                            <summary>Life Paths</summary>
+                            <div class="life-paths">
+                                <span class="life-path-item">Therapist</span>
+                                <span class="life-path-item">Confessor</span>
+                                <span class="life-path-item">Shaman</span>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q5 -->
+            <div class="plane-block plane-q5">
+                <div class="plane-header">
+                    <span class="plane-code" style="color: #29B6F6;">Q5</span>
+                    <h3 class="plane-title">The Crystal Grid of Logic</h3>
+                    <div class="plane-meta">
+                        <span class="tag">MUST?</span>
+                        <span class="tag">Context: Fact</span>
+                        <span class="tag">Material: Consistency</span>
+                        <span style="flex-basis: 100%; margin-top: 5px;">Captures Truth by defining Structure. The Net
+                            of the Law.</span>
+                    </div>
+                </div>
+                <div class="filament-list">
+                    <div class="filament">
+                        <div class="filament-header"><span>q1: Agency</span> <span>Catch: Expertise</span></div>
+                        <span class="filament-name">The Net of Credentials</span>
+                        <span class="filament-material">Fact woven with Identity</span>
+                        <details>
+                            <summary>Life Paths</summary>
+                            <div class="life-paths">
+                                <span class="life-path-item">PhD Candidate</span>
+                                <span class="life-path-item">Consultant</span>
+                                <span class="life-path-item">Professor</span>
+                            </div>
+                        </details>
+                    </div>
+                    <div class="filament">
+                        <div class="filament-header"><span>q2: Localization</span> <span>Catch: Index</span></div>
+                        <span class="filament-name">The Net of Taxonomy</span>
+                        <span class="filament-material">Fact woven with Placement</span>
+                        <details>
+                            <summary>Life Paths</summary>
+                            <div class="life-paths">
+                                <span class="life-path-item">Data Scientist</span>
+                                <span class="life-path-item">Taxonomist</span>
+                                <span class="life-path-item">Archivist</span>
+                            </div>
+                        </details>
+                    </div>
+                    <div class="filament">
+                        <div class="filament-header"><span>q3: Definitions</span> <span>Catch: Proof</span></div>
+                        <span class="filament-name">The Net of Axiom</span>
+                        <span class="filament-material">Fact woven with Definition</span>
+                        <details>
+                            <summary>Life Paths</summary>
+                            <div class="life-paths">
+                                <span class="life-path-item">Mathematician</span>
+                                <span class="life-path-item">Physicist</span>
+                                <span class="life-path-item">Philosopher</span>
+                            </div>
+                        </details>
+                    </div>
+                    <div class="filament">
+                        <div class="filament-header"><span>q4: Motive</span> <span>Catch: Solution</span></div>
+                        <span class="filament-name">The Net of Pragma</span>
+                        <span class="filament-material">Fact woven with Utility</span>
+                        <details>
+                            <summary>Life Paths</summary>
+                            <div class="life-paths">
+                                <span class="life-path-item">Civil Engineer</span>
+                                <span class="life-path-item">Mechanic</span>
+                                <span class="life-path-item">Troubleshooter</span>
+                            </div>
+                        </details>
+                    </div>
+                    <div class="filament">
+                        <div class="filament-header"><span>q5: Mechanism</span> <span>Catch: Automation</span></div>
+                        <span class="filament-name">The Net of Algorithm</span>
+                        <span class="filament-material">Fact woven with Sequence</span>
+                        <details>
+                            <summary>Life Paths</summary>
+                            <div class="life-paths">
+                                <span class="life-path-item">Software Engineer</span>
+                                <span class="life-path-item">Systems Architect</span>
+                                <span class="life-path-item">AI Trainer</span>
+                            </div>
+                        </details>
+                    </div>
+                    <div class="filament">
+                        <div class="filament-header"><span>q6: History</span> <span>Catch: Data</span></div>
+                        <span class="filament-name">The Net of Record</span>
+                        <span class="filament-material">Fact woven with Logging</span>
+                        <details>
+                            <summary>Life Paths</summary>
+                            <div class="life-paths">
+                                <span class="life-path-item">Accountant</span>
+                                <span class="life-path-item">Auditor</span>
+                                <span class="life-path-item">Notary</span>
+                            </div>
+                        </details>
+                    </div>
+                    <div class="filament">
+                        <div class="filament-header"><span>q7: Effect</span> <span>Catch: Q.E.D.</span></div>
+                        <span class="filament-name">The Net of Validity</span>
+                        <span class="filament-material">Fact woven with Verification</span>
+                        <details>
+                            <summary>Life Paths</summary>
+                            <div class="life-paths">
+                                <span class="life-path-item">QA Engineer</span>
+                                <span class="life-path-item">Peer Reviewer</span>
+                                <span class="life-path-item">Inspector</span>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q6 -->
+            <div class="plane-block plane-q6">
+                <div class="plane-header">
+                    <span class="plane-code" style="color: #78909C;">Q6</span>
+                    <h3 class="plane-title">The Iron Chain of Causality</h3>
+                    <div class="plane-meta">
+                        <span class="tag">HAD?</span>
+                        <span class="tag">Context: Time</span>
+                        <span class="tag">Material: Sequence</span>
+                        <span style="flex-basis: 100%; margin-top: 5px;">Captures the Present by defining the Past. The
+                            Net of the Anchor.</span>
+                    </div>
+                </div>
+                <div class="filament-list">
+                    <div class="filament">
+                        <div class="filament-header"><span>q1: Agency</span> <span>Catch: Heritage</span></div>
+                        <span class="filament-name">The Net of Ancestry</span>
+                        <span class="filament-material">Time woven with Blood</span>
+                        <details>
+                            <summary>Life Paths</summary>
+                            <div class="life-paths">
+                                <span class="life-path-item">Aristocrat</span>
+                                <span class="life-path-item">Clan Member</span>
+                                <span class="life-path-item">Estate Beneficiary</span>
+                            </div>
+                        </details>
+                    </div>
+                    <div class="filament">
+                        <div class="filament-header"><span>q2: Localization</span> <span>Catch: Root Cause</span></div>
+                        <span class="filament-name">The Net of Archaeology</span>
+                        <span class="filament-material">Time woven with Excavation</span>
+                        <details>
+                            <summary>Life Paths</summary>
+                            <div class="life-paths">
+                                <span class="life-path-item">Archaeologist</span>
+                                <span class="life-path-item">Paleontologist</span>
+                                <span class="life-path-item">Cold Case Detective</span>
+                            </div>
+                        </details>
+                    </div>
+                    <div class="filament">
+                        <div class="filament-header"><span>q3: Definitions</span> <span>Catch: Precedent</span></div>
+                        <span class="filament-name">The Net of Tradition</span>
+                        <span class="filament-material">Time woven with Pattern</span>
+                        <details>
+                            <summary>Life Paths</summary>
+                            <div class="life-paths">
+                                <span class="life-path-item">Conservative Politician</span>
+                                <span class="life-path-item">Religious Orthodox</span>
+                                <span class="life-path-item">Curator</span>
+                            </div>
+                        </details>
+                    </div>
+                    <div class="filament">
+                        <div class="filament-header"><span>q4: Motive</span> <span>Catch: Explanation</span></div>
+                        <span class="filament-name">The Net of Revisionism</span>
+                        <span class="filament-material">Time woven with Narrative</span>
+                        <details>
+                            <summary>Life Paths</summary>
+                            <div class="life-paths">
+                                <span class="life-path-item">Propagandist</span>
+                                <span class="life-path-item">PR Crisis Manager</span>
+                                <span class="life-path-item">Editor</span>
+                            </div>
+                        </details>
+                    </div>
+                    <div class="filament">
+                        <div class="filament-header"><span>q5: Mechanism</span> <span>Catch: Adaptation</span></div>
+                        <span class="filament-name">The Net of Evolution</span>
+                        <span class="filament-material">Time woven with Selection</span>
+                        <details>
+                            <summary>Life Paths</summary>
+                            <div class="life-paths">
+                                <span class="life-path-item">Breeder</span>
+                                <span class="life-path-item">Evolutionary Biologist</span>
+                                <span class="life-path-item">Recruiter</span>
+                            </div>
+                        </details>
+                    </div>
+                    <div class="filament">
+                        <div class="filament-header"><span>q6: History</span> <span>Catch: Chain</span></div>
+                        <span class="filament-name">The Net of Causality</span>
+                        <span class="filament-material">Time woven with Linkage</span>
+                        <details>
+                            <summary>Life Paths</summary>
+                            <div class="life-paths">
+                                <span class="life-path-item">Historian (Causal)</span>
+                                <span class="life-path-item">Accident Investigator</span>
+                            </div>
+                        </details>
+                    </div>
+                    <div class="filament">
+                        <div class="filament-header"><span>q7: Effect</span> <span>Catch: Karma</span></div>
+                        <span class="filament-name">The Net of Consequence</span>
+                        <span class="filament-material">Time woven with Return</span>
+                        <details>
+                            <summary>Life Paths</summary>
+                            <div class="life-paths">
+                                <span class="life-path-item">Parole Officer</span>
+                                <span class="life-path-item">Underwriter</span>
+                                <span class="life-path-item">Karmic Astrologer</span>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q7 -->
+            <div class="plane-block plane-q7">
+                <div class="plane-header">
+                    <span class="plane-code" style="color: var(--accent-danger);">Q7</span>
+                    <h3 class="plane-title">The Burning Web of Sensation</h3>
+                    <div class="plane-meta">
+                        <span class="tag">DID?</span>
+                        <span class="tag">Context: Feeling</span>
+                        <span class="tag">Material: Reaction</span>
+                        <span style="flex-basis: 100%; margin-top: 5px;">Captures the Moment by defining the Feeling.
+                            The Net of the Pulse.</span>
+                    </div>
+                </div>
+                <div class="filament-list">
+                    <div class="filament">
+                        <div class="filament-header"><span>q1: Agency</span> <span>Catch: Vanity</span></div>
+                        <span class="filament-name">The Net of Narcissism</span>
+                        <span class="filament-material">Feeling woven with Self-Image</span>
+                        <details>
+                            <summary>Life Paths</summary>
+                            <div class="life-paths">
+                                <span class="life-path-item">Instagram Model</span>
+                                <span class="life-path-item">Bodybuilder (Vanity)</span>
+                                <span class="life-path-item">Fashionista</span>
+                            </div>
+                        </details>
+                    </div>
+                    <div class="filament">
+                        <div class="filament-header"><span>q2: Localization</span> <span>Catch: Vibe</span></div>
+                        <span class="filament-name">The Net of Atmosphere</span>
+                        <span class="filament-material">Feeling woven with Environment</span>
+                        <details>
+                            <summary>Life Paths</summary>
+                            <div class="life-paths">
+                                <span class="life-path-item">DJ</span>
+                                <span class="life-path-item">Event Planner</span>
+                                <span class="life-path-item">Interior Designer</span>
+                            </div>
+                        </details>
+                    </div>
+                    <div class="filament">
+                        <div class="filament-header"><span>q3: Definitions</span> <span>Catch: Outrage</span></div>
+                        <span class="filament-name">The Net of Trigger</span>
+                        <span class="filament-material">Feeling woven with Offense</span>
+                        <details>
+                            <summary>Life Paths</summary>
+                            <div class="life-paths">
+                                <span class="life-path-item">Shock Jock</span>
+                                <span class="life-path-item">Troll</span>
+                                <span class="life-path-item">Tabloid Journalist</span>
+                            </div>
+                        </details>
+                    </div>
+                    <div class="filament">
+                        <div class="filament-header"><span>q4: Motive</span> <span>Catch: Lust</span></div>
+                        <span class="filament-name">The Net of Desire</span>
+                        <span class="filament-material">Feeling woven with Lack</span>
+                        <details>
+                            <summary>Life Paths</summary>
+                            <div class="life-paths">
+                                <span class="life-path-item">Advertiser</span>
+                                <span class="life-path-item">Marketer</span>
+                                <span class="life-path-item">Pick-up Artist</span>
+                            </div>
+                        </details>
+                    </div>
+                    <div class="filament">
+                        <div class="filament-header"><span>q5: Mechanism</span> <span>Catch: Submission</span></div>
+                        <span class="filament-name">The Net of Manipulation</span>
+                        <span class="filament-material">Feeling woven with Leverage</span>
+                        <details>
+                            <summary>Life Paths</summary>
+                            <div class="life-paths">
+                                <span class="life-path-item">Con Artist</span>
+                                <span class="life-path-item">Toxic Partner</span>
+                                <span class="life-path-item">Social Engineer</span>
+                            </div>
+                        </details>
+                    </div>
+                    <div class="filament">
+                        <div class="filament-header"><span>q6: History</span> <span>Catch: Victimhood</span></div>
+                        <span class="filament-name">The Net of Trauma</span>
+                        <span class="filament-material">Feeling woven with Memory</span>
+                        <details>
+                            <summary>Life Paths</summary>
+                            <div class="life-paths">
+                                <span class="life-path-item">Professional Patient</span>
+                                <span class="life-path-item">Trauma Bonder</span>
+                            </div>
+                        </details>
+                    </div>
+                    <div class="filament">
+                        <div class="filament-header"><span>q7: Effect</span> <span>Catch: Hysteria</span></div>
+                        <span class="filament-name">The Net of The Mob</span>
+                        <span class="filament-material">Feeling woven with Contagion</span>
+                        <details>
+                            <summary>Life Paths</summary>
+                            <div class="life-paths">
+                                <span class="life-path-item">Rioter</span>
+                                <span class="life-path-item">Hooligan</span>
+                                <span class="life-path-item">Panic Seller</span>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- SECTION 3: APEX -->
+        <section class="apex-section">
+            <h2>The Apex: The Fisher of Men</h2>
+            <p>This is the distinction Jesus draws. The disciples were casting <strong>Drag-nets</strong> for Bread
+                (Survival). Jesus calls them to cast <strong>The Net of Logos</strong>.</p>
+            <div class="grid-cards" style="margin-top: 40px; text-align: left;">
+                <div class="card" style="border-color: var(--accent-gold);">
+                    <span class="role">The Catch</span>
+                    <h3>The Soul</h3>
+                    <p>Not resources, but the totality of the Being. The "Hook, Line, and Sinker" capture of the Heart
+                        (Q4), Mind (Q5), and Will (Q1).</p>
+                </div>
+                <div class="card" style="border-color: var(--accent-gold);">
+                    <span class="role">The Physics</span>
+                    <h3>The Stronger Material</h3>
+                    <p>To catch a Man, your net must be woven from a material stronger than the Man's own Ego. You
+                        cannot catch a Soul with a net of Promises (Politics) or Logic (Science) alone.</p>
+                </div>
+            </div>
+            <p style="margin-top: 30px; font-style: italic; color: var(--accent-cyan);">"You are what you catch."</p>
+        </section>
+
+    </div>
+
+</body>
+
+</html>
