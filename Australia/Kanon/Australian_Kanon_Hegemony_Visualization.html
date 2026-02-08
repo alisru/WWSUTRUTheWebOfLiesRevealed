@@ -1,0 +1,1551 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Australian Kanon — Hegemony Visualization</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F8FAFC;
+            color: #1e293b;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: #0f172a;
+            font-weight: 800;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #64748b;
+            font-size: 1rem;
+            margin-bottom: 2rem;
+            font-style: italic;
+            font-family: 'Merriweather', serif;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .plane-btn {
+            padding: 0.6rem 1.2rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+            background: #ffffff;
+            color: #475569;
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        }
+
+        .plane-btn:hover {
+            background: #f1f5f9;
+            color: #1e293b;
+            border-color: #cbd5e1;
+            transform: translateY(-1px);
+        }
+
+        .plane-btn.active {
+            background: #2563eb;
+            color: white;
+            border-color: #2563eb;
+        }
+
+        .canvas-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        canvas {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            border: 1px solid #e2e8f0;
+        }
+
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .stat-card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 1rem;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        }
+
+        .stat-card h3 {
+            font-size: 0.9rem;
+            color: #64748b;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .stat-value {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #1e293b;
+        }
+
+        .positive {
+            color: #16a34a;
+        }
+
+        .negative {
+            color: #dc2626;
+        }
+
+        .neutral {
+            color: #d97706;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            font-size: 0.75rem;
+        }
+
+        th,
+        td {
+            padding: 0.5rem;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+            color: #334155;
+        }
+
+        th {
+            color: #64748b;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .fn-badge {
+            background: #7c3aed;
+            color: white;
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.65rem;
+            margin-left: 0.3rem;
+            font-weight: 600;
+        }
+
+        .tooltip {
+            position: fixed;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            padding: 0.8rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            max-width: 280px;
+            pointer-events: none;
+            z-index: 1000;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            display: none;
+            color: #1e293b;
+        }
+
+        .tooltip-title {
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+            color: #0f172a;
+        }
+
+        .tooltip-coords {
+            color: #64748b;
+            font-size: 0.75rem;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div style="position: absolute; top: 1.5rem; left: 2rem;">
+        <a href="AustralianMatrix.html"
+            style="color: #64748b; text-decoration: none; font-weight: 600; font-size: 0.9rem;">← Back To Navigation</a>
+    </div>
+
+    <h1>Australian Kanon — Psochic Hegemony</h1>
+
+    <p class="subtitle">Moral Vector Analysis of 354 Entries Across 7 Planes</p>
+
+    <div class="controls">
+
+        <button class="plane-btn active" data-plane="all">All Planes</button>
+
+        <button class="plane-btn" data-plane="1">P1: Identity</button>
+
+        <button class="plane-btn" data-plane="2">P2: Definition</button>
+
+        <button class="plane-btn" data-plane="3">P3: Land</button>
+
+        <button class="plane-btn" data-plane="4">P4: Drive</button>
+
+        <button class="plane-btn" data-plane="5">P5: Method</button>
+
+        <button class="plane-btn" data-plane="6">P6: Foundation</button>
+
+        <button class="plane-btn" data-plane="7">P7: Result</button>
+
+    </div>
+
+    <div class="canvas-container">
+
+        <canvas id="hegemonyCanvas" width="700" height="700"></canvas>
+
+    </div>
+
+    <div class="legend">
+
+        <div class="legend-item">
+
+            <div class="legend-dot" style="background: #4ade80;"></div> Greater Good (+υ, +ψ)
+
+        </div>
+
+        <div class="legend-item">
+
+            <div class="legend-dot" style="background: #f87171;"></div> Greatest Lie (-υ, +ψ)
+
+        </div>
+
+        <div class="legend-item">
+
+            <div class="legend-dot" style="background: #38bdf8;"></div> Lesser Good (+υ, -ψ)
+
+        </div>
+
+        <div class="legend-item">
+
+            <div class="legend-dot" style="background: #fb923c;"></div> Greater Evil (-υ, -ψ)
+
+        </div>
+
+        <div class="legend-item">
+
+            <div class="legend-dot" style="background: #7c3aed;"></div> First Nations Entry
+
+        </div>
+
+    </div>
+
+    <div class="stats-grid" id="statsGrid"></div>
+
+    <div class="tooltip" id="tooltip">
+
+        <div class="tooltip-title"></div>
+
+        <div class="tooltip-coords"></div>
+
+        <div class="tooltip-judgment"></div>
+
+    </div>
+
+    <script>
+
+        // KANON DATA - All 354 entries across 7 planes
+
+        const kanonData = {
+
+            1: { // Identity
+
+                name: "Identity (Who)",
+
+                color: "#38bdf8",
+
+                total: { u: 0.40, p: 0.17 },
+
+                entries: [
+
+                    { name: "Mateship", u: 0.7, p: 0.4, fn: false },
+
+                    { name: "The Larrikin", u: 0.5, p: 0.6, fn: false },
+
+                    { name: "The Battler", u: 0.6, p: -0.3, fn: false },
+
+                    { name: "The Anzac", u: 0.5, p: 0.8, fn: false },
+
+                    { name: "Stringybark and Greenhide", u: 0.6, p: 0.7, fn: false },
+
+                    { name: "The Indigenous Custodian", u: 0.9, p: 0.5, fn: true },
+
+                    { name: "The Forgotten People", u: 0.5, p: -0.4, fn: false },
+
+                    { name: "The Fair Go", u: 0.9, p: 0.5, fn: false },
+
+                    { name: "Tall Poppy Syndrome", u: 0.4, p: -0.5, fn: false },
+
+                    { name: "Egalitarianism", u: 0.8, p: 0.3, fn: false },
+
+                    { name: "She'll Be Right", u: 0.3, p: -0.6, fn: false },
+
+                    { name: "Secular Skepticism", u: 0.6, p: -0.3, fn: false },
+
+                    { name: "The Convict Stain", u: 0.3, p: -0.5, fn: false },
+
+                    { name: "The Commonwealth", u: 0.8, p: 0.5, fn: false },
+
+                    { name: "The Bush", u: 0.5, p: -0.4, fn: false },
+
+                    { name: "The Coast", u: 0.6, p: 0.3, fn: false },
+
+                    { name: "The Red Centre", u: 0.5, p: -0.5, fn: false },
+
+                    { name: "The Cycle (Drought & Flood)", u: 0.0, p: -0.5, fn: false },
+
+                    { name: "The Tyranny of Distance", u: 0.0, p: -0.6, fn: false },
+
+                    { name: "Terra Nullius", u: -0.9, p: 0.7, fn: false },
+
+                    { name: "The Suburb", u: 0.4, p: -0.4, fn: false },
+
+                    { name: "Punching Above Weight", u: 0.5, p: 0.8, fn: false },
+
+                    { name: "The Lucky Country", u: 0.3, p: -0.4, fn: false },
+
+                    { name: "Populate or Perish", u: -0.2, p: 0.6, fn: false },
+
+                    { name: "Anteriority [FN]", u: 0.9, p: 0.3, fn: true },
+
+                    { name: "Have a Go, Ya Mug", u: 0.7, p: 0.8, fn: false },
+
+                    { name: "The Cultural Cringe", u: -0.3, p: -0.5, fn: false },
+
+                    { name: "The Gold Rush", u: 0.5, p: 0.7, fn: false },
+
+                    { name: "Sport", u: 0.6, p: 0.7, fn: false },
+
+                    { name: "The Pub Test", u: 0.6, p: -0.3, fn: false },
+
+                    { name: "Compulsory Voting", u: 0.8, p: 0.5, fn: false },
+
+                    { name: "Pragmatism", u: 0.7, p: 0.5, fn: false },
+
+                    { name: "The Sickie", u: 0.4, p: -0.4, fn: false },
+
+                    { name: "The Royal Commission", u: 0.8, p: 0.7, fn: false },
+
+                    { name: "The Ticket of Leave", u: 0.6, p: 0.4, fn: false },
+
+                    { name: "The Union", u: 0.7, p: 0.7, fn: false },
+
+                    { name: "The First Fleet", u: -0.3, p: -0.5, fn: false },
+
+                    { name: "Continuity [FN]", u: 0.9, p: 0.4, fn: true },
+
+                    { name: "Federation", u: 0.6, p: 0.4, fn: false },
+
+                    { name: "Exclusion [FN]", u: -0.8, p: -0.6, fn: true },
+
+                    { name: "Songlines", u: 0.9, p: 0.3, fn: false },
+
+                    { name: "Eureka Stockade", u: 0.8, p: 0.9, fn: false },
+
+                    { name: "White Australia Policy", u: -0.9, p: 0.6, fn: false },
+
+                    { name: "Survival [FN]", u: 0.8, p: 0.6, fn: true },
+
+                    { name: "Deep Time", u: 0.7, p: -0.2, fn: false },
+
+                    { name: "Multiculturalism", u: 0.8, p: 0.6, fn: false },
+
+                    { name: "The Expat", u: 0.5, p: 0.5, fn: false },
+
+                    { name: "The Honest Broker", u: 0.7, p: 0.5, fn: false },
+
+                    { name: "The Food Bowl", u: 0.6, p: 0.4, fn: false },
+
+                    { name: "The Asian Century", u: 0.6, p: 0.4, fn: false },
+
+                    { name: "Medicare", u: 0.9, p: 0.5, fn: false },
+
+                    { name: "The Apology", u: 0.8, p: 0.6, fn: false },
+
+                    { name: "The Ashes", u: 0.5, p: 0.7, fn: false }
+
+                ]
+
+            },
+
+            2: { // Definition
+
+                name: "Definition (What)",
+
+                color: "#818cf8",
+
+                total: { u: 0.36, p: 0.17 },
+
+                entries: [
+
+                    { name: "The Independent Australian Briton", u: 0.4, p: 0.3, fn: false },
+
+                    { name: "The Constituent", u: 0.8, p: 0.4, fn: false },
+
+                    { name: "The Resident", u: 0.8, p: 0.3, fn: false },
+
+                    { name: "The Mate", u: 0.7, p: 0.3, fn: false },
+
+                    { name: "The Compelled Voter", u: 0.7, p: -0.4, fn: false },
+
+                    { name: "The Subject", u: 0.4, p: -0.3, fn: false },
+
+                    { name: "The Servant", u: 0.6, p: -0.3, fn: false },
+
+                    { name: "The Governor-General", u: 0.3, p: -0.4, fn: false },
+
+                    { name: "Peace, Order, and Good Government", u: 0.6, p: -0.4, fn: false },
+
+                    { name: "Supremacy", u: 0.5, p: 0.4, fn: false },
+
+                    { name: "The Double Majority", u: 0.6, p: -0.5, fn: false },
+
+                    { name: "The Interpreter", u: 0.5, p: 0.3, fn: false },
+
+                    { name: "The Deal", u: 0.6, p: 0.4, fn: false },
+
+                    { name: "The Gridlock", u: -0.3, p: -0.5, fn: false },
+
+                    { name: "The States' House", u: 0.6, p: 0.3, fn: false },
+
+                    { name: "The People's House", u: 0.7, p: 0.4, fn: false },
+
+                    { name: "The Bush Capital", u: 0.4, p: -0.3, fn: false },
+
+                    { name: "Fiscal Equalization", u: 0.7, p: 0.5, fn: false },
+
+                    { name: "Washminster System", u: 0.4, p: 0.4, fn: false },
+
+                    { name: "The Colonial Survey", u: -0.2, p: -0.4, fn: false },
+
+                    { name: "The Patchwork Economy", u: 0.0, p: -0.3, fn: false },
+
+                    { name: "The Crimson Thread", u: -0.4, p: 0.5, fn: false },
+
+                    { name: "The Workingman's Paradise", u: 0.8, p: 0.6, fn: false },
+
+                    { name: "A Bulwark", u: -0.3, p: 0.6, fn: false },
+
+                    { name: "Connection [FN]", u: 0.8, p: 0.4, fn: true },
+
+                    { name: "The Common Market", u: 0.6, p: 0.5, fn: false },
+
+                    { name: "The Secular State", u: 0.7, p: -0.3, fn: false },
+
+                    { name: "The Great Strikes", u: 0.7, p: 0.8, fn: false },
+
+                    { name: "The Quiet Life", u: 0.5, p: -0.5, fn: false },
+
+                    { name: "The Faceless Men", u: -0.4, p: 0.5, fn: false },
+
+                    { name: "The Secret Ballot", u: 0.9, p: 0.6, fn: false },
+
+                    { name: "Preferential Voting", u: 0.7, p: 0.5, fn: false },
+
+                    { name: "The Referendum", u: 0.8, p: 0.4, fn: false },
+
+                    { name: "The Royal Commission", u: 0.7, p: 0.6, fn: false },
+
+                    { name: "The Census", u: 0.5, p: 0.3, fn: false },
+
+                    { name: "The Spill", u: -0.3, p: 0.6, fn: false },
+
+                    { name: "The Prophet", u: 0.7, p: 0.8, fn: false },
+
+                    { name: "The Imperial Act", u: 0.3, p: -0.4, fn: false },
+
+                    { name: "The Stockade", u: 0.8, p: 0.9, fn: false },
+
+                    { name: "The Slump", u: 0.0, p: -0.5, fn: false },
+
+                    { name: "The Corowa Plan", u: 0.9, p: 0.7, fn: false },
+
+                    { name: "State Socialism", u: 0.6, p: 0.5, fn: false },
+
+                    { name: "Federation Day", u: 0.6, p: 0.4, fn: false },
+
+                    { name: "The Anzac", u: 0.6, p: 0.7, fn: false },
+
+                    { name: "The Lucky Country", u: 0.3, p: -0.4, fn: false },
+
+                    { name: "The Tyranny of Distance", u: 0.0, p: -0.6, fn: false },
+
+                    { name: "The Cultural Cringe", u: -0.4, p: -0.5, fn: false },
+
+                    { name: "Mateship", u: 0.7, p: 0.4, fn: false },
+
+                    { name: "The Great Silence", u: -0.8, p: -0.6, fn: false },
+
+                    { name: "Voice [FN]", u: 0.9, p: 0.6, fn: true },
+
+                    { name: "The Nanny State", u: 0.4, p: -0.5, fn: false }
+
+                ]
+
+            },
+
+            3: { // Land
+
+                name: "Land (Where)",
+
+                color: "#4ade80",
+
+                total: { u: 0.53, p: 0.39 },
+
+                entries: [
+
+                    { name: "The Sunburnt Country", u: 0.5, p: -0.4, fn: false },
+
+                    { name: "The Weird Melancholy", u: 0.3, p: -0.5, fn: false },
+
+                    { name: "The Never-Never", u: 0.4, p: -0.3, fn: false },
+
+                    { name: "The Red Steer", u: 0.0, p: -0.6, fn: false },
+
+                    { name: "The Drought", u: 0.3, p: -0.6, fn: false },
+
+                    { name: "The Spirit of Place", u: 0.6, p: -0.3, fn: false },
+
+                    { name: "The Primitive Area", u: 0.8, p: 0.5, fn: false },
+
+                    { name: "The Squatter", u: -0.6, p: 0.6, fn: false },
+
+                    { name: "The Void (Terra Nullius)", u: -0.9, p: 0.6, fn: false },
+
+                    { name: "Custodianship [FN]", u: 0.9, p: 0.4, fn: true },
+
+                    { name: "The Crossing", u: 0.4, p: 0.7, fn: false },
+
+                    { name: "The Grid", u: 0.4, p: 0.5, fn: false },
+
+                    { name: "The Crown", u: 0.3, p: -0.4, fn: false },
+
+                    { name: "The Selector", u: 0.5, p: 0.6, fn: false },
+
+                    { name: "The Red Heart", u: 0.0, p: -0.6, fn: false },
+
+                    { name: "Goyder's Line", u: 0.6, p: 0.4, fn: false },
+
+                    { name: "The Saltbush", u: 0.5, p: -0.3, fn: false },
+
+                    { name: "The River", u: 0.0, p: -0.4, fn: false },
+
+                    { name: "The Marsupial", u: 0.6, p: 0.4, fn: false },
+
+                    { name: "Gondwana", u: 0.7, p: -0.3, fn: false },
+
+                    { name: "The Plague", u: -0.6, p: 0.5, fn: false },
+
+                    { name: "The Sun", u: 0.0, p: 0.4, fn: false },
+
+                    { name: "The Thirst", u: 0.4, p: -0.5, fn: false },
+
+                    { name: "The Wet and The Dry", u: 0.0, p: -0.4, fn: false },
+
+                    { name: "The Flood", u: 0.4, p: 0.5, fn: false },
+
+                    { name: "The Wind", u: 0.0, p: 0.3, fn: false },
+
+                    { name: "The Oscillation (El NiÃ±o)", u: 0.0, p: -0.4, fn: false },
+
+                    { name: "The Windmill", u: 0.7, p: 0.6, fn: false },
+
+                    { name: "The Overland Telegraph", u: 0.7, p: 0.7, fn: false },
+
+                    { name: "Songlines [FN]", u: 0.9, p: 0.4, fn: true },
+
+                    { name: "The Dingo Fence", u: -0.3, p: 0.6, fn: false },
+
+                    { name: "The Highway", u: 0.6, p: 0.5, fn: false },
+
+                    { name: "The Dam", u: 0.7, p: 0.7, fn: false },
+
+                    { name: "The Air", u: 0.8, p: 0.7, fn: false },
+
+                    { name: "The Railway", u: 0.6, p: 0.5, fn: false },
+
+                    { name: "The Pipeline", u: 0.7, p: 0.8, fn: false },
+
+                    { name: "The Miner", u: 0.6, p: 0.7, fn: false },
+
+                    { name: "The Gold", u: 0.5, p: 0.5, fn: false },
+
+                    { name: "The Shield", u: 0.5, p: -0.3, fn: false },
+
+                    { name: "The Uranium", u: -0.3, p: 0.5, fn: false },
+
+                    { name: "The Opencut", u: -0.2, p: 0.7, fn: false },
+
+                    { name: "The Impact", u: 0.0, p: -0.3, fn: false },
+
+                    { name: "The Wealth (Lucky Country)", u: 0.3, p: -0.4, fn: false },
+
+                    { name: "The Suburbanite", u: 0.5, p: -0.3, fn: false },
+
+                    { name: "The Sprawl", u: 0.3, p: -0.4, fn: false },
+
+                    { name: "The Coast (Rim)", u: 0.4, p: -0.3, fn: false },
+
+                    { name: "The Lifestyle", u: 0.5, p: 0.3, fn: false },
+
+                    { name: "The BBQ", u: 0.7, p: 0.4, fn: false },
+
+                    { name: "The Quarantine", u: -0.4, p: -0.5, fn: false },
+
+                    { name: "The Future", u: 0.7, p: 0.5, fn: false }
+
+                ]
+
+            },
+
+            4: { // Drive
+
+                name: "Drive (Why)",
+
+                color: "#fbbf24",
+
+                total: { u: 0.45, p: 0.25 },
+
+                entries: [
+
+                    { name: "The Volunteer", u: 0.9, p: 0.8, fn: false },
+
+                    { name: "The Bludger", u: -0.6, p: -0.5, fn: false },
+
+                    { name: "The Knocker", u: -0.4, p: -0.3, fn: false },
+
+                    { name: "The Digger", u: 0.7, p: 0.5, fn: false },
+
+                    { name: "The Gambler", u: -0.2, p: 0.5, fn: false },
+
+                    { name: "The Battler", u: 0.6, p: 0.5, fn: false },
+
+                    { name: "The Larrikin", u: 0.4, p: 0.3, fn: false },
+
+                    { name: "The Fair Go", u: 0.9, p: 0.5, fn: false },
+
+                    { name: "The Weekend", u: 0.8, p: 0.4, fn: false },
+
+                    { name: "The Home", u: 0.5, p: 0.4, fn: false },
+
+                    { name: "The Holiday", u: 0.5, p: -0.2, fn: false },
+
+                    { name: "The Ute", u: 0.6, p: 0.5, fn: false },
+
+                    { name: "The Pay Packet", u: 0.7, p: 0.4, fn: false },
+
+                    { name: "The Pension", u: 0.8, p: 0.3, fn: false },
+
+                    { name: "The Pub", u: 0.5, p: 0.3, fn: false },
+
+                    { name: "The Beach", u: 0.6, p: 0.3, fn: false },
+
+                    { name: "Country [FN]", u: 0.9, p: 0.5, fn: true },
+
+                    { name: "The Club", u: 0.4, p: -0.2, fn: false },
+
+                    { name: "The Shed", u: 0.5, p: 0.4, fn: false },
+
+                    { name: "The Field", u: 0.6, p: 0.6, fn: false },
+
+                    { name: "The Mall", u: -0.2, p: 0.3, fn: false },
+
+                    { name: "Mateship", u: 0.7, p: 0.5, fn: false },
+
+                    { name: "Tall Poppy Syndrome", u: -0.4, p: 0.4, fn: false },
+
+                    { name: "Cultural Cringe", u: -0.5, p: -0.4, fn: false },
+
+                    { name: "She'll Be Right", u: 0.2, p: -0.6, fn: false },
+
+                    { name: "Have a Go", u: 0.6, p: 0.7, fn: false },
+
+                    { name: "Fear of Missing Out", u: -0.2, p: 0.5, fn: false },
+
+                    { name: "The Good Life", u: 0.5, p: -0.4, fn: false },
+
+                    { name: "Shouting", u: 0.7, p: 0.4, fn: false },
+
+                    { name: "Sledging", u: -0.3, p: 0.5, fn: false },
+
+                    { name: "Queuing", u: 0.8, p: -0.2, fn: false },
+
+                    { name: "Striking", u: 0.7, p: 0.7, fn: false },
+
+                    { name: "Improvising", u: 0.6, p: 0.6, fn: false },
+
+                    { name: "Gambling", u: -0.3, p: 0.4, fn: false },
+
+                    { name: "Volunteering", u: 0.9, p: 0.7, fn: false },
+
+                    { name: "The Stain", u: -0.4, p: -0.4, fn: false },
+
+                    { name: "Guilt [FN]", u: 0.6, p: 0.5, fn: true },
+
+                    { name: "The Gold", u: 0.5, p: 0.6, fn: false },
+
+                    { name: "The Bush", u: 0.5, p: -0.3, fn: false },
+
+                    { name: "Abundance [FN]", u: 0.8, p: 0.4, fn: true },
+
+                    { name: "The War", u: 0.6, p: 0.7, fn: false },
+
+                    { name: "Resistance [FN]", u: 0.8, p: 0.8, fn: true },
+
+                    { name: "The Depression", u: 0.0, p: -0.5, fn: false },
+
+                    { name: "The Isolation", u: 0.0, p: -0.4, fn: false },
+
+                    { name: "The Boom", u: 0.4, p: 0.4, fn: false },
+
+                    { name: "The Citizen", u: 0.7, p: 0.4, fn: false },
+
+                    { name: "The Middle Class", u: 0.5, p: -0.3, fn: false },
+
+                    { name: "The Suburb", u: 0.4, p: -0.4, fn: false },
+
+                    { name: "Stability", u: 0.6, p: -0.4, fn: false },
+
+                    { name: "Cynicism", u: 0.3, p: -0.2, fn: false },
+
+                    { name: "Prosperity", u: 0.6, p: 0.3, fn: false },
+
+                    { name: "Sovereignty", u: 0.7, p: 0.5, fn: false }
+
+                ]
+
+            },
+
+            5: { // Method
+
+                name: "Method (How)",
+
+                color: "#f472b6",
+
+                total: { u: 0.56, p: 0.32 },
+
+                entries: [
+
+                    { name: "The Bricoleur", u: 0.7, p: 0.6, fn: false },
+
+                    { name: "The Unionist", u: 0.8, p: 0.7, fn: false },
+
+                    { name: "The Public Servant", u: 0.4, p: -0.3, fn: false },
+
+                    { name: "The Whistleblower", u: 0.9, p: 0.7, fn: false },
+
+                    { name: "The Umpire", u: 0.7, p: 0.4, fn: false },
+
+                    { name: "The Drover", u: 0.5, p: 0.5, fn: false },
+
+                    { name: "The Scientist", u: 0.8, p: 0.7, fn: false },
+
+                    { name: "The Ballot Paper", u: 0.9, p: 0.6, fn: false },
+
+                    { name: "The Wage Case", u: 0.9, p: 0.5, fn: false },
+
+                    { name: "The WiFi", u: 0.8, p: 0.7, fn: false },
+
+                    { name: "Hard Yakka", u: 0.6, p: 0.5, fn: false },
+
+                    { name: "The Stump Jump Plough", u: 0.7, p: 0.6, fn: false },
+
+                    { name: "The Boomerang", u: 0.8, p: 0.5, fn: false },
+
+                    { name: "The Black Box", u: 0.8, p: 0.7, fn: false },
+
+                    { name: "The Polling Booth", u: 0.9, p: 0.4, fn: false },
+
+                    { name: "The Picket Line", u: 0.7, p: 0.7, fn: false },
+
+                    { name: "The Surf Club", u: 0.8, p: 0.6, fn: false },
+
+                    { name: "The Courtroom", u: 0.7, p: 0.4, fn: false },
+
+                    { name: "The Lab", u: 0.7, p: 0.6, fn: false },
+
+                    { name: "The Shearing Shed", u: 0.5, p: 0.6, fn: false },
+
+                    { name: "The School", u: 0.7, p: 0.4, fn: false },
+
+                    { name: "Egalitarianism", u: 0.8, p: 0.5, fn: false },
+
+                    { name: "Pragmatism", u: 0.5, p: 0.3, fn: false },
+
+                    { name: "Necessity", u: 0.5, p: 0.4, fn: false },
+
+                    { name: "Fairness", u: 0.9, p: 0.4, fn: false },
+
+                    { name: "Efficiency", u: 0.5, p: 0.6, fn: false },
+
+                    { name: "Survival", u: 0.4, p: 0.5, fn: false },
+
+                    { name: "Comfort", u: 0.5, p: -0.3, fn: false },
+
+                    { name: "The Smoko", u: 0.6, p: -0.2, fn: false },
+
+                    { name: "The Roster", u: 0.6, p: 0.3, fn: false },
+
+                    { name: "The Sickie", u: 0.4, p: -0.3, fn: false },
+
+                    { name: "The Meeting", u: 0.4, p: -0.4, fn: false },
+
+                    { name: "The Shortcut", u: -0.4, p: 0.3, fn: false },
+
+                    { name: "The Trial", u: 0.6, p: 0.5, fn: false },
+
+                    { name: "The Report", u: 0.2, p: -0.4, fn: false },
+
+                    { name: "The Convict System", u: -0.3, p: 0.5, fn: false },
+
+                    { name: "Relation [FN]", u: 0.9, p: 0.4, fn: true },
+
+                    { name: "The Distance", u: 0.0, p: -0.4, fn: false },
+
+                    { name: "Navigation [FN]", u: 0.9, p: 0.5, fn: true },
+
+                    { name: "The Survey", u: 0.3, p: 0.5, fn: false },
+
+                    { name: "Flow [FN]", u: 0.8, p: 0.4, fn: true },
+
+                    { name: "The Federation", u: 0.7, p: 0.6, fn: false },
+
+                    { name: "The Voter", u: 0.7, p: 0.3, fn: false },
+
+                    { name: "The Award", u: 0.9, p: 0.4, fn: false },
+
+                    { name: "The Infrastructure", u: 0.8, p: 0.7, fn: false },
+
+                    { name: "Efficiency (Outcome)", u: 0.6, p: 0.5, fn: false },
+
+                    { name: "Bureaucracy", u: 0.3, p: -0.5, fn: false },
+
+                    { name: "Peace", u: 0.8, p: -0.3, fn: false },
+
+                    { name: "The Fair Go (Realized)", u: 0.9, p: 0.4, fn: false }
+
+                ]
+
+            },
+
+            6: { // Foundation
+
+                name: "Foundation (Cause)",
+
+                color: "#fb923c",
+
+                total: { u: 0.35, p: 0.25 },
+
+                entries: [
+
+                    { name: "The Convict", u: 0.2, p: -0.5, fn: false },
+
+                    { name: "The Colonizer", u: -0.8, p: 0.6, fn: false },
+
+                    { name: "The Free Settler", u: 0.6, p: 0.5, fn: false },
+
+                    { name: "The Squatter", u: -0.6, p: 0.7, fn: false },
+
+                    { name: "The Digger (Gold)", u: 0.4, p: 0.6, fn: false },
+
+                    { name: "The Indigenous Elder", u: 0.9, p: 0.5, fn: true },
+
+                    { name: "The Immigrant", u: -0.7, p: -0.5, fn: false },
+
+                    { name: "Sydney Cove", u: 0.0, p: 0.5, fn: false },
+
+                    { name: "The Harbour Bridge", u: 0.7, p: 0.8, fn: false },
+
+                    { name: "Uluru", u: 0.9, p: 0.4, fn: false },
+
+                    { name: "Gallipoli", u: 0.6, p: 0.7, fn: false },
+
+                    { name: "The Goldfields", u: 0.8, p: 0.8, fn: false },
+
+                    { name: "Norfolk Island", u: -0.7, p: 0.6, fn: false },
+
+                    { name: "Parliament House", u: 0.8, p: 0.6, fn: false },
+
+                    { name: "Terra Nullius", u: -0.9, p: 0.5, fn: false },
+
+                    { name: "The Constitution", u: 0.6, p: 0.4, fn: false },
+
+                    { name: "Federation", u: 0.6, p: 0.5, fn: false },
+
+                    { name: "The Living Wage", u: 0.9, p: 0.6, fn: false },
+
+                    { name: "Compulsory Voting", u: 0.7, p: 0.4, fn: false },
+
+                    { name: "White Australia Policy", u: -0.9, p: 0.5, fn: false },
+
+                    { name: "The Mabo Decision", u: 0.9, p: 0.7, fn: false },
+
+                    { name: "Survival", u: 0.5, p: 0.5, fn: false },
+
+                    { name: "Redemption", u: 0.7, p: 0.5, fn: false },
+
+                    { name: "Distance", u: 0.0, p: -0.4, fn: false },
+
+                    { name: "The Fair Go", u: 0.9, p: 0.4, fn: false },
+
+                    { name: "Mateship", u: 0.8, p: 0.5, fn: false },
+
+                    { name: "Populate or Perish", u: -0.3, p: 0.5, fn: false },
+
+                    { name: "The Lucky Country", u: 0.3, p: -0.5, fn: false },
+
+                    { name: "The Bushman", u: 0.7, p: 0.6, fn: false },
+
+                    { name: "The Shearers' Strike", u: 0.8, p: 0.7, fn: false },
+
+                    { name: "The Bush (as Method)", u: 0.7, p: 0.5, fn: false },
+
+                    { name: "The Secret Ballot", u: 0.9, p: 0.6, fn: false },
+
+                    { name: "Compulsory Arbitration", u: 0.8, p: 0.5, fn: false },
+
+                    { name: "Colonial Sec. Office", u: -0.4, p: -0.4, fn: false },
+
+                    { name: "Peaceful Federation", u: 0.8, p: 0.4, fn: false },
+
+                    { name: "The Dreaming", u: 0.9, p: 0.5, fn: false },
+
+                    { name: "Gondwana", u: 0.0, p: 0.0, fn: false },
+
+                    { name: "Great Barrier Reef", u: 0.8, p: 0.4, fn: false },
+
+                    { name: "Megafauna Extinction", u: -0.3, p: 0.4, fn: false },
+
+                    { name: "Fire-Stick Farming", u: 0.8, p: 0.6, fn: false },
+
+                    { name: "Plate Tectonics", u: 0.0, p: 0.0, fn: false },
+
+                    { name: "The Arid Core", u: 0.0, p: -0.3, fn: false },
+
+                    { name: "The Digger (Myth)", u: 0.6, p: 0.4, fn: false },
+
+                    { name: "Warrior [FN]", u: 0.8, p: 0.7, fn: true },
+
+                    { name: "The Suburban House", u: 0.5, p: -0.3, fn: false },
+
+                    { name: "The Welfare State", u: 0.8, p: 0.4, fn: false },
+
+                    { name: "Consensus", u: 0.6, p: -0.2, fn: false },
+
+                    { name: "Unfinished Business", u: 0.8, p: 0.7, fn: false },
+
+                    { name: "Continuity", u: 0.7, p: 0.4, fn: false }
+
+                ]
+
+            },
+
+            7: { // Result
+
+                name: "Result (Effect)",
+
+                color: "#e879f9",
+
+                total: { u: 0.44, p: 0.26 },
+
+                entries: [
+
+                    { name: "The Quiet Australian", u: 0.3, p: -0.4, fn: false },
+
+                    { name: "The Multicultural Citizen", u: 0.8, p: 0.5, fn: false },
+
+                    { name: "The Coastal Dweller", u: 0.2, p: -0.3, fn: false },
+
+                    { name: "The Aspirational", u: -0.4, p: 0.7, fn: false },
+
+                    { name: "The Sports Fanatic", u: 0.3, p: 0.6, fn: false },
+
+                    { name: "The Digger's Heir", u: 0.5, p: -0.2, fn: false },
+
+                    { name: "The Citizen", u: 0.9, p: 0.4, fn: false },
+
+                    { name: "The Australian Diaspora", u: 0.4, p: 0.5, fn: false },
+
+                    { name: "The Commodity", u: -0.3, p: 0.6, fn: false },
+
+                    { name: "The Alliance", u: -0.2, p: -0.5, fn: false },
+
+                    { name: "The Middle Power", u: 0.7, p: 0.5, fn: false },
+
+                    { name: "Soft Power", u: 0.6, p: 0.3, fn: false },
+
+                    { name: "The Pacific", u: -0.3, p: 0.4, fn: false },
+
+                    { name: "The Asian Century", u: 0.5, p: 0.4, fn: false },
+
+                    { name: "The Home Owner", u: -0.2, p: 0.5, fn: false },
+
+                    { name: "The Superannuation Balance", u: 0.7, p: 0.6, fn: false },
+
+                    { name: "The University Sector", u: 0.3, p: 0.5, fn: false },
+
+                    { name: "The Medicare Card", u: 0.9, p: 0.5, fn: false },
+
+                    { name: "The Renewable Transition", u: 0.8, p: 0.7, fn: false },
+
+                    { name: "Biodiversity", u: 0.7, p: -0.2, fn: false },
+
+                    { name: "Stability", u: 0.6, p: 0.4, fn: false },
+
+                    { name: "Egalitarianism vs. Aspiration", u: 0.0, p: 0.0, fn: false },
+
+                    { name: "Sustainability vs. Extraction", u: 0.0, p: 0.0, fn: false },
+
+                    { name: "Urban vs. Regional", u: 0.0, p: 0.0, fn: false },
+
+                    { name: "Fair Go vs. Market", u: 0.0, p: 0.0, fn: false },
+
+                    { name: "Reconciliation vs. Denial", u: 0.0, p: 0.0, fn: false },
+
+                    { name: "Luck vs. Effort", u: 0.0, p: 0.0, fn: false },
+
+                    { name: "Unity vs. Division", u: 0.0, p: 0.0, fn: false },
+
+                    { name: "The Vote", u: 0.8, p: 0.6, fn: false },
+
+                    { name: "The Royal Commission", u: 0.7, p: 0.7, fn: false },
+
+                    { name: "The High Court", u: 0.8, p: 0.5, fn: false },
+
+                    { name: "The Media", u: -0.2, p: 0.4, fn: false },
+
+                    { name: "The ABS", u: 0.8, p: 0.4, fn: false },
+
+                    { name: "The Pub Test", u: 0.4, p: -0.3, fn: false },
+
+                    { name: "The Treasury", u: 0.6, p: 0.5, fn: false },
+
+                    { name: "The Next Generation", u: 0.7, p: 0.8, fn: false },
+
+                    { name: "The Energy Transition", u: 0.9, p: 0.8, fn: false },
+
+                    { name: "Northern Australia", u: 0.3, p: 0.5, fn: false },
+
+                    { name: "The Republic", u: 0.6, p: 0.4, fn: false },
+
+                    { name: "Treaty [First Nations]", u: 0.9, p: 0.7, fn: true },
+
+                    { name: "Asia", u: 0.5, p: 0.3, fn: false },
+
+                    { name: "The Good Life", u: 0.7, p: 0.5, fn: false },
+
+                    { name: "The Fair Go", u: 0.9, p: 0.3, fn: false },
+
+                    { name: "The Lifestyle", u: 0.6, p: 0.3, fn: false },
+
+                    { name: "Girt By Sea", u: 0.4, p: -0.3, fn: false },
+
+                    { name: "The Second Chance", u: 0.8, p: 0.5, fn: false },
+
+                    { name: "Dispossession [First Nations]", u: -0.8, p: -0.7, fn: true },
+
+                    { name: "She'll Be Right", u: 0.3, p: -0.5, fn: false },
+
+                    { name: "The Land", u: 0.7, p: -0.3, fn: false },
+
+                    { name: "Australia", u: 0.6, p: 0.4, fn: false }
+
+                ]
+
+            }
+
+        };
+
+        // Canvas setup
+
+        const canvas = document.getElementById('hegemonyCanvas');
+
+        const ctx = canvas.getContext('2d');
+
+        const tooltip = document.getElementById('tooltip');
+
+        const width = canvas.width;
+
+        const height = canvas.height;
+
+        const cx = width / 2;
+
+        const cy = height / 2;
+
+        const scale = (width - 100) / 2; // Maps -1 to +1 across canvas
+
+        let currentPlane = 'all';
+
+        let hoveredEntry = null;
+
+        // Coordinate conversion (INVERTED: positive υ is LEFT)
+
+        function toCanvasX(u) { return cx - (u * scale); }
+
+        function toCanvasY(p) { return cy - (p * scale); }
+
+        // Get quadrant color
+
+        function getQuadrantColor(u, p, alpha = 1) {
+
+            if (u >= 0 && p >= 0) return `rgba(74, 222, 128, ${alpha})`; // Greater Good - Green
+
+            if (u < 0 && p >= 0) return `rgba(248, 113, 113, ${alpha})`; // Greatest Lie - Red
+
+            if (u >= 0 && p < 0) return `rgba(56, 189, 248, ${alpha})`; // Lesser Good - Blue
+
+            return `rgba(251, 146, 60, ${alpha})`; // Greater Evil - Orange
+
+        }
+
+        // Draw the hegemony grid
+
+        function drawGrid() {
+
+            ctx.clearRect(0, 0, width, height);
+
+            // Background quadrant shading
+
+            ctx.globalAlpha = 0.1;
+
+            ctx.fillStyle = '#4ade80'; ctx.fillRect(0, 0, cx, cy); // TL - Greater Good
+
+            ctx.fillStyle = '#f87171'; ctx.fillRect(cx, 0, cx, cy); // TR - Greatest Lie
+
+            ctx.fillStyle = '#38bdf8'; ctx.fillRect(0, cy, cx, height / 2); // BL - Lesser Good
+
+            ctx.fillStyle = '#fb923c'; ctx.fillRect(cx, cy, cx, height / 2); // BR - Greater Evil
+
+            ctx.globalAlpha = 1;
+
+            // Zone 1 boundary (ÃÂ±1.0)
+
+            ctx.strokeStyle = '#475569';
+
+            ctx.lineWidth = 2;
+
+            ctx.setLineDash([5, 5]);
+
+            ctx.strokeRect(toCanvasX(1), toCanvasY(1), 2 * scale, 2 * scale);
+
+            // Zone 2 boundary (ÃÂ±2.0)
+
+            ctx.strokeStyle = '#334155';
+
+            ctx.lineWidth = 1;
+
+            ctx.strokeRect(toCanvasX(2), toCanvasY(2), 4 * scale, 4 * scale);
+
+            ctx.setLineDash([]);
+
+            // Axes
+
+            ctx.strokeStyle = '#64748b';
+
+            ctx.lineWidth = 1;
+
+            ctx.beginPath();
+
+            ctx.moveTo(0, cy); ctx.lineTo(width, cy); // Horizontal (υ)
+
+            ctx.moveTo(cx, 0); ctx.lineTo(cx, height); // Vertical (ψ)
+
+            ctx.stroke();
+
+            // Corner labels
+
+            ctx.font = '600 11px Inter';
+
+            ctx.fillStyle = '#4ade80'; ctx.textAlign = 'right'; ctx.fillText('GREATER GOOD', cx - 10, 25);
+
+            ctx.fillStyle = '#f87171'; ctx.textAlign = 'left'; ctx.fillText('GREATEST LIE', cx + 10, 25);
+
+            ctx.fillStyle = '#38bdf8'; ctx.textAlign = 'right'; ctx.fillText('LESSER GOOD', cx - 10, height - 15);
+
+            ctx.fillStyle = '#fb923c'; ctx.textAlign = 'left'; ctx.fillText('GREATER EVIL', cx + 10, height - 15);
+
+            // Axis labels
+
+            ctx.font = '600 10px Inter';
+
+            ctx.fillStyle = '#94a3b8';
+
+            ctx.textAlign = 'center';
+
+            ctx.fillText('υ = +1 (Universal)', 60, cy - 10);
+
+            ctx.fillText('υ = -1 (Self)', width - 60, cy - 10);
+
+            ctx.save();
+
+            ctx.translate(cx + 15, 60);
+
+            ctx.rotate(-Math.PI / 2);
+
+            ctx.fillText('ψ = +1 (Create)', 0, 0);
+
+            ctx.restore();
+
+            ctx.save();
+
+            ctx.translate(cx + 15, height - 40);
+
+            ctx.rotate(-Math.PI / 2);
+
+            ctx.fillText('ψ = -1 (Suppress)', 0, 0);
+
+            ctx.restore();
+
+        }
+
+        // Draw entries
+
+        function drawEntries() {
+
+            const planes = currentPlane === 'all' ? Object.keys(kanonData) : [currentPlane];
+
+            planes.forEach(planeId => {
+
+                const plane = kanonData[planeId];
+
+                plane.entries.forEach(entry => {
+
+                    const x = toCanvasX(entry.u);
+
+                    const y = toCanvasY(entry.p);
+
+                    const radius = entry.fn ? 6 : 4;
+
+                    const color = entry.fn ? '#7c3aed' : getQuadrantColor(entry.u, entry.p);
+
+                    ctx.beginPath();
+
+                    ctx.arc(x, y, radius, 0, Math.PI * 2);
+
+                    ctx.fillStyle = color;
+
+                    ctx.fill();
+
+                    if (entry === hoveredEntry) {
+
+                        ctx.strokeStyle = '#fff';
+
+                        ctx.lineWidth = 2;
+
+                        ctx.stroke();
+
+                    }
+
+                });
+
+                // Draw plane centroid
+
+                ctx.beginPath();
+
+                const centX = toCanvasX(plane.total.u);
+
+                const centY = toCanvasY(plane.total.p);
+
+                ctx.arc(centX, centY, 10, 0, Math.PI * 2);
+
+                ctx.fillStyle = plane.color;
+
+                ctx.globalAlpha = 0.8;
+
+                ctx.fill();
+
+                ctx.globalAlpha = 1;
+
+                ctx.strokeStyle = '#fff';
+
+                ctx.lineWidth = 2;
+
+                ctx.stroke();
+
+                // Label
+
+                ctx.font = '700 10px Inter';
+
+                ctx.fillStyle = '#fff';
+
+                ctx.textAlign = 'center';
+
+                ctx.fillText(`P${planeId}`, centX, centY + 4);
+
+            });
+
+        }
+
+        // Draw grand total
+
+        function drawGrandTotal() {
+
+            if (currentPlane !== 'all') return;
+
+            const totalU = 0.44;
+
+            const totalP = 0.26;
+
+            const x = toCanvasX(totalU);
+
+            const y = toCanvasY(totalP);
+
+            ctx.beginPath();
+
+            ctx.arc(x, y, 14, 0, Math.PI * 2);
+
+            ctx.fillStyle = '#fff';
+
+            ctx.fill();
+
+            ctx.strokeStyle = '#0f172a';
+
+            ctx.lineWidth = 3;
+
+            ctx.stroke();
+
+            ctx.font = '700 9px Inter';
+
+            ctx.fillStyle = '#0f172a';
+
+            ctx.textAlign = 'center';
+
+            ctx.fillText('AUS', x, y + 3);
+
+        }
+
+        // Main draw function
+
+        function draw() {
+
+            drawGrid();
+
+            drawEntries();
+
+            drawGrandTotal();
+
+        }
+
+        // Update stats display
+
+        function updateStats() {
+
+            const statsGrid = document.getElementById('statsGrid');
+
+            const planes = currentPlane === 'all' ? Object.keys(kanonData) : [currentPlane];
+
+            let html = '';
+
+            if (currentPlane === 'all') {
+
+                html += `
+
+                    <div class="stat-card">
+
+                        <h3>Grand Total (354 Entries)</h3>
+
+                        <div class="stat-value positive">υ = +0.44, ψ = +0.26</div>
+
+                        <p style="font-size: 0.75rem; color: #94a3b8; margin-top: 0.5rem;">Lesser Good — Positive morality, moderate will</p>
+
+                    </div>
+
+                `;
+
+            }
+
+            planes.forEach(planeId => {
+
+                const plane = kanonData[planeId];
+
+                const fnCount = plane.entries.filter(e => e.fn).length;
+
+                const quadrantClass = plane.total.u >= 0 ? 'positive' : 'negative';
+
+                html += `
+
+                    <div class="stat-card" style="border-left: 3px solid ${plane.color};">
+
+                        <h3>Plane ${planeId}: ${plane.name}</h3>
+
+                        <div class="stat-value ${quadrantClass}">υ = ${plane.total.u >= 0 ? '+' : ''}${plane.total.u.toFixed(2)}, ψ = ${plane.total.p >= 0 ? '+' : ''}${plane.total.p.toFixed(2)}</div>
+
+                        <p style="font-size: 0.75rem; color: #94a3b8; margin-top: 0.5rem;">
+
+                            ${plane.entries.length} entries ${fnCount > 0 ? `"Â¢ <span style="color: #7c3aed;">${fnCount} First Nations</span>` : ''}
+
+                        </p>
+
+                    </div>
+
+                `;
+
+            });
+
+            statsGrid.innerHTML = html;
+
+        }
+
+        // Mouse interaction
+
+        canvas.addEventListener('mousemove', (e) => {
+
+            const rect = canvas.getBoundingClientRect();
+
+            const mouseX = e.clientX - rect.left;
+
+            const mouseY = e.clientY - rect.top;
+
+            hoveredEntry = null;
+
+            const planes = currentPlane === 'all' ? Object.keys(kanonData) : [currentPlane];
+
+            for (const planeId of planes) {
+
+                for (const entry of kanonData[planeId].entries) {
+
+                    const x = toCanvasX(entry.u);
+
+                    const y = toCanvasY(entry.p);
+
+                    const dist = Math.sqrt((mouseX - x) ** 2 + (mouseY - y) ** 2);
+
+                    if (dist < 10) {
+
+                        hoveredEntry = entry;
+
+                        hoveredEntry._planeId = planeId;
+
+                        break;
+
+                    }
+
+                }
+
+                if (hoveredEntry) break;
+
+            }
+
+            if (hoveredEntry) {
+
+                tooltip.style.display = 'block';
+
+                tooltip.style.left = (e.clientX + 15) + 'px';
+
+                tooltip.style.top = (e.clientY + 15) + 'px';
+
+                tooltip.querySelector('.tooltip-title').textContent = hoveredEntry.name + (hoveredEntry.fn ? ' [FN]' : '');
+
+                tooltip.querySelector('.tooltip-coords').textContent = `υ = ${hoveredEntry.u >= 0 ? '+' : ''}${hoveredEntry.u.toFixed(1)}, ψ = ${hoveredEntry.p >= 0 ? '+' : ''}${hoveredEntry.p.toFixed(1)}`;
+
+                tooltip.querySelector('.tooltip-judgment').textContent = `Plane ${hoveredEntry._planeId}: ${kanonData[hoveredEntry._planeId].name}`;
+
+            } else {
+
+                tooltip.style.display = 'none';
+
+            }
+
+            draw();
+
+        });
+
+        canvas.addEventListener('mouseleave', () => {
+
+            hoveredEntry = null;
+
+            tooltip.style.display = 'none';
+
+            draw();
+
+        });
+
+        // Button handlers
+
+        document.querySelectorAll('.plane-btn').forEach(btn => {
+
+            btn.addEventListener('click', () => {
+
+                document.querySelectorAll('.plane-btn').forEach(b => b.classList.remove('active'));
+
+                btn.classList.add('active');
+
+                currentPlane = btn.dataset.plane;
+
+                draw();
+
+                updateStats();
+
+            });
+
+        });
+
+        // Initial draw
+
+        draw();
+
+        updateStats();
+
+    </script>
+
+</body>
+
+</html>

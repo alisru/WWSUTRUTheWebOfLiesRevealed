@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hegemonic Stress Tensor Visualization (Grid Attractors)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a;
+            color: #e2e8f0;
+        }
+
+        canvas {
+            background-color: #1e293b;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .control-group {
+            margin-bottom: 0.75rem;
+        }
+
+        label {
+            display: block;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Slider Styling */
+        input[type=range] {
+            width: 100%;
+            height: 6px;
+            background: #334155;
+            border-radius: 3px;
+            outline: none;
+            appearance: none;
+        }
+
+        input[type=range]::-webkit-slider-thumb {
+            appearance: none;
+            width: 14px;
+            height: 14px;
+            background: #38bdf8;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background .15s ease-in-out;
+            box-shadow: 0 0 0 2px #0f172a;
+        }
+
+        input[type=range]::-webkit-slider-thumb:hover {
+            background: #0ea5e9;
+        }
+
+        /* Disabled Slider */
+        input[type=range]:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        input[type=range]:disabled::-webkit-slider-thumb {
+            background: #475569;
+        }
+
+        /* Specific slider colors */
+        #t15::-webkit-slider-thumb {
+            background: #38bdf8;
+        }
+
+        /* Cyan */
+        #t25::-webkit-slider-thumb {
+            background: #f87171;
+        }
+
+        /* Red */
+        #t05::-webkit-slider-thumb {
+            background: #4ade80;
+        }
+
+        /* Green */
+        #t35::-webkit-slider-thumb {
+            background: #fb923c;
+        }
+
+        /* Orange */
+        #scopeRadius::-webkit-slider-thumb {
+            background: #facc15;
+        }
+
+        /* Yellow */
+
+        .value-display {
+            float: right;
+            color: #f8fafc;
+            font-variant-numeric: tabular-nums;
+            font-weight: normal;
+            text-transform: none;
+            font-size: 0.7rem;
+        }
+
+        .section-header {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.5rem;
+            border-bottom: 1px solid #334155;
+            padding-bottom: 0.25rem;
+        }
+
+        .pole-controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 8px;
+            padding: 8px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 6px;
+        }
+
+        .pole-title {
+            grid-column: span 2;
+            font-size: 0.75rem;
+            font-weight: bold;
+            color: #e2e8f0;
+            margin-bottom: 4px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .sub-label {
+            font-size: 0.65rem;
+            color: #64748b;
+        }
+
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .toggle-label {
+            font-size: 0.75rem;
+            color: #94a3b8;
+            font-weight: 600;
+        }
+
+        /* Scrollable controls area */
+        .controls-scroll {
+            max-height: 80vh;
+            overflow-y: auto;
+            padding-right: 8px;
+        }
+
+        .controls-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .controls-scroll::-webkit-scrollbar-thumb {
+            background: #475569;
+            border-radius: 3px;
+        }
+
+        .controls-scroll::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
+
+        /* Concept Slider Styles */
+        .concept-group {
+            margin-bottom: 12px;
+            padding: 8px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .concept-header {
+            font-size: 0.7rem;
+            color: #94a3b8;
+            margin-bottom: 6px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .concept-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 4px;
+        }
+
+        .concept-label {
+            font-size: 0.65rem;
+            width: auto;
+            /* Auto width */
+            max-width: 120px;
+            /* Max width */
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .opt-label {
+            color: #4ade80;
+        }
+
+        .pess-label {
+            color: #f87171;
+        }
+
+        .concept-slider {
+            flex: 1;
+        }
+
+        .concept-slider::-webkit-slider-thumb {
+            width: 10px;
+            height: 10px;
+        }
+    </style>
+</head>
+
+<body class="p-4 sm:p-6 flex flex-col lg:flex-row gap-6 items-start justify-center min-h-screen">
+
+    <div class="flex flex-col gap-4 w-full max-w-sm shrink-0">
+        <div>
+            <h1 class="text-xl font-bold text-sky-400">Hegemonic Stress Tensor</h1>
+            <p class="text-xs text-slate-400 mt-1">Relative System with Scope-Dependent Control. Attractors arranged in
+                a square grid lattice.</p>
+        </div>
+
+        <div class="bg-slate-800 p-4 rounded-xl border border-slate-700 controls-scroll">
+            <h2 class="section-header">Consciousness Scope</h2>
+            <div class="control-group">
+                <label for="scopeRadius" class="text-yellow-400">Radius <span id="val-scope" class="value-display">Layer
+                        3.5</span></label>
+                <input type="range" id="scopeRadius" min="0" max="7" step="0.1" value="3.5">
+            </div>
+
+            <h2 class="section-header mt-4">System Settings</h2>
+            <div class="control-group">
+                <label for="res">Density <span id="val-res" class="value-display">Med</span></label>
+                <input type="range" id="res" min="1" max="100" value="50">
+            </div>
+            <div class="control-group">
+                <label for="repulsion">Repulsion (Understanding) <span id="val-rep"
+                        class="value-display">30</span></label>
+                <input type="range" id="repulsion" min="0" max="100" value="30">
+            </div>
+
+            <h2 class="section-header mt-4">Triadic Concepts (By Node)</h2>
+            <div id="conceptControls">
+                <!-- Generated by JS -->
+            </div>
+
+            <h2 class="section-header mt-4">Major Attractors (Composite)</h2>
+            <div id="attractorControls">
+                <!-- Generated by JS -->
+            </div>
+
+            <h2 class="section-header mt-4">Visuals</h2>
+            <div class="toggle-container">
+                <span class="toggle-label">Blobs</span>
+                <input type="checkbox" id="showBlobs" checked class="accent-sky-500 w-4 h-4">
+            </div>
+            <div class="toggle-container">
+                <span class="toggle-label">Contours</span>
+                <input type="checkbox" id="showContours" checked class="accent-sky-500 w-4 h-4">
+            </div>
+            <div class="toggle-container">
+                <span class="toggle-label">Vectors</span>
+                <input type="checkbox" id="showVectors" class="accent-sky-500 w-4 h-4">
+            </div>
+            <div class="toggle-container">
+                <span class="toggle-label">Attractor Markers</span>
+                <input type="checkbox" id="showPoles" checked class="accent-sky-500 w-4 h-4">
+            </div>
+            <div class="toggle-container">
+                <span class="toggle-label">Compass</span>
+                <input type="checkbox" id="showCompass" checked class="accent-sky-500 w-4 h-4">
+            </div>
+        </div>
+    </div>
+
+    <div class="relative w-full max-w-2xl">
+        <canvas id="tensorCanvas" width="650" height="650" class="w-full h-auto"></canvas>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('tensorCanvas');
+        const ctx = canvas.getContext('2d');
+        const dpr = window.devicePixelRatio || 1;
+        const rect = canvas.getBoundingClientRect();
+        canvas.width = rect.width * dpr;
+        canvas.height = rect.height * dpr;
+        ctx.scale(dpr, dpr);
+
+        const width = rect.width;
+        const height = rect.height;
+
+        // --- Configuration & State ---
+        let gridSize = 35;
+        let contourRes = 8;
+        let repulsion = 30;
+        let scopeRadiusVal = 3.5; // Visual only now
+
+        let showBlobs = true;
+        let showContours = true;
+        let showVectors = false;
+        let showPoles = true;
+        let showCompass = true;
+
+        // Center
+        const cx = width * 0.5;
+        const cy = height * 0.5;
+        const maxR = width * 0.6; // Max pixel radius for Layer 7
+        const SILVER_RATIO = Math.SQRT2 - 1; // User defined
+
+        // --- Triadic Concepts Data ---
+        // Mapped to 4x4 Grid (0,0 to 3,3)
+        // [x][y]
+        const conceptDefinitions = [
+            // Column 0 (x=0)
+            [
+                { opt: "Reality (Truth)", pess: "Chaos (Structurelessness)" },      // 0,0
+                { opt: "The World (Fortitude)", pess: "Denial (Rejection of Fact)" },   // 0,1
+                { opt: "Learning (Prudence)", pess: "Anarchy (Dissolution)" },   // 0,2
+                { opt: "Intelligence (Hope)", pess: "Confusion (Self-Ignorance)" } // 0,3
+            ],
+            // Column 1 (x=1)
+            [
+                { opt: "History (Context)", pess: "Nihilism (Belief in Nothing)" },   // 1,0
+                { opt: "Internal Judgment (Justice)", pess: "Dogma (Closed Mind)" }, // 1,1
+                { opt: "Emotional-physics (Temperance)", pess: "Apathy (Inability to Care)" }, // 1,2
+                { opt: "Religion (Charity)", pess: "Deceit (Ill-Will)" }     // 1,3
+            ],
+            // Column 2 (x=2)
+            [
+                { opt: "Language (Connection)", pess: "Hatred (Active Ill-Will)" },    // 2,0
+                { opt: "Sociology (Empathy)", pess: "Indulgence (Lack of Control)" }, // 2,1
+                { opt: "Meta-Physics (Imagination)", pess: "Corruption (Perversion)" }, // 2,2
+                { opt: "Spirituality (Faith)", pess: "Erasure (Denial of Record)" } // 2,3
+            ],
+            // Column 3 (x=3)
+            [
+                { opt: "Psychology (Understanding)", pess: "Despair (Negative Conviction)" }, // 3,0
+                { opt: "Society itself (Community)", pess: "Folly (Willful Ignorance)" }, // 3,1
+                { opt: "Physics (Objectivity)", pess: "Cowardice (Refusal to Facts)" },  // 3,2
+                { opt: "Maths (Order)", pess: "Delusion (The Greater Lie)" }      // 3,3
+            ]
+        ];
+
+        // --- Attractor Definitions (Grid-Based) ---
+        const coords = [0.125, 0.375, 0.625, 0.875];
+        const rawAttractors = [];
+
+        let idCounter = 0;
+
+        // Helper to assign properties based on quadrant/position
+        function getPoleProps(x, y, isMajor = false) {
+            let color = "#cbd5e1"; // Default Grey
+            let label = "Minor Node";
+            let type = "Neutral";
+            let layer = 1;
+
+            // Distance from center (0.5, 0.5) determines Layer
+            const dx = x - 0.5;
+            const dy = y - 0.5;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+
+            // Map distance to layer (approx)
+            layer = Math.floor(dist * 12) + 1;
+            if (layer > 7) layer = 7;
+            if (layer < 1) layer = 1;
+
+            // Quadrant Logic for Color & Type
+            if (x < 0.5 && y < 0.5) {
+                color = "#38bdf8"; type = "GG";
+            } else if (x >= 0.5 && y < 0.5) {
+                color = "#f87171"; type = "LE";
+            } else if (x < 0.5 && y >= 0.5) {
+                color = "#4ade80"; type = "LG";
+            } else {
+                color = "#fb923c"; type = "GE";
+            }
+
+            // Labeling Logic
+            if (isMajor) {
+                if (type === "GG") label = "Major Greater Good";
+                else if (type === "LE") label = "Major Lesser Evil";
+                else if (type === "LG") label = "Major Lesser Good";
+                else label = "Major Greater Evil";
+            } else {
+                // Minor Node Labeling
+                if (Math.abs(dx) < 0.2 && Math.abs(dy) < 0.2) label = `${type} Inner`;
+                else if (Math.abs(dx) > 0.3 && Math.abs(dy) > 0.3) label = `${type} Corner`;
+                else label = `${type} Outer`;
+            }
+
+            return { label, color, layer, type };
+        }
+
+        // --- Minor Node Composition Logic (Round 11 - User Explicit List) ---
+        // Defines how each of the 16 Minor Nodes is composed of 2 concepts
+        const minorNodeCompositions = [
+            // GG Quadrant (TL)
+            { gridX: 0, gridY: 0, sources: [{ x: 0, y: 0, type: 'opt' }, { x: 1, y: 0, type: 'opt' }] }, // gg-gg: Reality + History
+            { gridX: 1, gridY: 0, sources: [{ x: 2, y: 0, type: 'opt' }, { x: 3, y: 0, type: 'opt' }] }, // gg-le: Language + Psychology (Connection + Understanding)
+            { gridX: 1, gridY: 1, sources: [{ x: 2, y: 1, type: 'opt' }, { x: 3, y: 1, type: 'opt' }] }, // gg-ge: Sociology + Society (Empathy + Community)
+            { gridX: 0, gridY: 1, sources: [{ x: 0, y: 1, type: 'opt' }, { x: 1, y: 1, type: 'opt' }] }, // gg-lg: The World + Internal Judgment (Fortitude + Justice)
+
+            // LG Quadrant (BL)
+            { gridX: 0, gridY: 2, sources: [{ x: 0, y: 2, type: 'opt' }, { x: 1, y: 2, type: 'opt' }] }, // lg-gg: Learning + Emotional-phys (Learning + Temperance)
+            { gridX: 1, gridY: 2, sources: [{ x: 2, y: 2, type: 'opt' }, { x: 3, y: 2, type: 'opt' }] }, // lg-le: Meta-Phys + Physics (Imagination + Objectivity)
+            { gridX: 1, gridY: 3, sources: [{ x: 2, y: 3, type: 'opt' }, { x: 3, y: 3, type: 'opt' }] }, // lg-ge: Spirituality + Maths (Faith + Order)
+            { gridX: 0, gridY: 3, sources: [{ x: 0, y: 3, type: 'opt' }, { x: 1, y: 3, type: 'opt' }] }, // lg-lg: Intelligence + Religion (Hope + Charity)
+
+            // LE Quadrant (TR)
+            { gridX: 2, gridY: 0, sources: [{ x: 0, y: 0, type: 'pess' }, { x: 1, y: 0, type: 'pess' }] }, // le-gg: Chaos + Nihilism
+            { gridX: 3, gridY: 0, sources: [{ x: 2, y: 0, type: 'pess' }, { x: 3, y: 0, type: 'pess' }] }, // le-le: Hatred + Despair
+            { gridX: 3, gridY: 1, sources: [{ x: 2, y: 1, type: 'pess' }, { x: 3, y: 1, type: 'pess' }] }, // le-ge: Indulgence + Folly
+            { gridX: 2, gridY: 1, sources: [{ x: 0, y: 1, type: 'pess' }, { x: 1, y: 1, type: 'pess' }] }, // le-lg: Denial + Dogma
+
+            // GE Quadrant (BR)
+            { gridX: 2, gridY: 2, sources: [{ x: 0, y: 2, type: 'pess' }, { x: 1, y: 2, type: 'pess' }] }, // ge-gg: Anarchy + Apathy
+            { gridX: 3, gridY: 2, sources: [{ x: 2, y: 2, type: 'pess' }, { x: 3, y: 2, type: 'pess' }] }, // ge-le: Corruption + Cowardice
+            { gridX: 3, gridY: 3, sources: [{ x: 2, y: 3, type: 'pess' }, { x: 3, y: 3, type: 'pess' }] }, // ge-ge: Erasure + Delusion
+            { gridX: 2, gridY: 3, sources: [{ x: 0, y: 3, type: 'pess' }, { x: 1, y: 3, type: 'pess' }] }  // ge-lg: Confusion + Deceit
+        ];
+
+        // 1. Generate existing 4x4 Grid (Minor Nodes)
+        coords.forEach((y, j) => {
+            coords.forEach((x, i) => {
+                const props = getPoleProps(x, y, false);
+                const concept = conceptDefinitions[i][j];
+
+                // Find composition definition
+                const comp = minorNodeCompositions.find(c => c.gridX === i && c.gridY === j);
+
+                // Deep copy sources and add 'value' property for independent state
+                const sources = comp ? comp.sources.map(s => ({ ...s, value: 0 })) : [];
+
+                rawAttractors.push({
+                    id: `node_minor_${i}_${j}`,
+                    x: x,
+                    y: y,
+                    layer: props.layer,
+                    label: props.label,
+                    color: props.color,
+                    type: props.type,
+                    gridX: i,
+                    gridY: j,
+                    isMajor: false,
+                    concept: concept,
+                    sources: sources,
+                    strength: 0 // Calculated composite strength
+                });
+            });
+        });
+
+        // --- Compositional Logic (4-Node Major System - User Defined) ---
+        const majorNodeCompositions = [
+            // 1. Greater Good (TL) - History, Language, Empathy, Justice
+            {
+                id: "major_GG", label: "Greater Good (TL)", x: 0.25, y: 0.25,
+                sources: [{ x: 1, y: 0, w: 0.25 }, { x: 2, y: 0, w: 0.25 }, { x: 2, y: 1, w: 0.25 }, { x: 1, y: 1, w: 0.25 }]
+            },
+            // 2. Lesser Evil (TR) - Nihilism, Hatred, Dogma, Indulgence
+            {
+                id: "major_LE", label: "Lesser Evil (TR)", x: 0.75, y: 0.25,
+                sources: [{ x: 1, y: 0, w: 0.25 }, { x: 2, y: 0, w: 0.25 }, { x: 1, y: 1, w: 0.25 }, { x: 2, y: 1, w: 0.25 }]
+            },
+            // 3. Lesser Good (BL) - Temperance, Imagination, Faith, Charity
+            {
+                id: "major_LG", label: "Lesser Good (BL)", x: 0.25, y: 0.75,
+                sources: [{ x: 1, y: 2, w: 0.25 }, { x: 2, y: 2, w: 0.25 }, { x: 2, y: 3, w: 0.25 }, { x: 1, y: 3, w: 0.25 }]
+            },
+            // 4. Greater Evil (BR) - Apathy, Corruption, Deceit, Erasure
+            {
+                id: "major_GE", label: "Greater Evil (BR)", x: 0.75, y: 0.75,
+                sources: [{ x: 1, y: 2, w: 0.25 }, { x: 2, y: 2, w: 0.25 }, { x: 1, y: 3, w: 0.25 }, { x: 2, y: 3, w: 0.25 }]
+            }
+        ];
+
+        // 2. Generate new 4-Node Major System
+        majorNodeCompositions.forEach(def => {
+            const props = getPoleProps(def.x, def.y, true);
+            rawAttractors.push({
+                id: def.id,
+                x: def.x,
+                y: def.y,
+                layer: props.layer,
+                label: def.label,
+                color: props.color,
+                type: props.type,
+                isMajor: true,
+                sources: def.sources,
+                strength: 0
+            });
+        });
+
+        // Hydrate attractors
+        const attractors = rawAttractors.map(a => {
+            let ext = 0;
+            let int = 0;
+
+            if (a.isMajor && a.x < 0.5 && a.y < 0.5) {
+                ext = 200; // Max for Major TL
+            }
+
+            return {
+                ...a,
+                basePx: a.x * width, // Store base position
+                basePy: a.y * height,
+                px: a.x * width,
+                py: a.y * height,
+                ext: ext,
+                int: int,
+                rgb: hexToRgb(a.color)
+            };
+        });
+
+        function hexToRgb(hex) {
+            const bigint = parseInt(hex.slice(1), 16);
+            return [(bigint >> 16) & 255, (bigint >> 8) & 255, bigint & 255];
+        }
+
+        // --- DOM Generation for Controls ---
+        const controlsDiv = document.getElementById('attractorControls');
+        const conceptsDiv = document.getElementById('conceptControls');
+
+        function renderAttractorControls() {
+            controlsDiv.innerHTML = '';
+            const major = attractors.filter(a => a.isMajor);
+
+            const createControl = (att) => {
+                const div = document.createElement('div');
+                div.className = 'pole-controls';
+                div.style.borderLeft = `3px solid ${att.color}`;
+
+                const title = document.createElement('div');
+                title.className = 'pole-title';
+                title.innerHTML = `<span>${att.label}</span> <span id="status-${att.id}" class="text-[9px] uppercase tracking-wider opacity-50">0%</span>`;
+                div.appendChild(title);
+
+                const strRow = document.createElement('div');
+                strRow.className = "flex items-center gap-2 text-[10px] text-slate-400";
+                strRow.innerHTML = `
+                    <div class="flex-1 flex flex-col">
+                        <span>Strength: <span id="val-str-${att.id}">0</span></span>
+                        <div class="w-full h-1 bg-slate-700 rounded overflow-hidden"><div id="bar-str-${att.id}" class="h-full bg-sky-400" style="width:0%"></div></div>
+                    </div>
+                `;
+                div.appendChild(strRow);
+                controlsDiv.appendChild(div);
+            };
+
+            major.forEach(createControl);
+        }
+
+        function renderGroupedSliders() {
+            conceptsDiv.innerHTML = '';
+
+            // 1. Build Lookup for Major Node Influence
+            // Map "x,y" -> [MajorID, MajorID...]
+            const majorInfluenceMap = {};
+            const majorNodes = attractors.filter(a => a.isMajor);
+            majorNodes.forEach(major => {
+                if (major.sources) {
+                    major.sources.forEach(src => {
+                        const key = `${src.x},${src.y}`;
+                        if (!majorInfluenceMap[key]) majorInfluenceMap[key] = [];
+                        // Use a short code for the Major Node (e.g., GG, LE)
+                        const shortCode = major.type; // GG, LE, etc.
+                        if (!majorInfluenceMap[key].includes(shortCode)) {
+                            majorInfluenceMap[key].push(shortCode);
+                        }
+                    });
+                }
+            });
+
+            // 2. Sort Minor Nodes
+            // Desired Order: Major Groups (GG->LE->GE->LG) -> Minor Sub-nodes (gg->le->ge->lg)
+            // Major Quadrants:
+            // GG: x<2, y<2
+            // LE: x>=2, y<2
+            // GE: x>=2, y>=2 (Note: User requested GE 3rd in list "gg-le-ge-lg")
+            // LG: x<2, y>=2
+
+            const getMajorOrder = (x, y) => {
+                if (x < 2 && y < 2) return 0; // GG (TL)
+                if (x >= 2 && y < 2) return 1; // LE (TR)
+                if (x >= 2 && y >= 2) return 2; // GE (BR) - Following gg-le-ge-lg pattern
+                return 3; // LG (BL)
+            };
+
+            const getMinorOrder = (x, y) => {
+                // Relative coordinates within 2x2 quadrant
+                const rx = x % 2;
+                const ry = y % 2;
+                if (rx === 0 && ry === 0) return 0; // gg (tl)
+                if (rx === 1 && ry === 0) return 1; // le (tr)
+                if (rx === 1 && ry === 1) return 2; // ge (br)
+                return 3; // lg (bl)
+            };
+
+            const getMajorLabel = (order) => ['GG', 'LE', 'GE', 'LG'][order];
+            const getMinorLabel = (order) => ['gg', 'le', 'ge', 'lg'][order];
+
+            const minorNodes = attractors.filter(a => !a.isMajor);
+
+            minorNodes.sort((a, b) => {
+                const majA = getMajorOrder(a.gridX, a.gridY);
+                const majB = getMajorOrder(b.gridX, b.gridY);
+                if (majA !== majB) return majA - majB;
+
+                const minA = getMinorOrder(a.gridX, a.gridY);
+                const minB = getMinorOrder(b.gridX, b.gridY);
+                return minA - minB;
+            });
+
+            minorNodes.forEach(minorNode => {
+                const majOrder = getMajorOrder(minorNode.gridX, minorNode.gridY);
+                const minOrder = getMinorOrder(minorNode.gridX, minorNode.gridY);
+                const majStr = getMajorLabel(majOrder);
+                const minStr = getMinorLabel(minOrder).toUpperCase(); // Uppercase for header
+
+                // Render Sliders for Sources
+                if (minorNode.sources) {
+                    minorNode.sources.forEach((src, index) => {
+                        const div = document.createElement('div');
+                        div.className = 'concept-group';
+                        div.style.borderLeft = `3px solid ${minorNode.color}`;
+
+                        // Header Construction
+                        let headerText = `[${majStr}-${minStr}]`;
+
+                        // Check for Major Influence
+                        const key = `${src.x},${src.y}`;
+                        if (majorInfluenceMap[key]) {
+                            const relevantMajors = majorInfluenceMap[key].filter(majCode => {
+                                const isOptMajor = (majCode === 'GG' || majCode === 'LG');
+                                const isOptSlider = (src.type === 'opt');
+                                return isOptMajor === isOptSlider;
+                            });
+
+                            if (relevantMajors.length > 0) {
+                                headerText += `{${relevantMajors.join(',')}}`;
+                            }
+                        }
+
+                        const header = document.createElement('div');
+                        header.className = 'concept-header';
+                        header.innerText = headerText;
+                        div.appendChild(header);
+
+                        // src has {x, y, type, value}
+                        // Find the concept definition label
+                        const conceptDef = conceptDefinitions[src.x][src.y];
+                        let label = src.type === 'opt' ? conceptDef.opt : conceptDef.pess;
+                        const labelClass = src.type === 'opt' ? 'opt-label' : 'pess-label';
+
+                        const row = document.createElement('div');
+                        row.className = 'concept-row';
+                        row.innerHTML = `<span class="concept-label ${labelClass}" title="${label}" style="width: auto; max-width: 120px;">${label}</span>`;
+
+                        const slider = document.createElement('input');
+                        slider.type = 'range';
+                        slider.className = 'concept-slider';
+                        slider.min = 0; slider.max = 100; slider.value = src.value;
+
+                        slider.addEventListener('input', (e) => {
+                            const newVal = parseInt(e.target.value);
+                            // Update Local Source Value
+                            src.value = newVal;
+
+                            updateAllStrengths();
+                            requestAnimationFrame(draw);
+                        });
+
+                        row.appendChild(slider);
+                        div.appendChild(row);
+                        conceptsDiv.appendChild(div);
+                    });
+                }
+            });
+        }
+
+        renderAttractorControls();
+        renderGroupedSliders();
+
+        // --- Physics & Position Logic ---
+        function updateAllStrengths() {
+            const minorNodes = attractors.filter(a => !a.isMajor);
+            const majorNodes = attractors.filter(a => a.isMajor);
+
+            // 1. Update Minor Node Strengths (Composite of Independent Sliders)
+            minorNodes.forEach(minor => {
+                let total = 0;
+                if (minor.sources && minor.sources.length > 0) {
+                    minor.sources.forEach(src => {
+                        total += src.value;
+                    });
+                    minor.strength = total / minor.sources.length; // Average
+                }
+            });
+
+            // 2. Update Major Node Strengths
+            // Major Nodes derive strength from the specific sliders on the Minor Nodes that match their composition.
+            // CRITICAL FIX: Only look at Minor Nodes in the SAME QUADRANT (same type).
+            majorNodes.forEach(major => {
+                let total = 0;
+                let totalW = 0;
+
+                // Filter Minor Nodes to only those in the same quadrant
+                const quadrantMinors = minorNodes.filter(m => m.type === major.type);
+
+                if (major.sources) {
+                    major.sources.forEach(src => {
+                        // src is {x, y, w} (The Concept Grid Coordinates)
+
+                        // Determine if Major Node is Opt or Pess aligned
+                        const isOpt = (major.id === 'major_GG' || major.id === 'major_LG');
+                        const type = isOpt ? 'opt' : 'pess';
+
+                        quadrantMinors.forEach(minor => {
+                            if (minor.sources) {
+                                minor.sources.forEach(s => {
+                                    if (s.x === src.x && s.y === src.y && s.type === type) {
+                                        // Found a slider for this concept in the correct quadrant!
+                                        total += s.value * src.w;
+                                    }
+                                });
+                            }
+                        });
+
+                        totalW += src.w;
+                    });
+                }
+
+                major.strength = total;
+
+                // Update UI Indicators
+                const valStrEl = document.getElementById(`val-str-${major.id}`);
+                const barStrEl = document.getElementById(`bar-str-${major.id}`);
+                const statusEl = document.getElementById(`status-${major.id}`);
+
+                if (valStrEl) valStrEl.textContent = Math.round(major.strength);
+                if (barStrEl) barStrEl.style.width = `${Math.min(100, major.strength)}%`; // Cap visual at 100
+                if (statusEl) statusEl.textContent = `${Math.round(major.strength)}%`;
+            });
+        }
+
+        // --- Main Listener Logic ---
+        const bindListener = (id, setter) => {
+            const el = document.getElementById(id);
+            const valEl = document.getElementById('val-' + (id === 'repulsion' ? 'rep' : (id === 'scopeRadius' ? 'scope' : id)));
+
+            if (el.type === 'checkbox') {
+                el.addEventListener('change', (e) => {
+                    setter(e.target.checked);
+                    requestAnimationFrame(draw);
+                });
+            } else {
+                el.addEventListener('input', (e) => {
+                    const val = parseFloat(e.target.value);
+                    setter(val);
+                    if (valEl) {
+                        if (id === 'res') valEl.textContent = val > 70 ? 'High' : (val > 30 ? 'Med' : 'Low');
+                        else if (id === 'scopeRadius') valEl.textContent = 'Layer ' + val.toFixed(1);
+                        else valEl.textContent = val;
+                    }
+                    requestAnimationFrame(draw);
+                });
+            }
+        };
+
+        bindListener('repulsion', v => repulsion = v);
+        bindListener('scopeRadius', v => {
+            scopeRadiusVal = v;
+            requestAnimationFrame(draw);
+        });
+        bindListener('res', v => {
+            gridSize = 80 - (v * 0.65);
+            contourRes = Math.max(2, Math.floor(20 - (v * 0.18)));
+        });
+        bindListener('showBlobs', v => showBlobs = v);
+        bindListener('showContours', v => showContours = v);
+        bindListener('showVectors', v => showVectors = v);
+        bindListener('showPoles', v => showPoles = v);
+        bindListener('showCompass', v => showCompass = v);
+
+        // --- Physics Engine ---
+        function calculateForcesAt(x, y) {
+            let netFx = 0;
+            let netFy = 0;
+            let potential = 0;
+
+            // Color mixing accumulators
+            let r = 0, g = 0, b = 0, totW = 0;
+
+            // Calculate Net Vector (Vector Addition)
+            attractors.forEach(att => {
+                const dx = x - att.px;
+                const dy = y - att.py;
+                const dist = Math.hypot(dx, dy);
+
+                // Effective Mass Logic
+                let effectiveMass = 0;
+
+                if (att.isMajor) {
+                    effectiveMass = att.strength * 2.0;
+                } else {
+                    effectiveMass = att.strength * 1.0;
+                }
+
+                // Inverse Square Law (Gravity)
+                const G = 2500;
+                const epsilon = 500;
+                const magnitude = effectiveMass * G / (dist * dist + epsilon);
+
+                let nx = 0, ny = 0;
+                if (dist > 0.001) {
+                    nx = -dx / dist;
+                    ny = -dy / dist;
+                }
+
+                // Vector Component (Isotropic)
+                let fx = magnitude * nx;
+                let fy = magnitude * ny;
+
+                // Accumulate Net Force
+                netFx += fx;
+                netFy += fy;
+
+                potential += magnitude;
+
+                // Accumulate Color
+                const weight = magnitude;
+                r += att.rgb[0] * weight;
+                g += att.rgb[1] * weight;
+                b += att.rgb[2] * weight;
+                totW += weight;
+            });
+
+            // Repulsion
+            const cdx = x - cx;
+            const cdy = y - cy;
+            const cDist = Math.hypot(cdx, cdy);
+
+            // Repulsion strength
+            const repMag = repulsion * Math.exp(-cDist / (gridSize * 3));
+            potential -= repMag;
+
+            let cnx = 0, cny = 0;
+            if (cDist > 0.001) {
+                cnx = cdx / cDist;
+                cny = cdy / cDist;
+            }
+
+            // Add Repulsion to Net Force
+            netFx += repMag * cnx;
+            netFy += repMag * cny;
+
+            const netMag = Math.hypot(netFx, netFy);
+
+            // Final Color
+            if (totW === 0) totW = 1;
+            const avgColor = [r / totW, g / totW, b / totW];
+
+            return {
+                netVector: { fx: netFx, fy: netFy, mag: netMag },
+                potential,
+                avgColor
+            };
+        }
+
+        // --- Drawing Helpers ---
+        function drawVectorBox(ctx, x, y, netVector, color, alphaMult) {
+            // Square Radial Convergence
+            const half = gridSize / 2;
+
+            // 1. Calculate Focal Point Displacement
+            const sensitivity = 1.0;
+            let dx = netVector.fx * sensitivity;
+            let dy = netVector.fy * sensitivity;
+
+            // Clamp displacement
+            const limit = half * 0.9;
+            const mag = Math.hypot(dx, dy);
+            if (mag > limit) {
+                dx = (dx / mag) * limit;
+                dy = (dy / mag) * limit;
+            }
+
+            const fx = x + dx;
+            const fy = y + dy;
+
+            // 2. Define Anchors
+            const anchors = [
+                { ax: -half, ay: -half }, // TL
+                { ax: 0, ay: -half }, // TM
+                { ax: half, ay: -half }, // TR
+                { ax: half, ay: 0 },     // RM
+                { ax: half, ay: half },  // BR
+                { ax: 0, ay: half },  // BM
+                { ax: -half, ay: half },  // BL
+                { ax: -half, ay: 0 }      // LM
+            ];
+
+            // 3. Draw Lines
+            const rgb = color.match(/\d+/g);
+            if (rgb && rgb.length >= 3) {
+                ctx.strokeStyle = `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, ${0.8 * alphaMult})`;
+            } else {
+                ctx.strokeStyle = color;
+            }
+            ctx.lineWidth = 1;
+
+            ctx.beginPath();
+            anchors.forEach(p => {
+                ctx.moveTo(x + p.ax, y + p.ay);
+                ctx.lineTo(fx, fy);
+            });
+            ctx.stroke();
+        }
+
+        function drawContours(ctx) {
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
+            const colsC = Math.ceil(width / contourRes);
+            const rowsC = Math.ceil(height / contourRes);
+
+            const grid = new Float32Array((rowsC + 1) * (colsC + 1));
+            for (let j = 0; j <= rowsC; j++) {
+                for (let i = 0; i <= colsC; i++) {
+                    const field = calculateForcesAt(i * contourRes, j * contourRes);
+                    grid[j * (colsC + 1) + i] = field.potential;
+                }
+            }
+
+            const baseLevels = [-5, -2, 2, 5, 10, 20, 40, 80, 150];
+            const scale = 1.0;
+            const levels = baseLevels.map(l => l * scale);
+
+            ctx.beginPath();
+            levels.forEach(threshold => {
+                for (let j = 0; j < rowsC; j++) {
+                    for (let i = 0; i < colsC; i++) {
+                        const v0 = grid[j * (colsC + 1) + i];
+                        const v1 = grid[j * (colsC + 1) + i + 1];
+                        const v2 = grid[(j + 1) * (colsC + 1) + i + 1];
+                        const v3 = grid[(j + 1) * (colsC + 1) + i];
+
+                        let caseIdx = 0;
+                        if (v0 >= threshold) caseIdx |= 1; if (v1 >= threshold) caseIdx |= 2;
+                        if (v2 >= threshold) caseIdx |= 4; if (v3 >= threshold) caseIdx |= 8;
+                        if (caseIdx === 0 || caseIdx === 15) continue;
+
+                        const lerp = (vA, vB) => (threshold - vA) / (vB - vA);
+                        const a = { x: lerp(v0, v1), y: 0 }; const b = { x: 1, y: lerp(v1, v2) };
+                        const c = { x: lerp(v3, v2), y: 1 }; const d = { x: 0, y: lerp(v0, v3) };
+                        const dl = (p1, p2) => { ctx.moveTo((i + p1.x) * contourRes, (j + p1.y) * contourRes); ctx.lineTo((i + p2.x) * contourRes, (j + p2.y) * contourRes); };
+
+                        switch (caseIdx) { case 1: dl(d, a); break; case 2: dl(a, b); break; case 3: dl(d, b); break; case 4: dl(b, c); break; case 5: dl(d, a); dl(b, c); break; case 6: dl(a, c); break; case 7: dl(d, c); break; case 8: dl(c, d); break; case 9: dl(c, a); break; case 10: dl(a, b); dl(c, d); break; case 11: dl(c, b); break; case 12: dl(d, b); break; case 13: dl(b, a); break; case 14: dl(d, a); break; }
+                    }
+                }
+            });
+            ctx.stroke();
+        }
+
+        function drawMultiArrows(ctx, x, y, vectors, alphaMult) {
+            const maxLength = gridSize * 0.5; // Cap at 50% of grid size
+
+            vectors.forEach(v => {
+                if (v.mag < 0.5) return;
+
+                let visualLen = v.mag * (gridSize * 0.05);
+                if (visualLen > maxLength) visualLen = maxLength;
+
+                const angle = Math.atan2(v.fy, v.fx);
+                const tox = x + Math.cos(angle) * visualLen;
+                const toy = y + Math.sin(angle) * visualLen;
+                ctx.beginPath();
+                ctx.moveTo(x, y);
+                ctx.lineTo(tox, toy);
+                ctx.strokeStyle = `rgba(${v.color[0]}, ${v.color[1]}, ${v.color[2]}, ${0.8 * alphaMult})`;
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+            });
+        }
+
+        function drawScope(ctx, radiusPx) {
+            // Scope Boundary
+            ctx.beginPath();
+            ctx.arc(cx, cy, radiusPx, 0, Math.PI * 2);
+            ctx.strokeStyle = 'rgba(250, 204, 21, 0.8)';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([5, 5]);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Layer Rings
+            for (let i = 1; i <= 7; i++) {
+                const r = (width / 2) * (i / 7) * 1.2;
+                ctx.beginPath();
+                ctx.arc(cx, cy, r, 0, Math.PI * 2);
+                ctx.strokeStyle = i <= scopeRadiusVal ? 'rgba(255, 255, 255, 0.1)' : 'rgba(255, 255, 255, 0.03)';
+                ctx.lineWidth = 1;
+                ctx.stroke();
+            }
+        }
+
+        function drawPoles(ctx) {
+            attractors.forEach(att => {
+                ctx.beginPath();
+
+                // Sizing Logic (User Defined)
+                let r = 0;
+                if (att.isMajor) {
+                    // Major Node Size grows with Strength
+                    const strength = att.strength / 200; // 0 to 1
+                    const baseR = ((width / 2) * (SILVER_RATIO / 2)) / 2;
+                    r = baseR * (1 + strength); // Grow up to 2x
+                } else {
+                    // Minor Node Size grows with Strength
+                    const strength = att.strength / 100; // 0 to 1
+                    const baseR = ((width / 4) * (SILVER_RATIO / 2)) / 2;
+                    r = baseR * (0.8 + strength * 0.5); // Grow slightly
+                }
+
+                ctx.arc(att.px, att.py, r, 0, Math.PI * 2);
+
+                // Visual Style
+                if (att.isMajor) {
+                    // Transparent for Major
+                    const rgb = att.color.match(/\d+/g);
+                    if (!rgb) {
+                        ctx.fillStyle = `rgba(${att.rgb[0]}, ${att.rgb[1]}, ${att.rgb[2]}, 0.2)`;
+                    } else {
+                        ctx.fillStyle = att.color; // Fallback
+                    }
+                } else {
+                    ctx.fillStyle = att.color;
+                }
+
+                ctx.fill();
+                ctx.strokeStyle = '#fff';
+                ctx.lineWidth = 1;
+                ctx.stroke();
+
+                // Labels
+                ctx.textAlign = 'center';
+                if (att.isMajor) {
+                    ctx.fillStyle = 'rgba(255,255,255,0.9)';
+                    ctx.font = '10px Inter';
+                    ctx.fillText(att.label.replace('Major ', '').replace('Anchor', ''), att.px, att.py);
+                } else {
+                    // Minor Node Label [Maj-Min]
+                    const rx = att.gridX % 2;
+                    const ry = att.gridY % 2;
+                    let sub = 'gg';
+                    if (rx === 1 && ry === 0) sub = 'le';
+                    else if (rx === 1 && ry === 1) sub = 'ge';
+                    else if (rx === 0 && ry === 1) sub = 'lg';
+
+                    ctx.fillStyle = 'rgba(255,255,255,0.6)';
+                    ctx.font = '9px Inter';
+                    ctx.fillText(`[${att.type}-${sub}]`, att.px, att.py);
+                }
+            });
+        }
+
+        function drawCompass(ctx) {
+            if (!showCompass) return;
+
+            // Calculate Net Force at Center
+            const centerData = calculateForcesAt(cx, cy);
+            const vec = centerData.netVector;
+
+            // If homogeny (near zero), don't draw
+            if (vec.mag < 0.01) return;
+
+            const angle = Math.atan2(vec.fy, vec.fx);
+
+            // Draw Compass in CENTER
+            // Scale 3x
+
+            ctx.save();
+            ctx.translate(cx, cy);
+            ctx.rotate(angle - Math.PI / 2); // Rotate so "down" (long end) points to vector
+
+            // Draw Christian Cross
+            // Long end points in direction of pull
+            // Center is (0,0). Total height 150.
+            // Top: -45, Bottom: +105. Width 24.
+
+            ctx.fillStyle = `rgba(255, 255, 255, 0.9)`;
+            ctx.shadowColor = `rgba(${Math.floor(centerData.avgColor[0])}, ${Math.floor(centerData.avgColor[1])}, ${Math.floor(centerData.avgColor[2])}, 0.8)`;
+            ctx.shadowBlur = 45; // Increased blur for scale
+
+            // Vertical Bar (Long Bottom, Short Top)
+            // x: -12, y: -45, w: 24, h: 150
+            ctx.fillRect(-12, -45, 24, 150);
+
+            // Horizontal Bar (Arms)
+            // Top section: 45px. Bottom section: 105px.
+            // Cross bar centered at -27?
+            // Width 90 (-45 to 45). Height 24.
+            ctx.fillRect(-45, -27, 90, 24);
+
+            ctx.restore();
+
+            // Label
+            ctx.fillStyle = "rgba(255, 255, 255, 0.5)";
+            ctx.font = "14px Inter";
+            ctx.textAlign = "center";
+            ctx.fillText("NET PULL", cx, cy + 130);
+        }
+
+        // --- Main Draw Loop ---
+        function draw() {
+            ctx.clearRect(0, 0, width, height);
+
+            if (showContours) drawContours(ctx);
+
+            const currentScopePx = (scopeRadiusVal / 7) * (width * 0.6);
+
+            const rows = Math.floor(height / gridSize);
+            const cols = Math.floor(width / gridSize);
+
+            for (let i = 1; i < cols; i++) {
+                for (let j = 1; j < rows; j++) {
+                    const x = i * gridSize;
+                    const y = j * gridSize;
+
+                    const data = calculateForcesAt(x, y);
+                    const dist = Math.hypot(x - cx, y - cy);
+                    let alpha = dist > currentScopePx ? 0.2 : 1.0;
+
+                    if (showBlobs) {
+                        const colStr = `rgba(${Math.floor(data.avgColor[0])},${Math.floor(data.avgColor[1])},${Math.floor(data.avgColor[2])}, 0.7)`;
+                        drawVectorBox(ctx, x, y, data.netVector, colStr, alpha);
+                    }
+
+                    if (showVectors) {
+                        // For vectors, we can just show the net vector now
+                        const allVectors = [{ ...data.netVector, color: data.avgColor }];
+                        drawMultiArrows(ctx, x, y, allVectors, alpha);
+                    }
+                }
+            }
+
+            drawScope(ctx, currentScopePx);
+            if (showPoles) drawPoles(ctx);
+            drawCompass(ctx);
+        }
+
+        updateAllStrengths();
+        draw();
+    </script>
+</body>
+
+</html>
