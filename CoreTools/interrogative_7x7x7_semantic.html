@@ -1,0 +1,2133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>7x7x7 Interrogative Cube - Questoscrapy</title>
+    <style>
+        :root {
+            --bg-deep: #020617;
+            --accent-primary: #38bdf8;
+            --accent-secondary: #818cf8;
+            --glass: rgba(15, 23, 42, 0.7);
+            --text-main: #f1f5f9;
+            --text-dim: #94a3b8;
+            --border: rgba(56, 189, 248, 0.2);
+            --plane-1: #ef4444;
+            /* Metaphysical/Identity */
+            --plane-2: #f97316;
+            /* Possible/Definition */
+            --plane-3: #eab308;
+            /* Physical/Matter */
+            --plane-4: #22c55e;
+            /* Lyrical/Meaning */
+            --plane-5: #06b6d4;
+            /* Logical/Reason */
+            --plane-6: #6366f1;
+            /* Historical/Event */
+            --plane-7: #a855f7;
+            /* Emotive/Feeling */
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap');
+
+        body {
+            background: var(--bg-deep);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image:
+                radial-gradient(circle at 10% 20%, rgba(56, 189, 248, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(129, 140, 248, 0.05) 0%, transparent 40%);
+        }
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(2, 6, 23, 0.8);
+            backdrop-filter: blur(12px);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .back-link {
+            color: var(--accent-primary);
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: transform 0.2s ease;
+        }
+
+        .back-link:hover {
+            transform: translateX(-4px);
+            color: var(--accent-secondary);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 6rem;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: var(--text-dim);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        section {
+            margin-bottom: 8rem;
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .glass-card {
+            background: var(--glass);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: var(--accent-primary);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        h2::before {
+            content: '';
+            width: 4px;
+            height: 32px;
+            background: var(--accent-primary);
+            border-radius: 4px;
+        }
+
+        .theory-text p {
+            font-size: 1.1rem;
+            color: var(--text-dim);
+            margin-bottom: 1.5rem;
+        }
+
+        .theory-text strong {
+            color: var(--text-main);
+        }
+
+        .plane-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .plane-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .plane-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--color);
+            transform: translateY(-5px);
+        }
+
+        .plane-item .number {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            opacity: 0.5;
+            margin-bottom: 0.5rem;
+        }
+
+        .plane-name {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+            color: var(--color);
+        }
+
+        .plane-metric {
+            font-size: 0.9rem;
+            color: var(--text-dim);
+        }
+
+        .layer-section {
+            background: rgba(15, 23, 42, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 4rem;
+        }
+
+        .sub-layer {
+            margin-bottom: 3rem;
+        }
+
+        .sub-layer h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: var(--accent-secondary);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 0.5rem;
+        }
+
+        .metadata {
+            font-size: 0.9rem;
+            color: var(--text-dim);
+            margin-bottom: 1rem;
+        }
+
+        .interrogative-list {
+            list-style: none;
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .interrogative-item {
+            background: rgba(255, 255, 255, 0.02);
+            padding: 1rem;
+            border-radius: 12px;
+            font-size: 0.95rem;
+        }
+
+        .interrogative-item strong {
+            color: var(--accent-primary);
+            font-family: 'JetBrains Mono', monospace;
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .summary-box {
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.1) 0%, rgba(129, 140, 248, 0.1) 100%);
+            border: 1px solid var(--accent-primary);
+            padding: 3rem;
+            border-radius: 32px;
+            text-align: center;
+        }
+
+        .coordinate-badge {
+            display: inline-block;
+            background: var(--accent-primary);
+            color: var(--bg-deep);
+            padding: 0.25rem 0.75rem;
+            border-radius: 99px;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 4rem;
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .glass-card {
+                padding: 1.5rem;
+            }
+
+            .navbar {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <a href="./index.html" class="back-link">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            BACK TO INDEX
+        </a>
+        <div class="logo" style="font-weight: 800; letter-spacing: 0.1em; color: var(--accent-primary);">VFT 7x7x7</div>
+    </nav>
+
+    <div class="container">
+        <header>
+            <div class="coordinate-badge">[343.MATRIX]</div>
+            <h1>The 7x7x7 Interrogative Cube</h1>
+            <p class="subtitle">A recursive semantic framework for the systematic measurement of reality.</p>
+        </header>
+
+        <section id="theory">
+            <div class="glass-card">
+                <h2>The Foundation: Questoscrapy</h2>
+                <div class="theory-text">
+                    <p>The 7x7x7 Interrogative Cube is a <strong>Questoscraper</strong>—a semantic measurement apparatus
+                        designed for <strong>Questoscrapy</strong>.</p>
+                    <p>Questoscrapy is the systematic extraction of structured semantic coordinates from unstructured
+                        conceptual or volitional content. It extracts the underlying vector structure of an idea by
+                        subjecting it to a recursive array of 343 orthogonal interrogative pulses.</p>
+
+                    <div
+                        style="margin: 3rem 0; padding: 2rem; border-left: 2px solid var(--accent-secondary); background: rgba(129, 140, 248, 0.05);">
+                        <h3 style="margin-top: 0; color: var(--accent-secondary);">The 7 Planes as Densities of Reality
+                        </h3>
+                        <p>The whole plane structure originates from <strong>dividing an infinite plane twice</strong>,
+                            revealing <strong>7 defined points of intersection</strong>. This geometric division creates
+                            the 7 planes and 7 densities of reality.</p>
+                        <p>They function as <strong>relative meters</strong>, measuring the information depth within the
+                            universal field.</p>
+                    </div>
+
+                    <div class="plane-grid">
+                        <div class="plane-item" style="--color: var(--plane-1)">
+                            <div class="number">PLANE 01</div>
+                            <div class="plane-name">Metaphysical</div>
+                            <div class="plane-metric">Density of Identity (Who?)</div>
+                        </div>
+                        <div class="plane-item" style="--color: var(--plane-2)">
+                            <div class="number">PLANE 02</div>
+                            <div class="plane-name">Possible</div>
+                            <div class="plane-metric">Density of Definition (What?)</div>
+                        </div>
+                        <div class="plane-item" style="--color: var(--plane-3)">
+                            <div class="number">PLANE 03</div>
+                            <div class="plane-name">Physical</div>
+                            <div class="plane-metric">Density of Matter (Where?)</div>
+                        </div>
+                        <div class="plane-item" style="--color: var(--plane-4)">
+                            <div class="number">PLANE 04</div>
+                            <div class="plane-name">Lyrical</div>
+                            <div class="plane-metric">Density of Meaning (Why?)</div>
+                        </div>
+                        <div class="plane-item" style="--color: var(--plane-5)">
+                            <div class="number">PLANE 05</div>
+                            <div class="plane-name">Logical</div>
+                            <div class="plane-metric">Density of Reason (How?)</div>
+                        </div>
+                        <div class="plane-item" style="--color: var(--plane-6)">
+                            <div class="number">PLANE 06</div>
+                            <div class="plane-name">Historical</div>
+                            <div class="plane-metric">Density of Event (Cause?)</div>
+                        </div>
+                        <div class="plane-item" style="--color: var(--plane-7)">
+                            <div class="number">PLANE 07</div>
+                            <div class="plane-name">Emotive</div>
+                            <div class="plane-metric">Density of Feeling (Effect?)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="methodology">
+            <div class="glass-card">
+                <h2>Methodology: Scrapy & Graphy</h2>
+                <div class="theory-text">
+                    <p><strong>Questoscrapy (The Examination):</strong> The active phase where a concept is viewed
+                        through the "Questoscope" array. Every word or claim is interrogated across the seven densities
+                        to determine its precise location.</p>
+                    <p><strong>Questography (The Record):</strong> The resulting map of measurements. This document
+                        serves as the <strong>Questographic Plate</strong>, recording the spectrum of any given thought.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="recursive-layers">
+            <h2 style="font-size: 2.5rem; margin-bottom: 3rem;">Recursive Mapping Layers</h2>
+            <!-- Layers 1 & 2 -->
+            <div id="layers-1-2">
+                <div class="layer-section" style="border-top: 4px solid var(--plane-1);">
+                    <div class="coordinate-badge">LAYER 1.0</div>
+                    <h2 style="font-size: 2.5rem; margin: 1rem 0; text-transform: uppercase;">WHO (Metaphysical)</h2>
+                    <p style="color: var(--text-dim); margin-bottom: 3rem; font-size: 1.2rem;">The interrogation of
+                        Identity through the Metaphysical plane.</p>
+                    <div class="sub-layer">
+                        <h3>1.1 Who of Who?</h3>
+                        <div class="metadata">Through the lens of: Which identity/agent?</div>
+                        <div class="interrogative-list">
+                            <div class="interrogative-item">
+                                <strong>1.1.1 Who</strong>
+                                Which specific identity is being identified?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>1.1.2 What</strong>
+                                What definition characterizes this identity?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>1.1.3 Where</strong>
+                                What material/spatial location contains this identity?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>1.1.4 Why</strong>
+                                What meaning/purpose explains this identity?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>1.1.5 How</strong>
+                                What logical reason structures this identity?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>1.1.6 Cause</strong>
+                                What historical event/origin created this identity?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>1.1.7 Effect</strong>
+                                What emotional consequence flows from this identity?
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sub-layer">
+                        <h3>1.2 What of Who?</h3>
+                        <div class="metadata">Through the lens of: What definition/concept?</div>
+                        <div class="interrogative-list">
+                            <div class="interrogative-item">
+                                <strong>1.2.1 Who</strong>
+                                Which identity defines this conceptual aspect?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>1.2.2 What</strong>
+                                What definition characterizes this definition?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>1.2.3 Where</strong>
+                                What material location contains this definition?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>1.2.4 Why</strong>
+                                What meaning explains this definition?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>1.2.5 How</strong>
+                                What logical structure governs this definition?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>1.2.6 Cause</strong>
+                                What historical origin created this definition?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>1.2.7 Effect</strong>
+                                What emotional impact flows from this definition?
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sub-layer">
+                        <h3>1.3 Where of Who?</h3>
+                        <div class="metadata">Through the lens of: Where/what location?</div>
+                        <div class="interrogative-list">
+                            <div class="interrogative-item">
+                                <strong>1.3.1 Who</strong>
+                                Which identity occupies or defines this location?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>1.3.2 What</strong>
+                                What definition characterizes this location?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>1.3.3 Where</strong>
+                                What material place contains this location?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>1.3.4 Why</strong>
+                                What meaning explains this location?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>1.3.5 How</strong>
+                                What logical structure governs this location?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>1.3.6 Cause</strong>
+                                What historical event created this location?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>1.3.7 Effect</strong>
+                                What emotional consequence flows from this location?
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sub-layer">
+                        <h3>1.4 Why of Who?</h3>
+                        <div class="metadata">Through the lens of: Why/what purpose?</div>
+                        <div class="interrogative-list">
+                            <div class="interrogative-item">
+                                <strong>1.4.1 Who</strong>
+                                Which identity gives meaning to this purpose?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>1.4.2 What</strong>
+                                What definition characterizes this purpose?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>1.4.3 Where</strong>
+                                What material location contains this purpose?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>1.4.4 Why</strong>
+                                What deeper meaning explains this purpose?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>1.4.5 How</strong>
+                                What logical structure governs this purpose?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>1.4.6 Cause</strong>
+                                What historical origin created this purpose?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>1.4.7 Effect</strong>
+                                What emotional impact flows from this purpose?
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sub-layer">
+                        <h3>1.5 How of Who?</h3>
+                        <div class="metadata">Through the lens of: How/what method?</div>
+                        <div class="interrogative-list">
+                            <div class="interrogative-item">
+                                <strong>1.5.1 Who</strong>
+                                Which identity employs this method?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>1.5.2 What</strong>
+                                What definition characterizes this method?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>1.5.3 Where</strong>
+                                What material location contains this method?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>1.5.4 Why</strong>
+                                What meaning explains this method?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>1.5.5 How</strong>
+                                What logical structure governs this method?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>1.5.6 Cause</strong>
+                                What historical origin created this method?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>1.5.7 Effect</strong>
+                                What emotional consequence flows from this method?
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sub-layer">
+                        <h3>1.6 Cause of Who?</h3>
+                        <div class="metadata">Through the lens of: What origin/source?</div>
+                        <div class="interrogative-list">
+                            <div class="interrogative-item">
+                                <strong>1.6.1 Who</strong>
+                                Which identity created this origin?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>1.6.2 What</strong>
+                                What definition characterizes this origin?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>1.6.3 Where</strong>
+                                What material location contains this origin?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>1.6.4 Why</strong>
+                                What meaning explains this origin?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>1.6.5 How</strong>
+                                What logical structure governs this origin?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>1.6.6 Cause</strong>
+                                What historical event/precedent created this origin?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>1.6.7 Effect</strong>
+                                What emotional impact flows from this origin?
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sub-layer">
+                        <h3>1.7 Effect of Who?</h3>
+                        <div class="metadata">Through the lens of: What consequence/feeling?</div>
+                        <div class="interrogative-list">
+                            <div class="interrogative-item">
+                                <strong>1.7.1 Who</strong>
+                                Which identity experiences this consequence?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>1.7.2 What</strong>
+                                What definition characterizes this consequence?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>1.7.3 Where</strong>
+                                What material location contains this consequence?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>1.7.4 Why</strong>
+                                What meaning explains this consequence?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>1.7.5 How</strong>
+                                What logical structure governs this consequence?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>1.7.6 Cause</strong>
+                                What historical event created this consequence?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>1.7.7 Effect</strong>
+                                What emotional impact flows from this consequence?
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layer-section" style="border-top: 4px solid var(--plane-2);">
+                    <div class="coordinate-badge">LAYER 2.0</div>
+                    <h2 style="font-size: 2.5rem; margin: 1rem 0; text-transform: uppercase;">WHAT (Possible)</h2>
+                    <p style="color: var(--text-dim); margin-bottom: 3rem; font-size: 1.2rem;">The interrogation of
+                        Definition through the Possible plane.</p>
+                    <div class="sub-layer">
+                        <h3>2.1 Who of What?</h3>
+                        <div class="metadata">Through the lens of: Which identity/agent?</div>
+                        <div class="interrogative-list">
+                            <div class="interrogative-item">
+                                <strong>2.1.1 Who</strong>
+                                Which specific identity is being identified within possibility?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>2.1.2 What</strong>
+                                What definition characterizes this identity within possibility?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>2.1.3 Where</strong>
+                                What material location contains this identity within possibility?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>2.1.4 Why</strong>
+                                What meaning explains this identity within possibility?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>2.1.5 How</strong>
+                                What logical reason structures this identity within possibility?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>2.1.6 Cause</strong>
+                                What historical event created this identity within possibility?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>2.1.7 Effect</strong>
+                                What emotional consequence flows from this identity within possibility?
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sub-layer">
+                        <h3>2.2 What of What?</h3>
+                        <div class="metadata">Through the lens of: What definition/concept?</div>
+                        <div class="interrogative-list">
+                            <div class="interrogative-item">
+                                <strong>2.2.1 Who</strong>
+                                Which identity defines this concept?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>2.2.2 What</strong>
+                                What definition characterizes this definition?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>2.2.3 Where</strong>
+                                What material location contains this definition?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>2.2.4 Why</strong>
+                                What meaning explains this definition?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>2.2.5 How</strong>
+                                What logical structure governs this definition?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>2.2.6 Cause</strong>
+                                What historical origin created this definition?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>2.2.7 Effect</strong>
+                                What emotional impact flows from this definition?
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sub-layer">
+                        <h3>2.3 Where of What?</h3>
+                        <div class="metadata">Through the lens of: Where/what location?</div>
+                        <div class="interrogative-list">
+                            <div class="interrogative-item">
+                                <strong>2.3.1 Who</strong>
+                                Which identity occupies this location within possibility?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>2.3.2 What</strong>
+                                What definition characterizes this location within possibility?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>2.3.3 Where</strong>
+                                What material place contains this location within possibility?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>2.3.4 Why</strong>
+                                What meaning explains this location within possibility?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>2.3.5 How</strong>
+                                What logical structure governs this location within possibility?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>2.3.6 Cause</strong>
+                                What historical event created this location within possibility?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>2.3.7 Effect</strong>
+                                What emotional consequence flows from this location within possibility?
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sub-layer">
+                        <h3>2.4 Why of What?</h3>
+                        <div class="metadata">Through the lens of: Why/what purpose?</div>
+                        <div class="interrogative-list">
+                            <div class="interrogative-item">
+                                <strong>2.4.1 Who</strong>
+                                Which identity gives meaning to this purpose within possibility?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>2.4.2 What</strong>
+                                What definition characterizes this purpose within possibility?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>2.4.3 Where</strong>
+                                What material location contains this purpose within possibility?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>2.4.4 Why</strong>
+                                What deeper meaning explains this purpose within possibility?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>2.4.5 How</strong>
+                                What logical structure governs this purpose within possibility?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>2.4.6 Cause</strong>
+                                What historical origin created this purpose within possibility?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>2.4.7 Effect</strong>
+                                What emotional impact flows from this purpose within possibility?
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sub-layer">
+                        <h3>2.5 How of What?</h3>
+                        <div class="metadata">Through the lens of: How/what method?</div>
+                        <div class="interrogative-list">
+                            <div class="interrogative-item">
+                                <strong>2.5.1 Who</strong>
+                                Which identity employs this method within possibility?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>2.5.2 What</strong>
+                                What definition characterizes this method within possibility?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>2.5.3 Where</strong>
+                                What material location contains this method within possibility?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>2.5.4 Why</strong>
+                                What meaning explains this method within possibility?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>2.5.5 How</strong>
+                                What logical structure governs this method within possibility?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>2.5.6 Cause</strong>
+                                What historical origin created this method within possibility?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>2.5.7 Effect</strong>
+                                What emotional consequence flows from this method within possibility?
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sub-layer">
+                        <h3>2.6 Cause of What?</h3>
+                        <div class="metadata">Through the lens of: What origin/source?</div>
+                        <div class="interrogative-list">
+                            <div class="interrogative-item">
+                                <strong>2.6.1 Who</strong>
+                                Which identity created this origin within possibility?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>2.6.2 What</strong>
+                                What definition characterizes this origin within possibility?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>2.6.3 Where</strong>
+                                What material location contains this origin within possibility?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>2.6.4 Why</strong>
+                                What meaning explains this origin within possibility?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>2.6.5 How</strong>
+                                What logical structure governs this origin within possibility?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>2.6.6 Cause</strong>
+                                What historical event/precedent created this origin within possibility?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>2.6.7 Effect</strong>
+                                What emotional impact flows from this origin within possibility?
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sub-layer">
+                        <h3>2.7 Effect of What?</h3>
+                        <div class="metadata">Through the lens of: What consequence/feeling?</div>
+                        <div class="interrogative-list">
+                            <div class="interrogative-item">
+                                <strong>2.7.1 Who</strong>
+                                Which identity experiences this consequence within possibility?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>2.7.2 What</strong>
+                                What definition characterizes this consequence within possibility?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>2.7.3 Where</strong>
+                                What material location contains this consequence within possibility?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>2.7.4 Why</strong>
+                                What meaning explains this consequence within possibility?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>2.7.5 How</strong>
+                                What logical structure governs this consequence within possibility?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>2.7.6 Cause</strong>
+                                What historical event created this consequence within possibility?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>2.7.7 Effect</strong>
+                                What emotional impact flows from this consequence within possibility?
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Layers 3 & 4 -->
+            <div id="layers-3-4">
+                <div class="layer-section" style="border-top: 4px solid var(--plane-3);">
+                    <div class="coordinate-badge">LAYER 3.0</div>
+                    <h2 style="font-size: 2.5rem; margin: 1rem 0; text-transform: uppercase;">WHERE (Physical)</h2>
+                    <p style="color: var(--text-dim); margin-bottom: 3rem; font-size: 1.2rem;">The interrogation of
+                        Matter through the Physical plane.</p>
+                    <div class="sub-layer">
+                        <h3>3.1 Who of Where?</h3>
+                        <div class="metadata">Through the lens of: Which identity/agent?</div>
+                        <div class="interrogative-list">
+                            <div class="interrogative-item">
+                                <strong>3.1.1 Who</strong>
+                                Which specific identity is being identified within matter?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>3.1.2 What</strong>
+                                What definition characterizes this identity within matter?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>3.1.3 Where</strong>
+                                What material location contains this identity within matter?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>3.1.4 Why</strong>
+                                What meaning explains this identity within matter?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>3.1.5 How</strong>
+                                What logical reason structures this identity within matter?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>3.1.6 Cause</strong>
+                                What historical event created this identity within matter?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>3.1.7 Effect</strong>
+                                What emotional consequence flows from this identity within matter?
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sub-layer">
+                        <h3>3.2 What of Where?</h3>
+                        <div class="metadata">Through the lens of: What definition/concept?</div>
+                        <div class="interrogative-list">
+                            <div class="interrogative-item">
+                                <strong>3.2.1 Who</strong>
+                                Which identity defines this concept within matter?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>3.2.2 What</strong>
+                                What definition characterizes this definition within matter?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>3.2.3 Where</strong>
+                                What material location contains this definition within matter?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>3.2.4 Why</strong>
+                                What meaning explains this definition within matter?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>3.2.5 How</strong>
+                                What logical structure governs this definition within matter?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>3.2.6 Cause</strong>
+                                What historical origin created this definition within matter?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>3.2.7 Effect</strong>
+                                What emotional impact flows from this definition within matter?
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sub-layer">
+                        <h3>3.3 Where of Where?</h3>
+                        <div class="metadata">Through the lens of: Where/what location?</div>
+                        <div class="interrogative-list">
+                            <div class="interrogative-item">
+                                <strong>3.3.1 Who</strong>
+                                Which identity occupies this location?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>3.3.2 What</strong>
+                                What definition characterizes this location?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>3.3.3 Where</strong>
+                                What material place contains this location?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>3.3.4 Why</strong>
+                                What meaning explains this location?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>3.3.5 How</strong>
+                                What logical structure governs this location?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>3.3.6 Cause</strong>
+                                What historical event created this location?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>3.3.7 Effect</strong>
+                                What emotional consequence flows from this location?
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sub-layer">
+                        <h3>3.4 Why of Where?</h3>
+                        <div class="metadata">Through the lens of: Why/what purpose?</div>
+                        <div class="interrogative-list">
+                            <div class="interrogative-item">
+                                <strong>3.4.1 Who</strong>
+                                Which identity gives meaning to this purpose within matter?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>3.4.2 What</strong>
+                                What definition characterizes this purpose within matter?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>3.4.3 Where</strong>
+                                What material location contains this purpose?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>3.4.4 Why</strong>
+                                What deeper meaning explains this purpose within matter?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>3.4.5 How</strong>
+                                What logical structure governs this purpose within matter?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>3.4.6 Cause</strong>
+                                What historical origin created this purpose within matter?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>3.4.7 Effect</strong>
+                                What emotional impact flows from this purpose within matter?
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sub-layer">
+                        <h3>3.5 How of Where?</h3>
+                        <div class="metadata">Through the lens of: How/what method?</div>
+                        <div class="interrogative-list">
+                            <div class="interrogative-item">
+                                <strong>3.5.1 Who</strong>
+                                Which identity employs this method within matter?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>3.5.2 What</strong>
+                                What definition characterizes this method within matter?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>3.5.3 Where</strong>
+                                What material location contains this method?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>3.5.4 Why</strong>
+                                What meaning explains this method within matter?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>3.5.5 How</strong>
+                                What logical structure governs this method within matter?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>3.5.6 Cause</strong>
+                                What historical origin created this method within matter?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>3.5.7 Effect</strong>
+                                What emotional consequence flows from this method within matter?
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sub-layer">
+                        <h3>3.6 Cause of Where?</h3>
+                        <div class="metadata">Through the lens of: What origin/source?</div>
+                        <div class="interrogative-list">
+                            <div class="interrogative-item">
+                                <strong>3.6.1 Who</strong>
+                                Which identity created this origin within matter?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>3.6.2 What</strong>
+                                What definition characterizes this origin within matter?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>3.6.3 Where</strong>
+                                What material location contains this origin?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>3.6.4 Why</strong>
+                                What meaning explains this origin within matter?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>3.6.5 How</strong>
+                                What logical structure governs this origin within matter?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>3.6.6 Cause</strong>
+                                What historical event/precedent created this origin within matter?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>3.6.7 Effect</strong>
+                                What emotional impact flows from this origin within matter?
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sub-layer">
+                        <h3>3.7 Effect of Where?</h3>
+                        <div class="metadata">Through the lens of: What consequence/feeling?</div>
+                        <div class="interrogative-list">
+                            <div class="interrogative-item">
+                                <strong>3.7.1 Who</strong>
+                                Which identity experiences this consequence within matter?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>3.7.2 What</strong>
+                                What definition characterizes this consequence within matter?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>3.7.3 Where</strong>
+                                What material location contains this consequence?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>3.7.4 Why</strong>
+                                What meaning explains this consequence within matter?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>3.7.5 How</strong>
+                                What logical structure governs this consequence within matter?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>3.7.6 Cause</strong>
+                                What historical event created this consequence within matter?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>3.7.7 Effect</strong>
+                                What emotional impact flows from this consequence within matter?
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layer-section" style="border-top: 4px solid var(--plane-4);">
+                    <div class="coordinate-badge">LAYER 4.0</div>
+                    <h2 style="font-size: 2.5rem; margin: 1rem 0; text-transform: uppercase;">WHY (Lyrical)</h2>
+                    <p style="color: var(--text-dim); margin-bottom: 3rem; font-size: 1.2rem;">The interrogation of
+                        Meaning through the Lyrical plane.</p>
+                    <div class="sub-layer">
+                        <h3>4.1 Who of Why?</h3>
+                        <div class="metadata">Through the lens of: Which identity/agent?</div>
+                        <div class="interrogative-list">
+                            <div class="interrogative-item">
+                                <strong>4.1.1 Who</strong>
+                                Which specific identity is being identified within meaning?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>4.1.2 What</strong>
+                                What definition characterizes this identity within meaning?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>4.1.3 Where</strong>
+                                What material location contains this identity within meaning?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>4.1.4 Why</strong>
+                                What meaning explains this identity within meaning?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>4.1.5 How</strong>
+                                What logical reason structures this identity within meaning?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>4.1.6 Cause</strong>
+                                What historical event created this identity within meaning?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>4.1.7 Effect</strong>
+                                What emotional consequence flows from this identity within meaning?
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sub-layer">
+                        <h3>4.2 What of Why?</h3>
+                        <div class="metadata">Through the lens of: What definition/concept?</div>
+                        <div class="interrogative-list">
+                            <div class="interrogative-item">
+                                <strong>4.2.1 Who</strong>
+                                Which identity defines this concept within meaning?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>4.2.2 What</strong>
+                                What definition characterizes this definition within meaning?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>4.2.3 Where</strong>
+                                What material location contains this definition within meaning?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>4.2.4 Why</strong>
+                                What meaning explains this definition within meaning?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>4.2.5 How</strong>
+                                What logical structure governs this definition within meaning?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>4.2.6 Cause</strong>
+                                What historical origin created this definition within meaning?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>4.2.7 Effect</strong>
+                                What emotional impact flows from this definition within meaning?
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sub-layer">
+                        <h3>4.3 Where of Why?</h3>
+                        <div class="metadata">Through the lens of: Where/what location?</div>
+                        <div class="interrogative-list">
+                            <div class="interrogative-item">
+                                <strong>4.3.1 Who</strong>
+                                Which identity occupies this location within meaning?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>4.3.2 What</strong>
+                                What definition characterizes this location within meaning?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>4.3.3 Where</strong>
+                                What material place contains this location within meaning?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>4.3.4 Why</strong>
+                                What meaning explains this location within meaning?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>4.3.5 How</strong>
+                                What logical structure governs this location within meaning?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>4.3.6 Cause</strong>
+                                What historical event created this location within meaning?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>4.3.7 Effect</strong>
+                                What emotional consequence flows from this location within meaning?
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sub-layer">
+                        <h3>4.4 Why of Why?</h3>
+                        <div class="metadata">Through the lens of: Why/what purpose?</div>
+                        <div class="interrogative-list">
+                            <div class="interrogative-item">
+                                <strong>4.4.1 Who</strong>
+                                Which identity gives meaning to this purpose?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>4.4.2 What</strong>
+                                What definition characterizes this purpose?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>4.4.3 Where</strong>
+                                What material location contains this purpose?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>4.4.4 Why</strong>
+                                What deeper meaning explains this purpose?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>4.4.5 How</strong>
+                                What logical structure governs this purpose?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>4.4.6 Cause</strong>
+                                What historical origin created this purpose?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>4.4.7 Effect</strong>
+                                What emotional impact flows from this purpose?
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sub-layer">
+                        <h3>4.5 How of Why?</h3>
+                        <div class="metadata">Through the lens of: How/what method?</div>
+                        <div class="interrogative-list">
+                            <div class="interrogative-item">
+                                <strong>4.5.1 Who</strong>
+                                Which identity employs this method within meaning?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>4.5.2 What</strong>
+                                What definition characterizes this method within meaning?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>4.5.3 Where</strong>
+                                What material location contains this method within meaning?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>4.5.4 Why</strong>
+                                What meaning explains this method?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>4.5.5 How</strong>
+                                What logical structure governs this method within meaning?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>4.5.6 Cause</strong>
+                                What historical origin created this method within meaning?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>4.5.7 Effect</strong>
+                                What emotional consequence flows from this method within meaning?
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sub-layer">
+                        <h3>4.6 Cause of Why?</h3>
+                        <div class="metadata">Through the lens of: What origin/source?</div>
+                        <div class="interrogative-list">
+                            <div class="interrogative-item">
+                                <strong>4.6.1 Who</strong>
+                                Which identity created this origin within meaning?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>4.6.2 What</strong>
+                                What definition characterizes this origin within meaning?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>4.6.3 Where</strong>
+                                What material location contains this origin within meaning?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>4.6.4 Why</strong>
+                                What meaning explains this origin?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>4.6.5 How</strong>
+                                What logical structure governs this origin within meaning?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>4.6.6 Cause</strong>
+                                What historical event/precedent created this origin within meaning?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>4.6.7 Effect</strong>
+                                What emotional impact flows from this origin within meaning?
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sub-layer">
+                        <h3>4.7 Effect of Why?</h3>
+                        <div class="metadata">Through the lens of: What consequence/feeling?</div>
+                        <div class="interrogative-list">
+                            <div class="interrogative-item">
+                                <strong>4.7.1 Who</strong>
+                                Which identity experiences this consequence within meaning?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>4.7.2 What</strong>
+                                What definition characterizes this consequence within meaning?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>4.7.3 Where</strong>
+                                What material location contains this consequence within meaning?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>4.7.4 Why</strong>
+                                What meaning explains this consequence?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>4.7.5 How</strong>
+                                What logical structure governs this consequence within meaning?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>4.7.6 Cause</strong>
+                                What historical event created this consequence within meaning?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>4.7.7 Effect</strong>
+                                What emotional impact flows from this consequence within meaning?
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Layers 5 & 6 -->
+            <div id="layers-5-6">
+                <div class="layer-section" style="border-top: 4px solid var(--plane-5);">
+                    <div class="coordinate-badge">LAYER 5.0</div>
+                    <h2 style="font-size: 2.5rem; margin: 1rem 0; text-transform: uppercase;">HOW (Logical)</h2>
+                    <p style="color: var(--text-dim); margin-bottom: 3rem; font-size: 1.2rem;">The interrogation of
+                        Reason through the Logical plane.</p>
+                    <div class="sub-layer">
+                        <h3>5.1 Who of How?</h3>
+                        <div class="metadata">Through the lens of: Which identity/agent?</div>
+                        <div class="interrogative-list">
+                            <div class="interrogative-item">
+                                <strong>5.1.1 Who</strong>
+                                Which specific identity is being identified within reason?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>5.1.2 What</strong>
+                                What definition characterizes this identity within reason?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>5.1.3 Where</strong>
+                                What material location contains this identity within reason?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>5.1.4 Why</strong>
+                                What meaning explains this identity within reason?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>5.1.5 How</strong>
+                                What logical reason structures this identity?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>5.1.6 Cause</strong>
+                                What historical event created this identity within reason?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>5.1.7 Effect</strong>
+                                What emotional consequence flows from this identity within reason?
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sub-layer">
+                        <h3>5.2 What of How?</h3>
+                        <div class="metadata">Through the lens of: What definition/concept?</div>
+                        <div class="interrogative-list">
+                            <div class="interrogative-item">
+                                <strong>5.2.1 Who</strong>
+                                Which identity defines this concept within reason?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>5.2.2 What</strong>
+                                What definition characterizes this definition within reason?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>5.2.3 Where</strong>
+                                What material location contains this definition within reason?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>5.2.4 Why</strong>
+                                What meaning explains this definition within reason?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>5.2.5 How</strong>
+                                What logical structure governs this definition?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>5.2.6 Cause</strong>
+                                What historical origin created this definition within reason?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>5.2.7 Effect</strong>
+                                What emotional impact flows from this definition within reason?
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sub-layer">
+                        <h3>5.3 Where of How?</h3>
+                        <div class="metadata">Through the lens of: Where/what location?</div>
+                        <div class="interrogative-list">
+                            <div class="interrogative-item">
+                                <strong>5.3.1 Who</strong>
+                                Which identity occupies this location within reason?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>5.3.2 What</strong>
+                                What definition characterizes this location within reason?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>5.3.3 Where</strong>
+                                What material place contains this location within reason?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>5.3.4 Why</strong>
+                                What meaning explains this location within reason?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>5.3.5 How</strong>
+                                What logical structure governs this location?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>5.3.6 Cause</strong>
+                                What historical event created this location within reason?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>5.3.7 Effect</strong>
+                                What emotional consequence flows from this location within reason?
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sub-layer">
+                        <h3>5.4 Why of How?</h3>
+                        <div class="metadata">Through the lens of: Why/what purpose?</div>
+                        <div class="interrogative-list">
+                            <div class="interrogative-item">
+                                <strong>5.4.1 Who</strong>
+                                Which identity gives meaning to this purpose within reason?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>5.4.2 What</strong>
+                                What definition characterizes this purpose within reason?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>5.4.3 Where</strong>
+                                What material location contains this purpose within reason?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>5.4.4 Why</strong>
+                                What deeper meaning explains this purpose within reason?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>5.4.5 How</strong>
+                                What logical structure governs this purpose?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>5.4.6 Cause</strong>
+                                What historical origin created this purpose within reason?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>5.4.7 Effect</strong>
+                                What emotional impact flows from this purpose within reason?
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sub-layer">
+                        <h3>5.5 How of How?</h3>
+                        <div class="metadata">Through the lens of: How/what method?</div>
+                        <div class="interrogative-list">
+                            <div class="interrogative-item">
+                                <strong>5.5.1 Who</strong>
+                                Which identity employs this method?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>5.5.2 What</strong>
+                                What definition characterizes this method?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>5.5.3 Where</strong>
+                                What material location contains this method?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>5.5.4 Why</strong>
+                                What meaning explains this method?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>5.5.5 How</strong>
+                                What logical structure governs this method?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>5.5.6 Cause</strong>
+                                What historical origin created this method?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>5.5.7 Effect</strong>
+                                What emotional consequence flows from this method?
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sub-layer">
+                        <h3>5.6 Cause of How?</h3>
+                        <div class="metadata">Through the lens of: What origin/source?</div>
+                        <div class="interrogative-list">
+                            <div class="interrogative-item">
+                                <strong>5.6.1 Who</strong>
+                                Which identity created this origin within reason?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>5.6.2 What</strong>
+                                What definition characterizes this origin within reason?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>5.6.3 Where</strong>
+                                What material location contains this origin within reason?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>5.6.4 Why</strong>
+                                What meaning explains this origin within reason?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>5.6.5 How</strong>
+                                What logical structure governs this origin?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>5.6.6 Cause</strong>
+                                What historical event/precedent created this origin within reason?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>5.6.7 Effect</strong>
+                                What emotional impact flows from this origin within reason?
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sub-layer">
+                        <h3>5.7 Effect of How?</h3>
+                        <div class="metadata">Through the lens of: What consequence/feeling?</div>
+                        <div class="interrogative-list">
+                            <div class="interrogative-item">
+                                <strong>5.7.1 Who</strong>
+                                Which identity experiences this consequence within reason?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>5.7.2 What</strong>
+                                What definition characterizes this consequence within reason?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>5.7.3 Where</strong>
+                                What material location contains this consequence within reason?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>5.7.4 Why</strong>
+                                What meaning explains this consequence within reason?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>5.7.5 How</strong>
+                                What logical structure governs this consequence?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>5.7.6 Cause</strong>
+                                What historical event created this consequence within reason?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>5.7.7 Effect</strong>
+                                What emotional impact flows from this consequence within reason?
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layer-section" style="border-top: 4px solid var(--plane-6);">
+                    <div class="coordinate-badge">LAYER 6.0</div>
+                    <h2 style="font-size: 2.5rem; margin: 1rem 0; text-transform: uppercase;">CAUSE (Historical)</h2>
+                    <p style="color: var(--text-dim); margin-bottom: 3rem; font-size: 1.2rem;">The interrogation of
+                        Event through the Historical plane.</p>
+                    <div class="sub-layer">
+                        <h3>6.1 Who of Cause?</h3>
+                        <div class="metadata">Through the lens of: Which identity/agent?</div>
+                        <div class="interrogative-list">
+                            <div class="interrogative-item">
+                                <strong>6.1.1 Who</strong>
+                                Which specific identity is being identified within historical events?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>6.1.2 What</strong>
+                                What definition characterizes this identity within historical events?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>6.1.3 Where</strong>
+                                What material location contains this identity within historical events?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>6.1.4 Why</strong>
+                                What meaning explains this identity within historical events?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>6.1.5 How</strong>
+                                What logical reason structures this identity within historical events?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>6.1.6 Cause</strong>
+                                What historical event/precedent created this identity?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>6.1.7 Effect</strong>
+                                What emotional consequence flows from this identity within historical events?
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sub-layer">
+                        <h3>6.2 What of Cause?</h3>
+                        <div class="metadata">Through the lens of: What definition/concept?</div>
+                        <div class="interrogative-list">
+                            <div class="interrogative-item">
+                                <strong>6.2.1 Who</strong>
+                                Which identity defines this concept within historical events?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>6.2.2 What</strong>
+                                What definition characterizes this definition within historical events?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>6.2.3 Where</strong>
+                                What material location contains this definition within historical events?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>6.2.4 Why</strong>
+                                What meaning explains this definition within historical events?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>6.2.5 How</strong>
+                                What logical structure governs this definition within historical events?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>6.2.6 Cause</strong>
+                                What historical event/precedent created this definition?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>6.2.7 Effect</strong>
+                                What emotional impact flows from this definition within historical events?
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sub-layer">
+                        <h3>6.3 Where of Cause?</h3>
+                        <div class="metadata">Through the lens of: Where/what location?</div>
+                        <div class="interrogative-list">
+                            <div class="interrogative-item">
+                                <strong>6.3.1 Who</strong>
+                                Which identity occupies this location within historical events?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>6.3.2 What</strong>
+                                What definition characterizes this location within historical events?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>6.3.3 Where</strong>
+                                What material place contains this location within historical events?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>6.3.4 Why</strong>
+                                What meaning explains this location within historical events?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>6.3.5 How</strong>
+                                What logical structure governs this location within historical events?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>6.3.6 Cause</strong>
+                                What historical event/precedent created this location?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>6.3.7 Effect</strong>
+                                What emotional consequence flows from this location within historical events?
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sub-layer">
+                        <h3>6.4 Why of Cause?</h3>
+                        <div class="metadata">Through the lens of: Why/what purpose?</div>
+                        <div class="interrogative-list">
+                            <div class="interrogative-item">
+                                <strong>6.4.1 Who</strong>
+                                Which identity gives meaning to this purpose within historical events?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>6.4.2 What</strong>
+                                What definition characterizes this purpose within historical events?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>6.4.3 Where</strong>
+                                What material location contains this purpose within historical events?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>6.4.4 Why</strong>
+                                What deeper meaning explains this purpose within historical events?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>6.4.5 How</strong>
+                                What logical structure governs this purpose within historical events?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>6.4.6 Cause</strong>
+                                What historical event/precedent created this purpose?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>6.4.7 Effect</strong>
+                                What emotional impact flows from this purpose within historical events?
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sub-layer">
+                        <h3>6.5 How of Cause?</h3>
+                        <div class="metadata">Through the lens of: How/what method?</div>
+                        <div class="interrogative-list">
+                            <div class="interrogative-item">
+                                <strong>6.5.1 Who</strong>
+                                Which identity employs this method within historical events?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>6.5.2 What</strong>
+                                What definition characterizes this method within historical events?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>6.5.3 Where</strong>
+                                What material location contains this method within historical events?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>6.5.4 Why</strong>
+                                What meaning explains this method within historical events?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>6.5.5 How</strong>
+                                What logical structure governs this method within historical events?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>6.5.6 Cause</strong>
+                                What historical event/precedent created this method?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>6.5.7 Effect</strong>
+                                What emotional consequence flows from this method within historical events?
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sub-layer">
+                        <h3>6.6 Cause of Cause?</h3>
+                        <div class="metadata">Through the lens of: What origin/source?</div>
+                        <div class="interrogative-list">
+                            <div class="interrogative-item">
+                                <strong>6.6.1 Who</strong>
+                                Which identity created this origin/precedent?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>6.6.2 What</strong>
+                                What definition characterizes this origin/precedent?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>6.6.3 Where</strong>
+                                What material location contains this origin/precedent?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>6.6.4 Why</strong>
+                                What meaning explains this origin/precedent?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>6.6.5 How</strong>
+                                What logical structure governs this origin/precedent?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>6.6.6 Cause</strong>
+                                What temporal sequence/precedent is being measured?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>6.6.7 Effect</strong>
+                                What emotional impact flows from this origin/precedent?
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sub-layer">
+                        <h3>6.7 Effect of Cause?</h3>
+                        <div class="metadata">Through the lens of: What consequence/feeling?</div>
+                        <div class="interrogative-list">
+                            <div class="interrogative-item">
+                                <strong>6.7.1 Who</strong>
+                                Which identity experiences this consequence within historical events?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>6.7.2 What</strong>
+                                What definition characterizes this consequence within historical events?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>6.7.3 Where</strong>
+                                What material location contains this consequence within historical events?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>6.7.4 Why</strong>
+                                What meaning explains this consequence within historical events?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>6.7.5 How</strong>
+                                What logical structure governs this consequence within historical events?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>6.7.6 Cause</strong>
+                                What historical event/precedent created this consequence?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>6.7.7 Effect</strong>
+                                What emotional impact flows from this consequence within historical events?
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Layer 7 -->
+            <div id="layers-7">
+                <div class="layer-section" style="border-top: 4px solid var(--plane-7);">
+                    <div class="coordinate-badge">LAYER 7.0</div>
+                    <h2 style="font-size: 2.5rem; margin: 1rem 0; text-transform: uppercase;">EFFECT (Emotive)</h2>
+                    <p style="color: var(--text-dim); margin-bottom: 3rem; font-size: 1.2rem;">The interrogation of
+                        Feeling through the Emotive plane.</p>
+                    <div class="sub-layer">
+                        <h3>7.1 Who of Effect?</h3>
+                        <div class="metadata">Through the lens of: Which identity/agent?</div>
+                        <div class="interrogative-list">
+                            <div class="interrogative-item">
+                                <strong>7.1.1 Who</strong>
+                                Which specific identity is being identified within feeling?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>7.1.2 What</strong>
+                                What definition characterizes this identity within feeling?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>7.1.3 Where</strong>
+                                What material location contains this identity within feeling?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>7.1.4 Why</strong>
+                                What meaning explains this identity within feeling?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>7.1.5 How</strong>
+                                What logical reason structures this identity within feeling?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>7.1.6 Cause</strong>
+                                What historical event created this identity within feeling?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>7.1.7 Effect</strong>
+                                What emotional consequence/strain flows from this identity?
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sub-layer">
+                        <h3>7.2 What of Effect?</h3>
+                        <div class="metadata">Through the lens of: What definition/concept?</div>
+                        <div class="interrogative-list">
+                            <div class="interrogative-item">
+                                <strong>7.2.1 Who</strong>
+                                Which identity defines this concept within feeling?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>7.2.2 What</strong>
+                                What definition characterizes this definition within feeling?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>7.2.3 Where</strong>
+                                What material location contains this definition within feeling?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>7.2.4 Why</strong>
+                                What meaning explains this definition within feeling?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>7.2.5 How</strong>
+                                What logical structure governs this definition within feeling?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>7.2.6 Cause</strong>
+                                What historical origin created this definition within feeling?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>7.2.7 Effect</strong>
+                                What emotional impact/strain flows from this definition?
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sub-layer">
+                        <h3>7.3 Where of Effect?</h3>
+                        <div class="metadata">Through the lens of: Where/what location?</div>
+                        <div class="interrogative-list">
+                            <div class="interrogative-item">
+                                <strong>7.3.1 Who</strong>
+                                Which identity occupies this location within feeling?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>7.3.2 What</strong>
+                                What definition characterizes this location within feeling?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>7.3.3 Where</strong>
+                                What material place contains this location within feeling?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>7.3.4 Why</strong>
+                                What meaning explains this location within feeling?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>7.3.5 How</strong>
+                                What logical structure governs this location within feeling?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>7.3.6 Cause</strong>
+                                What historical event created this location within feeling?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>7.3.7 Effect</strong>
+                                What emotional consequence/strain flows from this location?
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sub-layer">
+                        <h3>7.4 Why of Effect?</h3>
+                        <div class="metadata">Through the lens of: Why/what purpose?</div>
+                        <div class="interrogative-list">
+                            <div class="interrogative-item">
+                                <strong>7.4.1 Who</strong>
+                                Which identity gives meaning to this purpose within feeling?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>7.4.2 What</strong>
+                                What definition characterizes this purpose within feeling?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>7.4.3 Where</strong>
+                                What material location contains this purpose within feeling?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>7.4.4 Why</strong>
+                                What deeper meaning explains this purpose within feeling?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>7.4.5 How</strong>
+                                What logical structure governs this purpose within feeling?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>7.4.6 Cause</strong>
+                                What historical origin created this purpose within feeling?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>7.4.7 Effect</strong>
+                                What emotional impact/strain flows from this purpose?
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sub-layer">
+                        <h3>7.5 How of Effect?</h3>
+                        <div class="metadata">Through the lens of: How/what method?</div>
+                        <div class="interrogative-list">
+                            <div class="interrogative-item">
+                                <strong>7.5.1 Who</strong>
+                                Which identity employs this method within feeling?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>7.5.2 What</strong>
+                                What definition characterizes this method within feeling?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>7.5.3 Where</strong>
+                                What material location contains this method within feeling?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>7.5.4 Why</strong>
+                                What meaning explains this method within feeling?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>7.5.5 How</strong>
+                                What logical structure governs this method within feeling?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>7.5.6 Cause</strong>
+                                What historical origin created this method within feeling?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>7.5.7 Effect</strong>
+                                What emotional consequence/strain flows from this method?
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sub-layer">
+                        <h3>7.6 Cause of Effect?</h3>
+                        <div class="metadata">Through the lens of: What origin/source?</div>
+                        <div class="interrogative-list">
+                            <div class="interrogative-item">
+                                <strong>7.6.1 Who</strong>
+                                Which identity created this origin within feeling?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>7.6.2 What</strong>
+                                What definition characterizes this origin within feeling?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>7.6.3 Where</strong>
+                                What material location contains this origin within feeling?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>7.6.4 Why</strong>
+                                What meaning explains this origin within feeling?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>7.6.5 How</strong>
+                                What logical structure governs this origin within feeling?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>7.6.6 Cause</strong>
+                                What historical event/precedent created this origin within feeling?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>7.6.7 Effect</strong>
+                                What emotional impact/strain flows from this origin?
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sub-layer">
+                        <h3>7.7 Effect of Effect?</h3>
+                        <div class="metadata">Through the lens of: What consequence/feeling?</div>
+                        <div class="interrogative-list">
+                            <div class="interrogative-item">
+                                <strong>7.7.1 Who</strong>
+                                Which identity experiences this consequence?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>7.7.2 What</strong>
+                                What definition characterizes this consequence?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>7.7.3 Where</strong>
+                                What material location contains this consequence?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>7.7.4 Why</strong>
+                                What meaning explains this consequence?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>7.7.5 How</strong>
+                                What logical structure governs this consequence?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>7.7.6 Cause</strong>
+                                What historical event created this consequence?
+                            </div>
+                            <div class="interrogative-item">
+                                <strong>7.7.7 Effect</strong>
+                                What emotional strain/homeostasis is being measured?
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="summary">
+            <div class="summary-box">
+                <div class="coordinate-badge">[6.6.6]</div>
+                <h2>Coordinate Navigation</h2>
+                <p style="font-size: 1.2rem; color: var(--text-dim);">Each coordinate [n1.n2.n3] maps to a unique
+                    conceptual node in the possibility space, enabling precise navigation from surface perception down
+                    to causal origin.</p>
+                <div
+                    style="margin-top: 2rem; padding: 1rem; background: rgba(0,0,0,0.2); border-radius: 12px; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem;">
+                    Ex: [6.6.6] = Cause of Cause of Cause (The Eternal Precedent)
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Vector Field Theory - Alethekanon Protocol</p>
+        <p style="margin-top: 0.5rem; opacity: 0.5;">Fidelity > Agreement | Truth is the ratio of 1</p>
+    </footer>
+
+</body>
+
+</html>
