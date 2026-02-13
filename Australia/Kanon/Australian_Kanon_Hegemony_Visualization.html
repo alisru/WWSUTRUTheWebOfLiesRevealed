@@ -228,6 +228,31 @@
 
     <p class="subtitle">Moral Vector Analysis of 354 Entries Across 7 Planes</p>
 
+    <div class="explainer"
+        style="max-width: 800px; margin: 0 auto 2rem auto; background: #ffffff; padding: 1.5rem; border-radius: 12px; border: 1px solid #e2e8f0; text-align: left; box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);">
+        <h3
+            style="font-size: 1rem; font-weight: 700; color: #0f172a; margin-bottom: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 2px solid #f1f5f9; padding-bottom: 0.5rem;">
+            How to Read this Map</h3>
+        <p style="font-size: 0.9rem; color: #475569; line-height: 1.6; margin-bottom: 1rem;">
+            This graph plots every concept in the Australian Kanon as a coordinate in the <strong>Moral Field</strong>.
+        </p>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; font-size: 0.85rem; color: #334155;">
+            <div>
+                <strong style="color: #475569; display: block; margin-bottom: 0.3rem;">X-Axis: Will (ψ)</strong>
+                <span style="color: #16a34a; font-weight: 600;">Right (+1)</span>: Proactive/Creative<br>
+                <span style="color: #dc2626; font-weight: 600;">Left (-1)</span>: Suppressive/Passive
+            </div>
+            <div>
+                <strong style="color: #475569; display: block; margin-bottom: 0.3rem;">Y-Axis: Moral (υ)</strong>
+                <span style="color: #16a34a; font-weight: 600;">Top (+1)</span>: Universal Benefit<br>
+                <span style="color: #dc2626; font-weight: 600;">Bottom (-1)</span>: Self Benefit
+            </div>
+        </div>
+        <p style="font-size: 0.85rem; color: #64748b; margin-top: 1rem; font-style: italic;">
+            * Hover over any dot to see the specific Concept and its exact Judgment Vector.
+        </p>
+    </div>
+
     <div class="controls">
 
         <button class="plane-btn active" data-plane="all">All Planes</button>
@@ -1430,7 +1455,7 @@
 
                         <p style="font-size: 0.75rem; color: #94a3b8; margin-top: 0.5rem;">
 
-                            ${plane.entries.length} entries ${fnCount > 0 ? `"Â¢ <span style="color: #7c3aed;">${fnCount} First Nations</span>` : ''}
+                            ${plane.entries.length} entries ${fnCount > 0 ? `- <span style="color: #7c3aed;">${fnCount} First Nations</span>` : ''}
 
                         </p>
 

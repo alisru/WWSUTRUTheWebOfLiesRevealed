@@ -1,9 +1,10 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>The Australian Kanon</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -21,30 +22,42 @@
 </head>
 
 <body class="antialiased text-gray-800">
-
     <!-- Hero -->
-    <div class="relative bg-gray-900 overflow-hidden">
+    <div class="relative overflow-hidden" style="background-color: #0e1235;">
         <!-- Australian Flag Background -->
-        <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-20">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 640" class="w-full h-full"
-                preserveAspectRatio="xMidYMid slice">
-                <rect fill="#00008B" width="1280" height="640" />
-                <!-- Union Jack simplified -->
-                <path d="M0,0 L640,320 M640,0 L0,320" stroke="#fff" stroke-width="60" />
-                <path d="M0,0 L640,320 M640,0 L0,320" stroke="#C8102E" stroke-width="40" />
-                <path d="M320,0 V320 M0,160 H640" stroke="#fff" stroke-width="100" />
-                <path d="M320,0 V320 M0,160 H640" stroke="#C8102E" stroke-width="60" />
-                <!-- Commonwealth Star -->
-                <circle cx="320" cy="480" r="50" fill="#fff" />
-                <!-- Southern Cross simplified -->
-                <circle cx="1000" cy="160" r="20" fill="#fff" />
-                <circle cx="1120" cy="240" r="20" fill="#fff" />
-                <circle cx="1080" cy="400" r="20" fill="#fff" />
-                <circle cx="960" cy="320" r="20" fill="#fff" />
-                <circle cx="1040" cy="280" r="12" fill="#fff" />
+        <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-20"
+            style="transform: scale(1.15);">
+            <svg class="w-full h-full" preserveAspectRatio="xMidYMid meet" viewBox="0 0 10080 5040"
+                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <defs>
+                    <clipPath id="c1">
+                        <path d="M0,0H6V3H0z" />
+                    </clipPath>
+                    <clipPath id="c2">
+                        <path d="M0,0V1.5H6V3H6zM6,0H3V3H0V3z" />
+                    </clipPath>
+                    <path id="Star7"
+                        d="M0,-360 69.421398,-144.155019 281.459334,-224.456329 155.988466,-35.603349 350.974048,80.107536 125.093037,99.758368 156.198146,324.348792 0,160 -156.198146,324.348792 -125.093037,99.758368 -350.974048,80.107536 -155.988466,-35.603349 -281.459334,-224.456329 -69.421398,-144.155019z" />
+                    <path id="Star5"
+                        d="M0,-210 54.859957,-75.508253 199.721868,-64.893569 88.765275,28.841586 123.434903,169.893569 0,93.333333 -123.434903,169.893569 -88.765275,28.841586 -199.721868,-64.893569 -54.859957,-75.508253z" />
+                </defs>
+                <g transform="scale(840)">
+                    <rect width="12" height="6" fill="#00008b" />
+                    <path d="M0,0 6,3M6,0 0,3" stroke="#fff" stroke-width="0.6" clip-path="url(#c1)" />
+                    <path d="M0,0 6,3M6,0 0,3" stroke="#f00" stroke-width="0.4" clip-path="url(#c2)" />
+                    <path d="M3,0V3M0,1.5H6" stroke="#fff" />
+                    <path d="M3,0V3M0,1.5H6" stroke="#f00" stroke-width="0.6" />
+                </g>
+                <g fill="#fff">
+                    <use id="Comwlth" xlink:href="#Star7" transform="translate(2520, 3780) scale(2.1)" />
+                    <use id="αCrucis" xlink:href="#Star7" x="7560" y="4200" />
+                    <use id="βCrucis" xlink:href="#Star7" x="6300" y="2205" />
+                    <use id="γCrucis" xlink:href="#Star7" x="7560" y="840" />
+                    <use id="δCrucis" xlink:href="#Star7" x="8680" y="1869" />
+                    <use id="εCrucis" xlink:href="#Star5" x="8064" y="2730" />
+                </g>
             </svg>
         </div>
-
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32 relative z-10 text-center">
             <h1
                 class="text-6xl md:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-200 via-white to-yellow-200 mb-6 tracking-tight relative">
@@ -54,11 +67,13 @@
                 "The Ideal We Keep Returning To"
             </p>
             <p class="text-xl text-gray-400 font-light max-w-2xl mx-auto leading-relaxed mb-8">
-                Australia is the nation that keeps trying to become itself.
+                Australia is the nation that keeps trying to become itself. <br> Just another mate waiting for another
+                mate.
             </p>
             <div class="h-1 w-32 bg-yellow-500 mx-auto rounded-full"></div>
         </div>
     </div>
+
 
     <!-- Matrix Explainer -->
     <div class="bg-white border-b border-gray-200">
@@ -68,28 +83,31 @@
                     <div class="mb-4 md:mb-0">
                         <a href="../index.html">← Back To Navigation</a>
                     </div>
-                    <div class="flex space-x-4">
-                        <a href="Archetype_The_Stoic_Guardian.html"
-                            class="text-yellow-600 hover:text-yellow-700 font-medium">The Archetype</a>
-                        <a href="Australian_Kanon_Hegemony_Visualization.html"
-                            class="text-indigo-600 hover:text-indigo-700 font-medium">The Map</a>
-                        <a href="About_Australian_Kanon.html"
-                            class="text-slate-600 hover:text-slate-700 font-medium">About / Methodology</a>
+                    <div class="flex flex-wrap justify-center gap-4 w-full sm:w-auto items-center">
+                        <a class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-amber-600 hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 transition-all"
+                            href="Archetype_The_Stoic_Guardian.html">The Archetype</a>
+                        <a class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all"
+                            href="Australian_Kanon_Hegemony_Visualization.html">The Map</a>
+                        <a class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all"
+                            href="About_Australian_Kanon.html">About / Methodology</a>
                     </div>
                 </div>
             </div>
-
             <div class="relative mb-8 flex flex-col md:flex-row items-center justify-center">
                 <h2 class="text-4xl font-bold text-gray-900 font-serif">The Rulebook of the Mythology</h2>
             </div>
-
             <div class="prose prose-xl mx-auto text-gray-600 leading-relaxed mb-12">
                 <p class="font-medium text-gray-800">
                     The Kanon is not a sociology of what Australia <em>is</em>, but a map of the aspirational ghost that
                     has been conjured for 120 years. It captures the values that have been performed, weaponized, and
                     sentimentalized—the <strong>mythological substrate</strong> of the nation.
+                    <br>
+                    <br>
+                    The Kanon is an attempt to map what Australia means by asking Australia 3 layers of 7 interrogatives
+                    and seeking answers from its influencers throughout its history...
+                    <br>
+                    <em>For better and for worse</em>
                 </p>
-
                 <div class="my-8 bg-slate-50 p-6 rounded-2xl border border-slate-200 text-left">
                     <h3 class="text-lg font-bold text-gray-900 mb-3 uppercase tracking-widest text-center">The
                         Anti-Ideology</h3>
@@ -117,12 +135,10 @@
                         </div>
                     </div>
                 </div>
-
                 <p>
                     The "Founders" are every generation that re-asserted these core values against the drift of history.
                 </p>
             </div>
-
             <div class="flex flex-wrap justify-center gap-4">
                 <span
                     class="px-4 py-2 bg-gray-100 rounded-full text-sm font-bold text-gray-600 uppercase tracking-widest">7
@@ -134,25 +150,133 @@
                     class="px-4 py-2 bg-gray-100 rounded-full text-sm font-bold text-gray-600 uppercase tracking-widest">343
                     Vectors</span>
             </div>
-
         </div>
     </div>
+    <!-- Relative Morality Explainer -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
+        <div class="bg-white rounded-2xl p-8 md:p-12 shadow-xl border border-gray-200">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6 font-serif text-center">Relative Morality: The Coordinate
+                System</h2>
+            <div class="flex flex-col lg:flex-row gap-12 items-center">
+                <!-- Text Content -->
+                <div class="flex-1 space-y-6 text-gray-700 leading-relaxed">
+                    <p>
+                        The Kanon does not use a binary "Good vs Evil" scale. Instead, it uses a <strong>Vector
+                            Field</strong> defined by two axes:
+                    </p>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <span
+                                class="inline-flex items-center justify-center h-8 w-8 rounded-full bg-emerald-100 text-emerald-600 font-bold text-sm mr-3 mt-0.5">υ</span>
+                            <div>
+                                <strong class="text-gray-900 block">The Moral Vector (Benefit vs Cost)</strong>
+                                <span class="text-sm">Who benefits? <span class="text-emerald-700 font-semibold">+1
+                                        (Universal Benefit)</span> vs <span class="text-red-700 font-semibold">-1 (Self
+                                        Benefit)</span>. Does this concept serve the whole or just the self?</span>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span
+                                class="inline-flex items-center justify-center h-8 w-8 rounded-full bg-emerald-100 text-emerald-600 font-bold text-sm mr-3 mt-0.5">ψ</span>
+                            <div>
+                                <strong class="text-gray-900 block">The Will Vector (Proactive vs Suppressive)</strong>
+                                <span class="text-sm">What is the intent? <span
+                                        class="text-emerald-700 font-semibold">+1 (Proactive/Create)</span> vs <span
+                                        class="text-red-700 font-semibold">-1 (Suppressive/Prevent)</span>. Is the
+                                    energy flowing or blocking?</span>
+                            </div>
+                        </li>
+                    </ul>
+                    <p class="text-sm text-gray-500 italic mt-4">
+                        * A Concept is judged by its coordinates (υ, ψ). "Good" is typically High Benefit + High
+                        Creation (Greater Good). "Evil" is Self-Benefit + Suppression (The Void).
+                    </p>
+                </div>
+                <!-- Quadrant Visual -->
+                <div
+                    class="flex-1 w-full max-w-md aspect-square relative bg-gray-50 rounded-xl border border-gray-200 p-4">
+                    <!-- Axes -->
+                    <div class="absolute inset-x-4 top-1/2 h-px bg-gray-300"></div> <!-- X Axis -->
+                    <div class="absolute inset-y-4 left-1/2 w-px bg-gray-300"></div> <!-- Y Axis -->
+                    <!-- Labels -->
+                    <div
+                        class="absolute top-4 left-1/2 -translate-x-1/2 -bg-white px-2 text-xs font-bold text-emerald-700">
+                        CREATE (+ψ)</div>
+                    <div
+                        class="absolute bottom-4 left-1/2 -translate-x-1/2 -bg-white px-2 text-xs font-bold text-red-700">
+                        SUPPRESS (-ψ)</div>
+                    <div
+                        class="absolute left-4 top-1/2 -translate-y-1/2 -bg-white px-2 text-xs font-bold text-emerald-700">
+                        UNIVERSAL (+υ)</div>
+                    <div
+                        class="absolute right-4 top-1/2 -translate-y-1/2 -bg-white px-2 text-xs font-bold text-red-700">
+                        SELF (-υ)</div>
+                    <!-- Quadrants -->
+                    <div class="grid grid-cols-2 grid-rows-2 h-full w-full pt-6 pb-6 pl-6 pr-6 gap-2">
+                        <!-- TL: Greater Good -->
+                        <div
+                            class="bg-emerald-100/50 rounded-lg flex items-center justify-center text-center p-2 border border-emerald-100 hover:bg-emerald-100 transition-colors">
+                            <div>
+                                <div class="font-bold text-emerald-900 text-sm">Greater Good</div>
+                                <div class="text-[10px] text-emerald-700 font-mono">+υ, +ψ</div>
+                            </div>
+                        </div>
+                        <!-- TR: Greatest Lie -->
+                        <div
+                            class="bg-amber-100/50 rounded-lg flex items-center justify-center text-center p-2 border border-amber-100 hover:bg-amber-100 transition-colors">
+                            <div>
+                                <div class="font-bold text-amber-900 text-sm">Greatest Lie</div>
+                                <div class="text-[10px] text-amber-700 font-mono">-υ, +ψ</div>
+                            </div>
+                        </div>
+                        <!-- BL: Lesser Good -->
+                        <div
+                            class="bg-blue-100/50 rounded-lg flex items-center justify-center text-center p-2 border border-blue-100 hover:bg-blue-100 transition-colors">
+                            <div>
+                                <div class="font-bold text-blue-900 text-sm">Lesser Good</div>
+                                <div class="text-[10px] text-blue-700 font-mono">+υ, -ψ</div>
+                            </div>
+                        </div>
+                        <!-- BR: Greater Evil -->
+                        <div
+                            class="bg-red-100/50 rounded-lg flex items-center justify-center text-center p-2 border border-red-100 hover:bg-red-100 transition-colors">
+                            <div>
+                                <div class="font-bold text-red-900 text-sm">The Void</div>
+                                <div class="text-[10px] text-red-700 font-mono">-υ, -ψ</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
+            <!-- Map Link -->
+            <div class="mt-10 text-center border-t border-gray-100 pt-8">
+                <a href="Australian_Kanon_Hegemony_Visualization.html"
+                    class="inline-flex items-center px-6 py-3 border border-transparent text-base font-bold rounded-xl text-indigo-700 bg-indigo-50 hover:bg-indigo-100 border-indigo-100 transition-all hover:scale-105 shadow-sm">
+                    View the Full Hegemony Map (300+ Vectors)
+                    <svg class="ml-2 -mr-1 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                    </svg>
+                </a>
+                <p class="mt-2 text-sm text-gray-500">Explore the distribution of every concept in the Kanon.</p>
+            </div>
+        </div>
+    </div>
+    </div>
     <!-- Archetype Feature -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        <a href="Archetype_The_Stoic_Guardian.html"
-            class="block group relative bg-slate-900 rounded-3xl overflow-hidden shadow-2xl ring-1 ring-white/10 hover:ring-yellow-400/50 transition-all duration-300">
+        <a class="block group relative bg-slate-900 rounded-3xl overflow-hidden shadow-2xl ring-1 ring-white/10 hover:ring-yellow-400/50 transition-all duration-300"
+            href="Archetype_The_Stoic_Guardian.html">
             <div class="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 opacity-90 z-10">
             </div>
             <!-- Note: Image should be in the same folder -->
-            <img src="Stoic_Guardian.png"
+            <img alt="Stoic Guardian"
                 class="absolute inset-0 w-full h-full object-cover mix-blend-overlay opacity-50 group-hover:opacity-60 transition-opacity duration-300 transform group-hover:scale-105"
-                alt="Stoic Guardian">
-
+                src="Stoic_Guardian.png" />
             <div class="relative z-20 p-8 md:p-12 flex flex-col md:flex-row items-center justify-between">
                 <div class="mb-6 md:mb-0 md:w-2/3">
                     <div class="inline-flex items-center space-x-2 mb-4">
-
                         <span class="text-slate-300 text-sm font-medium tracking-wide">The Ideal Australian</span>
                     </div>
                     <h2
@@ -167,25 +291,23 @@
                     <span
                         class="inline-flex items-center px-8 py-4 border border-transparent text-base font-bold rounded-xl text-yellow-950 bg-yellow-400 hover:bg-yellow-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 transition-colors shadow-lg">
                         View Profile
-                        <svg class="ml-2 -mr-1 w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m1 1H3" />
+                        <svg class="ml-2 -mr-1 w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+                            <path d="M14 5l7 7m1 1H3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                            </path>
                         </svg>
                     </span>
                 </div>
             </div>
         </a>
     </div>
-
     <!-- Grid -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-
-            <a href="Plane_1_Identity.html"
-                class="group relative flex flex-col bg-white rounded-3xl shadow-sm hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 hover:border-yellow-200 h-full transform hover:-translate-y-1">
+            <a class="group relative flex flex-col bg-white rounded-3xl shadow-sm hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 hover:border-yellow-200 h-full transform hover:-translate-y-1"
+                href="Plane_1_Identity.html">
                 <div
                     class="absolute inset-0 bg-gradient-to-br from-yellow-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
                 </div>
-
                 <div class="p-8 flex-1 relative z-10 flex flex-col">
                     <div class="flex items-center justify-between mb-6">
                         <span
@@ -197,7 +319,6 @@
                             Who
                         </span>
                     </div>
-
                     <h2
                         class="text-3xl font-extrabold text-gray-900 mb-3 group-hover:text-yellow-700 transition-colors">
                         Identity
@@ -208,24 +329,21 @@
                         The Agent and their character; from Mateship to the Fair Go.
                     </p>
                 </div>
-
                 <div
                     class="bg-yellow-50 px-8 py-4 border-t border-yellow-100 flex items-center justify-between group-hover:bg-yellow-100/50 transition-colors relative z-10">
                     <span class="text-yellow-700 font-medium text-sm">Explore Who</span>
                     <svg class="w-5 h-5 text-yellow-500 transform group-hover:translate-x-1 transition-transform"
-                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        fill="none" stroke="currentColor" viewbox="0 0 24 24">
+                        <path d="M17 8l4 4m0 0l-4 4m4-4H3" stroke-linecap="round" stroke-linejoin="round"
+                            stroke-width="2"></path>
                     </svg>
                 </div>
             </a>
-
-            <a href="Plane_2_Definition.html"
-                class="group relative flex flex-col bg-white rounded-3xl shadow-sm hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 hover:border-amber-200 h-full transform hover:-translate-y-1">
+            <a class="group relative flex flex-col bg-white rounded-3xl shadow-sm hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 hover:border-amber-200 h-full transform hover:-translate-y-1"
+                href="Plane_2_Definition.html">
                 <div
                     class="absolute inset-0 bg-gradient-to-br from-amber-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
                 </div>
-
                 <div class="p-8 flex-1 relative z-10 flex flex-col">
                     <div class="flex items-center justify-between mb-6">
                         <span
@@ -237,7 +355,6 @@
                             What
                         </span>
                     </div>
-
                     <h2 class="text-3xl font-extrabold text-gray-900 mb-3 group-hover:text-amber-700 transition-colors">
                         Definition
                     </h2>
@@ -247,24 +364,21 @@
                         The concepts and roles regarding the State and Society.
                     </p>
                 </div>
-
                 <div
                     class="bg-amber-50 px-8 py-4 border-t border-amber-100 flex items-center justify-between group-hover:bg-amber-100/50 transition-colors relative z-10">
                     <span class="text-amber-700 font-medium text-sm">Explore What</span>
                     <svg class="w-5 h-5 text-amber-500 transform group-hover:translate-x-1 transition-transform"
-                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        fill="none" stroke="currentColor" viewbox="0 0 24 24">
+                        <path d="M17 8l4 4m0 0l-4 4m4-4H3" stroke-linecap="round" stroke-linejoin="round"
+                            stroke-width="2"></path>
                     </svg>
                 </div>
             </a>
-
-            <a href="Plane_3_Land.html"
-                class="group relative flex flex-col bg-white rounded-3xl shadow-sm hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 hover:border-green-200 h-full transform hover:-translate-y-1">
+            <a class="group relative flex flex-col bg-white rounded-3xl shadow-sm hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 hover:border-green-200 h-full transform hover:-translate-y-1"
+                href="Plane_3_Land.html">
                 <div
                     class="absolute inset-0 bg-gradient-to-br from-green-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
                 </div>
-
                 <div class="p-8 flex-1 relative z-10 flex flex-col">
                     <div class="flex items-center justify-between mb-6">
                         <span
@@ -276,7 +390,6 @@
                             Where
                         </span>
                     </div>
-
                     <h2 class="text-3xl font-extrabold text-gray-900 mb-3 group-hover:text-green-700 transition-colors">
                         Land
                     </h2>
@@ -286,24 +399,21 @@
                         The physical and spatial environment; the geography of the nation.
                     </p>
                 </div>
-
                 <div
                     class="bg-green-50 px-8 py-4 border-t border-green-100 flex items-center justify-between group-hover:bg-green-100/50 transition-colors relative z-10">
                     <span class="text-green-700 font-medium text-sm">Explore Where</span>
                     <svg class="w-5 h-5 text-green-500 transform group-hover:translate-x-1 transition-transform"
-                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        fill="none" stroke="currentColor" viewbox="0 0 24 24">
+                        <path d="M17 8l4 4m0 0l-4 4m4-4H3" stroke-linecap="round" stroke-linejoin="round"
+                            stroke-width="2"></path>
                     </svg>
                 </div>
             </a>
-
-            <a href="Plane_4_Drive.html"
-                class="group relative flex flex-col bg-white rounded-3xl shadow-sm hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 hover:border-teal-200 h-full transform hover:-translate-y-1">
+            <a class="group relative flex flex-col bg-white rounded-3xl shadow-sm hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 hover:border-teal-200 h-full transform hover:-translate-y-1"
+                href="Plane_4_Drive.html">
                 <div
                     class="absolute inset-0 bg-gradient-to-br from-teal-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
                 </div>
-
                 <div class="p-8 flex-1 relative z-10 flex flex-col">
                     <div class="flex items-center justify-between mb-6">
                         <span
@@ -315,7 +425,6 @@
                             Why
                         </span>
                     </div>
-
                     <h2 class="text-3xl font-extrabold text-gray-900 mb-3 group-hover:text-teal-700 transition-colors">
                         Drive
                     </h2>
@@ -325,24 +434,21 @@
                         The motivations and will that propel the nation forward.
                     </p>
                 </div>
-
                 <div
                     class="bg-teal-50 px-8 py-4 border-t border-teal-100 flex items-center justify-between group-hover:bg-teal-100/50 transition-colors relative z-10">
                     <span class="text-teal-700 font-medium text-sm">Explore Why</span>
                     <svg class="w-5 h-5 text-teal-500 transform group-hover:translate-x-1 transition-transform"
-                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        fill="none" stroke="currentColor" viewbox="0 0 24 24">
+                        <path d="M17 8l4 4m0 0l-4 4m4-4H3" stroke-linecap="round" stroke-linejoin="round"
+                            stroke-width="2"></path>
                     </svg>
                 </div>
             </a>
-
-            <a href="Plane_5_Method.html"
-                class="group relative flex flex-col bg-white rounded-3xl shadow-sm hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 hover:border-blue-200 h-full transform hover:-translate-y-1">
+            <a class="group relative flex flex-col bg-white rounded-3xl shadow-sm hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 hover:border-blue-200 h-full transform hover:-translate-y-1"
+                href="Plane_5_Method.html">
                 <div
                     class="absolute inset-0 bg-gradient-to-br from-blue-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
                 </div>
-
                 <div class="p-8 flex-1 relative z-10 flex flex-col">
                     <div class="flex items-center justify-between mb-6">
                         <span
@@ -354,7 +460,6 @@
                             How
                         </span>
                     </div>
-
                     <h2 class="text-3xl font-extrabold text-gray-900 mb-3 group-hover:text-blue-700 transition-colors">
                         Method
                     </h2>
@@ -364,24 +469,21 @@
                         The operational logic and techniques used to achieve the Drive.
                     </p>
                 </div>
-
                 <div
                     class="bg-blue-50 px-8 py-4 border-t border-blue-100 flex items-center justify-between group-hover:bg-blue-100/50 transition-colors relative z-10">
                     <span class="text-blue-700 font-medium text-sm">Explore How</span>
                     <svg class="w-5 h-5 text-blue-500 transform group-hover:translate-x-1 transition-transform"
-                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        fill="none" stroke="currentColor" viewbox="0 0 24 24">
+                        <path d="M17 8l4 4m0 0l-4 4m4-4H3" stroke-linecap="round" stroke-linejoin="round"
+                            stroke-width="2"></path>
                     </svg>
                 </div>
             </a>
-
-            <a href="Plane_6_Foundation.html"
-                class="group relative flex flex-col bg-white rounded-3xl shadow-sm hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 hover:border-indigo-200 h-full transform hover:-translate-y-1">
+            <a class="group relative flex flex-col bg-white rounded-3xl shadow-sm hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 hover:border-indigo-200 h-full transform hover:-translate-y-1"
+                href="Plane_6_Foundation.html">
                 <div
                     class="absolute inset-0 bg-gradient-to-br from-indigo-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
                 </div>
-
                 <div class="p-8 flex-1 relative z-10 flex flex-col">
                     <div class="flex items-center justify-between mb-6">
                         <span
@@ -393,7 +495,6 @@
                             Cause
                         </span>
                     </div>
-
                     <h2
                         class="text-3xl font-extrabold text-gray-900 mb-3 group-hover:text-indigo-700 transition-colors">
                         Foundation
@@ -404,24 +505,21 @@
                         The Historical Origins and Ancestors of the Nation.
                     </p>
                 </div>
-
                 <div
                     class="bg-indigo-50 px-8 py-4 border-t border-indigo-100 flex items-center justify-between group-hover:bg-indigo-100/50 transition-colors relative z-10">
                     <span class="text-indigo-700 font-medium text-sm">Explore Cause</span>
                     <svg class="w-5 h-5 text-indigo-500 transform group-hover:translate-x-1 transition-transform"
-                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        fill="none" stroke="currentColor" viewbox="0 0 24 24">
+                        <path d="M17 8l4 4m0 0l-4 4m4-4H3" stroke-linecap="round" stroke-linejoin="round"
+                            stroke-width="2"></path>
                     </svg>
                 </div>
             </a>
-
-            <a href="Plane_7_Result.html"
-                class="group relative flex flex-col bg-white rounded-3xl shadow-sm hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 hover:border-purple-200 h-full transform hover:-translate-y-1">
+            <a class="group relative flex flex-col bg-white rounded-3xl shadow-sm hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 hover:border-purple-200 h-full transform hover:-translate-y-1"
+                href="Plane_7_Result.html">
                 <div
                     class="absolute inset-0 bg-gradient-to-br from-purple-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
                 </div>
-
                 <div class="p-8 flex-1 relative z-10 flex flex-col">
                     <div class="flex items-center justify-between mb-6">
                         <span
@@ -433,7 +531,6 @@
                             Effect
                         </span>
                     </div>
-
                     <h2
                         class="text-3xl font-extrabold text-gray-900 mb-3 group-hover:text-purple-700 transition-colors">
                         Result
@@ -444,24 +541,21 @@
                         The legacy, impact, and final status of the Australian experiment.
                     </p>
                 </div>
-
                 <div
                     class="bg-purple-50 px-8 py-4 border-t border-purple-100 flex items-center justify-between group-hover:bg-purple-100/50 transition-colors relative z-10">
                     <span class="text-purple-700 font-medium text-sm">Explore Effect</span>
                     <svg class="w-5 h-5 text-purple-500 transform group-hover:translate-x-1 transition-transform"
-                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        fill="none" stroke="currentColor" viewbox="0 0 24 24">
+                        <path d="M17 8l4 4m0 0l-4 4m4-4H3" stroke-linecap="round" stroke-linejoin="round"
+                            stroke-width="2"></path>
                     </svg>
                 </div>
             </a>
-
         </div>
     </div>
-
     <footer class="bg-white border-t border-gray-100 py-12 mt-12">
         <div class="text-center text-gray-400 text-sm">
-            <p>&copy; 2024 The Psochic Hegemony. All rights reserved.</p>
+            <p>© 2024 The Psochic Hegemony. All rights reserved.</p>
         </div>
     </footer>
 </body>

@@ -17,6 +17,49 @@
         .font-serif {
             font-family: 'Merriweather', serif;
         }
+        @media (max-width: 640px) {
+            /* Force table to not be like tables anymore */
+            table, thead, tbody, th, td, tr { 
+                display: block; 
+            }
+            
+            /* Hide table headers (but not display: none;, for accessibility) */
+            thead tr { 
+                position: absolute;
+                top: -9999px;
+                left: -9999px;
+            }
+            
+            tr { border: 1px solid #e2e8f0; border-radius: 0.75rem; margin-bottom: 1.5rem; background: white; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1); overflow: hidden; }
+            
+            td { 
+                /* Behave  like a "row" */
+                border: none;
+                position: relative;
+                padding-left: 1.25rem !important;
+                padding-right: 1.25rem !important;
+                padding-top: 0.75rem !important;
+                padding-bottom: 0.75rem !important;
+            }
+            
+            /* Code Column */
+            td:nth-of-type(1) {
+                background-color: #f8fafc;
+                border-bottom: 1px solid #e2e8f0;
+                padding-top: 0.5rem !important;
+                padding-bottom: 0.5rem !important;
+            }
+            
+            /* Concept Column */
+            td:nth-of-type(2) {
+                padding-bottom: 0 !important;
+            }
+            
+            /* Description/Quote Column */
+            td:nth-of-type(3) {
+                padding-top: 1rem !important;
+            }
+        }
     </style>
 </head>
 
@@ -25,28 +68,57 @@
     <nav class="bg-gray-900 border-b border-gray-800 sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
+                <!-- Branding -->
                 <div class="flex items-center">
                     <div class="flex-shrink-0">
                         <span class="text-xl font-bold text-white tracking-widest">
                             <a href="../index.html" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700">←WWSUTRU</a>
                         </span>
                     </div>
-                    <div class="hidden md:block">
-                        <div class="ml-10 flex items-baseline space-x-2">
-                            <a href="AustralianMatrix.html" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700">Back To Matrix</a>
-                            <a href="Plane_1_Identity.html" class="px-3 py-2 rounded-md text-sm font-medium text-yellow-100 hover:bg-yellow-800 hover:text-white transition-colors">Who</a>
-                            <a href="Plane_2_Definition.html" class="px-3 py-2 rounded-md text-sm font-medium text-yellow-100 hover:bg-yellow-800 hover:text-white transition-colors">What</a>
-                            <a href="Plane_3_Land.html" class="px-3 py-2 rounded-md text-sm font-medium text-yellow-100 hover:bg-yellow-800 hover:text-white transition-colors">Where</a>
-                            <a href="Plane_4_Drive.html" class="px-3 py-2 rounded-md text-sm font-medium text-yellow-100 hover:bg-yellow-800 hover:text-white transition-colors">Why</a>
-                            <a href="Plane_5_Method.html" class="px-3 py-2 rounded-md text-sm font-medium bg-yellow-800 text-white transition-colors">How</a>
-                            <a href="Plane_6_Foundation.html" class="px-3 py-2 rounded-md text-sm font-medium text-yellow-100 hover:bg-yellow-800 hover:text-white transition-colors">Cause</a>
-                            <a href="Plane_7_Result.html" class="px-3 py-2 rounded-md text-sm font-medium text-yellow-100 hover:bg-yellow-800 hover:text-white transition-colors">Effect</a>
-                        </div>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-2">
+                        <a href="AustralianMatrix.html" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700">Back To Matrix</a>
+                        <a href="Plane_1_Identity.html" class="px-3 py-2 rounded-md text-sm font-medium text-yellow-100 hover:bg-yellow-800 hover:text-white transition-colors block md:inline-block">Who</a>
+                            <a href="Plane_2_Definition.html" class="px-3 py-2 rounded-md text-sm font-medium text-yellow-100 hover:bg-yellow-800 hover:text-white transition-colors block md:inline-block">What</a>
+                            <a href="Plane_3_Land.html" class="px-3 py-2 rounded-md text-sm font-medium text-yellow-100 hover:bg-yellow-800 hover:text-white transition-colors block md:inline-block">Where</a>
+                            <a href="Plane_4_Drive.html" class="px-3 py-2 rounded-md text-sm font-medium text-yellow-100 hover:bg-yellow-800 hover:text-white transition-colors block md:inline-block">Why</a>
+                            <a href="Plane_5_Method.html" class="px-3 py-2 rounded-md text-sm font-medium bg-yellow-800 text-white transition-colors block md:inline-block">How</a>
+                            <a href="Plane_6_Foundation.html" class="px-3 py-2 rounded-md text-sm font-medium text-yellow-100 hover:bg-yellow-800 hover:text-white transition-colors block md:inline-block">Cause</a>
+                            <a href="Plane_7_Result.html" class="px-3 py-2 rounded-md text-sm font-medium text-yellow-100 hover:bg-yellow-800 hover:text-white transition-colors block md:inline-block">Effect</a>
                     </div>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="-mr-2 flex md:hidden">
+                    <button type="button" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" class="bg-gray-800 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <!-- Icon when menu is closed -->
+                        <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
                 </div>
             </div>
         </div>
+
+        <!-- Mobile Menu, show/hide based on menu state. -->
+        <div class="hidden md:hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t border-gray-700">
+                <a href="AustralianMatrix.html" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 block">Back To Matrix</a>
+                            <a href="Plane_1_Identity.html" class="px-3 py-2 rounded-md text-sm font-medium text-yellow-100 hover:bg-yellow-800 hover:text-white transition-colors block md:inline-block">Who</a>
+                            <a href="Plane_2_Definition.html" class="px-3 py-2 rounded-md text-sm font-medium text-yellow-100 hover:bg-yellow-800 hover:text-white transition-colors block md:inline-block">What</a>
+                            <a href="Plane_3_Land.html" class="px-3 py-2 rounded-md text-sm font-medium text-yellow-100 hover:bg-yellow-800 hover:text-white transition-colors block md:inline-block">Where</a>
+                            <a href="Plane_4_Drive.html" class="px-3 py-2 rounded-md text-sm font-medium text-yellow-100 hover:bg-yellow-800 hover:text-white transition-colors block md:inline-block">Why</a>
+                            <a href="Plane_5_Method.html" class="px-3 py-2 rounded-md text-sm font-medium bg-yellow-800 text-white transition-colors block md:inline-block">How</a>
+                            <a href="Plane_6_Foundation.html" class="px-3 py-2 rounded-md text-sm font-medium text-yellow-100 hover:bg-yellow-800 hover:text-white transition-colors block md:inline-block">Cause</a>
+                            <a href="Plane_7_Result.html" class="px-3 py-2 rounded-md text-sm font-medium text-yellow-100 hover:bg-yellow-800 hover:text-white transition-colors block md:inline-block">Effect</a>
+            </div>
+        </div>
     </nav>
+
 
     <!-- Header -->
     <header class="bg-white border-b border-gray-200 relative overflow-hidden">
@@ -89,8 +161,8 @@
 
         <!-- Sense q1: The Who of the How -->
         <div class="mb-24">
-            <div class="bg-yellow-900 text-white p-6 rounded-t-2xl flex justify-between items-center sticky top-16 z-40 shadow-xl ring-1 ring-black/10">
-                <div>
+            <div class="bg-yellow-900 text-white p-6 rounded-t-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center sticky top-16 z-40 shadow-xl ring-1 ring-black/10 w-full">
+                <div class="w-full">
                     <h3 class="text-2xl font-bold tracking-tight font-serif">The Who of the How (Authenticity/Soul)</h3>
                     <div class="flex items-center mt-2 space-x-3 opacity-90">
                         <span class="text-yellow-200 text-xs uppercase tracking-widest font-bold">Sense q1</span>
@@ -100,7 +172,7 @@
                 </div>
             </div>
 
-            <div class="bg-white rounded-b-2xl shadow-sm border border-gray-200 overflow-hidden">
+            <div class="bg-white rounded-b-2xl shadow-sm border border-gray-200">
                 <div class="bg-gradient-to-br from-white to-yellow-50 border-x border-b border-gray-200 p-8 relative overflow-hidden group">
                     <div class="absolute top-0 right-0 w-32 h-32 bg-yellow-900 opacity-[0.03] rounded-bl-full -mr-8 -mt-8 transition-opacity group-hover:opacity-[0.08]"></div>
                     <div class="relative z-10">
@@ -115,11 +187,24 @@
                     <tbody class="divide-y divide-gray-100">
 
                         <tr class="hover:bg-gray-50/50 transition-colors align-top border-b border-gray-100 last:border-0">
-                            <td class="px-6 py-6 w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.Who.Who</div></td>
-                            <td class="px-6 py-6 w-1/4 align-top">
+                            <td class="px-6 py-6 md:w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.Who.Who</div></td>
+                            <td class="px-6 py-6 md:w-1/4 align-top">
                                 
              <div class="font-bold text-gray-900 text-lg leading-tight mb-1">The Bricoleur</div>
              <div class="text-xs text-yellow-600 font-mono bg-yellow-50 inline-block px-1.5 py-0.5 rounded">The The Bricoleur</div>
+             
+        <div class="mt-2 flex flex-wrap items-center gap-2 judgment-badge">
+            <div class="inline-flex items-center space-x-1.5 px-2 py-1 bg-slate-50 border border-slate-200 rounded-md text-xs font-mono">
+                <span class="font-semibold text-gray-500" title="Moral Vector (Benefit vs Cost)">υ</span>
+                <span class="text-emerald-600 font-bold">+0.7</span>
+                <span class="text-gray-300">|</span>
+                <span class="font-semibold text-gray-500" title="Will Vector (Proactive vs Suppressive)">ψ</span>
+                <span class="text-emerald-600 font-bold">+0.6</span>
+            </div>
+            <span class="inline-block px-2 py-0.5 text-xs font-bold rounded border bg-emerald-100 text-emerald-800 border-emerald-200">Greater Good</span>
+        </div>
+        <div class="mt-1.5 text-xs text-gray-500 italic leading-snug w-full judgment-note">Survival invention (+υ) through active improvisation (+ψ).</div>
+        
          
                             </td>
                             <td class="px-6 py-6 align-top">
@@ -138,11 +223,24 @@
                         </tr>
 
                         <tr class="hover:bg-gray-50/50 transition-colors align-top border-b border-gray-100 last:border-0">
-                            <td class="px-6 py-6 w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.Who.What</div></td>
-                            <td class="px-6 py-6 w-1/4 align-top">
+                            <td class="px-6 py-6 md:w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.Who.What</div></td>
+                            <td class="px-6 py-6 md:w-1/4 align-top">
                                 
              <div class="font-bold text-gray-900 text-lg leading-tight mb-1">The Unionist</div>
              <div class="text-xs text-yellow-600 font-mono bg-yellow-50 inline-block px-1.5 py-0.5 rounded">The Operator</div>
+             
+        <div class="mt-2 flex flex-wrap items-center gap-2 judgment-badge">
+            <div class="inline-flex items-center space-x-1.5 px-2 py-1 bg-slate-50 border border-slate-200 rounded-md text-xs font-mono">
+                <span class="font-semibold text-gray-500" title="Moral Vector (Benefit vs Cost)">υ</span>
+                <span class="text-emerald-600 font-bold">+0.8</span>
+                <span class="text-gray-300">|</span>
+                <span class="font-semibold text-gray-500" title="Will Vector (Proactive vs Suppressive)">ψ</span>
+                <span class="text-emerald-600 font-bold">+0.7</span>
+            </div>
+            <span class="inline-block px-2 py-0.5 text-xs font-bold rounded border bg-emerald-100 text-emerald-800 border-emerald-200">Greater Good</span>
+        </div>
+        <div class="mt-1.5 text-xs text-gray-500 italic leading-snug w-full judgment-note">Collective power (+υ) through organized action (+ψ).</div>
+        
          
                             </td>
                             <td class="px-6 py-6 align-top">
@@ -161,11 +259,24 @@
                         </tr>
 
                         <tr class="hover:bg-gray-50/50 transition-colors align-top border-b border-gray-100 last:border-0">
-                            <td class="px-6 py-6 w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.Who.Where</div></td>
-                            <td class="px-6 py-6 w-1/4 align-top">
+                            <td class="px-6 py-6 md:w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.Who.Where</div></td>
+                            <td class="px-6 py-6 md:w-1/4 align-top">
                                 
              <div class="font-bold text-gray-900 text-lg leading-tight mb-1">The Public Servant</div>
              <div class="text-xs text-yellow-600 font-mono bg-yellow-50 inline-block px-1.5 py-0.5 rounded">The The Public Servant</div>
+             
+        <div class="mt-2 flex flex-wrap items-center gap-2 judgment-badge">
+            <div class="inline-flex items-center space-x-1.5 px-2 py-1 bg-slate-50 border border-slate-200 rounded-md text-xs font-mono">
+                <span class="font-semibold text-gray-500" title="Moral Vector (Benefit vs Cost)">υ</span>
+                <span class="text-emerald-600 font-bold">+0.4</span>
+                <span class="text-gray-300">|</span>
+                <span class="font-semibold text-gray-500" title="Will Vector (Proactive vs Suppressive)">ψ</span>
+                <span class="text-red-600 font-bold">-0.3</span>
+            </div>
+            <span class="inline-block px-2 py-0.5 text-xs font-bold rounded border bg-slate-100 text-slate-800 border-slate-200">Tension</span>
+        </div>
+        <div class="mt-1.5 text-xs text-gray-500 italic leading-snug w-full judgment-note">Guardian of fairness (+υ) but stifler of excellence (-ψ).</div>
+        
          
                             </td>
                             <td class="px-6 py-6 align-top">
@@ -184,11 +295,24 @@
                         </tr>
 
                         <tr class="hover:bg-gray-50/50 transition-colors align-top border-b border-gray-100 last:border-0">
-                            <td class="px-6 py-6 w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.Who.Why</div></td>
-                            <td class="px-6 py-6 w-1/4 align-top">
+                            <td class="px-6 py-6 md:w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.Who.Why</div></td>
+                            <td class="px-6 py-6 md:w-1/4 align-top">
                                 
              <div class="font-bold text-gray-900 text-lg leading-tight mb-1">The Whistleblower</div>
              <div class="text-xs text-yellow-600 font-mono bg-yellow-50 inline-block px-1.5 py-0.5 rounded">The The Whistleblower</div>
+             
+        <div class="mt-2 flex flex-wrap items-center gap-2 judgment-badge">
+            <div class="inline-flex items-center space-x-1.5 px-2 py-1 bg-slate-50 border border-slate-200 rounded-md text-xs font-mono">
+                <span class="font-semibold text-gray-500" title="Moral Vector (Benefit vs Cost)">υ</span>
+                <span class="text-emerald-600 font-bold">+0.9</span>
+                <span class="text-gray-300">|</span>
+                <span class="font-semibold text-gray-500" title="Will Vector (Proactive vs Suppressive)">ψ</span>
+                <span class="text-emerald-600 font-bold">+0.7</span>
+            </div>
+            <span class="inline-block px-2 py-0.5 text-xs font-bold rounded border bg-emerald-100 text-emerald-800 border-emerald-200">Greater Good</span>
+        </div>
+        <div class="mt-1.5 text-xs text-gray-500 italic leading-snug w-full judgment-note">Truth service (+υ) through courageous disclosure (+ψ).</div>
+        
          
                             </td>
                             <td class="px-6 py-6 align-top">
@@ -207,11 +331,24 @@
                         </tr>
 
                         <tr class="hover:bg-gray-50/50 transition-colors align-top border-b border-gray-100 last:border-0">
-                            <td class="px-6 py-6 w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.Who.How</div></td>
-                            <td class="px-6 py-6 w-1/4 align-top">
+                            <td class="px-6 py-6 md:w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.Who.How</div></td>
+                            <td class="px-6 py-6 md:w-1/4 align-top">
                                 
              <div class="font-bold text-gray-900 text-lg leading-tight mb-1">The Umpire</div>
              <div class="text-xs text-yellow-600 font-mono bg-yellow-50 inline-block px-1.5 py-0.5 rounded">The The Umpire</div>
+             
+        <div class="mt-2 flex flex-wrap items-center gap-2 judgment-badge">
+            <div class="inline-flex items-center space-x-1.5 px-2 py-1 bg-slate-50 border border-slate-200 rounded-md text-xs font-mono">
+                <span class="font-semibold text-gray-500" title="Moral Vector (Benefit vs Cost)">υ</span>
+                <span class="text-emerald-600 font-bold">+0.7</span>
+                <span class="text-gray-300">|</span>
+                <span class="font-semibold text-gray-500" title="Will Vector (Proactive vs Suppressive)">ψ</span>
+                <span class="text-emerald-600 font-bold">+0.4</span>
+            </div>
+            <span class="inline-block px-2 py-0.5 text-xs font-bold rounded border bg-emerald-100 text-emerald-800 border-emerald-200">Greater Good</span>
+        </div>
+        <div class="mt-1.5 text-xs text-gray-500 italic leading-snug w-full judgment-note">Fair arbiter (+υ) through civilized conflict (+ψ).</div>
+        
          
                             </td>
                             <td class="px-6 py-6 align-top">
@@ -230,11 +367,24 @@
                         </tr>
 
                         <tr class="hover:bg-gray-50/50 transition-colors align-top border-b border-gray-100 last:border-0">
-                            <td class="px-6 py-6 w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.Who.Cause</div></td>
-                            <td class="px-6 py-6 w-1/4 align-top">
+                            <td class="px-6 py-6 md:w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.Who.Cause</div></td>
+                            <td class="px-6 py-6 md:w-1/4 align-top">
                                 
              <div class="font-bold text-gray-900 text-lg leading-tight mb-1">The Drover</div>
              <div class="text-xs text-yellow-600 font-mono bg-yellow-50 inline-block px-1.5 py-0.5 rounded">The The Drover</div>
+             
+        <div class="mt-2 flex flex-wrap items-center gap-2 judgment-badge">
+            <div class="inline-flex items-center space-x-1.5 px-2 py-1 bg-slate-50 border border-slate-200 rounded-md text-xs font-mono">
+                <span class="font-semibold text-gray-500" title="Moral Vector (Benefit vs Cost)">υ</span>
+                <span class="text-emerald-600 font-bold">+0.5</span>
+                <span class="text-gray-300">|</span>
+                <span class="font-semibold text-gray-500" title="Will Vector (Proactive vs Suppressive)">ψ</span>
+                <span class="text-emerald-600 font-bold">+0.5</span>
+            </div>
+            <span class="inline-block px-2 py-0.5 text-xs font-bold rounded border bg-emerald-100 text-emerald-800 border-emerald-200">Good</span>
+        </div>
+        <div class="mt-1.5 text-xs text-gray-500 italic leading-snug w-full judgment-note">Living logistics (+υ) through kinetic mastery (+ψ).</div>
+        
          
                             </td>
                             <td class="px-6 py-6 align-top">
@@ -253,11 +403,24 @@
                         </tr>
 
                         <tr class="hover:bg-gray-50/50 transition-colors align-top border-b border-gray-100 last:border-0">
-                            <td class="px-6 py-6 w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.Who.Effect</div></td>
-                            <td class="px-6 py-6 w-1/4 align-top">
+                            <td class="px-6 py-6 md:w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.Who.Effect</div></td>
+                            <td class="px-6 py-6 md:w-1/4 align-top">
                                 
              <div class="font-bold text-gray-900 text-lg leading-tight mb-1">The Scientist</div>
              <div class="text-xs text-yellow-600 font-mono bg-yellow-50 inline-block px-1.5 py-0.5 rounded">The Solver</div>
+             
+        <div class="mt-2 flex flex-wrap items-center gap-2 judgment-badge">
+            <div class="inline-flex items-center space-x-1.5 px-2 py-1 bg-slate-50 border border-slate-200 rounded-md text-xs font-mono">
+                <span class="font-semibold text-gray-500" title="Moral Vector (Benefit vs Cost)">υ</span>
+                <span class="text-emerald-600 font-bold">+0.8</span>
+                <span class="text-gray-300">|</span>
+                <span class="font-semibold text-gray-500" title="Will Vector (Proactive vs Suppressive)">ψ</span>
+                <span class="text-emerald-600 font-bold">+0.7</span>
+            </div>
+            <span class="inline-block px-2 py-0.5 text-xs font-bold rounded border bg-emerald-100 text-emerald-800 border-emerald-200">Greater Good</span>
+        </div>
+        <div class="mt-1.5 text-xs text-gray-500 italic leading-snug w-full judgment-note">Universal discovery (+υ) through active research (+ψ).</div>
+        
          
                             </td>
                             <td class="px-6 py-6 align-top">
@@ -282,8 +445,8 @@
 
         <!-- Sense q2: The What of the How -->
         <div class="mb-24">
-            <div class="bg-amber-900 text-white p-6 rounded-t-2xl flex justify-between items-center sticky top-16 z-40 shadow-xl ring-1 ring-black/10">
-                <div>
+            <div class="bg-amber-900 text-white p-6 rounded-t-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center sticky top-16 z-40 shadow-xl ring-1 ring-black/10 w-full">
+                <div class="w-full">
                     <h3 class="text-2xl font-bold tracking-tight font-serif">The What of the How (Roles/Titles)</h3>
                     <div class="flex items-center mt-2 space-x-3 opacity-90">
                         <span class="text-amber-200 text-xs uppercase tracking-widest font-bold">Sense q2</span>
@@ -293,7 +456,7 @@
                 </div>
             </div>
 
-            <div class="bg-white rounded-b-2xl shadow-sm border border-gray-200 overflow-hidden">
+            <div class="bg-white rounded-b-2xl shadow-sm border border-gray-200">
                 <div class="bg-gradient-to-br from-white to-amber-50 border-x border-b border-gray-200 p-8 relative overflow-hidden group">
                     <div class="absolute top-0 right-0 w-32 h-32 bg-amber-900 opacity-[0.03] rounded-bl-full -mr-8 -mt-8 transition-opacity group-hover:opacity-[0.08]"></div>
                     <div class="relative z-10">
@@ -308,11 +471,24 @@
                     <tbody class="divide-y divide-gray-100">
 
                         <tr class="hover:bg-gray-50/50 transition-colors align-top border-b border-gray-100 last:border-0">
-                            <td class="px-6 py-6 w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.What.Who</div></td>
-                            <td class="px-6 py-6 w-1/4 align-top">
+                            <td class="px-6 py-6 md:w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.What.Who</div></td>
+                            <td class="px-6 py-6 md:w-1/4 align-top">
                                 
              <div class="font-bold text-gray-900 text-lg leading-tight mb-1">The Ballot Paper</div>
              <div class="text-xs text-amber-600 font-mono bg-amber-50 inline-block px-1.5 py-0.5 rounded">The Silencer</div>
+             
+        <div class="mt-2 flex flex-wrap items-center gap-2 judgment-badge">
+            <div class="inline-flex items-center space-x-1.5 px-2 py-1 bg-slate-50 border border-slate-200 rounded-md text-xs font-mono">
+                <span class="font-semibold text-gray-500" title="Moral Vector (Benefit vs Cost)">υ</span>
+                <span class="text-emerald-600 font-bold">+0.9</span>
+                <span class="text-gray-300">|</span>
+                <span class="font-semibold text-gray-500" title="Will Vector (Proactive vs Suppressive)">ψ</span>
+                <span class="text-emerald-600 font-bold">+0.6</span>
+            </div>
+            <span class="inline-block px-2 py-0.5 text-xs font-bold rounded border bg-emerald-100 text-emerald-800 border-emerald-200">Greater Good</span>
+        </div>
+        <div class="mt-1.5 text-xs text-gray-500 italic leading-snug w-full judgment-note">Universal privacy (+υ) through Australian invention (+ψ).</div>
+        
          
                             </td>
                             <td class="px-6 py-6 align-top">
@@ -331,11 +507,24 @@
                         </tr>
 
                         <tr class="hover:bg-gray-50/50 transition-colors align-top border-b border-gray-100 last:border-0">
-                            <td class="px-6 py-6 w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.What.What</div></td>
-                            <td class="px-6 py-6 w-1/4 align-top">
+                            <td class="px-6 py-6 md:w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.What.What</div></td>
+                            <td class="px-6 py-6 md:w-1/4 align-top">
                                 
              <div class="font-bold text-gray-900 text-lg leading-tight mb-1">The Wage Case</div>
              <div class="text-xs text-amber-600 font-mono bg-amber-50 inline-block px-1.5 py-0.5 rounded">The Scale</div>
+             
+        <div class="mt-2 flex flex-wrap items-center gap-2 judgment-badge">
+            <div class="inline-flex items-center space-x-1.5 px-2 py-1 bg-slate-50 border border-slate-200 rounded-md text-xs font-mono">
+                <span class="font-semibold text-gray-500" title="Moral Vector (Benefit vs Cost)">υ</span>
+                <span class="text-emerald-600 font-bold">+0.9</span>
+                <span class="text-gray-300">|</span>
+                <span class="font-semibold text-gray-500" title="Will Vector (Proactive vs Suppressive)">ψ</span>
+                <span class="text-emerald-600 font-bold">+0.5</span>
+            </div>
+            <span class="inline-block px-2 py-0.5 text-xs font-bold rounded border bg-emerald-100 text-emerald-800 border-emerald-200">Greater Good</span>
+        </div>
+        <div class="mt-1.5 text-xs text-gray-500 italic leading-snug w-full judgment-note">Living wage (+υ) through judicial scale (+ψ).</div>
+        
          
                             </td>
                             <td class="px-6 py-6 align-top">
@@ -354,11 +543,24 @@
                         </tr>
 
                         <tr class="hover:bg-gray-50/50 transition-colors align-top border-b border-gray-100 last:border-0">
-                            <td class="px-6 py-6 w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.What.Where</div></td>
-                            <td class="px-6 py-6 w-1/4 align-top">
+                            <td class="px-6 py-6 md:w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.What.Where</div></td>
+                            <td class="px-6 py-6 md:w-1/4 align-top">
                                 
              <div class="font-bold text-gray-900 text-lg leading-tight mb-1">The Wifi</div>
              <div class="text-xs text-amber-600 font-mono bg-amber-50 inline-block px-1.5 py-0.5 rounded">The Link</div>
+             
+        <div class="mt-2 flex flex-wrap items-center gap-2 judgment-badge">
+            <div class="inline-flex items-center space-x-1.5 px-2 py-1 bg-slate-50 border border-slate-200 rounded-md text-xs font-mono">
+                <span class="font-semibold text-gray-500" title="Moral Vector (Benefit vs Cost)">υ</span>
+                <span class="text-emerald-600 font-bold">+0.8</span>
+                <span class="text-gray-300">|</span>
+                <span class="font-semibold text-gray-500" title="Will Vector (Proactive vs Suppressive)">ψ</span>
+                <span class="text-emerald-600 font-bold">+0.7</span>
+            </div>
+            <span class="inline-block px-2 py-0.5 text-xs font-bold rounded border bg-emerald-100 text-emerald-800 border-emerald-200">Greater Good</span>
+        </div>
+        <div class="mt-1.5 text-xs text-gray-500 italic leading-snug w-full judgment-note">Universal link (+υ) through CSIRO invention (+ψ).</div>
+        
          
                             </td>
                             <td class="px-6 py-6 align-top">
@@ -377,11 +579,24 @@
                         </tr>
 
                         <tr class="hover:bg-gray-50/50 transition-colors align-top border-b border-gray-100 last:border-0">
-                            <td class="px-6 py-6 w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.What.Why</div></td>
-                            <td class="px-6 py-6 w-1/4 align-top">
+                            <td class="px-6 py-6 md:w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.What.Why</div></td>
+                            <td class="px-6 py-6 md:w-1/4 align-top">
                                 
              <div class="font-bold text-gray-900 text-lg leading-tight mb-1">Hard Yakka</div>
              <div class="text-xs text-amber-600 font-mono bg-amber-50 inline-block px-1.5 py-0.5 rounded">The Purpose Principle</div>
+             
+        <div class="mt-2 flex flex-wrap items-center gap-2 judgment-badge">
+            <div class="inline-flex items-center space-x-1.5 px-2 py-1 bg-slate-50 border border-slate-200 rounded-md text-xs font-mono">
+                <span class="font-semibold text-gray-500" title="Moral Vector (Benefit vs Cost)">υ</span>
+                <span class="text-emerald-600 font-bold">+0.6</span>
+                <span class="text-gray-300">|</span>
+                <span class="font-semibold text-gray-500" title="Will Vector (Proactive vs Suppressive)">ψ</span>
+                <span class="text-emerald-600 font-bold">+0.5</span>
+            </div>
+            <span class="inline-block px-2 py-0.5 text-xs font-bold rounded border bg-emerald-100 text-emerald-800 border-emerald-200">Good</span>
+        </div>
+        <div class="mt-1.5 text-xs text-gray-500 italic leading-snug w-full judgment-note">Work ethic (+υ) through Indigenous etymology (+ψ).</div>
+        
          
                             </td>
                             <td class="px-6 py-6 align-top">
@@ -400,11 +615,24 @@
                         </tr>
 
                         <tr class="hover:bg-gray-50/50 transition-colors align-top border-b border-gray-100 last:border-0">
-                            <td class="px-6 py-6 w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.What.How</div></td>
-                            <td class="px-6 py-6 w-1/4 align-top">
+                            <td class="px-6 py-6 md:w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.What.How</div></td>
+                            <td class="px-6 py-6 md:w-1/4 align-top">
                                 
              <div class="font-bold text-gray-900 text-lg leading-tight mb-1">The Stump Jump Plough</div>
              <div class="text-xs text-amber-600 font-mono bg-amber-50 inline-block px-1.5 py-0.5 rounded">The Evasion</div>
+             
+        <div class="mt-2 flex flex-wrap items-center gap-2 judgment-badge">
+            <div class="inline-flex items-center space-x-1.5 px-2 py-1 bg-slate-50 border border-slate-200 rounded-md text-xs font-mono">
+                <span class="font-semibold text-gray-500" title="Moral Vector (Benefit vs Cost)">υ</span>
+                <span class="text-emerald-600 font-bold">+0.7</span>
+                <span class="text-gray-300">|</span>
+                <span class="font-semibold text-gray-500" title="Will Vector (Proactive vs Suppressive)">ψ</span>
+                <span class="text-emerald-600 font-bold">+0.6</span>
+            </div>
+            <span class="inline-block px-2 py-0.5 text-xs font-bold rounded border bg-emerald-100 text-emerald-800 border-emerald-200">Greater Good</span>
+        </div>
+        <div class="mt-1.5 text-xs text-gray-500 italic leading-snug w-full judgment-note">Adaptive tool (+υ) through inventive evasion (+ψ).</div>
+        
          
                             </td>
                             <td class="px-6 py-6 align-top">
@@ -423,11 +651,24 @@
                         </tr>
 
                         <tr class="hover:bg-gray-50/50 transition-colors align-top border-b border-gray-100 last:border-0">
-                            <td class="px-6 py-6 w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.What.Cause</div></td>
-                            <td class="px-6 py-6 w-1/4 align-top">
+                            <td class="px-6 py-6 md:w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.What.Cause</div></td>
+                            <td class="px-6 py-6 md:w-1/4 align-top">
                                 
              <div class="font-bold text-gray-900 text-lg leading-tight mb-1">The Boomerang</div>
              <div class="text-xs text-amber-600 font-mono bg-amber-50 inline-block px-1.5 py-0.5 rounded">The Loop</div>
+             
+        <div class="mt-2 flex flex-wrap items-center gap-2 judgment-badge">
+            <div class="inline-flex items-center space-x-1.5 px-2 py-1 bg-slate-50 border border-slate-200 rounded-md text-xs font-mono">
+                <span class="font-semibold text-gray-500" title="Moral Vector (Benefit vs Cost)">υ</span>
+                <span class="text-emerald-600 font-bold">+0.8</span>
+                <span class="text-gray-300">|</span>
+                <span class="font-semibold text-gray-500" title="Will Vector (Proactive vs Suppressive)">ψ</span>
+                <span class="text-emerald-600 font-bold">+0.5</span>
+            </div>
+            <span class="inline-block px-2 py-0.5 text-xs font-bold rounded border bg-emerald-100 text-emerald-800 border-emerald-200">Greater Good</span>
+        </div>
+        <div class="mt-1.5 text-xs text-gray-500 italic leading-snug w-full judgment-note">65,000-year engineering (+υ) through cyclic efficiency (+ψ).</div>
+        
          
                             </td>
                             <td class="px-6 py-6 align-top">
@@ -446,11 +687,24 @@
                         </tr>
 
                         <tr class="hover:bg-gray-50/50 transition-colors align-top border-b border-gray-100 last:border-0">
-                            <td class="px-6 py-6 w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.What.Effect</div></td>
-                            <td class="px-6 py-6 w-1/4 align-top">
+                            <td class="px-6 py-6 md:w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.What.Effect</div></td>
+                            <td class="px-6 py-6 md:w-1/4 align-top">
                                 
              <div class="font-bold text-gray-900 text-lg leading-tight mb-1">The Black Box</div>
              <div class="text-xs text-amber-600 font-mono bg-amber-50 inline-block px-1.5 py-0.5 rounded">The The Black Box</div>
+             
+        <div class="mt-2 flex flex-wrap items-center gap-2 judgment-badge">
+            <div class="inline-flex items-center space-x-1.5 px-2 py-1 bg-slate-50 border border-slate-200 rounded-md text-xs font-mono">
+                <span class="font-semibold text-gray-500" title="Moral Vector (Benefit vs Cost)">υ</span>
+                <span class="text-emerald-600 font-bold">+0.8</span>
+                <span class="text-gray-300">|</span>
+                <span class="font-semibold text-gray-500" title="Will Vector (Proactive vs Suppressive)">ψ</span>
+                <span class="text-emerald-600 font-bold">+0.7</span>
+            </div>
+            <span class="inline-block px-2 py-0.5 text-xs font-bold rounded border bg-emerald-100 text-emerald-800 border-emerald-200">Greater Good</span>
+        </div>
+        <div class="mt-1.5 text-xs text-gray-500 italic leading-snug w-full judgment-note">Technological conscience (+υ) through forensic truth (+ψ).</div>
+        
          
                             </td>
                             <td class="px-6 py-6 align-top">
@@ -475,8 +729,8 @@
 
         <!-- Sense q3: The Where of the How -->
         <div class="mb-24">
-            <div class="bg-green-900 text-white p-6 rounded-t-2xl flex justify-between items-center sticky top-16 z-40 shadow-xl ring-1 ring-black/10">
-                <div>
+            <div class="bg-green-900 text-white p-6 rounded-t-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center sticky top-16 z-40 shadow-xl ring-1 ring-black/10 w-full">
+                <div class="w-full">
                     <h3 class="text-2xl font-bold tracking-tight font-serif">The Where of the How (Origins/Location)</h3>
                     <div class="flex items-center mt-2 space-x-3 opacity-90">
                         <span class="text-green-200 text-xs uppercase tracking-widest font-bold">Sense q3</span>
@@ -486,7 +740,7 @@
                 </div>
             </div>
 
-            <div class="bg-white rounded-b-2xl shadow-sm border border-gray-200 overflow-hidden">
+            <div class="bg-white rounded-b-2xl shadow-sm border border-gray-200">
                 <div class="bg-gradient-to-br from-white to-green-50 border-x border-b border-gray-200 p-8 relative overflow-hidden group">
                     <div class="absolute top-0 right-0 w-32 h-32 bg-green-900 opacity-[0.03] rounded-bl-full -mr-8 -mt-8 transition-opacity group-hover:opacity-[0.08]"></div>
                     <div class="relative z-10">
@@ -501,11 +755,24 @@
                     <tbody class="divide-y divide-gray-100">
 
                         <tr class="hover:bg-gray-50/50 transition-colors align-top border-b border-gray-100 last:border-0">
-                            <td class="px-6 py-6 w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.Where.Who</div></td>
-                            <td class="px-6 py-6 w-1/4 align-top">
+                            <td class="px-6 py-6 md:w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.Where.Who</div></td>
+                            <td class="px-6 py-6 md:w-1/4 align-top">
                                 
              <div class="font-bold text-gray-900 text-lg leading-tight mb-1">The Polling Booth</div>
              <div class="text-xs text-green-600 font-mono bg-green-50 inline-block px-1.5 py-0.5 rounded">The The Polling Booth</div>
+             
+        <div class="mt-2 flex flex-wrap items-center gap-2 judgment-badge">
+            <div class="inline-flex items-center space-x-1.5 px-2 py-1 bg-slate-50 border border-slate-200 rounded-md text-xs font-mono">
+                <span class="font-semibold text-gray-500" title="Moral Vector (Benefit vs Cost)">υ</span>
+                <span class="text-emerald-600 font-bold">+0.9</span>
+                <span class="text-gray-300">|</span>
+                <span class="font-semibold text-gray-500" title="Will Vector (Proactive vs Suppressive)">ψ</span>
+                <span class="text-emerald-600 font-bold">+0.4</span>
+            </div>
+            <span class="inline-block px-2 py-0.5 text-xs font-bold rounded border bg-emerald-100 text-emerald-800 border-emerald-200">Greater Good</span>
+        </div>
+        <div class="mt-1.5 text-xs text-gray-500 italic leading-snug w-full judgment-note">Sanctuary of sovereignty (+υ) through private truth (+ψ).</div>
+        
          
                             </td>
                             <td class="px-6 py-6 align-top">
@@ -524,11 +791,24 @@
                         </tr>
 
                         <tr class="hover:bg-gray-50/50 transition-colors align-top border-b border-gray-100 last:border-0">
-                            <td class="px-6 py-6 w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.Where.What</div></td>
-                            <td class="px-6 py-6 w-1/4 align-top">
+                            <td class="px-6 py-6 md:w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.Where.What</div></td>
+                            <td class="px-6 py-6 md:w-1/4 align-top">
                                 
              <div class="font-bold text-gray-900 text-lg leading-tight mb-1">The Picket Line</div>
              <div class="text-xs text-green-600 font-mono bg-green-50 inline-block px-1.5 py-0.5 rounded">The The Picket Line</div>
+             
+        <div class="mt-2 flex flex-wrap items-center gap-2 judgment-badge">
+            <div class="inline-flex items-center space-x-1.5 px-2 py-1 bg-slate-50 border border-slate-200 rounded-md text-xs font-mono">
+                <span class="font-semibold text-gray-500" title="Moral Vector (Benefit vs Cost)">υ</span>
+                <span class="text-emerald-600 font-bold">+0.7</span>
+                <span class="text-gray-300">|</span>
+                <span class="font-semibold text-gray-500" title="Will Vector (Proactive vs Suppressive)">ψ</span>
+                <span class="text-emerald-600 font-bold">+0.7</span>
+            </div>
+            <span class="inline-block px-2 py-0.5 text-xs font-bold rounded border bg-emerald-100 text-emerald-800 border-emerald-200">Greater Good</span>
+        </div>
+        <div class="mt-1.5 text-xs text-gray-500 italic leading-snug w-full judgment-note">Collective fortress (+υ) through organized blockade (+ψ).</div>
+        
          
                             </td>
                             <td class="px-6 py-6 align-top">
@@ -547,11 +827,24 @@
                         </tr>
 
                         <tr class="hover:bg-gray-50/50 transition-colors align-top border-b border-gray-100 last:border-0">
-                            <td class="px-6 py-6 w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.Where.Where</div></td>
-                            <td class="px-6 py-6 w-1/4 align-top">
+                            <td class="px-6 py-6 md:w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.Where.Where</div></td>
+                            <td class="px-6 py-6 md:w-1/4 align-top">
                                 
              <div class="font-bold text-gray-900 text-lg leading-tight mb-1">The Surf Club</div>
              <div class="text-xs text-green-600 font-mono bg-green-50 inline-block px-1.5 py-0.5 rounded">The Post</div>
+             
+        <div class="mt-2 flex flex-wrap items-center gap-2 judgment-badge">
+            <div class="inline-flex items-center space-x-1.5 px-2 py-1 bg-slate-50 border border-slate-200 rounded-md text-xs font-mono">
+                <span class="font-semibold text-gray-500" title="Moral Vector (Benefit vs Cost)">υ</span>
+                <span class="text-emerald-600 font-bold">+0.8</span>
+                <span class="text-gray-300">|</span>
+                <span class="font-semibold text-gray-500" title="Will Vector (Proactive vs Suppressive)">ψ</span>
+                <span class="text-emerald-600 font-bold">+0.6</span>
+            </div>
+            <span class="inline-block px-2 py-0.5 text-xs font-bold rounded border bg-emerald-100 text-emerald-800 border-emerald-200">Greater Good</span>
+        </div>
+        <div class="mt-1.5 text-xs text-gray-500 italic leading-snug w-full judgment-note">Volunteer watchtower (+υ) through vigilant service (+ψ).</div>
+        
          
                             </td>
                             <td class="px-6 py-6 align-top">
@@ -570,11 +863,24 @@
                         </tr>
 
                         <tr class="hover:bg-gray-50/50 transition-colors align-top border-b border-gray-100 last:border-0">
-                            <td class="px-6 py-6 w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.Where.Why</div></td>
-                            <td class="px-6 py-6 w-1/4 align-top">
+                            <td class="px-6 py-6 md:w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.Where.Why</div></td>
+                            <td class="px-6 py-6 md:w-1/4 align-top">
                                 
              <div class="font-bold text-gray-900 text-lg leading-tight mb-1">The Courtroom</div>
              <div class="text-xs text-green-600 font-mono bg-green-50 inline-block px-1.5 py-0.5 rounded">The Oracle</div>
+             
+        <div class="mt-2 flex flex-wrap items-center gap-2 judgment-badge">
+            <div class="inline-flex items-center space-x-1.5 px-2 py-1 bg-slate-50 border border-slate-200 rounded-md text-xs font-mono">
+                <span class="font-semibold text-gray-500" title="Moral Vector (Benefit vs Cost)">υ</span>
+                <span class="text-emerald-600 font-bold">+0.7</span>
+                <span class="text-gray-300">|</span>
+                <span class="font-semibold text-gray-500" title="Will Vector (Proactive vs Suppressive)">ψ</span>
+                <span class="text-emerald-600 font-bold">+0.4</span>
+            </div>
+            <span class="inline-block px-2 py-0.5 text-xs font-bold rounded border bg-emerald-100 text-emerald-800 border-emerald-200">Greater Good</span>
+        </div>
+        <div class="mt-1.5 text-xs text-gray-500 italic leading-snug w-full judgment-note">Legal oracle (+υ) through structured argument (+ψ).</div>
+        
          
                             </td>
                             <td class="px-6 py-6 align-top">
@@ -593,11 +899,24 @@
                         </tr>
 
                         <tr class="hover:bg-gray-50/50 transition-colors align-top border-b border-gray-100 last:border-0">
-                            <td class="px-6 py-6 w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.Where.How</div></td>
-                            <td class="px-6 py-6 w-1/4 align-top">
+                            <td class="px-6 py-6 md:w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.Where.How</div></td>
+                            <td class="px-6 py-6 md:w-1/4 align-top">
                                 
              <div class="font-bold text-gray-900 text-lg leading-tight mb-1">The Lab</div>
              <div class="text-xs text-green-600 font-mono bg-green-50 inline-block px-1.5 py-0.5 rounded">The The Lab</div>
+             
+        <div class="mt-2 flex flex-wrap items-center gap-2 judgment-badge">
+            <div class="inline-flex items-center space-x-1.5 px-2 py-1 bg-slate-50 border border-slate-200 rounded-md text-xs font-mono">
+                <span class="font-semibold text-gray-500" title="Moral Vector (Benefit vs Cost)">υ</span>
+                <span class="text-emerald-600 font-bold">+0.7</span>
+                <span class="text-gray-300">|</span>
+                <span class="font-semibold text-gray-500" title="Will Vector (Proactive vs Suppressive)">ψ</span>
+                <span class="text-emerald-600 font-bold">+0.6</span>
+            </div>
+            <span class="inline-block px-2 py-0.5 text-xs font-bold rounded border bg-emerald-100 text-emerald-800 border-emerald-200">Greater Good</span>
+        </div>
+        <div class="mt-1.5 text-xs text-gray-500 italic leading-snug w-full judgment-note">Pragmatic cathedral (+υ) through applied science (+ψ).</div>
+        
          
                             </td>
                             <td class="px-6 py-6 align-top">
@@ -616,11 +935,24 @@
                         </tr>
 
                         <tr class="hover:bg-gray-50/50 transition-colors align-top border-b border-gray-100 last:border-0">
-                            <td class="px-6 py-6 w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.Where.Cause</div></td>
-                            <td class="px-6 py-6 w-1/4 align-top">
+                            <td class="px-6 py-6 md:w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.Where.Cause</div></td>
+                            <td class="px-6 py-6 md:w-1/4 align-top">
                                 
              <div class="font-bold text-gray-900 text-lg leading-tight mb-1">The Shearing Shed</div>
              <div class="text-xs text-green-600 font-mono bg-green-50 inline-block px-1.5 py-0.5 rounded">The Factory</div>
+             
+        <div class="mt-2 flex flex-wrap items-center gap-2 judgment-badge">
+            <div class="inline-flex items-center space-x-1.5 px-2 py-1 bg-slate-50 border border-slate-200 rounded-md text-xs font-mono">
+                <span class="font-semibold text-gray-500" title="Moral Vector (Benefit vs Cost)">υ</span>
+                <span class="text-emerald-600 font-bold">+0.5</span>
+                <span class="text-gray-300">|</span>
+                <span class="font-semibold text-gray-500" title="Will Vector (Proactive vs Suppressive)">ψ</span>
+                <span class="text-emerald-600 font-bold">+0.6</span>
+            </div>
+            <span class="inline-block px-2 py-0.5 text-xs font-bold rounded border bg-emerald-100 text-emerald-800 border-emerald-200">Good</span>
+        </div>
+        <div class="mt-1.5 text-xs text-gray-500 italic leading-snug w-full judgment-note">Factory of wealth (+υ) through industrial extraction (+ψ).</div>
+        
          
                             </td>
                             <td class="px-6 py-6 align-top">
@@ -639,11 +971,24 @@
                         </tr>
 
                         <tr class="hover:bg-gray-50/50 transition-colors align-top border-b border-gray-100 last:border-0">
-                            <td class="px-6 py-6 w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.Where.Effect</div></td>
-                            <td class="px-6 py-6 w-1/4 align-top">
+                            <td class="px-6 py-6 md:w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.Where.Effect</div></td>
+                            <td class="px-6 py-6 md:w-1/4 align-top">
                                 
              <div class="font-bold text-gray-900 text-lg leading-tight mb-1">The School</div>
              <div class="text-xs text-green-600 font-mono bg-green-50 inline-block px-1.5 py-0.5 rounded">The Mould</div>
+             
+        <div class="mt-2 flex flex-wrap items-center gap-2 judgment-badge">
+            <div class="inline-flex items-center space-x-1.5 px-2 py-1 bg-slate-50 border border-slate-200 rounded-md text-xs font-mono">
+                <span class="font-semibold text-gray-500" title="Moral Vector (Benefit vs Cost)">υ</span>
+                <span class="text-emerald-600 font-bold">+0.7</span>
+                <span class="text-gray-300">|</span>
+                <span class="font-semibold text-gray-500" title="Will Vector (Proactive vs Suppressive)">ψ</span>
+                <span class="text-emerald-600 font-bold">+0.4</span>
+            </div>
+            <span class="inline-block px-2 py-0.5 text-xs font-bold rounded border bg-emerald-100 text-emerald-800 border-emerald-200">Greater Good</span>
+        </div>
+        <div class="mt-1.5 text-xs text-gray-500 italic leading-snug w-full judgment-note">Free/compulsory/secular (+υ) through standardized mould (+ψ).</div>
+        
          
                             </td>
                             <td class="px-6 py-6 align-top">
@@ -668,8 +1013,8 @@
 
         <!-- Sense q4: The Why of the How -->
         <div class="mb-24">
-            <div class="bg-teal-900 text-white p-6 rounded-t-2xl flex justify-between items-center sticky top-16 z-40 shadow-xl ring-1 ring-black/10">
-                <div>
+            <div class="bg-teal-900 text-white p-6 rounded-t-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center sticky top-16 z-40 shadow-xl ring-1 ring-black/10 w-full">
+                <div class="w-full">
                     <h3 class="text-2xl font-bold tracking-tight font-serif">The Why of the How (Motivations/Drive)</h3>
                     <div class="flex items-center mt-2 space-x-3 opacity-90">
                         <span class="text-teal-200 text-xs uppercase tracking-widest font-bold">Sense q4</span>
@@ -679,7 +1024,7 @@
                 </div>
             </div>
 
-            <div class="bg-white rounded-b-2xl shadow-sm border border-gray-200 overflow-hidden">
+            <div class="bg-white rounded-b-2xl shadow-sm border border-gray-200">
                 <div class="bg-gradient-to-br from-white to-teal-50 border-x border-b border-gray-200 p-8 relative overflow-hidden group">
                     <div class="absolute top-0 right-0 w-32 h-32 bg-teal-900 opacity-[0.03] rounded-bl-full -mr-8 -mt-8 transition-opacity group-hover:opacity-[0.08]"></div>
                     <div class="relative z-10">
@@ -694,11 +1039,24 @@
                     <tbody class="divide-y divide-gray-100">
 
                         <tr class="hover:bg-gray-50/50 transition-colors align-top border-b border-gray-100 last:border-0">
-                            <td class="px-6 py-6 w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.Why.Who</div></td>
-                            <td class="px-6 py-6 w-1/4 align-top">
+                            <td class="px-6 py-6 md:w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.Why.Who</div></td>
+                            <td class="px-6 py-6 md:w-1/4 align-top">
                                 
              <div class="font-bold text-gray-900 text-lg leading-tight mb-1">Egalitarianism</div>
              <div class="text-xs text-teal-600 font-mono bg-teal-50 inline-block px-1.5 py-0.5 rounded">The Driver</div>
+             
+        <div class="mt-2 flex flex-wrap items-center gap-2 judgment-badge">
+            <div class="inline-flex items-center space-x-1.5 px-2 py-1 bg-slate-50 border border-slate-200 rounded-md text-xs font-mono">
+                <span class="font-semibold text-gray-500" title="Moral Vector (Benefit vs Cost)">υ</span>
+                <span class="text-emerald-600 font-bold">+0.8</span>
+                <span class="text-gray-300">|</span>
+                <span class="font-semibold text-gray-500" title="Will Vector (Proactive vs Suppressive)">ψ</span>
+                <span class="text-emerald-600 font-bold">+0.5</span>
+            </div>
+            <span class="inline-block px-2 py-0.5 text-xs font-bold rounded border bg-emerald-100 text-emerald-800 border-emerald-200">Greater Good</span>
+        </div>
+        <div class="mt-1.5 text-xs text-gray-500 italic leading-snug w-full judgment-note">Jack is as good as master (+υ) through active equality (+ψ).</div>
+        
          
                             </td>
                             <td class="px-6 py-6 align-top">
@@ -717,11 +1075,24 @@
                         </tr>
 
                         <tr class="hover:bg-gray-50/50 transition-colors align-top border-b border-gray-100 last:border-0">
-                            <td class="px-6 py-6 w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.Why.What</div></td>
-                            <td class="px-6 py-6 w-1/4 align-top">
+                            <td class="px-6 py-6 md:w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.Why.What</div></td>
+                            <td class="px-6 py-6 md:w-1/4 align-top">
                                 
              <div class="font-bold text-gray-900 text-lg leading-tight mb-1">Pragmatism</div>
              <div class="text-xs text-teal-600 font-mono bg-teal-50 inline-block px-1.5 py-0.5 rounded">The Pragmatism</div>
+             
+        <div class="mt-2 flex flex-wrap items-center gap-2 judgment-badge">
+            <div class="inline-flex items-center space-x-1.5 px-2 py-1 bg-slate-50 border border-slate-200 rounded-md text-xs font-mono">
+                <span class="font-semibold text-gray-500" title="Moral Vector (Benefit vs Cost)">υ</span>
+                <span class="text-emerald-600 font-bold">+0.5</span>
+                <span class="text-gray-300">|</span>
+                <span class="font-semibold text-gray-500" title="Will Vector (Proactive vs Suppressive)">ψ</span>
+                <span class="text-emerald-600 font-bold">+0.3</span>
+            </div>
+            <span class="inline-block px-2 py-0.5 text-xs font-bold rounded border bg-emerald-100 text-emerald-800 border-emerald-200">Good</span>
+        </div>
+        <div class="mt-1.5 text-xs text-gray-500 italic leading-snug w-full judgment-note">Sufficient outcome (+υ) through flexible logic (+ψ).</div>
+        
          
                             </td>
                             <td class="px-6 py-6 align-top">
@@ -740,11 +1111,24 @@
                         </tr>
 
                         <tr class="hover:bg-gray-50/50 transition-colors align-top border-b border-gray-100 last:border-0">
-                            <td class="px-6 py-6 w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.Why.Where</div></td>
-                            <td class="px-6 py-6 w-1/4 align-top">
+                            <td class="px-6 py-6 md:w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.Why.Where</div></td>
+                            <td class="px-6 py-6 md:w-1/4 align-top">
                                 
              <div class="font-bold text-gray-900 text-lg leading-tight mb-1">Necessity</div>
              <div class="text-xs text-teal-600 font-mono bg-teal-50 inline-block px-1.5 py-0.5 rounded">The Necessity</div>
+             
+        <div class="mt-2 flex flex-wrap items-center gap-2 judgment-badge">
+            <div class="inline-flex items-center space-x-1.5 px-2 py-1 bg-slate-50 border border-slate-200 rounded-md text-xs font-mono">
+                <span class="font-semibold text-gray-500" title="Moral Vector (Benefit vs Cost)">υ</span>
+                <span class="text-emerald-600 font-bold">+0.5</span>
+                <span class="text-gray-300">|</span>
+                <span class="font-semibold text-gray-500" title="Will Vector (Proactive vs Suppressive)">ψ</span>
+                <span class="text-emerald-600 font-bold">+0.4</span>
+            </div>
+            <span class="inline-block px-2 py-0.5 text-xs font-bold rounded border bg-emerald-100 text-emerald-800 border-emerald-200">Good</span>
+        </div>
+        <div class="mt-1.5 text-xs text-gray-500 italic leading-snug w-full judgment-note">Geographic commandment (+υ) through forced invention (+ψ).</div>
+        
          
                             </td>
                             <td class="px-6 py-6 align-top">
@@ -763,11 +1147,24 @@
                         </tr>
 
                         <tr class="hover:bg-gray-50/50 transition-colors align-top border-b border-gray-100 last:border-0">
-                            <td class="px-6 py-6 w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.Why.Why</div></td>
-                            <td class="px-6 py-6 w-1/4 align-top">
+                            <td class="px-6 py-6 md:w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.Why.Why</div></td>
+                            <td class="px-6 py-6 md:w-1/4 align-top">
                                 
              <div class="font-bold text-gray-900 text-lg leading-tight mb-1">Fairness</div>
              <div class="text-xs text-teal-600 font-mono bg-teal-50 inline-block px-1.5 py-0.5 rounded">The Fairness</div>
+             
+        <div class="mt-2 flex flex-wrap items-center gap-2 judgment-badge">
+            <div class="inline-flex items-center space-x-1.5 px-2 py-1 bg-slate-50 border border-slate-200 rounded-md text-xs font-mono">
+                <span class="font-semibold text-gray-500" title="Moral Vector (Benefit vs Cost)">υ</span>
+                <span class="text-emerald-600 font-bold">+0.9</span>
+                <span class="text-gray-300">|</span>
+                <span class="font-semibold text-gray-500" title="Will Vector (Proactive vs Suppressive)">ψ</span>
+                <span class="text-emerald-600 font-bold">+0.4</span>
+            </div>
+            <span class="inline-block px-2 py-0.5 text-xs font-bold rounded border bg-emerald-100 text-emerald-800 border-emerald-200">Greater Good</span>
+        </div>
+        <div class="mt-1.5 text-xs text-gray-500 italic leading-snug w-full judgment-note">Metric of legitimacy (+υ) through active enforcement (+ψ).</div>
+        
          
                             </td>
                             <td class="px-6 py-6 align-top">
@@ -786,11 +1183,24 @@
                         </tr>
 
                         <tr class="hover:bg-gray-50/50 transition-colors align-top border-b border-gray-100 last:border-0">
-                            <td class="px-6 py-6 w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.Why.How</div></td>
-                            <td class="px-6 py-6 w-1/4 align-top">
+                            <td class="px-6 py-6 md:w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.Why.How</div></td>
+                            <td class="px-6 py-6 md:w-1/4 align-top">
                                 
              <div class="font-bold text-gray-900 text-lg leading-tight mb-1">Efficiency</div>
              <div class="text-xs text-teal-600 font-mono bg-teal-50 inline-block px-1.5 py-0.5 rounded">The Efficiency</div>
+             
+        <div class="mt-2 flex flex-wrap items-center gap-2 judgment-badge">
+            <div class="inline-flex items-center space-x-1.5 px-2 py-1 bg-slate-50 border border-slate-200 rounded-md text-xs font-mono">
+                <span class="font-semibold text-gray-500" title="Moral Vector (Benefit vs Cost)">υ</span>
+                <span class="text-emerald-600 font-bold">+0.5</span>
+                <span class="text-gray-300">|</span>
+                <span class="font-semibold text-gray-500" title="Will Vector (Proactive vs Suppressive)">ψ</span>
+                <span class="text-emerald-600 font-bold">+0.6</span>
+            </div>
+            <span class="inline-block px-2 py-0.5 text-xs font-bold rounded border bg-emerald-100 text-emerald-800 border-emerald-200">Good</span>
+        </div>
+        <div class="mt-1.5 text-xs text-gray-500 italic leading-snug w-full judgment-note">Meritocracy of hand (+υ) through output hierarchy (+ψ).</div>
+        
          
                             </td>
                             <td class="px-6 py-6 align-top">
@@ -809,11 +1219,24 @@
                         </tr>
 
                         <tr class="hover:bg-gray-50/50 transition-colors align-top border-b border-gray-100 last:border-0">
-                            <td class="px-6 py-6 w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.Why.Cause</div></td>
-                            <td class="px-6 py-6 w-1/4 align-top">
+                            <td class="px-6 py-6 md:w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.Why.Cause</div></td>
+                            <td class="px-6 py-6 md:w-1/4 align-top">
                                 
              <div class="font-bold text-gray-900 text-lg leading-tight mb-1">Survival</div>
              <div class="text-xs text-teal-600 font-mono bg-teal-50 inline-block px-1.5 py-0.5 rounded">The Imperative</div>
+             
+        <div class="mt-2 flex flex-wrap items-center gap-2 judgment-badge">
+            <div class="inline-flex items-center space-x-1.5 px-2 py-1 bg-slate-50 border border-slate-200 rounded-md text-xs font-mono">
+                <span class="font-semibold text-gray-500" title="Moral Vector (Benefit vs Cost)">υ</span>
+                <span class="text-emerald-600 font-bold">+0.4</span>
+                <span class="text-gray-300">|</span>
+                <span class="font-semibold text-gray-500" title="Will Vector (Proactive vs Suppressive)">ψ</span>
+                <span class="text-emerald-600 font-bold">+0.5</span>
+            </div>
+            <span class="inline-block px-2 py-0.5 text-xs font-bold rounded border bg-emerald-100 text-emerald-800 border-emerald-200">Good</span>
+        </div>
+        <div class="mt-1.5 text-xs text-gray-500 italic leading-snug w-full judgment-note">Existential imperative (+υ) through populate-or-perish (+ψ).</div>
+        
          
                             </td>
                             <td class="px-6 py-6 align-top">
@@ -832,11 +1255,24 @@
                         </tr>
 
                         <tr class="hover:bg-gray-50/50 transition-colors align-top border-b border-gray-100 last:border-0">
-                            <td class="px-6 py-6 w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.Why.Effect</div></td>
-                            <td class="px-6 py-6 w-1/4 align-top">
+                            <td class="px-6 py-6 md:w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.Why.Effect</div></td>
+                            <td class="px-6 py-6 md:w-1/4 align-top">
                                 
              <div class="font-bold text-gray-900 text-lg leading-tight mb-1">Comfort</div>
              <div class="text-xs text-teal-600 font-mono bg-teal-50 inline-block px-1.5 py-0.5 rounded">The End</div>
+             
+        <div class="mt-2 flex flex-wrap items-center gap-2 judgment-badge">
+            <div class="inline-flex items-center space-x-1.5 px-2 py-1 bg-slate-50 border border-slate-200 rounded-md text-xs font-mono">
+                <span class="font-semibold text-gray-500" title="Moral Vector (Benefit vs Cost)">υ</span>
+                <span class="text-emerald-600 font-bold">+0.5</span>
+                <span class="text-gray-300">|</span>
+                <span class="font-semibold text-gray-500" title="Will Vector (Proactive vs Suppressive)">ψ</span>
+                <span class="text-red-600 font-bold">-0.3</span>
+            </div>
+            <span class="inline-block px-2 py-0.5 text-xs font-bold rounded border bg-emerald-50 text-emerald-800 border-emerald-100">Lesser Good</span>
+        </div>
+        <div class="mt-1.5 text-xs text-gray-500 italic leading-snug w-full judgment-note">Lifestyle goal (+υ) through passive settling (-ψ).</div>
+        
          
                             </td>
                             <td class="px-6 py-6 align-top">
@@ -861,8 +1297,8 @@
 
         <!-- Sense q5: The How of the How -->
         <div class="mb-24">
-            <div class="bg-blue-900 text-white p-6 rounded-t-2xl flex justify-between items-center sticky top-16 z-40 shadow-xl ring-1 ring-black/10">
-                <div>
+            <div class="bg-blue-900 text-white p-6 rounded-t-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center sticky top-16 z-40 shadow-xl ring-1 ring-black/10 w-full">
+                <div class="w-full">
                     <h3 class="text-2xl font-bold tracking-tight font-serif">The How of the How (Methods/Character)</h3>
                     <div class="flex items-center mt-2 space-x-3 opacity-90">
                         <span class="text-blue-200 text-xs uppercase tracking-widest font-bold">Sense q5</span>
@@ -872,7 +1308,7 @@
                 </div>
             </div>
 
-            <div class="bg-white rounded-b-2xl shadow-sm border border-gray-200 overflow-hidden">
+            <div class="bg-white rounded-b-2xl shadow-sm border border-gray-200">
                 <div class="bg-gradient-to-br from-white to-blue-50 border-x border-b border-gray-200 p-8 relative overflow-hidden group">
                     <div class="absolute top-0 right-0 w-32 h-32 bg-blue-900 opacity-[0.03] rounded-bl-full -mr-8 -mt-8 transition-opacity group-hover:opacity-[0.08]"></div>
                     <div class="relative z-10">
@@ -887,11 +1323,24 @@
                     <tbody class="divide-y divide-gray-100">
 
                         <tr class="hover:bg-gray-50/50 transition-colors align-top border-b border-gray-100 last:border-0">
-                            <td class="px-6 py-6 w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.How.Who</div></td>
-                            <td class="px-6 py-6 w-1/4 align-top">
+                            <td class="px-6 py-6 md:w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.How.Who</div></td>
+                            <td class="px-6 py-6 md:w-1/4 align-top">
                                 
              <div class="font-bold text-gray-900 text-lg leading-tight mb-1">The Smoko</div>
              <div class="text-xs text-blue-600 font-mono bg-blue-50 inline-block px-1.5 py-0.5 rounded">The Pause</div>
+             
+        <div class="mt-2 flex flex-wrap items-center gap-2 judgment-badge">
+            <div class="inline-flex items-center space-x-1.5 px-2 py-1 bg-slate-50 border border-slate-200 rounded-md text-xs font-mono">
+                <span class="font-semibold text-gray-500" title="Moral Vector (Benefit vs Cost)">υ</span>
+                <span class="text-emerald-600 font-bold">+0.6</span>
+                <span class="text-gray-300">|</span>
+                <span class="font-semibold text-gray-500" title="Will Vector (Proactive vs Suppressive)">ψ</span>
+                <span class="text-red-600 font-bold">-0.2</span>
+            </div>
+            <span class="inline-block px-2 py-0.5 text-xs font-bold rounded border bg-emerald-50 text-emerald-800 border-emerald-100">Lesser Good</span>
+        </div>
+        <div class="mt-1.5 text-xs text-gray-500 italic leading-snug w-full judgment-note">Rest right (+υ) through scheduled pause (-ψ).</div>
+        
          
                             </td>
                             <td class="px-6 py-6 align-top">
@@ -910,11 +1359,24 @@
                         </tr>
 
                         <tr class="hover:bg-gray-50/50 transition-colors align-top border-b border-gray-100 last:border-0">
-                            <td class="px-6 py-6 w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.How.What</div></td>
-                            <td class="px-6 py-6 w-1/4 align-top">
+                            <td class="px-6 py-6 md:w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.How.What</div></td>
+                            <td class="px-6 py-6 md:w-1/4 align-top">
                                 
              <div class="font-bold text-gray-900 text-lg leading-tight mb-1">The Roster</div>
              <div class="text-xs text-blue-600 font-mono bg-blue-50 inline-block px-1.5 py-0.5 rounded">The The Roster</div>
+             
+        <div class="mt-2 flex flex-wrap items-center gap-2 judgment-badge">
+            <div class="inline-flex items-center space-x-1.5 px-2 py-1 bg-slate-50 border border-slate-200 rounded-md text-xs font-mono">
+                <span class="font-semibold text-gray-500" title="Moral Vector (Benefit vs Cost)">υ</span>
+                <span class="text-emerald-600 font-bold">+0.6</span>
+                <span class="text-gray-300">|</span>
+                <span class="font-semibold text-gray-500" title="Will Vector (Proactive vs Suppressive)">ψ</span>
+                <span class="text-emerald-600 font-bold">+0.3</span>
+            </div>
+            <span class="inline-block px-2 py-0.5 text-xs font-bold rounded border bg-emerald-100 text-emerald-800 border-emerald-200">Good</span>
+        </div>
+        <div class="mt-1.5 text-xs text-gray-500 italic leading-snug w-full judgment-note">Fair allocation (+υ) through industrial clock (+ψ).</div>
+        
          
                             </td>
                             <td class="px-6 py-6 align-top">
@@ -933,11 +1395,24 @@
                         </tr>
 
                         <tr class="hover:bg-gray-50/50 transition-colors align-top border-b border-gray-100 last:border-0">
-                            <td class="px-6 py-6 w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.How.Where</div></td>
-                            <td class="px-6 py-6 w-1/4 align-top">
+                            <td class="px-6 py-6 md:w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.How.Where</div></td>
+                            <td class="px-6 py-6 md:w-1/4 align-top">
                                 
              <div class="font-bold text-gray-900 text-lg leading-tight mb-1">The Sickie</div>
              <div class="text-xs text-blue-600 font-mono bg-blue-50 inline-block px-1.5 py-0.5 rounded">The The Sickie</div>
+             
+        <div class="mt-2 flex flex-wrap items-center gap-2 judgment-badge">
+            <div class="inline-flex items-center space-x-1.5 px-2 py-1 bg-slate-50 border border-slate-200 rounded-md text-xs font-mono">
+                <span class="font-semibold text-gray-500" title="Moral Vector (Benefit vs Cost)">υ</span>
+                <span class="text-emerald-600 font-bold">+0.4</span>
+                <span class="text-gray-300">|</span>
+                <span class="font-semibold text-gray-500" title="Will Vector (Proactive vs Suppressive)">ψ</span>
+                <span class="text-red-600 font-bold">-0.3</span>
+            </div>
+            <span class="inline-block px-2 py-0.5 text-xs font-bold rounded border bg-slate-100 text-slate-800 border-slate-200">Tension</span>
+        </div>
+        <div class="mt-1.5 text-xs text-gray-500 italic leading-snug w-full judgment-note">Citizen veto (+υ) but leak in system (-ψ).</div>
+        
          
                             </td>
                             <td class="px-6 py-6 align-top">
@@ -956,11 +1431,24 @@
                         </tr>
 
                         <tr class="hover:bg-gray-50/50 transition-colors align-top border-b border-gray-100 last:border-0">
-                            <td class="px-6 py-6 w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.How.Why</div></td>
-                            <td class="px-6 py-6 w-1/4 align-top">
+                            <td class="px-6 py-6 md:w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.How.Why</div></td>
+                            <td class="px-6 py-6 md:w-1/4 align-top">
                                 
              <div class="font-bold text-gray-900 text-lg leading-tight mb-1">The Meeting</div>
              <div class="text-xs text-blue-600 font-mono bg-blue-50 inline-block px-1.5 py-0.5 rounded">The The Meeting</div>
+             
+        <div class="mt-2 flex flex-wrap items-center gap-2 judgment-badge">
+            <div class="inline-flex items-center space-x-1.5 px-2 py-1 bg-slate-50 border border-slate-200 rounded-md text-xs font-mono">
+                <span class="font-semibold text-gray-500" title="Moral Vector (Benefit vs Cost)">υ</span>
+                <span class="text-emerald-600 font-bold">+0.4</span>
+                <span class="text-gray-300">|</span>
+                <span class="font-semibold text-gray-500" title="Will Vector (Proactive vs Suppressive)">ψ</span>
+                <span class="text-red-600 font-bold">-0.4</span>
+            </div>
+            <span class="inline-block px-2 py-0.5 text-xs font-bold rounded border bg-slate-100 text-slate-800 border-slate-200">Tension</span>
+        </div>
+        <div class="mt-1.5 text-xs text-gray-500 italic leading-snug w-full judgment-note">Formal trauma processing (+υ) but urgency dampener (-ψ).</div>
+        
          
                             </td>
                             <td class="px-6 py-6 align-top">
@@ -979,11 +1467,24 @@
                         </tr>
 
                         <tr class="hover:bg-gray-50/50 transition-colors align-top border-b border-gray-100 last:border-0">
-                            <td class="px-6 py-6 w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.How.How</div></td>
-                            <td class="px-6 py-6 w-1/4 align-top">
+                            <td class="px-6 py-6 md:w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.How.How</div></td>
+                            <td class="px-6 py-6 md:w-1/4 align-top">
                                 
              <div class="font-bold text-gray-900 text-lg leading-tight mb-1">The Shortcut</div>
              <div class="text-xs text-blue-600 font-mono bg-blue-50 inline-block px-1.5 py-0.5 rounded">The The Shortcut</div>
+             
+        <div class="mt-2 flex flex-wrap items-center gap-2 judgment-badge">
+            <div class="inline-flex items-center space-x-1.5 px-2 py-1 bg-slate-50 border border-slate-200 rounded-md text-xs font-mono">
+                <span class="font-semibold text-gray-500" title="Moral Vector (Benefit vs Cost)">υ</span>
+                <span class="text-red-600 font-bold">-0.4</span>
+                <span class="text-gray-300">|</span>
+                <span class="font-semibold text-gray-500" title="Will Vector (Proactive vs Suppressive)">ψ</span>
+                <span class="text-emerald-600 font-bold">+0.3</span>
+            </div>
+            <span class="inline-block px-2 py-0.5 text-xs font-bold rounded border bg-red-100 text-red-900 border-red-200">Greatest Lie</span>
+        </div>
+        <div class="mt-1.5 text-xs text-gray-500 italic leading-snug w-full judgment-note">Quick fix (+ψ) sacrificing excellence (-υ).</div>
+        
          
                             </td>
                             <td class="px-6 py-6 align-top">
@@ -1002,11 +1503,24 @@
                         </tr>
 
                         <tr class="hover:bg-gray-50/50 transition-colors align-top border-b border-gray-100 last:border-0">
-                            <td class="px-6 py-6 w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.How.Cause</div></td>
-                            <td class="px-6 py-6 w-1/4 align-top">
+                            <td class="px-6 py-6 md:w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.How.Cause</div></td>
+                            <td class="px-6 py-6 md:w-1/4 align-top">
                                 
              <div class="font-bold text-gray-900 text-lg leading-tight mb-1">The Trial</div>
              <div class="text-xs text-blue-600 font-mono bg-blue-50 inline-block px-1.5 py-0.5 rounded">The The Trial</div>
+             
+        <div class="mt-2 flex flex-wrap items-center gap-2 judgment-badge">
+            <div class="inline-flex items-center space-x-1.5 px-2 py-1 bg-slate-50 border border-slate-200 rounded-md text-xs font-mono">
+                <span class="font-semibold text-gray-500" title="Moral Vector (Benefit vs Cost)">υ</span>
+                <span class="text-emerald-600 font-bold">+0.6</span>
+                <span class="text-gray-300">|</span>
+                <span class="font-semibold text-gray-500" title="Will Vector (Proactive vs Suppressive)">ψ</span>
+                <span class="text-emerald-600 font-bold">+0.5</span>
+            </div>
+            <span class="inline-block px-2 py-0.5 text-xs font-bold rounded border bg-emerald-100 text-emerald-800 border-emerald-200">Good</span>
+        </div>
+        <div class="mt-1.5 text-xs text-gray-500 italic leading-snug w-full judgment-note">Pilot experiment (+υ) through state laboratory (+ψ).</div>
+        
          
                             </td>
                             <td class="px-6 py-6 align-top">
@@ -1025,11 +1539,24 @@
                         </tr>
 
                         <tr class="hover:bg-gray-50/50 transition-colors align-top border-b border-gray-100 last:border-0">
-                            <td class="px-6 py-6 w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.How.Effect</div></td>
-                            <td class="px-6 py-6 w-1/4 align-top">
+                            <td class="px-6 py-6 md:w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.How.Effect</div></td>
+                            <td class="px-6 py-6 md:w-1/4 align-top">
                                 
              <div class="font-bold text-gray-900 text-lg leading-tight mb-1">The Report</div>
              <div class="text-xs text-blue-600 font-mono bg-blue-50 inline-block px-1.5 py-0.5 rounded">The The Report</div>
+             
+        <div class="mt-2 flex flex-wrap items-center gap-2 judgment-badge">
+            <div class="inline-flex items-center space-x-1.5 px-2 py-1 bg-slate-50 border border-slate-200 rounded-md text-xs font-mono">
+                <span class="font-semibold text-gray-500" title="Moral Vector (Benefit vs Cost)">υ</span>
+                <span class="text-emerald-600 font-bold">+0.2</span>
+                <span class="text-gray-300">|</span>
+                <span class="font-semibold text-gray-500" title="Will Vector (Proactive vs Suppressive)">ψ</span>
+                <span class="text-red-600 font-bold">-0.4</span>
+            </div>
+            <span class="inline-block px-2 py-0.5 text-xs font-bold rounded border bg-slate-100 text-slate-800 border-slate-200">Tension</span>
+        </div>
+        <div class="mt-1.5 text-xs text-gray-500 italic leading-snug w-full judgment-note">Memory device (+υ) but substitute for action (-ψ).</div>
+        
          
                             </td>
                             <td class="px-6 py-6 align-top">
@@ -1054,8 +1581,8 @@
 
         <!-- Sense q6: The Cause of the How -->
         <div class="mb-24">
-            <div class="bg-indigo-900 text-white p-6 rounded-t-2xl flex justify-between items-center sticky top-16 z-40 shadow-xl ring-1 ring-black/10">
-                <div>
+            <div class="bg-indigo-900 text-white p-6 rounded-t-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center sticky top-16 z-40 shadow-xl ring-1 ring-black/10 w-full">
+                <div class="w-full">
                     <h3 class="text-2xl font-bold tracking-tight font-serif">The Cause of the How (Roots/History)</h3>
                     <div class="flex items-center mt-2 space-x-3 opacity-90">
                         <span class="text-indigo-200 text-xs uppercase tracking-widest font-bold">Sense q6</span>
@@ -1065,7 +1592,7 @@
                 </div>
             </div>
 
-            <div class="bg-white rounded-b-2xl shadow-sm border border-gray-200 overflow-hidden">
+            <div class="bg-white rounded-b-2xl shadow-sm border border-gray-200">
                 <div class="bg-gradient-to-br from-white to-indigo-50 border-x border-b border-gray-200 p-8 relative overflow-hidden group">
                     <div class="absolute top-0 right-0 w-32 h-32 bg-indigo-900 opacity-[0.03] rounded-bl-full -mr-8 -mt-8 transition-opacity group-hover:opacity-[0.08]"></div>
                     <div class="relative z-10">
@@ -1080,11 +1607,24 @@
                     <tbody class="divide-y divide-gray-100">
 
                         <tr class="hover:bg-gray-50/50 transition-colors align-top border-b border-gray-100 last:border-0">
-                            <td class="px-6 py-6 w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.Cause.Who</div></td>
-                            <td class="px-6 py-6 w-1/4 align-top">
+                            <td class="px-6 py-6 md:w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.Cause.Who</div></td>
+                            <td class="px-6 py-6 md:w-1/4 align-top">
                                 
              <div class="font-bold text-gray-900 text-lg leading-tight mb-1">The Convict System</div>
              <div class="text-xs text-indigo-600 font-mono bg-indigo-50 inline-block px-1.5 py-0.5 rounded">The The Convict System</div>
+             
+        <div class="mt-2 flex flex-wrap items-center gap-2 judgment-badge">
+            <div class="inline-flex items-center space-x-1.5 px-2 py-1 bg-slate-50 border border-slate-200 rounded-md text-xs font-mono">
+                <span class="font-semibold text-gray-500" title="Moral Vector (Benefit vs Cost)">υ</span>
+                <span class="text-red-600 font-bold">-0.3</span>
+                <span class="text-gray-300">|</span>
+                <span class="font-semibold text-gray-500" title="Will Vector (Proactive vs Suppressive)">ψ</span>
+                <span class="text-emerald-600 font-bold">+0.5</span>
+            </div>
+            <span class="inline-block px-2 py-0.5 text-xs font-bold rounded border bg-red-100 text-red-900 border-red-200">Greatest Lie</span>
+        </div>
+        <div class="mt-1.5 text-xs text-gray-500 italic leading-snug w-full judgment-note">Bureaucratic origin (+ψ) serving empire (-υ).</div>
+        
          
                             </td>
                             <td class="px-6 py-6 align-top">
@@ -1103,11 +1643,12 @@
                         </tr>
 
                         <tr class="bg-amber-50/30 hover:bg-amber-50/60 transition-colors align-top border-b border-amber-100 last:border-0">
-                            <td class="px-6 py-6 w-16 align-top pt-7"></td>
-                            <td class="px-6 py-6 w-1/4 align-top">
+                            <td class="px-6 py-6 md:w-16 align-top pt-7"></td>
+                            <td class="px-6 py-6 md:w-1/4 align-top">
                                 
              <div class="font-bold text-gray-900 text-lg leading-tight mb-1">Relation</div>
              <div class="text-xs text-amber-800 font-mono bg-amber-100 inline-block px-1.5 py-0.5 rounded">First Nations Perspective</div>
+             
          
                             </td>
                             <td class="px-6 py-6 align-top">
@@ -1126,11 +1667,24 @@
                         </tr>
 
                         <tr class="hover:bg-gray-50/50 transition-colors align-top border-b border-gray-100 last:border-0">
-                            <td class="px-6 py-6 w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.Cause.Where</div></td>
-                            <td class="px-6 py-6 w-1/4 align-top">
+                            <td class="px-6 py-6 md:w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.Cause.Where</div></td>
+                            <td class="px-6 py-6 md:w-1/4 align-top">
                                 
              <div class="font-bold text-gray-900 text-lg leading-tight mb-1">The Distance</div>
              <div class="text-xs text-indigo-600 font-mono bg-indigo-50 inline-block px-1.5 py-0.5 rounded">The Problem</div>
+             
+        <div class="mt-2 flex flex-wrap items-center gap-2 judgment-badge">
+            <div class="inline-flex items-center space-x-1.5 px-2 py-1 bg-slate-50 border border-slate-200 rounded-md text-xs font-mono">
+                <span class="font-semibold text-gray-500" title="Moral Vector (Benefit vs Cost)">υ</span>
+                <span class="text-gray-500 font-bold">±0.0</span>
+                <span class="text-gray-300">|</span>
+                <span class="font-semibold text-gray-500" title="Will Vector (Proactive vs Suppressive)">ψ</span>
+                <span class="text-red-600 font-bold">-0.4</span>
+            </div>
+            <span class="inline-block px-2 py-0.5 text-xs font-bold rounded border bg-slate-100 text-slate-800 border-slate-200">Neutral</span>
+        </div>
+        <div class="mt-1.5 text-xs text-gray-500 italic leading-snug w-full judgment-note">Geographic problem. Catalyst for invention.</div>
+        
          
                             </td>
                             <td class="px-6 py-6 align-top">
@@ -1149,11 +1703,12 @@
                         </tr>
 
                         <tr class="bg-amber-50/30 hover:bg-amber-50/60 transition-colors align-top border-b border-amber-100 last:border-0">
-                            <td class="px-6 py-6 w-16 align-top pt-7"></td>
-                            <td class="px-6 py-6 w-1/4 align-top">
+                            <td class="px-6 py-6 md:w-16 align-top pt-7"></td>
+                            <td class="px-6 py-6 md:w-1/4 align-top">
                                 
              <div class="font-bold text-gray-900 text-lg leading-tight mb-1">Navigation</div>
              <div class="text-xs text-amber-800 font-mono bg-amber-100 inline-block px-1.5 py-0.5 rounded">First Nations Perspective</div>
+             
          
                             </td>
                             <td class="px-6 py-6 align-top">
@@ -1172,11 +1727,24 @@
                         </tr>
 
                         <tr class="hover:bg-gray-50/50 transition-colors align-top border-b border-gray-100 last:border-0">
-                            <td class="px-6 py-6 w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.Cause.How</div></td>
-                            <td class="px-6 py-6 w-1/4 align-top">
+                            <td class="px-6 py-6 md:w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.Cause.How</div></td>
+                            <td class="px-6 py-6 md:w-1/4 align-top">
                                 
              <div class="font-bold text-gray-900 text-lg leading-tight mb-1">The Survey</div>
              <div class="text-xs text-indigo-600 font-mono bg-indigo-50 inline-block px-1.5 py-0.5 rounded">The The Survey</div>
+             
+        <div class="mt-2 flex flex-wrap items-center gap-2 judgment-badge">
+            <div class="inline-flex items-center space-x-1.5 px-2 py-1 bg-slate-50 border border-slate-200 rounded-md text-xs font-mono">
+                <span class="font-semibold text-gray-500" title="Moral Vector (Benefit vs Cost)">υ</span>
+                <span class="text-emerald-600 font-bold">+0.3</span>
+                <span class="text-gray-300">|</span>
+                <span class="font-semibold text-gray-500" title="Will Vector (Proactive vs Suppressive)">ψ</span>
+                <span class="text-emerald-600 font-bold">+0.5</span>
+            </div>
+            <span class="inline-block px-2 py-0.5 text-xs font-bold rounded border bg-slate-100 text-slate-800 border-slate-200">Tension</span>
+        </div>
+        <div class="mt-1.5 text-xs text-gray-500 italic leading-snug w-full judgment-note">Geometric conquest (+ψ) imposing alien grid on land.</div>
+        
          
                             </td>
                             <td class="px-6 py-6 align-top">
@@ -1195,11 +1763,12 @@
                         </tr>
 
                         <tr class="bg-amber-50/30 hover:bg-amber-50/60 transition-colors align-top border-b border-amber-100 last:border-0">
-                            <td class="px-6 py-6 w-16 align-top pt-7"></td>
-                            <td class="px-6 py-6 w-1/4 align-top">
+                            <td class="px-6 py-6 md:w-16 align-top pt-7"></td>
+                            <td class="px-6 py-6 md:w-1/4 align-top">
                                 
              <div class="font-bold text-gray-900 text-lg leading-tight mb-1">Flow</div>
              <div class="text-xs text-amber-800 font-mono bg-amber-100 inline-block px-1.5 py-0.5 rounded">First Nations Perspective</div>
+             
          
                             </td>
                             <td class="px-6 py-6 align-top">
@@ -1218,11 +1787,24 @@
                         </tr>
 
                         <tr class="hover:bg-gray-50/50 transition-colors align-top border-b border-gray-100 last:border-0">
-                            <td class="px-6 py-6 w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.Cause.Effect</div></td>
-                            <td class="px-6 py-6 w-1/4 align-top">
+                            <td class="px-6 py-6 md:w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.Cause.Effect</div></td>
+                            <td class="px-6 py-6 md:w-1/4 align-top">
                                 
              <div class="font-bold text-gray-900 text-lg leading-tight mb-1">The Federation</div>
              <div class="text-xs text-indigo-600 font-mono bg-indigo-50 inline-block px-1.5 py-0.5 rounded">The Federation</div>
+             
+        <div class="mt-2 flex flex-wrap items-center gap-2 judgment-badge">
+            <div class="inline-flex items-center space-x-1.5 px-2 py-1 bg-slate-50 border border-slate-200 rounded-md text-xs font-mono">
+                <span class="font-semibold text-gray-500" title="Moral Vector (Benefit vs Cost)">υ</span>
+                <span class="text-emerald-600 font-bold">+0.7</span>
+                <span class="text-gray-300">|</span>
+                <span class="font-semibold text-gray-500" title="Will Vector (Proactive vs Suppressive)">ψ</span>
+                <span class="text-emerald-600 font-bold">+0.6</span>
+            </div>
+            <span class="inline-block px-2 py-0.5 text-xs font-bold rounded border bg-emerald-100 text-emerald-800 border-emerald-200">Greater Good</span>
+        </div>
+        <div class="mt-1.5 text-xs text-gray-500 italic leading-snug w-full judgment-note">Peaceful union (+υ) through manufactured destiny (+ψ).</div>
+        
          
                             </td>
                             <td class="px-6 py-6 align-top">
@@ -1247,8 +1829,8 @@
 
         <!-- Sense q7: The Effect of the How -->
         <div class="mb-24">
-            <div class="bg-purple-900 text-white p-6 rounded-t-2xl flex justify-between items-center sticky top-16 z-40 shadow-xl ring-1 ring-black/10">
-                <div>
+            <div class="bg-purple-900 text-white p-6 rounded-t-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center sticky top-16 z-40 shadow-xl ring-1 ring-black/10 w-full">
+                <div class="w-full">
                     <h3 class="text-2xl font-bold tracking-tight font-serif">The Effect of the How (Legacy/Impact)</h3>
                     <div class="flex items-center mt-2 space-x-3 opacity-90">
                         <span class="text-purple-200 text-xs uppercase tracking-widest font-bold">Sense q7</span>
@@ -1258,7 +1840,7 @@
                 </div>
             </div>
 
-            <div class="bg-white rounded-b-2xl shadow-sm border border-gray-200 overflow-hidden">
+            <div class="bg-white rounded-b-2xl shadow-sm border border-gray-200">
                 <div class="bg-gradient-to-br from-white to-purple-50 border-x border-b border-gray-200 p-8 relative overflow-hidden group">
                     <div class="absolute top-0 right-0 w-32 h-32 bg-purple-900 opacity-[0.03] rounded-bl-full -mr-8 -mt-8 transition-opacity group-hover:opacity-[0.08]"></div>
                     <div class="relative z-10">
@@ -1273,11 +1855,24 @@
                     <tbody class="divide-y divide-gray-100">
 
                         <tr class="hover:bg-gray-50/50 transition-colors align-top border-b border-gray-100 last:border-0">
-                            <td class="px-6 py-6 w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.Effect.Who</div></td>
-                            <td class="px-6 py-6 w-1/4 align-top">
+                            <td class="px-6 py-6 md:w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.Effect.Who</div></td>
+                            <td class="px-6 py-6 md:w-1/4 align-top">
                                 
              <div class="font-bold text-gray-900 text-lg leading-tight mb-1">The Voter</div>
              <div class="text-xs text-purple-600 font-mono bg-purple-50 inline-block px-1.5 py-0.5 rounded">The The Voter</div>
+             
+        <div class="mt-2 flex flex-wrap items-center gap-2 judgment-badge">
+            <div class="inline-flex items-center space-x-1.5 px-2 py-1 bg-slate-50 border border-slate-200 rounded-md text-xs font-mono">
+                <span class="font-semibold text-gray-500" title="Moral Vector (Benefit vs Cost)">υ</span>
+                <span class="text-emerald-600 font-bold">+0.7</span>
+                <span class="text-gray-300">|</span>
+                <span class="font-semibold text-gray-500" title="Will Vector (Proactive vs Suppressive)">ψ</span>
+                <span class="text-emerald-600 font-bold">+0.3</span>
+            </div>
+            <span class="inline-block px-2 py-0.5 text-xs font-bold rounded border bg-emerald-100 text-emerald-800 border-emerald-200">Greater Good</span>
+        </div>
+        <div class="mt-1.5 text-xs text-gray-500 italic leading-snug w-full judgment-note">Compelled participant (+υ) through mandatory duty (+ψ).</div>
+        
          
                             </td>
                             <td class="px-6 py-6 align-top">
@@ -1296,11 +1891,24 @@
                         </tr>
 
                         <tr class="hover:bg-gray-50/50 transition-colors align-top border-b border-gray-100 last:border-0">
-                            <td class="px-6 py-6 w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.Effect.What</div></td>
-                            <td class="px-6 py-6 w-1/4 align-top">
+                            <td class="px-6 py-6 md:w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.Effect.What</div></td>
+                            <td class="px-6 py-6 md:w-1/4 align-top">
                                 
              <div class="font-bold text-gray-900 text-lg leading-tight mb-1">The Award</div>
              <div class="text-xs text-purple-600 font-mono bg-purple-50 inline-block px-1.5 py-0.5 rounded">The The Award</div>
+             
+        <div class="mt-2 flex flex-wrap items-center gap-2 judgment-badge">
+            <div class="inline-flex items-center space-x-1.5 px-2 py-1 bg-slate-50 border border-slate-200 rounded-md text-xs font-mono">
+                <span class="font-semibold text-gray-500" title="Moral Vector (Benefit vs Cost)">υ</span>
+                <span class="text-emerald-600 font-bold">+0.9</span>
+                <span class="text-gray-300">|</span>
+                <span class="font-semibold text-gray-500" title="Will Vector (Proactive vs Suppressive)">ψ</span>
+                <span class="text-emerald-600 font-bold">+0.4</span>
+            </div>
+            <span class="inline-block px-2 py-0.5 text-xs font-bold rounded border bg-emerald-100 text-emerald-800 border-emerald-200">Greater Good</span>
+        </div>
+        <div class="mt-1.5 text-xs text-gray-500 italic leading-snug w-full judgment-note">Civilized minimum (+υ) through judicial protection (+ψ).</div>
+        
          
                             </td>
                             <td class="px-6 py-6 align-top">
@@ -1319,11 +1927,24 @@
                         </tr>
 
                         <tr class="hover:bg-gray-50/50 transition-colors align-top border-b border-gray-100 last:border-0">
-                            <td class="px-6 py-6 w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.Effect.Where</div></td>
-                            <td class="px-6 py-6 w-1/4 align-top">
+                            <td class="px-6 py-6 md:w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.Effect.Where</div></td>
+                            <td class="px-6 py-6 md:w-1/4 align-top">
                                 
              <div class="font-bold text-gray-900 text-lg leading-tight mb-1">The Infrastructure</div>
              <div class="text-xs text-purple-600 font-mono bg-purple-50 inline-block px-1.5 py-0.5 rounded">The Infrastructure</div>
+             
+        <div class="mt-2 flex flex-wrap items-center gap-2 judgment-badge">
+            <div class="inline-flex items-center space-x-1.5 px-2 py-1 bg-slate-50 border border-slate-200 rounded-md text-xs font-mono">
+                <span class="font-semibold text-gray-500" title="Moral Vector (Benefit vs Cost)">υ</span>
+                <span class="text-emerald-600 font-bold">+0.8</span>
+                <span class="text-gray-300">|</span>
+                <span class="font-semibold text-gray-500" title="Will Vector (Proactive vs Suppressive)">ψ</span>
+                <span class="text-emerald-600 font-bold">+0.7</span>
+            </div>
+            <span class="inline-block px-2 py-0.5 text-xs font-bold rounded border bg-emerald-100 text-emerald-800 border-emerald-200">Greater Good</span>
+        </div>
+        <div class="mt-1.5 text-xs text-gray-500 italic leading-snug w-full judgment-note">Secular worship (+υ) through nation-building (+ψ).</div>
+        
          
                             </td>
                             <td class="px-6 py-6 align-top">
@@ -1342,11 +1963,24 @@
                         </tr>
 
                         <tr class="hover:bg-gray-50/50 transition-colors align-top border-b border-gray-100 last:border-0">
-                            <td class="px-6 py-6 w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.Effect.Why</div></td>
-                            <td class="px-6 py-6 w-1/4 align-top">
+                            <td class="px-6 py-6 md:w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.Effect.Why</div></td>
+                            <td class="px-6 py-6 md:w-1/4 align-top">
                                 
              <div class="font-bold text-gray-900 text-lg leading-tight mb-1">Efficiency (Outcome)</div>
              <div class="text-xs text-purple-600 font-mono bg-purple-50 inline-block px-1.5 py-0.5 rounded">The Yield</div>
+             
+        <div class="mt-2 flex flex-wrap items-center gap-2 judgment-badge">
+            <div class="inline-flex items-center space-x-1.5 px-2 py-1 bg-slate-50 border border-slate-200 rounded-md text-xs font-mono">
+                <span class="font-semibold text-gray-500" title="Moral Vector (Benefit vs Cost)">υ</span>
+                <span class="text-emerald-600 font-bold">+0.6</span>
+                <span class="text-gray-300">|</span>
+                <span class="font-semibold text-gray-500" title="Will Vector (Proactive vs Suppressive)">ψ</span>
+                <span class="text-emerald-600 font-bold">+0.5</span>
+            </div>
+            <span class="inline-block px-2 py-0.5 text-xs font-bold rounded border bg-emerald-100 text-emerald-800 border-emerald-200">Good</span>
+        </div>
+        <div class="mt-1.5 text-xs text-gray-500 italic leading-snug w-full judgment-note">Punching above weight (+υ) through efficient yield (+ψ).</div>
+        
          
                             </td>
                             <td class="px-6 py-6 align-top">
@@ -1365,11 +1999,24 @@
                         </tr>
 
                         <tr class="hover:bg-gray-50/50 transition-colors align-top border-b border-gray-100 last:border-0">
-                            <td class="px-6 py-6 w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.Effect.How</div></td>
-                            <td class="px-6 py-6 w-1/4 align-top">
+                            <td class="px-6 py-6 md:w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.Effect.How</div></td>
+                            <td class="px-6 py-6 md:w-1/4 align-top">
                                 
              <div class="font-bold text-gray-900 text-lg leading-tight mb-1">Bureaucracy</div>
              <div class="text-xs text-purple-600 font-mono bg-purple-50 inline-block px-1.5 py-0.5 rounded">The Bureaucracy</div>
+             
+        <div class="mt-2 flex flex-wrap items-center gap-2 judgment-badge">
+            <div class="inline-flex items-center space-x-1.5 px-2 py-1 bg-slate-50 border border-slate-200 rounded-md text-xs font-mono">
+                <span class="font-semibold text-gray-500" title="Moral Vector (Benefit vs Cost)">υ</span>
+                <span class="text-emerald-600 font-bold">+0.3</span>
+                <span class="text-gray-300">|</span>
+                <span class="font-semibold text-gray-500" title="Will Vector (Proactive vs Suppressive)">ψ</span>
+                <span class="text-red-600 font-bold">-0.5</span>
+            </div>
+            <span class="inline-block px-2 py-0.5 text-xs font-bold rounded border bg-slate-100 text-slate-800 border-slate-200">Tension</span>
+        </div>
+        <div class="mt-1.5 text-xs text-gray-500 italic leading-snug w-full judgment-note">Fairness entropy (+υ) but friction cost (-ψ).</div>
+        
          
                             </td>
                             <td class="px-6 py-6 align-top">
@@ -1388,11 +2035,24 @@
                         </tr>
 
                         <tr class="hover:bg-gray-50/50 transition-colors align-top border-b border-gray-100 last:border-0">
-                            <td class="px-6 py-6 w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.Effect.Cause</div></td>
-                            <td class="px-6 py-6 w-1/4 align-top">
+                            <td class="px-6 py-6 md:w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.Effect.Cause</div></td>
+                            <td class="px-6 py-6 md:w-1/4 align-top">
                                 
              <div class="font-bold text-gray-900 text-lg leading-tight mb-1">Peace</div>
              <div class="text-xs text-purple-600 font-mono bg-purple-50 inline-block px-1.5 py-0.5 rounded">The Peace</div>
+             
+        <div class="mt-2 flex flex-wrap items-center gap-2 judgment-badge">
+            <div class="inline-flex items-center space-x-1.5 px-2 py-1 bg-slate-50 border border-slate-200 rounded-md text-xs font-mono">
+                <span class="font-semibold text-gray-500" title="Moral Vector (Benefit vs Cost)">υ</span>
+                <span class="text-emerald-600 font-bold">+0.8</span>
+                <span class="text-gray-300">|</span>
+                <span class="font-semibold text-gray-500" title="Will Vector (Proactive vs Suppressive)">ψ</span>
+                <span class="text-red-600 font-bold">-0.3</span>
+            </div>
+            <span class="inline-block px-2 py-0.5 text-xs font-bold rounded border bg-emerald-100 text-emerald-800 border-emerald-200">Greater Good</span>
+        </div>
+        <div class="mt-1.5 text-xs text-gray-500 italic leading-snug w-full judgment-note">Absence of war (+υ) through boring process (-ψ).</div>
+        
          
                             </td>
                             <td class="px-6 py-6 align-top">
@@ -1411,11 +2071,24 @@
                         </tr>
 
                         <tr class="hover:bg-gray-50/50 transition-colors align-top border-b border-gray-100 last:border-0">
-                            <td class="px-6 py-6 w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.Effect.Effect</div></td>
-                            <td class="px-6 py-6 w-1/4 align-top">
+                            <td class="px-6 py-6 md:w-16 align-top pt-7"><div class="font-mono text-gray-400 text-xs font-bold w-16 align-top pt-7">How.Effect.Effect</div></td>
+                            <td class="px-6 py-6 md:w-1/4 align-top">
                                 
              <div class="font-bold text-gray-900 text-lg leading-tight mb-1">The Fair Go (Realized)</div>
              <div class="text-xs text-purple-600 font-mono bg-purple-50 inline-block px-1.5 py-0.5 rounded">The Product</div>
+             
+        <div class="mt-2 flex flex-wrap items-center gap-2 judgment-badge">
+            <div class="inline-flex items-center space-x-1.5 px-2 py-1 bg-slate-50 border border-slate-200 rounded-md text-xs font-mono">
+                <span class="font-semibold text-gray-500" title="Moral Vector (Benefit vs Cost)">υ</span>
+                <span class="text-emerald-600 font-bold">+0.9</span>
+                <span class="text-gray-300">|</span>
+                <span class="font-semibold text-gray-500" title="Will Vector (Proactive vs Suppressive)">ψ</span>
+                <span class="text-emerald-600 font-bold">+0.4</span>
+            </div>
+            <span class="inline-block px-2 py-0.5 text-xs font-bold rounded border bg-emerald-100 text-emerald-800 border-emerald-200">Greater Good</span>
+        </div>
+        <div class="mt-1.5 text-xs text-gray-500 italic leading-snug w-full judgment-note">System validation (+υ) through product delivery (+ψ).</div>
+        
          
                             </td>
                             <td class="px-6 py-6 align-top">
