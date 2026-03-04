@@ -1,0 +1,4216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donald Trump — Hegemony Visualization</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            max-width: 100vw;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F8FAFC;
+            color: #1e293b;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .map-container {
+            padding: 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .map-container {
+            padding: 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        @media (min-width: 768px) {
+            .map-container {
+                padding: 2rem;
+            }
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: #0f172a;
+            font-family: 'Merriweather', serif;
+            font-weight: 800;
+        }
+
+        @media (min-width: 768px) {
+            h1 {
+                font-size: 3rem;
+            }
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #64748b;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            font-style: italic;
+            font-family: 'Merriweather', serif;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .plane-btn {
+            padding: 0.6rem 1.2rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+            background: #ffffff;
+            color: #475569;
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        }
+
+        .plane-btn:hover {
+            background: #f1f5f9;
+            color: #1e293b;
+            border-color: #cbd5e1;
+            transform: translateY(-1px);
+        }
+
+        .plane-btn.active {
+            background: #1e3a8a;
+            color: white;
+            border-color: #1e3a8a;
+        }
+
+        .canvas-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+            width: 100%;
+            overflow-x: auto;
+            overflow-y: hidden;
+            -webkit-overflow-scrolling: touch;
+            padding-bottom: 1rem;
+        }
+
+        .canvas-container.zoomed-container {
+            justify-content: flex-start;
+        }
+
+        @media (min-width: 800px) {
+            .canvas-container.zoomed-container {
+                justify-content: center;
+            }
+
+            .zoom-hint {
+                display: none !important;
+            }
+        }
+
+        canvas {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            border: 1px solid #e2e8f0;
+            width: 100%;
+            max-width: 800px;
+            height: auto;
+            touch-action: pan-y;
+            margin: 0 auto;
+            transition: all 0.3s ease-in-out;
+        }
+
+        canvas.zoomed-canvas {
+            width: 800px;
+            min-width: 800px;
+            height: 800px;
+            max-width: none;
+            touch-action: auto;
+            cursor: grab;
+        }
+
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            color: #64748b;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+
+        .legend-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .stat-card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+        }
+
+        .stat-card h3 {
+            font-size: 0.9rem;
+            color: #64748b;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #1e293b;
+        }
+
+        .positive {
+            color: #16a34a;
+        }
+
+        .negative {
+            color: #dc2626;
+        }
+
+        .neutral {
+            color: #d97706;
+        }
+
+        .tooltip {
+            position: fixed;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            max-width: none;
+            pointer-events: none;
+            z-index: 1000;
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 10px 10px -5px rgb(0 0 0 / 0.04);
+            display: none;
+            color: #1e293b;
+        }
+
+        .tooltip-title {
+            font-weight: 800;
+            font-size: 1rem;
+            margin-bottom: 0.4rem;
+            color: #0f172a;
+        }
+
+        .tooltip-coords {
+            color: #64748b;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+        }
+
+        .tooltip-judgment {
+            font-style: italic;
+            color: #475569;
+        }
+    </style>
+</head>
+
+<body class="antialiased text-gray-800">
+
+    <nav class="bg-gray-900 border-b border-gray-800 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Branding -->
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center gap-4">
+                        <span class="text-xl font-bold text-white tracking-widest uppercase">Trump Audit</span>
+                        <a href="index.html"
+                            class="ml-4 px-3 py-2 rounded-md text-sm font-medium text-gray-300 border border-gray-600 hover:text-white hover:bg-gray-700 transition">Index</a>
+                    </div>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden lg:block">
+                    <div class="ml-10 flex items-baseline space-x-2">
+                        <a href="Archetype_The_American_Anomaly.html"
+                            class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 transition">Archetype</a>
+                        <a href="Plane_1_Identity.html"
+                            class="px-3 py-2 rounded-md text-sm font-medium text-blue-100 hover:bg-blue-800 hover:text-white transition-colors">Who</a>
+                        <a href="Plane_2_Definition.html"
+                            class="px-3 py-2 rounded-md text-sm font-medium text-blue-100 hover:bg-blue-800 hover:text-white transition-colors">What</a>
+                        <a href="Plane_3_Land.html"
+                            class="px-3 py-2 rounded-md text-sm font-medium text-blue-100 hover:bg-blue-800 hover:text-white transition-colors">Where</a>
+                        <a href="Plane_4_Drive.html"
+                            class="px-3 py-2 rounded-md text-sm font-medium text-blue-100 hover:bg-blue-800 hover:text-white transition-colors">Why</a>
+                        <a href="Plane_5_Method.html"
+                            class="px-3 py-2 rounded-md text-sm font-medium text-blue-100 hover:bg-blue-800 hover:text-white transition-colors">How</a>
+                        <a href="Plane_6_Foundation.html"
+                            class="px-3 py-2 rounded-md text-sm font-medium text-blue-100 hover:bg-blue-800 hover:text-white transition-colors">Cause</a>
+                        <a href="Plane_7_Result.html"
+                            class="px-3 py-2 rounded-md text-sm font-medium text-blue-100 hover:bg-blue-800 hover:text-white transition-colors">Effect</a>
+                        <a href="Trump_Hegemony_Visualization.html"
+                            class="px-3 py-2 rounded-md text-sm font-medium bg-blue-800 text-white transition-colors">Map</a>
+                        <a href="About_Trump_Audit.html"
+                            class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 transition">About</a>
+                    </div>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="-mr-2 flex lg:hidden">
+                    <button type="button" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')"
+                        class="bg-gray-800 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+                        aria-controls="mobile-menu" aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="hidden lg:hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t border-gray-700 bg-gray-900">
+                <a href="Archetype_The_American_Anomaly.html"
+                    class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 transition block">Archetype</a>
+                <a href="Plane_1_Identity.html"
+                    class="px-3 py-2 rounded-md text-sm font-medium text-blue-100 hover:bg-blue-800 hover:text-white transition-colors block">Who</a>
+                <a href="Plane_2_Definition.html"
+                    class="px-3 py-2 rounded-md text-sm font-medium text-blue-100 hover:bg-blue-800 hover:text-white transition-colors block">What</a>
+                <a href="Plane_3_Land.html"
+                    class="px-3 py-2 rounded-md text-sm font-medium text-blue-100 hover:bg-blue-800 hover:text-white transition-colors block">Where</a>
+                <a href="Plane_4_Drive.html"
+                    class="px-3 py-2 rounded-md text-sm font-medium text-blue-100 hover:bg-blue-800 hover:text-white transition-colors block">Why</a>
+                <a href="Plane_5_Method.html"
+                    class="px-3 py-2 rounded-md text-sm font-medium text-blue-100 hover:bg-blue-800 hover:text-white transition-colors block">How</a>
+                <a href="Plane_6_Foundation.html"
+                    class="px-3 py-2 rounded-md text-sm font-medium text-blue-100 hover:bg-blue-800 hover:text-white transition-colors block">Cause</a>
+                <a href="Plane_7_Result.html"
+                    class="px-3 py-2 rounded-md text-sm font-medium text-blue-100 hover:bg-blue-800 hover:text-white transition-colors block">Effect</a>
+                <a href="Trump_Hegemony_Visualization.html"
+                    class="px-3 py-2 rounded-md text-sm font-medium bg-blue-800 text-white transition-colors block">Map</a>
+                <a href="About_Trump_Audit.html"
+                    class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 transition block">About</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="map-container">
+
+        <h1>Donald Trump — Hegemony Visualization</h1>
+        <p class="subtitle">Moral Vector Analysis of 343 Entries Across 7 Planes of the American Kanon</p>
+
+        <div class="explainer"
+            style="max-width: 800px; margin: 0 auto 2rem auto; background: #ffffff; padding: 1.5rem; border-radius: 16px; border: 1px solid #e2e8f0; text-align: left; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);">
+            <h3
+                style="font-size: 1.1rem; font-weight: 800; color: #0f172a; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 2px solid #f1f5f9; padding-bottom: 0.75rem; font-family: 'Merriweather', serif;">
+                How to Read this Map</h3>
+            <p style="font-size: 0.95rem; color: #475569; line-height: 1.7; margin-bottom: 1.5rem;">
+                This graph plots every concept in the American Kanon as interpreted by the actions and rhetoric of
+                Donald Trump into a coordinate in the <strong>Moral Field</strong>.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6 font-sm text-slate-700 items-start">
+                <div class="bg-slate-50 p-4 rounded-lg border border-slate-100">
+                    <strong class="text-slate-900 block mb-2 text-base">X-Axis: Moral (υ)</strong>
+                    <span class="text-green-600 font-bold">Left (+1)</span>: Universal Benefit<br>
+                    <span class="text-red-600 font-bold">Right (-1)</span>: Self Benefit
+                </div>
+                <div class="bg-slate-50 p-4 rounded-lg border border-slate-100">
+                    <strong class="text-slate-900 block mb-2 text-base">Y-Axis: Will (ψ)</strong>
+                    <span class="text-green-600 font-bold">Top (+1)</span>: Proactive/Creative<br>
+                    <span class="text-red-600 font-bold">Bottom (-1)</span>: Suppressive/Passive
+                </div>
+            </div>
+            <p style="font-size: 0.85rem; color: #64748b; margin-top: 1.5rem; font-style: italic; text-align: center;">
+                * Hover or tap over any dot to see the specific Concept and its exact Vector Coordinate. Click a node to
+                jump to its Kanon evaluation.<br>
+                <span class="zoom-hint"
+                    style="font-weight: 600; color: #3b82f6; display: inline-block; margin-top: 0.5rem; font-style: normal;">🔍
+                    Double-tap the map to toggle full native scroll size.</span>
+            </p>
+        </div>
+
+        <div class="controls mode-controls"
+            style="margin-bottom: 1rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 1rem;">
+            <label
+                style="cursor: pointer; font-weight: 600; color: #1e293b; display: inline-flex; align-items: center; gap: 0.5rem;"><input
+                    type="radio" name="viewMode" value="kanon" onchange="setViewMode(this.value)"> Base Kanon
+                Ideals</label>
+            <label
+                style="cursor: pointer; font-weight: 600; color: #1e293b; display: inline-flex; align-items: center; gap: 0.5rem;"><input
+                    type="radio" name="viewMode" value="trump" checked onchange="setViewMode(this.value)"> Trump's
+                Reality</label>
+            <label
+                style="cursor: pointer; font-weight: 600; color: #1e293b; display: inline-flex; align-items: center; gap: 0.5rem;"><input
+                    type="radio" name="viewMode" value="vectors" onchange="setViewMode(this.value)"> Relative Distortion
+                Map</label>
+        </div>
+
+        <div class="controls">
+            <button class="plane-btn active" data-plane="all">All Planes</button>
+            <button class="plane-btn" data-plane="1">P1: Identity</button>
+            <button class="plane-btn" data-plane="2">P2: Definition</button>
+            <button class="plane-btn" data-plane="3">P3: Land</button>
+            <button class="plane-btn" data-plane="4">P4: Drive</button>
+            <button class="plane-btn" data-plane="5">P5: Method</button>
+            <button class="plane-btn" data-plane="6">P6: Foundation</button>
+            <button class="plane-btn" data-plane="7">P7: Result</button>
+        </div>
+
+        <div class="canvas-container">
+            <canvas id="hegemonyCanvas" width="800" height="800"></canvas>
+        </div>
+
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-dot" style="background: #22c55e;"></div> Hit (+1) - Embodies Kanon
+            </div>
+            <div class="legend-item">
+                <div class="legend-dot" style="background: #ef4444;"></div> Fail (-1) - Violates Kanon
+            </div>
+            <div class="legend-item">
+                <div class="legend-dot" style="background: #9ca3af;"></div> Miss (0) - Neutral/Mixed
+            </div>
+        </div>
+
+        <div class="stats-grid" id="statsGrid"></div>
+
+        <div class="tooltip" id="tooltip">
+            <div class="tooltip-title"></div>
+            <div class="tooltip-coords"></div>
+            <div class="tooltip-judgment"></div>
+        </div>
+
+        <script>
+            const kanonData = {
+                "1": {
+                    "name": "Identity (Who)",
+                    "color": "#38bdf8",
+                    "total": {
+                        "u": 0.7755102040816326,
+                        "p": 0.49387755102040815
+                    },
+                    "trump_total": {
+                        "u": -0.26,
+                        "p": 0.15
+                    },
+                    "entries": [
+                        {
+                            "id": "Who.Who.Who",
+                            "name": "Self-Evidence",
+                            "u": 1.0,
+                            "p": 0.9,
+                            "trump_score": 1,
+                            "trump_u": 1.0,
+                            "trump_p": 0.9
+                        },
+                        {
+                            "id": "Who.Who.What",
+                            "name": "The Inner Light",
+                            "u": 0.8,
+                            "p": 0.8,
+                            "trump_score": -1,
+                            "trump_u": -0.8,
+                            "trump_p": -0.8
+                        },
+                        {
+                            "id": "Who.Who.Where",
+                            "name": "The Great Soul",
+                            "u": 1.0,
+                            "p": -0.6,
+                            "trump_score": -1,
+                            "trump_u": -1.0,
+                            "trump_p": 0.6
+                        },
+                        {
+                            "id": "Who.Who.Why",
+                            "name": "Self-Reliance",
+                            "u": 0.4,
+                            "p": 0.9,
+                            "trump_score": 1,
+                            "trump_u": 0.4,
+                            "trump_p": 0.9
+                        },
+                        {
+                            "id": "Who.Who.How",
+                            "name": "Integrity",
+                            "u": 0.9,
+                            "p": 0.4,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": -0.4
+                        },
+                        {
+                            "id": "Who.Who.Cause",
+                            "name": "The Conscience",
+                            "u": 0.9,
+                            "p": 0.8,
+                            "trump_score": 1,
+                            "trump_u": 0.9,
+                            "trump_p": 0.8
+                        },
+                        {
+                            "id": "Who.Who.Effect",
+                            "name": "Humility",
+                            "u": 0.8,
+                            "p": -0.8,
+                            "trump_score": -1,
+                            "trump_u": -0.8,
+                            "trump_p": 0.8
+                        },
+                        {
+                            "id": "Who.What.Who",
+                            "name": "The Citizen",
+                            "u": 0.9,
+                            "p": 0.7,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": -0.7
+                        },
+                        {
+                            "id": "Who.What.What",
+                            "name": "Merit",
+                            "u": 1.0,
+                            "p": 0.8,
+                            "trump_score": -1,
+                            "trump_u": -1.0,
+                            "trump_p": 0.8
+                        },
+                        {
+                            "id": "Who.What.Where",
+                            "name": "The Common Man",
+                            "u": 0.8,
+                            "p": 0.5,
+                            "trump_score": 1,
+                            "trump_u": 0.8,
+                            "trump_p": 0.5
+                        },
+                        {
+                            "id": "Who.What.Why",
+                            "name": "Upward Mobility",
+                            "u": 0.7,
+                            "p": 0.9,
+                            "trump_score": 1,
+                            "trump_u": 0.7,
+                            "trump_p": 0.9
+                        },
+                        {
+                            "id": "Who.What.How",
+                            "name": "Professionalism",
+                            "u": 0.6,
+                            "p": 0.8,
+                            "trump_score": -1,
+                            "trump_u": -0.6,
+                            "trump_p": -0.8
+                        },
+                        {
+                            "id": "Who.What.Cause",
+                            "name": "Civic Virtue",
+                            "u": 0.9,
+                            "p": 0.7,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": -0.7
+                        },
+                        {
+                            "id": "Who.What.Effect",
+                            "name": "Checks and Balances",
+                            "u": 0.8,
+                            "p": -0.6,
+                            "trump_score": -1,
+                            "trump_u": -0.8,
+                            "trump_p": 0.6
+                        },
+                        {
+                            "id": "Who.Where.Who",
+                            "name": "The Frontier",
+                            "u": 0.4,
+                            "p": 0.9,
+                            "trump_score": 1,
+                            "trump_u": 0.4,
+                            "trump_p": 0.9
+                        },
+                        {
+                            "id": "Who.Where.Where",
+                            "name": "The Heartland",
+                            "u": 0.6,
+                            "p": -0.7,
+                            "trump_score": 1,
+                            "trump_u": 0.6,
+                            "trump_p": -0.7
+                        },
+                        {
+                            "id": "Who.Where.What",
+                            "name": "The Melting Pot",
+                            "u": 0.9,
+                            "p": 0.6,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": -0.6
+                        },
+                        {
+                            "id": "Who.Where.Why",
+                            "name": "The Pioneer",
+                            "u": 0.5,
+                            "p": 0.9,
+                            "trump_score": 1,
+                            "trump_u": 0.5,
+                            "trump_p": 0.9
+                        },
+                        {
+                            "id": "Who.Where.How",
+                            "name": "Civilian Control",
+                            "u": 1.0,
+                            "p": -0.9,
+                            "trump_score": -1,
+                            "trump_u": -1.0,
+                            "trump_p": 0.9
+                        },
+                        {
+                            "id": "Who.Where.Cause",
+                            "name": "Union",
+                            "u": 0.9,
+                            "p": 0.8,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": -0.8
+                        },
+                        {
+                            "id": "Who.Where.Effect",
+                            "name": "States' Rights",
+                            "u": 0.6,
+                            "p": 0.4,
+                            "trump_score": -1,
+                            "trump_u": -0.6,
+                            "trump_p": 0.4
+                        },
+                        {
+                            "id": "Who.Why.Who",
+                            "name": "The Pursuit of Happiness",
+                            "u": 0.7,
+                            "p": 1.0,
+                            "trump_score": 1,
+                            "trump_u": 0.7,
+                            "trump_p": 1.0
+                        },
+                        {
+                            "id": "Who.Why.Where",
+                            "name": "The Dream",
+                            "u": 0.8,
+                            "p": 0.8,
+                            "trump_score": 1,
+                            "trump_u": 0.8,
+                            "trump_p": 0.8
+                        },
+                        {
+                            "id": "Who.Why.What",
+                            "name": "New Beginning",
+                            "u": 0.8,
+                            "p": 0.9,
+                            "trump_score": 1,
+                            "trump_u": 0.8,
+                            "trump_p": 0.9
+                        },
+                        {
+                            "id": "Who.Why.Why",
+                            "name": "Industry",
+                            "u": 0.6,
+                            "p": 0.9,
+                            "trump_score": -1,
+                            "trump_u": -0.6,
+                            "trump_p": -0.9
+                        },
+                        {
+                            "id": "Who.Why.How",
+                            "name": "Purpose",
+                            "u": 0.7,
+                            "p": 0.9,
+                            "trump_score": 1,
+                            "trump_u": 0.7,
+                            "trump_p": 0.9
+                        },
+                        {
+                            "id": "Who.Why.Cause",
+                            "name": "Charity",
+                            "u": 1.0,
+                            "p": 0.5,
+                            "trump_score": -1,
+                            "trump_u": -1.0,
+                            "trump_p": -0.5
+                        },
+                        {
+                            "id": "Who.Why.Effect",
+                            "name": "Temperance",
+                            "u": 0.8,
+                            "p": -0.7,
+                            "trump_score": -1,
+                            "trump_u": -0.8,
+                            "trump_p": 0.7
+                        },
+                        {
+                            "id": "Who.How.Who",
+                            "name": "Pragmatism",
+                            "u": 0.6,
+                            "p": 0.5,
+                            "trump_score": 1,
+                            "trump_u": 0.6,
+                            "trump_p": 0.5
+                        },
+                        {
+                            "id": "Who.How.What",
+                            "name": "Fair Play",
+                            "u": 0.8,
+                            "p": -0.4,
+                            "trump_score": -1,
+                            "trump_u": -0.8,
+                            "trump_p": 0.4
+                        },
+                        {
+                            "id": "Who.How.Where",
+                            "name": "The Strenuous Life",
+                            "u": 0.5,
+                            "p": 0.9,
+                            "trump_score": -1,
+                            "trump_u": -0.5,
+                            "trump_p": -0.9
+                        },
+                        {
+                            "id": "Who.How.Why",
+                            "name": "Ingenuity",
+                            "u": 0.7,
+                            "p": 0.9,
+                            "trump_score": 1,
+                            "trump_u": 0.7,
+                            "trump_p": 0.9
+                        },
+                        {
+                            "id": "Who.How.How",
+                            "name": "Transparency",
+                            "u": 0.9,
+                            "p": 0.7,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": -0.7
+                        },
+                        {
+                            "id": "Who.How.Cause",
+                            "name": "Diplomacy/Soft Power",
+                            "u": 0.5,
+                            "p": -0.5,
+                            "trump_score": -1,
+                            "trump_u": -0.5,
+                            "trump_p": 0.5
+                        },
+                        {
+                            "id": "Who.How.Effect",
+                            "name": "Frugality",
+                            "u": 0.7,
+                            "p": 0.4,
+                            "trump_score": -1,
+                            "trump_u": -0.7,
+                            "trump_p": -0.4
+                        },
+                        {
+                            "id": "Who.Cause.Who",
+                            "name": "The Immigrant Spirit",
+                            "u": 0.8,
+                            "p": 0.9,
+                            "trump_score": -1,
+                            "trump_u": -0.8,
+                            "trump_p": -0.9
+                        },
+                        {
+                            "id": "Who.Cause.What",
+                            "name": "Redemption",
+                            "u": 0.9,
+                            "p": 0.4,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": -0.4
+                        },
+                        {
+                            "id": "Who.Cause.Where",
+                            "name": "The Founders",
+                            "u": 0.7,
+                            "p": 0.5,
+                            "trump_score": -1,
+                            "trump_u": -0.7,
+                            "trump_p": 0.5
+                        },
+                        {
+                            "id": "Who.Cause.Why",
+                            "name": "Progress",
+                            "u": 0.8,
+                            "p": 0.8,
+                            "trump_score": -1,
+                            "trump_u": -0.8,
+                            "trump_p": -0.8
+                        },
+                        {
+                            "id": "Who.Cause.How",
+                            "name": "Remembrance",
+                            "u": 0.8,
+                            "p": -0.4,
+                            "trump_score": -1,
+                            "trump_u": -0.8,
+                            "trump_p": 0.4
+                        },
+                        {
+                            "id": "Who.Cause.Cause",
+                            "name": "Tradition vs Revolution",
+                            "u": 0.7,
+                            "p": 0.9,
+                            "trump_score": 1,
+                            "trump_u": 0.7,
+                            "trump_p": 0.9
+                        },
+                        {
+                            "id": "Who.Cause.Effect",
+                            "name": "Independence",
+                            "u": 0.8,
+                            "p": 1.0,
+                            "trump_score": 1,
+                            "trump_u": 0.8,
+                            "trump_p": 1.0
+                        },
+                        {
+                            "id": "Who.Effect.Who",
+                            "name": "Recognition",
+                            "u": 1.0,
+                            "p": 0.8,
+                            "trump_score": -1,
+                            "trump_u": -1.0,
+                            "trump_p": -0.8
+                        },
+                        {
+                            "id": "Who.Effect.What",
+                            "name": "Liberation",
+                            "u": 0.9,
+                            "p": 0.9,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": -0.9
+                        },
+                        {
+                            "id": "Who.Effect.Where",
+                            "name": "Superpower",
+                            "u": 0.6,
+                            "p": 0.8,
+                            "trump_score": 1,
+                            "trump_u": 0.6,
+                            "trump_p": 0.8
+                        },
+                        {
+                            "id": "Who.Effect.Why",
+                            "name": "Leadership",
+                            "u": 0.8,
+                            "p": 0.6,
+                            "trump_score": -1,
+                            "trump_u": -0.8,
+                            "trump_p": -0.6
+                        },
+                        {
+                            "id": "Who.Effect.How",
+                            "name": "Justice",
+                            "u": 1.0,
+                            "p": 0.7,
+                            "trump_score": -1,
+                            "trump_u": -1.0,
+                            "trump_p": -0.7
+                        },
+                        {
+                            "id": "Who.Effect.Cause",
+                            "name": "Inspiration",
+                            "u": 0.8,
+                            "p": 0.4,
+                            "trump_score": -1,
+                            "trump_u": -0.8,
+                            "trump_p": 0.4
+                        },
+                        {
+                            "id": "Who.Effect.Effect",
+                            "name": "Dissent",
+                            "u": 0.9,
+                            "p": 0.9,
+                            "trump_score": 1,
+                            "trump_u": 0.9,
+                            "trump_p": 0.9
+                        }
+                    ]
+                },
+                "2": {
+                    "name": "Definition (What)",
+                    "color": "#818cf8",
+                    "total": {
+                        "u": 0.7448979591836735,
+                        "p": 0.4530612244897959
+                    },
+                    "trump_total": {
+                        "u": -0.45,
+                        "p": 0.11
+                    },
+                    "entries": [
+                        {
+                            "id": "What.Who.Who",
+                            "name": "The Citizen",
+                            "u": 0.9,
+                            "p": 0.7,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": -0.7
+                        },
+                        {
+                            "id": "What.Who.Where",
+                            "name": "The Resident",
+                            "u": 0.7,
+                            "p": 0.6,
+                            "trump_score": -1,
+                            "trump_u": -0.7,
+                            "trump_p": 0.6
+                        },
+                        {
+                            "id": "What.Who.What",
+                            "name": "The Individual",
+                            "u": 1.0,
+                            "p": 0.8,
+                            "trump_score": 1,
+                            "trump_u": 1.0,
+                            "trump_p": 0.8
+                        },
+                        {
+                            "id": "What.Who.Why",
+                            "name": "The Consumer",
+                            "u": 0.4,
+                            "p": 0.8,
+                            "trump_score": 1,
+                            "trump_u": 0.4,
+                            "trump_p": 0.8
+                        },
+                        {
+                            "id": "What.Who.How",
+                            "name": "The Creator",
+                            "u": 0.8,
+                            "p": 0.7,
+                            "trump_score": 1,
+                            "trump_u": 0.8,
+                            "trump_p": 0.7
+                        },
+                        {
+                            "id": "What.Who.Cause",
+                            "name": "The Parent",
+                            "u": 0.9,
+                            "p": 0.5,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": -0.5
+                        },
+                        {
+                            "id": "What.Who.Effect",
+                            "name": "The Celebrity",
+                            "u": -0.2,
+                            "p": 0.7,
+                            "trump_score": 1,
+                            "trump_u": -0.2,
+                            "trump_p": 0.7
+                        },
+                        {
+                            "id": "What.Where.Who",
+                            "name": "The Private Sphere",
+                            "u": 0.9,
+                            "p": -0.5,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": 0.5
+                        },
+                        {
+                            "id": "What.Where.Where",
+                            "name": "The Public Square",
+                            "u": 0.8,
+                            "p": 0.7,
+                            "trump_score": -1,
+                            "trump_u": -0.8,
+                            "trump_p": -0.7
+                        },
+                        {
+                            "id": "What.Where.What",
+                            "name": "The Constitution",
+                            "u": 1.0,
+                            "p": -0.4,
+                            "trump_score": -1,
+                            "trump_u": -1.0,
+                            "trump_p": 0.4
+                        },
+                        {
+                            "id": "What.Where.Why",
+                            "name": "The Frontier (Concept)",
+                            "u": 0.6,
+                            "p": 0.9,
+                            "trump_score": -1,
+                            "trump_u": -0.6,
+                            "trump_p": -0.9
+                        },
+                        {
+                            "id": "What.Where.How",
+                            "name": "The Market",
+                            "u": 0.7,
+                            "p": -0.6,
+                            "trump_score": -1,
+                            "trump_u": -0.7,
+                            "trump_p": 0.6
+                        },
+                        {
+                            "id": "What.Where.Cause",
+                            "name": "The University",
+                            "u": 0.8,
+                            "p": 0.5,
+                            "trump_score": -1,
+                            "trump_u": -0.8,
+                            "trump_p": -0.5
+                        },
+                        {
+                            "id": "What.Where.Effect",
+                            "name": "The Internet",
+                            "u": 0.5,
+                            "p": 0.8,
+                            "trump_score": 1,
+                            "trump_u": 0.5,
+                            "trump_p": 0.8
+                        },
+                        {
+                            "id": "What.What.Who",
+                            "name": "Democracy",
+                            "u": 0.9,
+                            "p": 0.7,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": -0.7
+                        },
+                        {
+                            "id": "What.What.Where",
+                            "name": "Republic",
+                            "u": 1.0,
+                            "p": -0.6,
+                            "trump_score": -1,
+                            "trump_u": -1.0,
+                            "trump_p": 0.6
+                        },
+                        {
+                            "id": "What.What.What",
+                            "name": "Liberty",
+                            "u": 1.0,
+                            "p": 0.9,
+                            "trump_score": 1,
+                            "trump_u": 1.0,
+                            "trump_p": 0.9
+                        },
+                        {
+                            "id": "What.What.Why",
+                            "name": "Equality",
+                            "u": 1.0,
+                            "p": 0.5,
+                            "trump_score": -1,
+                            "trump_u": -1.0,
+                            "trump_p": -0.5
+                        },
+                        {
+                            "id": "What.What.How",
+                            "name": "Rights",
+                            "u": 0.9,
+                            "p": -0.8,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": 0.8
+                        },
+                        {
+                            "id": "What.What.Cause",
+                            "name": "Law",
+                            "u": 0.9,
+                            "p": -0.5,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": 0.5
+                        },
+                        {
+                            "id": "What.What.Effect",
+                            "name": "Justice",
+                            "u": 1.0,
+                            "p": 0.8,
+                            "trump_score": -1,
+                            "trump_u": -1.0,
+                            "trump_p": -0.8
+                        },
+                        {
+                            "id": "What.Why.Who",
+                            "name": "Protection",
+                            "u": 0.9,
+                            "p": -0.6,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": 0.6
+                        },
+                        {
+                            "id": "What.Why.Where",
+                            "name": "Defense",
+                            "u": 0.8,
+                            "p": 0.7,
+                            "trump_score": -1,
+                            "trump_u": -0.8,
+                            "trump_p": -0.7
+                        },
+                        {
+                            "id": "What.Why.What",
+                            "name": "Order",
+                            "u": 0.9,
+                            "p": -0.7,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": 0.7
+                        },
+                        {
+                            "id": "What.Why.Why",
+                            "name": "Prosperity",
+                            "u": 0.8,
+                            "p": 0.6,
+                            "trump_score": 1,
+                            "trump_u": 0.8,
+                            "trump_p": 0.6
+                        },
+                        {
+                            "id": "What.Why.How",
+                            "name": "Union",
+                            "u": 1.0,
+                            "p": 0.8,
+                            "trump_score": -1,
+                            "trump_u": -1.0,
+                            "trump_p": -0.8
+                        },
+                        {
+                            "id": "What.Why.Cause",
+                            "name": "Posterity",
+                            "u": 0.9,
+                            "p": 0.4,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": -0.4
+                        },
+                        {
+                            "id": "What.Why.Effect",
+                            "name": "Happiness",
+                            "u": 0.8,
+                            "p": 1.0,
+                            "trump_score": 1,
+                            "trump_u": 0.8,
+                            "trump_p": 1.0
+                        },
+                        {
+                            "id": "What.How.Who",
+                            "name": "Voting",
+                            "u": 0.9,
+                            "p": 0.5,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": -0.5
+                        },
+                        {
+                            "id": "What.How.Where",
+                            "name": "Debate",
+                            "u": 0.8,
+                            "p": 0.8,
+                            "trump_score": -1,
+                            "trump_u": -0.8,
+                            "trump_p": -0.8
+                        },
+                        {
+                            "id": "What.How.What",
+                            "name": "Amendment",
+                            "u": 0.9,
+                            "p": 0.6,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": -0.6
+                        },
+                        {
+                            "id": "What.How.Why",
+                            "name": "Protest",
+                            "u": 0.7,
+                            "p": 0.9,
+                            "trump_score": -1,
+                            "trump_u": -0.7,
+                            "trump_p": 0.9
+                        },
+                        {
+                            "id": "What.How.How",
+                            "name": "Due Process",
+                            "u": 1.0,
+                            "p": -0.8,
+                            "trump_score": -1,
+                            "trump_u": -1.0,
+                            "trump_p": 0.8
+                        },
+                        {
+                            "id": "What.How.Cause",
+                            "name": "Education",
+                            "u": 0.9,
+                            "p": 0.7,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": -0.7
+                        },
+                        {
+                            "id": "What.How.Effect",
+                            "name": "The Press",
+                            "u": 0.9,
+                            "p": 0.8,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": -0.8
+                        },
+                        {
+                            "id": "What.Cause.Who",
+                            "name": "God/Creator",
+                            "u": 1.0,
+                            "p": 0.5,
+                            "trump_score": -1,
+                            "trump_u": -1.0,
+                            "trump_p": -0.5
+                        },
+                        {
+                            "id": "What.Cause.Where",
+                            "name": "England",
+                            "u": 0.6,
+                            "p": -0.4,
+                            "trump_score": -1,
+                            "trump_u": -0.6,
+                            "trump_p": -0.4
+                        },
+                        {
+                            "id": "What.Cause.What",
+                            "name": "Enlightenment",
+                            "u": 0.8,
+                            "p": 0.8,
+                            "trump_score": -1,
+                            "trump_u": -0.8,
+                            "trump_p": -0.8
+                        },
+                        {
+                            "id": "What.Cause.Why",
+                            "name": "Grievance",
+                            "u": 0.7,
+                            "p": 0.9,
+                            "trump_score": 1,
+                            "trump_u": 0.7,
+                            "trump_p": 0.9
+                        },
+                        {
+                            "id": "What.Cause.How",
+                            "name": "Compact",
+                            "u": 0.9,
+                            "p": 0.7,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": -0.7
+                        },
+                        {
+                            "id": "What.Cause.Cause",
+                            "name": "Nature",
+                            "u": 0.9,
+                            "p": 0.4,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": -0.4
+                        },
+                        {
+                            "id": "What.Cause.Effect",
+                            "name": "War",
+                            "u": 0.5,
+                            "p": 1.0,
+                            "trump_score": 1,
+                            "trump_u": 0.5,
+                            "trump_p": 1.0
+                        },
+                        {
+                            "id": "What.Effect.Who",
+                            "name": "The Free Man",
+                            "u": 1.0,
+                            "p": 0.8,
+                            "trump_score": 1,
+                            "trump_u": 1.0,
+                            "trump_p": 0.8
+                        },
+                        {
+                            "id": "What.Effect.Where",
+                            "name": "The West",
+                            "u": 0.6,
+                            "p": 0.8,
+                            "trump_score": -1,
+                            "trump_u": -0.6,
+                            "trump_p": -0.8
+                        },
+                        {
+                            "id": "What.Effect.What",
+                            "name": "Standard of Living",
+                            "u": 0.7,
+                            "p": 0.6,
+                            "trump_score": 1,
+                            "trump_u": 0.7,
+                            "trump_p": 0.6
+                        },
+                        {
+                            "id": "What.Effect.Why",
+                            "name": "Consumer Culture",
+                            "u": -0.4,
+                            "p": 0.8,
+                            "trump_score": 1,
+                            "trump_u": -0.4,
+                            "trump_p": 0.8
+                        },
+                        {
+                            "id": "What.Effect.How",
+                            "name": "Litigation",
+                            "u": 0.3,
+                            "p": 0.7,
+                            "trump_score": 1,
+                            "trump_u": 0.3,
+                            "trump_p": 0.7
+                        },
+                        {
+                            "id": "What.Effect.Cause",
+                            "name": "Polarization",
+                            "u": -0.6,
+                            "p": 0.8,
+                            "trump_score": 1,
+                            "trump_u": -0.6,
+                            "trump_p": 0.8
+                        },
+                        {
+                            "id": "What.Effect.Effect",
+                            "name": "Transformation",
+                            "u": 0.8,
+                            "p": 0.9,
+                            "trump_score": -1,
+                            "trump_u": -0.8,
+                            "trump_p": 0.9
+                        }
+                    ]
+                },
+                "3": {
+                    "name": "Land (Where)",
+                    "color": "#4ade80",
+                    "total": {
+                        "u": 0.463265306122449,
+                        "p": 0.3979591836734694
+                    },
+                    "trump_total": {
+                        "u": -0.1,
+                        "p": 0.2
+                    },
+                    "entries": [
+                        {
+                            "id": "Where.Who.Who",
+                            "name": "The Frontiersman",
+                            "u": 0.6,
+                            "p": 0.9,
+                            "trump_score": 1,
+                            "trump_u": 0.6,
+                            "trump_p": 0.9
+                        },
+                        {
+                            "id": "Where.Who.Where",
+                            "name": "The Homesteader",
+                            "u": 1.0,
+                            "p": 0.8,
+                            "trump_score": -1,
+                            "trump_u": -1.0,
+                            "trump_p": -0.8
+                        },
+                        {
+                            "id": "Where.Who.What",
+                            "name": "The Neighbor",
+                            "u": 0.9,
+                            "p": 0.6,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": -0.6
+                        },
+                        {
+                            "id": "Where.Who.Why",
+                            "name": "The Explorer",
+                            "u": 0.5,
+                            "p": 1.0,
+                            "trump_score": 1,
+                            "trump_u": 0.5,
+                            "trump_p": 1.0
+                        },
+                        {
+                            "id": "Where.Who.How",
+                            "name": "The Architect",
+                            "u": 0.7,
+                            "p": 0.8,
+                            "trump_score": 1,
+                            "trump_u": 0.7,
+                            "trump_p": 0.8
+                        },
+                        {
+                            "id": "Where.Who.Cause",
+                            "name": "The Native",
+                            "u": 0.9,
+                            "p": -0.6,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": 0.6
+                        },
+                        {
+                            "id": "Where.Who.Effect",
+                            "name": "The Suburbanite",
+                            "u": 0.6,
+                            "p": -0.7,
+                            "trump_score": 1,
+                            "trump_u": 0.6,
+                            "trump_p": -0.7
+                        },
+                        {
+                            "id": "Where.Where.Who",
+                            "name": "The Wilderness",
+                            "u": 0.9,
+                            "p": -0.5,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": 0.5
+                        },
+                        {
+                            "id": "Where.Where.Where",
+                            "name": "The Sea to Shining Sea",
+                            "u": 0.8,
+                            "p": 0.4,
+                            "trump_score": 1,
+                            "trump_u": 0.8,
+                            "trump_p": 0.4
+                        },
+                        {
+                            "id": "Where.Where.What",
+                            "name": "The City",
+                            "u": 0.7,
+                            "p": 0.9,
+                            "trump_score": 1,
+                            "trump_u": 0.7,
+                            "trump_p": 0.9
+                        },
+                        {
+                            "id": "Where.Where.Why",
+                            "name": "The Road",
+                            "u": 0.6,
+                            "p": 1.0,
+                            "trump_score": 1,
+                            "trump_u": 0.6,
+                            "trump_p": 1.0
+                        },
+                        {
+                            "id": "Where.Where.How",
+                            "name": "The Grid",
+                            "u": 0.5,
+                            "p": -0.8,
+                            "trump_score": 1,
+                            "trump_u": 0.5,
+                            "trump_p": -0.8
+                        },
+                        {
+                            "id": "Where.Where.Cause",
+                            "name": "The Resources",
+                            "u": 0.4,
+                            "p": 0.8,
+                            "trump_score": 1,
+                            "trump_u": 0.4,
+                            "trump_p": 0.8
+                        },
+                        {
+                            "id": "Where.Where.Effect",
+                            "name": "The Ruin",
+                            "u": -0.5,
+                            "p": -0.8,
+                            "trump_score": 1,
+                            "trump_u": -0.5,
+                            "trump_p": -0.8
+                        },
+                        {
+                            "id": "Where.What.Who",
+                            "name": "The Territory",
+                            "u": -0.4,
+                            "p": 0.6,
+                            "trump_score": 1,
+                            "trump_u": -0.4,
+                            "trump_p": 0.6
+                        },
+                        {
+                            "id": "Where.What.Where",
+                            "name": "The State",
+                            "u": 0.8,
+                            "p": 0.7,
+                            "trump_score": -1,
+                            "trump_u": -0.8,
+                            "trump_p": 0.7
+                        },
+                        {
+                            "id": "Where.What.What",
+                            "name": "Property",
+                            "u": 1.0,
+                            "p": 0.8,
+                            "trump_score": 1,
+                            "trump_u": 1.0,
+                            "trump_p": 0.8
+                        },
+                        {
+                            "id": "Where.What.Why",
+                            "name": "Manifest Destiny",
+                            "u": -0.6,
+                            "p": 1.0,
+                            "trump_score": 1,
+                            "trump_u": -0.6,
+                            "trump_p": 1.0
+                        },
+                        {
+                            "id": "Where.What.How",
+                            "name": "Zoning",
+                            "u": 0.6,
+                            "p": -0.7,
+                            "trump_score": 1,
+                            "trump_u": 0.6,
+                            "trump_p": -0.7
+                        },
+                        {
+                            "id": "Where.What.Cause",
+                            "name": "Sovereignty",
+                            "u": 0.9,
+                            "p": 0.8,
+                            "trump_score": 1,
+                            "trump_u": 0.9,
+                            "trump_p": 0.8
+                        },
+                        {
+                            "id": "Where.What.Effect",
+                            "name": "Gerrymandering",
+                            "u": -0.8,
+                            "p": 0.9,
+                            "trump_score": 1,
+                            "trump_u": -0.8,
+                            "trump_p": 0.9
+                        },
+                        {
+                            "id": "Where.Why.Who",
+                            "name": "Sanctuary",
+                            "u": 1.0,
+                            "p": -0.4,
+                            "trump_score": -1,
+                            "trump_u": -1.0,
+                            "trump_p": 0.4
+                        },
+                        {
+                            "id": "Where.Why.Where",
+                            "name": "Adventure",
+                            "u": 0.6,
+                            "p": 0.9,
+                            "trump_score": -1,
+                            "trump_u": -0.6,
+                            "trump_p": -0.9
+                        },
+                        {
+                            "id": "Where.Why.What",
+                            "name": "Gold Fever",
+                            "u": -0.4,
+                            "p": 1.0,
+                            "trump_score": 1,
+                            "trump_u": -0.4,
+                            "trump_p": 1.0
+                        },
+                        {
+                            "id": "Where.Why.Why",
+                            "name": "Sacred Space",
+                            "u": 0.9,
+                            "p": -0.6,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": 0.6
+                        },
+                        {
+                            "id": "Where.Why.How",
+                            "name": "Conservation",
+                            "u": 0.9,
+                            "p": -0.5,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": 0.5
+                        },
+                        {
+                            "id": "Where.Why.Cause",
+                            "name": "Determinism",
+                            "u": 0.5,
+                            "p": -0.8,
+                            "trump_score": 1,
+                            "trump_u": 0.5,
+                            "trump_p": -0.8
+                        },
+                        {
+                            "id": "Where.Why.Effect",
+                            "name": "Nostalgia",
+                            "u": 0.6,
+                            "p": -0.6,
+                            "trump_score": 1,
+                            "trump_u": 0.6,
+                            "trump_p": -0.6
+                        },
+                        {
+                            "id": "Where.How.Who",
+                            "name": "Mobility",
+                            "u": 0.9,
+                            "p": 0.9,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": -0.9
+                        },
+                        {
+                            "id": "Where.How.Where",
+                            "name": "The Canal",
+                            "u": 0.8,
+                            "p": 0.8,
+                            "trump_score": -1,
+                            "trump_u": -0.8,
+                            "trump_p": -0.8
+                        },
+                        {
+                            "id": "Where.How.What",
+                            "name": "The Dam",
+                            "u": 0.7,
+                            "p": 1.0,
+                            "trump_score": 1,
+                            "trump_u": 0.7,
+                            "trump_p": 1.0
+                        },
+                        {
+                            "id": "Where.How.Why",
+                            "name": "The Interstate",
+                            "u": 0.8,
+                            "p": 0.9,
+                            "trump_score": -1,
+                            "trump_u": -0.8,
+                            "trump_p": 0.9
+                        },
+                        {
+                            "id": "Where.How.How",
+                            "name": "Air Conditioning",
+                            "u": 0.7,
+                            "p": 0.8,
+                            "trump_score": 1,
+                            "trump_u": 0.7,
+                            "trump_p": 0.8
+                        },
+                        {
+                            "id": "Where.How.Cause",
+                            "name": "The Railroad",
+                            "u": 0.9,
+                            "p": 0.9,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": -0.9
+                        },
+                        {
+                            "id": "Where.How.Effect",
+                            "name": "Sprawl",
+                            "u": -0.4,
+                            "p": 0.7,
+                            "trump_score": 1,
+                            "trump_u": -0.4,
+                            "trump_p": 0.7
+                        },
+                        {
+                            "id": "Where.Cause.Who",
+                            "name": "The First Nations",
+                            "u": -0.8,
+                            "p": 0.9,
+                            "trump_score": -1,
+                            "trump_u": -0.8,
+                            "trump_p": -0.9
+                        },
+                        {
+                            "id": "Where.Cause.Where",
+                            "name": "The Purchase",
+                            "u": 0.6,
+                            "p": 0.5,
+                            "trump_score": 1,
+                            "trump_u": 0.6,
+                            "trump_p": 0.5
+                        },
+                        {
+                            "id": "Where.Cause.What",
+                            "name": "The War",
+                            "u": -0.3,
+                            "p": 1.0,
+                            "trump_score": -1,
+                            "trump_u": -0.3,
+                            "trump_p": 1.0
+                        },
+                        {
+                            "id": "Where.Cause.Why",
+                            "name": "The Treaty",
+                            "u": 0.5,
+                            "p": 0.6,
+                            "trump_score": -1,
+                            "trump_u": -0.5,
+                            "trump_p": -0.6
+                        },
+                        {
+                            "id": "Where.Cause.How",
+                            "name": "The Survey",
+                            "u": 0.7,
+                            "p": -0.4,
+                            "trump_score": -1,
+                            "trump_u": -0.7,
+                            "trump_p": 0.4
+                        },
+                        {
+                            "id": "Where.Cause.Cause",
+                            "name": "The Geology",
+                            "u": 0.8,
+                            "p": -0.9,
+                            "trump_score": -1,
+                            "trump_u": -0.8,
+                            "trump_p": 0.9
+                        },
+                        {
+                            "id": "Where.Cause.Effect",
+                            "name": "The Statehood",
+                            "u": 0.9,
+                            "p": 0.7,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": -0.7
+                        },
+                        {
+                            "id": "Where.Effect.Who",
+                            "name": "The Tourist",
+                            "u": 0.3,
+                            "p": 0.6,
+                            "trump_score": 1,
+                            "trump_u": 0.3,
+                            "trump_p": 0.6
+                        },
+                        {
+                            "id": "Where.Effect.Where",
+                            "name": "The Base",
+                            "u": -0.4,
+                            "p": 0.8,
+                            "trump_score": -1,
+                            "trump_u": -0.4,
+                            "trump_p": 0.8
+                        },
+                        {
+                            "id": "Where.Effect.What",
+                            "name": "The Market",
+                            "u": 0.6,
+                            "p": 0.9,
+                            "trump_score": 1,
+                            "trump_u": 0.6,
+                            "trump_p": 0.9
+                        },
+                        {
+                            "id": "Where.Effect.Why",
+                            "name": "Isolationism",
+                            "u": 0.7,
+                            "p": -0.8,
+                            "trump_score": 1,
+                            "trump_u": 0.7,
+                            "trump_p": -0.8
+                        },
+                        {
+                            "id": "Where.Effect.How",
+                            "name": "Globalization",
+                            "u": 0.4,
+                            "p": 0.9,
+                            "trump_score": -1,
+                            "trump_u": -0.4,
+                            "trump_p": -0.9
+                        },
+                        {
+                            "id": "Where.Effect.Cause",
+                            "name": "Climate Change",
+                            "u": -0.9,
+                            "p": 0.8,
+                            "trump_score": -1,
+                            "trump_u": 0.9,
+                            "trump_p": -0.8
+                        },
+                        {
+                            "id": "Where.Effect.Effect",
+                            "name": "The Moon Landing",
+                            "u": 1.0,
+                            "p": 1.0,
+                            "trump_score": 1,
+                            "trump_u": 1.0,
+                            "trump_p": 1.0
+                        }
+                    ]
+                },
+                "4": {
+                    "name": "Drive (Why)",
+                    "color": "#fbbf24",
+                    "total": {
+                        "u": 0.610204081632653,
+                        "p": 0.7632653061224489
+                    },
+                    "trump_total": {
+                        "u": 0.03,
+                        "p": 0.36
+                    },
+                    "entries": [
+                        {
+                            "id": "Why.Who.Who",
+                            "name": "The Self-Made Man",
+                            "u": 0.8,
+                            "p": 0.9,
+                            "trump_score": 1,
+                            "trump_u": 0.8,
+                            "trump_p": 0.9
+                        },
+                        {
+                            "id": "Why.Who.Where",
+                            "name": "The Pioneer",
+                            "u": 0.6,
+                            "p": 1.0,
+                            "trump_score": 1,
+                            "trump_u": 0.6,
+                            "trump_p": 1.0
+                        },
+                        {
+                            "id": "Why.Who.What",
+                            "name": "The Dreamer",
+                            "u": 0.9,
+                            "p": 0.8,
+                            "trump_score": 1,
+                            "trump_u": 0.9,
+                            "trump_p": 0.8
+                        },
+                        {
+                            "id": "Why.Who.Why",
+                            "name": "The Believer",
+                            "u": 0.8,
+                            "p": 0.6,
+                            "trump_score": -1,
+                            "trump_u": -0.8,
+                            "trump_p": 0.6
+                        },
+                        {
+                            "id": "Why.Who.How",
+                            "name": "The Hustler",
+                            "u": 0.2,
+                            "p": 1.0,
+                            "trump_score": 1,
+                            "trump_u": 0.2,
+                            "trump_p": 1.0
+                        },
+                        {
+                            "id": "Why.Who.Cause",
+                            "name": "The Optimist",
+                            "u": 0.9,
+                            "p": 0.9,
+                            "trump_score": 1,
+                            "trump_u": 0.9,
+                            "trump_p": 0.9
+                        },
+                        {
+                            "id": "Why.Who.Effect",
+                            "name": "The Winner",
+                            "u": -0.3,
+                            "p": 1.0,
+                            "trump_score": 1,
+                            "trump_u": -0.3,
+                            "trump_p": 1.0
+                        },
+                        {
+                            "id": "Why.Where.Who",
+                            "name": "The Home",
+                            "u": 0.8,
+                            "p": -0.5,
+                            "trump_score": 1,
+                            "trump_u": 0.8,
+                            "trump_p": -0.5
+                        },
+                        {
+                            "id": "Why.Where.Where",
+                            "name": "The Open Road",
+                            "u": 0.7,
+                            "p": 0.9,
+                            "trump_score": 1,
+                            "trump_u": 0.7,
+                            "trump_p": 0.9
+                        },
+                        {
+                            "id": "Why.Where.What",
+                            "name": "The Market",
+                            "u": 0.7,
+                            "p": 0.8,
+                            "trump_score": 1,
+                            "trump_u": 0.7,
+                            "trump_p": 0.8
+                        },
+                        {
+                            "id": "Why.Where.Why",
+                            "name": "The Church",
+                            "u": 0.9,
+                            "p": -0.4,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": 0.4
+                        },
+                        {
+                            "id": "Why.Where.How",
+                            "name": "The School",
+                            "u": 0.9,
+                            "p": 0.7,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": -0.7
+                        },
+                        {
+                            "id": "Why.Where.Cause",
+                            "name": "The Frontier",
+                            "u": 0.6,
+                            "p": 0.9,
+                            "trump_score": -1,
+                            "trump_u": -0.6,
+                            "trump_p": -0.9
+                        },
+                        {
+                            "id": "Why.Where.Effect",
+                            "name": "The Monument",
+                            "u": 0.8,
+                            "p": -0.6,
+                            "trump_score": 1,
+                            "trump_u": 0.8,
+                            "trump_p": -0.6
+                        },
+                        {
+                            "id": "Why.What.Who",
+                            "name": "Life",
+                            "u": 1.0,
+                            "p": 0.8,
+                            "trump_score": -1,
+                            "trump_u": -1.0,
+                            "trump_p": 0.8
+                        },
+                        {
+                            "id": "Why.What.Where",
+                            "name": "Liberty",
+                            "u": 1.0,
+                            "p": 0.9,
+                            "trump_score": 1,
+                            "trump_u": 1.0,
+                            "trump_p": 0.9
+                        },
+                        {
+                            "id": "Why.What.What",
+                            "name": "Happiness",
+                            "u": 0.9,
+                            "p": 1.0,
+                            "trump_score": 1,
+                            "trump_u": 0.9,
+                            "trump_p": 1.0
+                        },
+                        {
+                            "id": "Why.What.Why",
+                            "name": "Meaning",
+                            "u": 0.9,
+                            "p": 0.7,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": -0.7
+                        },
+                        {
+                            "id": "Why.What.How",
+                            "name": "Duty",
+                            "u": 1.0,
+                            "p": 0.6,
+                            "trump_score": -1,
+                            "trump_u": -1.0,
+                            "trump_p": -0.6
+                        },
+                        {
+                            "id": "Why.What.Cause",
+                            "name": "Truth",
+                            "u": 1.0,
+                            "p": 0.8,
+                            "trump_score": -1,
+                            "trump_u": -1.0,
+                            "trump_p": -0.8
+                        },
+                        {
+                            "id": "Why.What.Effect",
+                            "name": "Legacy",
+                            "u": 0.8,
+                            "p": 0.7,
+                            "trump_score": 1,
+                            "trump_u": 0.8,
+                            "trump_p": 0.7
+                        },
+                        {
+                            "id": "Why.Why.Who",
+                            "name": "Self-Interest",
+                            "u": 0.4,
+                            "p": 0.9,
+                            "trump_score": 1,
+                            "trump_u": 0.4,
+                            "trump_p": 0.9
+                        },
+                        {
+                            "id": "Why.Why.Where",
+                            "name": "Curiosity",
+                            "u": 0.7,
+                            "p": 0.9,
+                            "trump_score": -1,
+                            "trump_u": -0.7,
+                            "trump_p": -0.9
+                        },
+                        {
+                            "id": "Why.Why.What",
+                            "name": "Greed",
+                            "u": -0.6,
+                            "p": 1.0,
+                            "trump_score": 1,
+                            "trump_u": -0.6,
+                            "trump_p": 1.0
+                        },
+                        {
+                            "id": "Why.Why.Why",
+                            "name": "Love",
+                            "u": 1.0,
+                            "p": 0.6,
+                            "trump_score": -1,
+                            "trump_u": -1.0,
+                            "trump_p": -0.6
+                        },
+                        {
+                            "id": "Why.Why.How",
+                            "name": "Excellence",
+                            "u": 0.9,
+                            "p": 0.9,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": 0.9
+                        },
+                        {
+                            "id": "Why.Why.Cause",
+                            "name": "Guilt",
+                            "u": 0.5,
+                            "p": 0.8,
+                            "trump_score": -1,
+                            "trump_u": -0.5,
+                            "trump_p": -0.8
+                        },
+                        {
+                            "id": "Why.Why.Effect",
+                            "name": "Pride",
+                            "u": 0.3,
+                            "p": 0.7,
+                            "trump_score": 1,
+                            "trump_u": 0.3,
+                            "trump_p": 0.7
+                        },
+                        {
+                            "id": "Why.How.Who",
+                            "name": "Competition",
+                            "u": 0.7,
+                            "p": 0.9,
+                            "trump_score": 1,
+                            "trump_u": 0.7,
+                            "trump_p": 0.9
+                        },
+                        {
+                            "id": "Why.How.Where",
+                            "name": "Marketing",
+                            "u": -0.3,
+                            "p": 0.9,
+                            "trump_score": 1,
+                            "trump_u": -0.3,
+                            "trump_p": 0.9
+                        },
+                        {
+                            "id": "Why.How.What",
+                            "name": "Incentive",
+                            "u": 0.6,
+                            "p": 0.8,
+                            "trump_score": 1,
+                            "trump_u": 0.6,
+                            "trump_p": 0.8
+                        },
+                        {
+                            "id": "Why.How.Why",
+                            "name": "Preaching",
+                            "u": 0.9,
+                            "p": 0.8,
+                            "trump_score": 1,
+                            "trump_u": 0.9,
+                            "trump_p": 0.8
+                        },
+                        {
+                            "id": "Why.How.How",
+                            "name": "Planning",
+                            "u": 0.8,
+                            "p": 0.7,
+                            "trump_score": -1,
+                            "trump_u": -0.8,
+                            "trump_p": -0.7
+                        },
+                        {
+                            "id": "Why.How.Cause",
+                            "name": "Crisis",
+                            "u": 0.8,
+                            "p": 0.9,
+                            "trump_score": 1,
+                            "trump_u": 0.8,
+                            "trump_p": 0.9
+                        },
+                        {
+                            "id": "Why.How.Effect",
+                            "name": "Success",
+                            "u": 0.6,
+                            "p": 0.8,
+                            "trump_score": 1,
+                            "trump_u": 0.6,
+                            "trump_p": 0.8
+                        },
+                        {
+                            "id": "Why.Cause.Who",
+                            "name": "The Immigrant",
+                            "u": 0.9,
+                            "p": 1.0,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": -1.0
+                        },
+                        {
+                            "id": "Why.Cause.Where",
+                            "name": "The Wilderness",
+                            "u": 0.6,
+                            "p": 0.9,
+                            "trump_score": -1,
+                            "trump_u": -0.6,
+                            "trump_p": -0.9
+                        },
+                        {
+                            "id": "Why.Cause.What",
+                            "name": "Calvinism",
+                            "u": 0.6,
+                            "p": 0.8,
+                            "trump_score": -1,
+                            "trump_u": -0.6,
+                            "trump_p": -0.8
+                        },
+                        {
+                            "id": "Why.Cause.Why",
+                            "name": "Scarcity",
+                            "u": 0.5,
+                            "p": 0.8,
+                            "trump_score": -1,
+                            "trump_u": -0.5,
+                            "trump_p": 0.8
+                        },
+                        {
+                            "id": "Why.Cause.How",
+                            "name": "Freedom",
+                            "u": 1.0,
+                            "p": 0.9,
+                            "trump_score": 1,
+                            "trump_u": 1.0,
+                            "trump_p": 0.9
+                        },
+                        {
+                            "id": "Why.Cause.Cause",
+                            "name": "Revolution",
+                            "u": 0.8,
+                            "p": 0.9,
+                            "trump_score": 1,
+                            "trump_u": 0.8,
+                            "trump_p": 0.9
+                        },
+                        {
+                            "id": "Why.Cause.Effect",
+                            "name": "Abundance",
+                            "u": 0.8,
+                            "p": 0.8,
+                            "trump_score": 1,
+                            "trump_u": 0.8,
+                            "trump_p": 0.8
+                        },
+                        {
+                            "id": "Why.Effect.Who",
+                            "name": "The Workaholic",
+                            "u": -0.4,
+                            "p": 0.9,
+                            "trump_score": -1,
+                            "trump_u": -0.4,
+                            "trump_p": -0.9
+                        },
+                        {
+                            "id": "Why.Effect.Where",
+                            "name": "The Superpower",
+                            "u": 0.5,
+                            "p": 1.0,
+                            "trump_score": 1,
+                            "trump_u": 0.5,
+                            "trump_p": 1.0
+                        },
+                        {
+                            "id": "Why.Effect.What",
+                            "name": "GDP",
+                            "u": 0.6,
+                            "p": 0.8,
+                            "trump_score": 1,
+                            "trump_u": 0.6,
+                            "trump_p": 0.8
+                        },
+                        {
+                            "id": "Why.Effect.Why",
+                            "name": "Restlessness",
+                            "u": -0.2,
+                            "p": 0.9,
+                            "trump_score": 1,
+                            "trump_u": -0.2,
+                            "trump_p": 0.9
+                        },
+                        {
+                            "id": "Why.Effect.How",
+                            "name": "Progress",
+                            "u": 0.7,
+                            "p": 1.0,
+                            "trump_score": -1,
+                            "trump_u": -0.7,
+                            "trump_p": 1.0
+                        },
+                        {
+                            "id": "Why.Effect.Cause",
+                            "name": "Stress",
+                            "u": -0.5,
+                            "p": 0.8,
+                            "trump_score": 1,
+                            "trump_u": -0.5,
+                            "trump_p": 0.8
+                        },
+                        {
+                            "id": "Why.Effect.Effect",
+                            "name": "American Exceptionalism",
+                            "u": 0.8,
+                            "p": 0.8,
+                            "trump_score": 1,
+                            "trump_u": 0.8,
+                            "trump_p": 0.8
+                        }
+                    ]
+                },
+                "5": {
+                    "name": "Method (How)",
+                    "color": "#a78bfa",
+                    "total": {
+                        "u": 0.5448979591836735,
+                        "p": 0.15714285714285717
+                    },
+                    "trump_total": {
+                        "u": -0.38,
+                        "p": -0.01
+                    },
+                    "entries": [
+                        {
+                            "id": "How.Who.Who",
+                            "name": "The Inventor",
+                            "u": 0.8,
+                            "p": 0.9,
+                            "trump_score": -1,
+                            "trump_u": -0.8,
+                            "trump_p": -0.9
+                        },
+                        {
+                            "id": "How.Who.Where",
+                            "name": "The Engineer",
+                            "u": 0.9,
+                            "p": 0.8,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": -0.8
+                        },
+                        {
+                            "id": "How.Who.What",
+                            "name": "The Professional",
+                            "u": 0.7,
+                            "p": -0.6,
+                            "trump_score": -1,
+                            "trump_u": -0.7,
+                            "trump_p": 0.6
+                        },
+                        {
+                            "id": "How.Who.Why",
+                            "name": "The Entrepreneur",
+                            "u": 0.8,
+                            "p": 1.0,
+                            "trump_score": 1,
+                            "trump_u": 0.8,
+                            "trump_p": 1.0
+                        },
+                        {
+                            "id": "How.Who.How",
+                            "name": "The Manager",
+                            "u": 0.5,
+                            "p": -0.8,
+                            "trump_score": -1,
+                            "trump_u": -0.5,
+                            "trump_p": 0.8
+                        },
+                        {
+                            "id": "How.Who.Cause",
+                            "name": "The Apprentice",
+                            "u": 0.7,
+                            "p": 0.6,
+                            "trump_score": -1,
+                            "trump_u": -0.7,
+                            "trump_p": -0.6
+                        },
+                        {
+                            "id": "How.Who.Effect",
+                            "name": "The Technocrat",
+                            "u": -0.6,
+                            "p": -0.8,
+                            "trump_score": -1,
+                            "trump_u": -0.6,
+                            "trump_p": -0.8
+                        },
+                        {
+                            "id": "How.Where.Who",
+                            "name": "The Shop Floor",
+                            "u": 0.4,
+                            "p": -0.9,
+                            "trump_score": -1,
+                            "trump_u": -0.4,
+                            "trump_p": -0.9
+                        },
+                        {
+                            "id": "How.Where.Where",
+                            "name": "Silicon Valley",
+                            "u": 0.8,
+                            "p": 1.0,
+                            "trump_score": -1,
+                            "trump_u": -0.8,
+                            "trump_p": -1.0
+                        },
+                        {
+                            "id": "How.Where.What",
+                            "name": "The Laboratory",
+                            "u": 0.9,
+                            "p": -0.6,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": 0.6
+                        },
+                        {
+                            "id": "How.Where.Why",
+                            "name": "Wall Street",
+                            "u": 0.3,
+                            "p": 0.9,
+                            "trump_score": 1,
+                            "trump_u": 0.3,
+                            "trump_p": 0.9
+                        },
+                        {
+                            "id": "How.Where.How",
+                            "name": "The Factory",
+                            "u": 0.7,
+                            "p": -0.7,
+                            "trump_score": -1,
+                            "trump_u": -0.7,
+                            "trump_p": -0.7
+                        },
+                        {
+                            "id": "How.Where.Cause",
+                            "name": "The Farm",
+                            "u": 1.0,
+                            "p": 0.6,
+                            "trump_score": -1,
+                            "trump_u": -1.0,
+                            "trump_p": -0.6
+                        },
+                        {
+                            "id": "How.Where.Effect",
+                            "name": "The Network",
+                            "u": 0.8,
+                            "p": 0.9,
+                            "trump_score": 1,
+                            "trump_u": 0.8,
+                            "trump_p": 0.9
+                        },
+                        {
+                            "id": "How.What.Who",
+                            "name": "Automation",
+                            "u": 0.6,
+                            "p": -0.8,
+                            "trump_score": -1,
+                            "trump_u": -0.6,
+                            "trump_p": -0.8
+                        },
+                        {
+                            "id": "How.What.Where",
+                            "name": "Infrastructure",
+                            "u": 0.9,
+                            "p": 0.8,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": -0.8
+                        },
+                        {
+                            "id": "How.What.What",
+                            "name": "The Algorithm",
+                            "u": 0.4,
+                            "p": -0.7,
+                            "trump_score": -1,
+                            "trump_u": -0.4,
+                            "trump_p": 0.7
+                        },
+                        {
+                            "id": "How.What.Why",
+                            "name": "Efficiency",
+                            "u": 0.6,
+                            "p": -0.8,
+                            "trump_score": -1,
+                            "trump_u": -0.6,
+                            "trump_p": 0.8
+                        },
+                        {
+                            "id": "How.What.How",
+                            "name": "The Assembly Line",
+                            "u": 0.7,
+                            "p": -0.9,
+                            "trump_score": -1,
+                            "trump_u": -0.7,
+                            "trump_p": 0.9
+                        },
+                        {
+                            "id": "How.What.Cause",
+                            "name": "Technology",
+                            "u": 0.9,
+                            "p": 0.9,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": -0.9
+                        },
+                        {
+                            "id": "How.What.Effect",
+                            "name": "Mass Production",
+                            "u": 0.8,
+                            "p": -0.7,
+                            "trump_score": 1,
+                            "trump_u": 0.8,
+                            "trump_p": -0.7
+                        },
+                        {
+                            "id": "How.Why.Who",
+                            "name": "Labor Rights",
+                            "u": 0.9,
+                            "p": -0.6,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": 0.6
+                        },
+                        {
+                            "id": "How.Why.Where",
+                            "name": "Logistics",
+                            "u": 0.9,
+                            "p": 0.8,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": -0.8
+                        },
+                        {
+                            "id": "How.Why.What",
+                            "name": "Standardization",
+                            "u": 0.8,
+                            "p": -0.7,
+                            "trump_score": -1,
+                            "trump_u": -0.8,
+                            "trump_p": 0.7
+                        },
+                        {
+                            "id": "How.Why.Why",
+                            "name": "Profit",
+                            "u": 0.3,
+                            "p": 0.9,
+                            "trump_score": 1,
+                            "trump_u": 0.3,
+                            "trump_p": 0.9
+                        },
+                        {
+                            "id": "How.Why.How",
+                            "name": "Optimization",
+                            "u": 0.8,
+                            "p": 0.9,
+                            "trump_score": -1,
+                            "trump_u": -0.8,
+                            "trump_p": -0.9
+                        },
+                        {
+                            "id": "How.Why.Cause",
+                            "name": "Problem Solving",
+                            "u": 0.9,
+                            "p": 0.8,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": -0.8
+                        },
+                        {
+                            "id": "How.Why.Effect",
+                            "name": "Scale",
+                            "u": 0.7,
+                            "p": 0.9,
+                            "trump_score": 1,
+                            "trump_u": 0.7,
+                            "trump_p": 0.9
+                        },
+                        {
+                            "id": "How.How.Who",
+                            "name": "Empiricism",
+                            "u": 0.9,
+                            "p": -0.5,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": 0.5
+                        },
+                        {
+                            "id": "How.How.Where",
+                            "name": "Fieldwork",
+                            "u": 0.9,
+                            "p": 0.7,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": -0.7
+                        },
+                        {
+                            "id": "How.How.What",
+                            "name": "Hypothesis",
+                            "u": 0.8,
+                            "p": 0.6,
+                            "trump_score": -1,
+                            "trump_u": -0.8,
+                            "trump_p": -0.6
+                        },
+                        {
+                            "id": "How.How.Why",
+                            "name": "Curiosity",
+                            "u": 0.9,
+                            "p": 0.7,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": -0.7
+                        },
+                        {
+                            "id": "How.How.How",
+                            "name": "Experimentation",
+                            "u": 0.8,
+                            "p": 0.9,
+                            "trump_score": 1,
+                            "trump_u": 0.8,
+                            "trump_p": 0.9
+                        },
+                        {
+                            "id": "How.How.Cause",
+                            "name": "Data",
+                            "u": 0.6,
+                            "p": -0.7,
+                            "trump_score": -1,
+                            "trump_u": -0.6,
+                            "trump_p": 0.7
+                        },
+                        {
+                            "id": "How.How.Effect",
+                            "name": "Proof",
+                            "u": 0.9,
+                            "p": 0.8,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": -0.8
+                        },
+                        {
+                            "id": "How.Cause.Who",
+                            "name": "Yankee Ingenuity",
+                            "u": 0.8,
+                            "p": 0.8,
+                            "trump_score": -1,
+                            "trump_u": -0.8,
+                            "trump_p": -0.8
+                        },
+                        {
+                            "id": "How.Cause.Where",
+                            "name": "Lowell Mills",
+                            "u": 0.6,
+                            "p": -0.6,
+                            "trump_score": -1,
+                            "trump_u": -0.6,
+                            "trump_p": -0.6
+                        },
+                        {
+                            "id": "How.Cause.What",
+                            "name": "Interchangeable Parts",
+                            "u": 0.9,
+                            "p": -0.8,
+                            "trump_score": 1,
+                            "trump_u": 0.9,
+                            "trump_p": -0.8
+                        },
+                        {
+                            "id": "How.Cause.Why",
+                            "name": "Necessity",
+                            "u": 0.8,
+                            "p": 0.7,
+                            "trump_score": -1,
+                            "trump_u": -0.8,
+                            "trump_p": -0.7
+                        },
+                        {
+                            "id": "How.Cause.How",
+                            "name": "Imitation",
+                            "u": 0.5,
+                            "p": 0.8,
+                            "trump_score": 1,
+                            "trump_u": 0.5,
+                            "trump_p": 0.8
+                        },
+                        {
+                            "id": "How.Cause.Cause",
+                            "name": "Capitalism",
+                            "u": 0.4,
+                            "p": 0.9,
+                            "trump_score": 1,
+                            "trump_u": 0.4,
+                            "trump_p": 0.9
+                        },
+                        {
+                            "id": "How.Cause.Effect",
+                            "name": "Modernity",
+                            "u": 0.2,
+                            "p": -0.7,
+                            "trump_score": -1,
+                            "trump_u": -0.2,
+                            "trump_p": 0.7
+                        },
+                        {
+                            "id": "How.Effect.Who",
+                            "name": "The Consumer",
+                            "u": -0.5,
+                            "p": 0.8,
+                            "trump_score": 1,
+                            "trump_u": -0.5,
+                            "trump_p": 0.8
+                        },
+                        {
+                            "id": "How.Effect.Where",
+                            "name": "The Suburb",
+                            "u": 0.4,
+                            "p": -0.7,
+                            "trump_score": 1,
+                            "trump_u": 0.4,
+                            "trump_p": -0.7
+                        },
+                        {
+                            "id": "How.Effect.What",
+                            "name": "Affluence",
+                            "u": 0.5,
+                            "p": 0.6,
+                            "trump_score": 1,
+                            "trump_u": 0.5,
+                            "trump_p": 0.6
+                        },
+                        {
+                            "id": "How.Effect.Why",
+                            "name": "Materialism",
+                            "u": -0.6,
+                            "p": 0.8,
+                            "trump_score": 1,
+                            "trump_u": -0.6,
+                            "trump_p": 0.8
+                        },
+                        {
+                            "id": "How.Effect.How",
+                            "name": "Dependence",
+                            "u": -0.5,
+                            "p": -0.7,
+                            "trump_score": -1,
+                            "trump_u": 0.5,
+                            "trump_p": 0.7
+                        },
+                        {
+                            "id": "How.Effect.Cause",
+                            "name": "Pollution",
+                            "u": -0.8,
+                            "p": 0.8,
+                            "trump_score": 1,
+                            "trump_u": -0.8,
+                            "trump_p": 0.8
+                        },
+                        {
+                            "id": "How.Effect.Effect",
+                            "name": "Alienation",
+                            "u": -0.7,
+                            "p": -0.6,
+                            "trump_score": 1,
+                            "trump_u": -0.7,
+                            "trump_p": -0.6
+                        }
+                    ]
+                },
+                "6": {
+                    "name": "Cause (Origin)",
+                    "color": "#f472b6",
+                    "total": {
+                        "u": 0.773469387755102,
+                        "p": 0.11224489795918367
+                    },
+                    "trump_total": {
+                        "u": -0.47,
+                        "p": 0.19
+                    },
+                    "entries": [
+                        {
+                            "id": "Cause.Who.Who",
+                            "name": "The Puritan",
+                            "u": 0.8,
+                            "p": 0.7,
+                            "trump_score": -1,
+                            "trump_u": -0.8,
+                            "trump_p": 0.7
+                        },
+                        {
+                            "id": "Cause.Who.Where",
+                            "name": "The Virginian",
+                            "u": 0.6,
+                            "p": 0.8,
+                            "trump_score": 1,
+                            "trump_u": 0.6,
+                            "trump_p": 0.8
+                        },
+                        {
+                            "id": "Cause.Who.What",
+                            "name": "The Slave",
+                            "u": -0.9,
+                            "p": -0.8,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": 0.8
+                        },
+                        {
+                            "id": "Cause.Who.Why",
+                            "name": "The Revolutionary",
+                            "u": 0.9,
+                            "p": 1.0,
+                            "trump_score": 1,
+                            "trump_u": 0.9,
+                            "trump_p": 1.0
+                        },
+                        {
+                            "id": "Cause.Who.How",
+                            "name": "The Framer",
+                            "u": 1.0,
+                            "p": 0.7,
+                            "trump_score": -1,
+                            "trump_u": -1.0,
+                            "trump_p": -0.7
+                        },
+                        {
+                            "id": "Cause.Who.Cause",
+                            "name": "The Indigenous",
+                            "u": -0.7,
+                            "p": -0.5,
+                            "trump_score": -1,
+                            "trump_u": -0.7,
+                            "trump_p": 0.5
+                        },
+                        {
+                            "id": "Cause.Who.Effect",
+                            "name": "The Immigrant",
+                            "u": 1.0,
+                            "p": 0.9,
+                            "trump_score": -1,
+                            "trump_u": -1.0,
+                            "trump_p": -0.9
+                        },
+                        {
+                            "id": "Cause.Where.Who",
+                            "name": "Plymouth Rock",
+                            "u": 0.8,
+                            "p": 0.6,
+                            "trump_score": -1,
+                            "trump_u": -0.8,
+                            "trump_p": -0.6
+                        },
+                        {
+                            "id": "Cause.Where.Where",
+                            "name": "Independence Hall",
+                            "u": 1.0,
+                            "p": 0.7,
+                            "trump_score": -1,
+                            "trump_u": -1.0,
+                            "trump_p": -0.7
+                        },
+                        {
+                            "id": "Cause.Where.What",
+                            "name": "The Battlefield",
+                            "u": 0.9,
+                            "p": -0.8,
+                            "trump_score": 1,
+                            "trump_u": 0.9,
+                            "trump_p": -0.8
+                        },
+                        {
+                            "id": "Cause.Where.Why",
+                            "name": "The Frontier (Historical)",
+                            "u": 0.7,
+                            "p": 1.0,
+                            "trump_score": -1,
+                            "trump_u": -0.7,
+                            "trump_p": 1.0
+                        },
+                        {
+                            "id": "Cause.Where.How",
+                            "name": "Ellis Island",
+                            "u": 0.8,
+                            "p": -0.5,
+                            "trump_score": -1,
+                            "trump_u": -0.8,
+                            "trump_p": 0.5
+                        },
+                        {
+                            "id": "Cause.Where.Cause",
+                            "name": "Jamestown",
+                            "u": 0.8,
+                            "p": 0.8,
+                            "trump_score": -1,
+                            "trump_u": -0.8,
+                            "trump_p": -0.8
+                        },
+                        {
+                            "id": "Cause.Where.Effect",
+                            "name": "The Graveyard",
+                            "u": 0.8,
+                            "p": -0.9,
+                            "trump_score": -1,
+                            "trump_u": -0.8,
+                            "trump_p": 0.9
+                        },
+                        {
+                            "id": "Cause.What.Who",
+                            "name": "Natural Rights",
+                            "u": 1.0,
+                            "p": 0.8,
+                            "trump_score": -1,
+                            "trump_u": -1.0,
+                            "trump_p": -0.8
+                        },
+                        {
+                            "id": "Cause.What.Where",
+                            "name": "Federalism",
+                            "u": 0.9,
+                            "p": -0.6,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": 0.6
+                        },
+                        {
+                            "id": "Cause.What.What",
+                            "name": "The Constitution",
+                            "u": 1.0,
+                            "p": -0.6,
+                            "trump_score": -1,
+                            "trump_u": -1.0,
+                            "trump_p": 0.6
+                        },
+                        {
+                            "id": "Cause.What.Why",
+                            "name": "Separation of Powers",
+                            "u": 1.0,
+                            "p": -0.9,
+                            "trump_score": -1,
+                            "trump_u": -1.0,
+                            "trump_p": 0.9
+                        },
+                        {
+                            "id": "Cause.What.How",
+                            "name": "Judicial Review",
+                            "u": 0.8,
+                            "p": -0.5,
+                            "trump_score": -1,
+                            "trump_u": -0.8,
+                            "trump_p": 0.5
+                        },
+                        {
+                            "id": "Cause.What.Cause",
+                            "name": "The Grievances",
+                            "u": 0.9,
+                            "p": 0.9,
+                            "trump_score": 1,
+                            "trump_u": 0.9,
+                            "trump_p": 0.9
+                        },
+                        {
+                            "id": "Cause.What.Effect",
+                            "name": "Amendment",
+                            "u": 1.0,
+                            "p": 0.5,
+                            "trump_score": -1,
+                            "trump_u": -1.0,
+                            "trump_p": -0.5
+                        },
+                        {
+                            "id": "Cause.Why.Who",
+                            "name": "Religious Freedom",
+                            "u": 1.0,
+                            "p": -0.7,
+                            "trump_score": -1,
+                            "trump_u": -1.0,
+                            "trump_p": 0.7
+                        },
+                        {
+                            "id": "Cause.Why.Where",
+                            "name": "Land Hunger",
+                            "u": 0.6,
+                            "p": 0.9,
+                            "trump_score": 1,
+                            "trump_u": 0.6,
+                            "trump_p": 0.9
+                        },
+                        {
+                            "id": "Cause.Why.What",
+                            "name": "Taxation",
+                            "u": 0.9,
+                            "p": 0.8,
+                            "trump_score": 1,
+                            "trump_u": 0.9,
+                            "trump_p": -0.8
+                        },
+                        {
+                            "id": "Cause.Why.Why",
+                            "name": "Liberty",
+                            "u": 1.0,
+                            "p": 0.9,
+                            "trump_score": -1,
+                            "trump_u": -1.0,
+                            "trump_p": 0.9
+                        },
+                        {
+                            "id": "Cause.Why.How",
+                            "name": "Self-Determination",
+                            "u": 1.0,
+                            "p": 0.9,
+                            "trump_score": 1,
+                            "trump_u": 1.0,
+                            "trump_p": 0.9
+                        },
+                        {
+                            "id": "Cause.Why.Cause",
+                            "name": "Fear of Tyranny",
+                            "u": 0.9,
+                            "p": -0.8,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": 0.8
+                        },
+                        {
+                            "id": "Cause.Why.Effect",
+                            "name": "Hope",
+                            "u": 1.0,
+                            "p": 0.9,
+                            "trump_score": 1,
+                            "trump_u": 1.0,
+                            "trump_p": 0.9
+                        },
+                        {
+                            "id": "Cause.How.Who",
+                            "name": "The Militia",
+                            "u": 0.8,
+                            "p": -0.6,
+                            "trump_score": 1,
+                            "trump_u": 0.8,
+                            "trump_p": -0.6
+                        },
+                        {
+                            "id": "Cause.How.Where",
+                            "name": "The Town Hall",
+                            "u": 1.0,
+                            "p": 0.6,
+                            "trump_score": -1,
+                            "trump_u": -1.0,
+                            "trump_p": -0.6
+                        },
+                        {
+                            "id": "Cause.How.What",
+                            "name": "The Press",
+                            "u": 0.9,
+                            "p": 0.8,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": -0.8
+                        },
+                        {
+                            "id": "Cause.How.Why",
+                            "name": "Compromise",
+                            "u": 0.9,
+                            "p": -0.5,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": 0.5
+                        },
+                        {
+                            "id": "Cause.How.How",
+                            "name": "Debate",
+                            "u": 0.9,
+                            "p": 0.7,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": -0.7
+                        },
+                        {
+                            "id": "Cause.How.Cause",
+                            "name": "War",
+                            "u": -0.2,
+                            "p": 1.0,
+                            "trump_score": -1,
+                            "trump_u": -0.2,
+                            "trump_p": 1.0
+                        },
+                        {
+                            "id": "Cause.How.Effect",
+                            "name": "Vote",
+                            "u": 0.9,
+                            "p": 0.5,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": -0.5
+                        },
+                        {
+                            "id": "Cause.Cause.Who",
+                            "name": "The Ancients",
+                            "u": 0.8,
+                            "p": -0.4,
+                            "trump_score": -1,
+                            "trump_u": -0.8,
+                            "trump_p": 0.4
+                        },
+                        {
+                            "id": "Cause.Cause.Where",
+                            "name": "Magna Carta",
+                            "u": 0.9,
+                            "p": -0.5,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": 0.5
+                        },
+                        {
+                            "id": "Cause.Cause.What",
+                            "name": "The Bible",
+                            "u": 0.8,
+                            "p": -0.4,
+                            "trump_score": -1,
+                            "trump_u": -0.8,
+                            "trump_p": 0.4
+                        },
+                        {
+                            "id": "Cause.Cause.Why",
+                            "name": "The Reformation",
+                            "u": 0.9,
+                            "p": 0.8,
+                            "trump_score": 1,
+                            "trump_u": 0.9,
+                            "trump_p": 0.8
+                        },
+                        {
+                            "id": "Cause.Cause.How",
+                            "name": "Common Law",
+                            "u": 0.9,
+                            "p": -0.6,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": 0.6
+                        },
+                        {
+                            "id": "Cause.Cause.Cause",
+                            "name": "Geography",
+                            "u": 0.7,
+                            "p": -0.9,
+                            "trump_score": 1,
+                            "trump_u": 0.7,
+                            "trump_p": -0.9
+                        },
+                        {
+                            "id": "Cause.Cause.Effect",
+                            "name": "The Enlightenment",
+                            "u": 1.0,
+                            "p": 0.8,
+                            "trump_score": -1,
+                            "trump_u": -1.0,
+                            "trump_p": -0.8
+                        },
+                        {
+                            "id": "Cause.Effect.Who",
+                            "name": "The Founder",
+                            "u": 0.7,
+                            "p": -0.5,
+                            "trump_score": -1,
+                            "trump_u": -0.7,
+                            "trump_p": 0.5
+                        },
+                        {
+                            "id": "Cause.Effect.Where",
+                            "name": "The Monument",
+                            "u": 0.8,
+                            "p": -0.6,
+                            "trump_score": -1,
+                            "trump_u": -0.8,
+                            "trump_p": 0.6
+                        },
+                        {
+                            "id": "Cause.Effect.What",
+                            "name": "The Precedent",
+                            "u": 0.7,
+                            "p": -0.7,
+                            "trump_score": -1,
+                            "trump_u": -0.7,
+                            "trump_p": 0.7
+                        },
+                        {
+                            "id": "Cause.Effect.Why",
+                            "name": "Civil Religion",
+                            "u": 0.6,
+                            "p": -0.7,
+                            "trump_score": -1,
+                            "trump_u": -0.6,
+                            "trump_p": 0.7
+                        },
+                        {
+                            "id": "Cause.Effect.How",
+                            "name": "Originalism",
+                            "u": 0.5,
+                            "p": -0.6,
+                            "trump_score": -1,
+                            "trump_u": -0.5,
+                            "trump_p": -0.6
+                        },
+                        {
+                            "id": "Cause.Effect.Cause",
+                            "name": "The Burden",
+                            "u": 0.9,
+                            "p": 0.6,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": 0.6
+                        },
+                        {
+                            "id": "Cause.Effect.Effect",
+                            "name": "Continuity",
+                            "u": 1.0,
+                            "p": 0.5,
+                            "trump_score": -1,
+                            "trump_u": -1.0,
+                            "trump_p": -0.5
+                        }
+                    ]
+                },
+                "7": {
+                    "name": "Effect (Result)",
+                    "color": "#9ca3af",
+                    "total": {
+                        "u": 0.589795918367347,
+                        "p": 0.2612244897959184
+                    },
+                    "trump_total": {
+                        "u": -0.48,
+                        "p": 0.17
+                    },
+                    "entries": [
+                        {
+                            "id": "Effect.Who.Who",
+                            "name": "The Global Citizen",
+                            "u": 1.0,
+                            "p": 0.8,
+                            "trump_score": -1,
+                            "trump_u": -1.0,
+                            "trump_p": -0.8
+                        },
+                        {
+                            "id": "Effect.Who.Where",
+                            "name": "The Expat",
+                            "u": -0.5,
+                            "p": 0.7,
+                            "trump_score": 0
+                        },
+                        {
+                            "id": "Effect.Who.What",
+                            "name": "The Consumer",
+                            "u": -0.8,
+                            "p": -0.6,
+                            "trump_score": 1,
+                            "trump_u": -0.8,
+                            "trump_p": -0.6
+                        },
+                        {
+                            "id": "Effect.Who.Why",
+                            "name": "The Cynic",
+                            "u": 0.6,
+                            "p": -0.8,
+                            "trump_score": 1,
+                            "trump_u": 0.6,
+                            "trump_p": -0.8
+                        },
+                        {
+                            "id": "Effect.Who.How",
+                            "name": "The Activist",
+                            "u": 0.9,
+                            "p": 1.0,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": 1.0
+                        },
+                        {
+                            "id": "Effect.Who.Cause",
+                            "name": "The Veteran",
+                            "u": 0.8,
+                            "p": -0.9,
+                            "trump_score": -1,
+                            "trump_u": -0.8,
+                            "trump_p": -0.9
+                        },
+                        {
+                            "id": "Effect.Who.Effect",
+                            "name": "The Individualist",
+                            "u": 0.5,
+                            "p": 1.0,
+                            "trump_score": 1,
+                            "trump_u": 0.5,
+                            "trump_p": 1.0
+                        },
+                        {
+                            "id": "Effect.Where.Who",
+                            "name": "The American Diaspora",
+                            "u": 0.8,
+                            "p": 0.7,
+                            "trump_score": -1,
+                            "trump_u": -0.8,
+                            "trump_p": -0.7
+                        },
+                        {
+                            "id": "Effect.Where.Where",
+                            "name": "Pax Americana",
+                            "u": 0.6,
+                            "p": 0.9,
+                            "trump_score": -1,
+                            "trump_u": -0.6,
+                            "trump_p": -0.9
+                        },
+                        {
+                            "id": "Effect.Where.What",
+                            "name": "Cocacolonization",
+                            "u": -0.6,
+                            "p": 0.8,
+                            "trump_score": 1,
+                            "trump_u": -0.6,
+                            "trump_p": 0.8
+                        },
+                        {
+                            "id": "Effect.Where.Why",
+                            "name": "Cultural Imperialism",
+                            "u": -0.7,
+                            "p": 0.9,
+                            "trump_score": 1,
+                            "trump_u": -0.7,
+                            "trump_p": 0.9
+                        },
+                        {
+                            "id": "Effect.Where.How",
+                            "name": "Democracy Promotion",
+                            "u": 0.4,
+                            "p": 1.0,
+                            "trump_score": -1,
+                            "trump_u": -0.4,
+                            "trump_p": -1.0
+                        },
+                        {
+                            "id": "Effect.Where.Cause",
+                            "name": "The Climate Crisis",
+                            "u": -1.0,
+                            "p": 0.8,
+                            "trump_score": 1,
+                            "trump_u": -1.0,
+                            "trump_p": 0.8
+                        },
+                        {
+                            "id": "Effect.Where.Effect",
+                            "name": "Globalization",
+                            "u": 0.5,
+                            "p": -0.4,
+                            "trump_score": -1,
+                            "trump_u": -0.5,
+                            "trump_p": 0.4
+                        },
+                        {
+                            "id": "Effect.What.Who",
+                            "name": "The Middle Class",
+                            "u": 1.0,
+                            "p": -0.5,
+                            "trump_score": -1,
+                            "trump_u": -1.0,
+                            "trump_p": 0.5
+                        },
+                        {
+                            "id": "Effect.What.Where",
+                            "name": "The Moon Landing",
+                            "u": 1.0,
+                            "p": 1.0,
+                            "trump_score": 1,
+                            "trump_u": 1.0,
+                            "trump_p": 1.0
+                        },
+                        {
+                            "id": "Effect.What.What",
+                            "name": "The Internet",
+                            "u": 0.9,
+                            "p": 0.9,
+                            "trump_score": 1,
+                            "trump_u": 0.9,
+                            "trump_p": 0.9
+                        },
+                        {
+                            "id": "Effect.What.Why",
+                            "name": "Wealth Inequality",
+                            "u": -0.9,
+                            "p": 0.8,
+                            "trump_score": 1,
+                            "trump_u": -0.9,
+                            "trump_p": 0.8
+                        },
+                        {
+                            "id": "Effect.What.How",
+                            "name": "The Atom Bomb",
+                            "u": -0.8,
+                            "p": 1.0,
+                            "trump_score": 1,
+                            "trump_u": -0.8,
+                            "trump_p": 1.0
+                        },
+                        {
+                            "id": "Effect.What.Cause",
+                            "name": "Medical Breakthroughs",
+                            "u": 1.0,
+                            "p": 0.8,
+                            "trump_score": -1,
+                            "trump_u": -1.0,
+                            "trump_p": -0.8
+                        },
+                        {
+                            "id": "Effect.What.Effect",
+                            "name": "Rock and Roll",
+                            "u": 0.8,
+                            "p": 0.9,
+                            "trump_score": 1,
+                            "trump_u": 0.8,
+                            "trump_p": 0.9
+                        },
+                        {
+                            "id": "Effect.Why.Who",
+                            "name": "Freedom vs Order",
+                            "u": 1.0,
+                            "p": -0.6,
+                            "trump_score": -1,
+                            "trump_u": -1.0,
+                            "trump_p": 0.6
+                        },
+                        {
+                            "id": "Effect.Why.Where",
+                            "name": "Conservation",
+                            "u": 1.0,
+                            "p": -0.8,
+                            "trump_score": -1,
+                            "trump_u": -1.0,
+                            "trump_p": 0.8
+                        },
+                        {
+                            "id": "Effect.Why.What",
+                            "name": "Meaning vs Materialism",
+                            "u": 0.9,
+                            "p": -0.7,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": 0.7
+                        },
+                        {
+                            "id": "Effect.Why.Why",
+                            "name": "Hubris",
+                            "u": 0.9,
+                            "p": -0.9,
+                            "trump_score": 1,
+                            "trump_u": 0.9,
+                            "trump_p": -0.9
+                        },
+                        {
+                            "id": "Effect.Why.How",
+                            "name": "Pragmatism vs Principle",
+                            "u": 0.5,
+                            "p": 0.8,
+                            "trump_score": 1,
+                            "trump_u": 0.5,
+                            "trump_p": 0.8
+                        },
+                        {
+                            "id": "Effect.Why.Cause",
+                            "name": "Gratitude",
+                            "u": 0.9,
+                            "p": -0.7,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": 0.7
+                        },
+                        {
+                            "id": "Effect.Why.Effect",
+                            "name": "Hope vs Despair",
+                            "u": 1.0,
+                            "p": 0.9,
+                            "trump_score": -1,
+                            "trump_u": -1.0,
+                            "trump_p": -0.9
+                        },
+                        {
+                            "id": "Effect.How.Who",
+                            "name": "The Vote",
+                            "u": 1.0,
+                            "p": -0.5,
+                            "trump_score": -1,
+                            "trump_u": -1.0,
+                            "trump_p": 0.5
+                        },
+                        {
+                            "id": "Effect.How.Where",
+                            "name": "The Court",
+                            "u": 0.9,
+                            "p": -0.7,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": 0.7
+                        },
+                        {
+                            "id": "Effect.How.What",
+                            "name": "The Market",
+                            "u": 0.6,
+                            "p": 0.9,
+                            "trump_score": 1,
+                            "trump_u": 0.6,
+                            "trump_p": 0.9
+                        },
+                        {
+                            "id": "Effect.How.Why",
+                            "name": "The Protest",
+                            "u": 0.9,
+                            "p": 0.8,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": 0.8
+                        },
+                        {
+                            "id": "Effect.How.How",
+                            "name": "The Media",
+                            "u": 0.9,
+                            "p": 0.7,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": -0.7
+                        },
+                        {
+                            "id": "Effect.How.Cause",
+                            "name": "History",
+                            "u": 0.8,
+                            "p": -0.9,
+                            "trump_score": -1,
+                            "trump_u": -0.8,
+                            "trump_p": 0.9
+                        },
+                        {
+                            "id": "Effect.How.Effect",
+                            "name": "War",
+                            "u": -0.4,
+                            "p": 1.0,
+                            "trump_score": -1,
+                            "trump_u": -0.4,
+                            "trump_p": -1.0
+                        },
+                        {
+                            "id": "Effect.Cause.Who",
+                            "name": "The Next Generation",
+                            "u": 0.9,
+                            "p": -0.8,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": 0.8
+                        },
+                        {
+                            "id": "Effect.Cause.Where",
+                            "name": "Mars",
+                            "u": 0.8,
+                            "p": 1.0,
+                            "trump_score": 1,
+                            "trump_u": 0.8,
+                            "trump_p": 1.0
+                        },
+                        {
+                            "id": "Effect.Cause.What",
+                            "name": "Artificial Intelligence",
+                            "u": 0.5,
+                            "p": 0.9,
+                            "trump_score": -1,
+                            "trump_u": -0.5,
+                            "trump_p": -0.9
+                        },
+                        {
+                            "id": "Effect.Cause.Why",
+                            "name": "Survival",
+                            "u": 0.9,
+                            "p": -0.7,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": -0.7
+                        },
+                        {
+                            "id": "Effect.Cause.How",
+                            "name": "Sustainability",
+                            "u": 1.0,
+                            "p": -0.6,
+                            "trump_score": -1,
+                            "trump_u": -1.0,
+                            "trump_p": 0.6
+                        },
+                        {
+                            "id": "Effect.Cause.Cause",
+                            "name": "Entropy",
+                            "u": 0.8,
+                            "p": -1.0,
+                            "trump_score": -1,
+                            "trump_u": -0.8,
+                            "trump_p": 1.0
+                        },
+                        {
+                            "id": "Effect.Cause.Effect",
+                            "name": "Renewal",
+                            "u": 1.0,
+                            "p": 0.9,
+                            "trump_score": 1,
+                            "trump_u": 1.0,
+                            "trump_p": 0.9
+                        },
+                        {
+                            "id": "Effect.Effect.Who",
+                            "name": "E Pluribus Unum",
+                            "u": 1.0,
+                            "p": 0.8,
+                            "trump_score": -1,
+                            "trump_u": -1.0,
+                            "trump_p": -0.8
+                        },
+                        {
+                            "id": "Effect.Effect.Where",
+                            "name": "The City on a Hill",
+                            "u": 0.9,
+                            "p": -0.5,
+                            "trump_score": -1,
+                            "trump_u": -0.9,
+                            "trump_p": 0.5
+                        },
+                        {
+                            "id": "Effect.Effect.What",
+                            "name": "Liberty",
+                            "u": 1.0,
+                            "p": 0.9,
+                            "trump_score": -1,
+                            "trump_u": -1.0,
+                            "trump_p": -0.9
+                        },
+                        {
+                            "id": "Effect.Effect.Why",
+                            "name": "The Pursuit",
+                            "u": 0.9,
+                            "p": 1.0,
+                            "trump_score": 1,
+                            "trump_u": 0.9,
+                            "trump_p": 1.0
+                        },
+                        {
+                            "id": "Effect.Effect.How",
+                            "name": "Self-Government",
+                            "u": 1.0,
+                            "p": 0.7,
+                            "trump_score": -1,
+                            "trump_u": -1.0,
+                            "trump_p": -0.7
+                        },
+                        {
+                            "id": "Effect.Effect.Cause",
+                            "name": "Providence",
+                            "u": 0.8,
+                            "p": -0.8,
+                            "trump_score": -1,
+                            "trump_u": -0.8,
+                            "trump_p": 0.8
+                        },
+                        {
+                            "id": "Effect.Effect.Effect",
+                            "name": "The United States",
+                            "u": 1.0,
+                            "p": 0.9,
+                            "trump_score": -1,
+                            "trump_u": -1.0,
+                            "trump_p": -0.9
+                        }
+                    ]
+                }
+            };
+
+            const canvas = document.getElementById('hegemonyCanvas');
+            const ctx = canvas.getContext('2d');
+            const tooltip = document.createElement('div');
+            tooltip.className = 'canvas-tooltip';
+            // Add pointer-events auto so user can interact with tooltip links if needed
+            tooltip.style.cssText = `
+            position: fixed;
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            pointer-events: auto;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 1000;
+            max-width: 280px;
+            transition: opacity 0.15s ease;
+        `;
+            document.body.appendChild(tooltip);
+            const width = canvas.width;
+            const height = canvas.height;
+            const cx = width / 2;
+            const cy = height / 2;
+            const scale = (width - 120) / 2;
+            let currentPlane = 'all';
+            let viewMode = 'trump';
+            let hoveredEntries = [];
+
+            function setViewMode(mode) {
+                viewMode = mode;
+                draw();
+                updateStats();
+            }
+
+            function toCanvasX(u) { return cx - (u * scale); }
+            function toCanvasY(p) { return cy - (p * scale); }
+
+            function getQuadrantColor(u, p, score, alpha = 1) {
+                // Override with hit/miss/fail coloring logic
+                if (score === 1) return `rgba(34, 197, 94, ${alpha})`; // Green for Hits
+                if (score === -1) return `rgba(239, 68, 68, ${alpha})`; // Red for Fails
+                return `rgba(156, 163, 175, ${alpha})`; // Grey for misses/neutral
+            }
+
+            function drawGrid() {
+                ctx.clearRect(0, 0, width, height);
+
+                ctx.globalAlpha = 0.08;
+                ctx.fillStyle = '#4ade80'; ctx.fillRect(0, 0, cx, cy);
+                ctx.fillStyle = '#f87171'; ctx.fillRect(cx, 0, cx, cy);
+                ctx.fillStyle = '#38bdf8'; ctx.fillRect(0, cy, cx, cy);
+                ctx.fillStyle = '#fb923c'; ctx.fillRect(cx, cy, cx, cy);
+                ctx.globalAlpha = 1;
+
+                ctx.strokeStyle = '#475569';
+                ctx.lineWidth = 1.5;
+                ctx.setLineDash([5, 5]);
+                ctx.strokeRect(cx - scale, cy - scale, 2 * scale, 2 * scale);
+                ctx.setLineDash([]);
+
+                ctx.strokeStyle = '#94a3b8';
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(0, cy); ctx.lineTo(width, cy);
+                ctx.moveTo(cx, 0); ctx.lineTo(cx, height);
+                ctx.stroke();
+
+                ctx.font = '700 12px Inter';
+                ctx.fillStyle = '#4ade80'; ctx.textAlign = 'left'; ctx.fillText('GREATER GOOD (PRODUCTIVE)', 20, 30);
+                ctx.fillStyle = '#f87171'; ctx.textAlign = 'right'; ctx.fillText('GREATEST LIE (REDUCTIVE)', width - 20, 30);
+                ctx.fillStyle = '#38bdf8'; ctx.textAlign = 'left'; ctx.fillText('LESSER GOOD (CONSTRUCTIVE)', 20, height - 20);
+                ctx.fillStyle = '#fb923c'; ctx.textAlign = 'right'; ctx.fillText('GREATER EVIL (DESTRUCTIVE)', width - 20, height - 20);
+
+                ctx.font = '600 11px Inter';
+                ctx.fillStyle = '#94a3b8';
+                ctx.textAlign = 'center';
+                ctx.fillText('ψ = +1 (Create)', cx, 15);
+                ctx.fillText('ψ = -1 (Suppress)', cx, height - 8);
+
+                ctx.save();
+                ctx.translate(15, cy);
+                ctx.rotate(-Math.PI / 2);
+                ctx.fillText('υ = +1 (Universal)', 0, 0);
+                ctx.restore();
+
+                ctx.save();
+                ctx.translate(width - 15, cy);
+                ctx.rotate(-Math.PI / 2);
+                ctx.fillText('υ = -1 (Self)', 0, 0);
+                ctx.restore();
+            }
+
+            function drawEntries() {
+                const planes = currentPlane === 'all' ? Object.keys(kanonData) : [currentPlane];
+
+                // Draw a faint connecting line to the origin for hovered? Optional.
+
+                planes.forEach(planeId => {
+                    const plane = kanonData[planeId];
+
+                    if (viewMode === 'vectors') {
+                        plane.entries.forEach(entry => {
+                            const isHovered = hoveredEntries.includes(entry);
+                            const kx = toCanvasX(entry.u);
+                            const ky = toCanvasY(entry.p);
+                            const tx = toCanvasX(entry.trump_u);
+                            const ty = toCanvasY(entry.trump_p);
+
+                            ctx.beginPath(); ctx.moveTo(kx, ky); ctx.lineTo(tx, ty);
+                            ctx.strokeStyle = isHovered ? 'rgba(71, 85, 105, 0.8)' : 'rgba(148, 163, 184, 0.3)';
+                            ctx.lineWidth = isHovered ? 2 : 1; ctx.stroke();
+
+                            ctx.beginPath(); ctx.arc(kx, ky, 3, 0, Math.PI * 2);
+                            ctx.fillStyle = '#64748b'; ctx.fill();
+                        });
+                    }
+
+                    plane.entries.forEach(entry => {
+                        const isHovered = hoveredEntries.includes(entry) || (pinnedEntry && pinnedEntry.id === entry.id);
+
+                        let target_u = entry.trump_u;
+                        let target_p = entry.trump_p;
+                        if (viewMode === 'kanon') { target_u = entry.u; target_p = entry.p; }
+
+                        const x = toCanvasX(target_u);
+                        const y = toCanvasY(target_p);
+
+                        let baseRadius = 5;
+                        if (entry.trump_score === 1) baseRadius = 9;
+                        if (entry.trump_score === -1) baseRadius = 13;
+                        if (viewMode === 'kanon') baseRadius = 5;
+
+                        const radius = isHovered ? baseRadius + 4 : baseRadius;
+
+                        let color = getQuadrantColor(target_u, target_p, entry.trump_score);
+                        if (viewMode === 'kanon') color = '#1e293b';
+
+                        ctx.beginPath();
+                        ctx.arc(x, y, radius, 0, Math.PI * 2);
+                        ctx.fillStyle = color;
+
+                        if (isHovered) {
+                            ctx.shadowColor = 'rgba(0,0,0,0.3)';
+                            ctx.shadowBlur = 10;
+                        } else {
+                            ctx.shadowColor = 'transparent';
+                            ctx.shadowBlur = 0;
+                        }
+
+                        ctx.fill();
+
+                        if (isHovered) {
+                            ctx.strokeStyle = '#1e293b';
+                            ctx.lineWidth = 2;
+                            ctx.stroke();
+                        } else {
+                            ctx.strokeStyle = '#ffffff';
+                            ctx.lineWidth = 1;
+                            ctx.stroke();
+                        }
+                    });
+
+                    // Draw Kanon plane centroid
+                    ctx.shadowColor = 'transparent';
+                    ctx.beginPath();
+                    let centX = toCanvasX(plane.total.u);
+                    let centY = toCanvasY(plane.total.p);
+
+                    // Add a crosshair behind centroid
+                    ctx.strokeStyle = plane.color;
+                    ctx.globalAlpha = 0.3;
+                    ctx.strokeRect(centX - 10, centY - 10, 20, 20);
+
+                    ctx.globalAlpha = 0.9;
+                    ctx.arc(centX, centY, 12, 0, Math.PI * 2);
+                    ctx.fillStyle = '#1e293b'; // Kanon color
+                    ctx.fill();
+                    ctx.strokeStyle = '#fff';
+                    ctx.lineWidth = 2.5;
+                    ctx.stroke();
+
+                    ctx.font = '800 11px Inter';
+                    ctx.fillStyle = '#fff';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(`K${planeId}`, centX, centY + 4);
+
+                    // Draw Trump plane centroid
+                    ctx.beginPath();
+                    centX = toCanvasX(plane.trump_total.u);
+                    centY = toCanvasY(plane.trump_total.p);
+
+                    ctx.strokeStyle = plane.color;
+                    ctx.globalAlpha = 0.3;
+                    ctx.strokeRect(centX - 10, centY - 10, 20, 20);
+
+                    ctx.globalAlpha = 0.9;
+                    ctx.arc(centX, centY, 12, 0, Math.PI * 2);
+                    ctx.fillStyle = '#f59e0b'; // Trump gold
+                    ctx.fill();
+                    ctx.strokeStyle = '#fff';
+                    ctx.lineWidth = 2.5;
+                    ctx.stroke();
+
+                    ctx.font = '800 11px Inter';
+                    ctx.fillStyle = '#fff';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(`T${planeId}`, centX, centY + 4);
+
+                    ctx.globalAlpha = 1;
+                });
+            }
+
+            function drawGrandTotal() {
+                if (currentPlane !== 'all') return;
+
+                // Kanon Overall Centroid
+                let x = toCanvasX(0.6431486880466473);
+                let y = toCanvasY(0.3769679300291546);
+
+                ctx.shadowColor = 'rgba(0,0,0,0.4)';
+                ctx.shadowBlur = 15;
+
+                ctx.beginPath();
+                ctx.arc(x, y, 18, 0, Math.PI * 2);
+                ctx.fillStyle = '#1e293b';
+                ctx.fill();
+                ctx.strokeStyle = '#fff';
+                ctx.lineWidth = 3;
+                ctx.stroke();
+                ctx.font = '800 9px Inter';
+                ctx.fillStyle = '#fff';
+                ctx.textAlign = 'center';
+                ctx.fillText('KANON', x, y + 3.5);
+
+                // Trump Overall Centroid
+                x = toCanvasX(-0.3);
+                y = toCanvasY(0.17);
+
+                ctx.beginPath();
+                ctx.arc(x, y, 18, 0, Math.PI * 2);
+                ctx.fillStyle = '#f59e0b';
+                ctx.fill();
+                ctx.strokeStyle = '#fff';
+                ctx.lineWidth = 3;
+                ctx.stroke();
+                ctx.font = '800 9px Inter';
+                ctx.fillStyle = '#fff';
+                ctx.textAlign = 'center';
+                ctx.fillText('TRUMP', x, y + 3.5);
+
+                ctx.shadowColor = 'transparent';
+                ctx.shadowBlur = 0;
+            }
+
+            function draw() {
+                drawGrid();
+                drawEntries();
+                drawGrandTotal();
+            }
+
+            function updateStats() {
+                const statsGrid = document.getElementById('statsGrid');
+                const planes = currentPlane === 'all' ? Object.keys(kanonData) : [currentPlane];
+                let html = '';
+
+                if (currentPlane === 'all') {
+                    html += `
+                    <div class="stat-card" style="border-left: 4px solid #0f172a;">
+                        <h3>American Kanon Overall Baseline</h3>
+                        <div class="stat-value" style="color: #0f172a;">υ = +0.64, ψ = +0.38</div>
+                        <p style="font-size: 0.8rem; color: #64748b; margin-top: 0.75rem; font-weight: 500;">
+                            <strong>Data Baseline:</strong> Nodes are clustered along the theoretical absolute vectors of the American Kanon. Color denotes Trump evaluation score.
+                        </p>
+                    </div>
+                    <div class="stat-card" style="border-left: 4px solid #f59e0b;">
+                        <h3>Overall Trump Evaluation</h3>
+                        <div class="stat-value" style="color: #f59e0b;">υ = -0.30, ψ = +0.17</div>
+                        <p style="font-size: 0.8rem; color: #64748b; margin-top: 0.75rem; font-weight: 500;">
+                            Derived aggregate position based on Trump's deviations (+1, 0, -1) applied to all 343 base Kanon vectors.
+                        </p>
+                    </div>
+                `;
+                }
+
+                planes.forEach(planeId => {
+                    const plane = kanonData[planeId];
+                    const quadrantClass = (plane.total.u >= 0 && plane.total.p >= 0) ? 'positive' :
+                        (plane.total.u < 0 && plane.total.p >= 0) ? 'negative' :
+                            (plane.total.u >= 0 && plane.total.p < 0) ? 'text-blue-500' : 'text-orange-500';
+
+                    const trumpQuadClass = (plane.trump_total.u >= 0 && plane.trump_total.p >= 0) ? 'positive' :
+                        (plane.trump_total.u < 0 && plane.trump_total.p >= 0) ? 'negative' :
+                            (plane.total.u >= 0 && plane.trump_total.p < 0) ? 'text-blue-500' : 'text-orange-500';
+
+                    let quadName = "Greater Good";
+                    if (plane.total.u < 0 && plane.total.p >= 0) quadName = "Greatest Lie";
+                    else if (plane.total.u >= 0 && plane.total.p < 0) quadName = "Lesser Good";
+                    else if (plane.total.u < 0 && plane.total.p < 0) quadName = "Greater Evil";
+
+                    let trumpQuadName = "Greater Good";
+                    if (plane.trump_total.u < 0 && plane.trump_total.p >= 0) trumpQuadName = "Greatest Lie";
+                    else if (plane.trump_total.u >= 0 && plane.trump_total.p < 0) trumpQuadName = "Lesser Good";
+                    else if (plane.trump_total.u < 0 && plane.trump_total.p < 0) trumpQuadName = "Greater Evil";
+
+                    html += `
+                    <div class="stat-card" style="border-left: 4px solid ${plane.color}; padding: 1.25rem;">
+                        <h3 style="margin-bottom: 0.75rem;">Plane ${planeId}: ${plane.name}</h3>
+                        
+                        <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 0.5rem; border-bottom: 1px solid #f1f5f9; padding-bottom: 0.5rem;">
+                            <div style="flex: 1; min-width: 140px;">
+                                <div style="font-size: 0.75rem; color: #94a3b8; font-weight: 700; text-transform: uppercase; margin-bottom: 0.25rem;">Kanon Avg</div>
+                                <div class="stat-value ${quadrantClass}" style="font-size: 1.25rem;">
+                                    υ = ${plane.total.u > 0 ? '+' : ''}${plane.total.u.toFixed(2)}, 
+                                    ψ = ${plane.total.p > 0 ? '+' : ''}${plane.total.p.toFixed(2)}
+                                </div>
+                            </div>
+                            
+                            <div style="flex: 1; min-width: 140px;">
+                                <div style="font-size: 0.75rem; color: #94a3b8; font-weight: 700; text-transform: uppercase; margin-bottom: 0.25rem;">Trump Result Avg</div>
+                                <div class="stat-value ${trumpQuadClass}" style="font-size: 1.25rem;">
+                                    υ = ${plane.trump_total.u > 0 ? '+' : ''}${plane.trump_total.u.toFixed(2)}, 
+                                    ψ = ${plane.trump_total.p > 0 ? '+' : ''}${plane.trump_total.p.toFixed(2)}
+                                </div>
+                            </div>
+                        </div>
+
+                        <p style="font-size: 0.8rem; color: #64748b; margin-top: 0.5rem; font-weight: 500;">
+                            ${plane.entries.length} Vectors • kanon: <strong>${quadName}</strong>, trump: <strong>${trumpQuadName}</strong>
+                        </p>
+                    </div>
+                `;
+                });
+                statsGrid.innerHTML = html;
+            }
+
+            // To allow tooltip interaction, we only hide tooltip on mouseleave of canvas if we aren't over tooltip.
+            // But since tooltip is over canvas, it needs its own mouseleave management if we do pointer-events: auto.
+            let isOverTooltip = false;
+
+            tooltip.addEventListener('mouseenter', () => isOverTooltip = true);
+            tooltip.addEventListener('mouseleave', () => {
+                isOverTooltip = false;
+                // If the tooltip is not pinned, hide it when mouse leaves
+                if (!pinnedEntry) {
+                    tooltip.style.display = 'none';
+                    hoveredEntries = [];
+                    draw();
+                }
+            });
+
+            // We will pin the tooltip when clicked, user requested: "click to keep open the node on the map then be able to click on the specific node"
+            let pinnedEntry = null;
+
+            canvas.addEventListener('mousemove', (e) => {
+                if (pinnedEntry) return; // If an entry is pinned, don't update on mousemove
+
+                const rect = canvas.getBoundingClientRect();
+                // Scale mouse coordinates due to canvas scaling (if using CSS max-width, though here it's fixed width)
+                const scaleX = canvas.width / rect.width;
+                const scaleY = canvas.height / rect.height;
+                const mouseX = (e.clientX - rect.left) * scaleX;
+                const mouseY = (e.clientY - rect.top) * scaleY;
+
+                let currentHovered = [];
+                const planes = currentPlane === 'all' ? Object.keys(kanonData) : [currentPlane];
+
+                let closestDist = Infinity;
+                let targetU = null;
+                let targetP = null;
+
+                for (const planeId of planes) {
+                    for (const entry of kanonData[planeId].entries) {
+                        let target_u = entry.trump_u;
+                        let target_p = entry.trump_p;
+                        if (viewMode === 'kanon') { target_u = entry.u; target_p = entry.p; }
+
+                        const x = toCanvasX(target_u);
+                        const y = toCanvasY(target_p);
+                        const dist = Math.sqrt((mouseX - x) ** 2 + (mouseY - y) ** 2);
+
+                        if (dist < 12 && dist < closestDist) {
+                            closestDist = dist;
+                            targetU = target_u;
+                            targetP = target_p;
+                        }
+                    }
+                }
+
+                if (targetU !== null && targetP !== null) {
+                    for (const planeId of planes) {
+                        for (const entry of kanonData[planeId].entries) {
+                            let chk_u = viewMode === 'kanon' ? entry.u : entry.trump_u;
+                            let chk_p = viewMode === 'kanon' ? entry.p : entry.trump_p;
+                            if (chk_u === targetU && chk_p === targetP) {
+                                entry._planeId = planeId;
+                                currentHovered.push(entry);
+                            }
+                        }
+                    }
+                }
+                {
+                    let kanon_u, kanon_p, trump_u, trump_p;
+                    if (currentPlane === 'all') {
+                        kanon_u = 0.6431486880466473; kanon_p = 0.3769679300291546;
+                        trump_u = -0.3; trump_p = 0.17;
+                    } else {
+                        kanon_u = kanonData[currentPlane].total.u; kanon_p = kanonData[currentPlane].total.p;
+                        trump_u = kanonData[currentPlane].trump_total.u; trump_p = kanonData[currentPlane].trump_total.p;
+                    }
+
+                    let kx = toCanvasX(kanon_u);
+                    let ky = toCanvasY(kanon_p);
+                    if (Math.sqrt((mouseX - kx) ** 2 + (mouseY - ky) ** 2) < 18) {
+                        currentHovered.push({
+                            name: currentPlane === 'all' ? 'Overall Kanon Average' : `Plane ${currentPlane} Kanon Average`,
+                            u: kanon_u, p: kanon_p,
+                            is_centroid: true, centroid_type: 'KANON', color: '#1e293b'
+                        });
+                    }
+
+                    let tx = toCanvasX(trump_u);
+                    let ty = toCanvasY(trump_p);
+                    if (Math.sqrt((mouseX - tx) ** 2 + (mouseY - ty) ** 2) < 18) {
+                        currentHovered.push({
+                            name: currentPlane === 'all' ? 'Overall Trump Average' : `Plane ${currentPlane} Trump Average`,
+                            u: trump_u, p: trump_p,
+                            is_centroid: true, centroid_type: 'TRUMP', color: '#f59e0b'
+                        });
+                    }
+                }
+
+                // Only update if hovered entries have changed
+                if (JSON.stringify(hoveredEntries) !== JSON.stringify(currentHovered)) {
+                    hoveredEntries = currentHovered;
+                    if (hoveredEntries.length > 0) {
+                        document.body.style.cursor = 'pointer';
+                        tooltip.style.display = 'block';
+
+                        let baseU = viewMode === 'kanon' ? hoveredEntries[0].u : hoveredEntries[0].trump_u;
+                        let baseP = viewMode === 'kanon' ? hoveredEntries[0].p : hoveredEntries[0].trump_p;
+                        if (hoveredEntries[0].is_centroid) {
+                            baseU = hoveredEntries[0].u;
+                            baseP = hoveredEntries[0].p;
+                        }
+
+                        let html = '';
+                        if (hoveredEntries.length > 1) {
+                            html += `<div style="color: #94a3b8; font-size: 0.8rem; font-weight: 600; margin-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 12px;">Coordinate Stack: <strong style="color:white;">υ: ${baseU > 0 ? '+' : ''}${baseU.toFixed(2)}, ψ: ${baseP > 0 ? '+' : ''}${baseP.toFixed(2)}</strong><br><span style="font-size:0.75rem; color:#94a3b8;">${hoveredEntries.length} overlapping items</span></div>`;
+                        } else {
+                            html += `<div style="color: #94a3b8; font-size: 0.8rem; font-weight: 600; margin-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 12px;">υ: ${baseU > 0 ? '+' : ''}${baseU.toFixed(2)}  |  ψ: ${baseP > 0 ? '+' : ''}${baseP.toFixed(2)}</div>`;
+                        }
+
+                        const maxRows = Math.min(7, hoveredEntries.length);
+                        html += `<div style="display: grid; grid-auto-flow: column; grid-template-rows: repeat(${maxRows}, auto); grid-auto-columns: max-content; gap: 0 1.5rem; margin-top: 16px;">`;
+
+                        hoveredEntries.forEach(entry => {
+                            if (entry.is_centroid) {
+                                html += `
+                                <div style="border-left: 3px solid ${entry.color}; padding-left: 10px; margin-bottom: 12px; min-width: 220px;">
+                                    <div style="font-weight: 800; font-size: 1rem; margin-bottom: 2px; color: white;">${entry.name}</div>
+                                    <div style="font-style: italic; color: #cbd5e1; font-size: 0.8rem;">Average aggregate coordinate</div>
+                                    <strong style="color:${entry.color}; font-size: 0.8rem; display:block; margin-top:2px;">Type: ${entry.centroid_type}</strong>
+                                </div>
+                            `;
+                            } else {
+                                let scoreText = 'Miss (0)';
+                                let colorStr = '#94a3b8'; // grey
+                                if (entry.trump_score === 1) { scoreText = 'Hit (+1)'; colorStr = '#22c55e'; } // green
+                                if (entry.trump_score === -1) { scoreText = 'Fail (-1)'; colorStr = '#ef4444'; } // red
+
+                                const planeNameFull = kanonData[entry._planeId].name;
+                                const planeName = planeNameFull.split(' ')[0];
+                                const url = `Plane_${entry._planeId}_${planeName}.html#${entry.id}`;
+                                const copyAction = `event.stopPropagation(); navigator.clipboard.writeText(new URL('${url}', window.location.href).href).then(()=>alert('Copied URL to Clipboard!'));`;
+
+                                html += `
+                                <div style="border-left: 3px solid ${kanonData[entry._planeId].color}; padding-left: 10px; margin-bottom: 12px; min-width: 220px;">
+                                    <div style="font-weight: 800; font-size: 1rem; margin-bottom: 2px; color: white; display:flex; justify-content:space-between; align-items:center;">
+                                        <a href="${url}" class="tooltip-link" style="color: white; text-decoration: underline;" title="Jump to Plane Evaluation">
+                                            ${entry.name} ↗
+                                        </a>
+                                        
+                                    </div>
+                                    <div style="font-style: italic; color: #cbd5e1; font-size: 0.8rem;">Plane ${entry._planeId}: ${kanonData[entry._planeId].name}</div>
+                                    <strong style="color:${colorStr}; font-size: 0.8rem; display:block; margin-top:2px;">Trump Score: ${scoreText}</strong>
+                                </div>
+                            `;
+                            }
+                        });
+
+                        html += `</div>`;
+                        tooltip.innerHTML = html;
+
+                        const tooltipRect = tooltip.getBoundingClientRect();
+                        const viewportWidth = window.innerWidth;
+                        const viewportHeight = window.innerHeight;
+
+                        let tLeft = e.clientX + 20;
+                        let tTop = e.clientY + 20;
+
+                        if (tLeft + tooltipRect.width > viewportWidth - 20) {
+                            tLeft = e.clientX - tooltipRect.width - 20;
+                        }
+
+                        if (tTop + tooltipRect.height > viewportHeight - 20) {
+                            tTop = viewportHeight - tooltipRect.height - 20;
+                        }
+
+                        tLeft = Math.max(10, tLeft);
+                        tTop = Math.max(10, tTop);
+
+                        tooltip.style.left = tLeft + 'px';
+                        tooltip.style.top = tTop + 'px';
+                    } else {
+                        document.body.style.cursor = 'default';
+                        tooltip.style.display = 'none';
+                    }
+                    draw();
+                }
+            });
+
+            // Ensure explicit taps on mobile correctly trigger the tooltip without swiping natively
+            let lastTap = 0;
+            canvas.addEventListener('touchstart', (e) => {
+                if (e.touches.length > 0) {
+                    const now = new Date().getTime();
+                    const timesince = now - lastTap;
+
+                    if (timesince < 300 && timesince > 0 && window.innerWidth < 800) {
+                        canvas.classList.toggle('zoomed-canvas');
+                        const container = canvas.closest('.canvas-container');
+                        if (container) container.classList.toggle('zoomed-container');
+                        lastTap = 0;
+                        e.preventDefault();
+                    } else {
+                        // Simulate mousemove for tooltip on tap
+                        const touchEvent = new MouseEvent('mousemove', {
+                            clientX: e.touches[0].clientX,
+                            clientY: e.touches[0].clientY
+                        });
+                        canvas.dispatchEvent(touchEvent);
+                        lastTap = now;
+                    }
+                }
+            }, { passive: false });
+
+            canvas.addEventListener('dblclick', (e) => {
+                if (window.innerWidth < 800) {
+                    canvas.classList.toggle('zoomed-canvas');
+                    const container = canvas.closest('.canvas-container');
+                    if (container) container.classList.toggle('zoomed-container');
+                }
+            });
+
+            canvas.addEventListener('click', (e) => {
+                if (hoveredEntries.length > 0) {
+                    const entry = hoveredEntries[0];
+                    if (!entry.is_centroid && entry.id) {
+                        pinnedEntry = entry; // Pin the tooltip
+                        // Re-render tooltip to show pinned state if desired, or just keep it visible
+                        // For now, just ensure it stays visible and update cursor
+                        document.body.style.cursor = 'auto'; // Allow interaction with tooltip
+                    }
+                } else {
+                    pinnedEntry = null; // click empty space to unpin
+                    tooltip.style.display = 'none'; // Hide tooltip if unpinned
+                    document.body.style.cursor = 'default';
+                }
+                draw(); // Redraw to update highlight for pinned entry
+            });
+
+            canvas.addEventListener('mouseleave', () => {
+                if (!pinnedEntry && !isOverTooltip) {
+                    hoveredEntries = [];
+                    tooltip.style.display = 'none';
+                    document.body.style.cursor = 'default';
+                    draw();
+                }
+            });
+
+            document.querySelectorAll('.plane-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.plane-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentPlane = btn.dataset.plane;
+                    draw();
+                    updateStats();
+                });
+            });
+
+            draw();
+            updateStats();
+
+        </script>
+    </div>
+</body>
+
+</html>
