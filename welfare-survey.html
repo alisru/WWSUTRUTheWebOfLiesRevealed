@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Community Welfare Survey</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#EDEEF0; --paper-2:#F6F7F8; --ink:#16202B; --ink-soft:#5A6672;
+  --rule:#D3D7DC; --focus:#1B6BD6;
+  --p1:#6A5A96; --p2:#1F7A6B; --p3:#7A5C3E; --p4:#B98B22;
+  --p5:#2E5B8A; --p6:#8E3552; --p7:#CE6146;
+  --disp:"Bricolage Grotesque",system-ui,sans-serif;
+  --body:"Source Serif 4",Georgia,serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+.wrap{max-width:860px;margin:0 auto;padding:0 20px}
+
+/* ---------- masthead ---------- */
+header.mast{border-bottom:1px solid var(--rule);background:var(--paper);position:sticky;top:0;z-index:40}
+.mast-in{max-width:860px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:14px}
+.brand{font-family:var(--disp);font-weight:800;font-size:15px;letter-spacing:-0.01em;text-decoration:none;color:var(--ink);white-space:nowrap}
+.brand span{display:block;font-family:var(--mono);font-size:10px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
+.mini{display:flex;gap:3px;flex:1;min-width:0}
+.mini a{flex:1;height:26px;border-radius:2px;background:var(--paper-2);border:1px solid var(--rule);position:relative;overflow:hidden;text-decoration:none;display:block}
+.mini a i{position:absolute;inset:0 auto 0 0;display:block;opacity:.85}
+.mini a b{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--mono);font-size:10px;font-weight:500;color:var(--ink);mix-blend-mode:multiply}
+.mini a[aria-current]{outline:2px solid var(--ink);outline-offset:1px}
+
+/* ---------- hub ---------- */
+.hero{padding:44px 0 26px}
+.hero h1{font-family:var(--disp);font-weight:800;font-size:clamp(32px,6vw,52px);line-height:1.02;letter-spacing:-0.025em;margin:0 0 14px}
+.hero p{margin:0 0 6px;max-width:56ch;color:var(--ink-soft)}
+.hero .lede{color:var(--ink);font-size:19px}
+
+.bands{margin:26px 0 10px;border-top:1px solid var(--rule)}
+.band{display:block;text-decoration:none;color:inherit;border-bottom:1px solid var(--rule);position:relative;padding:16px 14px 16px 0;overflow:hidden}
+.band .fill{position:absolute;left:0;top:0;bottom:0;width:0;opacity:.13;transition:width .5s cubic-bezier(.2,.7,.2,1)}
+.band .row{position:relative;display:flex;align-items:baseline;gap:14px}
+.band .num{font-family:var(--mono);font-size:11px;color:var(--ink-soft);flex:none;padding-left:14px;white-space:nowrap}
+.band .nm{font-family:var(--disp);font-weight:600;font-size:21px;letter-spacing:-0.015em;flex:none}
+.band .bl{color:var(--ink-soft);font-size:14px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.band .pc{font-family:var(--mono);font-size:12px;color:var(--ink-soft);flex:none}
+.band::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px}
+.band:hover .nm{text-decoration:underline;text-underline-offset:3px}
+.band:focus-visible{outline:2px solid var(--focus);outline-offset:-2px}
+@media(max-width:620px){.band .bl{display:none}}
+
+.hubgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:22px 0 60px}
+@media(max-width:620px){.hubgrid{grid-template-columns:1fr}}
+.tile{display:block;text-decoration:none;color:inherit;border:1px solid var(--rule);background:var(--paper-2);padding:16px;border-radius:3px}
+.tile:hover{border-color:var(--ink)}
+.tile h3{font-family:var(--disp);font-weight:600;font-size:17px;margin:0 0 4px}
+.tile p{margin:0;font-size:14px;color:var(--ink-soft)}
+.tile .st{font-family:var(--mono);font-size:11px;color:var(--ink-soft);display:block;margin-top:8px}
+
+/* ---------- plane page ---------- */
+.planehead{padding:30px 0 18px;border-bottom:2px solid var(--ink)}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin:0 0 8px}
+.planehead h1{font-family:var(--disp);font-weight:800;font-size:clamp(28px,5vw,42px);letter-spacing:-0.025em;margin:0 0 8px;line-height:1.05}
+.planehead p{margin:0;color:var(--ink-soft);max-width:56ch}
+
+details.sub{border-bottom:1px solid var(--rule)}
+details.sub>summary{cursor:pointer;list-style:none;padding:16px 0;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+details.sub>summary::-webkit-details-marker{display:none}
+details.sub>summary:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.sub .sid{font-family:var(--mono);font-size:11px;color:var(--ink-soft);width:2.6em;flex:none}
+.sub .snm{font-family:var(--disp);font-weight:600;font-size:19px;letter-spacing:-0.015em;flex:1;min-width:8em}
+.sub .saddr{font-family:var(--mono);font-size:10px;color:var(--ink-soft);flex-basis:100%;padding-left:3.6em;margin-top:-4px;letter-spacing:.02em}
+.sub .sdot{font-family:var(--mono);font-size:11px;flex:none;color:var(--ink-soft)}
+details.sub[open]>summary{border-bottom:1px dashed var(--rule)}
+.subbody{padding:6px 0 26px}
+
+.scale{padding:16px 0;border-bottom:1px dotted var(--rule)}
+.scale:last-of-type{border-bottom:none}
+.slabel{font-family:var(--mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:8px}
+.q{margin:0 0 6px;font-size:16.5px}
+.q .tag{font-family:var(--mono);font-size:10px;color:var(--ink-soft);margin-right:6px}
+.seg{display:flex;gap:4px;margin:6px 0 14px;flex-wrap:wrap;align-items:center}
+.seg>input[type=radio]{position:absolute;opacity:0;width:0;height:0}
+.seg label{font-family:var(--mono);font-size:13px;min-width:38px;height:34px;display:grid;place-items:center;border:1px solid var(--rule);background:var(--paper-2);cursor:pointer;border-radius:2px;user-select:none}
+.seg label:hover{border-color:var(--ink-soft)}
+.seg>input[type=radio]:checked+label{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.seg>input[type=radio]:focus-visible+label{outline:2px solid var(--focus);outline-offset:2px}
+.seg .lastwrap{display:flex;align-items:center;gap:6px;margin-left:6px}
+.seg .lastwrap span{font-family:var(--mono);font-size:10px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.06em}
+.seg .lastwrap input[type=text]::placeholder{color:#9AA3AC}
+.seg .lastwrap input[type=text]{font-family:var(--mono);font-size:12px;width:120px;height:34px;padding:0 8px;border:1px solid var(--rule);background:var(--paper-2);border-radius:2px;color:var(--ink)}
+.seg .clr{font-family:var(--mono);font-size:11px;background:none;border:none;color:var(--ink-soft);cursor:pointer;text-decoration:underline;padding:0 4px}
+
+.flags{margin-top:18px;border:1px solid var(--rule);border-radius:3px;background:var(--paper-2)}
+.flags>summary{cursor:pointer;list-style:none;padding:11px 14px;font-family:var(--mono);font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-soft);display:flex;justify-content:space-between;gap:10px}
+.flags>summary::-webkit-details-marker{display:none}
+.flags>summary:focus-visible{outline:2px solid var(--focus);outline-offset:-2px}
+.flagbody{padding:4px 14px 18px;border-top:1px solid var(--rule)}
+.flagbody h4{font-family:var(--disp);font-weight:600;font-size:15px;margin:16px 0 2px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 4px}
+.chips>input[type=radio]{position:absolute;opacity:0;width:0;height:0}
+.chips label{font-family:var(--mono);font-size:11.5px;padding:5px 9px;border:1px solid var(--rule);background:var(--paper);border-radius:99px;cursor:pointer}
+.chips>input[type=radio]:checked+label{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.chips>input[type=radio]:focus-visible+label{outline:2px solid var(--focus);outline-offset:2px}
+.chips input[type=text]{position:static;opacity:1;width:auto;height:auto}
+
+.tail{padding:26px 0 10px}
+.tail h3{font-family:var(--disp);font-weight:600;font-size:19px;margin:0 0 6px}
+textarea{width:100%;min-height:100px;font-family:var(--body);font-size:16px;padding:11px;border:1px solid var(--rule);background:var(--paper-2);border-radius:3px;color:var(--ink);resize:vertical}
+.checks{margin:14px 0 0;display:grid;gap:9px}
+.checks label{display:flex;gap:10px;align-items:flex-start;font-size:15.5px;cursor:pointer}
+.checks input{margin-top:5px;width:17px;height:17px;flex:none;accent-color:var(--ink)}
+
+.navrow{display:flex;gap:10px;flex-wrap:wrap;padding:26px 0 70px;border-top:1px solid var(--rule);margin-top:10px}
+.btn{font-family:var(--disp);font-weight:600;font-size:15px;padding:11px 18px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);border-radius:3px;cursor:pointer;text-decoration:none;display:inline-block}
+.btn.ghost{background:none;color:var(--ink)}
+.btn:hover{opacity:.86}
+.btn:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+
+.note{font-size:14.5px;color:var(--ink-soft);border-left:3px solid var(--rule);padding:2px 0 2px 14px;margin:18px 0}
+.saved{position:fixed;left:50%;transform:translateX(-50%);bottom:22px;background:var(--ink);color:var(--paper);font-family:var(--mono);font-size:12px;padding:9px 16px;border-radius:3px;opacity:0;pointer-events:none;transition:opacity .25s;z-index:60}
+.saved.on{opacity:1}
+pre.out{font-family:var(--mono);font-size:11.5px;background:var(--paper-2);border:1px solid var(--rule);padding:14px;border-radius:3px;overflow:auto;max-height:340px;white-space:pre-wrap;word-break:break-all}
+footer.foot{border-top:1px solid var(--rule);padding:22px 0 50px;font-size:13.5px;color:var(--ink-soft)}
+#view:focus{outline:none}
+
+/* ---------- plane layout + sidebar toc ---------- */
+.wrap.wide{max-width:1180px}
+.planegrid{display:grid;grid-template-columns:212px minmax(0,1fr);gap:44px;align-items:start}
+.toc{position:sticky;top:72px;align-self:start;max-height:calc(100vh - 96px);overflow-y:auto;overscroll-behavior:contain;padding-bottom:10px}
+.toc h2{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin:0 0 10px;font-weight:400}
+.toc ol{list-style:none;margin:0 0 18px;padding:0;border-left:1px solid var(--rule)}
+.toc li{margin:0}
+.toc a.t{display:flex;gap:6px;align-items:baseline;text-decoration:none;color:var(--ink);padding:7px 4px 7px 12px;margin-left:-1px;border-left:2px solid transparent;font-size:14px;line-height:1.3}
+.toc a.t .tt{flex:1;min-width:0}
+.toc a.t:hover{background:var(--paper-2)}
+.toc a.t:focus-visible{outline:2px solid var(--focus);outline-offset:-2px}
+.toc a.t .tn{font-family:var(--mono);font-size:10px;color:var(--ink-soft);flex:none;width:2.1em}
+.toc a.t .tc{font-family:var(--mono);font-size:10px;color:var(--ink-soft);flex:none;white-space:nowrap}
+.toc a.t[data-state=part]{color:var(--ink)}
+.toc a.t[data-state=done] .tc{color:var(--pl)}
+.toc a.t[aria-current]{border-left-color:var(--pl);background:var(--paper-2);font-weight:600}
+.toc .meter{height:5px;background:var(--paper-2);border:1px solid var(--rule);border-radius:99px;overflow:hidden;margin:0 0 6px}
+.toc .meter i{display:block;height:100%;background:var(--pl);transition:width .4s ease}
+.toc .pcline{font-family:var(--mono);font-size:10px;color:var(--ink-soft);margin:0 0 16px}
+.toc .jump{display:flex;flex-direction:column;gap:6px;border-top:1px solid var(--rule);padding-top:12px}
+.toc .jump a{font-family:var(--mono);font-size:11px;color:var(--ink-soft);text-decoration:none}
+.toc .jump a:hover{color:var(--ink);text-decoration:underline}
+.tocmob{display:none}
+@media(max-width:900px){
+  .planegrid{grid-template-columns:1fr;gap:0}
+  .toc{display:none}
+  .tocmob{display:block;margin:0 0 6px;border:1px solid var(--rule);border-radius:3px;background:var(--paper-2)}
+  .tocmob>summary{cursor:pointer;list-style:none;padding:11px 14px;font-family:var(--mono);font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-soft);display:flex;justify-content:space-between}
+  .tocmob>summary::-webkit-details-marker{display:none}
+  .tocmob .inner{padding:4px 10px 12px;border-top:1px solid var(--rule)}
+  .tocmob ol{list-style:none;margin:0;padding:0}
+  .tocmob a.t{display:block;text-decoration:none;color:var(--ink);padding:9px 6px;font-size:15px;border-bottom:1px solid var(--rule)}
+  .tocmob a.t:last-child{border-bottom:none}
+  .tocmob a.t{display:flex;gap:8px;align-items:baseline}
+  .tocmob a.t .tt{flex:1}
+  .tocmob a.t .tn{font-family:var(--mono);font-size:10px;color:var(--ink-soft);flex:none;width:2.1em}
+  .tocmob a.t .tc{font-family:var(--mono);font-size:10px;color:var(--ink-soft);flex:none}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<header class="mast">
+  <div class="mast-in">
+    <a class="brand" href="#/hub">Welfare Survey<span>Seven requirements</span></a>
+    <nav class="mini" id="mini" aria-label="Plane progress"></nav>
+  </div>
+</header>
+<main id="view" class="wrap" tabindex="-1"></main>
+<div class="saved" id="toast" role="status" aria-live="polite">Saved</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script id="survey-data" type="application/json">{"planes": [{"n": 1, "name": "Recognition", "domain": "Metaphysical", "q": "Who", "blurb": "Identity, visibility, dignity, and skill use", "subs": [{"id": "1.1", "name": "Sovereign Identity", "addr": "c1→c1", "src": "Metaphysical Recognition", "dst": "Metaphysical Recognition", "scales": [{"scale": "Micro", "a": "I possess a clear, unshakeable sense of self-identity and personal sovereignty", "b": "I am able to live daily without self-denial or identity erasure"}, {"scale": "Meso", "a": "My household acknowledges and validates my unique personal identity", "b": "My domestic environment actively respects my role and personal boundaries"}, {"scale": "Macro", "a": "Civic and legal institutions recognize my full legal personhood", "b": "Public agencies enforce equal protection and legal standing without discrimination"}], "offer": "I could help someone else hold onto their sense of self when it is under pressure", "need": "I need support holding onto my sense of self right now"}, {"id": "1.2", "name": "Skill & Talent Utilization", "addr": "c2→c1", "src": "Possible Purpose", "dst": "Metaphysical Recognition", "scales": [{"scale": "Micro", "a": "I possess unique skills, qualifications, and personal talents", "b": "I am able to fully deploy and utilize my capabilities daily rather than feeling underutilized or stagnant"}, {"scale": "Meso", "a": "My household recognizes my practical abilities and skills", "b": "Our household actively relies upon and deploys my specific talents to manage daily life"}, {"scale": "Macro", "a": "Local institutions and employers recognize my qualifications", "b": "The regional economy provides accessible opportunities that fully mobilize my potential"}], "offer": "I have skills, trades, or knowledge I would be willing to teach or lend to others", "need": "I need my skills and abilities to be recognised and actually used"}, {"id": "1.3", "name": "Bodily Integrity & Safety", "addr": "c3→c1", "src": "Physical Shelter", "dst": "Metaphysical Recognition", "scales": [{"scale": "Micro", "a": "I maintain complete internal awareness of my physical bodily boundaries", "b": "I retain total bodily autonomy and physical sovereignty over my person"}, {"scale": "Meso", "a": "My living arrangement recognizes my need for physical safety", "b": "My home environment actively safeguards my physical boundaries from violation"}, {"scale": "Macro", "a": "Public safety laws protect individual bodily integrity", "b": "Public safety systems effectively prevent physical harassment, violation, and assault"}], "offer": "I could help make someone else feel physically safe, escorted, or protected", "need": "I need help feeling physically safe"}, {"id": "1.4", "name": "Cultural Validation", "addr": "c4→c1", "src": "Lyrical Refreshment", "dst": "Metaphysical Recognition", "scales": [{"scale": "Micro", "a": "I hold a strong sense of personal cultural, artistic, or spiritual identity", "b": "I feel completely free to express my heritage publicly without fear"}, {"scale": "Meso", "a": "Our household shares a connection to our cultural roots and heritage", "b": "We actively celebrate and practice our traditions within the home"}, {"scale": "Macro", "a": "The community offers spaces for cultural and heritage expression", "b": "Local public events actively honor and celebrate cultural diversity"}], "offer": "I could share, teach, or host something from my cultural, artistic, or spiritual heritage", "need": "I need somewhere I can express my culture, faith, or heritage without hiding it"}, {"id": "1.5", "name": "Voice Receptivity & Action Vector", "addr": "c5→c1", "src": "Logical Power", "dst": "Metaphysical Recognition", "scales": [{"scale": "Micro", "a": "I feel confident that my opinion matters when I express concerns in groups", "b": "When I share my ideas or concerns in group settings, I feel genuinely listened to and taken seriously"}, {"scale": "Meso", "a": "Household governance allows my voice to influence domestic decisions", "b": "When I express thoughts or suggestions at home, I feel genuinely listened to and taken seriously"}, {"scale": "Macro", "a": "Local governing bodies offer mechanisms for residents to participate", "b": "When residents voice concerns to leadership, they feel genuinely listened to and taken seriously"}], "offer": "I could help someone else be heard, by listening, advocating, or speaking on their behalf", "need": "I need someone to listen to me, or to speak up for me"}, {"id": "1.6", "name": "Protection from Stigma", "addr": "c6→c1", "src": "Historical Morale", "dst": "Metaphysical Recognition", "scales": [{"scale": "Micro", "a": "I live free from internal self-stigma or shame", "b": "I am able to move through public spaces without experiencing devaluation"}, {"scale": "Meso", "a": "My domestic background is understood by my family", "b": "My personal history is respected without relational prejudice or dismissiveness"}, {"scale": "Macro", "a": "Legal frameworks prohibit discrimination against my group", "b": "Public institutions actively prevent systemic prejudice and institutional erasure"}], "offer": "I could stand up for someone facing stigma or prejudice, publicly or privately", "need": "I need backing against stigma, judgement, or prejudice I am facing"}, {"id": "1.7", "name": "Dignity & Emotional Validation", "addr": "c7→c1", "src": "Emotive Sustenance", "dst": "Metaphysical Recognition", "scales": [{"scale": "Micro", "a": "I regard myself as possessing inherent human worth", "b": "I treat myself with care and demand respectful treatment from others"}, {"scale": "Meso", "a": "Household members value each person's intrinsic worth", "b": "My family validates my feelings and treats my labor with active respect"}, {"scale": "Macro", "a": "Public institutions explicitly commit to dignified treatment of all citizens", "b": "Civil servants and service providers treat me with equal dignity and care"}], "offer": "I could offer steady respect and validation to someone who is not getting it elsewhere", "need": "I need to be treated with basic respect and dignity by the people around me"}]}, {"n": 2, "name": "Purpose", "domain": "Possible", "q": "What", "blurb": "Direction, options, mobility, pathways", "subs": [{"id": "2.1", "name": "Vocation & Sovereign Mission", "addr": "c1→c2", "src": "Metaphysical Recognition", "dst": "Possible Purpose", "scales": [{"scale": "Micro", "a": "I possess a clear sense of personal calling and core life mission", "b": "I actively structure my daily schedule around fulfilling my personal purpose"}, {"scale": "Meso", "a": "My household recognizes each member's unique life path", "b": "We actively support one another in pursuing individual vocational goals"}, {"scale": "Macro", "a": "Our community culture values diverse callings and life paths", "b": "Accessible institutions exist to help residents pursue their chosen vocation"}], "offer": "I could help someone else find or clarify a sense of direction and purpose", "need": "I need help finding a direction or sense of purpose"}, {"id": "2.2", "name": "Trajectory Horizon", "addr": "c2→c2", "src": "Possible Purpose", "dst": "Possible Purpose", "scales": [{"scale": "Micro", "a": "I can clearly envision achievable long-term goals for my life", "b": "I am making tangible, measurable progress toward my future aspirations"}, {"scale": "Meso", "a": "Our household shares a joint vision for our future", "b": "We actively collaborate on shared financial and life trajectory plans"}, {"scale": "Macro", "a": "The regional economy offers positive forward trajectories", "b": "Structural pathways enable upward social and economic mobility"}], "offer": "I could mentor someone, or open a door, contact, or opportunity for them", "need": "I need a mentor, a contact, or a door opened for me"}, {"id": "2.3", "name": "Material Mobility Foundations", "addr": "c3→c2", "src": "Physical Shelter", "dst": "Possible Purpose", "scales": [{"scale": "Micro", "a": "I possess the physical energy and stamina required for progress", "b": "I physically move and work toward my long-term goals daily"}, {"scale": "Meso", "a": "Our home environment provides space and resources for growth", "b": "We actively utilize domestic workspace and tools to advance our goals"}, {"scale": "Macro", "a": "Transportation and civic infrastructure exist in my area", "b": "Public transit and facilities reliably connect residents to economic opportunity"}], "offer": "I could lend, share, or provide material resources that help someone move forward", "need": "I need material resources to be able to move forward at all"}, {"id": "2.4", "name": "Applied Mastery & Skill Mobilization", "addr": "c4→c2", "src": "Lyrical Refreshment", "dst": "Possible Purpose", "scales": [{"scale": "Micro", "a": "I possess high personal skills and specialized capabilities", "b": "I have real daily outlets to apply my highest skills toward meaningful outcomes"}, {"scale": "Meso", "a": "Household members possess diverse talents and abilities", "b": "We organize domestic labor so everyone applies their strengths for collective well-being"}, {"scale": "Macro", "a": "The local community possesses rich human talent", "b": "The regional economy actively mobilizes local talent rather than wasting potential"}], "offer": "I could help someone see what their talent is actually for, and where it would matter", "need": "I need help finding where my skills and abilities would actually matter"}, {"id": "2.5", "name": "Socioeconomic Agency", "addr": "c5→c2", "src": "Logical Power", "dst": "Possible Purpose", "scales": [{"scale": "Micro", "a": "I possess the knowledge required to change my career or life situation", "b": "I actively execute decisions to improve my economic status"}, {"scale": "Meso", "a": "Our household understands financial management", "b": "We adapt our family plans effectively when economic conditions shift"}, {"scale": "Macro", "a": "Local institutions offer job retraining and educational resources", "b": "The job market provides fair, achievable pathways for career advancement"}], "offer": "I could help someone navigate financial, legal, or bureaucratic systems", "need": "I need help dealing with financial, legal, or bureaucratic systems"}, {"id": "2.6", "name": "Generational Legacy", "addr": "c6→c2", "src": "Historical Morale", "dst": "Possible Purpose", "scales": [{"scale": "Micro", "a": "I value building long-term security for the future", "b": "My current daily efforts build lasting security for my future self"}, {"scale": "Meso", "a": "Our family holds intergenerational memory and knowledge", "b": "We are actively building intergenerational assets and stability"}, {"scale": "Macro", "a": "Municipal planning accounts for long-term sustainability", "b": "Civic policies preserve local resources and economic vitality for coming generations"}], "offer": "I could pass on knowledge, craft, or history to a younger or newer person", "need": "I need someone to pass knowledge, craft, or history on to me"}, {"id": "2.7", "name": "Meaningful Work", "addr": "c7→c2", "src": "Emotive Sustenance", "dst": "Possible Purpose", "scales": [{"scale": "Micro", "a": "I seek work that aligns with my values and interests", "b": "My main daily occupation feels personally meaningful and emotionally fulfilling"}, {"scale": "Meso", "a": "Household members respect each other's career goals", "b": "Domestic duties are shared in a way that allows everyone time for meaningful work"}, {"scale": "Macro", "a": "Living-wage jobs exist in the regional market", "b": "Local employers provide working environments that treat employees with empathy and respect"}], "offer": "I could stand by someone through the cost of choosing work that matters over work that pays", "need": "I need support bearing the cost of doing work that matters"}]}, {"n": 3, "name": "Shelter", "domain": "Physical", "q": "Where", "blurb": "Safety, space, warmth, infrastructure", "subs": [{"id": "3.1", "name": "Spatial Privacy", "addr": "c1→c3", "src": "Metaphysical Recognition", "dst": "Physical Shelter", "scales": [{"scale": "Micro", "a": "I have access to a personal private space", "b": "I am able to maintain total privacy and personal sovereignty within my space"}, {"scale": "Meso", "a": "Our domestic space is structured to allow personal privacy", "b": "Family members respect individual personal boundaries at home"}, {"scale": "Macro", "a": "Legal rights protect private property and domestic spaces", "b": "Homes are effectively protected from unlawful search, intrusion, or surveillance"}], "offer": "I could offer someone quiet space, privacy, or a place to be undisturbed", "need": "I need privacy, quiet, or somewhere I can be undisturbed"}, {"id": "3.2", "name": "Housing Tenure Security", "addr": "c2→c3", "src": "Possible Purpose", "dst": "Physical Shelter", "scales": [{"scale": "Micro", "a": "I understand my rights as a tenant or owner", "b": "I feel confident I will not face sudden displacement or unhoused status"}, {"scale": "Meso", "a": "Our household manages housing expenses carefully", "b": "We live free from severe rent burden, overcrowding, or fear of eviction"}, {"scale": "Macro", "a": "Municipal housing policies promote affordability", "b": "Local legal systems protect residents' long-term land and housing tenure"}], "offer": "I could vouch for someone, act as a reference or guarantor, or help them keep a place they are at risk of losing", "need": "I need someone to vouch for me, or help me hold onto a place I am at risk of losing"}, {"id": "3.3", "name": "Thermoregulation & Containment", "addr": "c3→c3", "src": "Physical Shelter", "dst": "Physical Shelter", "scales": [{"scale": "Micro", "a": "I understand my body's thermal and rest requirements", "b": "I am able to maintain a safe body temperature and comfort throughout the day"}, {"scale": "Meso", "a": "Our dwelling contains heating, cooling, and insulation", "b": "Our home reliably protects us against extreme weather and seasonal changes"}, {"scale": "Macro", "a": "Public civil defense infrastructure exists", "b": "Civic systems protect residential zones from floods, heatwaves, and severe weather hazards"}], "offer": "I could help with heating, cooling, repairs, or making a space liveable", "need": "I need help with heating, cooling, or repairs to make my space liveable"}, {"id": "3.4", "name": "Aesthetic Comfort", "addr": "c4→c3", "src": "Lyrical Refreshment", "dst": "Physical Shelter", "scales": [{"scale": "Micro", "a": "I appreciate peaceful, harmonious physical surroundings", "b": "My immediate personal living space feels peaceful and aesthetically comforting"}, {"scale": "Meso", "a": "Our family values a clean, orderly living space", "b": "We maintain an uncluttered home organized for calm decompression"}, {"scale": "Macro", "a": "Urban planning incorporates green space and trees", "b": "Neighborhoods feature well-maintained parks, low noise, and clean air"}], "offer": "I could help make someone's space more comfortable, beautiful, or dignified", "need": "I need help making my living space decent and dignified"}, {"id": "3.5", "name": "Utility Infrastructure", "addr": "c5→c3", "src": "Logical Power", "dst": "Physical Shelter", "scales": [{"scale": "Micro", "a": "I know how to manage domestic utility systems safely", "b": "I have uninterrupted daily access to clean water, electricity, and sanitation"}, {"scale": "Meso", "a": "Our home is connected to power, plumbing, and waste grids", "b": "Essential domestic utilities operate consistently without failure"}, {"scale": "Macro", "a": "Public utilities manage municipal infrastructure", "b": "City crews rapidly repair utility outages, grid failures, and water line leaks"}], "offer": "I could help with power, water, internet, transport, or utility problems", "need": "I need help with power, water, internet, or transport"}, {"id": "3.6", "name": "Environmental Health", "addr": "c6→c3", "src": "Historical Morale", "dst": "Physical Shelter", "scales": [{"scale": "Micro", "a": "I am aware of environmental toxic risks", "b": "My daily living environment is free from hazardous chemicals, lead, or pollution"}, {"scale": "Meso", "a": "Our family inspects our home for hidden structural hazards", "b": "Our dwelling is completely free from mold, lead paint, radon, or asbestos"}, {"scale": "Macro", "a": "Environmental regulations govern industrial waste", "b": "Local authorities prevent industrial dumping and toxic zoning near housing"}], "offer": "I could contribute to cleaning, greening, or improving our shared environment", "need": "I need something done about the physical condition of my surroundings"}, {"id": "3.7", "name": "Sanctuary Safety", "addr": "c7→c3", "src": "Emotive Sustenance", "dst": "Physical Shelter", "scales": [{"scale": "Micro", "a": "I know how to secure my personal safety", "b": "I feel completely safe from physical harm or violence in my residence"}, {"scale": "Meso", "a": "Our residence features secure locks and windows", "b": "Our domestic atmosphere is physically safe and peaceful"}, {"scale": "Macro", "a": "Emergency services operate in our municipality", "b": "Neighborhood streets are well-lit and protected by reliable emergency response"}], "offer": "I could offer someone a place of refuge when their own is not safe", "need": "I need somewhere safe to go when where I am is not safe"}]}, {"n": 4, "name": "Refreshment", "domain": "Lyrical", "q": "Why", "blurb": "Rest, joy, play, renewal", "subs": [{"id": "4.1", "name": "Existential Stillness", "addr": "c1→c4", "src": "Metaphysical Recognition", "dst": "Lyrical Refreshment", "scales": [{"scale": "Micro", "a": "I possess the capacity for spiritual reflection and meditation", "b": "I regularly experience deep inner stillness and spiritual renewal"}, {"scale": "Meso", "a": "Our home layout permits quiet reflection", "b": "Family members actively respect quiet hours for personal reflection"}, {"scale": "Macro", "a": "Public sanctuaries, parks, and places of worship exist", "b": "Our community offers accessible, quiet sanctuaries for contemplation"}], "offer": "I could sit with someone in stillness without needing to fix them", "need": "I need someone to sit with me without trying to fix me"}, {"id": "4.2", "name": "Time Sovereignty", "addr": "c2→c4", "src": "Possible Purpose", "dst": "Lyrical Refreshment", "scales": [{"scale": "Micro", "a": "I hold personal boundary control over my schedule", "b": "I have sufficient personal downtime for hobbies and unhurried rest"}, {"scale": "Meso", "a": "Our household plans daily chores efficiently", "b": "We respect each other's downtime and avoid overburdening any member"}, {"scale": "Macro", "a": "Standard working-hour and labor laws exist", "b": "Paid leave and work-hour limits protect community members from systemic burnout"}], "offer": "I could take something off someone's plate so they get time back", "need": "I need something taken off my plate so I get some time back"}, {"id": "4.3", "name": "Somatic Recovery & Sleep", "addr": "c3→c4", "src": "Physical Shelter", "dst": "Lyrical Refreshment", "scales": [{"scale": "Micro", "a": "I recognize when my body requires physical recovery", "b": "I regularly receive adequate uninterrupted sleep and physical rest"}, {"scale": "Meso", "a": "Our home provides comfortable bedding and quiet space", "b": "Our household maintains dark, restful conditions for sleep"}, {"scale": "Macro", "a": "Local noise pollution ordinances exist", "b": "Municipal regulations effectively protect sleep quality in residential zones"}], "offer": "I could give someone a quiet, dark, comfortable place to actually sleep", "need": "I need somewhere quiet and comfortable enough to actually sleep"}, {"id": "4.4", "name": "Aesthetic Joy & Play", "addr": "c4→c4", "src": "Lyrical Refreshment", "dst": "Lyrical Refreshment", "scales": [{"scale": "Micro", "a": "I value creative expression, humor, and playfulness", "b": "I regularly experience art, play, and spontaneous joy in daily life"}, {"scale": "Meso", "a": "Our family values shared recreational fun", "b": "We regularly engage in family outings, games, festive meals, and play"}, {"scale": "Macro", "a": "Free public parks and cultural facilities exist", "b": "The city actively hosts accessible cultural festivals, sports, and arts events"}], "offer": "I could bring play, art, music, or joy to others", "need": "I need play, art, music, or joy back in my life"}, {"id": "4.5", "name": "Boundary Control", "addr": "c5→c4", "src": "Logical Power", "dst": "Lyrical Refreshment", "scales": [{"scale": "Micro", "a": "I know how to establish personal boundaries with work", "b": "I successfully enforce firm boundaries between work and rest"}, {"scale": "Meso", "a": "Household members understand chore equity", "b": "Domestic responsibilities are managed without creating chronic stress"}, {"scale": "Macro", "a": "Labor protections exist regarding working hours", "b": "Employers are prevented from requiring unpaid overtime or coercive contact"}], "offer": "I could help someone hold a boundary they are struggling to hold alone", "need": "I need help holding a boundary I cannot hold on my own"}, {"id": "4.6", "name": "Heritage Rituals", "addr": "c6→c4", "src": "Historical Morale", "dst": "Lyrical Refreshment", "scales": [{"scale": "Micro", "a": "I understand my cultural and spiritual heritage traditions", "b": "I participate in traditional celebrations that recharge my spirit"}, {"scale": "Meso", "a": "Our family holds traditional rituals and stories", "b": "We actively maintain family rituals, holiday meals, and shared traditions"}, {"scale": "Macro", "a": "Civic institutions recognize historical heritage sites", "b": "Local authorities support community cultural celebrations and preservation"}], "offer": "I could organise, host, or carry a ritual, festival, or tradition for others", "need": "I need connection to ritual, tradition, or celebration"}, {"id": "4.7", "name": "Emotional Decompression", "addr": "c7→c4", "src": "Emotive Sustenance", "dst": "Lyrical Refreshment", "scales": [{"scale": "Micro", "a": "I am aware of healthy emotional coping tools", "b": "I actively use healthy outlets to release stress, anxiety, and mental fatigue"}, {"scale": "Meso", "a": "Our household recognizes the importance of emotional health", "b": "The domestic climate allows open emotional expression without hostility"}, {"scale": "Macro", "a": "Community gathering places exist", "b": "Public spaces foster social warmth, mutual belonging, and shared relaxation"}], "offer": "I could be someone others decompress to without judgement", "need": "I need somewhere to offload without being judged for it"}]}, {"n": 5, "name": "Power", "domain": "Logical", "q": "How", "blurb": "Agency, governance, say over your own life", "subs": [{"id": "5.1", "name": "Active Capacity to Fulfill Needs", "addr": "c1→c5", "src": "Metaphysical Recognition", "dst": "Logical Power", "scales": [{"scale": "Micro", "a": "I possess the knowledge, skills, and agency required to meet my 7 core survival needs", "b": "I actively exercise my capacity to independently fulfill all 7 survival needs daily"}, {"scale": "Meso", "a": "Our household holds the collective capacity to meet all survival requirements", "b": "We actively deploy our domestic resources to satisfy every member's needs"}, {"scale": "Macro", "a": "Public systems are designed to foster citizen self-reliance", "b": "Community infrastructure actively empowers residents to sustain themselves"}], "offer": "I could act on someone's behalf when they lack the capacity to act for themselves", "need": "I need someone to act on my behalf because I cannot right now"}, {"id": "5.2", "name": "Option Agency & Choice", "addr": "c2→c5", "src": "Possible Purpose", "dst": "Logical Power", "scales": [{"scale": "Micro", "a": "I hold personal financial and social autonomy", "b": "I am able to decline unsafe, illegal, or exploitative situations"}, {"scale": "Meso", "a": "Our household holds financial emergency reserves", "b": "We have the leverage to make major life adaptations when conditions demand"}, {"scale": "Macro", "a": "Consumer protection laws exist", "b": "Economic policy prevents monopolies and maintains fair consumer choices"}], "offer": "I could help someone see and weigh options they cannot currently see", "need": "I need help seeing what options I actually have"}, {"id": "5.3", "name": "Command over Asset Base", "addr": "c3→c5", "src": "Physical Shelter", "dst": "Logical Power", "scales": [{"scale": "Micro", "a": "I possess personal income or property baseline", "b": "I effectively manage my material assets to secure my daily needs"}, {"scale": "Meso", "a": "Our family holds home equity or property stability", "b": "We manage domestic finances free from predatory debt traps"}, {"scale": "Macro", "a": "Municipal participatory budgeting processes exist", "b": "Community residents directly influence local capital and resource allocation"}], "offer": "I could share access to tools, equipment, vehicles, or assets I control", "need": "I need access to tools, equipment, or transport I do not own"}, {"id": "5.4", "name": "Creative Expression Autonomy", "addr": "c4→c5", "src": "Lyrical Refreshment", "dst": "Logical Power", "scales": [{"scale": "Micro", "a": "I hold independent personal viewpoints and ideas", "b": "I feel free to express my opinions and ideas publicly without fear of penalty"}, {"scale": "Meso", "a": "Household atmosphere encourages open discussion", "b": "Family members actively express independent viewpoints at home"}, {"scale": "Macro", "a": "Constitutional rights protect free speech and press", "b": "Local authorities protect public artistic and political expression"}], "offer": "I could give others a platform, audience, or means to express themselves", "need": "I need a platform or an outlet to express myself"}, {"id": "5.5", "name": "Democratic Franchise", "addr": "c5→c5", "src": "Logical Power", "dst": "Logical Power", "scales": [{"scale": "Micro", "a": "I understand my legal rights and civic duties", "b": "I actively advocate for myself in legal, formal, or official settings"}, {"scale": "Meso", "a": "Domestic decision-making rules are clear", "b": "Major household decisions are reached through fair, consensus-based discussion"}, {"scale": "Macro", "a": "Local voting processes and legal council exist", "b": "Elections are secure, voting is accessible, and legal counsel is affordable"}], "offer": "I could help someone enrol, vote, attend, or participate in civic processes", "need": "I need help participating in civic or democratic processes"}, {"id": "5.6", "name": "Institutional Transparency", "addr": "c6→c5", "src": "Historical Morale", "dst": "Logical Power", "scales": [{"scale": "Micro", "a": "I know my rights under open information laws", "b": "I am able to easily obtain truthful information from municipal offices"}, {"scale": "Meso", "a": "Household members agree on financial openness", "b": "Domestic financial records and assets are fully transparent to adults"}, {"scale": "Macro", "a": "Open government and sunshine laws exist", "b": "City budgets, council minutes, and contracts are open to public audit"}], "offer": "I could help someone find the record, what was decided before, by whom, and what precedent already exists", "need": "I need to find the record of what was actually decided, and by whom"}, {"id": "5.7", "name": "Collective Advocacy", "addr": "c7→c5", "src": "Emotive Sustenance", "dst": "Logical Power", "scales": [{"scale": "Micro", "a": "I recognize the power of collective action", "b": "I actively participate in a union, tenant group, or civic association"}, {"scale": "Meso", "a": "Our family maintains neighborly relationships", "b": "We actively coordinate with neighbors to resolve shared community issues"}, {"scale": "Macro", "a": "Grassroots community organizations exist", "b": "Community groups possess formal channels to directly influence city policy"}], "offer": "I could organise, campaign, or advocate alongside others for a shared cause", "need": "I need others to organise or advocate alongside me"}]}, {"n": 6, "name": "Morale", "domain": "Historical", "q": "Cause", "blurb": "Conviction, truth, fortitude, resilience", "subs": [{"id": "6.1", "name": "Conviction & Drive", "addr": "c1→c6", "src": "Metaphysical Recognition", "dst": "Historical Morale", "scales": [{"scale": "Micro", "a": "I possess deeply held moral convictions and clear principles", "b": "I actively stand up for and act upon my convictions despite resistance"}, {"scale": "Meso", "a": "Our household shares a strong internal spirit and common values", "b": "We actively encourage and uplift one another's spirit during hardship"}, {"scale": "Macro", "a": "Civic culture promotes shared hope and integrity", "b": "Public institutions protect whistleblowers and individuals standing for truth"}], "offer": "I could help someone recover their conviction when they are ready to give up", "need": "I need help recovering my conviction and will to keep going"}, {"id": "6.2", "name": "Endurance & Protection from Moral Injury", "addr": "c2→c6", "src": "Possible Purpose", "dst": "Historical Morale", "scales": [{"scale": "Micro", "a": "I am motivated and energized by my main occupation", "b": "I am able to perform my daily work without suffering moral injury or spirit exhaustion"}, {"scale": "Meso", "a": "Family members maintain mutual hope for the future", "b": "We actively help each other sustain enthusiasm during economic difficulties"}, {"scale": "Macro", "a": "Workplace standards promote human dignity", "b": "Labor laws actively protect workers' psychological stamina and moral integrity"}], "offer": "I could stand with someone through a long fight without walking away", "need": "I need someone to stand with me through something long and hard"}, {"id": "6.3", "name": "Structural Fortitude & Fair Restitution", "addr": "c3→c6", "src": "Physical Shelter", "dst": "Historical Morale", "scales": [{"scale": "Micro", "a": "I value my personal property and labor contributions", "b": "I receive fair recognition and restitution for my physical labor"}, {"scale": "Meso", "a": "Our home maintains a culture of mutual honor", "b": "Household members share chores and duties fairly and consistently"}, {"scale": "Macro", "a": "Local government acknowledges historical civic harms", "b": "Local institutions make tangible restitution for past environmental or structural harms"}], "offer": "I could cover the material side of someone's fight, fees, fuel, a lift to the hearing, somewhere to keep the paperwork", "need": "I need the material means to pursue what I am owed, costs, transport, somewhere to keep records"}, {"id": "6.4", "name": "Inspiring Culture & Truth", "addr": "c4→c6", "src": "Lyrical Refreshment", "dst": "Historical Morale", "scales": [{"scale": "Micro", "a": "I know my personal life history and authentic truth", "b": "I express my personal story openly without fear or shame"}, {"scale": "Meso", "a": "Our family values truth and open communication", "b": "We address domestic mistakes honestly and reconcile without deception"}, {"scale": "Macro", "a": "Local cultural institutions archive regional history", "b": "Educational and cultural bodies tell historical truths accurately without erasure"}], "offer": "I could tell, record, or preserve truths and stories that others need to hear", "need": "I need the truth of what happened acknowledged and recorded"}, {"id": "6.5", "name": "Institutional Faith & Fair Rules", "addr": "c5→c6", "src": "Logical Power", "dst": "Historical Morale", "scales": [{"scale": "Micro", "a": "I believe in doing the right thing and keeping ethical standards", "b": "My experience confirms that acting with integrity leads to fair outcomes"}, {"scale": "Meso", "a": "Household members make commitments to each other", "b": "Domestic promises are kept consistently, building deep trust at home"}, {"scale": "Macro", "a": "Judicial and administrative bodies are established to uphold justice", "b": "Public legal systems operate with integrity, sustaining civic faith"}], "offer": "I could help someone run a complaint or appeal properly, step by step, so it does not collapse on a technicality", "need": "I need help running a complaint or appeal properly so it does not fail on a technicality"}, {"id": "6.6", "name": "Ancestral Resilience", "addr": "c6→c6", "src": "Historical Morale", "dst": "Historical Morale", "scales": [{"scale": "Micro", "a": "I draw strength from my past experiences and character", "b": "I successfully overcome current hardships using my personal resilience"}, {"scale": "Meso", "a": "Our family preserves stories of past perseverance", "b": "Our family heritage serves as an active source of strength in hard times"}, {"scale": "Macro", "a": "Our community honors its history of overcoming adversity", "b": "Shared historical pride actively fuels collective perseverance against challenges"}], "offer": "I could pass on resilience, history, or hard-won lessons from what I have survived", "need": "I need to hear from people who have survived what I am facing"}, {"id": "6.7", "name": "Civic Empathy & Solidarity", "addr": "c7→c6", "src": "Emotive Sustenance", "dst": "Historical Morale", "scales": [{"scale": "Micro", "a": "I feel a strong moral duty and empathy toward others", "b": "I actively offer help and care to struggling community members"}, {"scale": "Meso", "a": "Household members value community service", "b": "We raise youth to demonstrate character, hope, and civic responsibility"}, {"scale": "Macro", "a": "Local civic organizations exist to build solidarity", "b": "Community groups actively foster social cohesion, high morale, and mutual care"}], "offer": "I could show up in solidarity for people whose struggle is not my own", "need": "I need people to show up in solidarity with me"}]}, {"n": 7, "name": "Sustenance", "domain": "Emotive", "q": "Effect", "blurb": "Care, food, calm, social cohesion", "subs": [{"id": "7.1", "name": "Existential Belonging", "addr": "c1→c7", "src": "Metaphysical Recognition", "dst": "Emotive Sustenance", "scales": [{"scale": "Micro", "a": "I hold a comforting sense of inherent worth and existential belonging", "b": "I live daily without feeling isolated, disposable, or unwanted"}, {"scale": "Meso", "a": "Our home acts as an unconditional emotional refuge", "b": "Family members provide immediate emotional support during personal crisis"}, {"scale": "Macro", "a": "Community programs exist to combat social isolation", "b": "Local initiatives actively ensure no demographic group is abandoned or ignored"}], "offer": "I could make sure someone who is isolated is included and not forgotten", "need": "I need to be included and not left out or forgotten"}, {"id": "7.2", "name": "Intergenerational Care", "addr": "c2→c7", "src": "Possible Purpose", "dst": "Emotive Sustenance", "scales": [{"scale": "Micro", "a": "I understand my long-term emotional and physical health needs", "b": "I am confident my care and health needs will be met as I age"}, {"scale": "Meso", "a": "Household members recognize dependent needs", "b": "Dependent members (elders, youth) receive consistent care and attention"}, {"scale": "Macro", "a": "Senior centers, youth hubs, and care systems are established", "b": "Public care networks are accessible, affordable, and well-supported"}], "offer": "I could care for elders, children, or dependents who are not my own", "need": "I need care for myself, or for someone who depends on me"}, {"id": "7.3", "name": "Nutritional Security", "addr": "c3→c7", "src": "Physical Shelter", "dst": "Emotive Sustenance", "scales": [{"scale": "Micro", "a": "I understand personal nutritional requirements", "b": "I consume healthy, nutritious, and culturally appropriate food daily"}, {"scale": "Meso", "a": "Our household manages a food budget", "b": "We can afford fresh, balanced groceries without sacrificing rent or utilities"}, {"scale": "Macro", "a": "Food infrastructure exists in our region", "b": "Affordable grocery stores and fresh food markets are accessible in all neighborhoods"}], "offer": "I could cook, grow, share, or distribute food to people who need it", "need": "I need food, or help affording and accessing it"}, {"id": "7.4", "name": "Relational Warmth", "addr": "c4→c7", "src": "Lyrical Refreshment", "dst": "Emotive Sustenance", "scales": [{"scale": "Micro", "a": "I value warm, supportive friendships", "b": "I regularly experience affectionate, warm connections with loved ones"}, {"scale": "Meso", "a": "Household members value emotional connection", "b": "Family members regularly share warmth, laughter, and affection at home"}, {"scale": "Macro", "a": "Public social clubs and event spaces exist", "b": "Community gatherings effectively foster widespread civic warmth and friendship"}], "offer": "I could offer genuine warmth and friendship to someone who is short of it", "need": "I need genuine warmth and friendship"}, {"id": "7.5", "name": "Crisis Care Response", "addr": "c5→c7", "src": "Logical Power", "dst": "Emotive Sustenance", "scales": [{"scale": "Micro", "a": "I recognize signs of emotional distress in myself", "b": "I can easily access compassionate mental health care when in distress"}, {"scale": "Meso", "a": "Household members know conflict de-escalation skills", "b": "We resolve domestic arguments through structured, caring communication"}, {"scale": "Macro", "a": "Community crisis response services exist", "b": "Emergency response dispatches mental health professionals rather than armed force for health crises"}], "offer": "I could be a steady presence for someone in acute emotional crisis", "need": "I need a steady presence during emotional crisis"}, {"id": "7.6", "name": "Emergency Mutual Aid", "addr": "c6→c7", "src": "Historical Morale", "dst": "Emotive Sustenance", "scales": [{"scale": "Micro", "a": "I maintain a contact list of trusted friends", "b": "I know exactly who to call for immediate help during an acute personal crisis"}, {"scale": "Meso", "a": "Our family knows our immediate neighbors", "b": "We rely on neighboring households for emergency support or childcare"}, {"scale": "Macro", "a": "Local mutual aid groups and food pantries exist", "b": "Mutual aid networks actively provide emergency food and resources to families in need"}], "offer": "I could be an emergency contact or first responder for a neighbour in trouble", "need": "I need someone I can call in an emergency"}, {"id": "7.7", "name": "Nervous System Peace", "addr": "c7→c7", "src": "Emotive Sustenance", "dst": "Emotive Sustenance", "scales": [{"scale": "Micro", "a": "I know grounding and relaxation techniques", "b": "My body feels calm and peaceful rather than stuck in constant anxiety"}, {"scale": "Meso", "a": "Our family values a calm living environment", "b": "Our household atmosphere is peaceful, calm, and free from hostility"}, {"scale": "Macro", "a": "General public order exists in our neighborhood", "b": "Local residents trust one another, collaborate, and share goodwill"}], "offer": "I could help create calm, de-escalate conflict, or steady a tense situation", "need": "I need calm, or help de-escalating something in my life"}]}]}</script>
+<script>
+const DATA = JSON.parse(document.getElementById('survey-data').textContent);
+const LOAD_TIME = Date.now();
+
+// --- Supabase: fill these two in after creating your project. Both are
+// public by design (the anon key ships in this file); RLS in
+// supabase_schema.sql is what actually protects the data. ---
+const SUPABASE_URL = 'YOUR_SUPABASE_URL';
+const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+let supa = null;
+try {
+  if (SUPABASE_URL !== 'YOUR_SUPABASE_URL' && window.supabase) {
+    supa = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  }
+} catch (e) { console.error('Supabase client init failed', e); }
+
+async function submitToSupabase(payload) {
+  // Honeypot: a hidden field a real person never sees or fills. Anything in
+  // it means a bot filled every input on the page indiscriminately.
+  const hp = document.getElementById('hp_field');
+  if (hp && hp.value) return { ok: false, error: 'Submission blocked.' };
+  // Timing heuristic: this instrument cannot be genuinely completed in
+  // under 20 seconds. Below that, reject client-side before it ever
+  // reaches Supabase.
+  if (Date.now() - LOAD_TIME < 20000) {
+    return { ok: false, error: 'That was fast — give it a moment and try again.' };
+  }
+  if (!supa) return { ok: false, error: 'Supabase is not configured yet.' };
+  const { data: resp, error: e1 } = await supa.from('responses').insert({ raw: payload }).select('id').single();
+  if (e1) return { ok: false, error: e1.message };
+  const responseId = resp.id;
+
+  const answerRows = [], blockerRows = [], metaRows = [], extraRows = [], rankRows = [];
+  for (const [planeKey, plane] of Object.entries(payload.planes || {})) {
+    const planeNum = Number(planeKey);
+    metaRows.push({
+      response_id: responseId, plane: planeNum,
+      open_response: plane.open_response ?? null,
+      consent_support: !!(plane.consent && plane.consent.follow_up),
+      consent_contribute: !!(plane.consent && plane.consent.contribute),
+    });
+    for (const [subId, sub] of Object.entries(plane.sub_indicators || {})) {
+      for (const [scale, pair] of Object.entries(sub.scales || {})) {
+        for (const vector of ['A', 'B']) {
+          const val = pair[vector];
+          if (val === null || val === undefined) continue;
+          answerRows.push({ response_id: responseId, plane: planeNum, sub_id: subId, scale, vector, value: val, last_note: pair[`${vector}_last`] ?? null });
+        }
+      }
+      for (const vector of ['Ca', 'Cb', 'Da', 'Db']) {
+        const val = sub.flags ? sub.flags[vector] : undefined;
+        if (val === null || val === undefined) continue;
+        answerRows.push({ response_id: responseId, plane: planeNum, sub_id: subId, scale: null, vector, value: val, last_note: null });
+      }
+      if (sub.flags && sub.flags.Cb_type) blockerRows.push({ response_id: responseId, sub_id: subId, side: 'give', tag: sub.flags.Cb_type });
+      if (sub.flags && sub.flags.Db_type) blockerRows.push({ response_id: responseId, sub_id: subId, side: 'receive', tag: sub.flags.Db_type });
+    }
+  }
+  for (const [itemId, value] of Object.entries(payload.extras || {})) {
+    extraRows.push({ response_id: responseId, item_id: itemId, value: String(value) });
+  }
+  for (const kind of ['self', 'community']) {
+    const rankMap = (payload.ranking && payload.ranking[kind]) || {};
+    for (const [planeName, rank] of Object.entries(rankMap)) {
+      const n = Number(rank);
+      if (Number.isInteger(n) && n >= 1 && n <= 7) rankRows.push({ response_id: responseId, kind, plane_name: planeName, rank: n });
+    }
+  }
+
+  const inserts = [
+    ['answers', answerRows], ['blocker_tags', blockerRows], ['module_meta', metaRows],
+    ['extras', extraRows], ['rankings', rankRows],
+  ];
+  for (const [table, rows] of inserts) {
+    if (!rows.length) continue;
+    const { error } = await supa.from(table).insert(rows);
+    if (error) return { ok: false, error: `${table}: ${error.message}` };
+  }
+  return { ok: true, id: responseId };
+}
+const HUES = {1:'var(--p1)',2:'var(--p2)',3:'var(--p3)',4:'var(--p4)',5:'var(--p5)',6:'var(--p6)',7:'var(--p7)'};
+const CORE_PER_PLANE = 7*3*2;
+
+const GIVE_TAGS = ["no time","money/cost","transport","health/energy","care duties","skills/confidence","permission/legal","no one to give it to"];
+const RECV_TAGS = ["nobody to ask","pride/shame","money/cost","transport","no service exists","tried, was refused","didn't know it existed","eligibility/paperwork"];
+
+/* ---------- storage: window.storage -> localStorage -> memory ---------- */
+const KEY='cws:v1';
+let mem=null;
+const Store={
+  async get(){
+    try{ if(window.storage&&window.storage.get){const r=await window.storage.get(KEY);return r&&r.value?JSON.parse(r.value):{};} }catch(e){}
+    try{ const r=localStorage.getItem(KEY); return r?JSON.parse(r):{}; }catch(e){}
+    return mem||{};
+  },
+  async set(o){
+    const s=JSON.stringify(o);
+    try{ if(window.storage&&window.storage.set){await window.storage.set(KEY,s);return true;} }catch(e){}
+    try{ localStorage.setItem(KEY,s); return true; }catch(e){}
+    mem=o; return true;
+  }
+};
+let STATE={};
+let saveTimer=null;
+function queueSave(){ clearTimeout(saveTimer); saveTimer=setTimeout(async()=>{ await Store.set(STATE); toast('Saved'); renderMini(); },350); }
+function toast(m){ const t=document.getElementById('toast'); t.textContent=m; t.classList.add('on'); setTimeout(()=>t.classList.remove('on'),1300); }
+
+/* ---------- progress ---------- */
+function planeAnswered(n){
+  const p=DATA.planes.find(x=>x.n===n); let c=0;
+  p.subs.forEach(s=>{ ['Micro','Meso','Macro'].forEach(sc=>{ ['A','B'].forEach(v=>{ if(STATE[`${s.id}|${sc}|${v}`]) c++; }); }); });
+  return c;
+}
+function planePct(n){ return Math.round(planeAnswered(n)/CORE_PER_PLANE*100); }
+function flagCount(n){
+  const p=DATA.planes.find(x=>x.n===n); let c=0;
+  p.subs.forEach(s=>{ ['Ca','Cb','Da','Db'].forEach(v=>{ if(STATE[`${s.id}|flag|${v}`]) c++; }); });
+  return c;
+}
+
+/* ---------- mini nav ---------- */
+function renderMini(){
+  const cur=(location.hash.match(/^#\/plane\/(\d)/)||[])[1];
+  document.getElementById('mini').innerHTML=DATA.planes.map(p=>{
+    const pc=planePct(p.n);
+    return `<a href="#/plane/${p.n}" title="${p.name} — ${pc}% answered"${cur==String(p.n)?' aria-current="page"':''}>
+      <i style="background:${HUES[p.n]};width:${pc}%"></i><b>${p.n}</b></a>`;
+  }).join('');
+}
+
+/* ---------- views ---------- */
+function esc(s){ return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+
+function subCounts(id){
+  const done=['Micro','Meso','Macro'].reduce((a,sc)=>a+(STATE[`${id}|${sc}|A`]?1:0)+(STATE[`${id}|${sc}|B`]?1:0),0);
+  const fl=['Ca','Cb','Da','Db'].filter(v=>STATE[`${id}|flag|${v}`]).length;
+  return {done,fl};
+}
+function tocItems(p){
+  return p.subs.map(s=>{
+    const {done,fl}=subCounts(s.id);
+    const state=done===6?'done':done>0?'part':'none';
+    return `<li><a class="t" href="#" data-jump="${s.id}" data-state="${state}">
+      <span class="tn">${s.id}</span><span class="tt">${esc(s.name)}</span>
+      <span class="tc">${done}/6${fl?'+'+fl:''}</span></a></li>`;
+  }).join('');
+}
+function tocHTML(p){
+  const pc=planePct(p.n), prev=p.n>1?p.n-1:null, next=p.n<7?p.n+1:null;
+  return `<aside class="toc" style="--pl:${HUES[p.n]}" aria-label="Questions in this part">
+    <h2>${esc(p.name)} — ${pc}%</h2>
+    <div class="meter"><i style="width:${pc}%"></i></div>
+    <p class="pcline">${planeAnswered(p.n)} of ${CORE_PER_PLANE} answered</p>
+    <ol>${tocItems(p)}</ol>
+    <div class="jump">
+      <a href="#/hub">↑ All seven parts</a>
+      ${prev?`<a href="#/plane/${prev}">← ${esc(DATA.planes[prev-1].name)}</a>`:''}
+      ${next?`<a href="#/plane/${next}">→ ${esc(DATA.planes[next-1].name)}</a>`:`<a href="#/extras">→ Who you can lean on</a>`}
+      <a href="#" data-openall="1">Close all questions</a>
+    </div>
+  </aside>`;
+}
+function tocMobHTML(p){
+  return `<details class="tocmob"><summary><span>Jump to a question</span><span>${planePct(p.n)}%</span></summary>
+    <div class="inner"><ol>${tocItems(p)}</ol></div></details>`;
+}
+function refreshToc(){
+  const p=DATA.planes.find(x=>x.n===currentPlane); if(!p) return;
+  document.querySelectorAll('.toc ol, .tocmob ol').forEach(o=>o.innerHTML=tocItems(p));
+  const pc=planePct(p.n);
+  const h=document.querySelector('.toc h2'); if(h) h.textContent=`${p.name} — ${pc}%`;
+  const m=document.querySelector('.toc .meter i'); if(m) m.style.width=pc+'%';
+  const l=document.querySelector('.toc .pcline'); if(l) l.textContent=`${planeAnswered(p.n)} of ${CORE_PER_PLANE} answered`;
+  const ms=document.querySelector('.tocmob>summary span:last-child'); if(ms) ms.textContent=pc+'%';
+  markActive();
+}
+let currentPlane=null;
+function markActive(){
+  const subs=[...document.querySelectorAll('details.sub')];
+  if(!subs.length) return;
+  let act=subs[0].id.slice(1);
+  for(const d of subs){ if(d.getBoundingClientRect().top<=140) act=d.id.slice(1); }
+  document.querySelectorAll('.toc a.t').forEach(a=>{
+    if(a.dataset.jump===act) a.setAttribute('aria-current','true'); else a.removeAttribute('aria-current');
+  });
+}
+
+function viewHub(){
+  const total=DATA.planes.reduce((a,p)=>a+planeAnswered(p.n),0);
+  const pct=Math.round(total/(CORE_PER_PLANE*7)*100);
+  const started=total>0;
+  return `
+  <section class="hero">
+    <h1>What this place has,<br>and what it needs.</h1>
+    <p class="lede">${started?`You're ${pct}% of the way through. Pick up wherever you left off.`:`Seven parts. Answer any of them, in any order, in as many sittings as you like.`}</p>
+    <p>Nothing is compulsory. Every question can be left blank, and a blank is never read as "fine" — it's just left out. Your answers save to this device as you go.</p>
+  </section>
+
+  <nav class="bands" aria-label="The seven requirements">
+    ${DATA.planes.map(p=>{
+      const pc=planePct(p.n), fl=flagCount(p.n);
+      return `<a class="band" href="#/plane/${p.n}" style="--h:${HUES[p.n]}">
+        <span class="fill" style="background:${HUES[p.n]};width:${pc}%"></span>
+        <span style="position:absolute;left:0;top:0;bottom:0;width:4px;background:${HUES[p.n]}"></span>
+        <span class="row">
+          <span class="num">${p.n} / 7</span>
+          <span class="nm">${esc(p.name)}</span>
+          <span class="bl">${esc(p.blurb)}</span>
+          <span class="pc">${pc?pc+'%':'—'}${fl?' · '+fl+' flags':''}</span>
+        </span></a>`;
+    }).join('')}
+  </nav>
+
+  <div class="hubgrid">
+    <a class="tile" href="#/extras">
+      <h3>Who you can lean on</h3>
+      <p>Six short questions about the people around you, and one ranking of what matters most.</p>
+      <span class="st">${STATE['x|8.1']||STATE['x|rank|self']?'STARTED':'NOT STARTED'}</span>
+    </a>
+    <a class="tile" href="#/review">
+      <h3>Review and hand in</h3>
+      <p>See everything you've answered, change anything, then export it.</p>
+      <span class="st">${total} ANSWERS RECORDED</span>
+    </a>
+  </div>
+
+  <footer class="foot">
+    <p>Each part asks the same three things at three scales: you, your household, and the wider community. Answers stay on this device until you export them.</p>
+  </footer>`;
+}
+
+function segHTML(key,val,labels){
+  return `<div class="seg" role="group">
+    ${[1,2,3,4,5].map(i=>`
+      <input type="radio" name="${key}" id="${key}~${i}" value="${i}"${STATE[key]==String(i)?' checked':''}>
+      <label for="${key}~${i}" title="${labels[i-1]}">${i}</label>`).join('')}
+    <div class="lastwrap"><span>last</span>
+      <input type="text" data-last="${key}" value="${esc(STATE[key+'|last']||'')}" placeholder="optional" aria-label="When this was last different">
+    </div>
+    <button type="button" class="clr" data-clear="${key}">clear</button>
+  </div>`;
+}
+const AB_L=['Non-existent','Unstable','Adequate','Secure','Flourishing'];
+const CA_L=['Not at all','Rarely','Occasionally','Readily','Freely and often'];
+const DA_L=['Not needed','Would be nice','Would help','Needed','Urgent'];
+const BL_L=['Nothing stops me','Minor friction','Real obstacle','Mostly blocked','Completely blocked'];
+
+function chipsHTML(key,tags){
+  return `<div class="chips">
+    ${tags.map((t,i)=>`<input type="radio" name="${key}" id="${key}~${i}" value="${esc(t)}"${STATE[key]===t?' checked':''}><label for="${key}~${i}">${esc(t)}</label>`).join('')}
+    <input type="text" data-other="${key}" value="${esc(STATE[key+'|other']||'')}" placeholder="something else…" aria-label="Other reason" style="font-family:var(--mono);font-size:11.5px;padding:5px 9px;border:1px solid var(--rule);border-radius:99px;background:var(--paper);color:var(--ink);width:150px">
+  </div>`;
+}
+
+function subHTML(s){
+  const done=['Micro','Meso','Macro'].reduce((a,sc)=>a+(STATE[`${s.id}|${sc}|A`]?1:0)+(STATE[`${s.id}|${sc}|B`]?1:0),0);
+  const fl=['Ca','Cb','Da','Db'].filter(v=>STATE[`${s.id}|flag|${v}`]).length;
+  return `<details class="sub" id="s${s.id}" open>
+    <summary>
+      <span class="sid">${s.id}</span>
+      <span class="snm">${esc(s.name)}</span>
+      <span class="sdot">${done}/6${fl?' +'+fl:''}</span>
+      <span class="saddr">${esc(s.src)} &rarr; ${esc(s.dst)} &nbsp;·&nbsp; ${esc(s.addr)}</span>
+    </summary>
+    <div class="subbody">
+      ${s.scales.map(sc=>`
+        <div class="scale">
+          <div class="slabel">${sc.scale==='Micro'?'You':sc.scale==='Meso'?'Your household':'The wider community'}</div>
+          <p class="q"><span class="tag">A</span>${esc(sc.a)}</p>
+          ${segHTML(`${s.id}|${sc.scale}|A`,null,AB_L)}
+          <p class="q"><span class="tag">B</span>${esc(sc.b)}</p>
+          ${segHTML(`${s.id}|${sc.scale}|B`,null,AB_L)}
+        </div>`).join('')}
+
+      <details class="flags">
+        <summary><span>Offer &amp; need — optional</span><span>${fl?fl+' set':'tap to open'}</span></summary>
+        <div class="flagbody">
+          <h4>${esc(s.offer)}</h4>
+          <p class="q" style="color:var(--ink-soft);font-size:15px">How much could you offer this?</p>
+          ${segHTML(`${s.id}|flag|Ca`,null,CA_L)}
+          <p class="q" style="color:var(--ink-soft);font-size:15px">How much is stopping you?</p>
+          ${segHTML(`${s.id}|flag|Cb`,null,BL_L)}
+          ${chipsHTML(`${s.id}|flag|Cbtype`,GIVE_TAGS)}
+
+          <h4 style="margin-top:22px">${esc(s.need)}</h4>
+          <p class="q" style="color:var(--ink-soft);font-size:15px">How much do you need this?</p>
+          ${segHTML(`${s.id}|flag|Da`,null,DA_L)}
+          <p class="q" style="color:var(--ink-soft);font-size:15px">How much is stopping you getting it?</p>
+          ${segHTML(`${s.id}|flag|Db`,null,BL_L)}
+          ${chipsHTML(`${s.id}|flag|Dbtype`,RECV_TAGS)}
+        </div>
+      </details>
+    </div>
+  </details>`;
+}
+
+function viewPlane(n){
+  const p=DATA.planes.find(x=>x.n===n);
+  if(!p) return `<p class="note">That part doesn't exist. <a href="#/hub">Back to the start</a>.</p>`;
+  const prev=n>1?n-1:null, next=n<7?n+1:null;
+  return `
+  <div class="planehead" style="border-color:${HUES[n]}">
+    <p class="eyebrow">Part ${n} of 7 · ${esc(p.domain)} · ${esc(p.q)}</p>
+    <h1>${esc(p.name)}</h1>
+    <p>${esc(p.blurb)}. Rate 1 (non-existent) to 5 (flourishing). Skip anything you'd rather not answer.</p>
+  </div>
+  <div class="planegrid">
+  ${tocHTML(p)}
+  <div>
+  ${tocMobHTML(p)}
+  <div>${p.subs.map(subHTML).join('')}</div>
+  <div class="tail">
+    <h3>Anything we missed?</h3>
+    <p style="color:var(--ink-soft);margin:0 0 10px;font-size:15px">Is there something about ${esc(p.name.toLowerCase())} in your life or this community that these questions didn't cover?</p>
+    <textarea data-text="open|${n}" placeholder="Write as much or as little as you like">${esc(STATE['open|'+n]||'')}</textarea>
+    <div class="checks">
+      <label><input type="checkbox" data-check="consent|${n}|support"${STATE['consent|'+n+'|support']?' checked':''}> I'd be open to someone following up with me about ${esc(p.name.toLowerCase())}.</label>
+      <label><input type="checkbox" data-check="consent|${n}|contribute"${STATE['consent|'+n+'|contribute']?' checked':''}> I'd be willing to be contacted about helping others with this.</label>
+    </div>
+    <p class="note">Ticking a box is what lets someone get in touch. Without it, your answers still count in the totals, but nobody will contact you.</p>
+  </div>
+  <div class="navrow">
+    ${prev?`<a class="btn ghost" href="#/plane/${prev}">← Part ${prev}</a>`:''}
+    <a class="btn ghost" href="#/hub">Back to the start</a>
+    ${next?`<a class="btn" href="#/plane/${next}">Part ${next} →</a>`:`<a class="btn" href="#/extras">Nearly done →</a>`}
+  </div>
+  </div></div>`;
+}
+
+const M8=[
+ ['8.1','How many households could you realistically ask for help in a real emergency — money, a lift, childcare, a bed for the night?',['0','1','2–3','4–6','7 or more']],
+ ['8.2','How many households do you think would ask you for help in a real emergency?',['0','1','2–3','4–6','7 or more']],
+ ['8.3','Over the past year, have you given more help than you received, or received more than you gave?',['Gave far more','Gave a bit more','About even','Received a bit more','Received far more']],
+ ['8.4','Roughly how many people here would recognise you and stop for a chat?',['0','1–5','6–15','16–40','More than 40']],
+ ['8.5','Is there someone you could tell something difficult or shameful to, and trust them with it?',['Yes, several','Yes, one','Not sure','No']],
+ ['8.6','If you needed help and didn\'t ask, what stopped you?',['Nobody to ask','Pride or shame','Didn\'t want to be a burden','Asked before, was refused','Didn\'t know help existed','Doesn\'t apply']]
+];
+function viewExtras(){
+  const names=DATA.planes.map(p=>p.name);
+  return `
+  <div class="planehead" style="border-color:var(--ink)">
+    <p class="eyebrow">The last bit · about five minutes</p>
+    <h1>Who you can lean on</h1>
+    <p>Low scores can mean two very different things: nothing is there, or it's there and you can't reach it. These questions tell them apart.</p>
+  </div>
+  <div style="padding:10px 0 0">
+    ${M8.map(([id,q,opts])=>`
+      <div class="scale">
+        <div class="slabel">${id}</div>
+        <p class="q">${esc(q)}</p>
+        <div class="chips">
+          ${opts.map((o,i)=>`<input type="radio" name="x|${id}" id="x${id}~${i}" value="${esc(o)}"${STATE['x|'+id]===o?' checked':''}><label for="x${id}~${i}">${esc(o)}</label>`).join('')}
+        </div>
+      </div>`).join('')}
+  </div>
+  <div class="tail">
+    <h3>What needs attention most?</h3>
+    <p style="color:var(--ink-soft);margin:0 0 4px;font-size:15px">Number these 1 to 7 for <strong>your own life</strong> right now. 1 = most urgent. Leave any blank.</p>
+    <div class="checks" style="gap:6px">
+      ${names.map((nm,i)=>`<label style="align-items:center"><input type="text" inputmode="numeric" maxlength="1" data-rank="rank|self|${i+1}" value="${esc(STATE['rank|self|'+(i+1)]||'')}" style="width:44px;height:34px;text-align:center;font-family:var(--mono);border:1px solid var(--rule);background:var(--paper-2);border-radius:2px;color:var(--ink)" aria-label="Rank for ${esc(nm)}"> ${esc(nm)}</label>`).join('')}
+    </div>
+    <p style="color:var(--ink-soft);margin:22px 0 4px;font-size:15px">And the same again for <strong>this community</strong>.</p>
+    <div class="checks" style="gap:6px">
+      ${names.map((nm,i)=>`<label style="align-items:center"><input type="text" inputmode="numeric" maxlength="1" data-rank="rank|comm|${i+1}" value="${esc(STATE['rank|comm|'+(i+1)]||'')}" style="width:44px;height:34px;text-align:center;font-family:var(--mono);border:1px solid var(--rule);background:var(--paper-2);border-radius:2px;color:var(--ink)" aria-label="Community rank for ${esc(nm)}"> ${esc(nm)}</label>`).join('')}
+    </div>
+  </div>
+  <div class="navrow">
+    <a class="btn ghost" href="#/hub">Back to the start</a>
+    <a class="btn" href="#/review">Review and hand in →</a>
+  </div>`;
+}
+
+function viewReview(){
+  const total=DATA.planes.reduce((a,p)=>a+planeAnswered(p.n),0);
+  const rows=DATA.planes.map(p=>{
+    const pc=planePct(p.n),fl=flagCount(p.n);
+    const openTxt=STATE['open|'+p.n]?'yes':'—';
+    const cs=[STATE['consent|'+p.n+'|support']?'follow-up':'',STATE['consent|'+p.n+'|contribute']?'help others':''].filter(Boolean).join(', ')||'—';
+    return `<a class="band" href="#/plane/${p.n}">
+      <span class="fill" style="background:${HUES[p.n]};width:${pc}%"></span>
+      <span style="position:absolute;left:0;top:0;bottom:0;width:4px;background:${HUES[p.n]}"></span>
+      <span class="row"><span class="num">${p.n} / 7</span><span class="nm">${esc(p.name)}</span>
+      <span class="bl">${fl} flags · notes: ${openTxt} · consent: ${cs}</span>
+      <span class="pc">${pc}%</span></span></a>`;
+  }).join('');
+  return `
+  <input type="text" id="hp_field" name="website" autocomplete="off" tabindex="-1" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0" aria-hidden="true">
+  <div class="planehead" style="border-color:var(--ink)">
+    <p class="eyebrow">Review</p>
+    <h1>Everything so far</h1>
+    <p>${total} answers recorded. Tap any part to go back and change it. Nothing is sent until you press Submit below.</p>
+  </div>
+  <nav class="bands">${rows}</nav>
+  <div class="tail">
+    <h3>Hand it in</h3>
+    <p style="color:var(--ink-soft);font-size:15px;margin:0 0 12px">Submit to send your answers in. You can also keep a copy for yourself, download or copied. Blank questions stay blank everywhere — they aren't filled in with a middle score.</p>
+    <div class="navrow" style="border:none;padding:0 0 10px">
+      <button class="btn" id="submit">${STATE['_submitted']?'Submitted ✓':'Submit my answers'}</button>
+      <button class="btn ghost" id="dl">Download a copy</button>
+      <button class="btn ghost" id="cp">Copy to clipboard</button>
+    </div>
+    <p id="submitmsg" style="color:var(--ink-soft);font-size:14px;margin:0 0 18px">${STATE['_submitted']?'Sent. You can keep changing answers and submit again — each submission is recorded separately.':'Submitting sends your answers in; downloading or copying keeps a copy for yourself. Both are optional, and neither is required to use the rest of the site.'}</p>
+    <div class="navrow" style="border:none;padding:0 0 18px">
+      <button class="btn ghost" id="wipe" style="border-color:#8E3552;color:#8E3552">Erase everything on this device</button>
+    </div>
+    <pre class="out" id="preview"></pre>
+  </div>
+  <div class="navrow"><a class="btn ghost" href="#/hub">Back to the start</a></div>`;
+}
+
+/* ---------- export ---------- */
+function buildExport(){
+  const out={instrument:"Community Welfare Survey (Quad-Vector 7x7)",saved_at:new Date().toISOString(),planes:{},extras:{},ranking:{self:{},community:{}}};
+  DATA.planes.forEach(p=>{
+    const pl={name:p.name,answered:planeAnswered(p.n),of:CORE_PER_PLANE,sub_indicators:{},open_response:STATE['open|'+p.n]||null,
+      consent:{follow_up:!!STATE['consent|'+p.n+'|support'],contribute:!!STATE['consent|'+p.n+'|contribute']}};
+    p.subs.forEach(s=>{
+      const rec={address:s.addr,scales:{},flags:{}};
+      ['Micro','Meso','Macro'].forEach(sc=>{
+        const a=STATE[`${s.id}|${sc}|A`]||null,b=STATE[`${s.id}|${sc}|B`]||null;
+        if(a||b||STATE[`${s.id}|${sc}|A|last`]||STATE[`${s.id}|${sc}|B|last`])
+          rec.scales[sc]={A:a?+a:null,A_last:STATE[`${s.id}|${sc}|A|last`]||null,B:b?+b:null,B_last:STATE[`${s.id}|${sc}|B|last`]||null};
+      });
+      ['Ca','Cb','Da','Db'].forEach(v=>{ if(STATE[`${s.id}|flag|${v}`]) rec.flags[v]=+STATE[`${s.id}|flag|${v}`]; });
+      const ct=STATE[`${s.id}|flag|Cbtype`]||STATE[`${s.id}|flag|Cbtype|other`];
+      const dt=STATE[`${s.id}|flag|Dbtype`]||STATE[`${s.id}|flag|Dbtype|other`];
+      if(ct) rec.flags.Cb_type=ct; if(dt) rec.flags.Db_type=dt;
+      if(Object.keys(rec.scales).length||Object.keys(rec.flags).length) pl.sub_indicators[s.id]=rec;
+    });
+    out.planes[p.n]=pl;
+  });
+  M8.forEach(([id])=>{ if(STATE['x|'+id]) out.extras[id]=STATE['x|'+id]; });
+  DATA.planes.forEach((p,i)=>{
+    if(STATE['rank|self|'+(i+1)]) out.ranking.self[p.name]=STATE['rank|self|'+(i+1)];
+    if(STATE['rank|comm|'+(i+1)]) out.ranking.community[p.name]=STATE['rank|comm|'+(i+1)];
+  });
+  return out;
+}
+
+/* ---------- router + events ---------- */
+function render(){
+  const h=location.hash||'#/hub';
+  const v=document.getElementById('view');
+  let m;
+  v.className='wrap';
+  if(h.startsWith('#/plane/')){ m=+h.split('/')[2]; currentPlane=m; v.className='wrap wide'; v.innerHTML=viewPlane(m); }
+  else if(h.startsWith('#/extras')) v.innerHTML=viewExtras();
+  else if(h.startsWith('#/review')){ v.innerHTML=viewReview(); wireReview(); }
+  else { currentPlane=null; v.innerHTML=viewHub(); }
+  renderMini(); window.scrollTo(0,0); v.focus({preventScroll:true}); if(currentPlane) markActive();
+}
+function wireReview(){
+  const pv=document.getElementById('preview'); if(pv) pv.textContent=JSON.stringify(buildExport(),null,1);
+  const dl=document.getElementById('dl');
+  if(dl) dl.onclick=()=>{
+    const blob=new Blob([JSON.stringify(buildExport(),null,2)],{type:'application/json'});
+    const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+    a.download='welfare-survey-'+new Date().toISOString().slice(0,10)+'.json'; a.click();
+    URL.revokeObjectURL(a.href); toast('Downloaded');
+  };
+  const cp=document.getElementById('cp');
+  if(cp) cp.onclick=async()=>{
+    try{ await navigator.clipboard.writeText(JSON.stringify(buildExport(),null,2)); toast('Copied'); }
+    catch(e){ toast('Select the text below and copy it'); }
+  };
+  const sb=document.getElementById('submit');
+  if(sb) sb.onclick=async()=>{
+    const msg=document.getElementById('submitmsg');
+    sb.disabled=true; const prevLabel=sb.textContent; sb.textContent='Sending…';
+    const res=await submitToSupabase(buildExport());
+    sb.disabled=false;
+    if(res.ok){
+      STATE['_submitted']=1; queueSave();
+      sb.textContent='Submitted ✓';
+      if(msg) msg.textContent='Sent. You can keep changing answers and submit again — each submission is recorded separately.';
+      toast('Submitted');
+    } else {
+      sb.textContent=prevLabel;
+      if(msg) msg.textContent='Couldn\'t send: '+res.error+'. Your answers are still saved on this device — try again, or download a copy.';
+      toast('Not sent');
+    }
+  };
+  const w=document.getElementById('wipe');
+  if(w) w.onclick=async()=>{ if(confirm('This deletes every answer on this device. It cannot be undone.')){ STATE={}; await Store.set(STATE); render(); toast('Erased'); } };
+}
+document.addEventListener('change',e=>{
+  const t=e.target;
+  if(t.type==='radio'){ STATE[t.name]=t.value; queueSave(); syncCounts(t); if(currentPlane) refreshToc(); }
+  else if(t.type==='checkbox'&&t.dataset.check){ STATE[t.dataset.check]=t.checked?1:0; queueSave(); }
+});
+document.addEventListener('input',e=>{
+  const t=e.target;
+  if(t.dataset.last){ STATE[t.dataset.last+'|last']=t.value; queueSave(); }
+  else if(t.dataset.text){ STATE[t.dataset.text]=t.value; queueSave(); }
+  else if(t.dataset.other){ STATE[t.dataset.other+'|other']=t.value; queueSave(); }
+  else if(t.dataset.rank){ STATE[t.dataset.rank]=t.value.replace(/[^1-7]/g,''); t.value=STATE[t.dataset.rank]; queueSave(); }
+});
+document.addEventListener('click',e=>{
+  const j=e.target.closest('[data-jump]');
+  if(j){ e.preventDefault();
+    const d=document.getElementById('s'+j.dataset.jump);
+    if(d){ d.open=true;
+      const mob=j.closest('.tocmob'); if(mob) mob.open=false;
+      const y=d.getBoundingClientRect().top+window.scrollY-84;
+      window.scrollTo({top:y,behavior:'smooth'}); setTimeout(markActive,450);
+    } return; }
+  const oa=e.target.closest('[data-openall]');
+  if(oa){ e.preventDefault();
+    const all=[...document.querySelectorAll('details.sub')];
+    const anyClosed=all.some(d=>!d.open);
+    all.forEach(d=>d.open=anyClosed);
+    oa.textContent=anyClosed?'Close all questions':'Open all questions';
+    return; }
+  const b=e.target.closest('[data-clear]'); if(!b) return;
+  const k=b.dataset.clear;
+  delete STATE[k]; delete STATE[k+'|last'];
+  document.querySelectorAll(`input[name="${CSS.escape(k)}"]`).forEach(r=>r.checked=false);
+  const li=document.querySelector(`input[data-last="${CSS.escape(k)}"]`); if(li) li.value='';
+  queueSave(); syncCounts(b); if(currentPlane) refreshToc(); toast('Cleared');
+});
+function syncCounts(node){
+  const d=node.closest('details.sub'); if(!d) return;
+  const id=d.id.slice(1);
+  const done=['Micro','Meso','Macro'].reduce((a,sc)=>a+(STATE[`${id}|${sc}|A`]?1:0)+(STATE[`${id}|${sc}|B`]?1:0),0);
+  const fl=['Ca','Cb','Da','Db'].filter(v=>STATE[`${id}|flag|${v}`]).length;
+  const dot=d.querySelector('.sdot'); if(dot) dot.textContent=`${done}/6${fl?' +'+fl:''}`;
+  const fs=d.querySelector('.flags>summary span:last-child'); if(fs) fs.textContent=fl?fl+' set':'tap to open';
+}
+let spy=null;
+window.addEventListener('scroll',()=>{ if(!currentPlane) return; if(spy) return;
+  spy=requestAnimationFrame(()=>{ spy=null; markActive(); }); },{passive:true});
+window.addEventListener('hashchange',render);
+(async()=>{ STATE=await Store.get()||{}; render(); })();
+</script>
+</body>
+</html>
