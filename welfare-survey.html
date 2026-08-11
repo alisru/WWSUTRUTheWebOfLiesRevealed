@@ -186,8 +186,8 @@ const LOAD_TIME = Date.now();
 // --- Supabase: fill these two in after creating your project. Both are
 // public by design (the anon key ships in this file); RLS in
 // supabase_schema.sql is what actually protects the data. ---
-const SUPABASE_URL = 'https://iaudayzofxrgzwutittm.supabase.co';
-const SUPABASE_ANON_KEY = 'sb_publishable_WlfhOxEkAGDwAk5oZV2YrA_BIFfI0XN';
+const SUPABASE_URL = 'YOUR_SUPABASE_URL';
+const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
 let supa = null;
 try {
   if (SUPABASE_URL !== 'YOUR_SUPABASE_URL' && window.supabase) {
@@ -207,9 +207,15 @@ async function submitToSupabase(payload) {
     return { ok: false, error: 'That was fast — give it a moment and try again.' };
   }
   if (!supa) return { ok: false, error: 'Supabase is not configured yet.' };
-  const { data: resp, error: e1 } = await supa.from('responses').insert({ raw: payload }).select('id').single();
+  // Generate the id client-side rather than reading it back from Postgres.
+  // Chaining .select() after .insert() would ask PostgREST to return the
+  // new row, and returning a row is a read -- which would need a SELECT
+  // policy we deliberately don't have, since anon can write here but
+  // never read, including its own submission. crypto.randomUUID() sidesteps
+  // that entirely: no representation requested, no SELECT policy needed.
+  const responseId = crypto.randomUUID();
+  const { error: e1 } = await supa.from('responses').insert({ id: responseId, raw: payload });
   if (e1) return { ok: false, error: e1.message };
-  const responseId = resp.id;
 
   const answerRows = [], blockerRows = [], metaRows = [], extraRows = [], rankRows = [];
   for (const [planeKey, plane] of Object.entries(payload.planes || {})) {
