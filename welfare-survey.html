@@ -594,6 +594,25 @@ function labelHTML(){
     </div>
   </section>`;
 }
+// Every name in STATE['_response_ids'] is a separate response row this
+// identity (the current account, or this device if not signed in) owns
+// -- effectively child records under the one respondent_id. This lets
+// you switch which one you're editing, or start another.
+function childListHTML(){
+  const ids=STATE['_response_ids']||{};
+  const names=Object.keys(ids);
+  if(!names.length) return '';
+  const current=labelKey();
+  return `
+  <section class="tail" style="margin:0 0 22px">
+    <h3>Saved responses <span style="color:var(--ink-soft);font-weight:400">under this ${ACCOUNT_EMAIL?'account':'device'}</span></h3>
+    <p style="color:var(--ink-soft);font-size:15px;margin:0 0 12px">${names.length>1?'More than one response is saved here':'A response is saved here'} — ${ACCOUNT_EMAIL?'this account has more than one name attached to it, e.g. different household members.':'more than one name has submitted from this device.'} Pick one to load its answers, or start a new one.</p>
+    <div class="navrow" style="border:none;padding:0 0 10px;gap:8px;flex-wrap:wrap">
+      ${names.map(n=>`<button class="btn ${n===current?'':'ghost'}" data-loadchild="${esc(n)}">${n?esc(n):'(unlabeled)'}${n===current?' • editing now':''}</button>`).join('')}
+      <button class="btn ghost" id="child_new">+ Start a new one</button>
+    </div>
+  </section>`;
+}
 
 function viewHub(){
   const total=DATA.planes.reduce((a,p)=>a+planeAnswered(p.n),0);
@@ -608,6 +627,7 @@ function viewHub(){
 
   ${accountHTML()}
   ${labelHTML()}
+  ${childListHTML()}
 
   <nav class="bands" aria-label="The seven requirements">
     ${DATA.planes.map(p=>{
@@ -734,6 +754,7 @@ function viewPlane(n){
   </div>
   ${accountHTML()}
   ${labelHTML()}
+  ${childListHTML()}
   <div class="navrow">
     ${prev?`<a class="btn ghost" href="#/plane/${prev}">← Part ${prev}</a>`:''}
     <a class="btn ghost" href="#/hub">Back to the start</a>
@@ -781,6 +802,7 @@ function viewExtras(){
   </div>
   ${accountHTML()}
   ${labelHTML()}
+  ${childListHTML()}
   <div class="navrow">
     <a class="btn ghost" href="#/hub">Back to the start</a>
     <a class="btn" href="#/review">Review and hand in →</a>
@@ -810,6 +832,7 @@ function viewReview(){
   <nav class="bands">${rows}</nav>
   ${accountHTML()}
   ${labelHTML()}
+  ${childListHTML()}
   <div class="tail">
     <h3>Hand it in</h3>
     <p id="submitlead" style="color:var(--ink-soft);font-size:15px;margin:0 0 12px">${currentResponseId()?'You already sent a response under this name. Pressing the button below updates that same response with your current answers — it does not create a new one.':'Submit to send your answers in. You can also keep a copy for yourself, download or copied. Blank questions stay blank everywhere — they aren\'t filled in with a middle score.'}</p>
@@ -918,6 +941,12 @@ function wireAccount(){
       toast('Not signed in');
     }
   };
+  const cn=document.getElementById('child_new');
+  if(cn) cn.onclick=()=>{
+    if(!confirm('Start a new response? Anything on screen that hasn\'t been submitted yet will be cleared -- already-submitted responses stay saved and can be reloaded from the list above.')) return;
+    STATE={ _response_ids: STATE['_response_ids'] };
+    queueSave(); render(); toast('Started a new one');
+  };
 }
 
 /* ---------- router + events ---------- */
@@ -1013,6 +1042,16 @@ document.addEventListener('click',e=>{
     const anyClosed=all.some(d=>!d.open);
     all.forEach(d=>d.open=anyClosed);
     oa.textContent=anyClosed?'Close all questions':'Open all questions';
+    return; }
+  const lc=e.target.closest('[data-loadchild]');
+  if(lc){ e.preventDefault();
+    (async()=>{
+      lc.disabled=true;
+      const res=await loadNamedResponse(lc.dataset.loadchild);
+      lc.disabled=false;
+      if(res.ok){ render(); toast('Loaded'); }
+      else toast(res.error);
+    })();
     return; }
   const b=e.target.closest('[data-clear]'); if(!b) return;
   const k=b.dataset.clear;
