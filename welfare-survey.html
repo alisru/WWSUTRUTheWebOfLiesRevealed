@@ -195,7 +195,7 @@ try {
   }
 } catch (e) { console.error('Supabase client init failed', e); }
 
-async function submitToSupabase(payload) {
+async function submitToSupabase(payload, existingId) {
   // Honeypot: a hidden field a real person never sees or fills. Anything in
   // it means a bot filled every input on the page indiscriminately.
   const hp = document.getElementById('hp_field');
@@ -214,18 +214,22 @@ async function submitToSupabase(payload) {
   }
   const respondentId = session.user.id;
 
-  // Generate the id client-side rather than reading it back from Postgres.
-  // Chaining .select() after .insert() would ask PostgREST to return the
-  // new row, and returning a row is a read -- which would need a SELECT
-  // policy we deliberately don't have, since anon can write here but
-  // never read, including its own submission. crypto.randomUUID() sidesteps
-  // that entirely: no representation requested, no SELECT policy needed.
-  const responseId = crypto.randomUUID();
-  const { error: e1 } = await supa.from('responses').insert({
+  // Reuse the id from a prior submission so this becomes an update rather
+  // than a new row -- that's the whole point of the stable anonymous
+  // identity (see the RLS comment block below). Only generate a fresh id
+  // client-side, rather than reading one back from Postgres, the first
+  // time: chaining .select() after .insert() would ask PostgREST to
+  // return the new row, and returning a row is a read -- which would
+  // need a SELECT policy we deliberately don't have, since anon can
+  // write here but never read. crypto.randomUUID() sidesteps that
+  // entirely: no representation requested, no SELECT policy needed.
+  const responseId = existingId || crypto.randomUUID();
+  const { error: e1 } = await supa.from('responses').upsert({
     id: responseId, respondent_id: respondentId, raw: payload,
+    updated_at: new Date().toISOString(),
     label_name: (payload.label && payload.label.name) || null,
     label_location: (payload.label && payload.label.location) || null,
-  });
+  }, { onConflict: 'id' });
   if (e1) return { ok: false, error: e1.message };
 
   // `answers` is a wide table -- one row per sub-indicator, not per
@@ -254,6 +258,15 @@ async function submitToSupabase(payload) {
       }
       answerRows.push(row);
     }
+  }
+  // Delete-then-insert rather than upsert: an upsert would leave behind a
+  // row for any sub_id the respondent has since cleared, so the stored
+  // answers would never actually shrink. Wiping this response's rows
+  // first and reinserting from the current payload makes `answers` an
+  // exact mirror of what's in the form right now, same as `raw` already is.
+  if (existingId) {
+    const { error: delErr } = await supa.from('answers').delete().eq('response_id', responseId);
+    if (delErr) return { ok: false, error: `answers cleanup: ${delErr.message}` };
   }
   if (answerRows.length) {
     const { error } = await supa.from('answers').insert(answerRows);
@@ -583,13 +596,13 @@ function viewReview(){
       <input type="text" id="label_location" data-text="label|location" value="${esc(STATE['label|location']||'')}" placeholder="Suburb / region" style="flex:1;min-width:200px;padding:10px 12px;border:1px solid var(--ink-soft);border-radius:8px;font:inherit;background:var(--paper)">
     </div>
     <h3>Hand it in</h3>
-    <p style="color:var(--ink-soft);font-size:15px;margin:0 0 12px">Submit to send your answers in. You can also keep a copy for yourself, download or copied. Blank questions stay blank everywhere — they aren't filled in with a middle score.</p>
+    <p style="color:var(--ink-soft);font-size:15px;margin:0 0 12px">${STATE['_response_id']?'You already sent a response. Pressing the button below updates that same response with your current answers — it does not create a new one.':'Submit to send your answers in. You can also keep a copy for yourself, download or copied. Blank questions stay blank everywhere — they aren\'t filled in with a middle score.'}</p>
     <div class="navrow" style="border:none;padding:0 0 10px">
-      <button class="btn" id="submit">${STATE['_submitted']?'Submitted ✓':'Submit my answers'}</button>
+      <button class="btn" id="submit">${STATE['_response_id']?'Update my answers':'Submit my answers'}</button>
       <button class="btn ghost" id="dl">Download a copy</button>
       <button class="btn ghost" id="cp">Copy to clipboard</button>
     </div>
-    <p id="submitmsg" style="color:var(--ink-soft);font-size:14px;margin:0 0 18px">${STATE['_submitted']?'Sent. You can keep changing answers and submit again — each submission is recorded separately.':'Submitting sends your answers in; downloading or copying keeps a copy for yourself. Both are optional, and neither is required to use the rest of the site.'}</p>
+    <p id="submitmsg" style="color:var(--ink-soft);font-size:14px;margin:0 0 18px">${STATE['_response_id']?'Sent. Changing answers and pressing Update revises this same response — it won\'t create a duplicate.':'Submitting sends your answers in; downloading or copying keeps a copy for yourself. Both are optional, and neither is required to use the rest of the site.'}</p>
     <div class="navrow" style="border:none;padding:0 0 18px">
       <button class="btn ghost" id="wipe" style="border-color:#8E3552;color:#8E3552">Erase everything on this device</button>
     </div>
@@ -658,14 +671,15 @@ function wireReview(){
   const sb=document.getElementById('submit');
   if(sb) sb.onclick=async()=>{
     const msg=document.getElementById('submitmsg');
-    sb.disabled=true; const prevLabel=sb.textContent; sb.textContent='Sending…';
-    const res=await submitToSupabase(buildExport());
+    const updating=!!STATE['_response_id'];
+    sb.disabled=true; const prevLabel=sb.textContent; sb.textContent=updating?'Updating…':'Sending…';
+    const res=await submitToSupabase(buildExport(), STATE['_response_id']);
     sb.disabled=false;
     if(res.ok){
-      STATE['_submitted']=1; queueSave();
-      sb.textContent='Submitted ✓';
-      if(msg) msg.textContent='Sent. You can keep changing answers and submit again — each submission is recorded separately.';
-      toast('Submitted');
+      STATE['_response_id']=res.id; queueSave();
+      sb.textContent=updating?'Updated ✓':'Submitted ✓';
+      if(msg) msg.textContent=updating?'Updated. Your response now reflects these answers.':'Sent. Changing answers and pressing Update revises this same response — it won\'t create a duplicate.';
+      toast(updating?'Updated':'Submitted');
     } else {
       sb.textContent=prevLabel;
       if(msg) msg.textContent='Couldn\'t send: '+res.error+'. Your answers are still saved on this device — try again, or download a copy.';
