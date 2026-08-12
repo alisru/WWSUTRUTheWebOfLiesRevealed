@@ -188,10 +188,32 @@ const LOAD_TIME = Date.now();
 // supabase_schema.sql is what actually protects the data. ---
 const SUPABASE_URL = 'https://iaudayzofxrgzwutittm.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_WlfhOxEkAGDwAk5oZV2YrA_BIFfI0XN';
+
+// "Stay signed in" storage: a custom storage adapter so unchecking the
+// checkbox keeps the session in sessionStorage (gone when the tab/browser
+// closes) instead of localStorage (survives indefinitely). Defaults to
+// localStorage/persistent -- that's what the automatic anonymous sign-in
+// has always relied on for cross-visit continuity, so leaving the flag
+// untouched (no email/password or Google sign-in ever used) keeps that
+// existing behaviour exactly as it was.
+const REMEMBER_KEY = 'cws:remember';
+function setRemember(v){ try{ localStorage.setItem(REMEMBER_KEY, v?'1':'0'); }catch(e){} }
+function getRemember(){ try{ return localStorage.getItem(REMEMBER_KEY)!=='0'; }catch(e){ return true; } }
+const authStorage = {
+  getItem(key){ try{ return localStorage.getItem(key) ?? sessionStorage.getItem(key); }catch(e){ return null; } },
+  setItem(key,value){
+    try{
+      if (getRemember()) { localStorage.setItem(key,value); sessionStorage.removeItem(key); }
+      else { sessionStorage.setItem(key,value); localStorage.removeItem(key); }
+    }catch(e){}
+  },
+  removeItem(key){ try{ localStorage.removeItem(key); sessionStorage.removeItem(key); }catch(e){} },
+};
+
 let supa = null;
 try {
   if (SUPABASE_URL !== 'YOUR_SUPABASE_URL' && window.supabase) {
-    supa = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    supa = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { auth: { storage: authStorage } });
   }
 } catch (e) { console.error('Supabase client init failed', e); }
 
@@ -303,6 +325,20 @@ async function signInAccount(email, password) {
   return await pullAccountData();
 }
 
+// Google requires a real http(s) origin -- it will redirect the whole
+// page away and back, so there's no result to await here. The bootstrap
+// IIFE at the bottom of the file (via maybeAutoPullAccount) handles what
+// happens after Google sends the browser back with a session.
+async function signInWithGoogle() {
+  if (!supa) return { ok: false, error: 'Supabase is not configured yet.' };
+  const { error } = await supa.auth.signInWithOAuth({
+    provider: 'google',
+    options: { redirectTo: window.location.origin + window.location.pathname + window.location.search },
+  });
+  if (error) return { ok: false, error: error.message };
+  return { ok: true };
+}
+
 // Fetches every response this account owns (RLS already limits the query
 // to rows where respondent_id = auth.uid()), remembers each one's id
 // against its label so future submits under that name update rather than
@@ -381,10 +417,21 @@ function applyExportToState(raw) {
 }
 
 let ACCOUNT_EMAIL = null;
-async function refreshAccountEmail() {
+// Runs once at page load. Covers three cases with the same code: a normal
+// reload with a previously-persisted email/password session, a Google
+// sign-in redirecting back (supabase-js auto-detects the session in the
+// URL fragment before this runs), and the plain anonymous-only case
+// (session has no email, so this is a no-op beyond setting ACCOUNT_EMAIL).
+// The sessionStorage flag limits the data pull to once per browser tab
+// session, so it doesn't clobber on-screen edits on every hash change.
+async function maybeAutoPullAccount() {
   if (!supa) return;
   const { data: { session } } = await supa.auth.getSession();
   ACCOUNT_EMAIL = (session && session.user && session.user.email) || null;
+  if (ACCOUNT_EMAIL && !sessionStorage.getItem('cws:pulled')) {
+    sessionStorage.setItem('cws:pulled', '1');
+    await pullAccountData();
+  }
 }
 
 const HUES = {1:'var(--p1)',2:'var(--p2)',3:'var(--p3)',4:'var(--p4)',5:'var(--p5)',6:'var(--p6)',7:'var(--p7)'};
@@ -520,14 +567,18 @@ function accountHTML(){
       <div class="navrow" style="border:none;padding:0 0 10px"><button class="btn ghost" id="acct_signout">Sign out</button></div>
     ` : `
       <p style="color:var(--ink-soft);font-size:15px;margin:0 0 12px">Answers only live on this device unless you set a password. Set one to continue elsewhere later, or sign in below if you already have one.</p>
+      <div class="navrow" style="border:none;padding:0 0 10px"><button class="btn ghost" id="acct_google">Continue with Google</button></div>
       <div class="navrow" style="border:none;padding:0 0 10px;gap:10px;flex-wrap:wrap">
         <input type="email" id="acct_email" placeholder="Email" style="flex:1;min-width:200px;padding:10px 12px;border:1px solid var(--ink-soft);border-radius:8px;font:inherit;background:var(--paper)">
         <input type="password" id="acct_password" placeholder="Password (8+ characters)" style="flex:1;min-width:200px;padding:10px 12px;border:1px solid var(--ink-soft);border-radius:8px;font:inherit;background:var(--paper)">
       </div>
-      <div class="navrow" style="border:none;padding:0 0 10px;gap:10px;flex-wrap:wrap">
+      <div class="navrow" style="border:none;padding:0 0 8px;gap:10px;flex-wrap:wrap">
         <button class="btn" id="acct_save">Save progress with this password</button>
         <button class="btn ghost" id="acct_signin">Sign in on this device</button>
       </div>
+      <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--ink-soft);margin:0 0 10px">
+        <input type="checkbox" id="acct_remember"${getRemember()?' checked':''}> Keep me signed in on this device
+      </label>
     `}
     <p id="acctmsg" style="color:var(--ink-soft);font-size:14px;margin:0"></p>
   </section>`;
@@ -818,15 +869,23 @@ function wireAccount(){
   if(so) so.onclick=async()=>{
     so.disabled=true;
     await supa.auth.signOut();
+    setRemember(true);
     ACCOUNT_EMAIL=null;
     render();
     toast('Signed out');
+  };
+  const rememberBox=document.getElementById('acct_remember');
+  const google=document.getElementById('acct_google');
+  if(google) google.onclick=()=>{
+    if(rememberBox) setRemember(rememberBox.checked);
+    signInWithGoogle();
   };
   const save=document.getElementById('acct_save');
   if(save) save.onclick=async()=>{
     const email=(document.getElementById('acct_email').value||'').trim();
     const pw=document.getElementById('acct_password').value||'';
     if(!email||pw.length<8){ if(msg) msg.textContent='Enter an email and a password of at least 8 characters.'; return; }
+    if(rememberBox) setRemember(rememberBox.checked);
     save.disabled=true; const prev=save.textContent; save.textContent='Saving…';
     const res=await linkAccountEmail(email,pw);
     save.disabled=false; save.textContent=prev;
@@ -845,6 +904,7 @@ function wireAccount(){
     const email=(document.getElementById('acct_email').value||'').trim();
     const pw=document.getElementById('acct_password').value||'';
     if(!email||!pw){ if(msg) msg.textContent='Enter your email and password.'; return; }
+    if(rememberBox) setRemember(rememberBox.checked);
     signin.disabled=true; const prev=signin.textContent; signin.textContent='Signing in…';
     const res=await signInAccount(email,pw);
     signin.disabled=false; signin.textContent=prev;
@@ -973,7 +1033,7 @@ let spy=null;
 window.addEventListener('scroll',()=>{ if(!currentPlane) return; if(spy) return;
   spy=requestAnimationFrame(()=>{ spy=null; markActive(); }); },{passive:true});
 window.addEventListener('hashchange',render);
-(async()=>{ STATE=await Store.get()||{}; await refreshAccountEmail(); render(); })();
+(async()=>{ STATE=await Store.get()||{}; await maybeAutoPullAccount(); render(); })();
 </script>
 </body>
 </html>
