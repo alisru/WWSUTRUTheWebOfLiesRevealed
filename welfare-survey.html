@@ -195,34 +195,39 @@ try {
   }
 } catch (e) { console.error('Supabase client init failed', e); }
 
+// RLS policies (supabase_schema.sql) only grant access to the
+// `authenticated` role, which both Supabase Anonymous Auth and a signed-in
+// email/password account use -- so we need a session, of either kind,
+// before writing or reading anything. A prior anonymous session persists
+// across visits (that's what lets a second submission update the first),
+// so only sign in anonymously if there isn't a session of some kind yet.
+async function ensureSession() {
+  let { data: { session } } = await supa.auth.getSession();
+  if (!session) {
+    const { data, error } = await supa.auth.signInAnonymously();
+    if (error) return { session: null, error };
+    session = data.session;
+  }
+  return { session, error: null };
+}
+
 async function submitToSupabase(payload, existingId) {
   // Honeypot: a hidden field a real person never sees or fills. Anything in
   // it means a bot filled every input on the page indiscriminately.
   const hp = document.getElementById('hp_field');
   if (hp && hp.value) return { ok: false, error: 'Submission blocked.' };
   if (!supa) return { ok: false, error: 'Supabase is not configured yet.' };
-  // RLS policies (supabase_schema.sql) only grant access to the
-  // `authenticated` role, which Supabase Anonymous Auth uses -- so we
-  // need a signed-in anonymous session before writing anything. A prior
-  // anonymous session persists across visits (that's what lets a second
-  // submission update the first), so only sign in if there isn't one yet.
-  let { data: { session } } = await supa.auth.getSession();
-  if (!session) {
-    const { data, error: authErr } = await supa.auth.signInAnonymously();
-    if (authErr) return { ok: false, error: authErr.message };
-    session = data.session;
-  }
+  const { session, error: authErr } = await ensureSession();
+  if (authErr) return { ok: false, error: authErr.message };
   const respondentId = session.user.id;
 
   // Reuse the id from a prior submission so this becomes an update rather
-  // than a new row -- that's the whole point of the stable anonymous
-  // identity (see the RLS comment block below). Only generate a fresh id
-  // client-side, rather than reading one back from Postgres, the first
+  // than a new row -- that's the whole point of the stable identity (see
+  // the RLS comment block in supabase_schema.sql). Only generate a fresh
+  // id client-side, rather than reading one back from Postgres, the first
   // time: chaining .select() after .insert() would ask PostgREST to
-  // return the new row, and returning a row is a read -- which would
-  // need a SELECT policy we deliberately don't have, since anon can
-  // write here but never read. crypto.randomUUID() sidesteps that
-  // entirely: no representation requested, no SELECT policy needed.
+  // return the new row, and that costs nothing extra to avoid even though
+  // SELECT is allowed for own rows now (see loadNamedResponse below).
   const responseId = existingId || crypto.randomUUID();
   const { error: e1 } = await supa.from('responses').upsert({
     id: responseId, respondent_id: respondentId, raw: payload,
@@ -274,6 +279,114 @@ async function submitToSupabase(payload, existingId) {
   }
   return { ok: true, id: responseId };
 }
+
+/* ---------- account: email/password on top of the anonymous identity ---------- */
+// Converts the current anonymous session into a permanent one. Supabase
+// keeps the same auth.uid() across this conversion, so every response
+// already submitted under the anonymous session stays owned by the same
+// account -- nothing needs to be re-pointed at a new id.
+async function linkAccountEmail(email, password) {
+  if (!supa) return { ok: false, error: 'Supabase is not configured yet.' };
+  const { error: authErr } = await ensureSession();
+  if (authErr) return { ok: false, error: authErr.message };
+  const { error } = await supa.auth.updateUser({ email, password });
+  if (error) return { ok: false, error: error.message };
+  return { ok: true };
+}
+
+// Signs into an existing account on a (possibly new) device, then pulls
+// every response that account owns so the respondent can keep going.
+async function signInAccount(email, password) {
+  if (!supa) return { ok: false, error: 'Supabase is not configured yet.' };
+  const { error } = await supa.auth.signInWithPassword({ email, password });
+  if (error) return { ok: false, error: error.message };
+  return await pullAccountData();
+}
+
+// Fetches every response this account owns (RLS already limits the query
+// to rows where respondent_id = auth.uid()), remembers each one's id
+// against its label so future submits under that name update rather than
+// duplicate, and loads the most recently submitted one onto the screen.
+// A response saved under a different name on this account still exists
+// and will correctly show "Update" once that name is typed in again, but
+// its answers won't appear on screen until explicitly loaded -- see
+// loadNamedResponse.
+async function pullAccountData() {
+  const { data, error } = await supa.from('responses')
+    .select('id, label_name, raw, submitted_at')
+    .order('submitted_at', { ascending: false });
+  if (error) return { ok: false, error: error.message };
+  const ids = STATE['_response_ids'] = STATE['_response_ids'] || {};
+  (data || []).forEach(row => { ids[row.label_name || ''] = row.id; });
+  const latest = data && data[0];
+  if (latest) applyExportToState(latest.raw);
+  queueSave();
+  return { ok: true, count: (data || []).length, loadedLabel: latest ? (latest.label_name || '') : null };
+}
+
+// Fetches the one response saved under a specific name on this account
+// and loads it onto the screen, for switching between several people's
+// saved answers under one account (see the per-label id map above).
+async function loadNamedResponse(name) {
+  if (!supa) return { ok: false, error: 'Supabase is not configured yet.' };
+  let q = supa.from('responses').select('id, label_name, raw').order('submitted_at', { ascending: false }).limit(1);
+  q = name ? q.eq('label_name', name) : q.is('label_name', null);
+  const { data, error } = await q.maybeSingle();
+  if (error) return { ok: false, error: error.message };
+  if (!data) return { ok: false, error: 'No saved response found under that name on this account.' };
+  STATE['_response_ids'] = STATE['_response_ids'] || {};
+  STATE['_response_ids'][name || ''] = data.id;
+  applyExportToState(data.raw);
+  queueSave();
+  return { ok: true };
+}
+
+// The inverse of buildExport(): rebuilds the flat STATE keys the rest of
+// the app reads from a previously exported `raw` payload. Preserves the
+// local response-id map across the reload rather than wiping it, since
+// that map can hold ids for other named responses on the same account
+// that this particular payload doesn't mention.
+function applyExportToState(raw) {
+  const keepIds = STATE['_response_ids'];
+  const st = {};
+  st['label|name'] = (raw.label && raw.label.name) || '';
+  st['label|location'] = (raw.label && raw.label.location) || '';
+  Object.entries(raw.planes || {}).forEach(([pn, pl]) => {
+    if (pl.open_response) st['open|' + pn] = pl.open_response;
+    if (pl.consent) {
+      if (pl.consent.follow_up) st['consent|' + pn + '|support'] = 1;
+      if (pl.consent.contribute) st['consent|' + pn + '|contribute'] = 1;
+    }
+    Object.entries(pl.sub_indicators || {}).forEach(([subId, rec]) => {
+      Object.entries(rec.scales || {}).forEach(([sc, pair]) => {
+        if (pair.A != null) st[`${subId}|${sc}|A`] = String(pair.A);
+        if (pair.A_last) st[`${subId}|${sc}|A|last`] = pair.A_last;
+        if (pair.B != null) st[`${subId}|${sc}|B`] = String(pair.B);
+        if (pair.B_last) st[`${subId}|${sc}|B|last`] = pair.B_last;
+      });
+      ['Ca', 'Cb', 'Da', 'Db'].forEach(v => { if (rec.flags && rec.flags[v] != null) st[`${subId}|flag|${v}`] = String(rec.flags[v]); });
+      if (rec.flags && rec.flags.Cb_type) st[`${subId}|flag|Cbtype`] = rec.flags.Cb_type;
+      if (rec.flags && rec.flags.Db_type) st[`${subId}|flag|Dbtype`] = rec.flags.Db_type;
+    });
+  });
+  Object.entries(raw.extras || {}).forEach(([id, val]) => { st['x|' + id] = val; });
+  DATA.planes.forEach((p, i) => {
+    const rs = raw.ranking && raw.ranking.self && raw.ranking.self[p.name];
+    const rc = raw.ranking && raw.ranking.community && raw.ranking.community[p.name];
+    if (rs) st['rank|self|' + (i + 1)] = rs;
+    if (rc) st['rank|comm|' + (i + 1)] = rc;
+  });
+  st['_response_ids'] = keepIds;
+  STATE = st;
+}
+
+let ACCOUNT_EMAIL = null;
+async function refreshAccountEmail() {
+  if (!supa) return;
+  const { data: { session } } = await supa.auth.getSession();
+  ACCOUNT_EMAIL = (session && session.user && session.user.email) || null;
+}
+
 const HUES = {1:'var(--p1)',2:'var(--p2)',3:'var(--p3)',4:'var(--p4)',5:'var(--p5)',6:'var(--p6)',7:'var(--p7)'};
 const CORE_PER_PLANE = 7*3*2;
 
@@ -326,6 +439,19 @@ function renderMini(){
 
 /* ---------- views ---------- */
 function esc(s){ return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+// Which local response id a submit should update, if any. Keyed by the
+// typed name rather than just "this device", because a shared device
+// (a household computer, a library kiosk) can have several different
+// people submit from it -- without this, the second person's submit
+// would silently overwrite the first person's row, since both would
+// otherwise reuse the one response id remembered for the browser.
+// Leaving the name blank means every unlabeled submit from this device
+// keeps updating the same anonymous row -- there's no way to tell two
+// unlabeled people apart, so that's the honest fallback, not a bug.
+function labelKey(){ return (STATE['label|name']||'').trim(); }
+function responseIdForKey(key){ return (STATE['_response_ids']||{})[key] || null; }
+function currentResponseId(){ return responseIdForKey(labelKey()); }
 
 
 function subCounts(id){
@@ -391,6 +517,25 @@ function viewHub(){
     <h1>What this place has,<br>and what it needs.</h1>
     <p class="lede">${started?`You're ${pct}% of the way through. Pick up wherever you left off.`:`Seven parts. Answer any of them, in any order, in as many sittings as you like.`}</p>
     <p>Nothing is compulsory. Every question can be left blank, and a blank is never read as "fine" — it's just left out. Your answers save to this device as you go.</p>
+  </section>
+
+  <section class="tail" style="margin:0 0 22px">
+    <h3>Your account <span style="color:var(--ink-soft);font-weight:400">(optional)</span></h3>
+    ${ACCOUNT_EMAIL ? `
+      <p style="color:var(--ink-soft);font-size:15px;margin:0 0 12px">Signed in as <strong>${esc(ACCOUNT_EMAIL)}</strong>. Sign in with this email and password on another device to pick up where you left off.</p>
+      <div class="navrow" style="border:none;padding:0 0 10px"><button class="btn ghost" id="acct_signout">Sign out</button></div>
+    ` : `
+      <p style="color:var(--ink-soft);font-size:15px;margin:0 0 12px">Answers only live on this device unless you set a password. Set one to continue elsewhere later, or sign in below if you already have one.</p>
+      <div class="navrow" style="border:none;padding:0 0 10px;gap:10px;flex-wrap:wrap">
+        <input type="email" id="acct_email" placeholder="Email" style="flex:1;min-width:200px;padding:10px 12px;border:1px solid var(--ink-soft);border-radius:8px;font:inherit;background:var(--paper)">
+        <input type="password" id="acct_password" placeholder="Password (8+ characters)" style="flex:1;min-width:200px;padding:10px 12px;border:1px solid var(--ink-soft);border-radius:8px;font:inherit;background:var(--paper)">
+      </div>
+      <div class="navrow" style="border:none;padding:0 0 10px;gap:10px;flex-wrap:wrap">
+        <button class="btn" id="acct_save">Save progress with this password</button>
+        <button class="btn ghost" id="acct_signin">Sign in on this device</button>
+      </div>
+    `}
+    <p id="acctmsg" style="color:var(--ink-soft);font-size:14px;margin:0"></p>
   </section>
 
   <nav class="bands" aria-label="The seven requirements">
@@ -590,19 +735,19 @@ function viewReview(){
   <nav class="bands">${rows}</nav>
   <div class="tail">
     <h3>Label this submission <span style="color:var(--ink-soft);font-weight:400">(optional)</span></h3>
-    <p style="color:var(--ink-soft);font-size:15px;margin:0 0 12px">Not for login or identity — just a name, alias, or rough location (suburb, region) so this response can be told apart from others and grouped by area. Leave either blank and it stays unlabeled.</p>
+    <p style="color:var(--ink-soft);font-size:15px;margin:0 0 12px">Not for login or identity — just a name, alias, or rough location (suburb, region) so this response can be told apart from others and grouped by area. It also keeps different people on the same device from overwriting one another: submitting again under the same name updates that name's response, submitting under a new or blank name starts a fresh one.</p>
     <div class="navrow" style="border:none;padding:0 0 14px;gap:10px;flex-wrap:wrap">
       <input type="text" id="label_name" data-text="label|name" value="${esc(STATE['label|name']||'')}" placeholder="Name or alias" style="flex:1;min-width:200px;padding:10px 12px;border:1px solid var(--ink-soft);border-radius:8px;font:inherit;background:var(--paper)">
       <input type="text" id="label_location" data-text="label|location" value="${esc(STATE['label|location']||'')}" placeholder="Suburb / region" style="flex:1;min-width:200px;padding:10px 12px;border:1px solid var(--ink-soft);border-radius:8px;font:inherit;background:var(--paper)">
     </div>
     <h3>Hand it in</h3>
-    <p style="color:var(--ink-soft);font-size:15px;margin:0 0 12px">${STATE['_response_id']?'You already sent a response. Pressing the button below updates that same response with your current answers — it does not create a new one.':'Submit to send your answers in. You can also keep a copy for yourself, download or copied. Blank questions stay blank everywhere — they aren\'t filled in with a middle score.'}</p>
+    <p id="submitlead" style="color:var(--ink-soft);font-size:15px;margin:0 0 12px">${currentResponseId()?'You already sent a response under this name. Pressing the button below updates that same response with your current answers — it does not create a new one.':'Submit to send your answers in. You can also keep a copy for yourself, download or copied. Blank questions stay blank everywhere — they aren\'t filled in with a middle score.'}</p>
     <div class="navrow" style="border:none;padding:0 0 10px">
-      <button class="btn" id="submit">${STATE['_response_id']?'Update my answers':'Submit my answers'}</button>
+      <button class="btn" id="submit">${currentResponseId()?'Update my answers':'Submit my answers'}</button>
       <button class="btn ghost" id="dl">Download a copy</button>
       <button class="btn ghost" id="cp">Copy to clipboard</button>
     </div>
-    <p id="submitmsg" style="color:var(--ink-soft);font-size:14px;margin:0 0 18px">${STATE['_response_id']?'Sent. Changing answers and pressing Update revises this same response — it won\'t create a duplicate.':'Submitting sends your answers in; downloading or copying keeps a copy for yourself. Both are optional, and neither is required to use the rest of the site.'}</p>
+    <p id="submitmsg" style="color:var(--ink-soft);font-size:14px;margin:0 0 18px">${currentResponseId()?'Sent. Changing answers and pressing Update revises this same response — it won\'t create a duplicate.':'Submitting sends your answers in; downloading or copying keeps a copy for yourself. Both are optional, and neither is required to use the rest of the site.'}</p>
     <div class="navrow" style="border:none;padding:0 0 18px">
       <button class="btn ghost" id="wipe" style="border-color:#8E3552;color:#8E3552">Erase everything on this device</button>
     </div>
@@ -642,6 +787,54 @@ function buildExport(){
   return out;
 }
 
+function wireHub(){
+  const msg=document.getElementById('acctmsg');
+  const so=document.getElementById('acct_signout');
+  if(so) so.onclick=async()=>{
+    so.disabled=true;
+    await supa.auth.signOut();
+    ACCOUNT_EMAIL=null;
+    render();
+    toast('Signed out');
+  };
+  const save=document.getElementById('acct_save');
+  if(save) save.onclick=async()=>{
+    const email=(document.getElementById('acct_email').value||'').trim();
+    const pw=document.getElementById('acct_password').value||'';
+    if(!email||pw.length<8){ if(msg) msg.textContent='Enter an email and a password of at least 8 characters.'; return; }
+    save.disabled=true; const prev=save.textContent; save.textContent='Saving…';
+    const res=await linkAccountEmail(email,pw);
+    save.disabled=false; save.textContent=prev;
+    if(res.ok){
+      ACCOUNT_EMAIL=email;
+      toast('Account saved');
+      render();
+      const m=document.getElementById('acctmsg'); if(m) m.textContent='Saved. If this project requires email confirmation, check your inbox before signing in elsewhere.';
+    } else {
+      if(msg) msg.textContent='Couldn\'t save: '+res.error;
+      toast('Not saved');
+    }
+  };
+  const signin=document.getElementById('acct_signin');
+  if(signin) signin.onclick=async()=>{
+    const email=(document.getElementById('acct_email').value||'').trim();
+    const pw=document.getElementById('acct_password').value||'';
+    if(!email||!pw){ if(msg) msg.textContent='Enter your email and password.'; return; }
+    signin.disabled=true; const prev=signin.textContent; signin.textContent='Signing in…';
+    const res=await signInAccount(email,pw);
+    signin.disabled=false; signin.textContent=prev;
+    if(res.ok){
+      ACCOUNT_EMAIL=email;
+      toast('Signed in');
+      render();
+      const m=document.getElementById('acctmsg'); if(m) m.textContent=res.count?`Loaded ${res.count} saved response(s) from this account.`:'Signed in. No saved responses found yet on this account.';
+    } else {
+      if(msg) msg.textContent='Couldn\'t sign in: '+res.error;
+      toast('Not signed in');
+    }
+  };
+}
+
 /* ---------- router + events ---------- */
 function render(){
   const h=location.hash||'#/hub';
@@ -651,7 +844,7 @@ function render(){
   if(h.startsWith('#/plane/')){ m=+h.split('/')[2]; currentPlane=m; v.className='wrap wide'; v.innerHTML=viewPlane(m); }
   else if(h.startsWith('#/extras')) v.innerHTML=viewExtras();
   else if(h.startsWith('#/review')){ v.innerHTML=viewReview(); wireReview(); }
-  else { currentPlane=null; v.innerHTML=viewHub(); }
+  else { currentPlane=null; v.innerHTML=viewHub(); wireHub(); }
   renderMini(); window.scrollTo(0,0); v.focus({preventScroll:true}); if(currentPlane) markActive();
 }
 function wireReview(){
@@ -671,12 +864,12 @@ function wireReview(){
   const sb=document.getElementById('submit');
   if(sb) sb.onclick=async()=>{
     const msg=document.getElementById('submitmsg');
-    const updating=!!STATE['_response_id'];
+    const key=labelKey(), existingId=currentResponseId(), updating=!!existingId;
     sb.disabled=true; const prevLabel=sb.textContent; sb.textContent=updating?'Updating…':'Sending…';
-    const res=await submitToSupabase(buildExport(), STATE['_response_id']);
+    const res=await submitToSupabase(buildExport(), existingId);
     sb.disabled=false;
     if(res.ok){
-      STATE['_response_id']=res.id; queueSave();
+      STATE['_response_ids']=STATE['_response_ids']||{}; STATE['_response_ids'][key]=res.id; queueSave();
       sb.textContent=updating?'Updated ✓':'Submitted ✓';
       if(msg) msg.textContent=updating?'Updated. Your response now reflects these answers.':'Sent. Changing answers and pressing Update revises this same response — it won\'t create a duplicate.';
       toast(updating?'Updated':'Submitted');
@@ -686,6 +879,17 @@ function wireReview(){
       toast('Not sent');
     }
   };
+  const ln=document.getElementById('label_name');
+  if(ln) ln.addEventListener('input',()=>{
+    // This fires before the document-level delegate (target phase, then
+    // bubble) so STATE['label|name'] may not be updated yet -- read the
+    // live input value directly instead of going through labelKey().
+    const lead=document.getElementById('submitlead'), msg=document.getElementById('submitmsg');
+    const already=!!responseIdForKey(ln.value.trim());
+    if(sb) sb.textContent=already?'Update my answers':'Submit my answers';
+    if(lead) lead.textContent=already?'You already sent a response under this name. Pressing the button below updates that same response with your current answers — it does not create a new one.':'Submit to send your answers in. You can also keep a copy for yourself, download or copied. Blank questions stay blank everywhere — they aren\'t filled in with a middle score.';
+    if(msg) msg.textContent=already?'Sent. Changing answers and pressing Update revises this same response — it won\'t create a duplicate.':'Submitting sends your answers in; downloading or copying keeps a copy for yourself. Both are optional, and neither is required to use the rest of the site.';
+  });
   const w=document.getElementById('wipe');
   if(w) w.onclick=async()=>{ if(confirm('This deletes every answer on this device. It cannot be undone.')){ STATE={}; await Store.set(STATE); render(); toast('Erased'); } };
 }
@@ -736,7 +940,7 @@ let spy=null;
 window.addEventListener('scroll',()=>{ if(!currentPlane) return; if(spy) return;
   spy=requestAnimationFrame(()=>{ spy=null; markActive(); }); },{passive:true});
 window.addEventListener('hashchange',render);
-(async()=>{ STATE=await Store.get()||{}; render(); })();
+(async()=>{ STATE=await Store.get()||{}; await refreshAccountEmail(); render(); })();
 </script>
 </body>
 </html>
