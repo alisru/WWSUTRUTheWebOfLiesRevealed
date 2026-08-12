@@ -508,17 +508,11 @@ function markActive(){
   });
 }
 
-function viewHub(){
-  const total=DATA.planes.reduce((a,p)=>a+planeAnswered(p.n),0);
-  const pct=Math.round(total/(CORE_PER_PLANE*7)*100);
-  const started=total>0;
+// Shared across every page (hub, plane, extras, review) so signing in
+// and labeling a submission are reachable from wherever the respondent
+// happens to be, not just at the start or end of the flow.
+function accountHTML(){
   return `
-  <section class="hero">
-    <h1>What this place has,<br>and what it needs.</h1>
-    <p class="lede">${started?`You're ${pct}% of the way through. Pick up wherever you left off.`:`Seven parts. Answer any of them, in any order, in as many sittings as you like.`}</p>
-    <p>Nothing is compulsory. Every question can be left blank, and a blank is never read as "fine" — it's just left out. Your answers save to this device as you go.</p>
-  </section>
-
   <section class="tail" style="margin:0 0 22px">
     <h3>Your account <span style="color:var(--ink-soft);font-weight:400">(optional)</span></h3>
     ${ACCOUNT_EMAIL ? `
@@ -536,7 +530,33 @@ function viewHub(){
       </div>
     `}
     <p id="acctmsg" style="color:var(--ink-soft);font-size:14px;margin:0"></p>
+  </section>`;
+}
+function labelHTML(){
+  return `
+  <section class="tail" style="margin:0 0 22px">
+    <h3>Label this submission <span style="color:var(--ink-soft);font-weight:400">(optional)</span></h3>
+    <p style="color:var(--ink-soft);font-size:15px;margin:0 0 12px">Not for login or identity — just a name, alias, or rough location (suburb, region) so this response can be told apart from others and grouped by area. It also keeps different people on the same device from overwriting one another: submitting again under the same name updates that name's response, submitting under a new or blank name starts a fresh one.</p>
+    <div class="navrow" style="border:none;padding:0 0 14px;gap:10px;flex-wrap:wrap">
+      <input type="text" id="label_name" data-text="label|name" value="${esc(STATE['label|name']||'')}" placeholder="Name or alias" style="flex:1;min-width:200px;padding:10px 12px;border:1px solid var(--ink-soft);border-radius:8px;font:inherit;background:var(--paper)">
+      <input type="text" id="label_location" data-text="label|location" value="${esc(STATE['label|location']||'')}" placeholder="Suburb / region" style="flex:1;min-width:200px;padding:10px 12px;border:1px solid var(--ink-soft);border-radius:8px;font:inherit;background:var(--paper)">
+    </div>
+  </section>`;
+}
+
+function viewHub(){
+  const total=DATA.planes.reduce((a,p)=>a+planeAnswered(p.n),0);
+  const pct=Math.round(total/(CORE_PER_PLANE*7)*100);
+  const started=total>0;
+  return `
+  <section class="hero">
+    <h1>What this place has,<br>and what it needs.</h1>
+    <p class="lede">${started?`You're ${pct}% of the way through. Pick up wherever you left off.`:`Seven parts. Answer any of them, in any order, in as many sittings as you like.`}</p>
+    <p>Nothing is compulsory. Every question can be left blank, and a blank is never read as "fine" — it's just left out. Your answers save to this device as you go.</p>
   </section>
+
+  ${accountHTML()}
+  ${labelHTML()}
 
   <nav class="bands" aria-label="The seven requirements">
     ${DATA.planes.map(p=>{
@@ -661,6 +681,8 @@ function viewPlane(n){
     </div>
     <p class="note">Ticking a box is what lets someone get in touch. Without it, your answers still count in the totals, but nobody will contact you.</p>
   </div>
+  ${accountHTML()}
+  ${labelHTML()}
   <div class="navrow">
     ${prev?`<a class="btn ghost" href="#/plane/${prev}">← Part ${prev}</a>`:''}
     <a class="btn ghost" href="#/hub">Back to the start</a>
@@ -706,6 +728,8 @@ function viewExtras(){
       ${names.map((nm,i)=>`<label style="align-items:center"><input type="text" inputmode="numeric" maxlength="1" data-rank="rank|comm|${i+1}" value="${esc(STATE['rank|comm|'+(i+1)]||'')}" style="width:44px;height:34px;text-align:center;font-family:var(--mono);border:1px solid var(--rule);background:var(--paper-2);border-radius:2px;color:var(--ink)" aria-label="Community rank for ${esc(nm)}"> ${esc(nm)}</label>`).join('')}
     </div>
   </div>
+  ${accountHTML()}
+  ${labelHTML()}
   <div class="navrow">
     <a class="btn ghost" href="#/hub">Back to the start</a>
     <a class="btn" href="#/review">Review and hand in →</a>
@@ -733,13 +757,9 @@ function viewReview(){
     <p>${total} answers recorded. Tap any part to go back and change it. Nothing is sent until you press Submit below.</p>
   </div>
   <nav class="bands">${rows}</nav>
+  ${accountHTML()}
+  ${labelHTML()}
   <div class="tail">
-    <h3>Label this submission <span style="color:var(--ink-soft);font-weight:400">(optional)</span></h3>
-    <p style="color:var(--ink-soft);font-size:15px;margin:0 0 12px">Not for login or identity — just a name, alias, or rough location (suburb, region) so this response can be told apart from others and grouped by area. It also keeps different people on the same device from overwriting one another: submitting again under the same name updates that name's response, submitting under a new or blank name starts a fresh one.</p>
-    <div class="navrow" style="border:none;padding:0 0 14px;gap:10px;flex-wrap:wrap">
-      <input type="text" id="label_name" data-text="label|name" value="${esc(STATE['label|name']||'')}" placeholder="Name or alias" style="flex:1;min-width:200px;padding:10px 12px;border:1px solid var(--ink-soft);border-radius:8px;font:inherit;background:var(--paper)">
-      <input type="text" id="label_location" data-text="label|location" value="${esc(STATE['label|location']||'')}" placeholder="Suburb / region" style="flex:1;min-width:200px;padding:10px 12px;border:1px solid var(--ink-soft);border-radius:8px;font:inherit;background:var(--paper)">
-    </div>
     <h3>Hand it in</h3>
     <p id="submitlead" style="color:var(--ink-soft);font-size:15px;margin:0 0 12px">${currentResponseId()?'You already sent a response under this name. Pressing the button below updates that same response with your current answers — it does not create a new one.':'Submit to send your answers in. You can also keep a copy for yourself, download or copied. Blank questions stay blank everywhere — they aren\'t filled in with a middle score.'}</p>
     <div class="navrow" style="border:none;padding:0 0 10px">
@@ -787,7 +807,12 @@ function buildExport(){
   return out;
 }
 
-function wireHub(){
+// Wires the account and label sections shared across every page --
+// accountHTML()/labelHTML() render the same markup wherever they're
+// embedded, so this is safe to call unconditionally after any render;
+// each handler is only attached if its element actually exists on the
+// current page.
+function wireAccount(){
   const msg=document.getElementById('acctmsg');
   const so=document.getElementById('acct_signout');
   if(so) so.onclick=async()=>{
@@ -844,7 +869,8 @@ function render(){
   if(h.startsWith('#/plane/')){ m=+h.split('/')[2]; currentPlane=m; v.className='wrap wide'; v.innerHTML=viewPlane(m); }
   else if(h.startsWith('#/extras')) v.innerHTML=viewExtras();
   else if(h.startsWith('#/review')){ v.innerHTML=viewReview(); wireReview(); }
-  else { currentPlane=null; v.innerHTML=viewHub(); wireHub(); }
+  else { currentPlane=null; v.innerHTML=viewHub(); }
+  wireAccount(); wireLabel();
   renderMini(); window.scrollTo(0,0); v.focus({preventScroll:true}); if(currentPlane) markActive();
 }
 function wireReview(){
@@ -879,19 +905,26 @@ function wireReview(){
       toast('Not sent');
     }
   };
+  const w=document.getElementById('wipe');
+  if(w) w.onclick=async()=>{ if(confirm('This deletes every answer on this device. It cannot be undone.')){ STATE={}; await Store.set(STATE); render(); toast('Erased'); } };
+}
+// The submit/submitlead/submitmsg elements this touches only exist on the
+// review page -- everywhere else the label inputs still save via the
+// document-level delegate below, this just has nothing extra to flip.
+function wireLabel(){
   const ln=document.getElementById('label_name');
-  if(ln) ln.addEventListener('input',()=>{
-    // This fires before the document-level delegate (target phase, then
+  if(!ln) return;
+  ln.addEventListener('input',()=>{
+    // Fires before the document-level delegate (target phase, then
     // bubble) so STATE['label|name'] may not be updated yet -- read the
     // live input value directly instead of going through labelKey().
-    const lead=document.getElementById('submitlead'), msg=document.getElementById('submitmsg');
+    const sb=document.getElementById('submit'), lead=document.getElementById('submitlead'), msg=document.getElementById('submitmsg');
+    if(!sb && !lead && !msg) return;
     const already=!!responseIdForKey(ln.value.trim());
     if(sb) sb.textContent=already?'Update my answers':'Submit my answers';
     if(lead) lead.textContent=already?'You already sent a response under this name. Pressing the button below updates that same response with your current answers — it does not create a new one.':'Submit to send your answers in. You can also keep a copy for yourself, download or copied. Blank questions stay blank everywhere — they aren\'t filled in with a middle score.';
     if(msg) msg.textContent=already?'Sent. Changing answers and pressing Update revises this same response — it won\'t create a duplicate.':'Submitting sends your answers in; downloading or copying keeps a copy for yourself. Both are optional, and neither is required to use the rest of the site.';
   });
-  const w=document.getElementById('wipe');
-  if(w) w.onclick=async()=>{ if(confirm('This deletes every answer on this device. It cannot be undone.')){ STATE={}; await Store.set(STATE); render(); toast('Erased'); } };
 }
 document.addEventListener('change',e=>{
   const t=e.target;
