@@ -200,12 +200,6 @@ async function submitToSupabase(payload) {
   // it means a bot filled every input on the page indiscriminately.
   const hp = document.getElementById('hp_field');
   if (hp && hp.value) return { ok: false, error: 'Submission blocked.' };
-  // Timing heuristic: this instrument cannot be genuinely completed in
-  // under 20 seconds. Below that, reject client-side before it ever
-  // reaches Supabase.
-  if (Date.now() - LOAD_TIME < 20000) {
-    return { ok: false, error: 'That was fast — give it a moment and try again.' };
-  }
   if (!supa) return { ok: false, error: 'Supabase is not configured yet.' };
   // RLS policies (supabase_schema.sql) only grant access to the
   // `authenticated` role, which Supabase Anonymous Auth uses -- so we
@@ -227,7 +221,11 @@ async function submitToSupabase(payload) {
   // never read, including its own submission. crypto.randomUUID() sidesteps
   // that entirely: no representation requested, no SELECT policy needed.
   const responseId = crypto.randomUUID();
-  const { error: e1 } = await supa.from('responses').insert({ id: responseId, respondent_id: respondentId, raw: payload });
+  const { error: e1 } = await supa.from('responses').insert({
+    id: responseId, respondent_id: respondentId, raw: payload,
+    label_name: (payload.label && payload.label.name) || null,
+    label_location: (payload.label && payload.label.location) || null,
+  });
   if (e1) return { ok: false, error: e1.message };
 
   // `answers` is a wide table -- one row per sub-indicator, not per
@@ -578,6 +576,12 @@ function viewReview(){
   </div>
   <nav class="bands">${rows}</nav>
   <div class="tail">
+    <h3>Label this submission <span style="color:var(--ink-soft);font-weight:400">(optional)</span></h3>
+    <p style="color:var(--ink-soft);font-size:15px;margin:0 0 12px">Not for login or identity — just a name, alias, or rough location (suburb, region) so this response can be told apart from others and grouped by area. Leave either blank and it stays unlabeled.</p>
+    <div class="navrow" style="border:none;padding:0 0 14px;gap:10px;flex-wrap:wrap">
+      <input type="text" id="label_name" data-text="label|name" value="${esc(STATE['label|name']||'')}" placeholder="Name or alias" style="flex:1;min-width:200px;padding:10px 12px;border:1px solid var(--ink-soft);border-radius:8px;font:inherit;background:var(--paper)">
+      <input type="text" id="label_location" data-text="label|location" value="${esc(STATE['label|location']||'')}" placeholder="Suburb / region" style="flex:1;min-width:200px;padding:10px 12px;border:1px solid var(--ink-soft);border-radius:8px;font:inherit;background:var(--paper)">
+    </div>
     <h3>Hand it in</h3>
     <p style="color:var(--ink-soft);font-size:15px;margin:0 0 12px">Submit to send your answers in. You can also keep a copy for yourself, download or copied. Blank questions stay blank everywhere — they aren't filled in with a middle score.</p>
     <div class="navrow" style="border:none;padding:0 0 10px">
@@ -596,7 +600,9 @@ function viewReview(){
 
 /* ---------- export ---------- */
 function buildExport(){
-  const out={instrument:"Community Welfare Survey (Quad-Vector 7x7)",saved_at:new Date().toISOString(),planes:{},extras:{},ranking:{self:{},community:{}}};
+  const out={instrument:"Community Welfare Survey (Quad-Vector 7x7)",saved_at:new Date().toISOString(),
+    label:{name:STATE['label|name']||null,location:STATE['label|location']||null},
+    planes:{},extras:{},ranking:{self:{},community:{}}};
   DATA.planes.forEach(p=>{
     const pl={name:p.name,answered:planeAnswered(p.n),of:CORE_PER_PLANE,sub_indicators:{},open_response:STATE['open|'+p.n]||null,
       consent:{follow_up:!!STATE['consent|'+p.n+'|support'],contribute:!!STATE['consent|'+p.n+'|contribute']}};
