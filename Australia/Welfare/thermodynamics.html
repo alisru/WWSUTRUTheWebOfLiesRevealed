@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document II - Thermodynamic & Structural Analysis</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- KaTeX with explicit non-dollar delimiters -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+
+    <!-- Chart.js CDN for interactive charts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #ffffff; color: #334155; }
+        h1, h2, h3, h4 { font-family: 'Playfair Display', serif; color: #0f172a; }
+        p { line-height: 1.8; margin-bottom: 1.25rem; font-size: 1.05rem; }
+
+        /* Hide scrollbar utility */
+        .scrollbar-none::-webkit-scrollbar { display: none; }
+        .scrollbar-none { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="antialiased selection:bg-amber-500 selection:text-white flex flex-col min-h-screen">
+
+    <nav class="fixed w-full z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm h-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
+            <div class="flex justify-between items-center h-full">
+                <div class="flex items-center">
+                    <a href="index.html" class="font-serif font-bold text-2xl tracking-tight text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-landmark text-amber-500"></i>
+                        The Subsidy Report
+                    </a>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="font-semibold text-sm text-slate-600 hover:text-amber-500 transition-colors">Home</a>
+                    <a href="matrix.html" class="font-semibold text-sm text-slate-600 hover:text-amber-500 transition-colors">Extraction Matrix</a>
+                    <a href="thermodynamics.html" class="font-semibold text-sm text-amber-600">Thermodynamic Analysis</a>
+                    <a href="works_cited.html" class="font-semibold text-sm px-4 py-2 bg-slate-900 text-white rounded-full hover:bg-slate-800 transition-colors">Works Cited</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Fixed Sticky Compass TOC (Granular sub-sections for 15-page document tracking) -->
+    <div class="fixed top-20 left-0 w-full z-40 bg-slate-900/95 border-b border-slate-800 backdrop-blur-md h-12 flex items-center select-none shadow-md overflow-hidden">
+        <!-- Center Indicator Needle (Game Reticle Style) -->
+        <div class="absolute inset-x-0 top-0 bottom-0 flex flex-col items-center justify-between pointer-events-none z-50 py-0.5">
+            <span class="text-amber-400 text-[8px] leading-none select-none">▼</span>
+            <div class="w-[2px] h-3.5 bg-amber-400/80 shadow-[0_0_8px_rgba(245,158,11,0.6)]"></div>
+            <span class="text-amber-400 text-[8px] leading-none select-none">▲</span>
+        </div>
+        <!-- Scrollable Track -->
+        <div id="compass-track" class="w-full flex items-center overflow-x-auto scrollbar-none scroll-smooth whitespace-nowrap h-full px-[50vw] cursor-grab select-none">
+            <div class="flex items-center space-x-6 pr-[10vw]">
+                <a href="#section-synthesis" draggable="false" class="compass-item text-[10px] font-bold tracking-widest text-slate-500 hover:text-amber-400 transition-colors py-2 uppercase">1. Synthesis</a>
+                <span class="text-slate-800 text-[10px] font-bold">|</span>
+                <a href="#section-vector1-mpc" draggable="false" class="compass-item text-[10px] font-bold tracking-widest text-slate-500 hover:text-amber-400 transition-colors py-2 uppercase">2. Kinetics &amp; MPC</a>
+                <span class="text-slate-800 text-[10px] font-bold">|</span>
+                <a href="#section-vector1-multipliers" draggable="false" class="compass-item text-[10px] font-bold tracking-widest text-slate-500 hover:text-amber-400 transition-colors py-2 uppercase">3. Keynesian Multipliers</a>
+                <span class="text-slate-800 text-[10px] font-bold">|</span>
+                <a href="#section-vector1-covid" draggable="false" class="compass-item text-[10px] font-bold tracking-widest text-slate-500 hover:text-amber-400 transition-colors py-2 uppercase">4. COVID Stimulus</a>
+                <span class="text-slate-800 text-[10px] font-bold">|</span>
+                <a href="#section-vector2-kalecki" draggable="false" class="compass-item text-[10px] font-bold tracking-widest text-slate-500 hover:text-amber-400 transition-colors py-2 uppercase">5. Kalecki Identity</a>
+                <span class="text-slate-800 text-[10px] font-bold">|</span>
+                <a href="#section-vector2-grocery" draggable="false" class="compass-item text-[10px] font-bold tracking-widest text-slate-500 hover:text-amber-400 transition-colors py-2 uppercase">6. Grocery Capture</a>
+                <span class="text-slate-800 text-[10px] font-bold">|</span>
+                <a href="#section-vector2-rental" draggable="false" class="compass-item text-[10px] font-bold tracking-widest text-slate-500 hover:text-amber-400 transition-colors py-2 uppercase">7. Rent Yields</a>
+                <span class="text-slate-800 text-[10px] font-bold">|</span>
+                <a href="#section-vector2-ndis" draggable="false" class="compass-item text-[10px] font-bold tracking-widest text-slate-500 hover:text-amber-400 transition-colors py-2 uppercase">8. NDIS Provision</a>
+                <span class="text-slate-800 text-[10px] font-bold">|</span>
+                <a href="#section-vector3-shield" draggable="false" class="compass-item text-[10px] font-bold tracking-widest text-slate-500 hover:text-amber-400 transition-colors py-2 uppercase">9. Moral Shield</a>
+                <span class="text-slate-800 text-[10px] font-bold">|</span>
+                <a href="#section-vector3-inflation" draggable="false" class="compass-item text-[10px] font-bold tracking-widest text-slate-500 hover:text-amber-400 transition-colors py-2 uppercase">10. Sellers' Inflation</a>
+                <span class="text-slate-800 text-[10px] font-bold">|</span>
+                <a href="#section-vector3-centralbank" draggable="false" class="compass-item text-[10px] font-bold tracking-widest text-slate-500 hover:text-amber-400 transition-colors py-2 uppercase">11. Rate Misdiagnosis</a>
+                <span class="text-slate-800 text-[10px] font-bold">|</span>
+                <a href="#section-vector4-targeting" draggable="false" class="compass-item text-[10px] font-bold tracking-widest text-slate-500 hover:text-amber-400 transition-colors py-2 uppercase">12. Targeted Reforms</a>
+                <span class="text-slate-800 text-[10px] font-bold">|</span>
+                <a href="#section-vector4-sustainability" draggable="false" class="compass-item text-[10px] font-bold tracking-widest text-slate-500 hover:text-amber-400 transition-colors py-2 uppercase">13. SFC Modeling</a>
+                <span class="text-slate-800 text-[10px] font-bold">|</span>
+                <a href="#section-vector4-taxation" draggable="false" class="compass-item text-[10px] font-bold tracking-widest text-slate-500 hover:text-amber-400 transition-colors py-2 uppercase">14. Closed-Loop Feedback</a>
+                <span class="text-slate-800 text-[10px] font-bold">|</span>
+                <a href="#section-conclusion" draggable="false" class="compass-item text-[10px] font-bold tracking-widest text-slate-500 hover:text-amber-400 transition-colors py-2 uppercase">15. Conclusion</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- pt-32 offsets the main header nav (pt-20) + compass TOC nav (h-12 / 3rem) -->
+    <main class="pt-32 flex-grow">
+        <div class="bg-slate-900 text-white py-12">
+            <div class="max-w-5xl mx-auto px-6 text-center">
+                <span class="text-xs font-bold text-amber-400 uppercase tracking-widest block mb-2">Theoretical Framework</span>
+                <h1 class="text-4xl md:text-5xl font-bold mb-4 text-white">The Welfare Floor as a Corporate Micro-Subsidy</h1>
+                <h2 class="text-xl text-slate-300 font-light italic mb-6">A Thermodynamic and Structural Analysis of Fiat Flow</h2>
+                
+                <!-- Global Level Switcher -->
+                <div class="bg-slate-800/80 backdrop-blur border border-slate-700 p-1 rounded-full inline-flex select-none text-[10px] font-bold shadow-md">
+                    <button id="global-btn-eli5" onclick="setGlobalLevel('eli5')" class="global-level-btn px-4 py-1.5 rounded-full text-slate-400 hover:text-slate-200 transition-all uppercase">ELI5</button>
+                    <button id="global-btn-eli18" onclick="setGlobalLevel('eli18')" class="global-level-btn px-4 py-1.5 rounded-full text-slate-400 hover:text-slate-200 transition-all uppercase">ELI18</button>
+                    <button id="global-btn-expert" onclick="setGlobalLevel('expert')" class="global-level-btn px-4 py-1.5 rounded-full text-white bg-slate-900 shadow transition-all uppercase">Expert Mode</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="max-w-4xl mx-auto px-6 py-16">
+            <!-- Summary Stats Dashboard Header -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16">
+                <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200 shadow-sm text-center">
+                    <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider block mb-1">Bottom-Quintile MPC</span>
+                    <strong class="text-3xl font-serif text-amber-500 font-bold block">0.60 - 1.00+</strong>
+                    <span class="text-[10px] text-slate-400 block mt-1">High Velocity Circulation</span>
+                </div>
+                <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200 shadow-sm text-center">
+                    <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider block mb-1">CRA Landlord Capture</span>
+                    <strong class="text-3xl font-serif text-amber-500 font-bold block">33%</strong>
+                    <span class="text-[10px] text-slate-400 block mt-1">Direct Landlord Yield Subsidy</span>
+                </div>
+                <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200 shadow-sm text-center">
+                    <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider block mb-1">NDIS Provider Margin</span>
+                    <strong class="text-3xl font-serif text-amber-500 font-bold block">40% - 60%</strong>
+                    <span class="text-[10px] text-slate-400 block mt-1">Voucher System Profitability</span>
+                </div>
+                <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200 shadow-sm text-center">
+                    <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider block mb-1">Top-Quintile MPC</span>
+                    <strong class="text-3xl font-serif text-slate-800 font-bold block">0.04 - 0.06</strong>
+                    <span class="text-[10px] text-slate-400 block mt-1">Capital Hoarding Trap</span>
+                </div>
+            </div>
+
+            <!-- SECTION 1 -->
+            <section class="mb-20 scroll-mt-36 border-b border-slate-100 pb-12" id="section-synthesis">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-2">
+                    <h2 class="text-2xl font-bold font-serif">Executive Synthesis and Theoretical Framework</h2>
+                    <div class="inline-flex rounded-full bg-slate-100 p-0.5 border border-slate-200" data-section="synthesis">
+                        <button onclick="setSectionLevel('synthesis', 'eli5')" class="level-btn-eli5 px-2.5 py-0.5 rounded-full text-[9px] font-bold text-slate-500 transition-all uppercase">ELI5</button>
+                        <button onclick="setSectionLevel('synthesis', 'eli18')" class="level-btn-eli18 px-2.5 py-0.5 rounded-full text-[9px] font-bold text-slate-500 transition-all uppercase">ELI18</button>
+                        <button onclick="setSectionLevel('synthesis', 'expert')" class="level-btn-expert px-2.5 py-0.5 rounded-full text-[9px] font-bold text-white bg-slate-900 shadow-sm transition-all uppercase">Expert</button>
+                    </div>
+                </div>
+                
+                <div>
+                    <p class="content-expert text-slate-800">Within contemporary macroeconomic orthodoxy, the welfare state—comprising age pensions, unemployment benefits, disability support mechanisms, and rental assistance—is conventionally modeled as a unilateral fiscal liability. Mainstream neoclassical paradigms frame these expenditures as passive, charitable drains on the public treasury, necessitating future taxation or debt monetization to balance the national ledger. However, when analyzed through the advanced frameworks of heterodox macroeconomics, stock-flow consistent (SFC) modeling, and the thermodynamic principles of econophysics, this prevailing narrative is revealed to be structurally incomplete and mechanically flawed.</p>
+                    <p class="content-eli18 hidden text-slate-700">In standard neoclassical economics, the welfare state—including pensions, unemployment benefits, and disability support—is conventionally treated as a unilateral debt liability that acts as a drain on the public treasury, requiring future tax increases to balance the books.</p>
+                    <p class="content-eli5 hidden text-slate-700">Most people think the government gives welfare money to poor people just to be nice, and that it is a waste of government money that leaves the state in debt.</p>
+                </div>
+                
+                <div>
+                    <p class="content-expert text-slate-800">This comprehensive analysis proposes a fundamental structural reframe: the welfare apparatus functions not as a passive charitable outlay, but as an active, high-velocity "indirect moral micro-subsidy" directed explicitly toward the corporate sector. In this paradigm, the vulnerable citizen serves as a biological conduit. The state injects fiat currency at the base of the economic pyramid, fully cognizant that the structural necessities of biological survival—food, shelter, and care—guarantee that this liquidity will be immediately and irrevocably captured by highly concentrated private monopolies. Specifically, this fiat flow is channeled into retail grocery duopolies, the private rental market, and privatized care networks. By subsidizing the baseline survival of the citizen, the state algorithmically underwrites the revenue floors, profit margins, and risk profiles of the broader corporate sector.</p>
+                    <p class="content-eli18 hidden text-slate-700">However, looking at sector-by-sector flows, welfare functions as a corporate subsidy. The government gives money to low-income citizens (who serve as biological conduits). Because they must spend it immediately to survive, this money is captured right away by grocery and housing monopolies, underwriting their profit margins.</p>
+                    <p class="content-eli5 hidden text-slate-700">But really, it works like a water recycling system. The government pumps money to the bottom (struggling families), but since they need it immediately to survive, they spend it on food and rent. The money flows straight to the top (big supermarkets and landlords). So, welfare is actually a hidden helper for big businesses.</p>
+                </div>
+
+                <div>
+                    <p class="content-expert text-slate-800">By applying the Kalecki-Levy profit equation, Marginal Propensity to Consume (MPC) differentials, and the mechanics of "sellers' inflation," this analysis maps the exact net macroeconomic benefit of formally acknowledging welfare as a corporate micro-subsidy. The research executed across four vectors—velocity discrepancy, monopoly capture, inflationary friction, and the required paradigm shift—demonstrates that welfare is an active systemic stabilizer. It is engineered to prevent the thermodynamic collapse of the fiat system by ensuring the continuous circulation of economic energy in an otherwise entropy-bound, financialized architecture.</p>
+                    <p class="content-eli18 hidden text-slate-700">By applying the Kalecki-Levy profit equation, MPC differentials, and 'sellers' inflation' models, we can map this flow. Welfare acts as an active systemic stabilizer to prevent the fiat currency system from experiencing a thermodynamic collapse.</p>
+                    <p class="content-eli5 hidden text-slate-700">By looking at how money moves, we can see that this spending keeps the whole financial machine from breaking down by making sure money never stops moving in our economic engine.</p>
+                </div>
+            </section>
+
+            <!-- SECTION 2 -->
+            <section class="mb-20 scroll-mt-36 border-b border-slate-100 pb-12" id="section-vector1-mpc">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-2">
+                    <h2 class="text-2xl font-bold font-serif border-l-4 border-amber-500 pl-4">Vector 1: Velocity &amp; Multipliers</h2>
+                    <div class="inline-flex rounded-full bg-slate-100 p-0.5 border border-slate-200" data-section="vector1-mpc">
+                        <button onclick="setSectionLevel('vector1-mpc', 'eli5')" class="level-btn-eli5 px-2.5 py-0.5 rounded-full text-[9px] font-bold text-slate-500 transition-all uppercase">ELI5</button>
+                        <button onclick="setSectionLevel('vector1-mpc', 'eli18')" class="level-btn-eli18 px-2.5 py-0.5 rounded-full text-[9px] font-bold text-slate-500 transition-all uppercase">ELI18</button>
+                        <button onclick="setSectionLevel('vector1-mpc', 'expert')" class="level-btn-expert px-2.5 py-0.5 rounded-full text-[9px] font-bold text-white bg-slate-900 shadow-sm transition-all uppercase">Expert</button>
+                    </div>
+                </div>
+                <h3 class="text-xl font-bold mb-3 text-slate-900">The Kinetics of Fiat Injection and the Marginal Propensity to Consume</h3>
+                
+                <div>
+                    <p class="content-expert text-slate-800">The mechanical impact of a fiat injection into a closed or semi-closed economic system is dictated by the velocity at which the currency changes hands. The fundamental metric for measuring this kinetic impact is the Marginal Propensity to Consume (MPC). Under the orthodox permanent income hypothesis (PIH), households that are not liquidity-constrained smooth their consumption over time, yielding a remarkably low MPC out of transitory income shocks. However, empirical microeconomic studies consistently demonstrate a stark divergence in MPC across income and wealth quintiles, fundamentally altering the macroeconomic multiplier of state expenditures depending on the exact point of injection.</p>
+                    <p class="content-eli18 hidden text-slate-700">The impact of a government cash injection depends on the velocity of money—how fast it changes hands. We measure this with the Marginal Propensity to Consume (MPC), which is the fraction of extra income a person spends rather than saves.</p>
+                    <p class="content-eli5 hidden text-slate-700">How fast money moves in the economy determines how healthy it is. We measure this speed by seeing how much of an extra dollar a person spends right away (how fast they consume).</p>
+                </div>
+
+                <div>
+                    <p class="content-expert text-slate-800">Data from the Household, Income and Labour Dynamics in Australia (HILDA) Survey, alongside international macroeconomic modeling, confirms that low-income and low-wealth households operate with an MPC approaching 1.0, and in some highly constrained demographics, the MPC exceeds 1.0 due to the urgent servicing of existing debt architectures and deferred essential consumption. For households in the lowest wealth quintile, the MPC out of transfer payments is significantly higher than that of the highest wealth quintile, which often exhibits an aggregate MPC as low as 0.04 to 0.06.</p>
+                    <p class="content-eli18 hidden text-slate-700">Survey data shows that low-income and low-wealth households have an MPC near 1.0, meaning they spend almost all extra cash immediately on survival and debt. High-income households have an MPC of only 0.05, meaning they save or hoard almost all of it.</p>
+                    <p class="content-eli5 hidden text-slate-700">If you give ten dollars to a kid who has no toys, they spend it immediately because they need it to survive and pay off any debts. If you give it to a rich kid, they will just put it in a piggy bank and do nothing with it.</p>
+                </div>
+
+                <div>
+                    <p class="content-expert text-slate-800">When the state injects a dollar via a bottom-up welfare transfer, such as the JobSeeker payment or the Age Pension, the liquidity constraint of the recipient guarantees immediate domestic consumption. The fiat energy is transferred instantly into the retail, energy, and housing sectors. This kinetic transfer is highly efficient. Conversely, when the state injects a dollar via a top-down corporate tax cut or a direct industrial subsidy, the capital is absorbed by entities with a negligible MPC. Multinational corporations and high-net-worth shareholders typically allocate this capital toward share buybacks, dividend distributions, or offshore tax havens. This behavior effectively stalls the domestic velocity of money, acting as a thermodynamic "heat sink" that removes kinetic energy from the real economy and accelerates systemic entropy.</p>
+                    <p class="content-eli18 hidden text-slate-700">When the government gives welfare, that cash is spent immediately in retail, energy, and housing. When the government gives corporate tax cuts, the money is hoarded by wealthy shareholders in share buybacks or tax havens, stalling the velocity of money.</p>
+                    <p class="content-eli5 hidden text-slate-700">Welfare goes to people who spend it right away on food and rent. Corporate tax cuts go to rich companies who just lock it away in bank accounts for share buybacks and dividends, which stops the money from moving.</p>
+                </div>
+
+                <!-- Interactive Chart 1: MPC vs Income Quintiles -->
+                <div class="my-8 bg-slate-50 border border-slate-200 p-6 rounded-2xl shadow-sm">
+                    <h4 class="font-serif font-bold text-center text-slate-800 text-lg mb-4">Marginal Propensity to Consume (MPC) by Household Wealth Quintile</h4>
+                    <div class="h-64">
+                        <canvas id="chart-mpc"></canvas>
+                    </div>
+                    <p class="text-[10px] text-slate-500 text-center mt-3">Synthesized from HILDA survey estimates, RBA Research discussion papers, and IMF wealth distribution studies.</p>
+                </div>
+
+                <!-- Comparison Table -->
+                <div class="overflow-x-auto my-6 border border-slate-200 rounded-lg shadow-sm">
+                    <table class="w-full text-left text-sm whitespace-nowrap">
+                        <thead>
+                            <tr class="bg-slate-100 text-slate-900">
+                                <th class="p-3 font-bold">Transfer Mechanism</th>
+                                <th class="p-3 font-bold">Recipient</th>
+                                <th class="p-3 font-bold">Est. Aggregate MPC</th>
+                                <th class="p-3 font-bold">Velocity / Kinetic Impact</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-200">
+                            <tr>
+                                <td class="p-3 font-semibold">Age Pension / JobSeeker</td>
+                                <td class="p-3">Bottom 20% Quintile</td>
+                                <td class="p-3 font-bold text-emerald-600">0.60 - 1.00+</td>
+                                <td class="p-3">High (Immediate circulation)</td>
+                            </tr>
+                            <tr class="bg-slate-50">
+                                <td class="p-3 font-semibold">Targeted Lump-Sum Bonus</td>
+                                <td class="p-3">Liquidity-Constrained</td>
+                                <td class="p-3 font-bold text-amber-600">0.20 - 0.60</td>
+                                <td class="p-3">Moderate to High</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-semibold">Corporate Tax Cut</td>
+                                <td class="p-3">Large Corporations</td>
+                                <td class="p-3 font-bold text-rose-600">0.04 - 0.15</td>
+                                <td class="p-3">Low (Capital hoarding)</td>
+                            </tr>
+                            <tr class="bg-slate-50">
+                                <td class="p-3 font-semibold">Fossil Fuel Subsidy</td>
+                                <td class="p-3">Energy Monopolies</td>
+                                <td class="p-3 font-bold text-rose-600">&lt; 0.10</td>
+                                <td class="p-3">Low (Systemic extraction)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- SECTION 3 -->
+            <section class="mb-20 scroll-mt-36 border-b border-slate-100 pb-12" id="section-vector1-multipliers">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-2">
+                    <h3 class="text-xl font-bold mb-3 text-slate-900 border-l-2 border-amber-500 pl-3">Keynesian Multipliers, Corporate Tax Cuts, and Thermodynamic Flow</h3>
+                    <div class="inline-flex rounded-full bg-slate-100 p-0.5 border border-slate-200" data-section="vector1-multipliers">
+                        <button onclick="setSectionLevel('vector1-multipliers', 'eli5')" class="level-btn-eli5 px-2.5 py-0.5 rounded-full text-[9px] font-bold text-slate-500 transition-all uppercase">ELI5</button>
+                        <button onclick="setSectionLevel('vector1-multipliers', 'eli18')" class="level-btn-eli18 px-2.5 py-0.5 rounded-full text-[9px] font-bold text-slate-500 transition-all uppercase">ELI18</button>
+                        <button onclick="setSectionLevel('vector1-multipliers', 'expert')" class="level-btn-expert px-2.5 py-0.5 rounded-full text-[9px] font-bold text-white bg-slate-900 shadow-sm transition-all uppercase">Expert</button>
+                    </div>
+                </div>
+                
+                <div>
+                    <p class="content-expert text-slate-800">The Keynesian multiplier effect of bottom-up micro-subsidies vastly outperforms corporate grants. Dynamic stochastic general equilibrium (DSGE) models and Post-Keynesian Stock-Flow Consistent (SFC) models indicate that the expenditure multiplier for government transfers to low-wealth households is substantially larger than the standard single MPC multiplier, often exceeding <strong>1.5</strong> during periods of accommodative monetary policy or crisis. In stark contrast, the empirical literature regarding corporate tax cuts demonstrates fragile and often negligible growth effects. Meta-regression analyses of corporate tax impacts reveal that, when correcting for publication bias, the hypothesis of a zero effect of corporate taxes on economic growth cannot be statistically rejected.</p>
+                    <p class="content-eli18 hidden text-slate-700">Because low-wealth households spend their money immediately, bottom-up welfare has a Keynesian multiplier of over 1.5, meaning every dollar spent creates more than a dollar of total economic activity. Corporate tax cuts, by contrast, have a multiplier close to zero because the money is hoarded.</p>
+                    <p class="content-eli5 hidden text-slate-700">When you spend a dollar, that dollar becomes someone else's income, and then they spend it again. This multiplying effect is called a Keynesian multiplier, which makes the dollar grow to be worth more than $1.50 for the economy. Corporate tax cuts get locked away in corporate bank accounts, making no new growth.</p>
+                </div>
+
+                <div>
+                    <p class="content-expert text-slate-800">In a thermodynamic economic model, money density (\(\rho\)) and money flow (\(\vec{J}\)) parallel the laws of energy transfer in physical systems. Welfare payments represent an injection of high-entropy "heat" that rapidly diffuses through the system, performing economic "work" by facilitating transactional volume. Because welfare recipients lack the wealth buffers to store this energy as static savings, the fiat flows unimpeded to the corporate sector. Thus, the multiplier effect dictates that a single fiat dollar injected via welfare changes hands multiple times domestically, directly supporting the revenue architectures of local supply chains. A dollar injected via a corporate tax cut is rapidly sequestered, increasing the system's entropy without performing localized economic work, resulting in an adiabatic stagnation.</p>
+                    <p class="content-eli18 hidden text-slate-700">In physics-based economic models, money acts like heat energy. Welfare is a hot injection that diffuses quickly to do real economic work. Corporate tax cuts create cold stagnation (adiabatic stagnation), removing energy from circulation.</p>
+                    <p class="content-eli5 hidden text-slate-700">Think of money like heat in physics: it needs to flow around to keep everyone warm. If the money stops moving, it creates cold stagnation and the economy freezes up.</p>
+                </div>
+            </section>
+
+            <!-- SECTION 4 -->
+            <section class="mb-20 scroll-mt-36 border-b border-slate-100 pb-12" id="section-vector1-covid">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-2">
+                    <h3 class="text-xl font-bold mb-3 text-slate-900 border-l-2 border-amber-500 pl-3">Historical Precedent: The COVID-19 Stimulus and Corporate Welfare</h3>
+                    <div class="inline-flex rounded-full bg-slate-100 p-0.5 border border-slate-200" data-section="vector1-covid">
+                        <button onclick="setSectionLevel('vector1-covid', 'eli5')" class="level-btn-eli5 px-2.5 py-0.5 rounded-full text-[9px] font-bold text-slate-500 transition-all uppercase">ELI5</button>
+                        <button onclick="setSectionLevel('vector1-covid', 'eli18')" class="level-btn-eli18 px-2.5 py-0.5 rounded-full text-[9px] font-bold text-slate-500 transition-all uppercase">ELI18</button>
+                        <button onclick="setSectionLevel('vector1-covid', 'expert')" class="level-btn-expert px-2.5 py-0.5 rounded-full text-[9px] font-bold text-white bg-slate-900 shadow-sm transition-all uppercase">Expert</button>
+                    </div>
+                </div>
+                
+                <div>
+                    <p class="content-expert text-slate-800">The macroeconomic response to the COVID-19 pandemic provides a pristine historical precedent illustrating this velocity discrepancy. In Australia, the fiscal response was bifurcated into bottom-up income support (the Coronavirus Supplement to JobSeeker) and top-down corporate wage subsidies (the JobKeeper program). Macroeconomic evaluations demonstrated that fiscal stimulus providing $1 of compensation for every $1 of private income lost via bottom-up transfers generated optimal employment and consumption outcomes. The JobSeeker enhancements kept millions out of poverty and sustained the foundational consumption required to keep the retail sector solvent.</p>
+                    <p class="content-eli18 hidden text-slate-700">During COVID-19, the bottom-up JobSeeker supplement kept millions of citizens out of poverty and sustained basic retail consumption because the cash circulated immediately.</p>
+                    <p class="content-eli5 hidden text-slate-700">During the pandemic, the government gave money directly to struggling citizens (JobSeeker supplement), which kept millions out of poverty and was spent immediately on food and rent, keeping local shops alive.</p>
+                </div>
+
+                <div>
+                    <p class="content-expert text-slate-800">Conversely, JobKeeper became the largest single corporate welfare transfer in Australian history. Due to structural flaws and a lack of claw-back mechanisms for profitable entities, an estimated <strong>A$20 Billion</strong> of public money was paid to corporate entities that actually experienced an <em>increase</em> in turnover during the pandemic. These payments flowed directly into executive bonuses and shareholder dividends for multinational corporations, including entities domiciled in offshore tax havens. This represented a massive thermodynamic deadweight loss. The state injected extraordinary volumes of fiat into the apex of the corporate structure, where the MPC is lowest, resulting in asset price inflation rather than real economic output or sustained velocity. The contrast between these two policies highlights the structural superiority of utilizing the citizen as a biological conduit; welfare guarantees that the fiat actually traverses the real economy before settling onto the corporate balance sheet.</p>
+                    <p class="content-eli18 hidden text-slate-700">Conversely, the JobKeeper corporate wage subsidy leaked A$20 billion to profitable companies that didn't need it. Instead of helping workers, these companies paid executive bonuses and shareholder dividends, or moved cash offshore, showing how top-down subsidies get hoarded.</p>
+                    <p class="content-eli5 hidden text-slate-700">They also gave money to businesses (JobKeeper wage subsidies), but A$20 billion of that money leaked to companies that made record profits. Instead of helping workers, these profitable companies kept the cash for executive bonuses and shareholder dividends, and some even hid it in tax havens offshore.</p>
+                </div>
+            </section>
+
+            <!-- SECTION 5 -->
+            <section class="mb-20 scroll-mt-36 border-b border-slate-100 pb-12" id="section-vector2-kalecki">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-2">
+                    <h2 class="text-2xl font-bold font-serif border-l-4 border-amber-500 pl-4">Vector 2: Monopoly Capture and Baseline Subsidy</h2>
+                    <div class="inline-flex rounded-full bg-slate-100 p-0.5 border border-slate-200" data-section="vector2-kalecki">
+                        <button onclick="setSectionLevel('vector2-kalecki', 'eli5')" class="level-btn-eli5 px-2.5 py-0.5 rounded-full text-[9px] font-bold text-slate-500 transition-all uppercase">ELI5</button>
+                        <button onclick="setSectionLevel('vector2-kalecki', 'eli18')" class="level-btn-eli18 px-2.5 py-0.5 rounded-full text-[9px] font-bold text-slate-500 transition-all uppercase">ELI18</button>
+                        <button onclick="setSectionLevel('vector2-kalecki', 'expert')" class="level-btn-expert px-2.5 py-0.5 rounded-full text-[9px] font-bold text-white bg-slate-900 shadow-sm transition-all uppercase">Expert</button>
+                    </div>
+                </div>
+                <h3 class="text-xl font-bold mb-3 text-slate-900">The Kalecki-Levy Profit Equation and Structural Deficits</h3>
+                
+                <div>
+                    <p class="content-expert text-slate-800">To understand the exact dependency of private monopolies on the welfare floor, one must utilize the Kalecki-Levy profit equation. Originally articulated by Jerome Levy in 1908 and mathematically formalized by Michal Kalecki in the 1930s, this accounting identity establishes the macro-foundations of corporate profitability. It demonstrates that aggregate corporate profits are not generated in a vacuum, nor are they solely the result of entrepreneurial innovation; rather, they are the mathematical result of specific sectoral balances. The equation is formally expressed as:</p>
+                    <p class="content-eli18 hidden text-slate-700">To see how private monopolies depend on welfare, we use the Kalecki-Levy profit equation. This equation shows that corporate profits are not created in a vacuum or just from business ideas. Instead, they are the mathematical result of how different sectors spend money. The equation is written as:</p>
+                    <p class="content-eli5 hidden text-slate-700">To see how big businesses depend on welfare, we use a simple rule called the Kalecki-Levy profit equation. This rule shows that businesses cannot make profits unless someone else spends money. The equation is written as:</p>
+                </div>
+
+                <!-- KaTeX Container -->
+                <div class="bg-slate-50 border border-slate-200 p-6 rounded-xl my-6 text-center shadow-sm">
+                    <div class="text-2xl font-serif mb-4 text-slate-900" id="katex-eq">
+                        $$P = I + Def + NX + C_c - S_w$$
+                    </div>
+                    <!-- Variable Explanations Swapped per Mode -->
+                    <p class="text-xs text-slate-600 content-expert">
+                        Where \(P\) = Realized aggregate corporate profits, \(I\) = Gross private domestic investment, \(Def\) = Government budget deficit (spending minus taxes), \(NX\) = Net exports, \(C_c\) = Capitalists' consumption, \(S_w\) = Workers' savings.
+                    </p>
+                    <p class="text-xs text-slate-600 content-eli18 hidden">
+                        Where: Profits (\(P\)) = Investment (\(I\)) + Government Deficit spending (\(Def\)) + Net Exports (\(NX\)) + Business Owner consumption (\(C_c\)) - Wage-earner savings (\(S_w\)).
+                    </p>
+                    <p class="text-xs text-slate-600 content-eli5 hidden">
+                        In simple words: Company Profits (\(P\)) = Private Investment (\(I\)) + Government Deficit Spending (\(Def\)) + Trade Balance (\(NX\)) + Owner Spending (\(C_c\)) - Worker Savings (\(S_w\)).
+                    </p>
+                </div>
+
+                <div>
+                    <p class="content-expert text-slate-800">This immutable macroeconomic identity dictates that the government budget deficit (\(Def\)) is a direct, positive determinant of aggregate corporate profits. When the state issues fiat to fund welfare programs (increasing \(Def\)), and the recipients immediately spend this fiat to survive (driving \(S_w\) into negative territory through dissaving, or zero-saving), the capital flows symmetrically into the profit margins of the corporate sector (\(P\)). The welfare state is therefore the mechanical engine of corporate profitability in a financialized economy where private investment (\(I\)) is chronically weak. If the state were to enact an algorithmic austerity event—removing the welfare floor—the government deficit would shrink, household dissaving would collapse, and by strict mathematical necessity, aggregate corporate profits would contract violently.</p>
+                    <p class="content-eli18 hidden text-slate-700">This macroeconomic rule shows that the government budget deficit (\(Def\)) directly determines aggregate corporate profits (\(P\)). When the state funds welfare programs (which increases the deficit, \(Def\)), and the recipients spend this money immediately to survive (meaning their savings, \(S_w\), are zero or negative), this cash flows straight into corporate profit margins (\(P\)). Welfare is therefore the main driver of corporate profits in an economy where private business investment (\(I\)) is weak. If the government were to cut welfare (enacting budget austerity), the deficit (\(Def\)) would shrink, household spending would collapse, and corporate profits (\(P\)) would fall dramatically by accounting necessity.</p>
+                    <p class="content-eli5 hidden text-slate-700">This math rule means that the government spending more than it taxes (the deficit, \(Def\)) is what creates company profits (\(P\)). When the government pays welfare (increasing \(Def\)), and the people spend it immediately to buy things (meaning their savings, \(S_w\), are zero or negative), that money goes straight into company profits (\(P\)). Welfare is the engine that keeps companies profitable because private investments (\(I\)) are very weak. If the government cuts welfare (austerity), the deficit (\(Def\)) shrinks, people stop spending, and company profits (\(P\)) collapse immediately.</p>
+                </div>
+
+                <!-- Interactive Chart 2: Fortnightly Welfare Allocation Capture -->
+                <div class="my-8 bg-slate-50 border border-slate-200 p-6 rounded-2xl shadow-sm">
+                    <h4 class="font-serif font-bold text-center text-slate-800 text-lg mb-4">Fortnightly Flow-Through Capture of Welfare Payments (Mean Allocations)</h4>
+                    <div class="h-64">
+                        <canvas id="chart-flowthrough"></canvas>
+                    </div>
+                    <p class="text-[10px] text-slate-500 text-center mt-3">Visualizes the destination of key household outlays to oligopolies from a base Pension/DSP or JobSeeker payment.</p>
+                </div>
+            </section>
+
+            <!-- SECTION 6 -->
+            <section class="mb-20 scroll-mt-36 border-b border-slate-100 pb-12" id="section-vector2-grocery">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-2">
+                    <h3 class="text-xl font-bold mb-3 text-slate-900 border-l-2 border-amber-500 pl-3">Supermarket Duopolies: Extracting the Nutritional Subsidy</h3>
+                    <div class="inline-flex rounded-full bg-slate-100 p-0.5 border border-slate-200" data-section="vector2-grocery">
+                        <button onclick="setSectionLevel('vector2-grocery', 'eli5')" class="level-btn-eli5 px-2.5 py-0.5 rounded-full text-[9px] font-bold text-slate-500 transition-all uppercase">ELI5</button>
+                        <button onclick="setSectionLevel('vector2-grocery', 'eli18')" class="level-btn-eli18 px-2.5 py-0.5 rounded-full text-[9px] font-bold text-slate-500 transition-all uppercase">ELI18</button>
+                        <button onclick="setSectionLevel('vector2-grocery', 'expert')" class="level-btn-expert px-2.5 py-0.5 rounded-full text-[9px] font-bold text-white bg-slate-900 shadow-sm transition-all uppercase">Expert</button>
+                    </div>
+                </div>
+                
+                <div>
+                    <p class="content-expert text-slate-800">The Australian retail grocery sector provides a flawless empirical model of this capture mechanism. The market is defined by a highly concentrated oligopoly, with Coles Group and Woolworths Group commanding approximately 67% of total supermarket retail sales nationally. Because food is a perfectly inelastic requirement for biological survival, the state's welfare payments act as a direct, inescapable subsidy to these retailers.</p>
+                    <p class="content-eli18 hidden text-slate-700">The Australian retail grocery sector is a concentrated duopoly, with Coles and Woolworths commanding 67% of sales. Because food is necessary for survival, welfare spending acts as a guaranteed subsidy to these two supermarkets.</p>
+                    <p class="content-eli5 hidden text-slate-700">In Australia, two giant companies (Coles and Woolworths) control 67% of all the food. Since poor people must eat, a huge chunk of their government payment goes straight to these two supermarkets.</p>
+                </div>
+
+                <div>
+                    <p class="content-expert text-slate-800">Analysis of household expenditure reveals the depth of this dependency. Low-income households in the bottom quintile allocate an average of 16.4% of their gross disposable income to food, compared to just 5.1% for the highest income quintile. Specific vulnerable demographics are even more heavily burdened; for instance, single parents with dependent children spend 11.6% of their disposable income on food, and elderly single persons spend 9.8%. Consequently, Australia's A$163.8 billion annual social security expenditure is disproportionately routed straight through supermarket checkouts.</p>
+                    <p class="content-eli18 hidden text-slate-700">Low-income households spend 16.4% of their budget on food (vulnerable single parents spend 11.6%) compared to just 5.1% for the highest income quintile. This means social security funds are disproportionately captured by the duopoly.</p>
+                    <p class="content-eli5 hidden text-slate-700">Poor families spend 16.4% of all their money on food (and single parents spend 11.6%), while rich families only spend 5.1%. This means government money goes straight to the supermarkets.</p>
+                </div>
+
+                <div>
+                    <p class="content-expert text-slate-800">During the post-2020 inflationary period, these duopolies utilized their market power to expand their earnings before interest and taxes (EBIT) margins. Woolworths' Australian Food EBIT margin expanded from 4.7% in 2018 to 6.0% in 2023, while Coles Supermarkets' EBIT margin rose to 4.8%. This margin expansion, applied to a colossal revenue stream inherently underwritten by state welfare distributions (with Coles generating A$37.28 billion in revenue), resulted in over A$1 billion in "extra" profit for the sector compared to pre-pandemic norms. If the welfare micro-subsidy were removed, the immediate insolvency impact on the private retail sector would be catastrophic. The sudden destruction of baseline consumer demand would trigger a deflationary spiral, as the 16.4% of low-income fiat flow currently guaranteeing the duopoly's cash flow would evaporate, collapsing the Kalecki-Levy profit pipeline entirely.</p>
+                    <p class="content-eli18 hidden text-slate-700">During recent inflation, these duopolies expanded their profit margins (Woolworths to 6.0% and Coles to 4.8%), extracting over A$1 billion in excess profits from welfare funds. Removing welfare would collapse consumer demand and destroy their revenue.</p>
+                    <p class="content-eli5 hidden text-slate-700">During price rises, these supermarkets raised their profit margins (from 4.7% to 6.0%), taking over A$1 billion in extra profits from government welfare funds. If welfare were stopped, their revenue would collapse instantly.</p>
+                </div>
+            </section>
+
+            <!-- SECTION 7 -->
+            <section class="mb-20 scroll-mt-36 border-b border-slate-100 pb-12" id="section-vector2-rental">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-2">
+                    <h3 class="text-xl font-bold mb-3 text-slate-900 border-l-2 border-amber-500 pl-3">The Private Rental Market: Subsidizing Asset Yields</h3>
+                    <div class="inline-flex rounded-full bg-slate-100 p-0.5 border border-slate-200" data-section="vector2-rental">
+                        <button onclick="setSectionLevel('vector2-rental', 'eli5')" class="level-btn-eli5 px-2.5 py-0.5 rounded-full text-[9px] font-bold text-slate-500 transition-all uppercase">ELI5</button>
+                        <button onclick="setSectionLevel('vector2-rental', 'eli18')" class="level-btn-eli18 px-2.5 py-0.5 rounded-full text-[9px] font-bold text-slate-500 transition-all uppercase">ELI18</button>
+                        <button onclick="setSectionLevel('vector2-rental', 'expert')" class="level-btn-expert px-2.5 py-0.5 rounded-full text-[9px] font-bold text-white bg-slate-900 shadow-sm transition-all uppercase">Expert</button>
+                    </div>
+                </div>
+                
+                <div>
+                    <p class="content-expert text-slate-800">The Commonwealth Rent Assistance (CRA) program serves as another direct conduit for corporate and private landlord welfare. Costing the federal government A$5.5 billion in the 2023-2024 financial year, the CRA is a demand-side subsidy explicitly designed to assist low-income private renters and is distributed to over 1.3 million income units. However, in a severely supply-constrained, financialized housing market, this fiat injection is rapidly captured by property investors and Real Estate Investment Trusts (REITs).</p>
+                    <p class="content-eli18 hidden text-slate-700">Commonwealth Rent Assistance (CRA) costs the government A$5.5 billion annually for 1.3 million low-income renters. In a supply-constrained housing market, this subsidy is captured by private landlords and real estate trusts.</p>
+                    <p class="content-eli5 hidden text-slate-700">The government spends A$5.5 billion a year on Rent Assistance for 1.3 million homes. But in tight markets, landlords capture 33 cents of every single subsidy dollar by raising rents.</p>
+                </div>
+
+                <div>
+                    <p class="content-expert text-slate-800">Microeconomic modeling of subsidy incidence reveals that while the CRA does modestly reduce rent stress for a specific cohort of recipients, a highly significant portion of the subsidy is captured by landlords through localized rent inflation. In disadvantaged areas characterized by inelastic housing supply, empirical estimates suggest that nearly <strong>33 cents of every CRA dollar</strong> is absorbed directly into rent increases. Furthermore, because the CRA is historically indexed to the general Consumer Price Index (CPI) rather than the specific rent component of the CPI, the payment structurally lags behind actual housing costs. This structural lag forces the tenant to direct an ever-increasing share of their base income support (such as the Age Pension or JobSeeker) toward rent, allowing landlords to extract the maximum possible yield from the state's welfare provisions. The state effectively acts as a guarantor for private real estate yields, ensuring that highly leveraged property investors do not face mass defaults from low-income tenants, thereby socializing the risk of property investment while privatizing the rental yields.</p>
+                    <p class="content-eli18 hidden text-slate-700">Landlords capture 33 cents of every subsidy dollar through rent inflation. Because indexation lags behind rent price rises, tenants must divert base welfare to pay rent, socializing property investment risks while privatizing yields.</p>
+                    <p class="content-eli5 hidden text-slate-700">Because the payment lags behind actual rent increases, tenants must use their base pension or JobSeeker money to cover the gap. This setup socializes property investment risks while privatizing the rental yields for property investors.</p>
+                </div>
+            </section>
+
+            <!-- SECTION 8 -->
+            <section class="mb-20 scroll-mt-36 border-b border-slate-100 pb-12" id="section-vector2-ndis">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-2">
+                    <h3 class="text-xl font-bold mb-3 text-slate-900 border-l-2 border-amber-500 pl-3">The Financialization of Care: The NDIS as a Corporate Asset Class</h3>
+                    <div class="inline-flex rounded-full bg-slate-100 p-0.5 border border-slate-200" data-section="vector2-ndis">
+                        <button onclick="setSectionLevel('vector2-ndis', 'eli5')" class="level-btn-eli5 px-2.5 py-0.5 rounded-full text-[9px] font-bold text-slate-500 transition-all uppercase">ELI5</button>
+                        <button onclick="setSectionLevel('vector2-ndis', 'eli18')" class="level-btn-eli18 px-2.5 py-0.5 rounded-full text-[9px] font-bold text-slate-500 transition-all uppercase">ELI18</button>
+                        <button onclick="setSectionLevel('vector2-ndis', 'expert')" class="level-btn-expert px-2.5 py-0.5 rounded-full text-[9px] font-bold text-white bg-slate-900 shadow-sm transition-all uppercase">Expert</button>
+                    </div>
+                </div>
+                
+                <div>
+                    <p class="content-expert text-slate-800">The National Disability Insurance Scheme (NDIS), with a projected total expenditure of A$211.3 billion over the four years from 2024-25, represents the ultimate evolution of the welfare-to-corporate subsidy pipeline. While functioning ostensibly as a critical social safety net, the NDIS operates mechanically as a highly lucrative, privatized procurement system. By transitioning from direct state provision of care to a marketized voucher system, the state has birthed an entirely new corporate asset class.</p>
+                    <p class="content-eli18 hidden text-slate-700">The NDIS will cost A$211.3 billion over four years, transitioning from public care to a marketized voucher system. This has turned disability support into a lucrative corporate asset class.</p>
+                    <p class="content-eli5 hidden text-slate-700">The government transitioned care to a voucher system called the NDIS, which will cost A$211.3 billion over four years. This turned care into a corporate asset class where companies make massive profits off government money.</p>
+                </div>
+
+                <div>
+                    <p class="content-expert text-slate-800">Business profitability analysis of NDIS providers reveals extraordinary margins driven entirely by state fiat injections. Support coordination services generate profit margins between 40% and 60%, while plan management services yield margins of 30% to 50%. Valuations for NDIS businesses regularly reach 3.5x to 5x EBITDA, driven by the absolute predictability of government-backed, inflation-adjusted revenue streams. By farming out the execution of care to private entities, the state guarantees a massive transfer of public wealth into private hands. The vulnerable citizen acts merely as the qualifying biological trigger required for the provider to draw down treasury funds. The provider's profitability is deeply reliant on this micro-subsidy; optimizing the roster, maximizing billable hours, and minimizing labor costs are the primary drivers of this sector's massive ROI, all funded by the public purse.</p>
+                    <p class="content-eli18 hidden text-slate-700">Private providers enjoy profit margins of 40% to 60% for support coordination and 30% to 50% for plan management, with business valuations reaching 3.5x to 5x EBITDA, converting vulnerable citizens into funding triggers for corporate revenue.</p>
+                    <p class="content-eli5 hidden text-slate-700">Private care managers enjoy huge profit margins (between 30% and 60%), and these businesses sell for 3.5x to 5x their earnings. Disabled people are used as the qualifying triggers to draw down state funds.</p>
+                </div>
+            </section>
+
+            <!-- SECTION 9 -->
+            <section class="mb-20 scroll-mt-36 border-b border-slate-100 pb-12" id="section-vector3-shield">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-2">
+                    <h2 class="text-2xl font-bold font-serif border-l-4 border-amber-500 pl-4">Vector 3: The "Moral Shield" and Inflationary Friction</h2>
+                    <div class="inline-flex rounded-full bg-slate-100 p-0.5 border border-slate-200" data-section="vector3-shield">
+                        <button onclick="setSectionLevel('vector3-shield', 'eli5')" class="level-btn-eli5 px-2.5 py-0.5 rounded-full text-[9px] font-bold text-slate-500 transition-all uppercase">ELI5</button>
+                        <button onclick="setSectionLevel('vector3-shield', 'eli18')" class="level-btn-eli18 px-2.5 py-0.5 rounded-full text-[9px] font-bold text-slate-500 transition-all uppercase">ELI18</button>
+                        <button onclick="setSectionLevel('vector3-shield', 'expert')" class="level-btn-expert px-2.5 py-0.5 rounded-full text-[9px] font-bold text-white bg-slate-900 shadow-sm transition-all uppercase">Expert</button>
+                    </div>
+                </div>
+                <h3 class="text-xl font-bold mb-3 text-slate-900">The Political Economy of Disguised Capital Flow</h3>
+                
+                <div>
+                    <p class="content-expert text-slate-800">The most sophisticated feature of the modern fiat system is its socio-epistemic architecture. By categorizing massive capital transfers to the poorest citizens as a "welfare burden," a "fiscal drain," or "charity," the state and the corporate sector deploy a powerful "moral shield." This framing achieves two critical structural outcomes. First, it stigmatizes the biological conduit (the citizen), thereby justifying punitive conditions, mutual obligation requirements, and the suppression of the labor market's broader wage-bargaining power. Second, and more importantly, it completely obfuscates the end-destination of the capital, shielding corporate cartels from antitrust scrutiny, price-gouging investigations, and the imposition of windfall taxes.</p>
+                    <p class="content-eli18 hidden text-slate-700">Categorizing transfers as a "welfare burden" acts as a moral shield. This framing justifies punitive mutual obligations and suppresses wage bargaining, while hiding the disguised capital flow: the fact that this public money is designed to route through citizens and settle on private corporate balance sheets.</p>
+                    <p class="content-eli5 hidden text-slate-700">When the government gives money to poor people, it calls it "welfare" to make it sound like a burden (acting as a moral shield). This negative language forces poor people into bad conditions and low wages, while hiding the disguised capital flow: the fact that this public money is actually designed to flow straight to corporate profits.</p>
+                </div>
+
+                <div>
+                    <p class="content-expert text-slate-800">The hypocrisy of this semantic framing is evident when comparing social welfare to direct corporate welfare. When A$5.5 billion is distributed as Commonwealth Rent Assistance, or A$41.8 billion is spent annually on the NDIS, it is framed as a "runaway welfare cost" threatening the national budget. Both capital flows ultimately bolster private corporate balance sheets, but the semantic divergence allows policymakers to debate the "sustainability" of the NDIS or the Age Pension while aggressively protecting direct corporate subsidies. This narrative entirely ignores the structural reality that cutting these welfare programs would instantly trigger a corporate insolvency crisis by terminating the baseline consumer micro-subsidy.</p>
+                    <p class="content-eli18 hidden text-slate-700">It also shields cartels from antitrust scrutiny, in contrast to the A$16.3 billion in direct, un-stigmatized fossil fuel and corporate subsidies. Cutting welfare would instantly trigger a corporate solvency crisis by terminating this baseline consumer subsidy.</p>
+                    <p class="content-eli5 hidden text-slate-700">Meanwhile, the government protects corporate cartels from antitrust checks, and gives A$16.3 billion in direct subsidies to fossil fuel giants without any moral lecturing. Cutting welfare would destroy corporate revenues immediately.</p>
+                </div>
+            </section>
+
+            <!-- SECTION 10 -->
+            <section class="mb-20 scroll-mt-36 border-b border-slate-100 pb-12" id="section-vector3-inflation">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-2">
+                    <h3 class="text-xl font-bold mb-3 text-slate-900 border-l-2 border-amber-500 pl-3">"Sellers' Inflation" and the Extraction Squeeze</h3>
+                    <div class="inline-flex rounded-full bg-slate-100 p-0.5 border border-slate-200" data-section="vector3-inflation">
+                        <button onclick="setSectionLevel('vector3-inflation', 'eli5')" class="level-btn-eli5 px-2.5 py-0.5 rounded-full text-[9px] font-bold text-slate-500 transition-all uppercase">ELI5</button>
+                        <button onclick="setSectionLevel('vector3-inflation', 'eli18')" class="level-btn-eli18 px-2.5 py-0.5 rounded-full text-[9px] font-bold text-slate-500 transition-all uppercase">ELI18</button>
+                        <button onclick="setSectionLevel('vector3-inflation', 'expert')" class="level-btn-expert px-2.5 py-0.5 rounded-full text-[9px] font-bold text-white bg-slate-900 shadow-sm transition-all uppercase">Expert</button>
+                    </div>
+                </div>
+                <!-- Swapped intro paragraphs -->
+                <div>
+                    <div class="content-expert text-slate-800">
+                        <p>The mechanical flow of these micro-subsidies becomes violently disruptive during periods of global supply-chain shock. The post-2020 macroeconomic environment provided the catalyst for what heterodox economists term "sellers' inflation" or "profit-led inflation".</p>
+                        <p>The classical monetarist interpretation of inflation posits that an excess of aggregate demand (too much money) chases too few goods, usually blaming overly generous welfare or wage increases. However, the sellers' inflation model, pioneered by economist Isabella Weber, demonstrates that inflation in highly concentrated markets derives from microeconomic origins—specifically, the ability of monopolies and oligopolies to use systemic emergencies as a coordinating mechanism to hike prices.</p>
+                    </div>
+                    <div class="content-eli18 hidden text-slate-700">
+                        <p>During supply-chain shocks, welfare flows are disrupted by "sellers' inflation" (profit-led inflation), where monopolies expand their profit margins.</p>
+                        <p>Monetarists blame inflation on excess welfare demand. However, Isabella Weber's sellers' inflation model shows that monopolies use emergencies to coordinate price hikes, driving inflation from microeconomic profit expansions.</p>
+                    </div>
+                    <div class="content-eli5 hidden text-slate-700">
+                        <p>The flow of government money gets messed up when there are global crises. The recent price rises are what economists call "sellers' inflation" or "profit-led inflation".</p>
+                        <p>Traditional economists blame price rises on the government giving too much money to families. But the sellers' inflation model shows that big companies coordinate price hikes during emergencies.</p>
+                    </div>
+                </div>
+                
+                <!-- Visual Step-by-Step Flow with multi-level text toggle inside card slots -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 my-8 text-center text-xs">
+                    <div class="bg-amber-50 border border-amber-100 rounded-xl p-5 shadow-sm">
+                        <span class="w-8 h-8 rounded-full bg-amber-500 text-white flex items-center justify-center mx-auto text-sm font-bold mb-3">1</span>
+                        <h4 class="font-bold text-slate-900 mb-1">Cost Impulse</h4>
+                        <p class="text-slate-600 content-expert">Upstream cost shocks (e.g. energy bottlenecks, shipping constraints) generate initial pricing impulses.</p>
+                        <p class="text-slate-600 content-eli18 hidden">Initial cost increases (like fuel or transport charges) start the price rises.</p>
+                        <p class="text-slate-600 content-eli5 hidden">Things become more expensive to make (like when fuel costs go up).</p>
+                    </div>
+                    <div class="bg-amber-50 border border-amber-100 rounded-xl p-5 shadow-sm">
+                        <span class="w-8 h-8 rounded-full bg-amber-500 text-white flex items-center justify-center mx-auto text-sm font-bold mb-3">2</span>
+                        <h4 class="font-bold text-slate-900 mb-1">Cartel Propagation</h4>
+                        <p class="text-slate-600 content-expert">Oligopolies hike prices beyond cost hikes to expand margins, knowing rivals will match to shield profits.</p>
+                        <p class="text-slate-600 content-eli18 hidden">Large companies raise their prices even more than their costs went up to increase profits, knowing their competitors will do the same.</p>
+                        <p class="text-slate-600 content-eli5 hidden">Big businesses raise their prices way higher than needed to make extra profit, knowing others will do it too.</p>
+                    </div>
+                    <div class="bg-amber-50 border border-amber-100 rounded-xl p-5 shadow-sm">
+                        <span class="w-8 h-8 rounded-full bg-amber-500 text-white flex items-center justify-center mx-auto text-sm font-bold mb-3">3</span>
+                        <h4 class="font-bold text-slate-900 mb-1">Labor Conflict</h4>
+                        <p class="text-slate-600 content-expert">Labor tries to negotiate wage increases to protect real wages, which is then blamed for a wage-price spiral.</p>
+                        <p class="text-slate-600 content-eli18 hidden">Workers demand higher pay to afford the higher cost of living, which companies blame for causing more inflation.</p>
+                        <p class="text-slate-600 content-eli5 hidden">Workers ask for more pocket money to buy food, but the big companies blame them for making prices go up.</p>
+                    </div>
+                </div>
+
+                <!-- Swapped paragraph under the graphics -->
+                <div>
+                    <p class="text-slate-800 content-expert">During this "extraction squeeze," corporations absorb the state's welfare injections at an accelerated rate by raising the prices of inelastic goods. The fiat meant to sustain the citizen is consumed entirely by the expanded profit margin of the monopoly. Empirical data confirms that in the initial stages of the recent inflationary bout, corporate profits accounted for up to 40% of the inflation in Europe. In the United States, profits accounted for 9.4% of the 14.1% increase in the GDP deflator from Q3 2020 to Q2 2022, compared to just 4.7% for wages.</p>
+                    <p class="text-slate-700 content-eli18 hidden">During this price squeeze, corporations absorb welfare payments by raising the prices of inelastic goods. In the US, profits accounted for 9.4% of the 14.1% deflator increase, while wages only accounted for 4.7%. The money meant to sustain citizens is captured by expanded profit margins.</p>
+                    <p class="text-slate-700 content-eli5 hidden">During this pricing squeeze, big businesses take the government money by charging more for basics like food and shelter. In the US, profits made up 9.4% of inflation, while wages were only 4.7%. The money meant to help families is eaten up by company profits.</p>
+                </div>
+
+                <!-- Interactive Chart 3: Drivers of Inflation Deflator -->
+                <div class="my-8 bg-slate-50 border border-slate-200 p-6 rounded-2xl shadow-sm">
+                    <h4 class="font-serif font-bold text-center text-slate-800 text-lg mb-4">Empirical Share of GDP Deflator Increase (Inflation Drivers)</h4>
+                    <div class="h-64">
+                        <canvas id="chart-inflation-drivers"></canvas>
+                    </div>
+                    <p class="text-[10px] text-slate-500 text-center mt-3">Compares corporate profit margins vs unit labor/wage costs during global supply chain cost shocks.</p>
+                </div>
+            </section>
+
+            <!-- SECTION 11 -->
+            <section class="mb-20 scroll-mt-36 border-b border-slate-100 pb-12" id="section-vector3-centralbank">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-2">
+                    <h3 class="text-xl font-bold mb-3 text-slate-900 border-l-2 border-amber-500 pl-3">Central Bank Misdiagnosis and Thermodynamic Friction</h3>
+                    <div class="inline-flex rounded-full bg-slate-100 p-0.5 border border-slate-200" data-section="vector3-centralbank">
+                        <button onclick="setSectionLevel('vector3-centralbank', 'eli5')" class="level-btn-eli5 px-2.5 py-0.5 rounded-full text-[9px] font-bold text-slate-500 transition-all uppercase">ELI5</button>
+                        <button onclick="setSectionLevel('vector3-centralbank', 'eli18')" class="level-btn-eli18 px-2.5 py-0.5 rounded-full text-[9px] font-bold text-slate-500 transition-all uppercase">ELI18</button>
+                        <button onclick="setSectionLevel('vector3-centralbank', 'expert')" class="level-btn-expert px-2.5 py-0.5 rounded-full text-[9px] font-bold text-white bg-slate-900 shadow-sm transition-all uppercase">Expert</button>
+                    </div>
+                </div>
+                
+                <div>
+                    <p class="content-expert text-slate-800">The central banking apparatus, structurally constrained by orthodox New Keynesian paradigms, systemically misdiagnoses sellers' inflation as consumer-driven excess demand. Consequently, institutions like the Reserve Bank of Australia (RBA) and the US Federal Reserve deploy their primary mechanism: raising the policy interest rate.</p>
+                    <p class="content-eli18 hidden text-slate-700">Central banks misdiagnose sellers' inflation as excess consumer demand, raising interest rates as their primary policy tool.</p>
+                    <p class="content-eli5 hidden text-slate-700">When prices go up, the central bank (the main government bank) raises overnight interest rates because they think families are spending too much money.</p>
+                </div>
+
+                <div>
+                    <p class="content-expert text-slate-800">Interest rate hikes are designed to destroy demand by increasing the cost of capital, thereby inducing unemployment and suppressing wage growth. However, treating sellers' inflation with macroeconomic tightening is akin to applying mechanical friction to a thermodynamic system suffering from concentrated heat sinks. The rate hikes do not compress the profit margins of the monopoly cartels; instead, they dump the costs of inflation directly onto labor, small businesses, and the welfare-dependent classes.</p>
+                    <p class="content-eli18 hidden text-slate-700">Rate hikes destroy labor demand and induce unemployment to suppress wages. This applies counterproductive friction to the economic system, cooling transaction volume and enriching creditors, while punishing welfare recipients without compressing monopoly margins.</p>
+                    <p class="content-eli5 hidden text-slate-700">This forces companies to fire people and cuts wages for workers, while enriching creditors who hold financial assets. This hurts renters and workers (the biological conduits), while doing nothing to stop giant companies from price-gouging (applying thermodynamic friction to the wrong place).</p>
+                </div>
+
+                <div>
+                    <p class="content-expert text-slate-800">By raising rates, central banks increase the cost of borrowing for small and medium enterprises, who must pass these costs onto consumers, while simultaneously enriching creditors who hold financial assets. Meanwhile, the corporate monopolies, sitting on vast reserves of retained earnings fueled by the welfare micro-subsidy, continue to extract economic rent. The central bank's actions effectively punish the biological conduit (the welfare recipient) for the inflationary pressures generated by the corporate entity capturing the subsidy.</p>
+                    <p class="content-eli18 hidden text-slate-700">By raising rates, central banks increase borrowing costs for small businesses (who pass it on to consumers) while enriching creditors. Meanwhile, monopolies use their welfare-funded profits to extract rent, punishing the citizen for inflation caused by the corporate sector.</p>
+                    <p class="content-eli5 hidden text-slate-700">Raising rates makes loans expensive for small shops (who raise prices) but makes rich lenders wealthier. Monopolies keep extracting high revenues, so normal families are punished for price rises created by the companies.</p>
+                </div>
+            </section>
+
+            <!-- SECTION 12 -->
+            <section class="mb-20 scroll-mt-36 border-b border-slate-100 pb-12" id="section-vector4-targeting">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-2">
+                    <h2 class="text-2xl font-bold font-serif border-l-4 border-amber-500 pl-4">Vector 4: The Net Benefit of the Paradigm Shift</h2>
+                    <div class="inline-flex rounded-full bg-slate-100 p-0.5 border border-slate-200" data-section="vector4-targeting">
+                        <button onclick="setSectionLevel('vector4-targeting', 'eli5')" class="level-btn-eli5 px-2.5 py-0.5 rounded-full text-[9px] font-bold text-slate-500 transition-all uppercase">ELI5</button>
+                        <button onclick="setSectionLevel('vector4-targeting', 'eli18')" class="level-btn-eli18 px-2.5 py-0.5 rounded-full text-[9px] font-bold text-slate-500 transition-all uppercase">ELI18</button>
+                        <button onclick="setSectionLevel('vector4-targeting', 'expert')" class="level-btn-expert px-2.5 py-0.5 rounded-full text-[9px] font-bold text-white bg-slate-900 shadow-sm transition-all uppercase">Expert</button>
+                    </div>
+                </div>
+                <h3 class="text-xl font-bold mb-3 text-slate-900">1. Revolutionizing Inflation Targeting</h3>
+                
+                <!-- Swapped intro paragraphs for Vector 4 -->
+                <div>
+                    <p class="content-expert text-slate-800">Formally adopting the structural view of welfare as an indirect corporate micro-subsidy unlocks profound, actionable economic benefits. By aligning policy with the mathematical realities of fiat flow, state actors can prevent the thermodynamic market failures inherent in late-stage financialized capitalism.</p>
+                    <p class="content-eli18 hidden text-slate-700">Adopting the paradigm of welfare as an indirect corporate subsidy allows policymakers to target the points of extraction and prevent thermodynamic market failures.</p>
+                    <p class="content-eli5 hidden text-slate-700">If we admit that welfare is actually a helper for big businesses, we can change the rules to stop companies from extracting all the money.</p>
+                </div>
+                
+                <div>
+                    <p class="content-expert text-slate-800">Recognizing that welfare functions as a corporate subsidy requires a total recalibration of inflation management. If inflation is driven by monopolies extracting the welfare floor via expanded margins, then deploying austerity measures or interest rate hikes is fundamentally counterproductive and actively harms the real economy. A paradigm shift demands the deployment of micro-targeted interventions rather than blunt macroeconomic instruments, targeting the point of extraction:</p>
+                    <p class="content-eli18 hidden text-slate-700">Recognizing this subsidy shifts inflation policy away from blunt interest rates or austerity. Instead, it mandates targeted price controls, windfall taxes, and credit guidance.</p>
+                    <p class="content-eli5 hidden text-slate-700">Instead of using high interest rates that hurt families, we should use targeted price rules to stop price-gouging directly.</p>
+                </div>
+                
+                <!-- Swapped content inside cards -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 my-6 text-sm">
+                    <div class="bg-slate-50 p-6 rounded-xl border border-slate-200">
+                        <strong class="text-slate-900 text-base block mb-2 flex items-center gap-2"><i class="fa-solid fa-coins text-amber-500"></i> Price Controls</strong>
+                        <p class="text-xs text-slate-600 leading-relaxed content-expert">
+                            Imposing temporary price controls and margin caps on systemically significant sectors (energy, basic food staples, rental yields) prevents monopolies from using cost-shocks to coordinate margin expansion.
+                        </p>
+                        <p class="text-xs text-slate-600 leading-relaxed content-eli18 hidden">
+                            Setting maximum price limits on basic goods (energy, food, rents) to prevent monopolies from using crises to raise prices.
+                        </p>
+                        <p class="text-xs text-slate-600 leading-relaxed content-eli5 hidden">
+                            Capping prices on basics like food, gas, and rent so big companies can't overcharge during crises.
+                        </p>
+                    </div>
+                    <div class="bg-slate-50 p-6 rounded-xl border border-slate-200">
+                        <strong class="text-slate-900 text-base block mb-2 flex items-center gap-2"><i class="fa-solid fa-percent text-amber-500"></i> Windfall Taxes</strong>
+                        <p class="text-xs text-slate-600 leading-relaxed content-expert">
+                            Implementing dynamic tax architectures that algorithmically capture margin expansions beyond historical norms. This ensures that attempt by corporations to hyper-extract that liquidity is automatically clawed back.
+                        </p>
+                        <p class="text-xs text-slate-600 leading-relaxed content-eli18 hidden">
+                            Taxing extra profits made during crises to automatically return that cash to the public treasury.
+                        </p>
+                        <p class="text-xs text-slate-600 leading-relaxed content-eli5 hidden">
+                            Taxing extra corporate profits to return the money to the government so they can't hoard it.
+                        </p>
+                    </div>
+                    <div class="bg-slate-50 p-6 rounded-xl border border-slate-200">
+                        <strong class="text-slate-900 text-base block mb-2 flex items-center gap-2"><i class="fa-solid fa-arrows-spin text-amber-500"></i> Credit Guidance</strong>
+                        <p class="text-xs text-slate-600 leading-relaxed content-expert">
+                            Implementing green collateral frameworks, credit ceilings for speculative asset purchases, and minimum lending targets for productive capacity ensures that fiat energy flows toward supply-side expansion.
+                        </p>
+                        <p class="text-xs text-slate-600 leading-relaxed content-eli18 hidden">
+                            Directing bank lending toward productive projects (like building homes) rather than financial speculation.
+                        </p>
+                        <p class="text-xs text-slate-600 leading-relaxed content-eli5 hidden">
+                            Telling banks to lend money for useful things (like building houses) instead of gambling on property prices.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 13 -->
+            <section class="mb-20 scroll-mt-36 border-b border-slate-100 pb-12" id="section-vector4-sustainability">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-2">
+                    <h3 class="text-xl font-bold mb-3 text-slate-900 border-l-2 border-amber-500 pl-3">2. Recalibrating Budget Modeling and Fiscal Sustainability</h3>
+                    <div class="inline-flex rounded-full bg-slate-100 p-0.5 border border-slate-200" data-section="vector4-sustainability">
+                        <button onclick="setSectionLevel('vector4-sustainability', 'eli5')" class="level-btn-eli5 px-2.5 py-0.5 rounded-full text-[9px] font-bold text-slate-500 transition-all uppercase">ELI5</button>
+                        <button onclick="setSectionLevel('vector4-sustainability', 'eli18')" class="level-btn-eli18 px-2.5 py-0.5 rounded-full text-[9px] font-bold text-slate-500 transition-all uppercase">ELI18</button>
+                        <button onclick="setSectionLevel('vector4-sustainability', 'expert')" class="level-btn-expert px-2.5 py-0.5 rounded-full text-[9px] font-bold text-white bg-slate-900 shadow-sm transition-all uppercase">Expert</button>
+                    </div>
+                </div>
+                
+                <div>
+                    <p class="content-expert text-slate-800">The calculation of "national debt" and fiscal sustainability treats welfare as a deadweight loss. Applying Post-Keynesian Stock-Flow Consistent (SFC) models alters this calculus entirely. SFC models demonstrate that the balance sheets of all institutional sectors are intrinsically mathematically linked; one sector's deficit is, to the penny, another sector's surplus.</p>
+                    <p class="content-eli18 hidden text-slate-700">Standard accounting treats national debt as a liability, but Stock-Flow Consistent (SFC) modeling proves that the balance sheets of all sectors are linked—one sector's deficit is another sector's surplus.</p>
+                    <p class="content-eli5 hidden text-slate-700">A special accounting rule called SFC modeling (Stock-Flow Consistent) tracks where every dollar goes using double-entry bookkeeping. It proves that the government's budget is not like a household budget: if the government runs a deficit and spends money on welfare, that deficit is mathematically the exact source of private corporate profits and household surpluses.</p>
+                </div>
+
+                <div>
+                    <p class="content-expert text-slate-800">When the state runs a deficit to fund the NDIS or the Age Pension, it is mathematically creating the private sector's financial surplus. Under the Kalecki-Levy framework, cutting the welfare budget to achieve a "fiscal surplus" directly destroys corporate profits and household savings, inevitably triggering a recession.</p>
+                    <p class="content-eli18 hidden text-slate-700">When the state runs a deficit to fund NDIS or pensions, it creates the private sector's profit surplus. Cutting welfare to balance the budget destroys corporate profits and triggers a recession.</p>
+                    <p class="content-eli5 hidden text-slate-700">When the government runs a deficit to pay for welfare, it creates the savings of the private sector. If you stop spending (austerity), businesses and families lose their savings and the economy crashes.</p>
+                </div>
+
+                <div>
+                    <p class="content-expert text-slate-800">Recognizing welfare as a corporate micro-subsidy proves that it is an active systemic stabilizer. It maintains the velocity of money required to keep the retail, housing, and service sectors solvent. Budget modeling must pivot from asking "How do we afford welfare?" to "What is the optimal velocity and distribution of fiat injection required to sustain the corporate revenue floor without triggering sellers' inflation?" Furthermore, this reframing exposes the macroeconomic absurdity of scrutinizing the NDIS while protecting the A$16.3 billion in direct fossil fuel subsidies, the latter of which has a significantly lower domestic velocity multiplier and generates massive negative environmental externalities.</p>
+                    <p class="content-eli18 hidden text-slate-700">Welfare is an active stabilizer maintaining the money velocity needed to keep retail, housing, and services solvent. Budgeting should optimize velocity to support demand, rather than obsessing over arbitrary debt limits, especially when comparing NDIS audits to protected A$16.3 billion fossil fuel subsidies.</p>
+                    <p class="content-eli5 hidden text-slate-700">Welfare keeps money moving fast enough to keep shops, rentals, and services from going broke. It is silly to audit welfare like the NDIS while protecting A$16.3 billion in direct fossil fuel subsidies that don't keep money moving.</p>
+                </div>
+            </section>
+
+            <!-- SECTION 14 -->
+            <section class="mb-20 scroll-mt-36 border-b border-slate-100 pb-12" id="section-vector4-taxation">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-2">
+                    <h3 class="text-xl font-bold mb-3 text-slate-900 border-l-2 border-amber-500 pl-3">3. The Socio-Epistemic Reality and Thermodynamic Market Failures</h3>
+                    <div class="inline-flex rounded-full bg-slate-100 p-0.5 border border-slate-200" data-section="vector4-taxation">
+                        <button onclick="setSectionLevel('vector4-taxation', 'eli5')" class="level-btn-eli5 px-2.5 py-0.5 rounded-full text-[9px] font-bold text-slate-500 transition-all uppercase">ELI5</button>
+                        <button onclick="setSectionLevel('vector4-taxation', 'eli18')" class="level-btn-eli18 px-2.5 py-0.5 rounded-full text-[9px] font-bold text-slate-500 transition-all uppercase">ELI18</button>
+                        <button onclick="setSectionLevel('vector4-taxation', 'expert')" class="level-btn-expert px-2.5 py-0.5 rounded-full text-[9px] font-bold text-white bg-slate-900 shadow-sm transition-all uppercase">Expert</button>
+                    </div>
+                </div>
+                
+                <div>
+                    <p class="content-expert text-slate-800">Making this implicit mechanical truth explicit is vital for prevent systemic collapse. In the field of econophysics, economies are accurately modeled as open, non-equilibrium thermodynamic systems. Fiat currency represents energy, and systemic risk or extreme wealth inequality represents entropy.</p>
+                    <p class="content-eli18 hidden text-slate-700">Econophysics models economies as open, non-equilibrium systems where fiat currency represents energy and inequality represents entropy.</p>
+                    <p class="content-eli5 hidden text-slate-700">Physics models show economies are like open engines. Money represents energy, and extreme wealth inequality represents entropy (clogged energy).</p>
+                </div>
+
+                <div>
+                    <p class="content-expert text-slate-800">A healthy economic system requires the continuous circulation of energy (high money velocity). When highly concentrated monopolies capture the welfare micro-subsidy and fail to reinvest it into productive capacity—instead hoarding it via share buybacks, dividend distributions, or offshore accounts—they act as localized entropy traps. The system progresses toward increased entropy, characterized by high inequality, liquidity traps, and a fatal collapse in the velocity of money. As adiabatic economic models demonstrate, systems without continuous, regulated energy flows inevitably fail to reach equilibrium and trend toward collapse.</p>
+                    <p class="content-eli18 hidden text-slate-700">Continuous circulation (high velocity) is required. Monopolies that extract welfare cash without reinvesting it create "entropy traps" where capital is hoarded statically in share buybacks and dividends rather than productive capacity, causing velocity collapse and systemic heat death.</p>
+                    <p class="content-eli5 hidden text-slate-700">Money must circulate. When monopolies extract welfare money and hoard it in share buybacks and dividends, it creates an entropy trap, slowing the money velocity and causing a systemic heat death where the economic engine stops working.</p>
+                </div>
+
+                <div>
+                    <p class="content-expert text-slate-800">By making the mechanics of the corporate micro-subsidy explicit, the state can redesign the fiat architecture to enforce thermodynamic circulation. If the welfare state is acknowledged as the indispensable bedrock of corporate profit, corporations lose the moral authority to demand austerity or oppose corporate taxation. The socio-epistemic reality shifts from "taxpayers funding the poor" to "the state engineering the survival of the corporate sector via the biological needs of the populace".</p>
+                    <p class="content-eli18 hidden text-slate-700">Making this explicit shifts the narrative from "taxpayers funding the poor" to "the state engineering corporate survival." Corporations lose the moral authority to demand austerity or oppose corporate taxes.</p>
+                    <p class="content-eli5 hidden text-slate-700">If we show everyone that corporate profits depend on welfare, big companies can no longer demand cuts to welfare or complain about corporate taxes.</p>
+                </div>
+
+                <div>
+                    <p class="content-expert text-slate-800">This acknowledgement mandates the creation of systemic feedback loops. If corporations extract the welfare subsidy, they must be subjected to proportional corporate taxation to complete the circuit, returning the fiat energy to the state to be re-injected. Failure to close this loop results in a "heat death" of the economic system: absolute concentration of wealth, the exhaustion of the biological conduits (the collapse of the working class), and the ultimate insolvency of the fiat regime.</p>
+                    <p class="content-eli18 hidden text-slate-700">We must close this loop via progressive corporate taxation to return the extracted fiat energy back to the state treasury for re-injection, sustaining the circulation and preventing system collapse.</p>
+                    <p class="content-eli5 hidden text-slate-700">We must tax those corporate profits to return the money to the government so it can be pumped back to the bottom. This progressive corporate taxation closes the loop and keeps the engine running.</p>
+                </div>
+            </section>
+
+            <!-- SECTION 15 -->
+            <section class="mb-20 scroll-mt-36" id="section-conclusion">
+                <div class="bg-slate-900 text-white p-8 rounded-2xl my-8">
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-2">
+                        <h3 class="text-2xl font-serif font-bold text-amber-400">Conclusion</h3>
+                        <div class="inline-flex rounded-full bg-slate-800 p-0.5 border border-slate-700" data-section="conclusion">
+                            <button onclick="setSectionLevel('conclusion', 'eli5')" class="level-btn-eli5 px-2.5 py-0.5 rounded-full text-[9px] font-bold text-slate-400 transition-all uppercase">ELI5</button>
+                            <button onclick="setSectionLevel('conclusion', 'eli18')" class="level-btn-eli18 px-2.5 py-0.5 rounded-full text-[9px] font-bold text-slate-400 transition-all uppercase">ELI18</button>
+                            <button onclick="setSectionLevel('conclusion', 'expert')" class="level-btn-expert px-2.5 py-0.5 rounded-full text-[9px] font-bold text-white bg-slate-900 shadow-sm transition-all uppercase">Expert</button>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <p class="content-expert text-slate-300">The modern welfare state is the victim of a profound, deliberately engineered macroeconomic misclassification. Through the rigorous application of Marginal Propensity to Consume differentials, the Post-Keynesian Kalecki-Levy profit equation, and thermodynamic stock-flow analysis, this report unequivocally demonstrates that social safety nets—from the Age Pension and the NDIS to Commonwealth Rent Assistance—are not fiscal burdens. They are structurally integrated, high-velocity fiat injection mechanisms that function mechanically as indirect corporate micro-subsidies.</p>
+                        <p class="content-eli18 hidden text-slate-300">The welfare state is misclassified as a fiscal burden. MPC differentials, Kalecki-Levy profit identities, and stock-flow analysis prove that social safety nets are high-velocity fiat injection mechanisms functioning as indirect corporate micro-subsidies.</p>
+                        <p class="content-eli5 hidden text-slate-300">Welfare is not a gift or a charitable outlay; it is the essential glue (a high-velocity fiat injection mechanism) that keeps our economic machine running. By giving money to poor people who are forced to spend it immediately, the government guarantees a revenue floor for retail, housing, and care monopolies.</p>
+                    </div>
+
+                    <div>
+                        <p class="content-expert text-slate-300">The state relies on the severe liquidity constraints of the vulnerable citizen to ensure that treasury disbursements are immediately converted into corporate revenue, seamlessly sustaining the profit margins of retail duopolies, private landlords, and privatized care providers. Shielding this reality behind the moralized, stigmatizing language of "welfare dependency" allows corporate cartels to capture the subsidy while avoiding the regulatory scrutiny required to prevent sellers' inflation and thermodynamic hoarding.</p>
+                        <p class="content-eli18 hidden text-slate-300">The state relies on the liquidity constraints of vulnerable citizens to route treasury funds directly into the revenues of grocery, landlord, and care monopolies. The moralizing language of "welfare dependency" serves to shield these cartels from regulatory scrutiny and price-gouging audits.</p>
+                        <p class="content-eli5 hidden text-slate-300">Stigmatizing this as "welfare dependency" just helps corporate cartels hide their subsidies and avoid price-gouging audits. Instead of raising interest rates and hurting families, the government should use targeted margin caps, windfall taxes, and structural interventions.</p>
+                    </div>
+
+                    <div>
+                        <p class="content-expert text-slate-300">Formally acknowledging this paradigm shifts the locus of macroeconomic management. It demands the abandonment of punitive central bank rate hikes in favor of targeted margin caps, windfall taxes, and structural interventions. Ultimately, the welfare floor is not a charitable endeavor; it is the absolute thermodynamic baseline required to prevent the mechanical collapse of late-stage financialized capitalism.</p>
+                        <p class="content-eli18 hidden text-slate-300">Acknowledging this paradigm demands transitioning from central bank interest rate hikes to targeted margin caps, windfall profit taxes, and structural interventions, as the welfare floor is the baseline stabilizer preventing the systemic collapse of financialized capitalism.</p>
+                        <p class="content-eli5 hidden text-slate-300">Without welfare, the consumer market would collapse and the entire corporate profit system would fall apart.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Bottom Pagination Link -->
+            <div class="flex justify-between items-center pt-8 border-t border-slate-200">
+                <a href="matrix.html" class="text-slate-600 hover:text-slate-900 font-semibold flex items-center gap-2">
+                    <i class="fa-solid fa-arrow-left"></i> Extraction Matrix
+                </a>
+                <a href="works_cited.html" class="px-6 py-3 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-lg shadow transition-all flex items-center gap-2">
+                    Full Works Cited <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: "$$", right: "$$", display: true},
+                    {left: "\\(", right: "\\)", display: false}
+                ],
+                throwOnError : false
+            });
+
+            // Set default view globally to Expert (this sets buttons correctly)
+            setGlobalLevel('expert');
+
+            // --- Chart.js Initializations ---
+
+            // Chart 1: MPC vs Income Quintiles
+            const ctxMpc = document.getElementById('chart-mpc').getContext('2d');
+            new Chart(ctxMpc, {
+                type: 'bar',
+                data: {
+                    labels: ['Bottom 20% (Low Wealth)', '2nd Quintile', '3rd Quintile', '4th Quintile', 'Top 20% (High Wealth)'],
+                    datasets: [{
+                        label: 'Marginal Propensity to Consume (MPC)',
+                        data: [0.90, 0.65, 0.40, 0.15, 0.05],
+                        backgroundColor: [
+                            'rgba(245, 158, 11, 0.85)', // Amber-500
+                            'rgba(245, 158, 11, 0.65)',
+                            'rgba(245, 158, 11, 0.45)',
+                            'rgba(148, 163, 184, 0.5)',  // Slate-400
+                            'rgba(148, 163, 184, 0.3)'
+                        ],
+                        borderColor: [
+                            '#f59e0b',
+                            '#f59e0b',
+                            '#f59e0b',
+                            '#94a3b8',
+                            '#94a3b8'
+                        ],
+                        borderWidth: 1.5,
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `MPC: ${context.raw.toFixed(2)}`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 1.0,
+                            ticks: { font: { family: 'Inter' } },
+                            grid: { color: 'rgba(226, 232, 240, 0.8)' }
+                        },
+                        x: {
+                            ticks: { font: { family: 'Inter', size: 10 } },
+                            grid: { display: false }
+                        }
+                    }
+                }
+            });
+
+            // Chart 2: Fortnightly Flow-Through Capture
+            const ctxFlow = document.getElementById('chart-flowthrough').getContext('2d');
+            new Chart(ctxFlow, {
+                type: 'bar',
+                data: {
+                    labels: ['Rent/Mortgage (Banks)', 'Groceries (Coles/Woolworths)', 'Energy (Origin/AGL)', 'Medical/Pharma', 'Telecom (Telstra/Optus)'],
+                    datasets: [
+                        {
+                            label: 'Pensioner/DSP (Fortnightly)',
+                            data: [610.00, 240.00, 180.00, 60.00, 33.00],
+                            backgroundColor: 'rgba(245, 158, 11, 0.85)',
+                            borderRadius: 6
+                        },
+                        {
+                            label: 'JobSeeker (Fortnightly)',
+                            data: [565.00, 202.00, 97.00, 15.00, 27.00],
+                            backgroundColor: 'rgba(30, 41, 59, 0.85)', // Slate-800
+                            borderRadius: 6
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: { font: { family: 'Inter', size: 11 } }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                font: { family: 'Inter' },
+                                callback: function(value) { return '$' + value; }
+                            },
+                            grid: { color: 'rgba(226, 232, 240, 0.8)' }
+                        },
+                        x: {
+                            ticks: { font: { family: 'Inter', size: 9 } },
+                            grid: { display: false }
+                        }
+                    }
+                }
+            });
+
+            // Chart 3: Drivers of Inflation Deflator
+            const ctxInflation = document.getElementById('chart-inflation-drivers').getContext('2d');
+            new Chart(ctxInflation, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Corporate Profits Share', 'Unit Labor Costs (Wages)', 'Import Costs / Taxes / Other'],
+                    datasets: [{
+                        data: [40.0, 15.0, 45.0],
+                        backgroundColor: [
+                            'rgba(245, 158, 11, 0.85)', // Amber-500
+                            'rgba(148, 163, 184, 0.7)',  // Slate-400
+                            'rgba(226, 232, 240, 0.8)'   // Slate-200
+                        ],
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: { font: { family: 'Inter', size: 11 } }
+                        }
+                    }
+                }
+            });
+
+        });
+
+        // Set a specific section to a level
+        function setSectionLevel(sectionId, level) {
+            const sectionToggle = document.querySelector(`[data-section="${sectionId}"]`);
+            if (!sectionToggle) return;
+            
+            // Reset all buttons in this group
+            const btns = sectionToggle.querySelectorAll('button');
+            btns.forEach(btn => {
+                btn.className = btn.className.replace(/bg-\S+ text-white shadow-sm/g, '').trim();
+                btn.classList.add('text-slate-500');
+                btn.classList.remove('text-white');
+                if (sectionId === 'conclusion') {
+                    btn.classList.add('text-slate-400');
+                    btn.classList.remove('text-slate-500');
+                }
+            });
+
+            const activeBtn = sectionToggle.querySelector(`.level-btn-${level}`);
+            activeBtn.classList.remove('text-slate-500', 'text-slate-400');
+            activeBtn.classList.add('text-white', 'shadow-sm');
+            
+            if (level === 'eli5') {
+                activeBtn.classList.add('bg-amber-500');
+            } else if (level === 'eli18') {
+                activeBtn.classList.add('bg-slate-700');
+            } else {
+                activeBtn.classList.add('bg-slate-900');
+            }
+
+            // Toggle content blocks (text blocks, formulas, flowcharts, cards)
+            const parentSection = document.getElementById(`section-${sectionId}`);
+            if (parentSection) {
+                // Hide all levels
+                parentSection.querySelectorAll('.content-eli5').forEach(el => el.classList.add('hidden'));
+                parentSection.querySelectorAll('.content-eli18').forEach(el => el.classList.add('hidden'));
+                parentSection.querySelectorAll('.content-expert').forEach(el => el.classList.add('hidden'));
+                
+                // Show selected level
+                parentSection.querySelectorAll(`.content-${level}`).forEach(el => el.classList.remove('hidden'));
+            }
+        }
+
+        // Global level setter
+        function setGlobalLevel(level) {
+            // Update global buttons
+            const globalBtns = document.querySelectorAll('.global-level-btn');
+            globalBtns.forEach(btn => {
+                btn.className = 'global-level-btn px-4 py-1.5 rounded-full text-slate-400 hover:text-slate-200 transition-all uppercase';
+            });
+
+            const activeGlobal = document.getElementById(`global-btn-${level}`);
+            activeGlobal.className = 'global-level-btn px-4 py-1.5 rounded-full text-white bg-slate-900 shadow transition-all uppercase';
+            if (level === 'eli5') {
+                activeGlobal.classList.add('bg-amber-500');
+                activeGlobal.classList.remove('bg-slate-900');
+            } else if (level === 'eli18') {
+                activeGlobal.classList.add('bg-slate-700');
+                activeGlobal.classList.remove('bg-slate-900');
+            }
+
+            // Propagate to all sections
+            const sectionToggles = document.querySelectorAll('[data-section]');
+            sectionToggles.forEach(toggle => {
+                const sectionId = toggle.getAttribute('data-section');
+                setSectionLevel(sectionId, level);
+            });
+        }
+
+        // Compass TOC Scroll Spy & Auto-Center Logic
+        const track = document.getElementById('compass-track');
+        const items = document.querySelectorAll('.compass-item');
+        const sections = document.querySelectorAll('section[id^="section-"]');
+
+        let isDown = false;
+        let isDragging = false;
+        let startX;
+        let scrollLeft;
+
+        // Drag to scroll functionality
+        track.addEventListener('mousedown', (e) => {
+            isDown = true;
+            isDragging = false;
+            track.classList.add('cursor-grabbing');
+            track.classList.remove('cursor-grab');
+            startX = e.pageX - track.offsetLeft;
+            scrollLeft = track.scrollLeft;
+            track.classList.remove('scroll-smooth');
+        });
+        track.addEventListener('mouseleave', () => {
+            isDown = false;
+            track.classList.remove('cursor-grabbing');
+            track.classList.add('cursor-grab');
+        });
+        track.addEventListener('mouseup', () => {
+            isDown = false;
+            track.classList.remove('cursor-grabbing');
+            track.classList.add('cursor-grab');
+        });
+        track.addEventListener('mousemove', (e) => {
+            if(!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - track.offsetLeft;
+            const walk = (x - startX) * 1.5;
+            if (Math.abs(x - startX) > 5) {
+                isDragging = true;
+            }
+            track.scrollLeft = scrollLeft - walk;
+        });
+
+        // Prevent standard HTML5 dragging of links/titles
+        track.addEventListener('dragstart', (e) => {
+            e.preventDefault();
+        });
+
+        // Click on links also smooth-scrolls and auto-centers (if not dragging)
+        items.forEach(item => {
+            item.addEventListener('click', (e) => {
+                if (isDragging) {
+                    // Prevent the click navigation if we were dragging the bar
+                    e.preventDefault();
+                } else {
+                    track.classList.add('scroll-smooth');
+                }
+            });
+        });
+
+        window.addEventListener('scroll', () => {
+            let currentId = "";
+            
+            // Determine active section based on scroll position
+            sections.forEach(section => {
+                const top = section.offsetTop;
+                if (pageYOffset >= (top - 180)) {
+                    currentId = section.getAttribute('id');
+                }
+            });
+
+            // If we found an active section ID and user is not dragging the bar
+            if (currentId && !isDown) {
+                items.forEach(item => {
+                    item.classList.remove('text-amber-400', 'font-bold');
+                    item.classList.add('text-slate-500');
+
+                    if (item.getAttribute('href') === `#${currentId}`) {
+                        item.classList.remove('text-slate-500');
+                        item.classList.add('text-amber-400', 'font-bold');
+
+                        // Auto-center current item
+                        const containerWidth = track.offsetWidth;
+                        const itemLeft = item.offsetLeft;
+                        const itemWidth = item.offsetWidth;
+                        
+                        track.classList.add('scroll-smooth');
+                        track.scrollTo({
+                            left: itemLeft - (containerWidth / 2) + (itemWidth / 2),
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            }
+        });
+    </script>
+
+    <footer class="bg-slate-900 text-slate-400 py-12 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="mb-2"><i class="fa-solid fa-landmark text-amber-400 mr-2"></i> The Corporate Subsidy Report &copy; 2026</p>
+            <p class="text-sm text-slate-500">Document II: Thermodynamic and Structural Analysis of Fiat Flow</p>
+        </div>
+    </footer>
+</body>
+</html>

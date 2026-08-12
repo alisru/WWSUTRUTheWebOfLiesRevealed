@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Corporate Subsidy Report - Home</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        brand: {
+                            dark: '#0f172a',
+                            accent: '#0ea5e9',
+                            gold: '#ca8a04',
+                            light: '#f8fafc',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #f8fafc; color: #334155; }
+        h1, h2, h3 { font-family: 'Playfair Display', serif; }
+        .hero-bg {
+            background-color: #0f172a;
+            background-image: radial-gradient(circle at top right, #1e293b, #0f172a);
+        }
+        .card-hover { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .card-hover:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); }
+    </style>
+</head>
+<body class="antialiased selection:bg-sky-500 selection:text-white flex flex-col min-h-screen">
+
+    <nav class="fixed w-full z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20">
+                <div class="flex items-center">
+                    <a href="index.html" class="font-serif font-bold text-2xl tracking-tight text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-landmark text-sky-500"></i>
+                        The Subsidy Report
+                    </a>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="font-semibold text-sm text-sky-500">Home</a>
+                    <a href="matrix.html" class="font-semibold text-sm text-slate-600 hover:text-sky-500 transition-colors">Extraction Matrix</a>
+                    <a href="thermodynamics.html" class="font-semibold text-sm text-slate-600 hover:text-sky-500 transition-colors">Thermodynamic Analysis</a>
+                    <a href="works_cited.html" class="font-semibold text-sm px-4 py-2 bg-slate-900 text-white rounded-full hover:bg-slate-800 transition-colors">Works Cited</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="pt-20 flex-grow">
+        <div class="hero-bg text-white py-24 lg:py-32 relative overflow-hidden">
+            <div class="max-w-5xl mx-auto px-6 relative z-10 text-center">
+                <span class="inline-block py-1 px-3 rounded-full bg-slate-800 border border-slate-700 text-sky-400 text-xs font-bold tracking-widest uppercase mb-6">
+                    Unabridged 2026 Edition
+                </span>
+                <h1 class="text-5xl lg:text-7xl font-bold mb-8 leading-tight text-white">
+                    The Corporate <span class="text-sky-400">Subsidy</span> Report
+                </h1>
+                <p class="text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed font-light mb-12">
+                    A comprehensive heterodox macroeconomic analysis mapping the flow of state fiat. Exploring how the welfare state functions mechanically as a guaranteed revenue floor for corporate monopolies.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="matrix.html" class="px-8 py-4 bg-sky-500 hover:bg-sky-400 text-white font-bold rounded-lg shadow-lg transition-all flex items-center justify-center gap-3">
+                        The Extraction Matrix <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                    <a href="thermodynamics.html" class="px-8 py-4 bg-slate-800 border border-slate-700 hover:bg-slate-700 text-white font-bold rounded-lg transition-all flex items-center justify-center gap-3">
+                        Thermodynamic Analysis <i class="fa-solid fa-book-open"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-6 py-20">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl lg:text-4xl font-bold text-slate-900 mb-4">Table of Contents & Reports</h2>
+                <p class="text-slate-500 max-w-2xl mx-auto">Select a report below to read the complete, unabridged research papers.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <a href="matrix.html" class="bg-white p-10 rounded-2xl shadow-md border border-slate-200 card-hover block">
+                    <div class="w-14 h-14 bg-blue-50 rounded-xl flex items-center justify-center mb-6 text-sky-500 text-2xl">
+                        <i class="fa-solid fa-table-list"></i>
+                    </div>
+                    <span class="text-xs font-bold uppercase tracking-wider text-sky-500 block mb-2">Extraction Analysis</span>
+                    <h2 class="text-3xl font-bold mb-4 text-slate-900">The Extraction Matrix</h2>
+                    <p class="text-slate-600 mb-6 leading-relaxed">
+                        Complete breakdown of baseline payment parameters, spending archetypes, and exact fortnightly capital capture by the grocery, energy, telecom, pharmacy, and banking oligopolies.
+                    </p>
+                    <span class="text-sky-500 font-semibold flex items-center gap-2">
+                        Read Extraction Matrix <i class="fa-solid fa-arrow-right text-sm"></i>
+                    </span>
+                </a>
+                
+                <a href="thermodynamics.html" class="bg-white p-10 rounded-2xl shadow-md border border-slate-200 card-hover block">
+                    <div class="w-14 h-14 bg-amber-50 rounded-xl flex items-center justify-center mb-6 text-amber-600 text-2xl">
+                        <i class="fa-solid fa-fire-flame-curved"></i>
+                    </div>
+                    <span class="text-xs font-bold uppercase tracking-wider text-amber-600 block mb-2">Theoretical Framework</span>
+                    <h2 class="text-3xl font-bold mb-4 text-slate-900">Thermodynamic Analysis</h2>
+                    <p class="text-slate-600 mb-6 leading-relaxed">
+                        A structural theoretical framework analyzing fiat flow velocity, the Kalecki-Levy profit equation, monopoly capture, and the mechanics of "sellers' inflation".
+                    </p>
+                    <span class="text-amber-600 font-semibold flex items-center gap-2">
+                        Read Thermodynamic Analysis <i class="fa-solid fa-arrow-right text-sm"></i>
+                    </span>
+                </a>
+            </div>
+
+            <div class="mt-16 bg-slate-900 text-white rounded-2xl p-8 lg:p-12 shadow-xl">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 text-center">
+                    <div class="p-4 border-b lg:border-b-0 lg:border-r border-slate-800">
+                        <span class="block text-4xl lg:text-5xl font-bold text-sky-400 font-serif mb-2">$2.19B - $2.72B</span>
+                        <span class="text-slate-400 text-sm">Fortnightly Corporate Macro Capture</span>
+                    </div>
+                    <div class="p-4 border-b lg:border-b-0 lg:border-r border-slate-800">
+                        <span class="block text-4xl lg:text-5xl font-bold text-amber-400 font-serif mb-2">68% - 78%</span>
+                        <span class="text-slate-400 text-sm">Of Net State Welfare Fiat Absorbed</span>
+                    </div>
+                    <div class="p-4">
+                        <span class="block text-4xl lg:text-5xl font-bold text-rose-400 font-serif mb-2">4.63M</span>
+                        <span class="text-slate-400 text-sm">Welfare Recipients Act as Biological Conduits</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-slate-900 text-slate-400 py-12 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="mb-2"><i class="fa-solid fa-landmark text-sky-400 mr-2"></i> The Corporate Subsidy Report &copy; 2026</p>
+            <p class="text-sm text-slate-500">Unabridged Macroeconomic & Sector Extraction Analysis</p>
+        </div>
+    </footer>
+</body>
+</html>

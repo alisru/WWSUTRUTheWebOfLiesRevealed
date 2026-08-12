@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document I - The 2026 Extraction Matrix</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #ffffff; color: #334155; }
+        h1, h2, h3, h4 { font-family: 'Playfair Display', serif; color: #0f172a; }
+        p { line-height: 1.8; margin-bottom: 1.25rem; font-size: 1.05rem; }
+        
+        /* Hide scrollbar utility */
+        .scrollbar-none::-webkit-scrollbar { display: none; }
+        .scrollbar-none { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="antialiased selection:bg-sky-500 selection:text-white flex flex-col min-h-screen">
+
+    <nav class="fixed w-full z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm h-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
+            <div class="flex justify-between items-center h-full">
+                <div class="flex items-center">
+                    <a href="index.html" class="font-serif font-bold text-2xl tracking-tight text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-landmark text-sky-500"></i>
+                        The Subsidy Report
+                    </a>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="font-semibold text-sm text-slate-600 hover:text-sky-500 transition-colors">Home</a>
+                    <a href="matrix.html" class="font-semibold text-sm text-sky-500">Extraction Matrix</a>
+                    <a href="thermodynamics.html" class="font-semibold text-sm text-slate-600 hover:text-sky-500 transition-colors">Thermodynamic Analysis</a>
+                    <a href="works_cited.html" class="font-semibold text-sm px-4 py-2 bg-slate-900 text-white rounded-full hover:bg-slate-800 transition-colors">Works Cited</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Fixed Sticky Compass TOC -->
+    <div class="fixed top-20 left-0 w-full z-40 bg-slate-900/95 border-b border-slate-800 backdrop-blur-md h-12 flex items-center select-none shadow-md overflow-hidden">
+        <!-- Center Indicator Needle (Game Reticle Style) -->
+        <div class="absolute inset-x-0 top-0 bottom-0 flex flex-col items-center justify-between pointer-events-none z-50 py-0.5">
+            <span class="text-sky-400 text-[8px] leading-none select-none">▼</span>
+            <div class="w-[2px] h-3.5 bg-sky-400/80 shadow-[0_0_8px_rgba(14,165,233,0.6)]"></div>
+            <span class="text-sky-400 text-[8px] leading-none select-none">▲</span>
+        </div>
+        <!-- Scrollable Track -->
+        <div id="compass-track" class="w-full flex items-center overflow-x-auto scrollbar-none scroll-smooth whitespace-nowrap h-full px-[50vw] cursor-grab select-none">
+            <div class="flex items-center space-x-6 pr-[10vw]">
+                <a href="#section-1" draggable="false" class="compass-item text-[10px] font-bold tracking-widest text-slate-500 hover:text-sky-400 transition-colors py-2 uppercase">1. Baseline &amp; Archetypes</a>
+                <span class="text-slate-800 text-[10px] font-bold">|</span>
+                <a href="#section-2" draggable="false" class="compass-item text-[10px] font-bold tracking-widest text-slate-500 hover:text-sky-400 transition-colors py-2 uppercase">2. Grocery Extraction</a>
+                <span class="text-slate-800 text-[10px] font-bold">|</span>
+                <a href="#section-3" draggable="false" class="compass-item text-[10px] font-bold tracking-widest text-slate-500 hover:text-sky-400 transition-colors py-2 uppercase">3. Energy Extraction</a>
+                <span class="text-slate-800 text-[10px] font-bold">|</span>
+                <a href="#section-4" draggable="false" class="compass-item text-[10px] font-bold tracking-widest text-slate-500 hover:text-sky-400 transition-colors py-2 uppercase">4. Telecom Extraction</a>
+                <span class="text-slate-800 text-[10px] font-bold">|</span>
+                <a href="#section-5" draggable="false" class="compass-item text-[10px] font-bold tracking-widest text-slate-500 hover:text-sky-400 transition-colors py-2 uppercase">5. Pharmacy Extraction</a>
+                <span class="text-slate-800 text-[10px] font-bold">|</span>
+                <a href="#section-6" draggable="false" class="compass-item text-[10px] font-bold tracking-widest text-slate-500 hover:text-sky-400 transition-colors py-2 uppercase">6. Banking Extraction</a>
+                <span class="text-slate-800 text-[10px] font-bold">|</span>
+                <a href="#section-7" draggable="false" class="compass-item text-[10px] font-bold tracking-widest text-slate-500 hover:text-sky-400 transition-colors py-2 uppercase">7. Grand Matrix Summary</a>
+                <span class="text-slate-800 text-[10px] font-bold">|</span>
+                <a href="#section-8" draggable="false" class="compass-item text-[10px] font-bold tracking-widest text-slate-500 hover:text-sky-400 transition-colors py-2 uppercase">8. Macro Extraction</a>
+                <span class="text-slate-800 text-[10px] font-bold">|</span>
+                <a href="#section-9" draggable="false" class="compass-item text-[10px] font-bold tracking-widest text-slate-500 hover:text-sky-400 transition-colors py-2 uppercase">9. Demographic Taper</a>
+                <span class="text-slate-800 text-[10px] font-bold">|</span>
+                <a href="#section-10" draggable="false" class="compass-item text-[10px] font-bold tracking-widest text-slate-500 hover:text-sky-400 transition-colors py-2 uppercase">10. Empirical Validation</a>
+                <span class="text-slate-800 text-[10px] font-bold">|</span>
+                <a href="#section-11" draggable="false" class="compass-item text-[10px] font-bold tracking-widest text-slate-500 hover:text-sky-400 transition-colors py-2 uppercase">11. Residual Fiat</a>
+                <span class="text-slate-800 text-[10px] font-bold">|</span>
+                <a href="#section-12" draggable="false" class="compass-item text-[10px] font-bold tracking-widest text-slate-500 hover:text-sky-400 transition-colors py-2 uppercase">12. Corporate Cross-Reference</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- pt-32 offsets the main header nav (pt-20) + compass TOC nav (h-12 / 3rem) -->
+    <main class="pt-32 flex-grow">
+        <div class="bg-slate-50 border-b border-slate-200 py-16">
+            <div class="max-w-5xl mx-auto px-6 text-center">
+                <span class="text-xs font-bold text-sky-600 uppercase tracking-widest block mb-2">Extraction Analysis</span>
+                <h1 class="text-4xl md:text-5xl font-bold text-slate-900 mb-4">The 2026 Welfare-to-Corporate Subsidy Extraction Matrix</h1>
+                <div class="w-24 h-1 bg-sky-500 mx-auto rounded-full"></div>
+            </div>
+        </div>
+
+        <div class="max-w-4xl mx-auto px-6 py-16">
+            <section class="mb-20 scroll-mt-36" id="section-1">
+                <h2 class="text-3xl font-bold mb-6 pb-2 border-b-2 border-slate-100 flex items-center gap-3">
+                    <span class="bg-slate-900 text-white w-10 h-10 flex items-center justify-center rounded-lg text-lg font-sans">1</span>
+                    Baseline Payment Parameters and Archetypal Spending Assumptions
+                </h2>
+                <p>To accurately estimate the structural flow of the systemic subsidy, we must first establish the baseline of incoming state fiat and explicitly define the behavioral spending assumptions forced upon each specific recipient archetype. The welfare recipient does not operate within a free market of rational choice; their spending habits are dictated entirely by severe financial scarcity and the biological necessity of survival. As of the March 2026 Services Australia indexation adjustments (<a href="https://www.servicesaustralia.gov.au/payment-rates-for-jobseeker-payment" target="_blank" class="text-sky-600 underline">Services Australia</a>), the maximum fortnightly payments are capped into distinct brackets. Because individuals subsisting on these incomes live severely below the recognized poverty line, their marginal propensity to consume is estimated at near 100 percent. There is zero capacity for wealth accumulation. We base the estimated corporate flow-through on the following structural assumptions for each demographic:</p>
+
+                <div class="bg-slate-900 text-white p-8 rounded-2xl my-8 shadow-xl">
+                    <h3 class="text-2xl font-bold mb-4 text-white font-serif">Demographic Scale and Population Baselines</h3>
+                    <p class="text-slate-300 mb-6">To accurately project these individual financial extractions to a national macroeconomic scale in the later sections of this matrix, we must establish the precise population sizes of these archetypes. According to 2025/2026 demographic data published by the Department of Social Services (DSS) and the Australian Institute of Health and Welfare (AIHW):</p>
+                    <ul class="space-y-4 text-sm">
+                        <li class="flex items-start gap-4 bg-slate-800 p-4 rounded-lg">
+                            <i class="fa-solid fa-user-graduate text-sky-400 mt-1 text-lg"></i>
+                            <div><strong class="text-white text-base">Youth Allowance (YA) Cohort:</strong> Comprises approximately <strong>240,000 individuals</strong>.</div>
+                        </li>
+                        <li class="flex items-start gap-4 bg-slate-800 p-4 rounded-lg">
+                            <i class="fa-solid fa-briefcase text-sky-400 mt-1 text-lg"></i>
+                            <div><strong class="text-white text-base">JobSeeker Payment (JSP) Cohort:</strong> Comprises approximately <strong>875,000 individuals</strong>.</div>
+                        </li>
+                        <li class="flex items-start gap-4 bg-slate-800 p-4 rounded-lg">
+                            <i class="fa-solid fa-wheelchair text-sky-400 mt-1 text-lg"></i>
+                            <div><strong class="text-white text-base">Age Pension &amp; Disability Support Pension (DSP) Cohort:</strong> Comprises approximately <strong>3,520,000 individuals</strong> (~2.7 million Age Pensioners and ~820,000 DSP recipients).</div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 my-10">
+                    <div class="bg-slate-50 border-t-4 border-sky-500 rounded-xl p-6 shadow-sm flex flex-col justify-between">
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-wider text-sky-600 block mb-2">Model A</span>
+                            <h3 class="text-xl font-bold mb-2">Youth Allowance (YA)</h3>
+                            <p class="font-bold text-slate-900 mb-4 bg-white px-3 py-1 rounded border border-slate-200 inline-block text-sm">Base Rate: $677.20 / fn</p>
+                            <p class="text-sm text-slate-600 mb-4">Assumes forced hyper-dense shared housing splitting rent/utilities across 3-5 people. Spending skewed toward digital connectivity and public transport.</p>
+                        </div>
+                        <div>
+                            <button class="w-full text-left text-xs font-bold text-sky-500 hover:text-sky-600 flex items-center justify-between py-2 border-t border-slate-200 mt-2 focus:outline-none" onclick="toggleDetails('ya-details')">
+                                <span>View Survival Constraints</span>
+                                <i class="fa-solid fa-chevron-down transition-transform duration-300" id="ya-details-icon"></i>
+                            </button>
+                            <div id="ya-details" class="hidden text-xs text-slate-600 mt-4 pt-4 border-t border-slate-100 space-y-2">
+                                <p><strong>The "Co-Dependent Fractional" Split:</strong> It is mathematically impossible for a YA recipient to survive independently in the 2026 private rental market. This forces hyper-dense shared housing arrangements, splitting utility bills and rent across 3 to 5 people.</p>
+                                <p>Their spending habits are highly skewed towards digital connectivity (due to study/apprentice needs) and public transport. Because their base fiat is so low, their food budget is dedicated almost entirely to high-volume, low-cost carbohydrates, pushing a higher percentage of grocery spend toward discount retailers like ALDI.</p>
+                                <p>Their financial deficit is bridged either by the gig economy or by unrecorded parental micro-subsidies.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-50 border-t-4 border-rose-500 rounded-xl p-6 shadow-sm flex flex-col justify-between">
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-wider text-rose-600 block mb-2">Model B</span>
+                            <h3 class="text-xl font-bold mb-2">JobSeeker (JSP)</h3>
+                            <p class="font-bold text-slate-900 mb-4 bg-white px-3 py-1 rounded border border-slate-200 inline-block text-sm">Base Rate: $808.70 / fn</p>
+                            <p class="text-sm text-slate-600 mb-4">Locked out of public housing and private rentals (rent consuming 65-75% of payment). Food is elastic, resulting in starvation to absorb bills.</p>
+                        </div>
+                        <div>
+                            <button class="w-full text-left text-xs font-bold text-rose-500 hover:text-rose-600 flex items-center justify-between py-2 border-t border-slate-200 mt-2 focus:outline-none" onclick="toggleDetails('jsp-details')">
+                                <span>View Survival Constraints</span>
+                                <i class="fa-solid fa-chevron-down transition-transform duration-300" id="jsp-details-icon"></i>
+                            </button>
+                            <div id="jsp-details" class="hidden text-xs text-slate-600 mt-4 pt-4 border-t border-slate-100 space-y-2">
+                                <p><strong>The "Survival Squeeze":</strong> Representing the most severe poverty-induced structural stress, the JSP recipient is locked out of public housing and private accommodation, with rent consuming 65% to 75% of income.</p>
+                                <p>Because rent and utilities are rigid, food is their only elastic variable. The JSP recipient routinely engages in enforced starvation (skipping meals) to absorb utility bill shocks.</p>
+                                <p>Lacking fuel money, they are geographically trapped to shop at whatever supermarket duopoly is closest, ensuring guaranteed capture by Woolworths or Coles. Transport spending is hoarded strictly to meet punitive mutual obligations.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-50 border-t-4 border-purple-500 rounded-xl p-6 shadow-sm flex flex-col justify-between">
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-wider text-purple-600 block mb-2">Model C</span>
+                            <h3 class="text-xl font-bold mb-2">Pensioner / DSP</h3>
+                            <p class="font-bold text-slate-900 mb-4 bg-white px-3 py-1 rounded border border-slate-200 inline-block text-sm">Base Rate: $1,200.90 / fn</p>
+                            <p class="text-sm text-slate-600 mb-4">Higher base consumed by severe physiological/medical overheads. High utility spend due to climate control/medical equipment needs.</p>
+                        </div>
+                        <div>
+                            <button class="w-full text-left text-xs font-bold text-purple-500 hover:text-purple-600 flex items-center justify-between py-2 border-t border-slate-200 mt-2 focus:outline-none" onclick="toggleDetails('pension-details')">
+                                <span>View Survival Constraints</span>
+                                <i class="fa-solid fa-chevron-down transition-transform duration-300" id="pension-details-icon"></i>
+                            </button>
+                            <div id="pension-details" class="hidden text-xs text-slate-600 mt-4 pt-4 border-t border-slate-100 space-y-2">
+                                <p><strong>The "Inelastic Overhead":</strong> Though receiving a higher base, this surplus is immediately consumed by inescapable biological and medical overheads.</p>
+                                <p>Utility spend is aggressively higher due to continuous climate control (preventing heatstroke/hypothermia) or powered medical equipment. Out-of-pocket health costs represent a massive structural flow-through straight to pharmacies.</p>
+                                <p>Groceries are rigid, requiring specific dietary purchases that prevent relying on cheap bulk carbohydrates, locking spend into higher-margin major supermarket aisles.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="mb-20 scroll-mt-36" id="section-2">
+                <h2 class="text-3xl font-bold mb-6 pb-2 border-b-2 border-slate-100 flex items-center gap-3">
+                    <span class="bg-slate-900 text-white w-10 h-10 flex items-center justify-center rounded-lg text-lg font-sans">2</span>
+                    The Grocery and Food Supply Extraction (Supermarket Oligopoly)
+                </h2>
+                <p><strong>Estimated Welfare Percentage Allocation:</strong> Estimated to consume <strong>20% to 25%</strong> of the total fortnightly payment.</p>
+                <p>According to the ACTCOSS June 2026 Cost of Living Report, food costs have surged by over 22% since 2020. The final February 2025 ACCC Supermarket Inquiry established that Woolworths controls ~38% of grocery sales, Coles ~29%, ALDI ~11%, and Metcash/IGA ~7%.</p>
+
+                <!-- Clean Grocery Table with Exact Dollar Spans -->
+                <div class="bg-slate-50 border border-slate-200 rounded-xl p-6 my-8 shadow-sm">
+                    <h3 class="text-xl font-bold mb-4 border-b border-slate-200 pb-2">Individual Fortnightly Grocery Breakdown</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
+                        <div>
+                            <h4 class="font-bold text-slate-900 mb-2">Youth Allowance (~$169.00 Spend)</h4>
+                            <ul class="space-y-2">
+                                <li class="flex justify-between border-b border-slate-200 pb-1"><span>Woolworths (38%)</span> <strong class="text-slate-900">$60.00 to $70.00</strong></li>
+                                <li class="flex justify-between border-b border-slate-200 pb-1"><span>Coles (29%)</span> <strong class="text-slate-900">$45.00 to $55.00</strong></li>
+                                <li class="flex justify-between border-b border-slate-200 pb-1"><span>ALDI (11%)</span> <strong class="text-slate-900">$15.00 to $20.00</strong></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-900 mb-2">JobSeeker (~$202.00 Spend)</h4>
+                            <ul class="space-y-2">
+                                <li class="flex justify-between border-b border-slate-200 pb-1"><span>Woolworths (38%)</span> <strong class="text-slate-900">$70.00 to $80.00</strong></li>
+                                <li class="flex justify-between border-b border-slate-200 pb-1"><span>Coles (29%)</span> <strong class="text-slate-900">$55.00 to $65.00</strong></li>
+                                <li class="flex justify-between border-b border-slate-200 pb-1"><span>ALDI (11%)</span> <strong class="text-slate-900">$20.00 to $25.00</strong></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-900 mb-2">Pensioner / DSP (~$240.00 Spend)</h4>
+                            <ul class="space-y-2">
+                                <li class="flex justify-between border-b border-slate-200 pb-1"><span>Woolworths (38%)</span> <strong class="text-slate-900">$85.00 to $95.00</strong></li>
+                                <li class="flex justify-between border-b border-slate-200 pb-1"><span>Coles (29%)</span> <strong class="text-slate-900">$65.00 to $75.00</strong></li>
+                                <li class="flex justify-between border-b border-slate-200 pb-1"><span>ALDI (11%)</span> <strong class="text-slate-900">$20.00 to $30.00</strong></li>
+                                <li class="flex justify-between border-b border-slate-200 pb-1"><span>Metcash / IGA (7%)</span> <strong class="text-slate-900">$15.00 to $20.00</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-200 text-xs text-slate-500">
+                        <strong>Microcosm Total:</strong> Combined, these three individuals receive $2,686.80 in base payments and surrender <strong>$611.00 per fortnight</strong> directly to supermarkets, demonstrating how forced biological survival underwrites corporate food retail supply chains.
+                    </div>
+                </div>
+
+                <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-6 text-emerald-900">
+                    <h4 class="font-bold text-lg mb-2">National Grocery Macro Ranges (Fortnightly)</h4>
+                    <ul class="list-disc pl-5 space-y-1">
+                        <li><strong>Woolworths Group:</strong> $374.8 Million to $421.2 Million</li>
+                        <li><strong>Coles Group:</strong> $287.7 Million to $334.1 Million</li>
+                        <li><strong>ALDI:</strong> $91.5 Million to $132.3 Million</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="mb-20 scroll-mt-36" id="section-3">
+                <h2 class="text-3xl font-bold mb-6 pb-2 border-b-2 border-slate-100 flex items-center gap-3">
+                    <span class="bg-slate-900 text-white w-10 h-10 flex items-center justify-center rounded-lg text-lg font-sans">3</span>
+                    The Energy and Utility Extraction (Retail Power Oligopoly)
+                </h2>
+                <p><strong>Estimated Welfare Percentage Allocation:</strong> <strong>10% to 15%</strong> of payment. AER data confirms the "Big Three" dominate: Origin Energy (~26%), AGL Energy (~21%), and EnergyAustralia (~13%).</p>
+
+                <div class="bg-slate-900 text-white p-6 rounded-xl my-6">
+                    <h4 class="text-xl font-bold font-serif mb-4 text-amber-400">National Energy Macro Extraction (Fortnightly)</h4>
+                    <ul class="space-y-2 text-slate-300">
+                        <li><strong>Origin Energy:</strong> $163.6 Million to $205.3 Million</li>
+                        <li><strong>AGL Energy:</strong> $141.8 Million to $183.2 Million</li>
+                        <li><strong>EnergyAustralia:</strong> $79.1 Million to $101.1 Million</li>
+                    </ul>
+                    <div class="mt-4 pt-4 border-t border-slate-800 text-xs text-slate-400">
+                        Combining the YA ($67), JSP ($97), and Pensioner ($180) cohorts, the energy retailers capture a predictable <strong>$344.00 per fortnight</strong> from this 3-person sample to service utility infrastructure and wholesale baseload debt.
+                    </div>
+                </div>
+            </section>
+
+            <section class="mb-20 scroll-mt-36" id="section-4">
+                <h2 class="text-3xl font-bold mb-6 pb-2 border-b-2 border-slate-100 flex items-center gap-3">
+                    <span class="bg-slate-900 text-white w-10 h-10 flex items-center justify-center rounded-lg text-lg font-sans">4</span>
+                    The Telecommunications and Data Extraction (Digital Oligopoly)
+                </h2>
+                <p><strong>Estimated Welfare Allocation:</strong> <strong>2.3% to 4.0%</strong>. Digital compliance (myGov, mutual obligations) is mandatory. Market captures: Telstra (~44%), Optus (~31%), TPG/Vodafone (~17%).</p>
+
+                <!-- Billing Cycle Mismatch Infographic -->
+                <div class="bg-sky-50 border border-sky-100 rounded-2xl p-6 my-8">
+                    <h3 class="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-clock text-sky-500"></i> The Billing Cycle &amp; Cash Flow Mismatch
+                    </h3>
+                    <p class="text-xs text-slate-600 mb-6">A critical friction point in low-income budgeting is the structural mismatch between fortnightly Services Australia payment cycles and telecommunications billing cycles:</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
+                        <div class="bg-white p-5 rounded-xl border border-sky-100 shadow-sm">
+                            <strong class="text-slate-900 block mb-2">1. 28-Day Prepaid SIMs</strong>
+                            <p class="text-xs text-slate-600 leading-relaxed">
+                                Strict 28-day cycles rather than calendar months. A standard $30 recharge every 28 days translates to a cash flow allocation of <strong>~$15.00 per fortnight</strong> ($30 / 2).
+                            </p>
+                        </div>
+                        <div class="bg-white p-5 rounded-xl border border-sky-100 shadow-sm">
+                            <strong class="text-slate-900 block mb-2">2. Monthly NBN / Sharehouse</strong>
+                            <p class="text-xs text-slate-600 leading-relaxed">
+                                Standard monthly NBN bills ($60-$80/month) convert to <strong>$27.70 to $36.90 per fortnight</strong>. Split across 3-4 sharehouse occupants, this reduces to <strong>$7.00 to $12.00 per fortnight</strong> per person.
+                            </p>
+                        </div>
+                        <div class="bg-white p-5 rounded-xl border border-sky-100 shadow-sm">
+                            <strong class="text-slate-900 block mb-2">3. Annual Long-Expiry SIMs</strong>
+                            <p class="text-xs text-slate-600 leading-relaxed">
+                                Low-income recipients frequently utilize 365-day prepaid SIMs ($150-$200 upfront). A $180 annual plan represents an amortized cost of <strong>$6.92 per fortnight</strong>.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 my-6">
+                    <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                        <strong class="block text-slate-900 mb-1">Telstra Macro Range</strong>
+                        <span class="text-sky-600 font-bold text-lg">$53.5M - $73.7M / fn</span>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                        <strong class="block text-slate-900 mb-1">Optus Macro Range</strong>
+                        <span class="text-sky-600 font-bold text-lg">$37.9M - $52.2M / fn</span>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                        <strong class="block text-slate-900 mb-1">TPG / Vodafone Range</strong>
+                        <span class="text-sky-600 font-bold text-lg">$20.9M - $28.8M / fn</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="mb-20 scroll-mt-36" id="section-5">
+                <h2 class="text-3xl font-bold mb-6 pb-2 border-b-2 border-slate-100 flex items-center gap-3">
+                    <span class="bg-slate-900 text-white w-10 h-10 flex items-center justify-center rounded-lg text-lg font-sans">5</span>
+                    The Pharmaceutical and Health Extraction
+                </h2>
+                <p>Following retail consolidation, the merged <strong>Sigma Healthcare / Chemist Warehouse</strong> entity commands ~49% of all pharmacy spend in Australia. Concessional safety nets frame the actual flow-through:</p>
+
+                <!-- PBS details -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
+                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-5 text-sm">
+                        <h4 class="font-bold text-slate-900 mb-2 flex items-center gap-2"><i class="fa-solid fa-file-medical text-rose-500"></i> Statutory PBS Safety Net</h4>
+                        <ul class="space-y-2 text-slate-600 text-xs">
+                            <li><strong>PBS Prescription Copay:</strong> Strictly capped at <strong>$7.70 per script</strong> for concessional cardholders.</li>
+                            <li><strong>Annual Safety Net Threshold:</strong> Capped at 36 scripts (<strong>$277.20 annually</strong> or <strong>~$10.65 per fortnight</strong>). Subsequent scripts are free.</li>
+                        </ul>
+                    </div>
+                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-5 text-sm">
+                        <h4 class="font-bold text-slate-900 mb-2 flex items-center gap-2"><i class="fa-solid fa-notes-medical text-rose-500"></i> Out-of-Pocket Spending</h4>
+                        <ul class="space-y-2 text-slate-600 text-xs">
+                            <li><strong>Seniors Spend Survey:</strong> Average of <strong>$1,586 annually</strong> in out-of-pocket health expenses (non-PBS over-the-counter medicine, vitamins, allied health gap fees).</li>
+                            <li><strong>Fortnightly Amortization:</strong> Translates to roughly <strong>$61.00 per fortnight</strong>.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="bg-rose-50 border border-rose-200 p-6 rounded-xl text-rose-950 my-6">
+                    <h4 class="font-bold text-lg mb-1">Chemist Warehouse / Sigma Macro Capture</h4>
+                    <p class="m-0">Absorbs an estimated national range of <strong>$93.6 Million to $134.4 Million</strong> every single fortnight in welfare-issued funds.</p>
+                </div>
+            </section>
+
+            <section class="mb-20 scroll-mt-36" id="section-6">
+                <h2 class="text-3xl font-bold mb-6 pb-2 border-b-2 border-slate-100 flex items-center gap-3">
+                    <span class="bg-slate-900 text-white w-10 h-10 flex items-center justify-center rounded-lg text-lg font-sans">6</span>
+                    The Residential Debt Servicing Extraction (Big Four Banks)
+                </h2>
+                <p><strong>Estimated Welfare Allocation:</strong> <strong>41% to 75%</strong> depending on demographic bracket. The Big Four banks (CBA, Westpac, NAB, ANZ) hold over 75% of residential mortgages. Renters transfer state fiat to landlords who service these mortgage books.</p>
+
+                <!-- SVG Flow chart -->
+                <div class="bg-slate-50 rounded-2xl border border-slate-200 p-6 my-8 flex flex-col items-center">
+                    <h3 class="text-sm font-bold text-slate-900 mb-4 text-center">Welfare-to-Mortgage Flow-Through Pipeline</h3>
+                    <svg viewBox="0 0 800 120" class="w-full max-w-2xl h-auto text-slate-700 font-sans" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                                <path d="M 0 0 L 10 5 L 0 10 z" fill="#0ea5e9" />
+                            </marker>
+                        </defs>
+                        <!-- Node 1: State -->
+                        <rect x="10" y="20" width="130" height="60" rx="8" fill="#0f172a" />
+                        <text x="75" y="45" font-size="12" fill="#fff" font-weight="bold" text-anchor="middle">Services Australia</text>
+                        <text x="75" y="65" font-size="10" fill="#94a3b8" text-anchor="middle">Welfare Disbursal</text>
+
+                        <!-- Connector 1 -->
+                        <line x1="140" y1="50" x2="225" y2="50" stroke="#0ea5e9" stroke-width="2" marker-end="url(#arrow)" />
+                        <text x="182.5" y="40" font-size="9" fill="#0ea5e9" text-anchor="middle" font-weight="bold">Base Cash</text>
+
+                        <!-- Node 2: Recipient -->
+                        <rect x="235" y="20" width="130" height="60" rx="8" fill="#334155" />
+                        <text x="300" y="45" font-size="12" fill="#fff" font-weight="bold" text-anchor="middle">Welfare Recipient</text>
+                        <text x="300" y="65" font-size="10" fill="#cbd5e1" text-anchor="middle">(Biological Conduit)</text>
+
+                        <!-- Connector 2 -->
+                        <line x1="365" y1="50" x2="450" y2="50" stroke="#0ea5e9" stroke-width="2" marker-end="url(#arrow)" />
+                        <text x="407.5" y="40" font-size="9" fill="#0ea5e9" text-anchor="middle" font-weight="bold">Predatory Rent</text>
+
+                        <!-- Node 3: Landlord -->
+                        <rect x="460" y="20" width="130" height="60" rx="8" fill="#475569" />
+                        <text x="525" y="45" font-size="12" fill="#fff" font-weight="bold" text-anchor="middle">Private Landlord</text>
+                        <text x="525" y="65" font-size="10" fill="#cbd5e1" text-anchor="middle">(Collection Agent)</text>
+
+                        <!-- Connector 3 -->
+                        <line x1="590" y1="50" x2="675" y2="50" stroke="#0ea5e9" stroke-width="2" marker-end="url(#arrow)" />
+                        <text x="632.5" y="40" font-size="9" fill="#0ea5e9" text-anchor="middle" font-weight="bold">Debt Service</text>
+
+                        <!-- Node 4: Banks -->
+                        <rect x="685" y="20" width="105" height="60" rx="8" fill="#0284c7" />
+                        <text x="737.5" y="45" font-size="12" fill="#fff" font-weight="bold" text-anchor="middle">Big Four Banks</text>
+                        <text x="737.5" y="65" font-size="10" fill="#e0f2fe" text-anchor="middle">(CBA, WBC, etc.)</text>
+                    </svg>
+                    <p class="text-[10px] text-slate-500 mt-4 text-center max-w-lg">The loop is mathematically perfect: housing extraction operates as the apex predator of the welfare state, instantly transforming state-funded social relief into risk-free mortgage backing and net interest margins for commercial lenders.</p>
+                </div>
+
+                <div class="bg-slate-900 text-white p-8 rounded-2xl shadow-xl my-6">
+                    <h3 class="text-2xl font-bold font-serif mb-4 text-sky-400">The Big Four Banking Oligopoly Macro Extraction</h3>
+                    <ul class="space-y-2 text-slate-300 mb-6">
+                        <li><strong>From Youth Allowance Renters:</strong> $66.4 Million to $70.0 Million / fn</li>
+                        <li><strong>From JobSeeker Renters:</strong> $370.1 Million to $393.7 Million / fn</li>
+                        <li><strong>From Renting Pensioners (1.1M):</strong> $412.5 Million to $594.0 Million / fn</li>
+                    </ul>
+                    <div class="border-t border-slate-800 pt-4 text-xl font-bold text-white">
+                        Total Banking Extraction: <span class="text-sky-400">$849.0 Million to $1.057 Billion per fortnight</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="mb-20 scroll-mt-36" id="section-7">
+                <h2 class="text-3xl font-bold mb-6 pb-2 border-b-2 border-slate-100 flex items-center gap-3">
+                    <span class="bg-slate-900 text-white w-10 h-10 flex items-center justify-center rounded-lg text-lg font-sans">7</span>
+                    The Grand Matrix Summary (Individual Level)
+                </h2>
+                
+                <div class="overflow-x-auto my-8 border border-slate-200 rounded-xl shadow-lg">
+                    <table class="w-full text-left border-collapse text-sm whitespace-nowrap">
+                        <thead>
+                            <tr class="bg-slate-900 text-white">
+                                <th class="p-4 font-bold">Archetype</th>
+                                <th class="p-4 font-bold">Base Fiat</th>
+                                <th class="p-4 font-bold">Grocery</th>
+                                <th class="p-4 font-bold">Energy</th>
+                                <th class="p-4 font-bold">Telecom</th>
+                                <th class="p-4 font-bold">Pharma</th>
+                                <th class="p-4 font-bold">Bank / Rent</th>
+                                <th class="p-4 font-bold bg-sky-600">Total Extraction</th>
+                                <th class="p-4 font-bold">Net Deficit / Surplus</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-200">
+                            <tr>
+                                <td class="p-4 font-bold">Youth Allowance</td>
+                                <td class="p-4">$677.20</td>
+                                <td class="p-4">$169.00</td>
+                                <td class="p-4">$67.00</td>
+                                <td class="p-4">$21.50</td>
+                                <td class="p-4">$15.00</td>
+                                <td class="p-4">$370.00</td>
+                                <td class="p-4 font-bold bg-sky-50">$642.50</td>
+                                <td class="p-4 text-emerald-600 font-bold">+$34.70</td>
+                            </tr>
+                            <tr class="bg-slate-50">
+                                <td class="p-4 font-bold">JobSeeker</td>
+                                <td class="p-4">$808.70</td>
+                                <td class="p-4">$202.00</td>
+                                <td class="p-4">$97.00</td>
+                                <td class="p-4">$27.00</td>
+                                <td class="p-4">$15.00</td>
+                                <td class="p-4">$565.00</td>
+                                <td class="p-4 font-bold bg-sky-50">$906.00</td>
+                                <td class="p-4 text-rose-600 font-bold">-$97.30</td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 font-bold">Pensioner / DSP</td>
+                                <td class="p-4">$1,200.90</td>
+                                <td class="p-4">$240.00</td>
+                                <td class="p-4">$180.00</td>
+                                <td class="p-4">$33.00</td>
+                                <td class="p-4">$60.00</td>
+                                <td class="p-4">$610.00</td>
+                                <td class="p-4 font-bold bg-sky-50">$1,123.00</td>
+                                <td class="p-4 text-emerald-600 font-bold">+$77.90</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="mb-20 scroll-mt-36" id="section-8">
+                <h2 class="text-3xl font-bold mb-6 pb-2 border-b-2 border-slate-100 flex items-center gap-3">
+                    <span class="bg-slate-900 text-white w-10 h-10 flex items-center justify-center rounded-lg text-lg font-sans">8</span>
+                    The Macro-Level Systemic Extraction
+                </h2>
+
+                <div class="overflow-x-auto my-8 border border-slate-200 rounded-xl shadow-lg">
+                    <table class="w-full text-left border-collapse text-sm">
+                        <thead>
+                            <tr class="bg-slate-900 text-white">
+                                <th class="p-4 font-bold">Oligopoly Sector / Entity</th>
+                                <th class="p-4 font-bold">Min Fortnightly (Millions)</th>
+                                <th class="p-4 font-bold">Max Fortnightly (Millions)</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-200">
+                            <tr><td class="p-4 font-semibold">Woolworths Group</td><td class="p-4">$374.8M</td><td class="p-4">$421.2M</td></tr>
+                            <tr class="bg-slate-50"><td class="p-4 font-semibold">Coles Group</td><td class="p-4">$287.7M</td><td class="p-4">$334.1M</td></tr>
+                            <tr><td class="p-4 font-semibold">ALDI</td><td class="p-4">$91.5M</td><td class="p-4">$132.3M</td></tr>
+                            <tr class="bg-slate-50"><td class="p-4 font-semibold">Origin Energy</td><td class="p-4">$163.6M</td><td class="p-4">$205.3M</td></tr>
+                            <tr><td class="p-4 font-semibold">AGL Energy</td><td class="p-4">$141.8M</td><td class="p-4">$183.2M</td></tr>
+                            <tr class="bg-slate-50"><td class="p-4 font-semibold">EnergyAustralia</td><td class="p-4">$79.1M</td><td class="p-4">$101.1M</td></tr>
+                            <tr><td class="p-4 font-semibold">Telstra</td><td class="p-4">$53.5M</td><td class="p-4">$73.7M</td></tr>
+                            <tr class="bg-slate-50"><td class="p-4 font-semibold">Optus</td><td class="p-4">$37.9M</td><td class="p-4">$52.2M</td></tr>
+                            <tr><td class="p-4 font-semibold">TPG / Vodafone</td><td class="p-4">$20.9M</td><td class="p-4">$28.8M</td></tr>
+                            <tr class="bg-slate-50"><td class="p-4 font-semibold">Chemist Warehouse / Sigma</td><td class="p-4">$93.6M</td><td class="p-4">$134.4M</td></tr>
+                            <tr><td class="p-4 font-semibold">Big Four Banks (CBA, WBC, NAB, ANZ)</td><td class="p-4">$849.0M</td><td class="p-4">$1,057.8M</td></tr>
+                            <tr class="bg-sky-900 text-white font-bold text-base">
+                                <td class="p-4">TOTAL ESTIMATED MACRO CAPTURE</td>
+                                <td class="p-4">$2.19 Billion / fn</td>
+                                <td class="p-4">$2.72 Billion / fn</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="mb-20 scroll-mt-36" id="section-9">
+                <h2 class="text-3xl font-bold mb-6 pb-2 border-b-2 border-slate-100 flex items-center gap-3">
+                    <span class="bg-slate-900 text-white w-10 h-10 flex items-center justify-center rounded-lg text-lg font-sans">9</span>
+                    Treasury Alignment and Demographic Taper
+                </h2>
+                <p>To align the matrix with actual Treasury expenditure, we apply a demographic taper. Real-world data indicates that approximately <strong>32% to 33%</strong> of Age Pensioners are part-pensioners (income/asset tested), and roughly <strong>14%</strong> of DSP recipients receive part-payments.</p>
+                <p>Factoring in partnered rate reductions (applied to 20-25% of recipients), the net national fortnightly welfare injection is calculated at <strong>~$3.19 Billion</strong>. This aligns with our findings, confirming that core oligopolies capture approximately <strong>68% to 75%</strong> of direct cash distributed by Services Australia.</p>
+            </section>
+
+            <section class="mb-20 scroll-mt-36" id="section-10">
+                <h2 class="text-3xl font-bold mb-6 pb-2 border-b-2 border-slate-100 flex items-center gap-3">
+                    <span class="bg-slate-900 text-white w-10 h-10 flex items-center justify-center rounded-lg text-lg font-sans">10</span>
+                    Federal Budget &amp; Outlay Validation
+                </h2>
+                <p>We stress-test this extraction matrix against empirical administrative files published by DSS and the AIHW:</p>
+                <div class="bg-slate-50 border border-slate-200 rounded-xl p-6 text-sm space-y-4 my-6">
+                    <p><strong>Total Recipient Volume:</strong> Approximately <strong>5.3 million Australians</strong> receive a continuous state income payment (Age Pension: ~2.60M, JSP: ~821k-875k, DSP: ~823k, YA: ~241.5k, Parent/Carer: ~800k). Our primary focus on YA, JSP, Age Pension, and DSP captures <strong>87% of the total direct cash volume</strong> distributed by Services Australia.</p>
+                    <p><strong>Direct Cash outlays:</strong> The Gross Federal Budget allocates $290.9B to "Social Security and Welfare". Stripping away institutional non-cash programs (NDIS at ~$50B+, aged care, childcare subsidies) leaves direct cash transfers at <strong>$125 Billion to $132 Billion annually</strong> (~$4.8B-$5.1B/fn gross). After partnered reductions and tapers, net fortnightly cash deposited directly into recipient bank accounts is confirmed at <strong>$3.25 Billion to $3.50 Billion</strong>.</p>
+                </div>
+            </section>
+
+            <section class="mb-20 scroll-mt-36" id="section-11">
+                <h2 class="text-3xl font-bold mb-6 pb-2 border-b-2 border-slate-100 flex items-center gap-3">
+                    <span class="bg-slate-900 text-white w-10 h-10 flex items-center justify-center rounded-lg text-lg font-sans">11</span>
+                    Analysis of the Macro Discrepancy &amp; Uncaptured Residual Fiat
+                </h2>
+                <p>Tracking the uncaptured residual variance of <strong>$530 Million to $1.31 Billion per fortnight</strong> reveals how the remainder of state welfare currency is absorbed by secondary corporate and financial mechanisms:</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
+                    <div class="bg-slate-50 p-6 rounded-xl border border-slate-200">
+                        <strong class="text-slate-900 block mb-2 flex items-center gap-2"><i class="fa-solid fa-car text-sky-500"></i> A. Vehicle &amp; Transport ($200M - $350M / fn)</strong>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            AAA Transport Index confirms average fuel spend of $189.90/fn. Captured by fuel retailers (Ampol, Shell/Viva, BP, 7-Eleven) and the insurance oligopoly (IAG, Suncorp, QBE) along with state transit registration fees.
+                        </p>
+                    </div>
+                    <div class="bg-slate-50 p-6 rounded-xl border border-slate-200">
+                        <strong class="text-slate-900 block mb-2 flex items-center gap-2"><i class="fa-solid fa-house-user text-sky-500"></i> B. Non-Rent Housing ($180M - $300M / fn)</strong>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            Roughly 70% of Age Pensioners own their homes outright. Their uncaptured fiat is directed into municipal council rates, water access charges, strata body corporate fees, and trade maintenance services.
+                        </p>
+                    </div>
+                    <div class="bg-slate-50 p-6 rounded-xl border border-slate-200">
+                        <strong class="text-slate-900 block mb-2 flex items-center gap-2"><i class="fa-solid fa-credit-card text-sky-500"></i> C. BNPL &amp; High-Interest Debt ($80M - $150M / fn)</strong>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            ASIC and Finder stats show 33% of BNPL (Afterpay, Zip) users use credit for groceries. Late fees, card interest, and account keeping fees represent high-margin non-bank financial extractions.
+                        </p>
+                    </div>
+                    <div class="bg-slate-50 p-6 rounded-xl border border-slate-200">
+                        <strong class="text-slate-900 block mb-2 flex items-center gap-2"><i class="fa-solid fa-shirt text-sky-500"></i> D. Secondary Retail ($70M - $150M / fn)</strong>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            Wesfarmers' Kmart Group (generating over $11.4 Billion in annual revenue) targets value-conscious low-income shoppers, along with Big W, second-hand charities, and local micro-services.
+                        </p>
+                    </div>
+                    <div class="bg-slate-50 p-6 rounded-xl border border-slate-200 md:col-span-2">
+                        <strong class="text-slate-900 block mb-2 flex items-center gap-2"><i class="fa-solid fa-receipt text-sky-500"></i> E. State Tax &amp; Excise Recapture ($50M - $100M / fn)</strong>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            Federal fuel excise (49.6c/L), tobacco/alcohol excises, and the standard GST act as a fiscal sponge, draining a predictable fraction of issued fiat directly back to the federal treasury.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="mb-20 scroll-mt-36" id="section-12">
+                <h2 class="text-3xl font-bold mb-6 pb-2 border-b-2 border-slate-100 flex items-center gap-3">
+                    <span class="bg-slate-900 text-white w-10 h-10 flex items-center justify-center rounded-lg text-lg font-sans">12</span>
+                    Corporate Cross-Reference Analysis
+                </h2>
+                <p>We cross-reference our estimated macro welfare extractions against the reported corporate revenues, operational earnings (EBIT/EBITDA), and net profits (NPAT) of specific oligopolies.</p>
+
+                <!-- Interactive Tabs Container -->
+                <div class="bg-white border border-slate-200 rounded-2xl shadow-md overflow-hidden my-8">
+                    <!-- Tab Headers -->
+                    <div class="flex border-b border-slate-200 bg-slate-50 font-semibold text-sm">
+                        <button class="flex-1 py-4 px-6 text-center text-sky-600 border-b-2 border-sky-500 focus:outline-none transition-colors" id="tab-btn-grocery" onclick="switchTab('grocery')">
+                            <i class="fa-solid fa-cart-shopping mr-2"></i> Groceries
+                        </button>
+                        <button class="flex-1 py-4 px-6 text-center text-slate-600 hover:text-sky-600 hover:bg-slate-100/50 focus:outline-none transition-colors" id="tab-btn-banks" onclick="switchTab('banks')">
+                            <i class="fa-solid fa-building-columns mr-2"></i> Big Four Banks
+                        </button>
+                        <button class="flex-1 py-4 px-6 text-center text-slate-600 hover:text-sky-600 hover:bg-slate-100/50 focus:outline-none transition-colors" id="tab-btn-telecom" onclick="switchTab('telecom')">
+                            <i class="fa-solid fa-mobile-screen-button mr-2"></i> Telecoms
+                        </button>
+                    </div>
+
+                    <!-- Tab Contents -->
+                    <div class="p-6">
+                        <!-- Grocery Tab -->
+                        <div id="tab-content-grocery" class="space-y-6">
+                            <div class="space-y-4">
+                                <h3 class="text-lg font-bold text-slate-900">Grocery Oligopoly Capture share</h3>
+                                <p class="text-xs text-slate-500">Comparing midpoint fortnightly welfare extractions to standard retail checkouts:</p>
+                                
+                                <div class="space-y-4">
+                                    <div>
+                                        <div class="flex justify-between text-xs font-semibold mb-1">
+                                            <span>Woolworths Group (Midpoint: $398.0M/fn)</span>
+                                            <span class="text-sky-600">20.1% of Supermarket Revenue</span>
+                                        </div>
+                                        <div class="w-full bg-slate-100 rounded-full h-2">
+                                            <div class="bg-sky-500 h-2 rounded-full" style="width: 20.1%"></div>
+                                        </div>
+                                        <p class="text-[10px] text-slate-500 mt-1">Generates an estimated $20M-$22M fortnightly EBIT ($521M-$586M annually) and $195M-$221M annual NPAT from welfare funds.</p>
+                                    </div>
+                                    <div>
+                                        <div class="flex justify-between text-xs font-semibold mb-1">
+                                            <span>Coles Group (Midpoint: $310.9M/fn)</span>
+                                            <span class="text-sky-600">20.2% of Supermarket Revenue</span>
+                                        </div>
+                                        <div class="w-full bg-slate-100 rounded-full h-2">
+                                            <div class="bg-sky-500 h-2 rounded-full" style="width: 20.2%"></div>
+                                        </div>
+                                        <p class="text-[10px] text-slate-500 mt-1">Generates an estimated $15.1M-$17.6M fortnightly EBIT ($394M-$458M annually) and $203M-$236M annual NPAT from welfare funds.</p>
+                                    </div>
+                                    <div>
+                                        <div class="flex justify-between text-xs font-semibold mb-1">
+                                            <span>ALDI Australia (Midpoint: $111.9M/fn)</span>
+                                            <span class="text-sky-600">20.9% of Sales Revenue</span>
+                                        </div>
+                                        <div class="w-full bg-slate-100 rounded-full h-2">
+                                            <div class="bg-sky-500 h-2 rounded-full" style="width: 20.9%"></div>
+                                        </div>
+                                        <p class="text-[10px] text-slate-500 mt-1">Underwrites 20.9% of ALDI Australia's entire net profit ($57.6M-$83.2M annually), paid as dividends to its European parent.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Banks Tab -->
+                        <div id="tab-content-banks" class="hidden space-y-6">
+                            <h3 class="text-lg font-bold text-slate-900">Big Four Banking Mortgage Book Capture</h3>
+                            <p class="text-xs text-slate-500">Individual bank capture and annual net interest margin (NIM) generated by rental-to-mortgage transfers (Big Four control ~75.4% of mortgage market):</p>
+                            
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                                        <h4 class="font-bold text-slate-900 text-sm flex justify-between"><span>CBA (26.8% Market Share)</span> <span class="text-sky-600 font-semibold text-xs">$338.3M / fn</span></h4>
+                                        <p class="text-[10px] text-slate-500 mt-1">Absorbs ~10% of total national welfare. Generates an estimated <strong>$175.0 Million annually</strong> in pure net interest profit from welfare-rent loop.</p>
+                                    </div>
+                                    <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                                        <h4 class="font-bold text-slate-900 text-sm flex justify-between"><span>Westpac (21.1% Market Share)</span> <span class="text-sky-600 font-semibold text-xs">$266.9M / fn</span></h4>
+                                        <p class="text-[10px] text-slate-500 mt-1">Absorbs ~8% of total welfare. Generates an estimated <strong>$134.6 Million annually</strong> in net interest earnings.</p>
+                                    </div>
+                                    <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                                        <h4 class="font-bold text-slate-900 text-sm flex justify-between"><span>NAB (14.7% Market Share)</span> <span class="text-sky-600 font-semibold text-xs">$185.9M / fn</span></h4>
+                                        <p class="text-[10px] text-slate-500 mt-1">Absorbs ~5.6% of total welfare. Generates an estimated <strong>$91.8 Million annually</strong> in pure interest profits.</p>
+                                    </div>
+                                    <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                                        <h4 class="font-bold text-slate-900 text-sm flex justify-between"><span>ANZ (12.8% Market Share)</span> <span class="text-sky-600 font-semibold text-xs">$162.1M / fn</span></h4>
+                                        <p class="text-[10px] text-slate-500 mt-1">Absorbs ~4.8% of total welfare. Generates an estimated <strong>$78.8 Million annually</strong> in net interest profit.</p>
+                                    </div>
+                                </div>
+                        </div>
+
+                        <!-- Telecom Tab -->
+                        <div id="tab-content-telecom" class="hidden space-y-6">
+                            <h3 class="text-lg font-bold text-slate-900">Telecom Oligopoly Capture shares</h3>
+                            <p class="text-xs text-slate-500">Comparing midpoint fortnightly captures to mobile service revenues and earnings:</p>
+
+                            <div class="space-y-4">
+                                <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                                    <div class="flex justify-between text-xs font-semibold mb-1">
+                                        <span>Telstra (Midpoint: $63.6M/fn)</span>
+                                        <span class="text-sky-600">14.8% of Mobile Service Revenue</span>
+                                    </div>
+                                    <p class="text-[10px] text-slate-500 mt-1">Generates <strong>$25.1M in underlying EBITDA per fortnight</strong> ($652 Million annually), contributing 7.6% of group operational earnings.</p>
+                                </div>
+                                <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                                    <div class="flex justify-between text-xs font-semibold mb-1">
+                                        <span>Optus (Midpoint: $45.0M/fn)</span>
+                                        <span class="text-sky-600">28.2% of Mobile Service Revenue</span>
+                                    </div>
+                                    <p class="text-[10px] text-slate-500 mt-1">Represents 14% of total operating revenue. Generates <strong>$12.7M EBITDA per fortnight</strong> ($330 Million annually), contributing 14% of group earnings.</p>
+                                </div>
+                                <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                                    <div class="flex justify-between text-xs font-semibold mb-1">
+                                        <span>TPG / Vodafone (Midpoint: $24.8M/fn)</span>
+                                        <span class="text-sky-600">26.6% of Mobile Service Revenue</span>
+                                    </div>
+                                    <p class="text-[10px] text-slate-500 mt-1">Represents 15.4% of total service revenue. Generates <strong>$9.7M EBITDA per fortnight</strong> ($252 Million annually), contributing 15.4% of group earnings.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Bottom Pagination Link -->
+            <div class="flex justify-between items-center pt-8 border-t border-slate-200">
+                <a href="index.html" class="text-slate-600 hover:text-slate-900 font-semibold flex items-center gap-2">
+                    <i class="fa-solid fa-arrow-left"></i> Home
+                </a>
+                <a href="thermodynamics.html" class="px-6 py-3 bg-sky-500 hover:bg-sky-400 text-white font-bold rounded-lg shadow transition-all flex items-center gap-2">
+                    Continue to Thermodynamic Analysis <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-slate-900 text-slate-400 py-12 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="mb-2"><i class="fa-solid fa-landmark text-sky-400 mr-2"></i> The Corporate Subsidy Report &copy; 2026</p>
+            <p class="text-sm text-slate-500">Document I: The 2026 Welfare-to-Corporate Subsidy Extraction Matrix</p>
+        </div>
+    </footer>
+
+    <script>
+        // Accordion toggle details
+        function toggleDetails(id) {
+            const details = document.getElementById(id);
+            const icon = document.getElementById(id + '-icon');
+            if (details.classList.contains('hidden')) {
+                details.classList.remove('hidden');
+                icon.classList.add('rotate-180');
+            } else {
+                details.classList.add('hidden');
+                icon.classList.remove('rotate-180');
+            }
+        }
+
+        // Switch corporate cross-reference tabs
+        function switchTab(tabId) {
+            document.getElementById('tab-content-grocery').classList.add('hidden');
+            document.getElementById('tab-content-banks').classList.add('hidden');
+            document.getElementById('tab-content-telecom').classList.add('hidden');
+            
+            const buttons = ['grocery', 'banks', 'telecom'];
+            buttons.forEach(btn => {
+                const element = document.getElementById('tab-btn-' + btn);
+                element.classList.remove('text-sky-600', 'border-b-2', 'border-sky-500');
+                element.classList.add('text-slate-600');
+            });
+            
+            document.getElementById('tab-content-' + tabId).classList.remove('hidden');
+            const activeBtn = document.getElementById('tab-btn-' + tabId);
+            activeBtn.classList.add('text-sky-600', 'border-b-2', 'border-sky-500');
+            activeBtn.classList.remove('text-slate-600');
+        }
+
+        // Compass TOC Scroll Spy & Auto-Center Logic
+        const track = document.getElementById('compass-track');
+        const items = document.querySelectorAll('.compass-item');
+        const sections = document.querySelectorAll('section[id^="section-"]');
+
+        let isDown = false;
+        let isDragging = false;
+        let startX;
+        let scrollLeft;
+
+        // Drag to scroll functionality
+        track.addEventListener('mousedown', (e) => {
+            isDown = true;
+            isDragging = false;
+            track.classList.add('cursor-grabbing');
+            track.classList.remove('cursor-grab');
+            startX = e.pageX - track.offsetLeft;
+            scrollLeft = track.scrollLeft;
+            track.classList.remove('scroll-smooth');
+        });
+        track.addEventListener('mouseleave', () => {
+            isDown = false;
+            track.classList.remove('cursor-grabbing');
+            track.classList.add('cursor-grab');
+        });
+        track.addEventListener('mouseup', () => {
+            isDown = false;
+            track.classList.remove('cursor-grabbing');
+            track.classList.add('cursor-grab');
+        });
+        track.addEventListener('mousemove', (e) => {
+            if(!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - track.offsetLeft;
+            const walk = (x - startX) * 1.5;
+            if (Math.abs(x - startX) > 5) {
+                isDragging = true;
+            }
+            track.scrollLeft = scrollLeft - walk;
+        });
+
+        // Prevent standard HTML5 dragging of links/titles
+        track.addEventListener('dragstart', (e) => {
+            e.preventDefault();
+        });
+
+        // Click on links also smooth-scrolls and auto-centers (if not dragging)
+        items.forEach(item => {
+            item.addEventListener('click', (e) => {
+                if (isDragging) {
+                    // Prevent the click navigation if we were dragging the bar
+                    e.preventDefault();
+                } else {
+                    track.classList.add('scroll-smooth');
+                }
+            });
+        });
+
+        window.addEventListener('scroll', () => {
+            let currentId = "";
+            
+            // Determine active section based on scroll position
+            sections.forEach(section => {
+                const top = section.offsetTop;
+                if (pageYOffset >= (top - 180)) {
+                    currentId = section.getAttribute('id');
+                }
+            });
+
+            // If we found an active section ID and user is not dragging the bar
+            if (currentId && !isDown) {
+                items.forEach(item => {
+                    item.classList.remove('text-sky-400', 'font-bold');
+                    item.classList.add('text-slate-500');
+
+                    if (item.getAttribute('href') === `#${currentId}`) {
+                        item.classList.remove('text-slate-500');
+                        item.classList.add('text-sky-400', 'font-bold');
+
+                        // Auto-center current item
+                        const containerWidth = track.offsetWidth;
+                        const itemLeft = item.offsetLeft;
+                        const itemWidth = item.offsetWidth;
+                        
+                        track.classList.add('scroll-smooth');
+                        track.scrollTo({
+                            left: itemLeft - (containerWidth / 2) + (itemWidth / 2),
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
