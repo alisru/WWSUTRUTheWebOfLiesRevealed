@@ -207,6 +207,19 @@ async function submitToSupabase(payload) {
     return { ok: false, error: 'That was fast — give it a moment and try again.' };
   }
   if (!supa) return { ok: false, error: 'Supabase is not configured yet.' };
+  // RLS policies (supabase_schema.sql) only grant access to the
+  // `authenticated` role, which Supabase Anonymous Auth uses -- so we
+  // need a signed-in anonymous session before writing anything. A prior
+  // anonymous session persists across visits (that's what lets a second
+  // submission update the first), so only sign in if there isn't one yet.
+  let { data: { session } } = await supa.auth.getSession();
+  if (!session) {
+    const { data, error: authErr } = await supa.auth.signInAnonymously();
+    if (authErr) return { ok: false, error: authErr.message };
+    session = data.session;
+  }
+  const respondentId = session.user.id;
+
   // Generate the id client-side rather than reading it back from Postgres.
   // Chaining .select() after .insert() would ask PostgREST to return the
   // new row, and returning a row is a read -- which would need a SELECT
@@ -214,54 +227,39 @@ async function submitToSupabase(payload) {
   // never read, including its own submission. crypto.randomUUID() sidesteps
   // that entirely: no representation requested, no SELECT policy needed.
   const responseId = crypto.randomUUID();
-  const { error: e1 } = await supa.from('responses').insert({ id: responseId, raw: payload });
+  const { error: e1 } = await supa.from('responses').insert({ id: responseId, respondent_id: respondentId, raw: payload });
   if (e1) return { ok: false, error: e1.message };
 
-  const answerRows = [], blockerRows = [], metaRows = [], extraRows = [], rankRows = [];
+  // `answers` is a wide table -- one row per sub-indicator, not per
+  // rating -- so every scale/flag for a sub_id folds into a single row.
+  const answerRows = [];
   for (const [planeKey, plane] of Object.entries(payload.planes || {})) {
     const planeNum = Number(planeKey);
-    metaRows.push({
-      response_id: responseId, plane: planeNum,
-      open_response: plane.open_response ?? null,
-      consent_support: !!(plane.consent && plane.consent.follow_up),
-      consent_contribute: !!(plane.consent && plane.consent.contribute),
-    });
     for (const [subId, sub] of Object.entries(plane.sub_indicators || {})) {
+      const row = { response_id: responseId, plane: planeNum, sub_id: subId };
+      const scaleCols = { Micro: 'micro', Meso: 'meso', Macro: 'macro' };
       for (const [scale, pair] of Object.entries(sub.scales || {})) {
-        for (const vector of ['A', 'B']) {
-          const val = pair[vector];
-          if (val === null || val === undefined) continue;
-          answerRows.push({ response_id: responseId, plane: planeNum, sub_id: subId, scale, vector, value: val, last_note: pair[`${vector}_last`] ?? null });
-        }
+        const col = scaleCols[scale];
+        if (!col) continue;
+        row[`${col}_a`] = pair.A ?? null;
+        row[`${col}_a_last`] = pair.A_last ?? null;
+        row[`${col}_b`] = pair.B ?? null;
+        row[`${col}_b_last`] = pair.B_last ?? null;
       }
-      for (const vector of ['Ca', 'Cb', 'Da', 'Db']) {
-        const val = sub.flags ? sub.flags[vector] : undefined;
-        if (val === null || val === undefined) continue;
-        answerRows.push({ response_id: responseId, plane: planeNum, sub_id: subId, scale: null, vector, value: val, last_note: null });
+      if (sub.flags) {
+        if (sub.flags.Ca !== undefined) row.ca = sub.flags.Ca;
+        if (sub.flags.Cb !== undefined) row.cb = sub.flags.Cb;
+        if (sub.flags.Da !== undefined) row.da = sub.flags.Da;
+        if (sub.flags.Db !== undefined) row.db = sub.flags.Db;
+        if (sub.flags.Cb_type) row.cb_type = sub.flags.Cb_type;
+        if (sub.flags.Db_type) row.db_type = sub.flags.Db_type;
       }
-      if (sub.flags && sub.flags.Cb_type) blockerRows.push({ response_id: responseId, sub_id: subId, side: 'give', tag: sub.flags.Cb_type });
-      if (sub.flags && sub.flags.Db_type) blockerRows.push({ response_id: responseId, sub_id: subId, side: 'receive', tag: sub.flags.Db_type });
+      answerRows.push(row);
     }
   }
-  for (const [itemId, value] of Object.entries(payload.extras || {})) {
-    extraRows.push({ response_id: responseId, item_id: itemId, value: String(value) });
-  }
-  for (const kind of ['self', 'community']) {
-    const rankMap = (payload.ranking && payload.ranking[kind]) || {};
-    for (const [planeName, rank] of Object.entries(rankMap)) {
-      const n = Number(rank);
-      if (Number.isInteger(n) && n >= 1 && n <= 7) rankRows.push({ response_id: responseId, kind, plane_name: planeName, rank: n });
-    }
-  }
-
-  const inserts = [
-    ['answers', answerRows], ['blocker_tags', blockerRows], ['module_meta', metaRows],
-    ['extras', extraRows], ['rankings', rankRows],
-  ];
-  for (const [table, rows] of inserts) {
-    if (!rows.length) continue;
-    const { error } = await supa.from(table).insert(rows);
-    if (error) return { ok: false, error: `${table}: ${error.message}` };
+  if (answerRows.length) {
+    const { error } = await supa.from('answers').insert(answerRows);
+    if (error) return { ok: false, error: `answers: ${error.message}` };
   }
   return { ok: true, id: responseId };
 }
