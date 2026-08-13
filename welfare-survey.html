@@ -377,6 +377,49 @@ async function loadNamedResponse(name) {
   return { ok: true };
 }
 
+// Renames a saved response's label -- both the indexed label_name column
+// (the source of truth for the child list and future update-matching)
+// and the local id map's key. Refuses to collide two different response
+// ids under one name, since that would make the older one unreachable.
+async function renameResponse(oldName, newName) {
+  if (!supa) return { ok: false, error: 'Supabase is not configured yet.' };
+  const ids = STATE['_response_ids'] || {};
+  const id = ids[oldName];
+  if (!id) return { ok: false, error: 'No saved response found under that name.' };
+  const clean = (newName || '').trim();
+  if (clean === oldName) return { ok: true };
+  if (ids[clean] && ids[clean] !== id) return { ok: false, error: 'That name is already used by a different saved response.' };
+  const { error } = await supa.from('responses').update({ label_name: clean || null }).eq('id', id);
+  if (error) return { ok: false, error: error.message };
+  delete ids[oldName];
+  ids[clean] = id;
+  STATE['_response_ids'] = ids;
+  if (labelKey() === oldName) STATE['label|name'] = clean;
+  queueSave();
+  return { ok: true };
+}
+
+// Deletes a saved response outright -- both its answers rows and the
+// response row itself (RLS already scopes both to rows this identity
+// owns, same as every other write here). If the deleted response is the
+// one currently on screen, clears the form back to blank rather than
+// leaving stale answers attached to an id that no longer exists.
+async function deleteResponse(name) {
+  if (!supa) return { ok: false, error: 'Supabase is not configured yet.' };
+  const ids = STATE['_response_ids'] || {};
+  const id = ids[name];
+  if (!id) return { ok: false, error: 'No saved response found under that name.' };
+  const { error: e1 } = await supa.from('answers').delete().eq('response_id', id);
+  if (e1) return { ok: false, error: e1.message };
+  const { error: e2 } = await supa.from('responses').delete().eq('id', id);
+  if (e2) return { ok: false, error: e2.message };
+  delete ids[name];
+  if (labelKey() === name) STATE = { _response_ids: ids };
+  else { STATE['_response_ids'] = ids; }
+  queueSave();
+  return { ok: true };
+}
+
 // The inverse of buildExport(): rebuilds the flat STATE keys the rest of
 // the app reads from a previously exported `raw` payload. Preserves the
 // local response-id map across the reload rather than wiping it, since
@@ -472,6 +515,32 @@ function flagCount(n){
   const p=DATA.planes.find(x=>x.n===n); let c=0;
   p.subs.forEach(s=>{ ['Ca','Cb','Da','Db'].forEach(v=>{ if(STATE[`${s.id}|flag|${v}`]) c++; }); });
   return c;
+}
+
+/* ---------- results diagnostic ---------- */
+// Every sub-indicator has up to 6 raw 1-5 answers (Micro/Meso/Macro x A/B).
+// `raw` keeps each one that's actually answered (in a fixed order, so tick
+// position always means the same thing across every arm); `score` is
+// their average normalized to 0..1, or null if nothing's answered yet --
+// arm length reads that, tick length reads each individual raw value.
+const ANSWER_SLOTS=[['Micro','A'],['Micro','B'],['Meso','A'],['Meso','B'],['Macro','A'],['Macro','B']];
+function subScore(id){
+  const raw=ANSWER_SLOTS.map(([sc,v])=>{ const val=STATE[`${id}|${sc}|${v}`]; return val?+val:null; });
+  const answered=raw.filter(v=>v!=null);
+  const score=answered.length?((answered.reduce((a,b)=>a+b,0)/answered.length)-1)/4:null;
+  return { raw, score };
+}
+// Flattens every sub-indicator across all 7 planes into one ranked list,
+// for the "critical needs" / "flourishing" summary at the top of results
+// -- only sub-indicators with at least one answer are ranked, since an
+// unanswered question isn't known to be bad, just unknown.
+function rankedSubs(){
+  const rows=[];
+  DATA.planes.forEach(p=>p.subs.forEach(s=>{
+    const {score}=subScore(s.id);
+    if(score!=null) rows.push({ plane:p, sub:s, score });
+  }));
+  return rows.sort((a,b)=>a.score-b.score);
 }
 
 /* ---------- mini nav ---------- */
@@ -606,9 +675,17 @@ function childListHTML(){
   return `
   <section class="tail" style="margin:0 0 22px">
     <h3>Saved responses <span style="color:var(--ink-soft);font-weight:400">under this ${ACCOUNT_EMAIL?'account':'device'}</span></h3>
-    <p style="color:var(--ink-soft);font-size:15px;margin:0 0 12px">${names.length>1?'More than one response is saved here':'A response is saved here'} — ${ACCOUNT_EMAIL?'this account has more than one name attached to it, e.g. different household members.':'more than one name has submitted from this device.'} Pick one to load its answers, or start a new one.</p>
-    <div class="navrow" style="border:none;padding:0 0 10px;gap:8px;flex-wrap:wrap">
-      ${names.map(n=>`<button class="btn ${n===current?'':'ghost'}" data-loadchild="${esc(n)}">${n?esc(n):'(unlabeled)'}${n===current?' • editing now':''}</button>`).join('')}
+    <p style="color:var(--ink-soft);font-size:15px;margin:0 0 12px">${names.length>1
+      ? (ACCOUNT_EMAIL?'More than one name is attached to this account, e.g. different household members.':'More than one name has submitted from this device.')
+      : (ACCOUNT_EMAIL?'One response is saved on this account.':'One response is saved from this device.')
+    } Pick one to load its answers, or start a new one.</p>
+    <div class="navrow" style="border:none;padding:0 0 10px;gap:8px;flex-wrap:wrap;align-items:center">
+      ${names.map(n=>`
+        <span style="display:inline-flex;align-items:center;gap:2px">
+          <button class="btn ${n===current?'':'ghost'}" data-loadchild="${esc(n)}">${n?esc(n):'(unlabeled)'}${n===current?' • editing now':''}</button>
+          <button class="btn ghost" style="padding:8px 10px" data-rename="${esc(n)}" title="Rename" aria-label="Rename ${n?esc(n):'unlabeled'} response">✎</button>
+          <button class="btn ghost" style="padding:8px 10px;border-color:#8E3552;color:#8E3552" data-delrow="${esc(n)}" title="Delete" aria-label="Delete ${n?esc(n):'unlabeled'} response">✕</button>
+        </span>`).join('')}
       <button class="btn ghost" id="child_new">+ Start a new one</button>
     </div>
   </section>`;
@@ -654,6 +731,11 @@ function viewHub(){
       <h3>Review and hand in</h3>
       <p>See everything you've answered, change anything, then export it.</p>
       <span class="st">${total} ANSWERS RECORDED</span>
+    </a>
+    <a class="tile" href="#/results">
+      <h3>Results</h3>
+      <p>A diagnostic star per plane, plus your highest and lowest-rated questions.</p>
+      <span class="st">${total?'VIEW':'ANSWER SOMETHING FIRST'}</span>
     </a>
   </div>
 
@@ -809,6 +891,244 @@ function viewExtras(){
   </div>`;
 }
 
+// One arm = one key blade. The shaft's own length is the question's
+// overall score (short for low, long for high). Teeth are cut into both
+// edges clustered right near this shaft's own current tip (85%-98% of
+// its actual length) -- the A vector's 3 answers (Micro/Meso/Macro) on
+// the left edge, the B vector's 3 on the right, each side's Micro/Meso/
+// Macro sharing the same 3 radial slots so a left/right pair for the
+// same scale lines up directly opposite each other. Tooth length is the
+// rating. Arms with nothing answered stay a plain thin line.
+// `showScale` draws the legend directly on this one arm instead of as a
+// separate floating graphic elsewhere: a bracket framing the tooth zone
+// with "5" labeled at each end, showing exactly what full-length teeth
+// would look like right where the teeth actually are.
+function armSVG(cx,cy,angleDeg,armLen,hue,sub,labelSize,showScale){
+  const ang=angleDeg*Math.PI/180;
+  const dx=Math.cos(ang), dy=Math.sin(ang);
+  const px=-dy, py=dx;
+  const {raw}=subScore(sub.id);
+  const aVals=[raw[0],raw[2],raw[4]]; // Micro/Meso/Macro A
+  const bVals=[raw[1],raw[3],raw[5]]; // Micro/Meso/Macro B
+  const answered=raw.filter(v=>v!=null);
+  const parts=[];
+  const tipX=cx+dx*armLen, tipY=cy+dy*armLen;
+  if(!answered.length){
+    parts.push(`<line x1="${cx.toFixed(1)}" y1="${cy.toFixed(1)}" x2="${tipX.toFixed(1)}" y2="${tipY.toFixed(1)}" stroke="var(--ink-soft)" stroke-width="1" opacity="0.3"/>`);
+  } else {
+    parts.push(`<line x1="${cx.toFixed(1)}" y1="${cy.toFixed(1)}" x2="${tipX.toFixed(1)}" y2="${tipY.toFixed(1)}" stroke="${hue}" stroke-width="4" stroke-linecap="round"/>`);
+    const slots=[0.85,0.915,0.98];
+    [[aVals,-1],[bVals,1]].forEach(([vals,sgn])=>{
+      vals.forEach((v,i)=>{
+        if(v==null) return;
+        const frac=slots[i];
+        const bx=cx+dx*armLen*frac, by=cy+dy*armLen*frac;
+        const tlen=4+(v-1)/4*11;
+        const ex=bx+px*tlen*sgn, ey=by+py*tlen*sgn;
+        parts.push(`<line x1="${bx.toFixed(1)}" y1="${by.toFixed(1)}" x2="${ex.toFixed(1)}" y2="${ey.toFixed(1)}" stroke="${hue}" stroke-width="3" stroke-linecap="round"/>`);
+      });
+    });
+  }
+  if(showScale){
+    const bx=cx+dx*armLen*0.83, by=cy+dy*armLen*0.83;
+    const fw=15; // frame half-width, matches the max tooth length (11) plus a little clearance
+    const p1x=bx-px*fw, p1y=by-py*fw, p2x=bx+px*fw, p2y=by+py*fw;
+    const p3x=tipX-px*fw, p3y=tipY-py*fw, p4x=tipX+px*fw, p4y=tipY+py*fw;
+    parts.push(`<polyline points="${p1x.toFixed(1)},${p1y.toFixed(1)} ${p2x.toFixed(1)},${p2y.toFixed(1)}" stroke="var(--ink)" stroke-width="1" opacity="0.35"/>`);
+    parts.push(`<polyline points="${p1x.toFixed(1)},${p1y.toFixed(1)} ${p3x.toFixed(1)},${p3y.toFixed(1)}" stroke="var(--ink)" stroke-width="1" opacity="0.35"/>`);
+    parts.push(`<polyline points="${p2x.toFixed(1)},${p2y.toFixed(1)} ${p4x.toFixed(1)},${p4y.toFixed(1)}" stroke="var(--ink)" stroke-width="1" opacity="0.35"/>`);
+    parts.push(`<text x="${(p3x-px*5).toFixed(1)}" y="${(p3y-py*5).toFixed(1)}" font-size="8" fill="var(--ink)" opacity="0.5" text-anchor="middle" font-family="var(--mono)">A:5</text>`);
+    parts.push(`<text x="${(p4x+px*5).toFixed(1)}" y="${(p4y+py*5).toFixed(1)}" font-size="8" fill="var(--ink)" opacity="0.5" text-anchor="middle" font-family="var(--mono)">B:5</text>`);
+  }
+  if(labelSize){
+    const lx=cx+dx*(armLen+labelSize+4), ly=cy+dy*(armLen+labelSize+4);
+    parts.push(`<text x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" font-size="${labelSize}" fill="var(--ink-soft)" text-anchor="middle" dominant-baseline="middle">${esc(sub.id)}</text>`);
+  }
+  return parts.join('');
+}
+function planeStarSVG(p){
+  const cx=100, cy=100, armLen=78;
+  const hue=HUES[p.n];
+  const parts=p.subs.map((s,i)=>armSVG(cx,cy,-90+i*(360/7),armLen,hue,s,9,true));
+  return `<svg viewBox="0 0 200 200" style="max-width:200px;display:block;margin:0 auto" role="img" aria-label="${esc(p.name)} diagnostic star">
+    <circle cx="${cx}" cy="${cy}" r="3" fill="${hue}"/>
+    ${parts.join('')}
+  </svg>`;
+}
+// One arm direction (Q1-Q7, the i-th sub-indicator slot, same generic
+// position every plane shares) carrying all 7 planes' teeth at once --
+// no per-plane angle or origin offset this time, every plane's teeth sit
+// on the exact same shared axis, which is what keeps this from breaking
+// into the jagged mess the old laneShift version produced. Each plane
+// gets its own thin ring within the tooth zone, nested outer-to-inner
+// from plane 1 (Recognition) to plane 7 (Sustenance): 3 A teeth on the
+// left of that ring, 3 B teeth on the right -- 7 rings x 3 = 21 teeth
+// per side, all on the one arm.
+function combinedArmSVG(cx,cy,angleDeg,armLen,i){
+  const ang=angleDeg*Math.PI/180;
+  const dx=Math.cos(ang), dy=Math.sin(ang);
+  const px=-dy, py=dx;
+  const parts=[];
+  const tipX=cx+dx*armLen, tipY=cy+dy*armLen;
+  parts.push(`<line x1="${cx.toFixed(1)}" y1="${cy.toFixed(1)}" x2="${tipX.toFixed(1)}" y2="${tipY.toFixed(1)}" stroke="var(--ink-soft)" stroke-width="1" opacity="0.3"/>`);
+  const maxTlen=36;
+  const zoneStart=0.5, zoneEnd=0.98, ringW=(zoneEnd-zoneStart)/7;
+  DATA.planes.forEach((p,pi)=>{
+    const {raw}=subScore(p.subs[i].id);
+    const aVals=[raw[0],raw[2],raw[4]], bVals=[raw[1],raw[3],raw[5]];
+    const ringStart=zoneEnd-(pi+1)*ringW;
+    const slotFracs=[ringStart+ringW*0.2,ringStart+ringW*0.5,ringStart+ringW*0.8];
+    const hue=HUES[p.n];
+    [[aVals,-1],[bVals,1]].forEach(([vals,sgn])=>{
+      vals.forEach((v,k)=>{
+        if(v==null) return;
+        const bx=cx+dx*armLen*slotFracs[k], by=cy+dy*armLen*slotFracs[k];
+        const tlen=4+(v-1)/4*maxTlen;
+        const ex=bx+px*tlen*sgn, ey=by+py*tlen*sgn;
+        parts.push(`<line x1="${bx.toFixed(1)}" y1="${by.toFixed(1)}" x2="${ex.toFixed(1)}" y2="${ey.toFixed(1)}" stroke="${hue}" stroke-width="3.2" stroke-linecap="round"/>`);
+      });
+    });
+  });
+  // Scale bracket — same structure as the single-arm showScale bracket
+  const fw=maxTlen+6; // frame half-width: max tooth + a little clearance
+  const bx0=cx+dx*armLen*zoneStart, by0=cy+dy*armLen*zoneStart; // zone base
+  const bx1=cx+dx*armLen*zoneEnd,  by1=cy+dy*armLen*zoneEnd;   // zone tip
+  const p1x=bx0-px*fw, p1y=by0-py*fw, p2x=bx0+px*fw, p2y=by0+py*fw; // base rail ends
+  const p3x=bx1-px*fw, p3y=by1-py*fw, p4x=bx1+px*fw, p4y=by1+py*fw; // tip rail ends
+  parts.push(`<polyline points="${p1x.toFixed(1)},${p1y.toFixed(1)} ${p2x.toFixed(1)},${p2y.toFixed(1)}" stroke="var(--ink)" stroke-width="1" opacity="0.3"/>`);
+  parts.push(`<polyline points="${p1x.toFixed(1)},${p1y.toFixed(1)} ${p3x.toFixed(1)},${p3y.toFixed(1)}" stroke="var(--ink)" stroke-width="1" opacity="0.3"/>`);
+  parts.push(`<polyline points="${p2x.toFixed(1)},${p2y.toFixed(1)} ${p4x.toFixed(1)},${p4y.toFixed(1)}" stroke="var(--ink)" stroke-width="1" opacity="0.3"/>`);
+  parts.push(`<text x="${(p3x-px*5).toFixed(1)}" y="${(p3y-py*5).toFixed(1)}" font-size="8" fill="var(--ink)" opacity="0.5" text-anchor="middle" font-family="var(--mono)">A:5</text>`);
+  parts.push(`<text x="${(p4x+px*5).toFixed(1)}" y="${(p4y+py*5).toFixed(1)}" font-size="8" fill="var(--ink)" opacity="0.5" text-anchor="middle" font-family="var(--mono)">B:5</text>`);
+  const lx=cx+dx*(armLen+14), ly=cy+dy*(armLen+14);
+  parts.push(`<text x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" font-size="10" fill="var(--ink-soft)" text-anchor="middle" dominant-baseline="middle">Q${i+1}</text>`);
+  return parts.join('');
+}
+function combinedStarSVG(){
+  const cx=220, cy=220, armLen=170;
+  const parts=[];
+  for(let i=0;i<7;i++) parts.push(combinedArmSVG(cx,cy,-90+i*(360/7),armLen,i));
+  const legend=DATA.planes.map(p=>`<span style="display:inline-flex;align-items:center;gap:5px;margin-right:14px"><span style="width:9px;height:9px;border-radius:50%;background:${HUES[p.n]};display:inline-block"></span>${esc(p.name)}</span>`).join('');
+  return `<svg viewBox="0 0 440 440" style="max-width:440px;display:block;margin:0 auto" role="img" aria-label="All seven planes overlaid, one arm per question position, plane 1 outermost to plane 7 innermost">
+    <circle cx="${cx}" cy="${cy}" r="3.5" fill="var(--ink)"/>
+    ${parts.join('')}
+  </svg>
+  <p style="font-size:13px;margin:10px 0 0;text-align:center">${legend}</p>`;
+}
+// A baked-in 3-arm mini keyring used as an illustrative diagram in the
+// explainer. Uses hardcoded illustrative data (not live STATE) so it renders
+// identically regardless of what the respondent has answered.
+function keyringExampleSVG(){
+  const cx=100, cy=100, r=82, viewW=200, viewH=220;
+  const HUES_EX=Object.values(HUES);
+  // Hardcoded A and B values per ring per arm (3 micro/meso/macro slots)
+  // Arm0=Q1, Arm1=Q2, Arm2=Q3 — deliberately varied to show the encoding
+  const DATA_EX=[
+    { a:[5,4,3], b:[5,3,2] }, // plane 1 — Recognition
+    { a:[3,3,4], b:[4,2,3] }, // plane 2 — Purpose
+    { a:[4,4,5], b:[2,3,4] }, // plane 3 — Shelter
+    { a:[3,2,3], b:[3,3,2] }, // plane 4 — Refreshment
+    { a:[5,4,4], b:[4,3,3] }, // plane 5 — Power
+    { a:[2,3,2], b:[3,2,2] }, // plane 6 — Morale
+    { a:[4,3,4], b:[3,4,3] }, // plane 7 — Sustenance
+  ];
+  const maxTlen=18, zoneStart=0.42, zoneEnd=0.94;
+  const ringW=(zoneEnd-zoneStart)/7;
+  const parts=[];
+  parts.push(`<circle cx="${cx}" cy="${cy}" r="3" fill="var(--ink)"/>`);
+  for(let ai=0;ai<7;ai++){
+    const ang=(-90+ai*(360/7))*Math.PI/180;
+    const dx=Math.cos(ang), dy=Math.sin(ang);
+    const px=-dy, py=dx;
+    const tipX=cx+dx*r, tipY=cy+dy*r;
+    parts.push(`<line x1="${cx}" y1="${cy}" x2="${tipX.toFixed(1)}" y2="${tipY.toFixed(1)}" stroke="var(--ink-soft)" stroke-width="1" opacity="0.3"/>`);
+    for(let ri=0;ri<7;ri++){
+      const ringStart=zoneEnd-(ri+1)*ringW;
+      const slots=[ringStart+ringW*0.2,ringStart+ringW*0.5,ringStart+ringW*0.8];
+      const {a,b}=DATA_EX[ri];
+      [[a,-1],[b,1]].forEach(([vals,sgn])=>{
+        vals.forEach((v,k)=>{
+          const bx=cx+dx*r*slots[k], by=cy+dy*r*slots[k];
+          const tlen=2+(v-1)/4*maxTlen;
+          parts.push(`<line x1="${bx.toFixed(1)}" y1="${by.toFixed(1)}" x2="${(bx+px*tlen*sgn).toFixed(1)}" y2="${(by+py*tlen*sgn).toFixed(1)}" stroke="${HUES_EX[ri]}" stroke-width="1.8" stroke-linecap="round"/>`);
+        });
+      });
+    }
+    if(ai===0){
+      const fw=maxTlen+4;
+      const bx0=cx+dx*r*zoneStart, by0=cy+dy*r*zoneStart;
+      const bx1=cx+dx*r*zoneEnd,  by1=cy+dy*r*zoneEnd;
+      const p1x=bx0-px*fw,p1y=by0-py*fw,p2x=bx0+px*fw,p2y=by0+py*fw;
+      const p3x=bx1-px*fw,p3y=by1-py*fw,p4x=bx1+px*fw,p4y=by1+py*fw;
+      parts.push(`<polyline points="${p1x.toFixed(1)},${p1y.toFixed(1)} ${p2x.toFixed(1)},${p2y.toFixed(1)}" stroke="var(--ink)" stroke-width="0.8" opacity="0.3"/>`);
+      parts.push(`<polyline points="${p1x.toFixed(1)},${p1y.toFixed(1)} ${p3x.toFixed(1)},${p3y.toFixed(1)}" stroke="var(--ink)" stroke-width="0.8" opacity="0.3"/>`);
+      parts.push(`<polyline points="${p2x.toFixed(1)},${p2y.toFixed(1)} ${p4x.toFixed(1)},${p4y.toFixed(1)}" stroke="var(--ink)" stroke-width="0.8" opacity="0.3"/>`);
+      parts.push(`<text x="${(p3x-px*5).toFixed(1)}" y="${(p3y-py*5).toFixed(1)}" font-size="7" fill="var(--ink)" opacity="0.5" text-anchor="middle" font-family="var(--mono)">A:5</text>`);
+      parts.push(`<text x="${(p4x+px*5).toFixed(1)}" y="${(p4y+py*5).toFixed(1)}" font-size="7" fill="var(--ink)" opacity="0.5" text-anchor="middle" font-family="var(--mono)">B:5</text>`);
+    }
+    const lx=cx+dx*(r+13), ly=cy+dy*(r+13);
+    parts.push(`<text x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" font-size="8" fill="var(--ink-soft)" text-anchor="middle" dominant-baseline="middle" font-family="var(--mono)">Q${ai+1}</text>`);
+  }
+  // Colour dots legend — one per plane
+  DATA.planes.forEach((p,i)=>{
+    const lx=10+i*27, ly=viewH-8;
+    parts.push(`<circle cx="${lx}" cy="${ly}" r="3" fill="${HUES_EX[i]}"/>`);
+  });
+  return `<svg viewBox="0 0 ${viewW} ${viewH}" style="width:100%;max-width:${viewW}px;flex-shrink:0;display:block" role="img" aria-label="Keyring plot mini example, 7 arms and 7 planes">${parts.join('')}</svg>`;
+}
+function viewResults(){
+  const ranked=rankedSubs();
+  const critical=ranked.slice(0,5);
+  const flourishing=ranked.slice(-5).reverse();
+  const rowHTML=(r)=>`<a class="band" href="#/plane/${r.plane.n}" style="--h:${HUES[r.plane.n]}">
+    <span class="fill" style="background:${HUES[r.plane.n]};width:${Math.round(r.score*100)}%"></span>
+    <span style="position:absolute;left:0;top:0;bottom:0;width:4px;background:${HUES[r.plane.n]}"></span>
+    <span class="row"><span class="num">${esc(r.sub.id)}</span><span class="nm">${esc(r.sub.name)}</span>
+    <span class="bl">${esc(r.plane.name)}</span><span class="pc">${(r.score*4+1).toFixed(1)}/5</span></span></a>`;
+  return `
+  <div class="planehead" style="border-color:var(--ink)">
+    <p class="eyebrow">Results</p>
+    <h1>Highs, lows, and the shape of it</h1>
+    <p>Built from whatever's currently on screen. Every star below is 7 arms, one per sub-indicator. Each arm's length is that question's overall score; the teeth near its tip are its individual ratings (A on the left, B on the right). The bracketed <span style="font-family:var(--mono);font-size:13px">A:5</span> and <span style="font-family:var(--mono);font-size:13px">B:5</span> on the overlaid chart show what a full-length tooth looks like on each side.</p>
+  </div>
+  <div class="tail" style="text-align:center">
+    <h3 style="text-align:left">All seven, overlaid — the keyring plot</h3>
+    <div style="border:1px solid var(--rule);border-radius:3px;background:var(--paper-2);padding:16px 20px;margin:0 0 18px;text-align:left;display:flex;gap:24px;align-items:flex-start">
+      <div style="flex:1;min-width:0">
+      <p style="margin:0 0 10px;font-size:15px">This is a <strong>keyring plot</strong> — a chart type purpose-built for this instrument. Each of the seven arms is a question position (Q1–Q7). The arms radiate like keys on a ring.</p>
+      <p style="margin:0 0 10px;font-size:15px">Think of each arm as a physical key blade. A <em>blank key</em> — smooth, uncut — is the ideal: every need met, every capacity fully deployed, nothing blocking anything. Life cuts the key. Each etch encodes a fact about where things actually stand.</p>
+      <p style="margin:0 0 10px;font-size:15px">On every arm, seven coloured rings sit nested from outermost (Plane 1 · Recognition) to innermost (Plane 7 · Sustenance). Within each ring, three tick marks run along the shaft — Micro (you), Meso (household), Macro (community). Ticks on the <strong>left</strong> of the shaft are <span style="font-family:var(--mono);font-size:13px">A</span> — the capacity or state rating. Ticks on the <strong>right</strong> are <span style="font-family:var(--mono);font-size:13px">B</span> — the actualization or practice rating. Tick length is the score: short is low (1), reaching the bracket edge is 5.</p>
+      <p style="margin:0;font-size:15px">The <span style="font-family:var(--mono);font-size:13px">A:5</span> and <span style="font-family:var(--mono);font-size:13px">B:5</span> labels at the tip of each bracket show exactly what full-length ticks look like. When all ticks touch their bracket edge, the key is blank again.</p>
+      </div>
+      ${keyringExampleSVG()}
+    </div>
+    <p style="color:var(--ink-soft);font-size:15px;margin:0 0 12px;text-align:left">7 planes · 7 question positions · 3 scales · 2 vectors — 294 data points in one diagram.</p>
+    ${combinedStarSVG()}
+  </div>
+  ${ranked.length?`
+  <div class="tail">
+    <h3>Critical needs <span style="color:var(--ink-soft);font-weight:400">— lowest-rated answered questions</span></h3>
+    <nav class="bands">${critical.map(rowHTML).join('')}</nav>
+    <h3 style="margin-top:22px">Flourishing <span style="color:var(--ink-soft);font-weight:400">— highest-rated answered questions</span></h3>
+    <nav class="bands">${flourishing.map(rowHTML).join('')}</nav>
+  </div>`:`
+  <div class="tail"><p class="note">Answer a few questions first and this page will start ranking where things stand.</p></div>`}
+  <div class="tail">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px">
+      ${DATA.planes.map(p=>`
+        <div style="text-align:center">
+          <h3 style="margin:0 0 4px">${esc(p.name)}</h3>
+          <p style="color:var(--ink-soft);font-size:13px;margin:0 0 6px">${planePct(p.n)}% answered</p>
+          ${planeStarSVG(p)}
+        </div>`).join('')}
+    </div>
+  </div>
+  <div class="navrow">
+    <a class="btn ghost" href="#/hub">Back to the start</a>
+    <a class="btn" href="#/review">Review and hand in →</a>
+  </div>`;
+}
+
 function viewReview(){
   const total=DATA.planes.reduce((a,p)=>a+planeAnswered(p.n),0);
   const rows=DATA.planes.map(p=>{
@@ -847,7 +1167,7 @@ function viewReview(){
     </div>
     <pre class="out" id="preview"></pre>
   </div>
-  <div class="navrow"><a class="btn ghost" href="#/hub">Back to the start</a></div>`;
+  <div class="navrow"><a class="btn ghost" href="#/hub">Back to the start</a><a class="btn ghost" href="#/results">See results →</a></div>`;
 }
 
 /* ---------- export ---------- */
@@ -957,6 +1277,7 @@ function render(){
   v.className='wrap';
   if(h.startsWith('#/plane/')){ m=+h.split('/')[2]; currentPlane=m; v.className='wrap wide'; v.innerHTML=viewPlane(m); }
   else if(h.startsWith('#/extras')) v.innerHTML=viewExtras();
+  else if(h.startsWith('#/results')) v.innerHTML=viewResults();
   else if(h.startsWith('#/review')){ v.innerHTML=viewReview(); wireReview(); }
   else { currentPlane=null; v.innerHTML=viewHub(); }
   wireAccount(); wireLabel();
@@ -985,8 +1306,12 @@ function wireReview(){
     sb.disabled=false;
     if(res.ok){
       STATE['_response_ids']=STATE['_response_ids']||{}; STATE['_response_ids'][key]=res.id; queueSave();
-      sb.textContent=updating?'Updated ✓':'Submitted ✓';
-      if(msg) msg.textContent=updating?'Updated. Your response now reflects these answers.':'Sent. Changing answers and pressing Update revises this same response — it won\'t create a duplicate.';
+      // Full re-render, not just a text tweak, so the "Saved responses"
+      // list picks up this name immediately instead of only after the
+      // next unrelated navigation.
+      render();
+      const m2=document.getElementById('submitmsg');
+      if(m2) m2.textContent=updating?'Updated. Your response now reflects these answers.':'Sent. Changing answers and pressing Update revises this same response — it won\'t create a duplicate.';
       toast(updating?'Updated':'Submitted');
     } else {
       sb.textContent=prevLabel;
@@ -1053,6 +1378,31 @@ document.addEventListener('click',e=>{
       else toast(res.error);
     })();
     return; }
+  const rn=e.target.closest('[data-rename]');
+  if(rn){ e.preventDefault();
+    const oldName=rn.dataset.rename;
+    const next=prompt('Rename this saved response to:', oldName);
+    if(next===null) return;
+    (async()=>{
+      rn.disabled=true;
+      const res=await renameResponse(oldName, next);
+      rn.disabled=false;
+      if(res.ok){ render(); toast('Renamed'); }
+      else toast(res.error);
+    })();
+    return; }
+  const dr=e.target.closest('[data-delrow]');
+  if(dr){ e.preventDefault();
+    const name=dr.dataset.delrow;
+    if(!confirm(`Delete the response saved as "${name||'(unlabeled)'}"? This removes it from the server permanently and cannot be undone.`)) return;
+    (async()=>{
+      dr.disabled=true;
+      const res=await deleteResponse(name);
+      dr.disabled=false;
+      if(res.ok){ render(); toast('Deleted'); }
+      else toast(res.error);
+    })();
+    return; }
   const b=e.target.closest('[data-clear]'); if(!b) return;
   const k=b.dataset.clear;
   delete STATE[k]; delete STATE[k+'|last'];
@@ -1072,6 +1422,10 @@ let spy=null;
 window.addEventListener('scroll',()=>{ if(!currentPlane) return; if(spy) return;
   spy=requestAnimationFrame(()=>{ spy=null; markActive(); }); },{passive:true});
 window.addEventListener('hashchange',render);
+
+// Prefill removed — form opens blank.
+try{ localStorage.removeItem('cws:v1'); }catch(e){}
+
 (async()=>{ STATE=await Store.get()||{}; await maybeAutoPullAccount(); render(); })();
 </script>
 </body>
