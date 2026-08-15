@@ -1,0 +1,4158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aletheia Bot — Psochic Hegemony Control Panel & Thread Viewer</title>
+  <!-- On-Screen Console Logger for Offline/Local Diagnostics -->
+  <script>
+    (function() {
+      const logs = [];
+      let errCount = 0;
+      let warnCount = 0;
+
+      function addLog(type, message, stack) {
+        logs.push({ type, message, stack, time: new Date().toLocaleTimeString() });
+        if (type === 'error') errCount++;
+        if (type === 'warn') warnCount++;
+        updateConsoleUI();
+      }
+
+      // Intercept window errors
+      window.addEventListener('error', function(e) {
+        addLog('error', `${e.message} at ${e.filename}:${e.lineno}:${e.colno}`, e.error ? e.error.stack : '');
+      });
+
+      window.addEventListener('unhandledrejection', function(e) {
+        addLog('error', `Unhandled Promise Rejection: ${e.reason}`, e.reason ? e.reason.stack : '');
+      });
+
+      // Intercept console
+      const origError = console.error;
+      console.error = function(...args) {
+        origError.apply(console, args);
+        addLog('error', args.map(a => typeof a === 'object' ? JSON.stringify(a) : a).join(' '));
+      };
+
+      const origWarn = console.warn;
+      console.warn = function(...args) {
+        origWarn.apply(console, args);
+        addLog('warn', args.map(a => typeof a === 'object' ? JSON.stringify(a) : a).join(' '));
+      };
+
+      const origInfo = console.info || console.log;
+      console.info = function(...args) {
+        origInfo.apply(console, args);
+        addLog('info', args.map(a => typeof a === 'object' ? JSON.stringify(a) : a).join(' '));
+      };
+
+      // Create and inject CSS
+      const style = document.createElement('style');
+      style.innerHTML = `
+        #onscreen-console-toggle {
+          position: fixed;
+          bottom: 20px;
+          right: 20px;
+          z-index: 10000;
+          background: rgba(15, 23, 42, 0.85);
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          color: #e2e8f0;
+          padding: 8px 14px;
+          border-radius: 9999px;
+          font-family: 'Outfit', sans-serif;
+          font-size: 0.75rem;
+          font-weight: 600;
+          cursor: pointer;
+          box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        #onscreen-console-toggle.has-error {
+          border-color: #ef4444;
+          box-shadow: 0 0 15px rgba(239, 68, 68, 0.4);
+          background: rgba(239, 68, 68, 0.2);
+        }
+        #onscreen-console-toggle.has-warning {
+          border-color: #f59e0b;
+          box-shadow: 0 0 15px rgba(245, 158, 11, 0.4);
+          background: rgba(245, 158, 11, 0.2);
+        }
+        #onscreen-console-panel {
+          position: fixed;
+          bottom: 70px;
+          right: 20px;
+          width: 520px;
+          max-width: calc(100vw - 40px);
+          height: 380px;
+          max-height: calc(100vh - 120px);
+          z-index: 9999;
+          background: rgba(11, 15, 25, 0.96);
+          backdrop-filter: blur(16px);
+          -webkit-backdrop-filter: blur(16px);
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          border-radius: 12px;
+          box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+          display: flex;
+          flex-direction: column;
+          overflow: hidden;
+          font-family: 'Outfit', sans-serif;
+          transform: translateY(20px) scale(0.95);
+          opacity: 0;
+          pointer-events: none;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        #onscreen-console-panel.active {
+          transform: translateY(0) scale(1);
+          opacity: 1;
+          pointer-events: all;
+        }
+        .console-hdr {
+          padding: 10px 14px;
+          background: rgba(255, 255, 255, 0.02);
+          border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+        .console-title {
+          font-size: 0.75rem;
+          font-weight: 700;
+          letter-spacing: 0.05em;
+          text-transform: uppercase;
+          color: #94a3b8;
+        }
+        .console-actions {
+          display: flex;
+          gap: 6px;
+        }
+        .console-btn {
+          background: rgba(255, 255, 255, 0.05);
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          color: #cbd5e1;
+          padding: 3px 8px;
+          border-radius: 4px;
+          font-size: 0.7rem;
+          cursor: pointer;
+          font-weight: 500;
+          transition: all 0.2s;
+        }
+        .console-btn:hover {
+          background: rgba(255, 255, 255, 0.1);
+          color: #fff;
+        }
+        .console-logs {
+          flex-grow: 1;
+          padding: 12px;
+          overflow-y: auto;
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 0.7rem;
+          line-height: 1.4;
+          display: flex;
+          flex-direction: column;
+          gap: 6px;
+          background: #060911;
+        }
+        .console-log-entry {
+          padding: 5px 8px;
+          border-radius: 4px;
+          word-break: break-all;
+          white-space: pre-wrap;
+          border-left: 3px solid transparent;
+        }
+        .console-log-error {
+          background: rgba(239, 68, 68, 0.08);
+          border-left-color: #ef4444;
+          color: #fca5a5;
+        }
+        .console-log-warn {
+          background: rgba(245, 158, 11, 0.08);
+          border-left-color: #f59e0b;
+          color: #fde047;
+        }
+        .console-log-info {
+          background: rgba(59, 130, 246, 0.08);
+          border-left-color: #3b82f6;
+          color: #93c5fd;
+        }
+      `;
+      document.head.appendChild(style);
+
+      // Create DOM elements on DOMContentLoaded
+      document.addEventListener('DOMContentLoaded', function() {
+        const toggle = document.createElement('button');
+        toggle.id = 'onscreen-console-toggle';
+        toggle.innerHTML = `⚙️ Diagnostics <span id="onscreen-console-badge" style="background: rgba(255,255,255,0.15); padding: 1px 5px; border-radius: 10px; font-size: 0.65rem;">0</span>`;
+        
+        const panel = document.createElement('div');
+        panel.id = 'onscreen-console-panel';
+        panel.innerHTML = `
+          <div class="console-hdr">
+            <span class="console-title">System Diagnostics & Logs</span>
+            <div class="console-actions">
+              <button class="console-btn" id="console-clear-btn">Clear</button>
+              <button class="console-btn" id="console-close-btn">Hide</button>
+            </div>
+          </div>
+          <div class="console-logs" id="console-log-container">
+            <div style="color: #64748b; font-style: italic; font-size: 0.7rem; padding: 4px 8px;">No issues or errors detected.</div>
+          </div>
+        `;
+
+        document.body.appendChild(toggle);
+        document.body.appendChild(panel);
+
+        toggle.addEventListener('click', function() {
+          panel.classList.toggle('active');
+        });
+
+        document.getElementById('console-close-btn').addEventListener('click', function() {
+          panel.classList.remove('active');
+        });
+
+        document.getElementById('console-clear-btn').addEventListener('click', function() {
+          logs.length = 0;
+          errCount = 0;
+          warnCount = 0;
+          updateConsoleUI();
+        });
+
+        window.updateConsoleUI = function() {
+          const badge = document.getElementById('onscreen-console-badge');
+          const container = document.getElementById('console-log-container');
+          if (!badge || !container) return;
+
+          const total = errCount + warnCount;
+          badge.innerText = total;
+
+          if (errCount > 0) {
+            toggle.className = 'has-error';
+          } else if (warnCount > 0) {
+            toggle.className = 'has-warning';
+          } else {
+            toggle.className = '';
+          }
+
+          if (logs.length === 0) {
+            container.innerHTML = `<div style="color: #64748b; font-style: italic; font-size: 0.7rem; padding: 4px 8px;">No issues or errors detected.</div>`;
+            return;
+          }
+
+          container.innerHTML = logs.map(l => `
+            <div class="console-log-entry console-log-${l.type}">
+              <div style="font-size: 0.6rem; color: rgba(255,255,255,0.3); margin-bottom: 2px;">[${l.time}] [${l.type.toUpperCase()}]</div>
+              <div>${escapeHTML(l.message)}</div>
+              ${l.stack ? `<pre style="font-size: 0.6rem; color: rgba(255,255,255,0.4); margin-top: 4px; overflow-x: auto;">${escapeHTML(l.stack)}</pre>` : ''}
+            </div>
+          `).join('');
+
+          // Auto-scroll to bottom
+          container.scrollTop = container.scrollHeight;
+        };
+
+        function escapeHTML(str) {
+          return str.replace(/[&<>'"]/g, 
+            tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+          );
+        }
+
+        // Run initial update in case logs were added before DOMContentLoaded
+        updateConsoleUI();
+      });
+
+      function updateConsoleUI() {
+        if (window.updateConsoleUI) {
+          window.updateConsoleUI();
+        }
+      }
+    })();
+  </script>
+
+  <!-- Outfit Font from Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-radial: radial-gradient(circle at top right, #1a2333, #0b0f19);
+      --panel-bg: rgba(18, 25, 38, 0.7);
+      --panel-border: rgba(255, 255, 255, 0.06);
+      --panel-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+      --text-main: #e2e8f0;
+      --text-muted: #94a3b8;
+      --bsky-blue: #0085ff;
+      --bsky-blue-glow: rgba(0, 133, 255, 0.4);
+      --claim-yellow: #f59e0b;
+      --claim-glow: rgba(245, 158, 11, 0.3);
+      --reality-red: #ef4444;
+      --reality-glow: rgba(239, 68, 68, 0.3);
+      --pass-green: #10b981;
+      --pass-glow: rgba(16, 185, 129, 0.2);
+      --fail-red: #f43f5e;
+      --fail-glow: rgba(244, 63, 94, 0.2);
+      --font-outfit: 'Outfit', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    [data-theme="light"] {
+      --bg-radial: radial-gradient(circle at top right, #f1f5f9, #cbd5e1);
+      --panel-bg: rgba(255, 255, 255, 0.75);
+      --panel-border: rgba(0, 0, 0, 0.08);
+      --panel-shadow: 0 16px 40px rgba(15, 23, 42, 0.1);
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --bsky-blue: #0070d6;
+      --bsky-blue-glow: rgba(0, 112, 214, 0.25);
+      --claim-yellow: #d97706;
+      --claim-glow: rgba(217, 119, 6, 0.2);
+      --reality-red: #dc2626;
+      --reality-glow: rgba(220, 38, 38, 0.2);
+      --pass-green: #059669;
+      --fail-red: #e11d48;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-outfit);
+      background: var(--bg-radial);
+      color: var(--text-main);
+      -webkit-user-select: text !important;
+      user-select: text !important;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      transition: background 0.4s ease, color 0.4s ease;
+    }
+
+    /* Scrollbars */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(148, 163, 184, 0.2);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(148, 163, 184, 0.4);
+    }
+
+    /* Header styling */
+    header {
+      background: rgba(0, 0, 0, 0.15);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--panel-border);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 10;
+    }
+
+    .header-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .logo-glow {
+      width: 32px;
+      height: 32px;
+      background: var(--bsky-blue);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      color: white;
+      box-shadow: 0 0 15px var(--bsky-blue-glow);
+      font-size: 1.2rem;
+    }
+
+    h1 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .status-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      color: var(--pass-green);
+      padding: 0.35rem 0.75rem;
+      border-radius: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .status-badge.offline {
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.2);
+      color: var(--reality-red);
+    }
+
+    .status-pulse {
+      width: 8px;
+      height: 8px;
+      background: var(--pass-green);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--pass-green);
+      animation: pulse 1.8s infinite;
+      transition: all 0.3s ease;
+    }
+
+    .status-badge.offline .status-pulse {
+      background: var(--reality-red);
+      box-shadow: 0 0 8px var(--reality-red);
+      animation: pulse-offline 1.8s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(0.95); opacity: 0.5; }
+      50% { transform: scale(1.15); opacity: 1; box-shadow: 0 0 12px var(--pass-green); }
+      100% { transform: scale(0.95); opacity: 0.5; }
+    }
+
+    @keyframes pulse-offline {
+      0% { transform: scale(0.95); opacity: 0.5; }
+      50% { transform: scale(1.15); opacity: 1; box-shadow: 0 0 12px var(--reality-red); }
+      100% { transform: scale(0.95); opacity: 0.5; }
+    }
+
+    .theme-toggle {
+      background: transparent;
+      border: 1px solid var(--panel-border);
+      color: var(--text-main);
+      padding: 0.5rem 0.75rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 500;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s ease;
+    }
+
+    .theme-toggle:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: var(--text-muted);
+    }
+
+    /* Main layout grid */
+    .dashboard-container {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      height: calc(100vh - 66px);
+    }
+
+    /* Sidebar list */
+    .sidebar {
+      background: rgba(0, 0, 0, 0.08);
+      border-right: 1px solid var(--panel-border);
+      display: flex;
+      flex-direction: column;
+      height: calc(100vh - 66px);
+      overflow: hidden;
+    }
+
+    .search-container {
+      padding: 1.25rem;
+      border-bottom: 1px solid var(--panel-border);
+    }
+
+    .search-input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--panel-border);
+      color: var(--text-main);
+      border-radius: 8px;
+      padding: 0.7rem 1rem;
+      font-family: var(--font-outfit);
+      font-size: 0.9rem;
+      transition: all 0.2s ease;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--bsky-blue);
+      box-shadow: 0 0 10px rgba(0, 133, 255, 0.15);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .story-list {
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
+      padding: 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .story-card {
+      background: var(--panel-bg);
+      border: 1px solid var(--panel-border);
+      border-radius: 10px;
+      padding: 1rem;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .story-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--bsky-blue);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .story-card.active {
+      border-color: var(--bsky-blue);
+      background: rgba(0, 133, 255, 0.07);
+      box-shadow: 0 0 15px rgba(0, 133, 255, 0.1);
+    }
+
+    .story-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      line-height: 1.3;
+      letter-spacing: -0.01em;
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 0.25rem;
+    }
+
+    .card-badge {
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    .badge-pass {
+      background: rgba(16, 185, 129, 0.12);
+      color: var(--pass-green);
+      border: 1px solid rgba(16, 185, 129, 0.15);
+    }
+
+    .badge-fail {
+      background: rgba(244, 63, 94, 0.12);
+      color: var(--fail-red);
+      border: 1px solid rgba(244, 63, 94, 0.15);
+    }
+
+    .card-coordinates {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .card-status {
+      font-size: 0.7rem;
+      color: var(--bsky-blue);
+      font-weight: 500;
+    }
+
+    /* Main Content Area */
+    .main-workspace {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* Tabs Bar */
+    .tabs-bar {
+      display: flex;
+      background: rgba(0, 0, 0, 0.12);
+      border-bottom: 1px solid var(--panel-border);
+      padding: 0 1.5rem;
+    }
+
+    .tab-button {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 1.1rem 1.5rem;
+      font-family: var(--font-outfit);
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+      outline: none;
+    }
+
+    .tab-button:hover {
+      color: var(--text-main);
+    }
+
+    .tab-button.active {
+      color: var(--bsky-blue);
+    }
+
+    .tab-button.active::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--bsky-blue);
+      border-radius: 3px 3px 0 0;
+      box-shadow: 0 -2px 10px var(--bsky-blue);
+    }
+
+    /* Viewports */
+    .content-viewport {
+      flex: 1;
+      position: relative;
+      overflow-y: auto;
+      padding: 2rem;
+    }
+
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.3s ease;
+      min-height: 100%;
+    }
+
+    .tab-content.active {
+      display: grid;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Thread Emulator Viewport */
+    .thread-emulator {
+      grid-template-columns: 550px 1fr;
+      gap: 2.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* Bluesky Feed Container */
+    .bsky-feed {
+      background: var(--panel-bg);
+      border: 1px solid var(--panel-border);
+      border-radius: 14px;
+      padding: 1.5rem;
+      box-shadow: var(--panel-shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      overflow-y: auto;
+      max-height: calc(100vh - 180px);
+    }
+
+    .post-container {
+      display: flex;
+      gap: 0.75rem;
+      position: relative;
+    }
+
+    /* Vertical line linking posts */
+    .post-thread-line {
+      position: absolute;
+      left: 20px;
+      top: 45px;
+      bottom: -10px;
+      width: 2px;
+      background: rgba(148, 163, 184, 0.15);
+      z-index: 1;
+    }
+
+    .post-container:last-child .post-thread-line {
+      display: none;
+    }
+
+    .avatar-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      z-index: 2;
+    }
+
+    .bsky-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--bsky-blue), #5bc0be);
+      color: white;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      box-shadow: 0 3px 10px rgba(0, 133, 255, 0.2);
+    }
+
+    .avatar-aww {
+      background: linear-gradient(135deg, #ec4899, #f43f5e);
+    }
+    .avatar-bro {
+      background: linear-gradient(135deg, #f59e0b, #eab308);
+    }
+
+    .content-col {
+      flex: 1;
+      padding-bottom: 1.5rem;
+    }
+
+    .post-header {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .profile-display-name {
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .profile-handle {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    .post-timestamp {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    .post-body {
+      font-size: 0.95rem;
+      line-height: 1.55;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    /* Embedded image in post */
+    .post-embed-image {
+      margin-top: 0.75rem;
+      border-radius: 10px;
+      border: 1px solid var(--panel-border);
+      max-width: 100%;
+      max-height: 250px;
+      object-fit: cover;
+      cursor: pointer;
+      transition: border-color 0.2s ease;
+    }
+
+    .post-embed-image:hover {
+      border-color: var(--bsky-blue);
+    }
+
+    /* Embedded link preview card in post */
+    .post-link-card {
+      margin-top: 0.75rem;
+      border: 1px solid var(--panel-border);
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      background: var(--bg-hover);
+      text-decoration: none;
+      color: var(--text-color);
+      transition: background-color 0.2s, border-color 0.2s;
+    }
+    .post-link-card:hover {
+      background: var(--panel-bg);
+      border-color: var(--bsky-blue);
+    }
+    .post-link-card-content {
+      padding: 0.75rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+    .post-link-card-domain {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+    .post-link-card-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      line-height: 1.3;
+      color: var(--text-color);
+      margin: 0;
+    }
+    .post-link-card-description {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      margin: 0;
+    }
+
+    .post-actions {
+      display: flex;
+      gap: 2rem;
+      margin-top: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .action-button {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: color 0.15s ease;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+    }
+
+    .action-button:hover {
+      color: var(--bsky-blue);
+    }
+
+    /* Sidebar info panel for Emulator */
+    .story-meta-pane {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .meta-panel {
+      background: var(--panel-bg);
+      border: 1px solid var(--panel-border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: var(--panel-shadow);
+    }
+
+    .meta-panel-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      letter-spacing: -0.01em;
+      border-bottom: 1px solid var(--panel-border);
+      padding-bottom: 0.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      margin-bottom: 1rem;
+    }
+
+    .meta-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .meta-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .meta-value {
+      font-size: 0.95rem;
+      font-weight: 500;
+      line-height: 1.4;
+    }
+
+    .coordinate-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 0.3rem 0.6rem;
+      border-radius: 6px;
+      border: 1px solid var(--panel-border);
+      width: fit-content;
+    }
+
+    /* Grid Map Viewport */
+    .hegemony-map-view {
+      grid-template-columns: 1fr 380px;
+      gap: 2.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      min-height: 100%;
+    }
+
+    .grid-canvas-container {
+      background: var(--panel-bg);
+      border: 1px solid var(--panel-border);
+      border-radius: 14px;
+      padding: 1.5rem;
+      box-shadow: var(--panel-shadow);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      min-height: 450px;
+    }
+
+    .grid-svg {
+      width: 100%;
+      max-width: 500px;
+      height: auto;
+      aspect-ratio: 1;
+    }
+
+    .map-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      overflow-y: auto;
+    }
+
+    /* Prompt Tab Viewport */
+    .controller-view {
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .terminal-panel {
+      background: #0d1117;
+      border: 1px solid var(--panel-border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: var(--panel-shadow);
+      font-family: var(--font-mono);
+      color: #c9d1d9;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .terminal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(240, 246, 252, 0.1);
+      padding-bottom: 0.5rem;
+    }
+
+    .terminal-title {
+      font-weight: 700;
+      color: #58a6ff;
+      font-size: 0.9rem;
+    }
+
+    .terminal-body {
+      background: #161b22;
+      border-radius: 6px;
+      padding: 1rem;
+      font-size: 0.85rem;
+      line-height: 1.5;
+      overflow-x: auto;
+      position: relative;
+    }
+
+    .copy-btn {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      background: rgba(240, 246, 252, 0.05);
+      border: 1px solid rgba(240, 246, 252, 0.1);
+      color: #c9d1d9;
+      padding: 0.3rem 0.6rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .copy-btn:hover {
+      background: #21262d;
+      border-color: #8b949e;
+    }
+
+    .composer-panel {
+      background: var(--panel-bg);
+      border: 1px solid var(--panel-border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: var(--panel-shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .composer-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .form-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      color: var(--text-muted);
+    }
+
+    .form-input, .form-textarea {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.15);
+      border: 1px solid var(--panel-border);
+      color: var(--text-main);
+      border-radius: 6px;
+      padding: 0.6rem 0.8rem;
+      font-family: var(--font-outfit);
+      font-size: 0.9rem;
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .form-input:focus, .form-textarea:focus {
+      outline: none;
+      border-color: var(--bsky-blue);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .btn-primary {
+      background: var(--bsky-blue);
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      font-family: var(--font-outfit);
+      font-weight: 600;
+      font-size: 0.95rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 12px rgba(0, 133, 255, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .btn-primary:hover {
+      background: #0070d6;
+      box-shadow: 0 6px 16px rgba(0, 133, 255, 0.4);
+    }
+
+    .filter-pill {
+      padding: 0.25rem 0.6rem;
+      border-radius: 20px;
+      border: 1px solid rgba(240, 246, 252, 0.15);
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 0.75rem;
+      font-family: var(--font-outfit);
+      font-weight: 500;
+      transition: all 0.15s ease;
+    }
+    .filter-pill:hover { border-color: rgba(0,133,255,0.4); color: var(--bsky-blue); }
+    .filter-pill.active { background: rgba(0,133,255,0.15); border-color: rgba(0,133,255,0.5); color: var(--bsky-blue); font-weight: 700; }
+
+    /* Modal / Lightbox for image */
+    .lightbox {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .lightbox.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    .lightbox-img {
+      max-width: 90%;
+      max-height: 80%;
+      border-radius: 12px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    /* Empty state */
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      color: var(--text-muted);
+      gap: 1rem;
+    }
+
+    .empty-icon {
+      font-size: 3rem;
+      opacity: 0.5;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 1024px) {
+      .dashboard-container {
+        grid-template-columns: 1fr;
+        height: auto;
+      }
+      .sidebar {
+        height: 350px;
+        border-bottom: 1px solid var(--panel-border);
+      }
+      .thread-emulator, .hegemony-map-view, .controller-view {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+      .bsky-feed {
+        max-height: 500px;
+      }
+    }
+
+    /* Interactive domain links in audit panel */
+    .interactive-domain:hover {
+      color: var(--bsky-blue) !important;
+      text-decoration-color: var(--bsky-blue) !important;
+    }
+
+    /* Big Hegemony Map hover styling */
+    .hegemony-story-node:hover circle {
+      stroke: #ffffff;
+      stroke-width: 1.5px;
+      r: 6;
+      filter: drop-shadow(0 0 4px var(--bsky-blue));
+      transition: all 0.15s ease-in-out;
+    }
+    .hegemony-landmark-text {
+      font-size: 8px;
+      fill: var(--text-muted);
+      opacity: 0.55;
+      pointer-events: none;
+      user-select: none;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-logo">
+      <div class="logo-glow">⚖️</div>
+      <div>
+        <h1>Aletheia Bot</h1>
+        <div style="font-size: 0.75rem; color: var(--text-muted); font-family: var(--font-mono)">TRINARY SYNTHESIS CONTROL PANEL v4.2</div>
+      </div>
+    </div>
+    
+    <div class="header-controls">
+      <div class="status-badge" id="systemStatusBadge">
+        <div class="status-pulse"></div>
+        <span id="systemStatusText">SERVER ONLINE</span>
+      </div>
+
+      
+      
+      <button class="theme-toggle" id="themeBtn" onclick="toggleTheme()">
+        🌙 Dark Mode
+      </button>
+    </div>
+  </header>
+
+  <div class="dashboard-container">
+    <!-- Sidebar Story List -->
+    <div class="sidebar">
+      <div class="search-container" style="display:flex; flex-direction:column; gap:0.5rem;">
+        <input type="text" class="search-input" id="searchInput" placeholder="Search stories..." oninput="filterStories()">
+        
+        <!-- Preferred Outlets quick search -->
+        <div style="display:flex; flex-direction:column; gap:0.2rem; width:100%; border-bottom: 1px solid rgba(255,255,255,0.04); padding-bottom:0.4rem;">
+          <div style="font-size:0.75rem; color:var(--text-muted); font-family:var(--font-outfit); font-weight:500;">Quick Outlet Search:</div>
+          <div style="display:flex; gap:0.25rem; flex-wrap:wrap; max-height:60px; overflow-y:auto;">
+            <button onclick="filterByDomain('bloomberg')" class="filter-pill" style="font-size:0.68rem; padding:0.1rem 0.3rem; border-color:transparent; background:rgba(255,255,255,0.03);">Bloomberg</button>
+            <button onclick="filterByDomain('nytimes')" class="filter-pill" style="font-size:0.68rem; padding:0.1rem 0.3rem; border-color:transparent; background:rgba(255,255,255,0.03);">NYT</button>
+            <button onclick="filterByDomain('reuters')" class="filter-pill" style="font-size:0.68rem; padding:0.1rem 0.3rem; border-color:transparent; background:rgba(255,255,255,0.03);">Reuters</button>
+            <button onclick="filterByDomain('bbc')" class="filter-pill" style="font-size:0.68rem; padding:0.1rem 0.3rem; border-color:transparent; background:rgba(255,255,255,0.03);">BBC</button>
+            <button onclick="filterByDomain('abc.net.au')" class="filter-pill" style="font-size:0.68rem; padding:0.1rem 0.3rem; border-color:transparent; background:rgba(255,255,255,0.03);">ABC AU</button>
+            <button onclick="filterByDomain('smh.com.au')" class="filter-pill" style="font-size:0.68rem; padding:0.1rem 0.3rem; border-color:transparent; background:rgba(255,255,255,0.03);">SMH</button>
+            <button onclick="filterByDomain('techcrunch')" class="filter-pill" style="font-size:0.68rem; padding:0.1rem 0.3rem; border-color:transparent; background:rgba(255,255,255,0.03);">TechCrunch</button>
+            <button onclick="filterByDomain('washingtonpost')" class="filter-pill" style="font-size:0.68rem; padding:0.1rem 0.3rem; border-color:transparent; background:rgba(255,255,255,0.03);">WaPo</button>
+            <button onclick="filterByDomain('npr.org')" class="filter-pill" style="font-size:0.68rem; padding:0.1rem 0.3rem; border-color:transparent; background:rgba(255,255,255,0.03);">NPR</button>
+            <button onclick="filterByDomain('thesaturdaypaper')" class="filter-pill" style="font-size:0.68rem; padding:0.1rem 0.3rem; border-color:transparent; background:rgba(255,255,255,0.03);">Sat Paper</button>
+          </div>
+        </div>
+        <div style="display:flex; gap:0.5rem; width:100%;">
+          <button onclick="document.getElementById('fileUploadInput').click()" class="theme-toggle" style="flex:1; justify-content:center; font-size:0.8rem; padding:0.35rem 0.5rem; font-family: var(--font-outfit);">📁 Import JSON</button>
+          <input type="file" id="fileUploadInput" style="display:none;" onchange="handleFileUpload(event)" accept=".json">
+        </div>
+        <div style="display:flex; gap:0.4rem; flex-wrap:wrap; margin-bottom:0.25rem;">
+          <button onclick="setStatusFilter('all')" id="filterAll" class="filter-pill active">All</button>
+          <button onclick="setStatusFilter('ready')" id="filterReady" class="filter-pill">✅ Ready</button>
+          <button onclick="setStatusFilter('flagged')" id="filterFlagged" class="filter-pill">🗑 Flagged</button>
+          <button onclick="setStatusFilter('live')" id="filterLive" class="filter-pill">🦋 Live</button>
+          <button onclick="setStatusFilter('dry_run')" id="filterDryRun" class="filter-pill">⚙️ Dry Run</button>
+        </div>
+        <div style="display:flex; align-items:center; gap:0.4rem; width:100%;">
+          <span style="font-size:0.75rem; color:var(--text-muted); font-family:var(--font-outfit); font-weight:500;">Sort:</span>
+          <select id="sortControl" onchange="filterStories()" style="flex:1; background:rgba(255,255,255,0.05); color:var(--text-color); border:1px solid var(--panel-border); border-radius:6px; padding:0.25rem 0.5rem; font-size:0.8rem; font-family:var(--font-outfit); cursor:pointer; outline:none; transition:border-color 0.2s ease;">
+            <option value="chronological" style="background:#121214;">Newest First 📅</option>
+            <option value="reverse-chronological" style="background:#121214;">Oldest First ⏳</option>
+            <option value="alphabetical" style="background:#121214;">Alphabetical (A-Z) 🔠</option>
+            <option value="alphabetical-desc" style="background:#121214;">Alphabetical (Z-A) 🔤</option>
+            <option value="fall" style="background:#121214;">Greatest Fall (u Shift) 📉</option>
+            <option value="grace" style="background:#121214;">Greatest Grace (u Shift) 📈</option>
+          </select>
+        </div>
+        <div class="server-tip" style="font-size:0.7rem; color:var(--text-muted); background:rgba(255,255,255,0.03); border:1px dashed var(--panel-border); border-radius:6px; padding:0.4rem 0.5rem; margin-top:0.15rem; font-family:var(--font-mono); line-height:1.3; text-align:center; width:100%;">
+          💡 To run programmatically:<br>
+          <code style="color:var(--bsky-blue); font-weight:600;">python -m http.server</code>
+        </div>
+      </div>
+      <div class="story-list" id="storyList">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+
+    <!-- Main Workspace -->
+    <div class="main-workspace">
+      <!-- Tabs -->
+      <div class="tabs-bar">
+        <button class="tab-button active" onclick="switchTab(event, 'emulator-tab')">📱 Thread Emulator</button>
+        <button class="tab-button" onclick="switchTab(event, 'map-tab')">🗺️ Interactive Map</button>
+        <button class="tab-button" onclick="switchTab(event, 'composer-tab')">⚙️ Controller & Composer</button>
+        <button class="tab-button" onclick="switchTab(event, 'audit-tab'); renderAuditTab()">📊 Audit & Trends</button>
+        <button class="tab-button" onclick="switchTab(event, 'source-tab'); fetchSourceText()">📰 Source Text</button>
+      </div>
+
+      <!-- Viewports -->
+      <div class="content-viewport">
+        
+        <!-- Tab 1: Thread Emulator -->
+        <div id="emulator-tab" class="tab-content active thread-emulator">
+          <!-- Left Col: Bluesky Post Feed -->
+          <div class="bsky-feed" id="bskyFeed">
+            <!-- Rendered dynamically -->
+          </div>
+
+          <!-- Right Col: Metapanel -->
+          <div class="story-meta-pane" id="metaPane">
+            <!-- Rendered dynamically -->
+          </div>
+        </div>
+
+        <!-- Tab 5: Source Text -->
+        <div id="source-tab" class="tab-content" style="padding: 20px; overflow-y: auto; height: 100%;">
+          <div id="sourceContent" style="font-family: var(--font-outfit, sans-serif); color: var(--text-primary, #e2e8f0);">
+            <div style="color: var(--text-muted, #64748b); padding: 40px; text-align: center;">
+              Select a story and click the Source Text tab to load the scraped article.
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 2: Interactive Grid Map -->
+        <div id="map-tab" class="tab-content hegemony-map-view">
+          <!-- Left: Big Interactive SVG Grid -->
+          <div class="grid-canvas-container">
+            <svg id="hegemonyGrid" class="grid-svg" viewBox="0 0 500 500">
+              <!-- Definitions of markers -->
+              <defs>
+                <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#ffffff" />
+                </marker>
+                <radialGradient id="tlGlow" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#10b981" stop-opacity="0.1" />
+                  <stop offset="100%" stop-color="#10b981" stop-opacity="0" />
+                </radialGradient>
+                <radialGradient id="trGlow" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#ec4899" stop-opacity="0.1" />
+                  <stop offset="100%" stop-color="#ec4899" stop-opacity="0" />
+                </radialGradient>
+                <radialGradient id="brGlow" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#ef4444" stop-opacity="0.1" />
+                  <stop offset="100%" stop-color="#ef4444" stop-opacity="0" />
+                </radialGradient>
+                <radialGradient id="blGlow" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#0085ff" stop-opacity="0.1" />
+                  <stop offset="100%" stop-color="#0085ff" stop-opacity="0" />
+                </radialGradient>
+              </defs>
+
+              <!-- Shaded Quadrants -->
+              <rect x="0" y="0" width="250" height="250" fill="url(#tlGlow)" />
+              <rect x="250" y="0" width="250" height="250" fill="url(#trGlow)" />
+              <rect x="250" y="250" width="250" height="250" fill="url(#brGlow)" />
+              <rect x="0" y="250" width="250" height="250" fill="url(#blGlow)" />
+
+              <!-- Outer boundary (Zone 2) -->
+              <rect x="50" y="50" width="400" height="400" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="2" />
+              <!-- Inner boundary (Zone 1) -->
+              <rect x="150" y="150" width="200" height="200" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" stroke-dasharray="4,4" />
+
+              <!-- Axes -->
+              <line x1="250" y1="20" x2="250" y2="480" stroke="rgba(255,255,255,0.3)" stroke-width="1" />
+              <line x1="20" y1="250" x2="480" y2="250" stroke="rgba(255,255,255,0.3)" stroke-width="1" />
+
+              <!-- Legend text inside SVG -->
+              <text x="240" y="35" fill="rgba(255,255,255,0.4)" font-size="9" text-anchor="end" font-family="Outfit" font-weight="600">WILL (ψ)</text>
+              <text x="40" y="240" fill="rgba(255,255,255,0.4)" font-size="9" text-anchor="start" font-family="Outfit" font-weight="600">MORALITY (υ)</text>
+
+              <text x="60" y="68" fill="rgba(255,255,255,0.3)" font-size="10" font-family="Outfit" font-weight="700">JUSTICE</text>
+              <text x="440" y="68" fill="rgba(255,255,255,0.3)" font-size="10" text-anchor="end" font-family="Outfit" font-weight="700">TYRANNY</text>
+              <text x="440" y="440" fill="rgba(255,255,255,0.3)" font-size="10" text-anchor="end" font-family="Outfit" font-weight="700">CHAOS</text>
+              <text x="60" y="440" fill="rgba(255,255,255,0.3)" font-size="10" font-family="Outfit" font-weight="700">STAGNATION</text>
+
+              <text x="140" y="140" fill="rgba(255,255,255,0.5)" font-size="9" text-anchor="end" font-family="Outfit">Greater Good</text>
+              <text x="360" y="140" fill="rgba(255,255,255,0.5)" font-size="9" text-anchor="start" font-family="Outfit">Greatest Lie</text>
+              <text x="360" y="365" fill="rgba(255,255,255,0.5)" font-size="9" text-anchor="start" font-family="Outfit">Greater Evil</text>
+              <text x="140" y="365" fill="rgba(255,255,255,0.5)" font-size="9" text-anchor="end" font-family="Outfit">Lesser Good</text>
+
+              <!-- Dynamic Interactive Trajectory Path -->
+              <path id="trajectoryPath" d="" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-dasharray="6,4" marker-end="url(#arrow)" />
+              
+              <!-- Points -->
+              <circle id="claimPoint" cx="0" cy="0" r="7" fill="none" stroke="#f59e0b" stroke-width="2.5" style="display:none;" />
+              <polygon id="realityPoint" points="" fill="#ef4444" stroke="#ffffff" stroke-width="1" style="display:none;" />
+            </svg>
+          </div>
+
+          <!-- Right: Details of coordinates and zones -->
+          <div class="map-sidebar">
+            <div class="meta-panel">
+              <div class="meta-panel-title">Hegemonic Trajectory</div>
+              
+              <div class="meta-item">
+                <span class="meta-label">Path Class</span>
+                <span class="meta-value" id="mapPathClass" style="color: var(--bsky-blue); font-weight: 700; font-size: 1.15rem;">---</span>
+              </div>
+              
+              <div class="meta-item">
+                <span class="meta-label">Stated Claim Coordinate</span>
+                <div class="coordinate-pill" style="border-color: rgba(245,158,11,0.3); color: var(--claim-yellow);">
+                  <span id="mapClaimCoord">---</span>
+                </div>
+              </div>
+              
+              <div class="meta-item">
+                <span class="meta-label">Actual Reality Coordinate</span>
+                <div class="coordinate-pill" style="border-color: rgba(239,68,68,0.3); color: var(--reality-red);">
+                  <span id="mapRealCoord">---</span>
+                </div>
+              </div>
+
+              <div class="meta-item">
+                <span class="meta-label">Trajectory Dynamics</span>
+                <span class="meta-value" id="mapTrajectoryDynamics" style="font-size: 0.9rem;">Select a story to visualize the vector flow.</span>
+              </div>
+            </div>
+
+            <div class="meta-panel">
+              <div class="meta-panel-title">Trinary Calibration</div>
+              <div style="display:flex; flex-direction:column; gap:0.75rem; font-size:0.85rem; line-height:1.4;">
+                <div><strong>Grace (BL ➔ TL):</strong> Shifting from passive boundary preservation to proactive creation of universal value.</div>
+                <div><strong>The Fall (TL ➔ TR):</strong> Falling from true proactive universal utility into a protective stated lie that hides private extractiveness.</div>
+                <div><strong>Delusion (TR ➔ BR):</strong> Sinking from a high-status active lie into active, passive, or systemic voids and extraction.</div>
+                <div><strong>Redemption (BR ➔ BL):</strong> Rescuing elements from the entropic void back into quiet, localized boundary protection.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 4: Audit & Trends -->
+        <div id="audit-tab" class="tab-content" style="padding:1.5rem; overflow-y:auto; display:flex; flex-direction:column; gap:1.5rem;">
+          <div id="audit-content" style="display:flex; flex-direction:column; gap:1.5rem;">
+            <div style="color:var(--text-muted); font-size:0.85rem;">Loading audit data…</div>
+          </div>
+        </div>
+
+        <!-- Tab 3: Composer & CLI Controller -->
+        <div id="composer-tab" class="tab-content controller-view">
+          <!-- Left: Prompt composer / local execution CLI tool -->
+          <div class="terminal-panel">
+            <div class="terminal-header">
+              <div class="terminal-title">🖥️ CLI Bot Execution Command</div>
+            </div>
+            
+            <div style="font-size:0.85rem; color:var(--text-muted);">
+              Run this command in your powershell terminal to execute the Aletheia Bot orchestrator for this story:
+            </div>
+
+            <div class="terminal-body">
+              <button class="copy-btn" onclick="copyText('terminalCmd')">Copy</button>
+              <code id="terminalCmd">python bluesky_bot/orchestrator.py --news-query "..."</code>
+            </div>
+
+            <div style="margin-top: 1rem; border-top: 1px solid rgba(240, 246, 252, 0.1); padding-top: 1rem;">
+              <div class="meta-label" style="margin-bottom: 0.5rem;">AI Chat Instruction Composer</div>
+              <div style="font-size:0.85rem; color:var(--text-muted); margin-bottom: 0.75rem;">
+                Copy this prompt instruction to feed back into your agentic coding chat to calibrate the bot on a new news link:
+              </div>
+              <div class="terminal-body" style="height: 180px; overflow-y: auto;">
+                <button class="copy-btn" onclick="copyText('chatPrompt')">Copy</button>
+                <code id="chatPrompt" style="white-space: pre-wrap;">Select a story to generate the custom chat prompt.</code>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Manual Draft JSON compiler -->
+          <div class="composer-panel">
+            <div class="composer-title">✍️ Manual Thread Compiler</div>
+            <div style="font-size:0.85rem; color:var(--text-muted)">
+              Draft your own Convergence Test evaluation. Enter coordinates and details to download a pre-compiled JSON file directly.
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Subject</label>
+                <input type="text" id="compSubject" class="form-input" placeholder="e.g. Swedish Green Datacenter">
+              </div>
+              <div class="form-group">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 0.3rem;">
+                  <label class="form-label" style="margin: 0;">Primary URL Link</label>
+                  <select id="commonOutlets" onchange="quickFillOutlet(this.value)" style="background:rgba(255,255,255,0.05); color:var(--text-color); border:1px solid var(--panel-border); border-radius:4px; padding:0.1rem 0.3rem; font-size:0.72rem; font-family:var(--font-outfit); cursor:pointer; outline:none;">
+                    <option value="">-- Quick Fill Outlet --</option>
+                    <option value="https://www.bloomberg.com/">Bloomberg</option>
+                    <option value="https://www.nytimes.com/">NY Times</option>
+                    <option value="https://www.thesaturdaypaper.com.au/">The Saturday Paper</option>
+                    <option value="https://www.reuters.com/">Reuters</option>
+                    <option value="https://www.bbc.com/news/">BBC News</option>
+                    <option value="https://www.smh.com.au/">SMH</option>
+                    <option value="https://www.abc.net.au/news/">ABC News AU</option>
+                    <option value="https://techcrunch.com/">TechCrunch</option>
+                    <option value="https://www.washingtonpost.com/">Washington Post</option>
+                    <option value="https://www.npr.org/">NPR</option>
+                  </select>
+                </div>
+                <input type="text" id="compLink" class="form-input" placeholder="e.g. https://www.bloomberg.com/news...">
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Stated Coordinate (Claim)</label>
+                <div class="form-row" style="gap:0.5rem;">
+                  <input type="number" step="0.1" min="-2" max="2" id="compClaimU" class="form-input" placeholder="υ (e.g. 1.5)">
+                  <input type="number" step="0.1" min="-2" max="2" id="compClaimPsi" class="form-input" placeholder="ψ (e.g. 1.0)">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Actual Coordinate (Reality)</label>
+                <div class="form-row" style="gap:0.5rem;">
+                  <input type="number" step="0.1" min="-2" max="2" id="compRealU" class="form-input" placeholder="υ (e.g. -0.5)">
+                  <input type="number" step="0.1" min="-2" max="2" id="compRealPsi" class="form-input" placeholder="ψ (e.g. 0.8)">
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Short Plain English Breakdown</label>
+              <textarea id="compBreakdown" class="form-textarea" placeholder="Explain the dynamic simply..."></textarea>
+            </div>
+
+            <button class="btn-primary" onclick="compileNewJSON()">
+              📥 Compile & Export Thread JSON
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Lightbox Modal for graph inspection -->
+  <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+    <img id="lightboxImg" class="lightbox-img" src="" alt="Graph Magnified">
+  </div>
+
+  <!-- Include external stories database script -->
+  <script src="stories_registry.js"></script>
+  <script src="../hegemony_db.js"></script>
+
+  <!-- JavaScript Stories Registry & Controller -->
+  <script>
+    // Fallback to loaded global registry, or empty list if offline/failed
+    const STORIES_REGISTRY = window.ALETHEIA_STORIES_REGISTRY || [];
+
+    let activeStory = STORIES_REGISTRY[0];
+
+    function updateServerStatus(isOnline) {
+      const badge = document.getElementById('systemStatusBadge');
+      const text = document.getElementById('systemStatusText');
+      if (!badge || !text) return;
+      if (isOnline) {
+        badge.classList.remove('offline');
+        text.innerText = 'SERVER ONLINE';
+      } else {
+        badge.classList.add('offline');
+        text.innerText = 'SERVER OFFLINE';
+      }
+    }
+
+    // Toggle Themes (Light vs Dark)
+    function toggleTheme() {
+      const body = document.body;
+      const themeBtn = document.getElementById('themeBtn');
+      if (body.getAttribute('data-theme') === 'light') {
+        body.removeAttribute('data-theme');
+        themeBtn.innerHTML = '🌙 Dark Mode';
+      } else {
+        body.setAttribute('data-theme', 'light');
+        themeBtn.innerHTML = '☀️ Light Mode';
+      }
+    }
+
+    // Switch Tabs
+    function switchTab(evt, tabId) {
+      const tabcontents = document.getElementsByClassName("tab-content");
+      for (let i = 0; i < tabcontents.length; i++) {
+        tabcontents[i].classList.remove("active");
+      }
+
+      const tablinks = document.getElementsByClassName("tab-button");
+      for (let i = 0; i < tablinks.length; i++) {
+        tablinks[i].classList.remove("active");
+      }
+
+      document.getElementById(tabId).classList.add("active");
+      evt.currentTarget.classList.add("active");
+
+      if (tabId === 'map-tab') {
+        renderMap();
+      }
+    }
+
+    // Render Story Cards in Sidebar
+    let currentStoriesList = [];
+    const CARD_HEIGHT = 104; // Estimated average height of a story card including flex gap
+    const WINDOW_SIZE = 100; // Keep exactly 100 cards rendered in the DOM
+    let lastStartIndex = -1;
+
+    function renderStoriesListVirtual() {
+      const listContainer = document.getElementById('storyList');
+      if (!listContainer || currentStoriesList.length === 0) return;
+
+      const scrollTop = listContainer.scrollTop;
+      const containerHeight = listContainer.clientHeight;
+
+      // Estimate how many are visible and the buffer window range
+      const visibleCount = Math.ceil(containerHeight / CARD_HEIGHT);
+      const firstVisibleIndex = Math.floor(scrollTop / CARD_HEIGHT);
+      
+      let startIndex = Math.max(0, firstVisibleIndex - Math.floor((WINDOW_SIZE - visibleCount) / 2));
+      let endIndex = Math.min(currentStoriesList.length, startIndex + WINDOW_SIZE);
+      
+      if (endIndex === currentStoriesList.length) {
+        startIndex = Math.max(0, endIndex - WINDOW_SIZE);
+      }
+
+      // Only refresh the DOM if the sliding window indices actually shift
+      if (startIndex === lastStartIndex && listContainer.innerHTML !== '') return;
+      lastStartIndex = startIndex;
+
+      const activeId = activeStory ? activeStory.id : null;
+      const topHeight = startIndex * CARD_HEIGHT;
+      const bottomHeight = (currentStoriesList.length - endIndex) * CARD_HEIGHT;
+
+      let html = `<div style="height: ${topHeight}px; width: 100%; flex-shrink: 0; background: transparent;"></div>`;
+
+      for (let i = startIndex; i < endIndex; i++) {
+        const story = currentStoriesList[i];
+        const isPass = story.verdict && story.verdict.trim().toUpperCase().startsWith('PASS');
+        const badgeClass = isPass ? 'badge-pass' : 'badge-fail';
+        const badgeText = isPass ? 'PASS' : 'FAIL';
+
+        const cu = story.claim_u !== null && story.claim_u !== undefined ? story.claim_u.toFixed(1) : '?';
+        const cpsi = story.claim_psi !== null && story.claim_psi !== undefined ? story.claim_psi.toFixed(1) : '?';
+        const ru = story.real_u !== null && story.real_u !== undefined ? story.real_u.toFixed(1) : '?';
+        const rpsi = story.real_psi !== null && story.real_psi !== undefined ? story.real_psi.toFixed(1) : '?';
+
+        const typeBadgeText = story.five_word ? '5-Word' : (story.mode === 'compact' ? 'Compact' : (story.mode === 'compact_single' ? 'Comp-1' : 'Std'));
+        const typeBadgeColor = story.five_word ? '#F472B6' : (story.mode === 'compact' ? '#38BDF8' : (story.mode === 'compact_single' ? '#818CF8' : '#34D399'));
+
+        html += `
+          <div class="story-card ${activeId === story.id ? 'active' : ''}" data-story-id="${story.id}">
+            <div class="story-title">${story.subject || 'No Subject'}</div>
+            <div class="card-status">${story.status || ''}</div>
+            <div class="card-footer">
+              <span class="card-badge ${badgeClass}">${badgeText}</span>
+              <span class="card-badge" style="background: rgba(255,255,255,0.05); color: ${typeBadgeColor}; border: 1px solid rgba(255,255,255,0.1); margin-left: 4px;">${typeBadgeText}</span>
+              <span class="card-coordinates">(${cu}, ${cpsi}) ➔ (${ru}, ${rpsi})</span>
+            </div>
+          </div>
+        `;
+      }
+
+
+      html += `<div style="height: ${bottomHeight}px; width: 100%; flex-shrink: 0; background: transparent;"></div>`;
+      const savedScrollTop = listContainer.scrollTop;
+      listContainer.innerHTML = html;
+      listContainer.scrollTop = savedScrollTop;
+    }
+
+    // Render Story Cards in Sidebar
+    function renderStories(stories) {
+      const listContainer = document.getElementById('storyList');
+      if (!listContainer) return;
+
+      currentStoriesList = stories;
+      lastStartIndex = -1; // Reset window cache
+
+      if (stories.length === 0) {
+        listContainer.innerHTML = '<div class="empty-state"><span class="empty-icon">🔍</span><span>No stories found</span></div>';
+        return;
+      }
+
+      // Reset scroll position on full list loads
+      listContainer.scrollTop = 0;
+      renderStoriesListVirtual();
+    }
+
+    // Filter Stories
+    function filterStories() {
+      const query = document.getElementById('searchInput').value.toLowerCase();
+      renderStories(getFilteredStories(query));
+      if (activeStory) {
+        const exists = currentStoriesList.some(s => s.id === activeStory.id);
+        if (exists) {
+          selectStory(activeStory.id);
+        }
+      }
+    }
+
+    // Select Story
+    function selectStory(storyId, scrollIntoView = true) {
+      activeStory = STORIES_REGISTRY.find(s => s.id === storyId);
+      
+      const listContainer = document.getElementById('storyList');
+      if (listContainer) {
+        // 1. Remove active class from any existing active card in the DOM
+        const activeCards = listContainer.querySelectorAll('.story-card.active');
+        activeCards.forEach(card => card.classList.remove('active'));
+
+        // 2. Add active class to the newly selected card in the DOM if it's currently rendered
+        const newActiveCard = listContainer.querySelector(`[data-story-id="${storyId}"]`);
+        if (newActiveCard) {
+          newActiveCard.classList.add('active');
+        }
+
+        // 3. Auto-scroll selected card into view if it was selected programmatically (e.g. from the map click)
+        if (scrollIntoView) {
+          const storyIndex = currentStoriesList.findIndex(s => s.id === storyId);
+          if (storyIndex !== -1) {
+            const cardTop = storyIndex * CARD_HEIGHT;
+            const cardBottom = cardTop + CARD_HEIGHT;
+            const scrollTop = listContainer.scrollTop;
+            const containerHeight = listContainer.clientHeight;
+
+            if (cardTop < scrollTop || cardBottom > (scrollTop + containerHeight)) {
+              listContainer.scrollTop = cardTop - (containerHeight / 2) + (CARD_HEIGHT / 2);
+            }
+          }
+        }
+      }
+      
+      // Update Viewports
+      renderEmulator();
+      renderMap();
+      renderController();
+    }
+
+    // Render Bluesky Thread Emulator
+    function renderEmulator() {
+      const feedContainer = document.getElementById('bskyFeed');
+      feedContainer.innerHTML = '';
+
+      if (!activeStory) return;
+
+      // Add Target Post header if in reply mode
+      if (activeStory.mode === 'reply' && activeStory.target_url) {
+        let parentHandle = 'parent post';
+        try {
+          const match = activeStory.target_url.match(/profile\/([^\/]+)/);
+          if (match && match[1]) {
+            parentHandle = '@' + decodeURIComponent(match[1]);
+          }
+        } catch(e) {}
+        
+        const replyHeader = document.createElement('div');
+        replyHeader.className = 'bsky-reply-header';
+        replyHeader.innerHTML = `
+          <div style="padding: 12px 16px; margin-bottom: 16px; border: 1px solid var(--panel-border); background: rgba(0, 133, 255, 0.05); border-radius: 8px; display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem; color: var(--text-muted); font-family: var(--font-outfit);">
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <span>💬 Replying to</span>
+              <span style="color: var(--bsky-blue); font-weight: 600;">${parentHandle}</span>
+            </div>
+            <a href="${activeStory.target_url}" target="_blank" style="color: var(--bsky-blue); text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 4px;">
+              View Target Post 🦋
+            </a>
+          </div>
+        `;
+        feedContainer.appendChild(replyHeader);
+      }
+
+      function pack5WordPosts(pList, maxLen = 300) {
+        const grouped = [];
+        let currentChunk = [];
+        let currentLen = 0;
+        for (const p of pList) {
+          const line = p.trim();
+          if (!line) continue;
+          const lineLen = line.length;
+          const addedLen = lineLen + (currentChunk.length ? 1 : 0);
+          if (currentLen + addedLen <= maxLen) {
+            currentChunk.push(line);
+            currentLen += addedLen;
+          } else {
+            if (currentChunk.length) {
+              grouped.push(currentChunk.join('\n'));
+            }
+            currentChunk = [line];
+            currentLen = lineLen;
+          }
+        }
+        if (currentChunk.length) {
+          grouped.push(currentChunk.join('\n'));
+        }
+        return grouped;
+      }
+
+      const rawPosts = activeStory.posts || [];
+      if (!rawPosts.length) {
+        // posts text not stored in registry — show links to live posts instead
+        const urls = activeStory.post_urls || [];
+        if (urls.length) {
+          const fallback = document.createElement('div');
+          fallback.style.cssText = 'padding:16px; color:var(--text-muted); font-family:var(--font-outfit); font-size:0.9rem;';
+          fallback.innerHTML = '<p style="margin:0 0 10px">Post text not stored — view live posts:</p>' +
+            urls.map((u, i) => `<div style="margin:4px 0"><a href="${u}" target="_blank" style="color:var(--bsky-blue)">Post ${i+1}</a></div>`).join('');
+          feedContainer.appendChild(fallback);
+        } else {
+          feedContainer.innerHTML = '<div style="padding:16px;color:var(--text-muted);font-family:var(--font-outfit)">No post data available.</div>';
+        }
+        return;
+      }
+
+      let displayPosts = [...rawPosts];
+      const isFiveWord = activeStory.five_word === true;
+      const isCompactSingle = activeStory.mode === 'compact_single';
+      const isCompactThread = activeStory.mode === 'compact';
+
+      if (isFiveWord) {
+        displayPosts = pack5WordPosts(rawPosts, 300);
+      } else if (isCompactSingle) {
+        displayPosts = rawPosts.slice(0, 1);
+        if (activeStory.link) {
+          const refSuffix = `\n\nReference: ${activeStory.link}`;
+          if (displayPosts[0].length + refSuffix.length <= 300) {
+            displayPosts[0] += refSuffix;
+          } else {
+            const shortSuffix = `\n\n${activeStory.link}`;
+            if (displayPosts[0].length + shortSuffix.length <= 300) {
+              displayPosts[0] += shortSuffix;
+            }
+          }
+        }
+      } else if (isCompactThread) {
+        displayPosts = rawPosts.slice(0, 4);
+      }
+
+      displayPosts.forEach((postText, index) => {
+        const postDiv = document.createElement('div');
+        postDiv.className = 'post-container';
+
+        // Custom avatar based on persona
+        let avatarText = 'A';
+        let avatarClass = '';
+        let displayName = 'Aletheia Bot ⚖️';
+        let handle = '@judgement-bot.bsky.social';
+
+        if (postText.startsWith('Awwthekanon:')) {
+          avatarText = '🧸';
+          avatarClass = 'avatar-aww';
+          displayName = 'Awwthekanon';
+          handle = '@awwthekanon.bsky.social';
+          postText = postText.replace('Awwthekanon:\n', '');
+        } else if (postText.startsWith('Brothekanon:')) {
+          avatarText = '🛹';
+          avatarClass = 'avatar-bro';
+          displayName = 'Brothekanon';
+          handle = '@brothekanon.bsky.social';
+          postText = postText.replace('Brothekanon:\n', '');
+        }
+
+        // Render embeds (graph image + info cards on Post 1 for compact/five-word, link preview card on Post 2 if link exists for standard, grounding link card on the post containing "Source:")
+        let embedTag = '';
+        if (index === 0) {
+          let embedImages = [];
+          if (activeStory.graph_img) {
+            embedImages.push(activeStory.graph_img);
+          }
+          if (isFiveWord) {
+            embedImages.push(`graph_png/${activeStory.id}_info_card_five_word.png`);
+          } else if (isCompactSingle || isCompactThread) {
+            embedImages.push(`graph_png/${activeStory.id}_info_card_verdict.png`);
+            embedImages.push(`graph_png/${activeStory.id}_info_card_analysis.png`);
+          }
+          
+          if (embedImages.length > 0) {
+            embedTag = `<div style="display: grid; grid-template-columns: repeat(${Math.min(embedImages.length, 2)}, 1fr); gap: 0.5rem; margin-top: 0.75rem;">`;
+            embedImages.forEach(img => {
+              embedTag += `<img class="post-embed-image" src="${img}" alt="Embed Media" style="margin: 0; aspect-ratio: 16/10; object-fit: cover;" onerror="this.style.display='none';" onclick="openLightbox('${img}')">`;
+            });
+            embedTag += `</div>`;
+          }
+        } else if (index === 1 && activeStory.link && !activeStory.link.includes('bsky.app/profile') && !isCompactSingle) {
+          // Render link card embed on second post if link exists and is not a bsky profile link
+          const title = activeStory.subject || 'External Link';
+          let descText = '';
+          if (rawPosts.length > 4) {
+            descText = rawPosts[4].replace("What's happening:\n", "").trim();
+          } else {
+            descText = `Alethekanon Psochic Hegemony Assessment for ${title}`;
+          }
+          if (descText.length > 200) {
+            descText = descText.substring(0, 197) + '...';
+          }
+          let domain = '';
+          try {
+            domain = new URL(activeStory.link).hostname;
+          } catch(e) {
+            domain = 'external-link';
+          }
+          embedTag = `
+            <a href="${activeStory.link}" target="_blank" class="post-link-card">
+              <div class="post-link-card-content">
+                <div class="post-link-card-domain">${domain}</div>
+                <div class="post-link-card-title">${title}</div>
+                <div class="post-link-card-description">${descText}</div>
+              </div>
+            </a>
+          `;
+        } else if (activeStory.grounding_url && postText.includes('Source: ')) {
+          // Render grounding link preview card on the post containing "Source:"
+          const gUrl = activeStory.grounding_url;
+          const title = "Verification Source | Aletheia Bot";
+          const descText = `Fact-check verification source for ${activeStory.subject}`;
+          let domain = '';
+          try {
+            domain = new URL(gUrl).hostname;
+          } catch(e) {
+            domain = 'verification-source';
+          }
+          embedTag = `
+            <a href="${gUrl}" target="_blank" class="post-link-card">
+              <div class="post-link-card-content">
+                <div class="post-link-card-domain">${domain}</div>
+                <div class="post-link-card-title">${title}</div>
+                <div class="post-link-card-description">${descText}</div>
+              </div>
+            </a>
+          `;
+        }
+
+
+        // Resolve direct post link if live
+        let postUrl = '';
+        if (activeStory.post_urls && activeStory.post_urls[index]) {
+          postUrl = activeStory.post_urls[index];
+        } else if (activeStory.rkeys && activeStory.rkeys[index]) {
+          const cleanHandle = handle.replace('@', '');
+          postUrl = `https://bsky.app/profile/${cleanHandle}/post/${activeStory.rkeys[index]}`;
+        } else if (index === 0 && activeStory.link && activeStory.link.includes('bsky.app/profile')) {
+          postUrl = activeStory.link;
+        }
+
+        const bskyLink = postUrl 
+          ? `<a href="${postUrl}" target="_blank" class="post-timestamp" style="text-decoration: none; color: var(--bsky-blue); font-weight: 500; display: inline-flex; align-items: center; gap: 2px;">
+               ${index}h · <span style="font-size: 0.8rem; display: inline-flex; align-items: center; gap: 2px;">🦋 View Live</span>
+             </a>` 
+          : `<span class="post-timestamp">${index}h</span>`;
+
+        postDiv.innerHTML = `
+          <div class="post-thread-line"></div>
+          <div class="avatar-col">
+            <div class="bsky-avatar ${avatarClass}">${avatarText}</div>
+          </div>
+          <div class="content-col">
+            <div class="post-header">
+              <span class="profile-display-name">${displayName}</span>
+              <span class="profile-handle">${handle}</span>
+              <span style="color:var(--text-muted)">·</span>
+              ${bskyLink}
+            </div>
+            <div class="post-body">${postText}</div>
+            ${embedTag}
+            <div class="post-actions">
+              <button class="action-button">💬 Reply</button>
+              <button class="action-button">🔁 Repost</button>
+              <button class="action-button">❤️ Like</button>
+            </div>
+          </div>
+        `;
+        feedContainer.appendChild(postDiv);
+      });
+
+      // Render Meta Panel
+      const metaPane = document.getElementById('metaPane');
+      const isPass = activeStory.verdict.trim().toUpperCase().startsWith('PASS');
+      const verdictColor = isPass ? 'var(--pass-green)' : 'var(--fail-red)';
+
+      // Resolve thread link for meta item
+      let liveThreadRow = '';
+      if (activeStory.status.includes('LIVE') || (activeStory.post_urls && activeStory.post_urls.length > 0) || (activeStory.rkeys && activeStory.rkeys.length > 0)) {
+        let threadUrl = '';
+        if (activeStory.post_urls && activeStory.post_urls[0]) {
+          threadUrl = activeStory.post_urls[0];
+        } else if (activeStory.rkeys && activeStory.rkeys[0]) {
+          threadUrl = `https://bsky.app/profile/judgement-bot.bsky.social/post/${activeStory.rkeys[0]}`;
+        } else if (activeStory.link && activeStory.link.includes('bsky.app/profile')) {
+          threadUrl = activeStory.link;
+        }
+        
+        if (threadUrl) {
+          liveThreadRow = `
+            <div class="meta-item">
+              <span class="meta-label">Live Bluesky Thread</span>
+              <span class="meta-value"><a href="${threadUrl}" target="_blank" style="color: var(--bsky-blue); text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 4px;">🦋 View Live Thread on Bluesky</a></span>
+            </div>
+          `;
+        }
+      }
+
+      // Reply-To row (only for reply mode)
+      const replyToRow = (activeStory.mode === 'reply' && activeStory.target_url)
+        ? `<div class="meta-item">
+            <span class="meta-label">Reply-To (Bsky Post)</span>
+            <span class="meta-value"><a href="${activeStory.target_url}" target="_blank" style="color: var(--bsky-blue); text-decoration: none;">View Target Post 🦋</a></span>
+          </div>` : '';
+
+      // Flag state
+      const isFlagged = activeStory._flag === 'flagged';
+      const isReady = activeStory._flag === 'ready';
+
+      // Resolve asset cards dynamically
+      const assets = [
+        { label: 'Trajectory Graph', path: `graph_png/${activeStory.id}_graph.png` }
+      ];
+      if (activeStory.five_word) {
+        assets.push({ label: '5-Word Info Card', path: `graph_png/${activeStory.id}_info_card_five_word.png` });
+      } else {
+        assets.push({ label: 'Verdict Info Card', path: `graph_png/${activeStory.id}_info_card_verdict.png` });
+        assets.push({ label: 'Analysis Info Card', path: `graph_png/${activeStory.id}_info_card_analysis.png` });
+      }
+
+
+      const assetsHTML = `
+        <div style="margin-top: 1.25rem; border-top: 1px solid var(--panel-border); padding-top: 1rem;">
+          <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.75rem;">Generated Assets</div>
+          <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 0.5rem;">
+            ${assets.map(asset => `
+              <div style="display: flex; flex-direction: column; gap: 0.25rem;">
+                <span style="font-size: 0.65rem; color: var(--text-muted); font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="${asset.label}">${asset.label}</span>
+                <img src="${asset.path}" 
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" 
+                     style="width: 100%; border-radius: 6px; border: 1px solid var(--panel-border); cursor: pointer; aspect-ratio: 16/10; object-fit: cover;" 
+                     onclick="openLightbox('${asset.path}')">
+                <div style="display: none; width: 100%; aspect-ratio: 16/10; background: rgba(255,255,255,0.02); border-radius: 6px; border: 1px dashed rgba(255,255,255,0.1); align-items: center; justify-content: center; font-size: 0.6rem; color: var(--text-muted); text-align: center; padding: 2px; font-weight: 500;">
+                  Not Found
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+
+      metaPane.innerHTML = `
+        <div class="meta-panel">
+          <div class="meta-panel-title">
+            <span>Story Analysis</span>
+            <span style="color: ${verdictColor}">${isPass ? 'PASS' : 'FAIL'}</span>
+          </div>
+          ${activeStory.created_at ? `
+          <div class="meta-item">
+            <span class="meta-label">Evaluation Datetime</span>
+            <span class="meta-value" style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-muted);">${activeStory.created_at}</span>
+          </div>
+          ` : ''}
+          <div class="meta-item">
+            <span class="meta-label">Post Type</span>
+            <span class="meta-value" style="font-weight: 600; color: ${activeStory.five_word ? '#F472B6' : (activeStory.mode === 'compact' ? '#38BDF8' : (activeStory.mode === 'compact_single' ? '#818CF8' : '#34D399'))}">
+              ${activeStory.five_word ? '5-Word Mode 📝' : (activeStory.mode === 'compact' ? 'Compact Mode ⚡' : (activeStory.mode === 'compact_single' ? 'Compact Single ⚡' : 'Standard Mode 🧵'))}
+            </span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Subject</span>
+            <span class="meta-value">${activeStory.subject}</span>
+          </div>
+          ${activeStory.category ? `
+          <div class="meta-item">
+            <span class="meta-label">Category</span>
+            <span class="meta-value" style="text-transform: capitalize; color: var(--text-main); font-weight: 500;">${activeStory.category}</span>
+          </div>
+          ` : ''}
+          ${activeStory.topic ? `
+          <div class="meta-item">
+            <span class="meta-label">Topic</span>
+            <span class="meta-value" style="color: var(--text-main); font-weight: 500;">${activeStory.topic}</span>
+          </div>
+          ` : ''}
+          ${activeStory.actors && activeStory.actors.length > 0 ? `
+          <div class="meta-item">
+            <span class="meta-label">Actors & Entities</span>
+            <span class="meta-value" style="color: var(--text-main); font-size: 0.82rem; line-height: 1.4;">${activeStory.actors.join(', ')}</span>
+          </div>
+          ` : ''}
+          <div class="meta-item">
+            <span class="meta-label">Primary Source</span>
+            <span class="meta-value"><a href="${activeStory.link}" target="_blank" style="color: var(--bsky-blue); text-decoration: none;">Link to Article 🔗</a></span>
+          </div>
+          ${replyToRow}
+          ${liveThreadRow}
+          <div class="meta-item">
+            <span class="meta-label">Coordinates Shift</span>
+            <div style="display:flex; gap:0.5rem; align-items:center; margin-top:0.25rem;">
+              <div class="coordinate-pill" style="border-color: rgba(245,158,11,0.3); color: var(--claim-yellow);">
+                Claim: (${activeStory.claim_u !== null && activeStory.claim_u !== undefined ? activeStory.claim_u.toFixed(1) : '?'}, ${activeStory.claim_psi !== null && activeStory.claim_psi !== undefined ? activeStory.claim_psi.toFixed(1) : '?'})
+              </div>
+              <span style="color:var(--text-muted)">➔</span>
+              <div class="coordinate-pill" style="border-color: rgba(239,68,68,0.3); color: var(--reality-red);">
+                Reality: (${activeStory.real_u !== null && activeStory.real_u !== undefined ? activeStory.real_u.toFixed(1) : '?'}, ${activeStory.real_psi !== null && activeStory.real_psi !== undefined ? activeStory.real_psi.toFixed(1) : '?'})
+              </div>
+            </div>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Verdict trajectory</span>
+            <span class="meta-value" style="font-weight:700;">${activeStory.verdict}</span>
+          </div>
+          <div class="meta-item" style="display:flex; gap:0.5rem; margin-top:0.25rem; margin-bottom: 0.5rem;">
+            <button onclick="markStory('ready')" style="flex:1; padding:0.45rem 0.5rem; border-radius:8px; border:1px solid rgba(16,185,129,0.4); background:${isReady ? 'rgba(16,185,129,0.25)' : 'transparent'}; color:${isReady ? '#10b981' : 'var(--text-muted)'}; cursor:pointer; font-size:0.8rem; font-family:var(--font-outfit); font-weight:600;">✅ Ready to Push</button>
+            <button onclick="markStory('flagged')" style="flex:1; padding:0.45rem 0.5rem; border-radius:8px; border:1px solid rgba(239,68,68,0.4); background:${isFlagged ? 'rgba(239,68,68,0.2)' : 'transparent'}; color:${isFlagged ? '#ef4444' : 'var(--text-muted)'}; cursor:pointer; font-size:0.8rem; font-family:var(--font-outfit); font-weight:600;">🗑 Flag Failure</button>
+          </div>
+          ${assetsHTML}
+        </div>
+
+
+        <div class="meta-panel">
+          <div class="meta-panel-title">Character Limit Check</div>
+          <div style="font-size:0.85rem; color:var(--text-muted); display:flex; flex-direction:column; gap:0.5rem;">
+            <div>All ${activeStory.posts.length} posts have been dynamic-checked to ensure they fit under Bluesky's strict 300-character limit without requiring dynamic split lines.</div>
+            <div style="display:grid; grid-template-columns: repeat(7, 1fr); gap:4px; margin-top:0.5rem;">
+              ${activeStory.posts.map((p, idx) => {
+                const len = p.length;
+                const pct = Math.min(100, (len / 300) * 100);
+                const barColor = len <= 280 ? 'var(--pass-green)' : (len <= 300 ? '#f59e0b' : 'var(--fail-red)');
+                return `
+                  <div style="text-align:center;">
+                    <div style="height:35px; background:rgba(255,255,255,0.05); border-radius:3px; position:relative; overflow:hidden;">
+                      <div style="position:absolute; bottom:0; left:0; right:0; height:${pct}%; background:${barColor};"></div>
+                    </div>
+                    <div style="font-size:0.65rem; margin-top:2px;">p${idx+1}</div>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // Render Psochic Hegemony Map (SVG coordinates mapping)
+    function renderMap() {
+      if (!activeStory) return;
+
+      // Coordinate scaling logic:
+      // In the graph, X ranges from 2.5 (Left, represented as positive) to -2.5 (Right, represented as negative)
+      // Y ranges from 2.5 (Top, positive) to -2.5 (Bottom, negative)
+      // Center is (250, 250) on our SVG canvas (width/height 500)
+      // Morality mapping: reversed! Positive u values go left, negative go right.
+      // u = +2.5 -> X = 50, u = -2.5 -> X = 450. Scale factor: X = 250 - (u / 2.5) * 200
+      // Will mapping: standard. ψ = +2.5 -> Y = 50, ψ = -2.5 -> Y = 450. Scale factor: Y = 250 - (psi / 2.5) * 200
+
+      const getSvgCoords = (u, psi) => {
+        const x = 250 - (u / 2.5) * 200;
+        const y = 250 - (psi / 2.5) * 200;
+        return { x, y };
+      };
+
+      const hasClaim = activeStory.claim_u !== null && activeStory.claim_u !== undefined && activeStory.claim_psi !== null && activeStory.claim_psi !== undefined;
+      const hasReal = activeStory.real_u !== null && activeStory.real_u !== undefined && activeStory.real_psi !== null && activeStory.real_psi !== undefined;
+
+      const claim = document.getElementById('claimPoint');
+      if (hasClaim) {
+        const startCoords = getSvgCoords(activeStory.claim_u, activeStory.claim_psi);
+        claim.setAttribute('cx', startCoords.x);
+        claim.setAttribute('cy', startCoords.y);
+        claim.style.display = 'block';
+      } else {
+        claim.style.display = 'none';
+      }
+
+      // Standard SVG polygon formula for a 5-point star
+      const getStarPointsString = (cx, cy, spikes, outerRadius, innerRadius) => {
+        let rot = Math.PI / 2 * 3;
+        let x = cx;
+        let y = cy;
+        const step = Math.PI / spikes;
+        let points = [];
+
+        for (let i = 0; i < spikes; i++) {
+          x = cx + Math.cos(rot) * outerRadius;
+          y = cy + Math.sin(rot) * outerRadius;
+          points.push(`${x},${y}`);
+          rot += step;
+
+          x = cx + Math.cos(rot) * innerRadius;
+          y = cy + Math.sin(rot) * innerRadius;
+          points.push(`${x},${y}`);
+          rot += step;
+        }
+        return points.join(' ');
+      };
+
+      const reality = document.getElementById('realityPoint');
+      if (hasReal) {
+        const endCoords = getSvgCoords(activeStory.real_u, activeStory.real_psi);
+        const starPoints = getStarPointsString(endCoords.x, endCoords.y, 5, 10, 4);
+        reality.setAttribute('points', starPoints);
+        reality.style.display = 'block';
+      } else {
+        reality.style.display = 'none';
+      }
+
+      // Animate Arrow path
+      const path = document.getElementById('trajectoryPath');
+      if (hasClaim && hasReal) {
+        const startCoords = getSvgCoords(activeStory.claim_u, activeStory.claim_psi);
+        const endCoords = getSvgCoords(activeStory.real_u, activeStory.real_psi);
+        // Create a nice subtle arc curve for the connection
+        const dx = endCoords.x - startCoords.x;
+        const dy = endCoords.y - startCoords.y;
+        const dr = Math.sqrt(dx * dx + dy * dy) * 1.2; // radius of arc
+        path.setAttribute('d', `M ${startCoords.x} ${startCoords.y} A ${dr} ${dr} 0 0,0 ${endCoords.x} ${endCoords.y}`);
+        path.style.display = 'block';
+      } else {
+        path.style.display = 'none';
+      }
+
+      // Update Map Sidebar
+      document.getElementById('mapPathClass').innerText = activeStory.verdict.split('—')[1] || activeStory.verdict;
+      const mcu = activeStory.claim_u !== null && activeStory.claim_u !== undefined ? activeStory.claim_u.toFixed(2) : '?';
+      const mcpsi = activeStory.claim_psi !== null && activeStory.claim_psi !== undefined ? activeStory.claim_psi.toFixed(2) : '?';
+      const mru = activeStory.real_u !== null && activeStory.real_u !== undefined ? activeStory.real_u.toFixed(2) : '?';
+      const mrpsi = activeStory.real_psi !== null && activeStory.real_psi !== undefined ? activeStory.real_psi.toFixed(2) : '?';
+      document.getElementById('mapClaimCoord').innerText = `(${mcu}, ${mcpsi})`;
+      document.getElementById('mapRealCoord').innerText = `(${mru}, ${mrpsi})`;
+
+      // Formulate custom dynamic path explanation
+      let explanation = "";
+      const pathType = activeStory.verdict.toLowerCase();
+      if (pathType.includes('deception')) {
+        explanation = "We map the steep structural drop from a highly positive stated intent (Greater/Lesser Good) into a private, extractive active lie (TR). This is the Path of Deception.";
+      } else if (pathType.includes('delusion')) {
+        explanation = "We map the structural sink from an active, public political facade (Greatest Lie) down into the passive, systemic void of the bottom-right quadrant (Greater Evil). This is the Path of Delusion.";
+      } else if (pathType.includes('empty mass') || pathType.includes('fall')) {
+        explanation = "We map the boundary fall from a proactive, positive community assertion (Greater Good) into a passive, stagnant, or highly suppressed outcome (Lesser Good / Bad Preference). This is the Path of Empty Mass (The Fall).";
+      } else if (pathType.includes('grace')) {
+        explanation = "We map the beautiful structural rise from a passive, localized positive preference (BL) into the proactive creation of systemic, universal care and value (TL). This is the Path of Grace.";
+      } else if (pathType.includes('redemption')) {
+        explanation = "We map the recovery vector of rescuing suppressed elements from an extractive void (BR) back into localized boundary safeguards (BL). This is the Path of Redemption.";
+      } else {
+        explanation = "A customized dual-coordinate mapping representing the vector transition between stated claims and ground-level realities.";
+      }
+      document.getElementById('mapTrajectoryDynamics').innerText = explanation;
+    }
+
+    // Render Prompt Tabs & CLI Composer
+    function renderController() {
+      if (!activeStory) return;
+
+      // Update terminal command
+      document.getElementById('terminalCmd').innerText = `python bluesky_bot/orchestrator.py --news-query "${activeStory.subject}"`;
+
+      // Update AI prompt generator
+      const prompt = `Please analyze a new Bluesky news story with the Aletheia Bot orchestrator:
+
+Link URL: ${activeStory.link}
+Subject: ${activeStory.subject}
+Stated Claim Coordinates: (${activeStory.claim_u}, ${activeStory.claim_psi})
+Actual Reality Coordinates: (${activeStory.real_u}, ${activeStory.real_psi})
+
+Please construct a clean, premium 13-post Gnostic trinary assessment thread completely in Plain English without ellipses bridges, and save the compiled config locally.`;
+      
+      document.getElementById('chatPrompt').innerText = prompt;
+    }
+
+    // Copy Utility
+    function copyText(elementId) {
+      const text = document.getElementById(elementId).innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        alert("Command copied to clipboard!");
+      }).catch(err => {
+        console.error("Could not copy text: ", err);
+      });
+    }
+
+    // Flag / Ready-to-Push
+    let _statusFilter = 'all';
+
+    function markStory(flag) {
+      if (!activeStory) return;
+      // Toggle off if already set
+      activeStory._flag = (activeStory._flag === flag) ? null : flag;
+      // Persist to localStorage
+      const flags = JSON.parse(localStorage.getItem('aletheia_flags') || '{}');
+      if (activeStory._flag) flags[activeStory.id] = activeStory._flag;
+      else delete flags[activeStory.id];
+      localStorage.setItem('aletheia_flags', JSON.stringify(flags));
+      // Re-render
+      renderEmulator();
+      const query = document.getElementById('searchInput').value.toLowerCase();
+      renderStories(getFilteredStories(query));
+      if (activeStory) {
+        selectStory(activeStory.id);
+      }
+    }
+
+    function setStatusFilter(filter) {
+      _statusFilter = filter;
+      ['filterAll','filterReady','filterFlagged','filterLive','filterDryRun'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.remove('active');
+      });
+      const map = { all:'filterAll', ready:'filterReady', flagged:'filterFlagged', live:'filterLive', dry_run:'filterDryRun' };
+      const activeEl = document.getElementById(map[filter]);
+      if (activeEl) activeEl.classList.add('active');
+      const query = document.getElementById('searchInput').value.toLowerCase();
+      renderStories(getFilteredStories(query));
+      if (activeStory) {
+        const exists = currentStoriesList.some(s => s.id === activeStory.id);
+        if (exists) {
+          selectStory(activeStory.id);
+        } else if (currentStoriesList.length > 0) {
+          selectStory(currentStoriesList[0].id);
+        }
+      }
+    }
+
+    function getFilteredStories(query) {
+      const filtered = STORIES_REGISTRY.filter(s => {
+        let matchesSearch = !query || s.subject.toLowerCase().includes(query) || s.verdict.toLowerCase().includes(query);
+        if (!matchesSearch && query && s.link) {
+          try {
+            const host = new URL(s.link).hostname.replace(/^www\./, '').toLowerCase();
+            if (host.includes(query) || s.link.toLowerCase().includes(query)) {
+              matchesSearch = true;
+            }
+          } catch (e) {
+            if (s.link.toLowerCase().includes(query)) {
+              matchesSearch = true;
+            }
+          }
+        }
+        let matchesFlag = false;
+        if (_statusFilter === 'all') {
+          matchesFlag = true;
+        } else if (_statusFilter === 'ready' || _statusFilter === 'flagged') {
+          matchesFlag = s._flag === _statusFilter;
+        } else if (_statusFilter === 'live') {
+          matchesFlag = s.status && s.status.toLowerCase().includes('live');
+        } else if (_statusFilter === 'dry_run') {
+          matchesFlag = s.status && s.status.toLowerCase().includes('dry run');
+        }
+        return matchesSearch && matchesFlag;
+      });
+
+      const sortCtrl = document.getElementById('sortControl');
+      const sortVal = sortCtrl ? sortCtrl.value : 'chronological';
+
+      if (sortVal === 'alphabetical') {
+        filtered.sort((a, b) => a.subject.localeCompare(b.subject));
+      } else if (sortVal === 'alphabetical-desc') {
+        filtered.sort((a, b) => b.subject.localeCompare(a.subject));
+      } else if (sortVal === 'chronological') {
+        filtered.sort((a, b) => (a._origIndex ?? 0) - (b._origIndex ?? 0));
+      } else if (sortVal === 'reverse-chronological') {
+        filtered.sort((a, b) => (b._origIndex ?? 0) - (a._origIndex ?? 0));
+      } else if (sortVal === 'fall') {
+        filtered.sort((a, b) => {
+          const shiftA = (a.real_u ?? 0) - (a.claim_u ?? 0);
+          const shiftB = (b.real_u ?? 0) - (b.claim_u ?? 0);
+          return shiftA - shiftB;
+        });
+      } else if (sortVal === 'grace') {
+        filtered.sort((a, b) => {
+          const shiftA = (a.real_u ?? 0) - (a.claim_u ?? 0);
+          const shiftB = (b.real_u ?? 0) - (b.claim_u ?? 0);
+          return shiftB - shiftA;
+        });
+      }
+
+      return filtered;
+    }
+
+    // Helper function to set search query by domain / outlet and trigger filtering
+    window.filterByDomain = function(domain) {
+      const searchInput = document.getElementById('searchInput');
+      if (searchInput) {
+        searchInput.value = domain;
+        setStatusFilter('all'); // Reset status filters to show all matching stories
+        filterStories();
+        searchInput.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    };
+
+    // Helper function to quick fill outlet links in manual compiler
+    window.quickFillOutlet = function(val) {
+      if (!val) return;
+      const compLink = document.getElementById('compLink');
+      if (compLink) {
+        compLink.value = val;
+        compLink.focus();
+      }
+      // Reset dropdown
+      const select = document.getElementById('commonOutlets');
+      if (select) select.value = '';
+    };
+
+    // Manual Draft json compiler
+    function compileNewJSON() {
+      const subject = document.getElementById('compSubject').value || 'New Story Draft';
+      const link = document.getElementById('compLink').value || 'https://bsky.app';
+      const claimU = parseFloat(document.getElementById('compClaimU').value) || 0.0;
+      const claimPsi = parseFloat(document.getElementById('compClaimPsi').value) || 0.0;
+      const realU = parseFloat(document.getElementById('compRealU').value) || 0.0;
+      const realPsi = parseFloat(document.getElementById('compRealPsi').value) || 0.0;
+      const breakdown = document.getElementById('compBreakdown').value || 'Evaluation details...';
+
+      // Design standard JSON object
+      const draftJSON = {
+        "subject": subject,
+        "link": link,
+        "claim_u": claimU,
+        "claim_psi": claimPsi,
+        "real_u": realU,
+        "real_psi": realPsi,
+        "mode": "root",
+        "posts": [
+          `${subject} assessment under the Actualism Framework.\n\nEvidence: stated ideal, actual effect, actual ideal`,
+          `The Claim: The actor asserts they are actively producing positive outcomes.\nStated Judgement: (${claimU.toFixed(1)}, ${claimPsi.toFixed(1)})`,
+          `The Reality: Ground level outcomes expose extraction or structural inaction.\nResulting Judgement: (${realU.toFixed(1)}, ${realPsi.toFixed(1)})`,
+          `Verdict: FAIL — The Path of Deception`,
+          `What's happening: ${breakdown}`,
+          `The Poison: The system is designed to lock in performative benefits while externalizing costs.`,
+          `The Breakdown & Plane Error:\nWe analyze the boundary error between stated claims (WHAT) and physical execution (HOW).`,
+          `The Trajectory: The Path of Deception\nWe map the gap between the stated ideal and actual ground-level dynamics.`,
+          `The Destination:\nThis trajectory plots a direct path toward hollowed-out execution.`,
+          `The Unavoidable Truth: Stated intentions cannot override physical actions.\n\nThe Unavoidable Lie: That performative compliance is equivalent to structural excellence.`,
+          `Alethekanon:\nThe logic is uncompromising. We must enforce real boundaries.`,
+          `Awwthekanon:\nWe must hold space for local community healing and minimize the human strain.`,
+          `Brothekanon:\nBro, this performative action is wild. Just bypass the bureaucracy entirely.`,
+          `Blended Path: Establish decentralized local monitoring networks to balance systemic boundaries.\nFinal Recalculated Coordinates: (0.0, 0.0) — Center`
+        ]
+      };
+
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify([draftJSON], null, 2));
+      const downloadAnchor = document.createElement('a');
+      downloadAnchor.setAttribute("href", dataStr);
+      downloadAnchor.setAttribute("download", `factcheck_${subject.toLowerCase().replace(/\s+/g, '_')}.json`);
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+    }
+
+    // Lightbox handlers
+    function openLightbox(imgSrc) {
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightboxImg');
+      lightboxImg.src = imgSrc;
+      lightbox.classList.add('active');
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('active');
+    }
+
+    // File Upload & Drag-and-Drop Dynamic Loader
+    function handleFileUpload(evt) {
+      const file = evt.target.files[0];
+      if (!file) return;
+      parseAndAddStoryFile(file);
+    }
+
+    function parseAndAddStoryFile(file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const data = JSON.parse(e.target.result);
+          const storyData = Array.isArray(data) ? data[0] : data;
+          
+          if (!storyData.subject || !storyData.posts) {
+            alert("Invalid story format. Make sure it has 'subject' and 'posts' array.");
+            return;
+          }
+
+          const newStory = {
+            "id": "imported_" + Date.now(),
+            "subject": storyData.subject,
+            "link": storyData.link || "https://bsky.app",
+            "claim_u": parseFloat(storyData.claim_u) || 0.0,
+            "claim_psi": parseFloat(storyData.claim_psi) || 0.0,
+            "real_u": parseFloat(storyData.real_u) || 0.0,
+            "real_psi": parseFloat(storyData.real_psi) || 0.0,
+            "mode": storyData.mode || "root",
+            "target_url": storyData.target_url || "",
+            "status": "DYNAMICALLY IMPORTED DRY RUN",
+            "verdict": storyData.posts[3] ? storyData.posts[3].replace("Verdict: ", "") : "FAIL — The Path of Deception",
+            "graph_img": storyData.graph_img ? (storyData.graph_img.startsWith("graph_png/") ? storyData.graph_img : "graph_png/" + storyData.graph_img) : "graph_png/" + ((storyData.id || storyData.subject.toLowerCase().replace(/\s+/g, '_')) + "_graph.png"),
+             "posts": storyData.posts,
+            "grounding_url": storyData.grounding_url || "",
+            "rkeys": storyData.rkeys || null,
+            "post_urls": storyData.post_urls || null
+          };
+
+          const existingIdx = STORIES_REGISTRY.findIndex(s => s.subject === newStory.subject);
+          if (existingIdx !== -1) {
+            STORIES_REGISTRY[existingIdx] = newStory;
+          } else {
+            STORIES_REGISTRY.unshift(newStory);
+          }
+
+          renderStories(STORIES_REGISTRY);
+          selectStory(newStory.id);
+        } catch(err) {
+          alert("Error parsing JSON: " + err.message);
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    // Helper to dynamically read files in directories when running http.server, otherwise fallback to static index.json
+    async function getFilenamesFromDirectory(dirPath, fallbackIndexPath) {
+      try {
+        const res = await fetch(dirPath, { cache: "no-store" });
+        if (!res.ok) throw new Error("Directory fetch failed");
+        
+        const contentType = res.headers.get("content-type") || "";
+        if (contentType.includes("text/html")) {
+          const htmlText = await res.text();
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(htmlText, "text/html");
+          const links = Array.from(doc.querySelectorAll("a"));
+          const filenames = links
+            .map(a => a.getAttribute("href"))
+            .filter(href => href && href.endsWith(".json") && href.startsWith("factcheck_"))
+            .map(href => {
+              // Extract the basename in case it returned a relative path
+              const parts = href.split("/");
+              return decodeURIComponent(parts[parts.length - 1]);
+            });
+          
+          return [...new Set(filenames)];
+        } else {
+          // Fallback to static index.json if it is not an HTML directory listing
+          const fallbackRes = await fetch(fallbackIndexPath, { cache: "no-store" });
+          if (fallbackRes.ok) return await fallbackRes.json();
+        }
+      } catch (e) {
+        console.info(`Directory listing parser failed for ${dirPath}, trying static fallback index...`, e);
+        try {
+          const fallbackRes = await fetch(fallbackIndexPath, { cache: "no-store" });
+          if (fallbackRes.ok) return await fallbackRes.json();
+        } catch(err) {
+          console.warn(`Static index fallback failed for ${fallbackIndexPath}`, err);
+        }
+      }
+      return [];
+    }
+
+    let storiesByActor = {};
+    let storiesByOutlet = {};
+    let storiesByCategory = {};
+    let storiesByTopic = {};
+
+    function rebuildIndexMaps() {
+      storiesByActor = {};
+      storiesByOutlet = {};
+      storiesByCategory = {};
+      storiesByTopic = {};
+
+      STORIES_REGISTRY.forEach(s => {
+        // Actor
+        if (Array.isArray(s.actors)) {
+          s.actors.forEach(a => {
+            const key = a.trim().toLowerCase();
+            if (key) {
+              if (!storiesByActor[key]) storiesByActor[key] = [];
+              storiesByActor[key].push(s);
+            }
+          });
+        }
+        // Outlet
+        if (s.link) {
+          try {
+            const host = new URL(s.link).hostname.replace(/^www\./, '').toLowerCase();
+            if (host) {
+              if (!storiesByOutlet[host]) storiesByOutlet[host] = [];
+              storiesByOutlet[host].push(s);
+            }
+          } catch(e) {}
+        }
+        // Category
+        if (s.category) {
+          s.category.split(',').forEach(c => {
+            const key = c.trim().toLowerCase();
+            if (key) {
+              if (!storiesByCategory[key]) storiesByCategory[key] = [];
+              storiesByCategory[key].push(s);
+            }
+          });
+        }
+        // Topic
+        if (s.topic) {
+          s.topic.split(',').forEach(t => {
+            const key = t.trim().toLowerCase();
+            if (key) {
+              if (!storiesByTopic[key]) storiesByTopic[key] = [];
+              storiesByTopic[key].push(s);
+            }
+          });
+        }
+      });
+    }
+
+    // Render and refresh stories list based on current registry state
+    function refreshRegistryUI() {
+      const flags = JSON.parse(localStorage.getItem('aletheia_flags') || '{}');
+      STORIES_REGISTRY.forEach((s, idx) => {
+        s._origIndex = idx;
+        if (flags[s.id]) s._flag = flags[s.id];
+      });
+
+      // Build Fast Index Maps for O(1) Leaderboard Lookups
+      rebuildIndexMaps();
+
+      if (STORIES_REGISTRY.length > 0) {
+        const query = document.getElementById('searchInput').value.toLowerCase();
+        renderStories(getFilteredStories(query));
+        
+        // Keep active story selected if it still exists in the registry
+        const activeId = activeStory ? activeStory.id : null;
+        const exists = STORIES_REGISTRY.some(s => s.id === activeId);
+        if (exists) {
+          selectStory(activeId);
+        } else {
+          selectStory(STORIES_REGISTRY[0].id);
+        }
+      } else {
+        document.getElementById('storyList').innerHTML = '<div class="empty-state"><span class="empty-icon">📁</span><span>Upload story JSONs to visualize</span></div>';
+      }
+    }
+
+    // App Initialization
+    window.onload = async () => {
+
+      // Bind Drag and Drop listeners
+      document.body.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+      });
+      document.body.addEventListener('drop', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+          parseAndAddStoryFile(files[0]);
+        }
+      });
+
+      // Initial render from statically-loaded stories_registry.js
+      refreshRegistryUI();
+
+      // Attach click and scroll listeners for sliding-window virtual list rendering
+      const storyListEl = document.getElementById('storyList');
+      if (storyListEl) {
+        storyListEl.addEventListener('scroll', () => {
+          renderStoriesListVirtual();
+        });
+        storyListEl.addEventListener('click', (e) => {
+          const card = e.target.closest('.story-card');
+          if (card && card.dataset.storyId) {
+            selectStory(card.dataset.storyId, false);
+          }
+        });
+      }
+
+      async function checkRegistryUpdates() {
+        try {
+          if (window.ALETHEIA_STORIES_REGISTRY && window.ALETHEIA_STORIES_REGISTRY.length > 0) {
+            updateServerStatus(true);
+            const text = document.getElementById('systemStatusText');
+            if (text) text.innerText = `ONLINE (${window.ALETHEIA_STORIES_REGISTRY.length} AUDITS)`;
+          } else {
+            const res = await fetch('http://localhost:8766/health').catch(() => null);
+            if (res && res.ok) {
+              updateServerStatus(true);
+            } else {
+              updateServerStatus(false);
+            }
+          }
+        } catch (e) {
+          if (window.ALETHEIA_STORIES_REGISTRY && window.ALETHEIA_STORIES_REGISTRY.length > 0) {
+            updateServerStatus(true);
+          }
+        }
+      }
+
+      // Initial check
+      checkRegistryUpdates();
+
+      // Periodically check server status
+      setInterval(checkRegistryUpdates, 10000);
+    };
+
+    function showNotificationBanner(message, type) {
+      let banner = document.getElementById('notificationBanner');
+      if (!banner) {
+        banner = document.createElement('div');
+        banner.id = 'notificationBanner';
+        banner.style.cssText = `
+          padding: 0.75rem 2rem;
+          font-size: 0.85rem;
+          font-weight: 500;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          border-bottom: 1px solid var(--panel-border);
+          transition: all 0.3s ease;
+        `;
+        document.body.insertBefore(banner, document.body.firstChild);
+      }
+      
+      const isPass = type === "pass";
+      banner.style.background = isPass ? "rgba(16, 185, 129, 0.12)" : "rgba(0, 133, 255, 0.1)";
+      banner.style.borderColor = isPass ? "rgba(16, 185, 129, 0.2)" : "rgba(0, 133, 255, 0.2)";
+      banner.style.color = isPass ? "var(--pass-green)" : "var(--bsky-blue)";
+      
+      banner.innerHTML = `
+        <span>${message}</span>
+        <button onclick="document.getElementById('notificationBanner').remove()" style="background:transparent; border:none; color:inherit; font-size:1.1rem; cursor:pointer; font-weight:700;">×</button>
+      `;
+    }
+
+    // =====================================================================
+    // AUDIT & TRENDS TAB
+    // =====================================================================
+    let _auditRendered = false;
+    let _auditScope = 'all';   // 'all' = whole corpus, 'live' = posted only
+    let _trendInterval = 'all'; // 'day', 'week', 'month', 'all'
+    let _showRealityU = true;
+    let _showDeltaU = true;
+    
+    // Leaderboard limits
+    let _actorMinN = 1;
+    let _outletMinN = 1;
+    let _categoryMinN = 1;
+    let _topicMinN = 1;
+    
+    let _calibSampleSize = 300; // 120, 300, 500, 'all'
+    
+    // Sorting states
+    let _actorSortCol = 'avgDelta'; // 'key', 'n', 'avgDelta', 'consistency'
+    let _actorSortDir = 'desc'; // 'asc', 'desc'
+    let _actorSort2Col  = 'none'; // 'none','n','avgDelta','consistency'
+    let _actorSort2Dir  = 'asc';
+
+    let _outletSortCol = 'avgDelta';
+    let _outletSortDir = 'desc';
+    let _outletSort2Col = 'none';
+    let _outletSort2Dir = 'asc';
+
+    let _categorySortCol = 'avgDelta';
+    let _categorySortDir = 'desc';
+    let _categorySort2Col = 'none';
+    let _categorySort2Dir = 'asc';
+
+    let _topicSortCol = 'avgDelta';
+    let _topicSortDir = 'desc';
+    let _topicSort2Col = 'none';
+    let _topicSort2Dir = 'asc';
+
+    const _openLeaderboardDropdowns = new Set();
+
+    function updateLeaderboard(tableType) {
+      const id = `${tableType}-leaderboard-container`;
+      const el = document.getElementById(id);
+      if (el) {
+        const stories = STORIES_REGISTRY;
+        const liveOnly = stories.filter(s => (s.status || '').toLowerCase().includes('live'));
+        const live = _auditScope === 'live' ? liveOnly : stories;
+        
+        let title = '';
+        let bodyHtml = '';
+        
+        if (tableType === 'actor') {
+          title = 'Actor Hypocrisy Leaderboard';
+          bodyHtml = auditActorLeaderboard(live);
+        } else if (tableType === 'outlet') {
+          title = 'Outlet Hypocrisy (avg Δu by source)';
+          bodyHtml = auditOutletHypocrisy(live);
+        } else if (tableType === 'category') {
+          title = 'Category Hypocrisy Leaderboard';
+          bodyHtml = auditCategoryLeaderboard(live);
+        } else if (tableType === 'topic') {
+          title = 'Topic Hypocrisy Leaderboard';
+          bodyHtml = auditTopicLeaderboard(live);
+        }
+        
+        el.innerHTML = `
+          <div style="font-size:0.75rem; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-muted); margin-bottom:0.8rem;">${title}</div>
+          ${bodyHtml}
+        `;
+        
+        // Re-bind click handlers for story links in the updated leaderboard
+        el.querySelectorAll('[data-story-id]').forEach(elLink => {
+          elLink.addEventListener('click', () => {
+            const id = elLink.getAttribute('data-story-id');
+            document.querySelector('.tab-button.active') && document.querySelector('.tab-button').click();
+            switchTab({currentTarget: document.querySelector('.tab-button')}, 'emulator-tab');
+            document.querySelectorAll('.tab-button')[0].classList.add('active');
+            selectStory(id);
+          });
+        });
+      }
+    }
+
+    function updateActorLeaderboard() { updateLeaderboard('actor'); }
+    function updateOutletLeaderboard() { updateLeaderboard('outlet'); }
+    function updateCategoryLeaderboard() { updateLeaderboard('category'); }
+    function updateTopicLeaderboard() { updateLeaderboard('topic'); }
+
+    function setTrendInterval(interval) {
+      _trendInterval = interval;
+      _auditRendered = false;
+      renderAuditTab();
+    }
+
+    function setMinN(tableType, val) {
+      const parsed = parseInt(val, 10) || 1;
+      if (tableType === 'actor') {
+        _actorMinN = parsed;
+        updateActorLeaderboard();
+      } else if (tableType === 'outlet') {
+        _outletMinN = parsed;
+        updateOutletLeaderboard();
+      } else if (tableType === 'category') {
+        _categoryMinN = parsed;
+        updateCategoryLeaderboard();
+      } else if (tableType === 'topic') {
+        _topicMinN = parsed;
+        updateTopicLeaderboard();
+      }
+    }
+
+    function handleHeaderClick(tableType, colName) {
+      if (tableType === 'actor') {
+        if (_actorSortCol === colName) {
+          _actorSortDir = _actorSortDir === 'desc' ? 'asc' : 'desc';
+        } else {
+          _actorSortCol = colName;
+          _actorSortDir = 'desc';
+          if (colName === 'key') _actorSortDir = 'asc';
+          if (_actorSort2Col === colName) _actorSort2Col = 'none';
+        }
+        updateActorLeaderboard();
+      } else if (tableType === 'outlet') {
+        if (_outletSortCol === colName) {
+          _outletSortDir = _outletSortDir === 'desc' ? 'asc' : 'desc';
+        } else {
+          _outletSortCol = colName;
+          _outletSortDir = 'desc';
+          if (colName === 'key') _outletSortDir = 'asc';
+          if (_outletSort2Col === colName) _outletSort2Col = 'none';
+        }
+        updateOutletLeaderboard();
+      } else if (tableType === 'category') {
+        if (_categorySortCol === colName) {
+          _categorySortDir = _categorySortDir === 'desc' ? 'asc' : 'desc';
+        } else {
+          _categorySortCol = colName;
+          _categorySortDir = 'desc';
+          if (colName === 'key') _categorySortDir = 'asc';
+          if (_categorySort2Col === colName) _categorySort2Col = 'none';
+        }
+        updateCategoryLeaderboard();
+      } else if (tableType === 'topic') {
+        if (_topicSortCol === colName) {
+          _topicSortDir = _topicSortDir === 'desc' ? 'asc' : 'desc';
+        } else {
+          _topicSortCol = colName;
+          _topicSortDir = 'desc';
+          if (colName === 'key') _topicSortDir = 'asc';
+          if (_topicSort2Col === colName) _topicSort2Col = 'none';
+        }
+        updateTopicLeaderboard();
+      }
+    }
+
+    function setSort2(tableType, field, val) {
+      if (tableType === 'actor') {
+        if (field === 'col') _actorSort2Col = val;
+        else _actorSort2Dir = val;
+        updateActorLeaderboard();
+      } else if (tableType === 'outlet') {
+        if (field === 'col') _outletSort2Col = val;
+        else _outletSort2Dir = val;
+        updateOutletLeaderboard();
+      } else if (tableType === 'category') {
+        if (field === 'col') _categorySort2Col = val;
+        else _categorySort2Dir = val;
+        updateCategoryLeaderboard();
+      } else if (tableType === 'topic') {
+        if (field === 'col') _topicSort2Col = val;
+        else _topicSort2Dir = val;
+        updateTopicLeaderboard();
+      }
+    }
+
+    // Extract a numeric value from a row for a given sort column.
+    // Round floats to 2 decimal places (matching displayed UI) to allow secondary tiebreakers to execute.
+    function _colVal(r, col) {
+      if (col === 'n')           return r.n;
+      if (col === 'avgDelta')    return Math.round((r.avgDelta || 0) * 100) / 100;
+      if (col === 'avgRealU')    return Math.round((r.avgRealU || 0) * 100) / 100;
+      if (col === 'avgRealPsi')  return Math.round((r.avgRealPsi || 0) * 100) / 100;
+      if (col === 'consistency') return Math.round((r.consistency || 0) * 100) / 100;
+      return 0;
+    }
+
+    function setCalibSampleSize(val) {
+      _calibSampleSize = val === 'all' ? 'all' : (parseInt(val, 10) || 300);
+      _auditRendered = false;
+      renderAuditTab();
+    }
+
+    function toggleTrendLine(line, visible) {
+      if (line === 'realityU') _showRealityU = visible;
+      if (line === 'deltaU') _showDeltaU = visible;
+      
+      const pathRU = document.getElementById('trend-path-ru');
+      const pathDU = document.getElementById('trend-path-du');
+      const dotsRU = document.getElementsByClassName('trend-dot-ru');
+      const dotsDU = document.getElementsByClassName('trend-dot-du');
+      
+      if (pathRU) pathRU.style.display = _showRealityU ? 'block' : 'none';
+      if (pathDU) pathDU.style.display = _showDeltaU ? 'block' : 'none';
+      
+      for (let el of dotsRU) el.style.display = _showRealityU ? 'block' : 'none';
+      for (let el of dotsDU) el.style.display = _showDeltaU ? 'block' : 'none';
+    }
+
+    function handleTrendHover(evt, svg) {
+      const series = JSON.parse(svg.getAttribute('data-series') || '[]');
+      if (!series.length) return;
+      
+      const rect = svg.getBoundingClientRect();
+      const scaleX = 520 / rect.width;
+      const mx = (evt.clientX - rect.left) * scaleX;
+      
+      const W = 520, H = 160, padL = 35, padB = 22, padT = 15, padR = 15;
+      const xMax = series[series.length-1].x || 1;
+      const sx = x => padL + (x / xMax) * (W - padL - padR);
+      
+      let closestIdx = 0;
+      let minDst = Infinity;
+      series.forEach((p, idx) => {
+        const px = sx(p.x);
+        const dst = Math.abs(mx - px);
+        if (dst < minDst) {
+          minDst = dst;
+          closestIdx = idx;
+        }
+      });
+      
+      const p = series[closestIdx];
+      const px = sx(p.x);
+      
+      const guide = svg.getElementById('trend-guide');
+      if (guide) {
+        guide.setAttribute('x1', px);
+        guide.setAttribute('x2', px);
+        guide.style.display = 'block';
+      }
+      
+      const markerRU = svg.getElementById('trend-marker-ru');
+      const markerDU = svg.getElementById('trend-marker-du');
+      
+      const sy = y => padT + (1 - (y - -2.2)/(3.2 - -2.2)) * (H - padT - padB);
+      
+      if (markerRU) {
+        markerRU.setAttribute('cx', px);
+        markerRU.setAttribute('cy', sy(p.ru));
+        markerRU.style.display = _showRealityU ? 'block' : 'none';
+      }
+      if (markerDU) {
+        markerDU.setAttribute('cx', px);
+        markerDU.setAttribute('cy', sy(p.du));
+        markerDU.style.display = _showDeltaU ? 'block' : 'none';
+      }
+      
+      let tooltip = document.getElementById('trend-tooltip');
+      if (!tooltip) {
+        tooltip = document.createElement('div');
+        tooltip.id = 'trend-tooltip';
+        tooltip.style.cssText = `
+          position: absolute;
+          background: rgba(10, 18, 30, 0.95);
+          border: 1px solid var(--panel-border);
+          border-radius: 6px;
+          padding: 0.5rem 0.75rem;
+          font-size: 0.72rem;
+          pointer-events: none;
+          display: none;
+          z-index: 100;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+          backdrop-filter: blur(4px);
+          color: var(--text-light, #f0f0f0);
+        `;
+        document.body.appendChild(tooltip);
+      }
+      
+      tooltip.style.left = (evt.pageX + 15) + 'px';
+      tooltip.style.top = (evt.pageY - 20) + 'px';
+      tooltip.style.display = 'block';
+      
+      tooltip.innerHTML = `
+        <div style="font-weight:600; color:var(--text-muted); margin-bottom:0.25rem;">${p.dateRange}</div>
+        <div style="display:flex; flex-direction:column; gap:0.15rem;">
+          <div>Stories: <span style="font-family:var(--font-mono); font-weight:600;">${p.n}</span></div>
+          ${_showRealityU ? `<div>Avg reality_u: <span style="font-family:var(--font-mono); font-weight:600; color:var(--pass-green);">${(p.ru >= 0 ? '+' : '') + p.ru.toFixed(2)}</span></div>` : ''}
+          ${_showDeltaU ? `<div>Avg Δu gap: <span style="font-family:var(--font-mono); font-weight:600; color:var(--claim-yellow);">${(p.du >= 0 ? '+' : '') + p.du.toFixed(2)}</span></div>` : ''}
+        </div>
+      `;
+    }
+    
+    function handleTrendLeave(svg) {
+      const guide = svg.getElementById('trend-guide');
+      const markerRU = svg.getElementById('trend-marker-ru');
+      const markerDU = svg.getElementById('trend-marker-du');
+      if (guide) guide.style.display = 'none';
+      if (markerRU) markerRU.style.display = 'none';
+      if (markerDU) markerDU.style.display = 'none';
+      
+      const tooltip = document.getElementById('trend-tooltip');
+      if (tooltip) tooltip.style.display = 'none';
+    }
+
+    function setAuditScope(scope) {
+      _auditScope = scope;
+      _auditRendered = false;
+      renderAuditTab();
+    }
+
+    // ── Source Text Tab ───────────────────────────────────────────────────────
+    async function fetchSourceText() {
+      const container = document.getElementById('sourceContent');
+      if (!activeStory) {
+        container.innerHTML = `<div style="color:var(--text-muted);padding:40px;text-align:center;">No story selected.</div>`;
+        return;
+      }
+
+      const url = activeStory.link || '';
+      const subject = activeStory.subject || activeStory.id || 'Untitled';
+
+      container.innerHTML = `
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--panel-border);">
+          <div>
+            <div style="font-size:1.1rem;font-weight:700;color:var(--text-primary);">${subject}</div>
+            <a href="${url}" target="_blank" style="font-size:0.8rem;color:var(--bsky-blue);word-break:break-all;">${url}</a>
+          </div>
+        </div>
+        <div id="sourceTextBody" style="color:var(--text-muted);font-size:0.88rem;">
+          ⏳ Loading scraped source text...
+        </div>`;
+
+      if (!url) {
+        document.getElementById('sourceTextBody').innerHTML = '<em>No URL stored for this story.</em>';
+        return;
+      }
+
+      try {
+        const resp = await fetch(`http://localhost:8765/source?url=${encodeURIComponent(url)}`);
+        const data = await resp.json();
+
+        if (data.error) {
+          document.getElementById('sourceTextBody').innerHTML = `
+            <div style="color:#f87171;">⚠️ ${data.error}</div>
+            <div style="margin-top:12px;font-size:0.8rem;color:var(--text-muted);">
+              Make sure <strong>source_server.py</strong> is running, or launch via <strong>launch_panel.bat</strong>.<br>
+              You can also <a href="${url}" target="_blank" style="color:var(--bsky-blue);">open the original article</a>.
+            </div>`;
+          return;
+        }
+
+        const paragraphs = (data.text || '').split('\n\n').filter(p => p.trim());
+        const renderedParas = paragraphs.map(p =>
+          `<p style="margin:0 0 14px;line-height:1.75;color:var(--text-primary);">${p.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</p>`
+        ).join('');
+
+        const ts = data.timestamp ? `<div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:16px;">Scraped: ${data.timestamp.split('T')[0]}</div>` : '';
+
+        document.getElementById('sourceTextBody').innerHTML = paragraphs.length
+          ? ts + renderedParas
+          : `<em style="color:#f87171;">No paragraph text was captured for this article (may be paywalled or JS-rendered).</em>`;
+
+      } catch(e) {
+        document.getElementById('sourceTextBody').innerHTML = `
+          <div style="color:#f87171;">⚠️ Could not connect to source server (localhost:8765).</div>
+          <div style="margin-top:12px;font-size:0.8rem;color:var(--text-muted);">
+            Launch via <strong>launch_panel.bat</strong> to start both servers automatically.
+          </div>`;
+      }
+    }
+
+    function renderAuditTab() {
+
+      if (_auditRendered) return;
+      _auditRendered = true;
+
+      const stories = STORIES_REGISTRY;
+      const container = document.getElementById('audit-content');
+      if (!stories || stories.length === 0) {
+        container.innerHTML = '<div style="color:var(--text-muted)">No stories loaded.</div>';
+        return;
+      }
+
+      // Scope: by default analyze the WHOLE corpus (dry-run evaluations are valid
+      // judgements too). Toggle to 'live' to restrict to posted threads only.
+      const liveOnly = stories.filter(s => (s.status || '').toLowerCase().includes('live'));
+      const live = _auditScope === 'live' ? liveOnly : stories;
+      const scopeLabel = _auditScope === 'live' ? 'Live posted only' : 'All stories';
+
+      const scopeToggle = `
+        <div style="display:flex; gap:0.4rem; align-items:center; margin-bottom:0.4rem;">
+          <span style="font-size:0.75rem; color:var(--text-muted);">Scope:</span>
+          <button onclick="setAuditScope('all')" class="filter-pill ${_auditScope==='all'?'active':''}">All (${stories.length})</button>
+          <button onclick="setAuditScope('live')" class="filter-pill ${_auditScope==='live'?'active':''}">🦋 Live (${liveOnly.length})</button>
+        </div>`;
+
+      // Filter out any entries without valid coordinate data for the statistics calculations
+      const validForStats = live.filter(s => s.claim_u !== null && s.claim_u !== undefined && s.real_u !== null && s.real_u !== undefined && s.claim_psi !== null && s.claim_psi !== undefined && s.real_psi !== null && s.real_psi !== undefined);
+
+      const legendPanel = `
+        <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--panel-border); border-radius: 10px; padding: 1.2rem; font-size: 0.82rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.2rem; line-height: 1.5; margin-bottom: 0.5rem;">
+          <div>
+            <strong style="color: var(--bsky-blue); display: block; margin-bottom: 0.35rem; font-size: 0.88rem;">📊 Morality & Utility (u)</strong>
+            <span style="color: var(--text-muted);">Measures systemic alignment:
+              <br>• <span style="color: var(--pass-green); font-weight: 600;">+u (Green)</span>: Productive/Greater Good.
+              <br>• <span style="color: var(--reality-red); font-weight: 600;">-u (Red)</span>: Extraction/Lesser Evil.
+            </span>
+          </div>
+          <div>
+            <strong style="color: var(--claim-yellow); display: block; margin-bottom: 0.35rem; font-size: 0.88rem;">🔍 Deception Gap (Δu)</strong>
+            <span style="color: var(--text-muted);">Calculated as: <strong>Δu = claim_u − real_u</strong>.
+              <br>• <span style="color: var(--reality-red); font-weight: 600;">Δu > 0</span>: Claim exceeds reality (deceptive/hype).
+              <br>• <span style="color: var(--pass-green); font-weight: 600;">Δu ≤ 0</span>: Reality matches or beats claim (honest).
+            </span>
+          </div>
+          <div>
+            <strong style="color: #e2e8f0; display: block; margin-bottom: 0.35rem; font-size: 0.88rem;">⚡ Will & Agency (ψ)</strong>
+            <span style="color: var(--text-muted);">Measures structural force/intent:
+              <br>• <span style="color: #58a6ff; font-weight: 600;">+ψ</span>: Active value creation/productivity.
+              <br>• <span style="color: #f59e0b; font-weight: 600;">-ψ</span>: Suppression, chaos, or passivity.
+            </span>
+          </div>
+          <div>
+            <strong style="color: #a78bfa; display: block; margin-bottom: 0.35rem; font-size: 0.88rem;">📉 Consistency (σ)</strong>
+            <span style="color: var(--text-muted);">Standard deviation of the deception gap:
+              <br>• <strong>Low σ</strong>: Consistently deceptive (or consistently honest).
+              <br>• <strong>High σ</strong>: Erratic/unpredictable behavior.
+            </span>
+          </div>
+        </div>`;
+
+      const passCount = validForStats.filter(s => s.real_u > 0).length;
+      const failCount = validForStats.filter(s => s.real_u <= 0).length;
+      const avgClaimU  = avg(validForStats.map(s => s.claim_u));
+      const avgRealU   = avg(validForStats.map(s => s.real_u));
+      const avgClaimPsi= avg(validForStats.map(s => s.claim_psi));
+      const avgRealPsi = avg(validForStats.map(s => s.real_psi));
+      const avgDeltaU  = avg(validForStats.map(s => s.claim_u - s.real_u));
+      const avgDeltaPsi= avg(validForStats.map(s => s.claim_psi - s.real_psi));
+
+      container.innerHTML = scopeToggle + legendPanel + `
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; margin-bottom: 1.5rem;">
+          ${auditSection('Corpus Overview', auditStats([
+            ['Scope', scopeLabel],
+            ['Stories in scope', live.length],
+            ['Live / posted (total)', liveOnly.length],
+            ['PASS (real_u > 0)', passCount + ' (' + pct(passCount, live.length) + ')'],
+            ['FAIL (real_u ≤ 0)', failCount + ' (' + pct(failCount, live.length) + ')'],
+            ['Avg claim (u, ψ)', '(' + fmt(avgClaimU) + ', ' + fmt(avgClaimPsi) + ')'],
+            ['Avg reality (u, ψ)', '(' + fmt(avgRealU) + ', ' + fmt(avgRealPsi) + ')'],
+            ['Avg delta u / ψ', fmt(avgDeltaU) + ' / ' + fmt(avgDeltaPsi)],
+            ['Modes', 'root: ' + live.filter(s=>s.mode==='root').length + '  reply: ' + live.filter(s=>s.mode==='reply').length],
+          ]))}
+          
+          ${auditSection('The Scales of Judgement', auditScalesOfJudgement(live, passCount, failCount, avgDeltaU))}
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+          ${auditSection('Big Hegemony Map (Interactive Corpus Visualizer)', auditHegemonyMap(live))}
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; margin-bottom: 1.5rem;">
+          ${auditSection('Reality u Score Distribution', auditHistogram(validForStats.map(s => s.real_u), -2, 2, 0.5, 'var(--reality-red)', 'var(--pass-green)'))}
+          ${auditSection('Claim → Reality Gap (Δu) Distribution', auditHistogram(validForStats.map(s => s.claim_u - s.real_u), -1, 3, 0.5, 'var(--bsky-blue)', 'var(--claim-yellow)'))}
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; margin-bottom: 1.5rem;">
+          ${auditSection('ψ Drift (claim_ψ → real_ψ)', auditHistogram(validForStats.map(s => s.real_psi - s.claim_psi), -2, 2, 0.5, 'var(--claim-yellow)', 'var(--bsky-blue)'))}
+          ${auditSection('Trend Over Time (avg reality_u &amp; Δu)', auditTimeSeries(live))}
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; margin-bottom: 1.5rem;">
+          ${auditSection('Δu vs ψ-Drift Scatter (structural signatures)', auditScatter(live))}
+          ${auditSection('Calibration Drift (claim → reality)', auditCalibration(live))}
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; margin-bottom: 1.5rem;">
+          ${auditSection('Actor Hypocrisy Leaderboard', auditActorLeaderboard(live), 'actor-leaderboard-container')}
+          ${auditSection('Outlet Hypocrisy (avg Δu by source)', auditOutletHypocrisy(live), 'outlet-leaderboard-container')}
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; margin-bottom: 1.5rem;">
+          ${auditSection('Category Hypocrisy Leaderboard', auditCategoryLeaderboard(live), 'category-leaderboard-container')}
+          ${auditSection('Topic Hypocrisy Leaderboard', auditTopicLeaderboard(live), 'topic-leaderboard-container')}
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; margin-bottom: 1.5rem;">
+          ${auditSection('Domain Breakdown (top sources)', auditDomains(live))}
+          <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+            ${auditSection('PASS Stories (real_u > 0)', auditStoryList(live.filter(s => s.real_u > 0).sort((a,b) => b.real_u - a.real_u), 'pass'))}
+            ${auditSection('Worst Divergence (highest Δu)', auditStoryList(validForStats.slice().sort((a,b) => (b.claim_u - b.real_u) - (a.claim_u - a.real_u)).slice(0,20), 'fail'))}
+          </div>
+        </div>
+      `;
+
+      // Bind click handlers for story links in audit lists
+      container.querySelectorAll('[data-story-id]').forEach(el => {
+        el.addEventListener('click', () => {
+          const id = el.getAttribute('data-story-id');
+          document.querySelector('.tab-button.active') && document.querySelector('.tab-button').click();
+          switchTab({currentTarget: document.querySelector('.tab-button')}, 'emulator-tab');
+          document.querySelectorAll('.tab-button')[0].classList.add('active');
+          selectStory(id);
+        });
+      });
+    }
+
+    function avg(arr) {
+      if (!arr.length) return 0;
+      return arr.reduce((a,b) => a+b, 0) / arr.length;
+    }
+    function fmt(n) {
+      if (n === null || n === undefined || isNaN(n)) return '?';
+      return (n >= 0 ? '+' : '') + n.toFixed(2);
+    }
+    function pct(n, total) { return total ? Math.round(n/total*100) + '%' : '0%'; }
+
+    function auditSection(title, body, id) {
+      const idAttr = id ? `id="${id}"` : '';
+      return `<div ${idAttr} style="background:var(--panel-bg); border:1px solid var(--panel-border); border-radius:10px; padding:1rem 1.2rem;">
+        <div style="font-size:0.75rem; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-muted); margin-bottom:0.8rem;">${title}</div>
+        ${body}
+      </div>`;
+    }
+
+    function auditScalesOfJudgement(stories, passCount, failCount, avgDeltaU) {
+      const angleDeg = Math.min(25, Math.max(-25, avgDeltaU * 15));
+      const theta = angleDeg * Math.PI / 180;
+      
+      const xL = 150 - 80 * Math.cos(theta);
+      const yL = 60 - 80 * Math.sin(theta);
+      const xR = 150 + 80 * Math.cos(theta);
+      const yR = 60 + 80 * Math.sin(theta);
+      
+      const rL = Math.max(5, Math.min(15, 5 + Math.log2(passCount || 1) * 1.5));
+      const rR = Math.max(5, Math.min(15, 5 + Math.log2(failCount || 1) * 1.5));
+      
+      let balanceColor = 'var(--text-muted)';
+      let balanceText = `Balanced (${fmt(avgDeltaU)} Δu)`;
+      if (avgDeltaU > 0.05) {
+        balanceColor = 'var(--reality-red)';
+        balanceText = `Deception Heavy (${fmt(avgDeltaU)} Δu)`;
+      } else if (avgDeltaU < -0.05) {
+        balanceColor = 'var(--pass-green)';
+        balanceText = `Truth Heavy (${fmt(avgDeltaU)} Δu)`;
+      }
+      
+      return `
+        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; min-height: 200px;">
+          <svg viewBox="0 0 300 200" style="width: 100%; max-width: 280px; display: block; overflow: visible;">
+            <!-- Stand Base -->
+            <rect x="110" y="170" width="80" height="8" rx="2" fill="var(--text-muted)" opacity="0.7"/>
+            <rect x="125" y="162" width="50" height="8" rx="1" fill="var(--text-muted)" opacity="0.6"/>
+            
+            <!-- Dial / Gauge behind pointer -->
+            <path d="M 120 48 A 30 30 0 0 1 180 48" fill="none" stroke="var(--panel-border)" stroke-width="2" stroke-dasharray="2,2"/>
+            <line x1="150" y1="18" x2="150" y2="24" stroke="var(--panel-border)" stroke-width="1.5"/>
+            
+            <!-- Pillar Stand -->
+            <line x1="150" y1="60" x2="150" y2="162" stroke="var(--text-muted)" stroke-width="4" stroke-linecap="round"/>
+            <circle cx="150" cy="60" r="6" fill="var(--text-main)"/>
+            
+            <!-- Rotated Beam & Pointer Group -->
+            <g transform="rotate(${angleDeg}, 150, 60)">
+              <!-- Pointer (needle pointing up/down) -->
+              <line x1="150" y1="60" x2="150" y2="25" stroke="var(--claim-yellow)" stroke-width="2.5" stroke-linecap="round"/>
+              <circle cx="150" cy="25" r="2" fill="var(--claim-yellow)"/>
+              
+              <!-- Main Beam Crossbar -->
+              <line x1="70" y1="60" x2="230" y2="60" stroke="var(--text-main)" stroke-width="3" stroke-linecap="round"/>
+              
+              <!-- Hook Rings -->
+              <circle cx="70" cy="60" r="3" fill="none" stroke="var(--text-main)" stroke-width="1.5"/>
+              <circle cx="230" cy="60" r="3" fill="none" stroke="var(--text-main)" stroke-width="1.5"/>
+            </g>
+            
+            <!-- Left Pan (Truth, Green) - Translates vertically to follow beam tip -->
+            <g transform="translate(${xL.toFixed(1)}, ${yL.toFixed(1)})">
+              <line x1="0" y1="0" x2="-16" y2="50" stroke="var(--text-muted)" stroke-width="1" opacity="0.5"/>
+              <line x1="0" y1="0" x2="16" y2="50" stroke="var(--text-muted)" stroke-width="1" opacity="0.5"/>
+              <path d="M -24 50 C -24 58, 24 58, 24 50 Z" fill="rgba(16, 185, 129, 0.08)" stroke="var(--pass-green)" stroke-width="1.5"/>
+              <circle cx="0" cy="46" r="${rL.toFixed(1)}" fill="var(--pass-green)" opacity="0.8" style="filter: drop-shadow(0 0 5px var(--pass-glow));"/>
+              <text x="0" y="36" font-size="8.5" fill="var(--pass-green)" font-weight="700" font-family="var(--font-outfit)" text-anchor="middle">Truth (${passCount})</text>
+            </g>
+            
+            <!-- Right Pan (Deception, Red) - Translates vertically to follow beam tip -->
+            <g transform="translate(${xR.toFixed(1)}, ${yR.toFixed(1)})">
+              <line x1="0" y1="0" x2="-16" y2="50" stroke="var(--text-muted)" stroke-width="1" opacity="0.5"/>
+              <line x1="0" y1="0" x2="16" y2="50" stroke="var(--text-muted)" stroke-width="1" opacity="0.5"/>
+              <path d="M -24 50 C -24 58, 24 58, 24 50 Z" fill="rgba(239, 68, 68, 0.08)" stroke="var(--reality-red)" stroke-width="1.5"/>
+              <circle cx="0" cy="46" r="${rR.toFixed(1)}" fill="var(--reality-red)" opacity="0.8" style="filter: drop-shadow(0 0 5px var(--fail-glow));"/>
+              <text x="0" y="36" font-size="8.5" fill="var(--reality-red)" font-weight="700" font-family="var(--font-outfit)" text-anchor="middle">Hype (${failCount})</text>
+            </g>
+          </svg>
+          <div style="font-size: 0.85rem; font-weight: 700; color: ${balanceColor}; text-shadow: 0 0 10px rgba(0,0,0,0.5); font-family: var(--font-outfit); text-align: center; margin-top: 4px;">
+            Scale State: ${balanceText}
+          </div>
+        </div>
+      `;
+    }
+
+    function auditStats(rows) {
+      return `<div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:0.5rem;">` +
+        rows.map(([k,v]) => `<div style="display:flex; justify-content:space-between; font-size:0.82rem; padding:0.3rem 0; border-bottom:1px solid var(--panel-border);">
+          <span style="color:var(--text-muted)">${k}</span>
+          <span style="font-weight:600; font-family:var(--font-mono)">${v}</span>
+        </div>`).join('') +
+      `</div>`;
+    }
+
+    function auditHistogram(values, minVal, maxVal, step, colorNeg, colorPos) {
+      const buckets = [];
+      for (let v = minVal; v < maxVal; v += step) {
+        const lo = Math.round(v * 100) / 100;
+        const hi = Math.round((v + step) * 100) / 100;
+        const count = values.filter(x => x >= lo && x < hi).length;
+        buckets.push({ lo, hi, count });
+      }
+      const maxCount = Math.max(...buckets.map(b => b.count), 1);
+      const BAR_H = 80;
+      const BAR_W = Math.max(28, Math.floor(420 / buckets.length));
+      const totalW = BAR_W * buckets.length;
+
+      const bars = buckets.map((b, i) => {
+        const h = Math.round((b.count / maxCount) * BAR_H);
+        const color = b.lo >= 0 ? colorPos : colorNeg;
+        const x = i * BAR_W + 2;
+        const y = BAR_H - h;
+        const label = b.lo.toFixed(1);
+        return `<g>
+          <rect x="${x}" y="${y}" width="${BAR_W - 4}" height="${h}" fill="${color}" opacity="0.7" rx="2"/>
+          ${b.count > 0 ? `<text x="${x + (BAR_W-4)/2}" y="${y - 3}" text-anchor="middle" font-size="9" fill="var(--text-muted)">${b.count}</text>` : ''}
+          <text x="${x + (BAR_W-4)/2}" y="${BAR_H + 12}" text-anchor="middle" font-size="9" fill="var(--text-muted)">${label}</text>
+        </g>`;
+      }).join('');
+
+      return `<svg viewBox="0 0 ${totalW + 4} ${BAR_H + 20}" style="width:100%; max-width:${totalW+4}px; overflow:visible; display:block;">
+        ${bars}
+        <line x1="0" y1="${BAR_H}" x2="${totalW}" y2="${BAR_H}" stroke="var(--panel-border)" stroke-width="1"/>
+      </svg>`;
+    }
+
+    function auditDomains(stories) {
+      const counts = {};
+      let parsed = 0;
+      stories.forEach(s => {
+        try {
+          const host = new URL(s.link || 'https://unknown').hostname.replace(/^www\./, '');
+          counts[host] = (counts[host] || 0) + 1;
+          parsed++;
+        } catch(e) {}
+      });
+      const all = Object.entries(counts).sort((a,b) => b[1]-a[1]);
+      const TOP = 40;
+      const sorted = all.slice(0, TOP);
+      const tail = all.slice(TOP);
+      const tailStories = tail.reduce((a,[,c]) => a+c, 0);
+      const maxC = sorted[0]?.[1] || 1;
+      const footer = `<div style="font-size:0.72rem; color:var(--text-muted); margin-top:0.5rem;">
+        ${all.length} distinct outlets across ${parsed} stories.${tail.length ? ' Showing top ' + TOP + '; +' + tail.length + ' smaller outlets (' + tailStories + ' stories) not listed.' : ''}</div>`;
+      return `<div style="display:flex; flex-direction:column; gap:0.3rem;">` +
+        sorted.map(([domain, count]) => {
+          const pctW = Math.round(count / maxC * 100);
+          return `<div style="display:flex; align-items:center; gap:0.6rem; font-size:0.8rem;">
+            <span class="interactive-domain" style="min-width:160px; color:var(--text-muted); font-family:var(--font-mono); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; cursor:pointer; text-decoration:underline; text-decoration-color:transparent; transition:color 0.2s, text-decoration-color 0.2s;" onclick="filterByDomain('${domain}')" title="Filter stories by ${domain}">${domain}</span>
+            <div style="flex:1; background:rgba(255,255,255,0.05); border-radius:3px; height:10px; overflow:hidden;">
+              <div style="width:${pctW}%; height:100%; background:var(--bsky-blue); opacity:0.7; border-radius:3px;"></div>
+            </div>
+            <span style="min-width:28px; text-align:right; font-weight:600; font-family:var(--font-mono)">${count}</span>
+          </div>`;
+        }).join('') +
+      `</div>` + footer;
+    }
+
+    // --- Timestamp decoding: bsky rkeys are TIDs encoding microseconds since epoch ---
+    const _TID_B32 = '234567abcdefghijklmnopqrstuvwxyz';
+    function tidToDate(rkey) {
+      if (!rkey || rkey.length !== 13) return null;
+      let n = 0n;
+      for (const c of rkey) {
+        const i = _TID_B32.indexOf(c);
+        if (i < 0) return null;
+        n = n * 32n + BigInt(i);
+      }
+      const micros = n >> 10n;
+      const ms = Number(micros / 1000n);
+      const d = new Date(ms);
+      const yr = d.getFullYear();
+      if (yr < 2020 || yr > 2100) return null;
+      return d;
+    }
+    function rkeyFromUrl(url) {
+      if (!url) return null;
+      const parts = url.split('/');
+      return parts[parts.length - 1] || null;
+    }
+    function storyDate(s) {
+      // Limit dates to a valid operation window (e.g. 2025-09-01 to today) to avoid outliers
+      const minDate = new Date('2025-09-01').getTime();
+      const maxDate = Date.now() + 24 * 3600 * 1000;
+      
+      const checkRange = (d) => {
+        if (!d) return null;
+        const t = d.getTime();
+        if (t >= minDate && t <= maxDate) return d;
+        return null;
+      };
+
+      // Prefer the source/target post time (the actual event), then our post, then mtime.
+      let d = checkRange(tidToDate(rkeyFromUrl(s.target_url)));
+      if (!d && Array.isArray(s.post_urls) && s.post_urls.length) d = checkRange(tidToDate(rkeyFromUrl(s.post_urls[0])));
+      if (!d && s.created_at) {
+        const c = new Date(s.created_at.replace(' ', 'T'));
+        if (!isNaN(c)) d = checkRange(c);
+      }
+      return d;
+    }
+
+    function auditTimeSeries(stories) {
+      const allPts = stories
+        .filter(s => s.real_u !== null && s.real_u !== undefined && s.claim_u !== null && s.claim_u !== undefined)
+        .map(s => ({ d: storyDate(s), ru: s.real_u, du: s.claim_u - s.real_u }))
+        .filter(p => p.d)
+        .sort((a,b) => a.d - b.d);
+      if (allPts.length === 0) return '<div style="color:var(--text-muted); font-size:0.82rem; padding: 1rem 0; text-align: center;">Not enough dated stories.</div>';
+
+      const latestTime = allPts[allPts.length - 1].d.getTime();
+      let t0;
+      let binMs;
+      
+      if (_trendInterval === 'day') {
+        t0 = latestTime - 24 * 3600 * 1000;
+        binMs = 3600 * 1000; // 1 hour
+      } else if (_trendInterval === 'week') {
+        t0 = latestTime - 7 * 24 * 3600 * 1000;
+        binMs = 24 * 3600 * 1000; // 1 day
+      } else if (_trendInterval === 'month') {
+        t0 = latestTime - 30 * 24 * 3600 * 1000;
+        binMs = 24 * 3600 * 1000; // 1 day
+      } else { // 'all'
+        t0 = allPts[0].d.getTime();
+        binMs = 7 * 24 * 3600 * 1000; // 1 week
+      }
+
+      const pts = allPts.filter(p => p.d.getTime() >= t0);
+      if (pts.length === 0) return '<div style="color:var(--text-muted); font-size:0.82rem; padding: 1rem 0; text-align: center;">No stories found in the selected date scope.</div>';
+
+      const bins = {};
+      pts.forEach(p => {
+        const b = Math.floor((p.d.getTime() - t0) / binMs);
+        if (b >= 0) {
+          (bins[b] = bins[b] || []).push(p);
+        }
+      });
+
+      const series = Object.keys(bins).map(Number).sort((a,b)=>a-b).map(b => {
+        const binStart = new Date(t0 + b * binMs);
+        const binEnd = new Date(t0 + (b + 1) * binMs - 1);
+        
+        let dateRange = "";
+        if (_trendInterval === 'day') {
+          dateRange = binStart.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
+        } else if (_trendInterval === 'month' || _trendInterval === 'week') {
+          dateRange = binStart.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+        } else { // 'all'
+          dateRange = binStart.toLocaleDateString(undefined, { month: 'short', day: 'numeric' }) + 
+                      ' - ' + 
+                      binEnd.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+        }
+
+        return {
+          x: b,
+          ru: avg(bins[b].map(p => p.ru)),
+          du: avg(bins[b].map(p => p.du)),
+          n: bins[b].length,
+          dateRange: dateRange
+        };
+      });
+
+      const W = 520, H = 160, padL = 35, padB = 22, padT = 15, padR = 15;
+      
+      let xMax;
+      if (_trendInterval === 'day') xMax = 24;
+      else if (_trendInterval === 'week') xMax = 7;
+      else if (_trendInterval === 'month') xMax = 30;
+      else xMax = Math.max(1, Math.floor((latestTime - t0) / binMs));
+
+      const yMin = -2.2, yMax = 3.2;
+      const sx = x => padL + (x / (xMax||1)) * (W - padL - padR);
+      const sy = y => padT + (1 - (y - yMin)/(yMax - yMin)) * (H - padT - padB);
+
+      const line = (key) => series.map((p,i) =>
+        (i===0?'M':'L') + sx(p.x).toFixed(1) + ' ' + sy(p[key]).toFixed(1)).join(' ');
+
+      const zeroY = sy(0);
+      
+      let startLbl, endLbl;
+      if (_trendInterval === 'day') {
+        startLbl = new Date(t0).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
+        endLbl = new Date(latestTime).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
+      } else if (_trendInterval === 'week' || _trendInterval === 'month') {
+        startLbl = new Date(t0).toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+        endLbl = new Date(latestTime).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+      } else {
+        startLbl = new Date(t0).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+        endLbl = new Date(latestTime).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+      }
+
+      // Serialize series to embed in SVG data attribute for hover tracker
+      const serializedSeries = JSON.stringify(series).replace(/'/g, "&apos;");
+
+      return `
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem; flex-wrap:wrap; gap:0.5rem;">
+          <div style="display:flex; gap:0.3rem; align-items:center;">
+            <span style="font-size:0.75rem; color:var(--text-muted); margin-right:4px;">Period:</span>
+            <button onclick="setTrendInterval('day')" class="filter-pill ${_trendInterval==='day'?'active':''}" style="font-size:0.7rem; padding:0.15rem 0.5rem;">Last 24h</button>
+            <button onclick="setTrendInterval('week')" class="filter-pill ${_trendInterval==='week'?'active':''}" style="font-size:0.7rem; padding:0.15rem 0.5rem;">Last 7d</button>
+            <button onclick="setTrendInterval('month')" class="filter-pill ${_trendInterval==='month'?'active':''}" style="font-size:0.7rem; padding:0.15rem 0.5rem;">Last 30d</button>
+            <button onclick="setTrendInterval('all')" class="filter-pill ${_trendInterval==='all'?'active':''}" style="font-size:0.7rem; padding:0.15rem 0.5rem;">All Time</button>
+          </div>
+          <div style="display:flex; gap:0.8rem; align-items:center; font-size:0.75rem;">
+            <label style="cursor:pointer; display:flex; align-items:center; gap:0.3rem;">
+              <input type="checkbox" ${_showRealityU?'checked':''} onchange="toggleTrendLine('realityU', this.checked)" style="accent-color:var(--pass-green); width:12px; height:12px;">
+              <span style="color:var(--pass-green); font-weight:600;">reality_u</span>
+            </label>
+            <label style="cursor:pointer; display:flex; align-items:center; gap:0.3rem;">
+              <input type="checkbox" ${_showDeltaU?'checked':''} onchange="toggleTrendLine('deltaU', this.checked)" style="accent-color:var(--claim-yellow); width:12px; height:12px;">
+              <span style="color:var(--claim-yellow); font-weight:600;">Δu (gap)</span>
+            </label>
+          </div>
+        </div>
+
+        <div style="position:relative;">
+          <svg viewBox="0 0 ${W} ${H+14}" 
+               data-series='${serializedSeries}' 
+               onmousemove="handleTrendHover(event, this)" 
+               onmouseleave="handleTrendLeave(this)"
+               style="width:100%; display:block; overflow:visible; cursor:crosshair;">
+            <!-- Horizontal grid lines -->
+            <line x1="${padL}" y1="${sy(2)}" x2="${W-padR}" y2="${sy(2)}" stroke="var(--panel-border)" stroke-width="0.5" opacity="0.3"/>
+            <line x1="${padL}" y1="${sy(1)}" x2="${W-padR}" y2="${sy(1)}" stroke="var(--panel-border)" stroke-width="0.5" opacity="0.3"/>
+            <line x1="${padL}" y1="${sy(0)}" x2="${W-padR}" y2="${sy(0)}" stroke="var(--panel-border)" stroke-width="0.5" opacity="0.3"/>
+            <line x1="${padL}" y1="${sy(-1)}" x2="${W-padR}" y2="${sy(-1)}" stroke="var(--panel-border)" stroke-width="0.5" opacity="0.3"/>
+            <line x1="${padL}" y1="${sy(-2)}" x2="${W-padR}" y2="${sy(-2)}" stroke="var(--panel-border)" stroke-width="0.5" opacity="0.3"/>
+
+            <line x1="${padL}" y1="${zeroY}" x2="${W-padR}" y2="${zeroY}" stroke="var(--panel-border)" stroke-dasharray="3,3" stroke-width="1"/>
+            
+            <text x="2" y="${sy(2)+3}" font-size="8" fill="var(--text-muted)">+2</text>
+            <text x="2" y="${sy(0)+3}" font-size="8" fill="var(--text-muted)">0</text>
+            <text x="2" y="${sy(-2)+3}" font-size="8" fill="var(--text-muted)">-2</text>
+            
+            <!-- Lines -->
+            <path id="trend-path-ru" d="${line('ru')}" fill="none" stroke="var(--pass-green)" stroke-width="1.8" style="display: ${_showRealityU ? 'block' : 'none'}; transition: all 0.2s;"/>
+            <path id="trend-path-du" d="${line('du')}" fill="none" stroke="var(--claim-yellow)" stroke-width="1.8" style="display: ${_showDeltaU ? 'block' : 'none'}; transition: all 0.2s;"/>
+            
+            <!-- Individual vertices -->
+            ${series.map(p => `
+              <circle class="trend-dot-ru" cx="${sx(p.x).toFixed(1)}" cy="${sy(p.ru).toFixed(1)}" r="2" fill="var(--panel-bg)" stroke="var(--pass-green)" stroke-width="1.2" style="display: ${_showRealityU ? 'block' : 'none'};"/>
+              <circle class="trend-dot-du" cx="${sx(p.x).toFixed(1)}" cy="${sy(p.du).toFixed(1)}" r="2" fill="var(--panel-bg)" stroke="var(--claim-yellow)" stroke-width="1.2" style="display: ${_showDeltaU ? 'block' : 'none'};"/>
+            `).join('')}
+
+            <!-- Interactive Guide Elements -->
+            <line id="trend-guide" x1="0" y1="${padT}" x2="0" y2="${H-padB}" stroke="rgba(255,255,255,0.25)" stroke-dasharray="2,2" stroke-width="1" style="display:none; pointer-events:none;"/>
+            <circle id="trend-marker-ru" r="4.5" fill="var(--pass-green)" stroke="#fff" stroke-width="1.5" style="display:none; pointer-events:none;"/>
+            <circle id="trend-marker-du" r="4.5" fill="var(--claim-yellow)" stroke="#fff" stroke-width="1.5" style="display:none; pointer-events:none;"/>
+
+            <!-- X Axis Dates -->
+            <text x="${padL}" y="${H+2}" font-size="8" fill="var(--text-muted)">${startLbl}</text>
+            <text x="${W-padR}" y="${H+2}" font-size="8" fill="var(--text-muted)" text-anchor="end">${endLbl}</text>
+          </svg>
+        </div>
+        <div style="font-size:0.72rem; color:var(--text-muted); margin-top:0.3rem;">Date scope: ${_trendInterval === 'day' ? 'Last 24 hours' : _trendInterval === 'week' ? 'Last 7 days' : _trendInterval === 'month' ? 'Last 30 days' : 'All time'}. Hover chart to track precise coordinates.</div>
+      `;
+    }
+
+    function auditHegemonyMap(stories) {
+      const W = 600, H = 600, pad = 40;
+      // reversed Morality: +2.5 is left, -2.5 is right
+      const sx = u => 300 - (u / 2.5) * 260;
+      // standard Will: +2.5 is top, -2.5 is bottom
+      const sy = psi => 300 - (psi / 2.5) * 260;
+
+      const validStories = stories.filter(s => s.claim_u !== null && s.claim_u !== undefined && s.real_u !== null && s.real_u !== undefined && s.claim_psi !== null && s.claim_psi !== undefined && s.real_psi !== null && s.real_psi !== undefined);
+
+      // Render quadrant backgrounds
+      const qBackgrounds = `
+        <!-- Q1: Systemic Justice (Top Left) -->
+        <rect x="40" y="40" width="260" height="260" fill="var(--pass-green)" fill-opacity="0.015" rx="4"/>
+        <!-- Q4: Passive Service (Bottom Left) -->
+        <rect x="40" y="300" width="260" height="260" fill="var(--bsky-blue)" fill-opacity="0.015" rx="4"/>
+        <!-- Q2: Tyranny / Extraction (Top Right) -->
+        <rect x="300" y="40" width="260" height="260" fill="var(--reality-red)" fill-opacity="0.015" rx="4"/>
+        <!-- Q3: Coercive/Receptive Withdrawal (Bottom Right) -->
+        <rect x="300" y="300" width="260" height="260" fill="var(--claim-yellow)" fill-opacity="0.015" rx="4"/>
+      `;
+
+      // Render gridlines
+      let gridLines = '';
+      for (let v = -2.0; v <= 2.0; v += 0.5) {
+        if (v === 0) continue;
+        const xVal = sx(v);
+        const yVal = sy(v);
+        gridLines += `
+          <line x1="${xVal}" y1="40" x2="${xVal}" y2="560" stroke="var(--panel-border)" stroke-width="0.5" stroke-dasharray="2,4"/>
+          <line x1="40" y1="${yVal}" x2="560" y2="${yVal}" stroke="var(--panel-border)" stroke-width="0.5" stroke-dasharray="2,4"/>
+          <text x="${xVal}" y="295" font-size="7" fill="var(--text-muted)" text-anchor="middle">${v > 0 ? '+' : ''}${v}</text>
+          <text x="305" y="${yVal+3}" font-size="7" fill="var(--text-muted)">${v > 0 ? '+' : ''}${v}</text>
+        `;
+      }
+
+      // Render Quadrant Labels
+      const qLabels = `
+        <text x="50" y="55" font-size="8.5" font-weight="bold" fill="var(--pass-green)" opacity="0.6">I. Systemic Justice (Everyone)</text>
+        <text x="550" y="55" font-size="8.5" font-weight="bold" fill="var(--reality-red)" opacity="0.6" text-anchor="end">II. Tyranny & Extraction (Only Me)</text>
+        <text x="50" y="550" font-size="8.5" font-weight="bold" fill="var(--bsky-blue)" opacity="0.6">IV. Proactive Goodwill (Others)</text>
+        <text x="550" y="550" font-size="8.5" font-weight="bold" fill="var(--claim-yellow)" opacity="0.6" text-anchor="end">III. Receptive / Coercive Withdrawal</text>
+      `;
+
+      // Render Hegemony Landmarks
+      const landmarks = window.hegemonyLovesExternal || [
+        { name: "Agape", u: 2.0, p: 2.0 },
+        { name: "Philanthropia", u: 2.0, p: 1.5 },
+        { name: "Eros", u: -1.0, p: 1.5 },
+        { name: "Philarguria", u: -2.0, p: 0.5 },
+        { name: "Epithymia", u: -1.5, p: 1.0 },
+        { name: "Henosis", u: 2.0, p: 0.0 },
+        { name: "Eunoia", u: 1.5, p: 0.5 },
+        { name: "Eleos", u: 1.8, p: 1.5 },
+        { name: "Koinonia", u: 2.0, p: 1.0 }
+      ];
+
+      const landmarkElements = landmarks.map(l => {
+        const x = sx(l.u);
+        const y = sy(l.p || l.psi || 0);
+        return `
+          <circle cx="${x}" cy="${y}" r="2" fill="var(--text-muted)" opacity="0.25"/>
+          <text x="${x}" y="${y - 5}" class="hegemony-landmark-text" text-anchor="middle">${l.name}</text>
+        `;
+      }).join('');
+
+      // Render Story Nodes with Deception Vectors (Grouped to prevent DOM bloat and visual explosions)
+      const vectorGroups = {};
+      validStories.forEach(s => {
+        const key = `${s.claim_u.toFixed(2)},${s.claim_psi.toFixed(2)}->${s.real_u.toFixed(2)},${s.real_psi.toFixed(2)}`;
+        if (!vectorGroups[key]) {
+          vectorGroups[key] = {
+            claim_u: s.claim_u,
+            claim_psi: s.claim_psi,
+            real_u: s.real_u,
+            real_psi: s.real_psi,
+            stories: []
+          };
+        }
+        vectorGroups[key].stories.push(s);
+      });
+
+      const nodes = Object.values(vectorGroups).map(g => {
+        const x1 = sx(g.claim_u);
+        const y1 = sy(g.claim_psi);
+        const x2 = sx(g.real_u);
+        const y2 = sy(g.real_psi);
+        
+        const latestStory = g.stories[0];
+        const color = latestStory.real_u > 0 ? 'var(--pass-green)' : 'var(--reality-red)';
+        
+        // Dynamically scale stroke-width and opacity, capped to prevent visual explosion
+        const strokeWidth = Math.min(5.0, 1.0 + Math.log2(g.stories.length) * 0.8);
+        const opacity = Math.min(0.8, 0.2 + 0.12 * Math.log2(g.stories.length));
+        
+        // Build tooltip content listing stories
+        const titles = g.stories.slice(0, 5).map(s => s.subject || s.id).join('\n• ');
+        const remaining = g.stories.length > 5 ? `\n• ... and ${g.stories.length - 5} more stories` : '';
+        const tooltip = `Vector: (${g.claim_u}, ${g.claim_psi}) ➔ (${g.real_u}, ${g.real_psi})\nStory Count: ${g.stories.length}\n\nStories:\n• ${titles}${remaining}\n\n(Click to view latest details)`;
+        
+        return `
+          <g class="hegemony-story-node" data-story-id="${latestStory.id}" style="cursor:pointer;">
+            <!-- Deception Vector -->
+            <line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="var(--text-muted)" stroke-width="${strokeWidth.toFixed(1)}" opacity="${opacity.toFixed(2)}" stroke-dasharray="2,3"/>
+            <!-- Claim Point -->
+            <circle cx="${x1.toFixed(1)}" cy="${y1.toFixed(1)}" r="${Math.min(4.0, 2.0 + Math.log2(g.stories.length) * 0.4).toFixed(1)}" fill="var(--claim-yellow)" opacity="0.6"/>
+            <!-- Reality Point -->
+            <circle cx="${x2.toFixed(1)}" cy="${y2.toFixed(1)}" r="${Math.min(7.0, 4.2 + Math.log2(g.stories.length) * 0.6).toFixed(1)}" fill="${color}"/>
+            <title>${tooltip}</title>
+          </g>
+        `;
+      }).join('');
+
+      return `
+        <div style="display:flex; flex-direction:column; align-items:center; gap:0.5rem; background:rgba(0,0,0,0.15); border-radius:8px; padding:1.2rem; border:1px solid var(--panel-border);">
+          <svg viewBox="0 0 ${W} ${H}" style="width:100%; max-width:${W}px; display:block; aspect-ratio:1;">
+            ${qBackgrounds}
+            
+            <!-- Axes -->
+            <line x1="300" y1="40" x2="300" y2="560" stroke="var(--panel-border)" stroke-width="1.5"/>
+            <line x1="40" y1="300" x2="560" y2="300" stroke="var(--panel-border)" stroke-width="1.5"/>
+            
+            ${gridLines}
+            ${qLabels}
+            ${landmarkElements}
+            ${nodes}
+
+            <!-- Axis Main Labels -->
+            <text x="300" y="32" font-size="9" fill="var(--text-muted)" font-weight="bold" text-anchor="middle">▲ Active Will (+ψ)</text>
+            <text x="300" y="578" font-size="9" fill="var(--text-muted)" font-weight="bold" text-anchor="middle">▼ Passive Will (-ψ)</text>
+            <text x="10" y="303" font-size="9" fill="var(--text-muted)" font-weight="bold" text-anchor="start">◀ Morality (+υ)</text>
+            <text x="590" y="303" font-size="9" fill="var(--text-muted)" font-weight="bold" text-anchor="end">Morality (-υ) ▶</text>
+          </svg>
+          <div style="font-size:0.75rem; color:var(--text-muted); text-align:center; max-width:520px; line-height:1.4; margin-top:0.5rem;">
+            <strong>Interactive Hegemony Map:</strong> Each story is plotted as a vector starting at its 
+            <span style="color:var(--claim-yellow); font-weight:bold;">Claim (yellow dot)</span> and ending at its 
+            <span style="font-weight:bold;">Reality (green/red dot)</span>. The length of the dotted connector represents its 
+            <strong>Deception Vector</strong>. Hover for details, or click a node to view the complete evaluation.
+          </div>
+        </div>
+      `;
+    }
+
+    function auditScatter(stories) {
+      const W = 360, H = 300, pad = 30;
+      // x: Δu (-1..3), y: ψ-drift real_psi - claim_psi (-2..2)
+      const xMin=-1, xMax=3, yMin=-2, yMax=2;
+      const sx = x => pad + ((Math.max(xMin,Math.min(xMax,x)) - xMin)/(xMax-xMin))*(W-2*pad);
+      const sy = y => pad + (1-(Math.max(yMin,Math.min(yMax,y)) - yMin)/(yMax-yMin))*(H-2*pad);
+      const validStories = stories.filter(s => s.claim_u !== null && s.claim_u !== undefined && s.real_u !== null && s.real_u !== undefined && s.claim_psi !== null && s.claim_psi !== undefined && s.real_psi !== null && s.real_psi !== undefined);
+      // Group scatter dots by exact coordinate to prevent overplotting and DOM bloat
+      const scatterGroups = {};
+      validStories.forEach(s => {
+        const du = s.claim_u - s.real_u;
+        const dpsi = s.real_psi - s.claim_psi;
+        const key = `${du.toFixed(2)},${dpsi.toFixed(2)}`;
+        if (!scatterGroups[key]) {
+          scatterGroups[key] = {
+            du,
+            dpsi,
+            count: 0,
+            passCount: 0,
+            stories: []
+          };
+        }
+        scatterGroups[key].count++;
+        if (s.real_u > 0) scatterGroups[key].passCount++;
+        scatterGroups[key].stories.push(s);
+      });
+
+      const dots = Object.values(scatterGroups).map(g => {
+        const color = g.passCount > (g.count / 2) ? 'var(--pass-green)' : 'var(--reality-red)';
+        
+        // Dynamically scale radius and opacity by concentration, capped to prevent visual explosion
+        const r = Math.min(8.0, 2.5 + Math.log2(g.count) * 0.8);
+        const opacity = Math.min(0.85, 0.4 + 0.1 * Math.log2(g.count));
+        
+        const titles = g.stories.slice(0, 5).map(s => s.subject || s.id).join('\n• ');
+        const remaining = g.stories.length > 5 ? `\n• ... and ${g.stories.length - 5} more stories` : '';
+        const tooltip = `Δu: ${g.du.toFixed(2)}, ψ-drift: ${g.dpsi.toFixed(2)}\nStory Count: ${g.count}\n\nStories:\n• ${titles}${remaining}`;
+        
+        return `<circle cx="${sx(g.du).toFixed(1)}" cy="${sy(g.dpsi).toFixed(1)}" r="${r.toFixed(1)}" fill="${color}" opacity="${opacity.toFixed(2)}" style="cursor:pointer;" onclick="selectStory('${g.stories[0].id}')">
+          <title>${tooltip}</title>
+        </circle>`;
+      }).join('');
+      return `<svg viewBox="0 0 ${W} ${H}" style="width:100%; max-width:${W}px; display:block;">
+        <line x1="${sx(0)}" y1="${pad}" x2="${sx(0)}" y2="${H-pad}" stroke="var(--panel-border)"/>
+        <line x1="${pad}" y1="${sy(0)}" x2="${W-pad}" y2="${sy(0)}" stroke="var(--panel-border)"/>
+        ${dots}
+        <text x="${W-pad}" y="${sy(0)-4}" font-size="9" fill="var(--text-muted)" text-anchor="end">Δu →</text>
+        <text x="${sx(0)+4}" y="${pad+6}" font-size="9" fill="var(--text-muted)">+ψ drift</text>
+        <text x="${sx(0)+4}" y="${H-pad-2}" font-size="9" fill="var(--text-muted)">−ψ drift</text>
+      </svg>
+      <div style="font-size:0.72rem; color:var(--text-muted); margin-top:0.3rem;">Each dot a story. Right = bigger deception gap; up/down = drift toward chaos(+ψ) or coercion(−ψ). Clusters = structural signatures.</div>`;
+    }
+
+    function auditCalibration(stories) {
+      const W = 300, H = 300, pad = 30;
+      // Inverted so +u is on the left and -u is on the right
+      const sc = v => pad + (1 - ((Math.max(-1.5,Math.min(1.5,v))+1.5)/3))*(W-2*pad);
+      const scY = v => pad + (1-((Math.max(-1.5,Math.min(1.5,v))+1.5)/3))*(H-2*pad);
+      const validStories = stories.filter(s => s.claim_u !== null && s.claim_u !== undefined && s.real_u !== null && s.real_u !== undefined && s.claim_psi !== null && s.claim_psi !== undefined && s.real_psi !== null && s.real_psi !== undefined);
+      
+      let sample;
+      if (_calibSampleSize === 'all') {
+        sample = validStories;
+      } else {
+        const targetSize = _calibSampleSize;
+        if (validStories.length > targetSize) {
+          const step = Math.ceil(validStories.length / targetSize);
+          sample = validStories.filter((_, i) => i % step === 0);
+        } else {
+          sample = validStories;
+        }
+      }
+      
+      // Determine opacity based on sample size to keep chart readable
+      let lineOpacity = 0.4;
+      let dotOpacity = 0.6;
+      if (sample.length > 1000) {
+        lineOpacity = 0.08;
+        dotOpacity = 0.15;
+      } else if (sample.length > 500) {
+        lineOpacity = 0.15;
+        dotOpacity = 0.25;
+      } else if (sample.length > 200) {
+        lineOpacity = 0.25;
+        dotOpacity = 0.4;
+      }
+      
+      // Group calibration trajectories to prevent overplotting and DOM bloat
+      const trajectoryGroups = {};
+      sample.forEach(s => {
+        const key = `${s.claim_u.toFixed(2)},${s.claim_psi.toFixed(2)}->${s.real_u.toFixed(2)},${s.real_psi.toFixed(2)}`;
+        if (!trajectoryGroups[key]) {
+          trajectoryGroups[key] = {
+            claim_u: s.claim_u,
+            claim_psi: s.claim_psi,
+            real_u: s.real_u,
+            real_psi: s.real_psi,
+            count: 0,
+            stories: []
+          };
+        }
+        trajectoryGroups[key].count++;
+        trajectoryGroups[key].stories.push(s);
+      });
+
+      const arrows = Object.values(trajectoryGroups).map(g => {
+        const x1=sc(g.claim_u), y1=scY(g.claim_psi), x2=sc(g.real_u), y2=scY(g.real_psi);
+        const color = g.real_u > 0 ? 'var(--pass-green)' : 'var(--reality-red)';
+        
+        // Scale thickness and dot size based on frequency, capped to prevent visual explosion
+        const strokeWidth = Math.min(4.0, 0.8 + Math.log2(g.count) * 0.5);
+        const r = Math.min(5.0, 1.6 + Math.log2(g.count) * 0.4);
+        
+        const titles = g.stories.slice(0, 5).map(s => s.subject || s.id).join('\n• ');
+        const remaining = g.stories.length > 5 ? `\n• ... and ${g.stories.length - 5} more stories` : '';
+        const tooltip = `Vector: (${g.claim_u}, ${g.claim_psi}) ➔ (${g.real_u}, ${g.real_psi})\nTrajectory Count: ${g.count}\n\nStories:\n• ${titles}${remaining}`;
+        
+        return `<g style="cursor:pointer;" onclick="selectStory('${g.stories[0].id}')">
+                  <line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="${color}" stroke-width="${strokeWidth.toFixed(1)}" opacity="${lineOpacity}"/>
+                  <circle cx="${x2.toFixed(1)}" cy="${y2.toFixed(1)}" r="${r.toFixed(1)}" fill="${color}" opacity="${dotOpacity}"/>
+                  <title>${tooltip}</title>
+                </g>`;
+      }).join('');
+      
+      return `
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem; font-size:0.75rem;">
+          <span style="color:var(--text-muted);">Showing ${sample.length} of ${validStories.length} stories</span>
+          <div style="display:flex; align-items:center; gap:0.4rem;">
+            <span style="color:var(--text-muted);">Sample size:</span>
+            <select onchange="setCalibSampleSize(this.value)" style="background:rgba(0,0,0,0.2); border:1px solid var(--panel-border); color:var(--text-main); border-radius:4px; padding:0.15rem 0.4rem; outline:none; cursor:pointer;">
+              <option value="120" ${_calibSampleSize===120?'selected':''}>120 (Fast)</option>
+              <option value="300" ${_calibSampleSize===300?'selected':''}>300 (Detailed)</option>
+              <option value="500" ${_calibSampleSize===500?'selected':''}>500 (Dense)</option>
+              <option value="all" ${_calibSampleSize==='all'?'selected':''}>All (${validStories.length})</option>
+            </select>
+          </div>
+        </div>
+        <svg viewBox="0 0 ${W} ${H}" style="width:100%; max-width:${W}px; display:block; margin: 0 auto;">
+          <line x1="${sc(0)}" y1="${pad}" x2="${sc(0)}" y2="${H-pad}" stroke="var(--panel-border)"/>
+          <line x1="${pad}" y1="${scY(0)}" x2="${W-pad}" y2="${scY(0)}" stroke="var(--panel-border)"/>
+          ${arrows}
+          <text x="${pad}" y="${scY(0)-4}" font-size="9" fill="var(--text-muted)">+u</text>
+          <text x="${W-pad}" y="${scY(0)-4}" font-size="9" fill="var(--text-muted)" text-anchor="end">−u</text>
+          <text x="${sc(0)+4}" y="${pad+6}" font-size="9" fill="var(--text-muted)">+ψ</text>
+          <text x="${sc(0)+4}" y="${H-pad-2}" font-size="9" fill="var(--text-muted)">−ψ</text>
+        </svg>
+        <div style="font-size:0.72rem; color:var(--text-muted); margin-top:0.3rem;">Arrow tail = stated claim, head = assessed reality. Downward/rightward arrows = reality sinks below the claim.</div>
+      `;
+    }
+
+    function toggleActorDropdown(actorId) {
+      const el = document.getElementById(actorId);
+      const arrow = document.getElementById('arrow-' + actorId);
+      if (!el) return;
+      if (el.style.display === 'none') {
+        el.style.display = 'block';
+        if (arrow) arrow.style.transform = 'rotate(90deg)';
+        _openLeaderboardDropdowns.add(actorId);
+      } else {
+        el.style.display = 'none';
+        if (arrow) arrow.style.transform = 'rotate(0deg)';
+        _openLeaderboardDropdowns.delete(actorId);
+      }
+    }
+
+    function _statsForGroups(stories, keyFn) {
+      const groups = {};
+      stories.forEach(s => {
+        if (s.claim_u === null || s.claim_u === undefined || s.real_u === null || s.real_u === undefined) return;
+        const keys = keyFn(s);
+        keys.forEach(k => {
+          if (!k) return;
+          const realPsi = (s.real_psi !== null && s.real_psi !== undefined) ? s.real_psi : 0;
+          (groups[k] = groups[k] || []).push({
+            delta: s.claim_u - s.real_u,
+            real_u: s.real_u,
+            real_psi: realPsi
+          });
+        });
+      });
+      return Object.entries(groups).map(([k, items]) => {
+        const deltas = items.map(x => x.delta);
+        const realUs = items.map(x => x.real_u);
+        const realPsis = items.map(x => x.real_psi);
+        const mDelta = avg(deltas);
+        const mRealU = avg(realUs);
+        const mRealPsi = avg(realPsis);
+        const variance = deltas.length > 1 ? avg(deltas.map(d => (d-mDelta)*(d-mDelta))) : 0;
+        return { 
+          key: k, 
+          n: deltas.length, 
+          avgDelta: mDelta, 
+          avgRealU: mRealU, 
+          avgRealPsi: mRealPsi,
+          consistency: Math.sqrt(variance) 
+        };
+      });
+    }
+
+    function _hypocrisyTable(stories, rows, labelHead, minN) {
+      let filtered = rows.filter(r => r.n >= minN);
+      
+      const labelLower = labelHead.toLowerCase();
+      let tableType = 'actor';
+      if (labelLower.includes('outlet') || labelLower.includes('source')) tableType = 'outlet';
+      else if (labelLower.includes('category')) tableType = 'category';
+      else if (labelLower.includes('topic')) tableType = 'topic';
+      
+      let sortCol, sortDir, sort2Col, sort2Dir, currentMinN;
+      
+      if (tableType === 'actor') {
+        sortCol = _actorSortCol; sortDir = _actorSortDir;
+        sort2Col = _actorSort2Col; sort2Dir = _actorSort2Dir;
+        currentMinN = _actorMinN;
+      } else if (tableType === 'outlet') {
+        sortCol = _outletSortCol; sortDir = _outletSortDir;
+        sort2Col = _outletSort2Col; sort2Dir = _outletSort2Dir;
+        currentMinN = _outletMinN;
+      } else if (tableType === 'category') {
+        sortCol = _categorySortCol; sortDir = _categorySortDir;
+        sort2Col = _categorySort2Col; sort2Dir = _categorySort2Dir;
+        currentMinN = _categoryMinN;
+      } else {
+        sortCol = _topicSortCol; sortDir = _topicSortDir;
+        sort2Col = _topicSort2Col; sort2Dir = _topicSort2Dir;
+        currentMinN = _topicMinN;
+      }
+      
+      const onMinNChange = `setMinN('${tableType}', this.value)`;
+      const clickFn = `handleHeaderClick('${tableType}', `;
+
+      // Sort rows: combo presets override single-column sort
+      // Two-level sort: primary (header click) then secondary (Then by dropdowns)
+      filtered.sort((a, b) => {
+        // Primary
+        let primary;
+        if (sortCol === 'key') {
+          primary = sortDir === 'asc'
+            ? a.key.toLowerCase().localeCompare(b.key.toLowerCase())
+            : b.key.toLowerCase().localeCompare(a.key.toLowerCase());
+        } else {
+          const pa = _colVal(a, sortCol), pb = _colVal(b, sortCol);
+          primary = sortDir === 'asc' ? pa - pb : pb - pa;
+        }
+        if (primary !== 0) return primary;
+        // Secondary tiebreaker
+        if (sort2Col === 'none') return 0;
+        const sa = _colVal(a, sort2Col), sb = _colVal(b, sort2Col);
+        return sort2Dir === 'asc' ? sa - sb : sb - sa;
+      });
+
+      const getIndicator = (col) => {
+        if (sortCol !== col) return '';
+        const dir = sortDir === 'asc' ? ' ▲' : ' ▼';
+        // Show secondary indicator if active on this col
+        const sec = (sort2Col === col) ? (sort2Dir === 'asc' ? '₂▲' : '₂▼') : '';
+        return dir + sec;
+      };
+
+      // "Then by" col options (exclude primary sort col so it's not redundant)
+      const sort2ColOptions = [
+        { val: 'none',          label: '—' },
+        { val: 'n',             label: 'n' },
+        { val: 'avgDelta',      label: 'avg Δu' },
+        { val: 'avgRealU',      label: 'avg u' },
+        { val: 'avgRealPsi',    label: 'avg ψ' },
+        { val: 'consistency',   label: 'σ' },
+      ].filter(o => o.val === 'none' || o.val !== sortCol);
+      const sort2ColSelect = `<select onchange="setSort2('${tableType}','col',this.value)" style="background:rgba(0,0,0,0.25); border:1px solid var(--panel-border); color:var(--text-main); border-radius:4px; padding:0.15rem 0.4rem; outline:none; cursor:pointer; font-family:var(--font-outfit); font-size:0.72rem;">
+        ${sort2ColOptions.map(o => `<option value="${o.val}" ${sort2Col===o.val?'selected':''}>${o.label}</option>`).join('')}
+      </select>`;
+      const sort2DirSelect = sort2Col !== 'none' ? `<select onchange="setSort2('${tableType}','dir',this.value)" style="background:rgba(0,0,0,0.25); border:1px solid var(--panel-border); color:var(--text-main); border-radius:4px; padding:0.15rem 0.4rem; outline:none; cursor:pointer; font-family:var(--font-outfit); font-size:0.72rem;">
+        <option value="asc"  ${sort2Dir==='asc' ?'selected':''}>▲ asc</option>
+        <option value="desc" ${sort2Dir==='desc'?'selected':''}>▼ desc</option>
+      </select>` : '';
+
+      let tableContent = '';
+      if (!filtered.length) {
+        tableContent = '<div style="grid-column: span 6; color:var(--text-muted); text-align:center; padding: 1rem 0;">No entries matching filters.</div>';
+      } else {
+        tableContent = filtered.map((r, idx) => {
+          // Color is a smooth HSL spectrum: Green (hue 140) at 0 delta to Red (hue 0) at 3+ delta
+          const ratio = Math.min(1.0, Math.max(0.0, (r.avgDelta || 0) / 3.0));
+          const hue = Math.round(140 - (ratio * 140));
+          const color = `hsl(${hue}, 80%, 48%)`;
+          const cleanKey = r.key.replace(/[^a-zA-Z0-9]/g, '-');
+          const dropdownId = `dropdown-${tableType}-${cleanKey}`;
+          const isOpen = _openLeaderboardDropdowns.has(dropdownId);
+          const displayStyle = isOpen ? 'block' : 'none';
+          const arrowTransform = isOpen ? 'rotate(90deg)' : 'rotate(0deg)';
+          
+          let related = [];
+          const rKeyLower = r.key.toLowerCase();
+          if (tableType === 'actor') {
+            related = storiesByActor[rKeyLower] || [];
+          } else if (tableType === 'outlet') {
+            related = storiesByOutlet[rKeyLower] || [];
+          } else if (tableType === 'category') {
+            related = storiesByCategory[rKeyLower] || [];
+          } else if (tableType === 'topic') {
+            related = storiesByTopic[rKeyLower] || [];
+          }
+
+          return `
+            <span style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap; cursor:pointer; font-weight:600;" onclick="toggleActorDropdown('${dropdownId}')">
+              <span id="arrow-${dropdownId}" style="display:inline-block; transition:transform 0.15s; margin-right:4px; transform:${arrowTransform};">▶</span>${r.key}
+            </span>
+            <span style="text-align:right; font-family:var(--font-mono); color:var(--text-muted);">${r.n}</span>
+            <span style="text-align:right; font-family:var(--font-mono); color:${color}; font-weight:600;">${fmt(r.avgDelta)}</span>
+            <span style="text-align:right; font-family:var(--font-mono); color:var(--text-muted);">${fmt(r.avgRealU)}</span>
+            <span style="text-align:right; font-family:var(--font-mono); color:var(--text-muted);">${fmt(r.avgRealPsi)}</span>
+            <span style="text-align:right; font-family:var(--font-mono); color:var(--text-muted);">${r.consistency.toFixed(2)}</span>
+            
+            <div id="${dropdownId}" style="grid-column: span 6; display:${displayStyle}; padding:0.4rem 0.8rem; margin:0.1rem 0 0.3rem 0; background:rgba(0,0,0,0.15); border-left:2px solid var(--bsky-blue); border-radius:0 4px 4px 0; font-size:0.75rem;">
+              <div style="display:flex; flex-direction:column; gap:0.3rem;">
+                ${related.map(s => {
+                  const sDelta = (s.claim_u !== null && s.claim_u !== undefined && s.real_u !== null && s.real_u !== undefined) ? s.claim_u - s.real_u : 0;
+                  const sColor = s.real_u > 0 ? 'var(--pass-green)' : 'var(--reality-red)';
+                  
+                  // Link indicators
+                  const sourceLink = s.link ? `<a href="${s.link}" target="_blank" onclick="event.stopPropagation()" title="Original Article" style="color:var(--bsky-blue); text-decoration:none; margin-right:6px;">🔗</a>` : '';
+                  const bskyUrl = (s.post_urls && s.post_urls.length) ? s.post_urls[0] : (s.target_url ? s.target_url : null);
+                  const bskyLink = bskyUrl ? `<a href="${bskyUrl}" target="_blank" onclick="event.stopPropagation()" title="Bluesky Thread" style="color:#0085ff; text-decoration:none; margin-right:6px;">🦋</a>` : '';
+                  const linksSpan = (sourceLink || bskyLink) ? `<span style="font-size:0.85rem; display:inline-flex; align-items:center;">${sourceLink}${bskyLink}</span>` : '';
+
+                  return `
+                    <div data-story-id="${s.id}" style="display:flex; justify-content:space-between; align-items:center; padding:0.2rem 0.4rem; border-radius:4px; cursor:pointer;"
+                         onmouseover="this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.background='transparent'">
+                       <span style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:70%; display:inline-flex; align-items:center;">
+                        ${linksSpan}
+                        <span style="text-decoration:underline; color:var(--text-muted);">${s.subject || s.id}</span>
+                      </span>
+                      <span style="font-family:var(--font-mono); color:${sColor}; font-size:0.7rem; white-space:nowrap; margin-left:0.5rem;">
+                        u: ${fmt(s.real_u)} | Δu: ${fmt(sDelta)}
+                      </span>
+                    </div>
+                  `;
+                }).join('')}
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+      
+      return `
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem; font-size:0.75rem; flex-wrap:wrap; gap:0.5rem;">
+          <div style="display:flex; align-items:center; gap:0.4rem; flex-wrap:wrap;">
+            <span style="color:var(--text-muted);">Then by:</span>
+            ${sort2ColSelect}
+            ${sort2DirSelect}
+          </div>
+          <div style="display:flex; align-items:center; gap:0.4rem;">
+            <span style="color:var(--text-muted);">Min n:</span>
+            <select onchange="${onMinNChange}" style="background:rgba(0,0,0,0.25); border:1px solid var(--panel-border); color:var(--text-main); border-radius:4px; padding:0.15rem 0.4rem; outline:none; cursor:pointer; font-family:var(--font-outfit);">
+              <option value="1" ${currentMinN===1?'selected':''}>1+</option>
+              <option value="2" ${currentMinN===2?'selected':''}>2+</option>
+              <option value="5" ${currentMinN===5?'selected':''}>5+</option>
+              <option value="10" ${currentMinN===10?'selected':''}>10+</option>
+              <option value="25" ${currentMinN===25?'selected':''}>25+</option>
+            </select>
+          </div>
+        </div>
+        <div style="max-height: 400px; overflow-y: auto; padding-right: 0.5rem; border: 1px solid var(--panel-border); border-radius: 6px; background: rgba(0,0,0,0.12); margin-bottom: 0.5rem;">
+          <div style="display:grid; grid-template-columns:1fr auto auto auto auto auto; gap:0.2rem 0.8rem; font-size:0.78rem; align-items:center; padding: 0.5rem;">
+            <!-- Clickable Headers (Standard Column Sorting) -->
+            <span style="color:var(--text-muted); font-weight:600; position: sticky; top: 0; background: var(--panel-bg); padding: 0.2rem 0; z-index: 2; cursor:pointer; user-select:none;" onclick="${clickFn}'key')">${labelHead}${getIndicator('key')}</span>
+            <span style="color:var(--text-muted); text-align:right; position: sticky; top: 0; background: var(--panel-bg); padding: 0.2rem 0; z-index: 2; cursor:pointer; user-select:none;" onclick="${clickFn}'n')">n${getIndicator('n')}</span>
+            <span style="color:var(--text-muted); text-align:right; position: sticky; top: 0; background: var(--panel-bg); padding: 0.2rem 0; z-index: 2; cursor:pointer; user-select:none;" onclick="${clickFn}'avgDelta')">avg Δu${getIndicator('avgDelta')}</span>
+            <span style="color:var(--text-muted); text-align:right; position: sticky; top: 0; background: var(--panel-bg); padding: 0.2rem 0; z-index: 2; cursor:pointer; user-select:none; white-space:nowrap;" onclick="${clickFn}'avgRealU')">avg u${getIndicator('avgRealU')}</span>
+            <span style="color:var(--text-muted); text-align:right; position: sticky; top: 0; background: var(--panel-bg); padding: 0.2rem 0; z-index: 2; cursor:pointer; user-select:none; white-space:nowrap;" onclick="${clickFn}'avgRealPsi')">avg ψ${getIndicator('avgRealPsi')}</span>
+            <span style="color:var(--text-muted); text-align:right; position: sticky; top: 0; background: var(--panel-bg); padding: 0.2rem 0; z-index: 2; cursor:pointer; user-select:none; white-space:nowrap;" onclick="${clickFn}'consistency')">σ${getIndicator('consistency')}</span>
+            
+            ${tableContent}
+          </div>
+        </div>
+      `;
+    }
+
+    function auditActorLeaderboard(stories) {
+      const hasActors = stories.some(s => Array.isArray(s.actors) && s.actors.length);
+      if (!hasActors) return '<div style="color:var(--text-muted); font-size:0.82rem;">No actor tags yet. Run enrich_stories.py (backfill) then rebuild_registries.py.</div>';
+      const rows = _statsForGroups(stories, s => Array.isArray(s.actors) ? s.actors : []);
+      return _hypocrisyTable(stories, rows, 'Actor / Entity', _actorMinN);
+    }
+
+    function auditOutletHypocrisy(stories) {
+      const rows = _statsForGroups(stories, s => {
+        try { return [new URL(s.link || 'https://unknown').hostname.replace(/^www\./, '')]; }
+        catch(e) { return []; }
+      });
+      return _hypocrisyTable(stories, rows, 'Source Outlet', _outletMinN);
+    }
+
+    function auditCategoryLeaderboard(stories) {
+      const hasCategories = stories.some(s => s.category);
+      if (!hasCategories) return '<div style="color:var(--text-muted); font-size:0.82rem;">No category tags found in stories.</div>';
+      const rows = _statsForGroups(stories, s => {
+        if (!s.category) return [];
+        return s.category.split(',').map(c => c.trim().toLowerCase()).filter(Boolean);
+      });
+      return _hypocrisyTable(stories, rows, 'Category', _categoryMinN);
+    }
+
+    function auditTopicLeaderboard(stories) {
+      const hasTopics = stories.some(s => s.topic);
+      if (!hasTopics) return '<div style="color:var(--text-muted); font-size:0.82rem;">No topic tags found in stories.</div>';
+      const rows = _statsForGroups(stories, s => {
+        if (!s.topic) return [];
+        return s.topic.split(',').map(t => t.trim().toLowerCase()).filter(Boolean);
+      });
+      return _hypocrisyTable(stories, rows, 'Topic', _topicMinN);
+    }
+
+    function auditStoryList(stories, type) {
+      if (!stories.length) return '<div style="color:var(--text-muted); font-size:0.82rem;">None.</div>';
+      const color = type === 'pass' ? 'var(--pass-green)' : 'var(--reality-red)';
+      return `<div style="display:flex; flex-direction:column; gap:0.3rem;">` +
+        stories.slice(0, 25).map(s => {
+          const delta = s.claim_u - s.real_u;
+          const badge = type === 'pass'
+            ? `real_u ${fmt(s.real_u)}`
+            : `Δu ${fmt(delta)}`;
+          return `<div data-story-id="${s.id}" style="display:flex; justify-content:space-between; align-items:center; font-size:0.8rem; padding:0.3rem 0.5rem; border-radius:5px; cursor:pointer; transition:background 0.15s; border-bottom:1px solid var(--panel-border);"
+            onmouseover="this.style.background='rgba(255,255,255,0.04)'" onmouseout="this.style.background='transparent'">
+            <span style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:75%">${s.subject || s.id}</span>
+            <span style="font-family:var(--font-mono); font-size:0.75rem; color:${color}; white-space:nowrap; margin-left:0.5rem">${badge}</span>
+          </div>`;
+        }).join('') +
+      `</div>`;
+    }
+
+  </script>
+</body>
+</html>

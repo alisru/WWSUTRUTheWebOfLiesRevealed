@@ -2,3 +2,7 @@
 .chat-project/
 **/ .chat-project/
 **/_chat-project/
+
+# Secrets
+.env
+**/.env
