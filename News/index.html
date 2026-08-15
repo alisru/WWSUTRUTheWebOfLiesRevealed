@@ -645,11 +645,12 @@
     .tab-content {
       display: none;
       animation: fadeIn 0.3s ease;
-      min-height: 100%;
     }
 
     .tab-content.active {
       display: grid;
+      align-items: start;
+      align-content: start;
     }
 
     @keyframes fadeIn {
@@ -922,7 +923,8 @@
       max-width: 1200px;
       margin: 0 auto;
       width: 100%;
-      min-height: 100%;
+      align-items: start;
+      align-content: start;
     }
 
     .grid-canvas-container {
@@ -935,7 +937,7 @@
       align-items: center;
       justify-content: center;
       position: relative;
-      min-height: 450px;
+      align-self: start;
     }
 
     .grid-svg {
@@ -950,6 +952,7 @@
       flex-direction: column;
       gap: 1.5rem;
       overflow-y: auto;
+      align-self: start;
     }
 
     /* Prompt Tab Viewport */
@@ -1286,7 +1289,7 @@
       <div class="tabs-bar">
         <button class="tab-button active" onclick="switchTab(event, 'emulator-tab')">📱 Thread Emulator</button>
         <button class="tab-button" onclick="switchTab(event, 'map-tab')">🗺️ Interactive Map</button>
-        <button class="tab-button" onclick="switchTab(event, 'composer-tab')">⚙️ Controller & Composer</button>
+        
         <button class="tab-button" onclick="switchTab(event, 'audit-tab'); renderAuditTab()">📊 Audit & Trends</button>
         <button class="tab-button" onclick="switchTab(event, 'source-tab'); fetchSourceText()">📰 Source Text</button>
       </div>
@@ -1431,101 +1434,7 @@
           </div>
         </div>
 
-        <!-- Tab 3: Composer & CLI Controller -->
-        <div id="composer-tab" class="tab-content controller-view">
-          <!-- Left: Prompt composer / local execution CLI tool -->
-          <div class="terminal-panel">
-            <div class="terminal-header">
-              <div class="terminal-title">🖥️ CLI Bot Execution Command</div>
-            </div>
-            
-            <div style="font-size:0.85rem; color:var(--text-muted);">
-              Run this command in your powershell terminal to execute the Aletheia Bot orchestrator for this story:
-            </div>
-
-            <div class="terminal-body">
-              <button class="copy-btn" onclick="copyText('terminalCmd')">Copy</button>
-              <code id="terminalCmd">python bluesky_bot/orchestrator.py --news-query "..."</code>
-            </div>
-
-            <div style="margin-top: 1rem; border-top: 1px solid rgba(240, 246, 252, 0.1); padding-top: 1rem;">
-              <div class="meta-label" style="margin-bottom: 0.5rem;">AI Chat Instruction Composer</div>
-              <div style="font-size:0.85rem; color:var(--text-muted); margin-bottom: 0.75rem;">
-                Copy this prompt instruction to feed back into your agentic coding chat to calibrate the bot on a new news link:
-              </div>
-              <div class="terminal-body" style="height: 180px; overflow-y: auto;">
-                <button class="copy-btn" onclick="copyText('chatPrompt')">Copy</button>
-                <code id="chatPrompt" style="white-space: pre-wrap;">Select a story to generate the custom chat prompt.</code>
-              </div>
-            </div>
-          </div>
-
-          <!-- Right: Manual Draft JSON compiler -->
-          <div class="composer-panel">
-            <div class="composer-title">✍️ Manual Thread Compiler</div>
-            <div style="font-size:0.85rem; color:var(--text-muted)">
-              Draft your own Convergence Test evaluation. Enter coordinates and details to download a pre-compiled JSON file directly.
-            </div>
-            
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label">Subject</label>
-                <input type="text" id="compSubject" class="form-input" placeholder="e.g. Swedish Green Datacenter">
-              </div>
-              <div class="form-group">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 0.3rem;">
-                  <label class="form-label" style="margin: 0;">Primary URL Link</label>
-                  <select id="commonOutlets" onchange="quickFillOutlet(this.value)" style="background:rgba(255,255,255,0.05); color:var(--text-color); border:1px solid var(--panel-border); border-radius:4px; padding:0.1rem 0.3rem; font-size:0.72rem; font-family:var(--font-outfit); cursor:pointer; outline:none;">
-                    <option value="">-- Quick Fill Outlet --</option>
-                    <option value="https://www.bloomberg.com/">Bloomberg</option>
-                    <option value="https://www.nytimes.com/">NY Times</option>
-                    <option value="https://www.thesaturdaypaper.com.au/">The Saturday Paper</option>
-                    <option value="https://www.reuters.com/">Reuters</option>
-                    <option value="https://www.bbc.com/news/">BBC News</option>
-                    <option value="https://www.smh.com.au/">SMH</option>
-                    <option value="https://www.abc.net.au/news/">ABC News AU</option>
-                    <option value="https://techcrunch.com/">TechCrunch</option>
-                    <option value="https://www.washingtonpost.com/">Washington Post</option>
-                    <option value="https://www.npr.org/">NPR</option>
-                  </select>
-                </div>
-                <input type="text" id="compLink" class="form-input" placeholder="e.g. https://www.bloomberg.com/news...">
-              </div>
-            </div>
-
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label">Stated Coordinate (Claim)</label>
-                <div class="form-row" style="gap:0.5rem;">
-                  <input type="number" step="0.1" min="-2" max="2" id="compClaimU" class="form-input" placeholder="υ (e.g. 1.5)">
-                  <input type="number" step="0.1" min="-2" max="2" id="compClaimPsi" class="form-input" placeholder="ψ (e.g. 1.0)">
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="form-label">Actual Coordinate (Reality)</label>
-                <div class="form-row" style="gap:0.5rem;">
-                  <input type="number" step="0.1" min="-2" max="2" id="compRealU" class="form-input" placeholder="υ (e.g. -0.5)">
-                  <input type="number" step="0.1" min="-2" max="2" id="compRealPsi" class="form-input" placeholder="ψ (e.g. 0.8)">
-                </div>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label">Short Plain English Breakdown</label>
-              <textarea id="compBreakdown" class="form-textarea" placeholder="Explain the dynamic simply..."></textarea>
-            </div>
-
-            <button class="btn-primary" onclick="compileNewJSON()">
-              📥 Compile & Export Thread JSON
-            </button>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-  <!-- Lightbox Modal for graph inspection -->
+        <!-- Lightbox Modal for graph inspection -->
   <div id="lightbox" class="lightbox" onclick="closeLightbox()">
     <img id="lightboxImg" class="lightbox-img" src="" alt="Graph Magnified">
   </div>
@@ -3042,20 +2951,39 @@ Please construct a clean, premium 13-post Gnostic trinary assessment thread comp
         return;
       }
 
-      try {
-        const resp = await fetch(`http://localhost:8765/source?url=${encodeURIComponent(url)}`);
-        const data = await resp.json();
+      // 1. Try static JSON endpoint on Vercel / Git (relative path)
+      let data = null;
+      const storyId = story.id || '';
+      const cleanSlug = storyId.replace(/^factcheck_/, '');
+      
+      const staticCandidates = [
+        `sources/${storyId}.json`,
+        `sources/factcheck_${cleanSlug}.json`,
+        `sources/${cleanSlug}.json`
+      ];
 
-        if (data.error) {
-          document.getElementById('sourceTextBody').innerHTML = `
-            <div style="color:#f87171;">⚠️ ${data.error}</div>
-            <div style="margin-top:12px;font-size:0.8rem;color:var(--text-muted);">
-              Make sure <strong>source_server.py</strong> is running, or launch via <strong>launch_panel.bat</strong>.<br>
-              You can also <a href="${url}" target="_blank" style="color:var(--bsky-blue);">open the original article</a>.
-            </div>`;
-          return;
-        }
+      for (const sp of staticCandidates) {
+        try {
+          const sResp = await fetch(sp);
+          if (sResp.ok) {
+            data = await sResp.json();
+            break;
+          }
+        } catch(e) {}
+      }
 
+      // 2. Fallback to local source server if on localhost
+      if (!data && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
+        try {
+          const resp = await fetch(`http://localhost:8765/source?url=${encodeURIComponent(url)}`);
+          if (resp.ok) {
+            const lData = await resp.json();
+            if (!lData.error) data = lData;
+          }
+        } catch(e) {}
+      }
+
+      if (data && data.text) {
         const paragraphs = (data.text || '').split('\n\n').filter(p => p.trim());
         const renderedParas = paragraphs.map(p =>
           `<p style="margin:0 0 14px;line-height:1.75;color:var(--text-primary);">${p.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</p>`
@@ -3066,12 +2994,18 @@ Please construct a clean, premium 13-post Gnostic trinary assessment thread comp
         document.getElementById('sourceTextBody').innerHTML = paragraphs.length
           ? ts + renderedParas
           : `<em style="color:#f87171;">No paragraph text was captured for this article (may be paywalled or JS-rendered).</em>`;
-
-      } catch(e) {
+      } else {
+        // 3. Graceful Static Web Fallback for Vercel / Hosted Environments
         document.getElementById('sourceTextBody').innerHTML = `
-          <div style="color:#f87171;">⚠️ Could not connect to source server (localhost:8765).</div>
-          <div style="margin-top:12px;font-size:0.8rem;color:var(--text-muted);">
-            Launch via <strong>launch_panel.bat</strong> to start both servers automatically.
+          <div style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 8px; padding: 16px; margin-bottom: 16px;">
+            <div style="font-size: 0.9rem; font-weight: 600; color: var(--text-primary); margin-bottom: 6px;">📰 Primary Source Article</div>
+            <div style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 12px;">This investigation was conducted on the ground-truth reporting from:</div>
+            <a href="${url}" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 6px; background: var(--bsky-blue); color: #fff; text-decoration: none; padding: 8px 14px; border-radius: 6px; font-size: 0.85rem; font-weight: 600;">
+              🌐 Open Original Article ↗
+            </a>
+          </div>
+          <div style="font-size:0.8rem;color:var(--text-muted);line-height: 1.6;">
+            <strong>Aletheia Knowledge Base:</strong> The full text of this article was parsed and evaluated during the 5-phase Gnostic Actualism convergence test.
           </div>`;
       }
     }
