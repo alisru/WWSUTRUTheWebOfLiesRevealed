@@ -7,11 +7,14 @@
 .env
 **/.env
 
-# Survey builder: admin-only tool, deliberately not published with the site.
-# It talks to Supabase directly and is gated by the owner login + RLS, but
-# there is no reason for it to have a public URL. Keep a copy somewhere safe
-# -- being gitignored means it is NOT recoverable from history.
+# Survey builder & viewer: admin-only tools, deliberately not published with the site.
+# They talk to Supabase directly and are gated by owner login or direct credentials.
 survey-platform/builder.html
+survey-viewer.html
+admin-viewer.html
+viewer.html
+**/survey-viewer.html
+**/admin-viewer.html
 
 # Temporary workspace & scratch directories
 drawing board/
