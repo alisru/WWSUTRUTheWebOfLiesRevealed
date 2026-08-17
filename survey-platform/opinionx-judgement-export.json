@@ -1,0 +1,94 @@
+{
+  "_meta": {
+    "source": "OpinionX app.opinionx.co, survey 69a592aa5469b2b48d74c6bb",
+    "pulled": "2026-08-16",
+    "tier": "free",
+    "participant_note": "OpinionX free tier caps participants; stats show 2 participants, 0 opinions, 0 votes -- nothing worth migrating except the survey definition itself",
+    "publicId": "0aac9ae5-3da3-41c9-93a1-a61037c4a75e",
+    "shareableLinkId": "322a5a9c-adce-4ded-8093-d686bbb73c2c",
+    "step_types_used": ["multiple_choice", "header", "text_response"],
+    "routing_or_branching_configured": false
+  },
+  "title": "Judgement",
+  "intro": {
+    "heading": "The Psochic Hegemony",
+    "text": "Judging ideas, concepts and people through relative morality",
+    "iconURL": "https://opinionx.blob.core.windows.net/opinionx/69a592aa5469b2b48d74c6bb/e6194a6f-5a72-47b6-9431-bfa1c7c4fefc",
+    "timeEstimate": true,
+    "alignment": "center"
+  },
+  "images": {
+    "hegemony_graph_intro": "https://opinionx.blob.core.windows.net/opinionx/69a592aa5469b2b48d74c6bb/cb837e39-3bc9-47d3-9cf4-724321d82d63",
+    "calibration_header": "https://opinionx.blob.core.windows.net/opinionx/69a592aa5469b2b48d74c6bb/c772ec36-f35a-4a4d-bcef-eca57af719d6",
+    "calibration_questions": "https://opinionx.blob.core.windows.net/opinionx/69a592aa5469b2b48d74c6bb/655e68ed-b7ea-4a62-81cf-40a17a469ee3",
+    "calibration_recap": "https://opinionx.blob.core.windows.net/opinionx/69a592aa5469b2b48d74c6bb/0a91db1a-5edc-414c-997b-aadb8e304eef",
+    "fruit_basket_left_hegemony": "https://opinionx.blob.core.windows.net/opinionx/69a592aa5469b2b48d74c6bb/46288282-9f16-4f81-abc6-2047e73f1b5f",
+    "recap_inversion": "https://opinionx.blob.core.windows.net/opinionx/69a592aa5469b2b48d74c6bb/79ef1d86-2f99-46e4-be34-abdbaa16420b",
+    "money_economy": "https://opinionx.blob.core.windows.net/opinionx/69a592aa5469b2b48d74c6bb/f535e731-b623-4dea-8810-9414343843b2",
+    "control_questions": "https://opinionx.blob.core.windows.net/opinionx/69a592aa5469b2b48d74c6bb/247edc8e-628a-4186-b521-ec325de9331e"
+  },
+  "answer_sets": {
+    "impression": ["Good", "Confused", "Bad"],
+    "hegemony_7": ["Greater Good", "Lesser Good", "Greater Evil", "Lesser Evil", "Good Preference", "Bad Preference", "Confusion"],
+    "hegemony_11_perceptual": ["Greater Good", "Lesser Good", "Greater Evil", "Lesser Evil", "Good Preference", "Bad Preference", "Confusion", "Perceptually Greater Good", "Perceptually Lesser Good", "Perceptually Greater Evil", "Perceptually Lesser Evil"],
+    "hegemony_7_with_none": ["None", "Greater Good", "Lesser Good", "Greater Evil", "Lesser Evil", "Good Preference", "Bad Preference"]
+  },
+  "steps": [
+    {
+      "i": 0, "type": "multiple_choice", "image": "hegemony_graph_intro", "required": true, "selection": "pick_one",
+      "heading": "A pre-knowledge test. How do you feel about the Psochic Hegemony Graph?",
+      "answers_ref": "impression"
+    },
+    {
+      "i": 1, "type": "header",
+      "heading": "That was interesting",
+      "description": "Some people have a natural inclination to liking or disliking the map on first impressions. There's no need to be afraid, it's just a map of good and bad"
+    },
+    {
+      "i": 2, "type": "header", "image": "calibration_header",
+      "heading": "Calibration",
+      "description": "To begin we must calibrate your understanding. Some people are able to feel the Psochic Hegemony, the Ruling Principle of the Mind, the Map of Good and Evil naturally when they look at Greater Good and think Greater Evil, they'll feel a gradient or a discernable bodily feeling. Most people cannot, since 'like' only interacts with 'like' and 'like' understands 'like'. Good and Evil can only be felt as strongly as one understands it. Your Body understands Good more than your Mind does; a starving person never says \"good is an illusion\" when being handed sustenance as that is an example of Good. Similarly they'd never say \"bad is an illusion\" if you took the sustenance from their starving mouth and sold it to another. They would, however, if you gave them a rock and took it away. In the following section, imagine you are and have been in a desert, you're starving and parched. Answer with the closest point you feel is more 'Right'. Do not overthink it. Yes its as simple as it seems"
+    },
+    { "i": 3, "type": "multiple_choice", "image": "calibration_questions", "required": true, "selection": "pick_one", "heading": "You're starving and parched, I give you food and water", "answers_ref": "hegemony_7" },
+    { "i": 4, "type": "multiple_choice", "image": "calibration_questions", "required": true, "selection": "pick_one", "heading": "You're starving and parched, I sell you food and water", "answers_ref": "hegemony_7" },
+    { "i": 5, "type": "multiple_choice", "image": "calibration_questions", "required": true, "selection": "pick_one", "heading": "You're starving and parched, I take your food and water", "answers_ref": "hegemony_7" },
+    { "i": 6, "type": "multiple_choice", "image": "calibration_questions", "required": true, "selection": "pick_one", "heading": "You're starving and parched, I let you have my water", "answers_ref": "hegemony_7" },
+    { "i": 7, "type": "multiple_choice", "image": "calibration_questions", "required": true, "selection": "pick_one", "heading": "You're starving and parched, I give you a rock", "answers_ref": "hegemony_7" },
+    { "i": 8, "type": "multiple_choice", "image": "calibration_questions", "required": true, "selection": "pick_one", "heading": "You're starving and parched, I take your rock", "answers_ref": "hegemony_7" },
+    { "i": 9, "type": "multiple_choice", "image": "calibration_questions", "required": true, "selection": "pick_one", "heading": "You're starving and parched, I take your rock and sell it", "answers_ref": "hegemony_7" },
+    {
+      "i": 10, "type": "header", "image": "calibration_recap",
+      "heading": "Calibration Recap",
+      "description": "Your answers may map something like this. Note that the last 3 answers 5,6,7 are mapped as confusion then -2,2, exceeding the 'lesser evil'. If you assume the rock has intrinsic value you may have answered 'Good preference' when being given the rock, and so answered 'Bad preference' when taken away with the 'lesser evil' when it's being sold from under you. This is because the rock has now assumed value that you have missed and was 'stolen' from you. If you answered 'Greater Evil' to the rock being taken and sold from you then you thought the rock has more intrinsic value than not. This is because the 'lesser evil' is the greed zone, in this context the 'greater evil' is the effects of greed. From the perspective of Greed, taking away the rock and selling it from under them is the 'greater evil' as that's opposite to what they wanted to do with the rock. If you don't understand why you're given a rock you'll react with confusion, similarly when its taken away, but when value is implied on the rock you'll feel its a 'lesser evil'. If you recognize the rock still has no intrinsic value you'd answer with confusion as to why they took your rock and sold it, or simply the bad preference if you recognize it's not good but ultimately has no individual effect on you. With any luck, the preceding survival oriented questions should calibrate the understanding of contextual benefit, of Good and Evil and to understand the rock has no intrinsic value. We did not say 'Sulphur in the context of medicine' or 'Gemstone', 'metal' or even 'Ore'; even a starving person in the desert can find a rock for themselves. Note the reactions of the will axis. Having something sold from you, even as worthless as sand in the desert, opposes your individual belief and sense of fairness and generates will. Willpower is generated from a reaction of external events and one's worldview, determined by magnitude of opposition or support and justification. Consider; Sand sold in the desert by a company to make products sounds sensible, even bagged sand in the desert is selling the time, effort and bags. Trying to sell handfuls of sand is lunacy in any environment. The ultimate point is that a things objective worth comes from its objective benefit relative to completing a task, survival is the one shared goal of all Life so sustenance has universal benefit and universal understanding of benefit. The lesson is that periods of abundance mute the sense of suffering, and understanding of Bad. This in turn mutes the sense of Good and is easily achieved by overthinking. Now try looking at Greater Good and think Greater Evil"
+    },
+    {
+      "i": 11, "type": "text_response", "image": "fruit_basket_left_hegemony", "required": true, "size": "long",
+      "heading": "Please describe how you feel when following the fruit basket experiment. Please study the 7 points of the Left Psochic Hegemony; Imagine two baskets of fruit. One basket is very good, full of the ripest fruit you love to eat. One basket is very bad, so bad they cannot be eaten, putrid, rotting and disgusting. Where would you place them on the graph? Now try to move the good basket to the opposite side and listen to how wrong it feels. Try to keep the good basket on the other side and imagine time passing, what happens to the good basket of fruit? What happens when you place it on different points over months and years passing? Then what happens if you do the same with the bad basket of fruit? Imagine the good basket on the good point and someone attempting to steal it and replace it with poison, how do you feel. Now try those experiments with the Hegemony on the right, the one with the inner inverted points. You'll find it feels right to put the basket in wrong, but not as clearly or strongly as the first time. This is why people vote against their interests and are comfortable permitting systemic evils"
+    },
+    {
+      "i": 12, "type": "header", "image": "recap_inversion",
+      "heading": "Recap",
+      "description": "Bags of sand in the desert introduces a perceptual inversion, something that should be bad is good, what should be good is bad. Strength feels like Burdon and Burdon feels like Strength, the inner hegemony is the perception from the self. In the following section we'll study environmental effects on decisions, namely within the context of the economy and money. You may pick up to 2 points for perceptual moral points"
+    },
+    { "i": 13, "type": "multiple_choice", "image": "money_economy", "required": true, "selection": "multi", "heading": "In the context of Money and the Economy. I make a product and sell it to you for the effort it took to make", "answers_ref": "hegemony_11_perceptual" },
+    { "i": 14, "type": "multiple_choice", "image": "money_economy", "required": true, "selection": "multi", "heading": "In the context of Money and the Economy. I make a product and sell it to you for 5 times the effort it took to make", "answers_ref": "hegemony_11_perceptual" },
+    { "i": 15, "type": "multiple_choice", "image": "money_economy", "required": true, "selection": "multi", "heading": "In the context of Money and the Economy. I make a product and sell it to you for 5 times less than the effort it took to make", "answers_ref": "hegemony_11_perceptual" },
+    { "i": 16, "type": "multiple_choice", "image": "money_economy", "required": true, "selection": "multi", "heading": "In the context of Money and the Economy. I buy a product at 5 times less than it costs to make", "answers_ref": "hegemony_11_perceptual" },
+    { "i": 17, "type": "multiple_choice", "image": "money_economy", "required": true, "selection": "multi", "heading": "In the context of Money and the Economy. I buy a product at 5 times more than it costs to make", "answers_ref": "hegemony_11_perceptual" },
+    {
+      "i": 18, "type": "header",
+      "heading": "Control Questions",
+      "description": "In this section we ask some basic questions about the concept of Free Food where food is Sustenance, please answer the closest location for where you think the idea originates"
+    },
+    { "i": 19, "type": "multiple_choice", "image": "control_questions", "required": true, "selection": "pick_one", "allowOther": true, "heading": "Where would you place Free Sustenance for Everyone?", "answers_ref": "hegemony_7_with_none" },
+    { "i": 20, "type": "multiple_choice", "image": "control_questions", "required": true, "selection": "pick_one", "allowOther": true, "heading": "Where would you place No Sustenance for Anyone?", "answers_ref": "hegemony_7_with_none" },
+    { "i": 21, "type": "multiple_choice", "image": "control_questions", "required": true, "selection": "pick_one", "allowOther": true, "heading": "Where would you place Free Sustenance only for the poor?", "answers_ref": "hegemony_7_with_none" },
+    { "i": 22, "type": "multiple_choice", "image": "control_questions", "required": true, "selection": "pick_one", "allowOther": true, "heading": "Where would you place Free Sustenance only for the rich?", "answers_ref": "hegemony_7_with_none" },
+    {
+      "i": 23, "type": "header",
+      "heading": "Moving on…",
+      "description": "Now we should have a decent understanding of how the Psochic Hegemony works, lets move onto some historical and mythological figures. Consider the idea of these individuals and what they represent"
+    }
+  ],
+  "finish": { "type": "redirect", "link": null, "name": "Finish Page 1" }
+}

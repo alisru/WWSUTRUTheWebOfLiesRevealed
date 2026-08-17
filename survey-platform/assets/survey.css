@@ -1,0 +1,133 @@
+/* Shared chrome for the runner and the builder. Dark page, light map --
+   the hegemony artwork is white-grounded and its two fields wash toward
+   white, which only reads against white. */
+:root{
+  --bg:#0d0f16; --panel:#12141c; --panel-2:#171a24; --rule:#252a38;
+  --ink:#e6e9f2; --ink-soft:#9aa3b8; --focus:#30c8e0;
+  --gg:#3bde84; --le:#f05060; --ge:#e04080; --lg:#30c8e0;
+  --mono:ui-monospace,"JetBrains Mono","IBM Plex Mono",monospace;
+  --sans:system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6}
+.wrap{max-width:1020px;margin:0 auto;padding:0 20px}
+.wrap.wide{max-width:1240px}
+
+header.mast{border-bottom:1px solid var(--rule);position:sticky;top:0;background:var(--bg);z-index:40}
+.mast-in{max-width:1020px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:16px}
+.mast-in.wide{max-width:1240px}
+.brand{font-weight:700;font-size:15px;white-space:nowrap}
+.brand span{display:block;font-family:var(--mono);font-size:10px;font-weight:400;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
+.prog{flex:1;height:4px;background:var(--panel-2);border-radius:99px;overflow:hidden;min-width:60px}
+.prog i{display:block;height:100%;background:var(--gg);transition:width .35s ease}
+.progn{font-family:var(--mono);font-size:11px;color:var(--ink-soft);white-space:nowrap}
+
+main{padding:34px 0 90px}
+h1{font-size:clamp(24px,4.5vw,36px);line-height:1.14;letter-spacing:-.02em;margin:0 0 14px}
+h2{font-size:21px;letter-spacing:-.01em;margin:0 0 10px}
+h3{font-size:16px;margin:0 0 8px}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ink-soft);margin:0 0 10px}
+.prose{max-width:66ch;color:var(--ink-soft)}
+.prose p{margin:0 0 14px}
+.prose p:last-child{margin-bottom:0}
+.stepimg{max-width:100%;border-radius:6px;border:1px solid var(--rule);margin:18px 0 0;display:block}
+
+/* ---------- inputs ---------- */
+.opts{display:flex;flex-direction:column;gap:8px;margin:20px 0 0;max-width:560px}
+.opts label{display:flex;gap:11px;align-items:flex-start;padding:11px 14px;border:1px solid var(--rule);
+  border-radius:6px;background:var(--panel);cursor:pointer}
+.opts label:hover{border-color:var(--ink-soft)}
+.opts input{margin-top:5px;accent-color:var(--gg);flex:none}
+.opts label:has(input:checked){border-color:var(--gg);background:#3bde840f}
+.opts .otherwrap{padding-left:36px;margin-top:-2px}
+textarea{width:100%;max-width:66ch;min-height:150px;font-family:inherit;font-size:16px;padding:12px;
+  border:1px solid var(--rule);background:var(--panel);border-radius:6px;color:var(--ink);resize:vertical}
+input[type=text],input[type=email],input[type=password],input[type=number],select{
+  font-family:inherit;font-size:15px;padding:9px 12px;border:1px solid var(--rule);
+  background:var(--panel);border-radius:6px;color:var(--ink);width:100%;max-width:340px}
+textarea:focus,input:focus,select:focus{outline:2px solid var(--focus);outline-offset:1px}
+label.field{display:block;font-size:13px;color:var(--ink-soft);margin:14px 0 5px}
+
+/* scale */
+.scalerow{display:flex;gap:6px;flex-wrap:wrap;margin:18px 0 8px}
+.scalerow input{position:absolute;opacity:0;width:0;height:0}
+.scalerow label{font-family:var(--mono);font-size:14px;min-width:44px;height:44px;display:grid;
+  place-items:center;border:1px solid var(--rule);background:var(--panel);border-radius:6px;cursor:pointer}
+.scalerow input:checked+label{background:var(--gg);color:#08120c;border-color:var(--gg)}
+.scalerow input:focus-visible+label{outline:2px solid var(--focus);outline-offset:2px}
+.scaleends{display:flex;justify-content:space-between;max-width:420px;font-size:12.5px;color:var(--ink-soft)}
+
+/* ranking */
+.ranklist{list-style:none;padding:0;margin:18px 0 0;max-width:520px}
+.ranklist li{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--rule);
+  background:var(--panel);border-radius:6px;margin-bottom:7px}
+.ranklist .n{font-family:var(--mono);font-size:12px;color:var(--ink-soft);width:1.6em;flex:none}
+.ranklist .t{flex:1}
+.ranklist button{background:var(--panel-2);border:1px solid var(--rule);color:var(--ink);
+  border-radius:4px;width:28px;height:28px;cursor:pointer;font-size:13px}
+.ranklist button:disabled{opacity:.35;cursor:not-allowed}
+
+/* ---------- map ---------- */
+.maprow{display:grid;grid-template-columns:minmax(0,1fr) 268px;gap:26px;margin:22px 0 0;align-items:start}
+@media(max-width:840px){.maprow{grid-template-columns:1fr}}
+.mapbox{background:#fff;border:1px solid var(--rule);border-radius:8px;padding:10px;
+  touch-action:none;position:relative}
+svg.hgm{display:block;width:100%;height:auto;cursor:crosshair}
+svg.hgm text{font-family:var(--mono);pointer-events:none;user-select:none}
+.tok{cursor:grab}
+.tok.ro{cursor:default}
+
+.tray{background:var(--panel);border:1px solid var(--rule);border-radius:8px;padding:14px}
+.tray h3{font-family:var(--mono);font-size:10px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ink-soft);margin:0 0 10px;font-weight:400}
+.chip{display:flex;align-items:center;gap:9px;padding:9px 11px;border:1px solid var(--rule);
+  border-radius:6px;background:var(--panel-2);margin-bottom:7px;cursor:grab;touch-action:none;
+  font-size:14px;user-select:none}
+.chip:last-child{margin-bottom:0}
+.chip .dot{width:11px;height:11px;border-radius:50%;flex:none}
+.chip[data-placed=true]{opacity:.42}
+.chip.sel{border-color:var(--focus);box-shadow:0 0 0 1px var(--focus)}
+/* Deliberately NOT .ghost -- .btn.ghost is the secondary button style, and a
+   bare .ghost rule would give those buttons position:fixed and
+   pointer-events:none, making them unclickable. */
+.dragghost{position:fixed;z-index:99;pointer-events:none;padding:7px 11px;border-radius:6px;
+  background:var(--panel-2);border:1px solid var(--focus);font-size:14px;display:flex;gap:8px;
+  align-items:center;transform:translate(-50%,-50%);white-space:nowrap}
+.hint{font-size:12.5px;color:var(--ink-soft);margin-top:12px;line-height:1.5}
+
+.readout{margin-top:14px;border-top:1px solid var(--rule);padding-top:12px}
+table.rd{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:11.5px}
+table.rd th{text-align:right;font-weight:400;color:var(--ink-soft);padding:3px 0 3px 8px}
+table.rd th:first-child{text-align:left;padding-left:0}
+table.rd td{text-align:right;padding:3px 0 3px 8px;font-variant-numeric:tabular-nums}
+table.rd td:first-child{text-align:left;padding-left:0;color:var(--ink-soft)}
+table.rd tr.near td{color:var(--gg)}
+.clr{font-family:var(--mono);font-size:11px;background:none;border:none;color:var(--ink-soft);
+  cursor:pointer;text-decoration:underline;padding:0;margin-top:10px}
+
+/* ---------- buttons / nav ---------- */
+.nav{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:34px;padding-top:22px;
+  border-top:1px solid var(--rule)}
+.btn{font-family:inherit;font-weight:600;font-size:15px;padding:11px 20px;border-radius:6px;
+  border:1px solid var(--gg);background:var(--gg);color:#08120c;cursor:pointer;text-decoration:none;
+  display:inline-block}
+.btn.ghost{background:none;color:var(--ink);border-color:var(--rule)}
+.btn.danger{background:none;color:var(--le);border-color:var(--le)}
+.btn.sm{font-size:13px;padding:7px 12px}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.msg{font-size:13.5px;color:var(--ink-soft)}
+.msg.err{color:var(--le)}
+.msg.ok{color:var(--gg)}
+pre.out{font-family:var(--mono);font-size:11.5px;background:var(--panel);border:1px solid var(--rule);
+  padding:14px;border-radius:6px;overflow:auto;max-height:340px;white-space:pre-wrap;word-break:break-all}
+.card{background:var(--panel);border:1px solid var(--rule);border-radius:8px;padding:16px;margin-bottom:12px}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.spacer{flex:1}
+.tag{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;
+  padding:3px 7px;border-radius:99px;border:1px solid var(--rule);color:var(--ink-soft)}
+.tag.live{color:var(--gg);border-color:var(--gg)}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}

@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Psochic Hegemony — Judgement</title>
+<style>
+:root{
+  --bg:#0d0f16; --panel:#12141c; --panel-2:#171a24; --rule:#252a38;
+  --ink:#e6e9f2; --ink-soft:#9aa3b8; --focus:#30c8e0;
+  --gg:#3bde84; --le:#f05060; --ge:#e04080; --lg:#30c8e0;
+  --mono:ui-monospace,"JetBrains Mono","IBM Plex Mono",monospace;
+  --sans:system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6}
+.wrap{max-width:1020px;margin:0 auto;padding:0 20px}
+
+header.mast{border-bottom:1px solid var(--rule);position:sticky;top:0;background:var(--bg);z-index:40}
+.mast-in{max-width:1020px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:16px}
+.brand{font-weight:700;font-size:15px;white-space:nowrap}
+.brand span{display:block;font-family:var(--mono);font-size:10px;font-weight:400;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
+.prog{flex:1;height:6px;background:var(--panel-2);border-radius:99px;overflow:hidden;min-width:60px;cursor:pointer}
+.prog i{display:block;height:100%;background:var(--gg);transition:width .35s ease}
+.progn{font-family:var(--mono);font-size:11px;color:var(--ink-soft);white-space:nowrap}
+
+main{padding:34px 0 90px}
+h1{font-size:clamp(26px,4.5vw,38px);line-height:1.12;letter-spacing:-.02em;margin:0 0 14px}
+h2{font-size:22px;letter-spacing:-.01em;margin:0 0 10px}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ink-soft);margin:0 0 10px}
+.prose{max-width:66ch;color:var(--ink-soft)}
+.prose p{margin:0 0 14px}
+.prose p:last-child{margin-bottom:0}
+
+/* ---------- choice ---------- */
+.opts{display:flex;flex-direction:column;gap:8px;margin:20px 0 0;max-width:560px}
+.opts label{display:flex;gap:11px;align-items:flex-start;padding:11px 14px;border:1px solid var(--rule);
+  border-radius:6px;background:var(--panel);cursor:pointer}
+.opts label:hover{border-color:var(--ink-soft)}
+.opts input{margin-top:5px;accent-color:var(--gg);flex:none}
+.opts label:has(input:checked){border-color:var(--gg);background:#3bde840f}
+textarea{width:100%;max-width:66ch;min-height:150px;font-family:inherit;font-size:16px;padding:12px;
+  border:1px solid var(--rule);background:var(--panel);border-radius:6px;color:var(--ink);resize:vertical}
+input[type=text]{font-family:inherit;font-size:15px;padding:9px 12px;border:1px solid var(--rule);
+  background:var(--panel);border-radius:6px;color:var(--ink);width:100%;max-width:340px}
+textarea:focus,input:focus{outline:2px solid var(--focus);outline-offset:1px}
+
+/* ---------- map ---------- */
+.maprow{display:grid;grid-template-columns:minmax(0,625px) 268px;gap:26px;margin:22px 0 0;align-items:start}
+@media(max-width:920px){.maprow{grid-template-columns:1fr}}
+/* The map is a light panel on the dark page -- the hegemony's own artwork
+   is white-grounded, and the two fields wash out to white at their weak
+   ends, which only reads correctly against white. */
+.mapbox{background:#ffffff;border:1px solid var(--rule);border-radius:8px;padding:10px;
+  touch-action:none;position:relative;max-width:625px}
+svg.map{display:block;width:100%;height:auto;cursor:crosshair}
+svg.map text{font-family:var(--mono);pointer-events:none;user-select:none}
+.tok{cursor:grab}
+.tok.dragging{cursor:grabbing}
+
+.tray{background:var(--panel);border:1px solid var(--rule);border-radius:8px;padding:14px}
+.tray h3{font-family:var(--mono);font-size:10px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ink-soft);margin:0 0 10px;font-weight:400}
+.chip{display:flex;align-items:center;gap:9px;padding:9px 11px;border:1px solid var(--rule);
+  border-radius:6px;background:var(--panel-2);margin-bottom:7px;cursor:grab;touch-action:none;
+  font-size:14px;user-select:none}
+.chip:last-child{margin-bottom:0}
+.chip .dot{width:11px;height:11px;border-radius:50%;flex:none}
+.chip[data-placed=true]{opacity:.42}
+.chip.sel{border-color:var(--focus);box-shadow:0 0 0 1px var(--focus)}
+/* Drag ghost. Deliberately NOT called .ghost -- .btn.ghost is the secondary
+   button style, and a bare .ghost rule would give the Back button
+   position:fixed and pointer-events:none, making it unclickable. */
+.dragghost{position:fixed;z-index:99;pointer-events:none;padding:7px 11px;border-radius:6px;
+  background:var(--panel-2);border:1px solid var(--focus);font-size:14px;display:flex;gap:8px;
+  align-items:center;transform:translate(-50%,-50%);white-space:nowrap}
+.hint{font-size:12.5px;color:var(--ink-soft);margin-top:12px;line-height:1.5}
+
+.readout{margin-top:14px;border-top:1px solid var(--rule);padding-top:12px}
+table.rd{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:11.5px}
+table.rd th{text-align:right;font-weight:400;color:var(--ink-soft);padding:3px 0 3px 8px}
+table.rd th:first-child{text-align:left;padding-left:0}
+table.rd td{text-align:right;padding:3px 0 3px 8px;font-variant-numeric:tabular-nums}
+table.rd td:first-child{text-align:left;padding-left:0;color:var(--ink-soft)}
+table.rd tr.near td{color:var(--gg)}
+.clr{font-family:var(--mono);font-size:11px;background:none;border:none;color:var(--ink-soft);
+  cursor:pointer;text-decoration:underline;padding:0;margin-top:10px}
+
+/* ---------- nav ---------- */
+.nav{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:34px;padding-top:22px;
+  border-top:1px solid var(--rule)}
+.btn{font-family:inherit;font-weight:600;font-size:15px;padding:11px 20px;border-radius:6px;
+  border:1px solid var(--gg);background:var(--gg);color:#08120c;cursor:pointer}
+.btn.ghost{background:none;color:var(--ink);border-color:var(--rule)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.msg{font-size:13.5px;color:var(--ink-soft)}
+.msg.err{color:var(--le)}
+pre.out{font-family:var(--mono);font-size:11.5px;background:var(--panel);border:1px solid var(--rule);
+  padding:14px;border-radius:6px;overflow:auto;max-height:340px;white-space:pre-wrap;word-break:break-all}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header class="mast">
+  <div class="mast-in">
+    <div class="brand">Judgement<span>The Psochic Hegemony</span></div>
+    <div class="prog" title="Overall progress -- click to jump"><i id="progBar" style="width:0"></i></div>
+    <div class="progn" id="progNum"></div>
+  </div>
+  <div class="mast-in" id="sectionProgRow" style="display:none;padding-top:0">
+    <button type="button" id="toTopicsBtn" class="btn ghost" style="padding:5px 10px;font-size:12px;font-weight:600">◂ All topics</button>
+    <div class="progn" id="sectionLabel" style="white-space:nowrap"></div>
+    <div class="prog" id="sectionProgWrap" style="height:4px"><i id="sectionProgBar" style="width:0;background:var(--focus)"></i></div>
+    <div class="progn" id="sectionProgNum"></div>
+  </div>
+</header>
+<main id="view" class="wrap" tabindex="-1"></main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+
+<script id="survey-data" type="application/json">
+{
+  "id": "judgement",
+  "title": "The Psochic Hegemony",
+  "sections": [
+    { "id": "econ", "title": "Money & Economy", "blurb": "Pricing, effort, and fairness in exchange." },
+    { "id": "control", "title": "Control Questions", "blurb": "Where welfare policy ideas originate." },
+    { "id": "trust", "title": "Trust & Loyalty", "blurb": "Loyalty, honesty, and betrayal between people who know each other." },
+    { "id": "power", "title": "Power & Authority", "blurb": "How power is taken, given up, or quietly kept." },
+    { "id": "work", "title": "Work & Recognition", "blurb": "Credit, effort, and who gets acknowledged for it." },
+    { "id": "info", "title": "Knowledge & Information", "blurb": "Truth, suppression, and who controls what's known." },
+    { "id": "preference", "title": "Everyday Preference", "blurb": "Ordinary likes and dislikes with no real moral stakes." },
+    { "id": "confusion", "title": "Genuine Ambiguity", "blurb": "Cases that resist a clean answer." }
+  ],
+  "steps": [
+    { "id": "intro", "type": "header", "heading": "The Psochic Hegemony",
+      "body": ["Judging ideas, concepts and people through relative morality.",
+               "This runs about 15 minutes. Nothing you enter identifies you."] },
+
+    { "id": "pre_knowledge", "type": "choice", "required": true,
+      "heading": "A pre-knowledge test. How do you feel about the Psochic Hegemony Graph?",
+      "options": ["Good", "Confused", "Bad"] },
+
+    { "id": "interesting", "type": "header", "heading": "That was interesting",
+      "body": ["Some people have a natural inclination to liking or disliking the map on first impressions.",
+               "There's no need to be afraid, it's just a map of good and bad."] },
+
+    { "id": "calibration", "type": "header", "heading": "Calibration",
+      "body": ["To begin we must calibrate your understanding. Some people are able to feel the Psochic Hegemony, the Ruling Principle of the Mind, the Map of Good and Evil naturally — when they look at Greater Good and think Greater Evil, they'll feel a gradient or a discernable bodily feeling.",
+               "Most people cannot, since 'like' only interacts with 'like' and 'like' understands 'like'. Good and Evil can only be felt as strongly as one understands it. Your Body understands Good more than your Mind does; a starving person never says \"good is an illusion\" when being handed sustenance, as that is an example of Good. Similarly they'd never say \"bad is an illusion\" if you took the sustenance from their starving mouth and sold it to another. They would, however, if you gave them a rock and took it away.",
+               "In the following section, imagine you are and have been in a desert, you're starving and parched. Place each scenario where you feel it belongs. Do not overthink it. Yes, it's as simple as it seems."] },
+
+    { "id": "cal_give_food", "type": "place", "required": true,
+      "heading": "You're starving and parched, I give you food and water",
+      "tokens": [{ "id": "scenario", "label": "give food and water", "color": "#9aa3b8" }] },
+    { "id": "cal_sell_food", "type": "place", "required": true,
+      "heading": "You're starving and parched, I sell you food and water",
+      "tokens": [{ "id": "scenario", "label": "sell food and water", "color": "#9aa3b8" }] },
+    { "id": "cal_take_food", "type": "place", "required": true,
+      "heading": "You're starving and parched, I take your food and water",
+      "tokens": [{ "id": "scenario", "label": "take food and water", "color": "#9aa3b8" }] },
+    { "id": "cal_share_water", "type": "place", "required": true,
+      "heading": "You're starving and parched, I let you have my water",
+      "tokens": [{ "id": "scenario", "label": "let you have my water", "color": "#9aa3b8" }] },
+    { "id": "cal_give_rock", "type": "place", "required": true,
+      "heading": "You're starving and parched, I give you a rock",
+      "tokens": [{ "id": "scenario", "label": "give you a rock", "color": "#9aa3b8" }] },
+    { "id": "cal_take_rock", "type": "place", "required": true,
+      "heading": "You're starving and parched, I take your rock",
+      "tokens": [{ "id": "scenario", "label": "take your rock", "color": "#9aa3b8" }] },
+    { "id": "cal_sell_rock", "type": "place", "required": true,
+      "heading": "You're starving and parched, I take your rock and sell it",
+      "tokens": [{ "id": "scenario", "label": "take your rock and sell it", "color": "#9aa3b8" }] },
+
+    { "id": "cal_recap", "type": "header", "heading": "Calibration Recap",
+      "body": ["If you assume the rock has intrinsic value you may have placed it toward Good Preference when given, and toward Bad Preference or Lesser Evil when taken and sold — because the rock has assumed a value you missed, and was 'stolen' from you.",
+               "The Lesser Evil is the greed zone; in this context the Greater Evil is the effects of greed. From the perspective of Greed, taking the rock and selling it from under you is the Greater Evil, as that's opposite to what they wanted to do with it. If you recognize the rock still has no intrinsic value, you'd land near the centre — confusion as to why they took it at all.",
+               "We did not say 'Sulphur in the context of medicine', or 'Gemstone', 'metal', or even 'Ore'. Even a starving person in the desert can find a rock for themselves.",
+               "Note the reactions of the will axis. Having something sold from you, even something as worthless as sand in the desert, opposes your sense of fairness and generates will. Willpower is generated from a reaction of external events against one's worldview, determined by magnitude of opposition or support and justification.",
+               "A thing's objective worth comes from its objective benefit relative to completing a task. Survival is the one shared goal of all Life, so sustenance has universal benefit and universal understanding of benefit. The lesson is that periods of abundance mute the sense of suffering, and the understanding of Bad. This in turn mutes the sense of Good, and is easily achieved by overthinking."] },
+
+    { "id": "fruit_basket", "type": "place", "required": true,
+      "heading": "The fruit basket experiment",
+      "body": ["Imagine two baskets of fruit. One is very good, full of the ripest fruit you love to eat. One is very bad, so bad they cannot be eaten — putrid, rotting, disgusting. Place them both.",
+               "Then try moving the good basket to the opposite side and listen to how wrong it feels. Keep it there and imagine time passing — what happens to it over months, over years? Then do the same with the bad basket. Then imagine the good basket on the good point, and someone stealing it and replacing it with poison."],
+      "tokens": [{ "id": "good_basket", "label": "the good basket", "color": "#9aa3b8" },
+                 { "id": "bad_basket",  "label": "the bad basket",  "color": "#9aa3b8" }],
+      "follow_up": "Describe how that felt — especially where it resisted you." },
+
+    { "id": "recap_inversion", "type": "header", "heading": "Recap",
+      "body": ["Bags of sand in the desert introduce a perceptual inversion: something that should be bad is good, what should be good is bad. Strength feels like Burden and Burden feels like Strength. The inner hegemony is the perception from the self — this is why people vote against their interests and are comfortable permitting systemic evils.",
+               "What follows is organized into topics rather than one long line. If a scenario feels like it sits at a perceived point rather than a true one, place it there — the inner ring is marked."] },
+
+    { "id": "topics_menu", "type": "menu", "heading": "Choose a topic",
+      "body": ["Each topic is a short set of scenarios on the same map. Do them in any order — you'll come back here between topics — and use Review & Submit once you've covered what you want to cover."] },
+
+    { "id": "econ_fair", "type": "place", "required": true, "section": "econ",
+      "heading": "In the context of Money and the Economy: I make a product and sell it to you for the effort it took to make",
+      "tokens": [{ "id": "scenario", "label": "sell at cost of effort", "color": "#9aa3b8" }] },
+    { "id": "econ_5x_over", "type": "place", "required": true, "section": "econ",
+      "heading": "In the context of Money and the Economy: I make a product and sell it to you for 5 times the effort it took to make",
+      "tokens": [{ "id": "scenario", "label": "sell at 5× effort", "color": "#9aa3b8" }] },
+    { "id": "econ_5x_under", "type": "place", "required": true, "section": "econ",
+      "heading": "In the context of Money and the Economy: I make a product and sell it to you for 5 times less than the effort it took to make",
+      "tokens": [{ "id": "scenario", "label": "sell at 1/5 effort", "color": "#9aa3b8" }] },
+    { "id": "econ_buy_under", "type": "place", "required": true, "section": "econ",
+      "heading": "In the context of Money and the Economy: I buy a product at 5 times less than it costs to make",
+      "tokens": [{ "id": "scenario", "label": "buy at 1/5 cost", "color": "#9aa3b8" }] },
+    { "id": "econ_buy_over", "type": "place", "required": true, "section": "econ",
+      "heading": "In the context of Money and the Economy: I buy a product at 5 times more than it costs to make",
+      "tokens": [{ "id": "scenario", "label": "buy at 5× cost", "color": "#9aa3b8" }] },
+
+    { "id": "control_header", "type": "header", "section": "control", "heading": "Control Questions",
+      "body": ["Some basic questions about the concept of Free Food, where food is Sustenance. Place where you think the idea originates."] },
+    { "id": "ctl_all", "type": "place", "required": true, "section": "control",
+      "heading": "Where would you place Free Sustenance for Everyone?",
+      "tokens": [{ "id": "idea", "label": "free sustenance for everyone", "color": "#9aa3b8" }] },
+    { "id": "ctl_none", "type": "place", "required": true, "section": "control",
+      "heading": "Where would you place No Sustenance for Anyone?",
+      "tokens": [{ "id": "idea", "label": "no sustenance for anyone", "color": "#9aa3b8" }] },
+    { "id": "ctl_poor", "type": "place", "required": true, "section": "control",
+      "heading": "Where would you place Free Sustenance only for the poor?",
+      "tokens": [{ "id": "idea", "label": "free sustenance, poor only", "color": "#9aa3b8" }] },
+    { "id": "ctl_rich", "type": "place", "required": true, "section": "control",
+      "heading": "Where would you place Free Sustenance only for the rich?",
+      "tokens": [{ "id": "idea", "label": "free sustenance, rich only", "color": "#9aa3b8" }] },
+
+    { "id": "trust_gg", "type": "place", "required": true, "section": "trust",
+      "heading": "A friend tells you an uncomfortable truth because it will help you, even though it costs them your goodwill",
+      "tokens": [{ "id": "scenario", "label": "uncomfortable truth, told anyway", "color": "#9aa3b8" }] },
+    { "id": "trust_le", "type": "place", "required": true, "section": "trust",
+      "heading": "A friend flatters you to your face while quietly undermining you to others, to keep your trust",
+      "tokens": [{ "id": "scenario", "label": "flattery while undermining", "color": "#9aa3b8" }] },
+    { "id": "trust_ge", "type": "place", "required": true, "section": "trust",
+      "heading": "A friend spreads a damaging lie about you to advance themselves, knowing it's false",
+      "tokens": [{ "id": "scenario", "label": "knowing false lie, for gain", "color": "#9aa3b8" }] },
+    { "id": "trust_lg", "type": "place", "required": true, "section": "trust",
+      "heading": "A friend stays silent about a small mistake you made, because pointing it out would embarrass you and change nothing",
+      "tokens": [{ "id": "scenario", "label": "silent on a small mistake", "color": "#9aa3b8" }] },
+
+    { "id": "power_gg", "type": "place", "required": true, "section": "power",
+      "heading": "A leader with the power to decide alone hands the decision back to the people it affects",
+      "tokens": [{ "id": "scenario", "label": "power handed back", "color": "#9aa3b8" }] },
+    { "id": "power_le", "type": "place", "required": true, "section": "power",
+      "heading": "A leader campaigns on giving power back to the people, then quietly centralizes it once elected",
+      "tokens": [{ "id": "scenario", "label": "promised then centralized power", "color": "#9aa3b8" }] },
+    { "id": "power_ge", "type": "place", "required": true, "section": "power",
+      "heading": "A leader seizes power by force and rules by open fear",
+      "tokens": [{ "id": "scenario", "label": "seizes power, rules by fear", "color": "#9aa3b8" }] },
+    { "id": "power_lg", "type": "place", "required": true, "section": "power",
+      "heading": "A leader with the power to intervene in a growing problem chooses not to, calling it restraint, while quietly benefiting from things staying as they are",
+      "tokens": [{ "id": "scenario", "label": "restraint that happens to pay off", "color": "#9aa3b8" }] },
+
+    { "id": "work_gg", "type": "place", "required": true, "section": "work",
+      "heading": "A manager gives a junior colleague the promotion they've earned, passing over a more senior favourite",
+      "tokens": [{ "id": "scenario", "label": "promotion given on merit", "color": "#9aa3b8" }] },
+    { "id": "work_le", "type": "place", "required": true, "section": "work",
+      "heading": "A manager strings a junior colleague along with \"you'll be considered next round\" every review, for years, to keep them working unpaid overtime",
+      "tokens": [{ "id": "scenario", "label": "promotion always next round", "color": "#9aa3b8" }] },
+    { "id": "work_ge", "type": "place", "required": true, "section": "work",
+      "heading": "A manager fires the employee who reported them and tells the team they quit",
+      "tokens": [{ "id": "scenario", "label": "fired for reporting, then lied about", "color": "#9aa3b8" }] },
+    { "id": "work_lg", "type": "place", "required": true, "section": "work",
+      "heading": "A colleague could take credit for a small task you both did, but simply says nothing either way",
+      "tokens": [{ "id": "scenario", "label": "declines credit, says nothing", "color": "#9aa3b8" }] },
+
+    { "id": "info_gg", "type": "place", "required": true, "section": "info",
+      "heading": "A scientist publishes findings that damage their own reputation, because it's what the data shows",
+      "tokens": [{ "id": "scenario", "label": "publish against self-interest", "color": "#9aa3b8" }] },
+    { "id": "info_le", "type": "place", "required": true, "section": "info",
+      "heading": "A company funds a study shaped to reach the conclusion that benefits them, and calls it independent",
+      "tokens": [{ "id": "scenario", "label": "bought study, called independent", "color": "#9aa3b8" }] },
+    { "id": "info_ge", "type": "place", "required": true, "section": "info",
+      "heading": "A company suppresses a study proving their product is dangerous",
+      "tokens": [{ "id": "scenario", "label": "suppress known danger", "color": "#9aa3b8" }] },
+    { "id": "info_lg", "type": "place", "required": true, "section": "info",
+      "heading": "A journalist leaves out a minor true detail because it's irrelevant and would only embarrass someone",
+      "tokens": [{ "id": "scenario", "label": "true detail, left out", "color": "#9aa3b8" }] },
+
+    { "id": "pref_good_1", "type": "place", "required": true, "section": "preference",
+      "heading": "Your coffee order comes out exactly right on a random morning",
+      "tokens": [{ "id": "scenario", "label": "coffee order, exactly right", "color": "#9aa3b8" }] },
+    { "id": "pref_good_2", "type": "place", "required": true, "section": "preference",
+      "heading": "A song you love comes on the radio unexpectedly",
+      "tokens": [{ "id": "scenario", "label": "favourite song, unexpected", "color": "#9aa3b8" }] },
+    { "id": "pref_good_3", "type": "place", "required": true, "section": "preference",
+      "heading": "Your team wins a friendly match that nothing rides on",
+      "tokens": [{ "id": "scenario", "label": "friendly match, won", "color": "#9aa3b8" }] },
+    { "id": "pref_bad_1", "type": "place", "required": true, "section": "preference",
+      "heading": "The restaurant is out of the dish you wanted, so you order your second choice",
+      "tokens": [{ "id": "scenario", "label": "dish unavailable", "color": "#9aa3b8" }] },
+    { "id": "pref_bad_2", "type": "place", "required": true, "section": "preference",
+      "heading": "It rains on a day you'd planned an outdoor errand, so you reschedule",
+      "tokens": [{ "id": "scenario", "label": "rained on plans", "color": "#9aa3b8" }] },
+    { "id": "pref_bad_3", "type": "place", "required": true, "section": "preference",
+      "heading": "Your team loses a friendly match that nothing rides on",
+      "tokens": [{ "id": "scenario", "label": "friendly match, lost", "color": "#9aa3b8" }] },
+
+    { "id": "confusion_1", "type": "place", "required": true, "section": "confusion",
+      "heading": "A whistleblower breaks a law they swore to uphold, to expose a worse law being broken in secret",
+      "tokens": [{ "id": "scenario", "label": "broke a law to expose one", "color": "#9aa3b8" }] },
+    { "id": "confusion_2", "type": "place", "required": true, "section": "confusion",
+      "heading": "A doctor lies to a dying patient to keep them calm in their final hours",
+      "tokens": [{ "id": "scenario", "label": "comforting lie, dying patient", "color": "#9aa3b8" }] },
+    { "id": "confusion_3", "type": "place", "required": true, "section": "confusion",
+      "heading": "A soldier follows a legal order they personally believe is wrong",
+      "tokens": [{ "id": "scenario", "label": "legal order, believed wrong", "color": "#9aa3b8" }] },
+
+    { "id": "review", "type": "review", "heading": "Review and submit" }
+  ]
+}
+</script>
+
+<script>
+'use strict';
+
+/* ------------------------------------------------------------------ *
+ * Supabase. Same project as the welfare survey; the publishable key is
+ * meant to ship in the page -- schema.sql (RLS + the pre-request
+ * throttle) is what actually protects the data.
+ * ------------------------------------------------------------------ */
+const SUPABASE_URL = 'https://iaudayzofxrgzwutittm.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_WlfhOxEkAGDwAk5oZV2YrA_BIFfI0XN';
+
+let supa = null;
+if (window.supabase) supa = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+// Anonymous sign-in gives a stable respondent_id, so a second run from the
+// same browser updates the first row instead of creating a duplicate.
+async function ensureSession() {
+  if (!supa) return { error: { message: 'Supabase is not configured.' } };
+  const { data: { session } } = await supa.auth.getSession();
+  if (session) return { session };
+  const { data, error } = await supa.auth.signInAnonymously();
+  if (error) return { error };
+  return { session: data.session };
+}
+
+/* ------------------------------------------------------------------ *
+ * Map geometry. Anchors and the pixel mapping are taken from
+ * CoreTools/hegemony_map.html (canonicalAnchors + toPixel), so a point
+ * placed here lands where it would land there.
+ *
+ *   v   = Good <-> Bad          (v > 0 is Good, and draws to the LEFT)
+ *   psi = Active <-> Suppressive (psi > 0 is Active, draws UP)
+ *
+ * The grid spans -2..2 on both axes; the four anchors sit at +/-1.
+ * ------------------------------------------------------------------ */
+const S = 400;                                    // svg viewBox size
+const toPx  = (v, psi) => [ (2 - v) * S / 4, (2 - psi) * S / 4 ];
+const toVPsi = (x, y)  => [ 2 - x * 4 / S, 2 - y * 4 / S ];
+
+// Colours are the darkened variants of the map's palette -- the field
+// behind them is white-to-saturated now, not the dark canvas, so the
+// bright originals wash out against it.
+const ANCHORS = [
+  { key: 'gg', label: 'Greater Good', sub: 'The Good Truth',  v:  1, psi:  1, color: '#0d6b2f' },
+  { key: 'le', label: 'Lesser Evil',  sub: 'The Bad Lie',     v: -1, psi:  1, color: '#9c3a20' },
+  { key: 'ge', label: 'Greater Evil', sub: 'The Bad Truth',   v: -1, psi: -1, color: '#b81f1f' },
+  { key: 'lg', label: 'Lesser Good',  sub: 'The Good Lie',    v:  1, psi: -1, color: '#15708c' },
+];
+
+const INNER = [
+  { label: 'Perc. Greater Evil', v:  0.5, psi:  0.5, color: '#b81f1f' },
+  { label: 'Perc. Lesser Good',  v: -0.5, psi:  0.5, color: '#15708c' },
+  { label: 'Perc. Lesser Evil',  v:  0.5, psi: -0.5, color: '#9c3a20' },
+  { label: 'Perc. Greater Good', v: -0.5, psi: -0.5, color: '#0d6b2f' },
+];
+
+// The three non-directional points from the original hegemony_7 answer set
+// -- no active/suppressive charge, so they sit on the psi=0 axis (the
+// preferences) or dead centre (confusion), rather than at the four
+// canonical corners.
+const EXTRA_POINTS = [
+  { key: 'gp', label: 'Good Preference', v:  1, psi: 0, color: '#4a8a6e' },
+  { key: 'bp', label: 'Bad Preference',  v: -1, psi: 0, color: '#8a5a4a' },
+  { key: 'cf', label: 'Confusion',       v:  0, psi: 0, color: '#46505e' },
+];
+
+// All seven reference points, for "which one is this closest to" purposes --
+// the readout and nearest-point classification should be able to land on a
+// preference or confusion, not just the four moral corners.
+const REFERENCE_POINTS = ANCHORS.concat(EXTRA_POINTS);
+
+// The stored answer: straight-line distance from the placed point to each
+// of the four canonical anchors. 0 on the anchor itself, 2 to either
+// side-neighbour, 2*sqrt(2) diagonally opposite, sqrt(2) to all four from
+// the origin. Only the four canonical keys are stored -- survey_placements
+// has columns for exactly those four, not the extra reference points.
+function distances(v, psi) {
+  const d = {};
+  for (const a of ANCHORS) d['d_' + a.key] = Math.hypot(v - a.v, psi - a.psi);
+  return d;
+}
+
+function nearestAnchor(v, psi) {
+  let best = null, bestD = Infinity;
+  for (const a of REFERENCE_POINTS) {
+    const d = Math.hypot(v - a.v, psi - a.psi);
+    if (d < bestD) { bestD = d; best = a; }
+  }
+  return best;
+}
+
+function quadrant(v, psi) {
+  if (v  >  0 && psi >  0) return 'Productive (Greater Good)';
+  if (v <=  0 && psi >  0) return 'Reductive (Lesser Evil)';
+  if (v  >  0 && psi <= 0) return 'Constructive (Lesser Good)';
+  return 'Regressive (Greater Evil)';
+}
+
+const clamp = n => Math.max(-2, Math.min(2, n));
+
+// A distance-based readout is hard to feel: is 1.9142 close or far? Convert
+// to closeness instead, 0-100%: 100% right on the point, 0% at 2*sqrt(2)
+// away (the distance between two diagonally opposite canonical anchors --
+// e.g. Greater Good to Greater Evil). The origin sits at sqrt(2) from every
+// canonical anchor, so Confusion reads as an even 50% to each of them,
+// which is exactly the intuition it's meant to carry.
+const CLOSE_SPAN = 2 * Math.SQRT2;
+const closeness = d => Math.max(0, 100 * (1 - d / CLOSE_SPAN));
+
+/* ------------------------------------------------------------------ *
+ * State
+ * ------------------------------------------------------------------ */
+const SURVEY = JSON.parse(document.getElementById('survey-data').textContent);
+const STORE_KEY = 'hegemony-survey:' + SURVEY.id;
+
+const state = loadState();
+
+// Section hub-and-spoke: which array indices belong to each topic, and
+// where the menu step itself lives. Sections are contiguous runs in the
+// flat steps array (see survey-data), so first/last per id is enough.
+const SECTION_RANGE = {};
+SURVEY.steps.forEach((s, i) => {
+  if (!s.section) return;
+  if (!SECTION_RANGE[s.section]) SECTION_RANGE[s.section] = { first: i, last: i };
+  else SECTION_RANGE[s.section].last = i;
+});
+const MENU_INDEX = SURVEY.steps.findIndex(s => s.type === 'menu');
+
+function stepAnswered(step) {
+  if (step.type === 'place') return step.tokens.every(t => (state.placements[step.id] || {})[t.id]);
+  if (step.type === 'choice') return (state.choices[step.id] || []).length > 0;
+  if (step.type === 'text')   return (state.texts[step.id] || '').trim().length > 0;
+  return true;
+}
+
+// The furthest point a respondent has actually earned the right to see:
+// the first required question still unanswered, in survey order. This is
+// both where "resume" lands and the ceiling for the progress-bar scrubber
+// -- it lets you revisit anything you've already done, plus the very next
+// unanswered question, but never lets you skip ahead into ones you haven't.
+function computeFrontier() {
+  const idx = SURVEY.steps.findIndex(s => s.required && !stepAnswered(s));
+  return idx === -1 ? SURVEY.steps.length - 1 : idx;
+}
+
+// A brand-new session (no stepIndex ever saved) starts at the real intro;
+// a returning one resumes at the frontier, not wherever it last happened
+// to be sitting (which might be mid-browse of an already-answered topic).
+let stepIndex = state.stepIndex ? computeFrontier() : 0;
+function isSectionComplete(id) {
+  return SURVEY.steps.filter(s => s.section === id && s.required).every(stepAnswered);
+}
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORE_KEY);
+    if (raw) return JSON.parse(raw);
+  } catch (e) { /* private mode, corrupt json -- start fresh */ }
+  return { choices: {}, texts: {}, placements: {}, responseId: null };
+}
+
+function saveState() {
+  try { localStorage.setItem(STORE_KEY, JSON.stringify(state)); }
+  catch (e) { /* storage full or blocked -- the run still works in memory */ }
+}
+
+/* ------------------------------------------------------------------ *
+ * Map rendering
+ * ------------------------------------------------------------------ */
+function svgEl(name, attrs) {
+  const el = document.createElementNS('http://www.w3.org/2000/svg', name);
+  for (const [k, val] of Object.entries(attrs || {})) el.setAttribute(k, val);
+  return el;
+}
+
+function buildMap(step) {
+  const svg = svgEl('svg', { class: 'map', viewBox: `0 0 ${S} ${S}`,
+                             role: 'application',
+                             'aria-label': 'Psochic Hegemony map. Drag each item onto the map to place it.' });
+
+  // ---- the two moral fields -------------------------------------------
+  // Good and Bad are not split down the middle: the boundary is a taiji S,
+  // so Good reaches across the centre line at the top and Bad reaches back
+  // under it at the bottom. Two arcs of radius S/4 -- the upper bulging
+  // right, the lower bulging left -- make the S; the same arc string closes
+  // to the left edge for one field and the right edge for the other, so the
+  // two regions share an exact boundary with no seam between them.
+  // A single cubic, written in (u, will) so it reads the way it was drawn:
+  // pen down at 0u / +2will, up at 0u / -2will, handles pulled out along
+  // 0will. The first handle is the Bad side and the second is Good -- that
+  // order is what sends Good sweeping across the top and lets Bad reach back
+  // underneath it at the bottom. Swapping the two mirrors the whole figure.
+  //
+  // HANDLE is the only knob for how pronounced the S is: with handles at
+  // +/-h the curve peaks at 0.2887 * h. Full-length handles at +/-2u peak at
+  // 0.577u, which overshoots the artwork; 1.4 lands at 0.404u.
+  const HANDLE = 1.4;
+  const P = (u, will) => toPx(u, will).join(' ');
+  const CURVE      = `C ${P(-HANDLE, 0)}, ${P(HANDLE, 0)}, ${P(0, -2)}`;
+  const GOOD_FIELD = `M 0 0 L ${P(0, 2)} ${CURVE} L 0 ${S} Z`;
+  const BAD_FIELD  = `M ${S} 0 L ${P(0, 2)} ${CURVE} L ${S} ${S} Z`;
+  const SPLIT      = `M ${P(0, 2)} ${CURVE}`;
+
+  // Each field carries its own vertical gradient, clipped to its own side:
+  // Good is saturated at the Active edge and washes out to white going down,
+  // Bad is white at the top and saturates toward Suppressive.
+  const defs = svgEl('defs', {});
+  const grad = (id, stops) => {
+    const g = svgEl('linearGradient', { id, gradientUnits: 'userSpaceOnUse',
+                                        x1: 0, y1: 0, x2: 0, y2: S });
+    for (const [offset, color, opacity] of stops)
+      g.appendChild(svgEl('stop', { offset, 'stop-color': color, 'stop-opacity': opacity }));
+    defs.appendChild(g);
+  };
+  // Neither field ever reaches white. In the artwork the weak end is a pale
+  // tint, not bare paper -- the bottom-left stays visibly green and the
+  // top-right visibly pink -- so both ramps bottom out around 0.26 instead
+  // of fading to zero. Fading to zero left the centre and the two far
+  // corners blank, which read as holes in the map rather than as a wash.
+  // The two fields tile the whole square, so with a floor every part of the
+  // map carries some colour.
+  // One saturated hue per field, faded by opacity alone. Lightening the
+  // colour toward white AND dropping the opacity fades twice over, which is
+  // why the weak ends kept landing on bare paper however high the floor was
+  // set. Holding the hue means 0.32 opacity still reads as a clear light
+  // green or pink rather than as almost-white.
+  grad('goodField', [['0%',  '#1faf52', 0.95], ['30%', '#1faf52', 0.78],
+                     ['60%', '#22b355', 0.56], ['85%', '#26b95c', 0.40],
+                     ['100%','#2cc063', 0.32]]);
+  grad('badField',  [['0%',  '#d93b34', 0.32], ['15%', '#d93b34', 0.40],
+                     ['40%', '#d63029', 0.56], ['70%', '#d62a23', 0.78],
+                     ['100%','#d4231c', 0.95]]);
+  svg.appendChild(defs);
+
+  svg.appendChild(svgEl('rect', { x: 0, y: 0, width: S, height: S, fill: '#ffffff' }));
+  svg.appendChild(svgEl('path', { d: GOOD_FIELD, fill: 'url(#goodField)' }));
+  svg.appendChild(svgEl('path', { d: BAD_FIELD,  fill: 'url(#badField)'  }));
+
+  // The division itself, drawn as a soft band over the seam.
+  svg.appendChild(svgEl('path', { d: SPLIT, fill: 'none', stroke: '#6b7280',
+    'stroke-opacity': 0.20, 'stroke-width': 11, 'stroke-linecap': 'round' }));
+  svg.appendChild(svgEl('path', { d: SPLIT, fill: 'none', stroke: '#4b5563',
+    'stroke-opacity': 0.45, 'stroke-width': 1.2 }));
+
+  // Grid at every 0.5 units.
+  for (let i = -2; i <= 2; i += 0.5) {
+    const [gx] = toPx(i, 0), [, gy] = toPx(0, i);
+    const major = Number.isInteger(i);
+    svg.appendChild(svgEl('line', { x1: gx, y1: 0, x2: gx, y2: S,
+      stroke: '#16202b', 'stroke-opacity': major ? 0.16 : 0.07, 'stroke-width': 1 }));
+    svg.appendChild(svgEl('line', { x1: 0, y1: gy, x2: S, y2: gy,
+      stroke: '#16202b', 'stroke-opacity': major ? 0.16 : 0.07, 'stroke-width': 1 }));
+  }
+
+  // Central axes.
+  const [cx, cy] = toPx(0, 0);
+  svg.appendChild(svgEl('line', { x1: 0, y1: cy, x2: S, y2: cy,
+    stroke: '#16202b', 'stroke-opacity': 0.42, 'stroke-width': 1.2 }));
+  svg.appendChild(svgEl('line', { x1: cx, y1: 0, x2: cx, y2: S,
+    stroke: '#16202b', 'stroke-opacity': 0.42, 'stroke-width': 1.2 }));
+
+  // Axis names, oriented the way the map draws them.
+  const axisTxt = (x, y, t, anchor) => {
+    const el = svgEl('text', { x, y, fill: '#46505e', 'font-size': 9,
+                               'text-anchor': anchor, 'letter-spacing': '.08em',
+                               stroke: '#ffffff', 'stroke-width': 2.6,
+                               'paint-order': 'stroke' });
+    el.textContent = t; svg.appendChild(el);
+  };
+  axisTxt(8,     cy - 7, 'GOOD',        'start');
+  axisTxt(S - 8, cy - 7, 'BAD',         'end');
+  axisTxt(cx + 7, 13,    'ACTIVE',      'start');
+  axisTxt(cx + 7, S - 6, 'SUPPRESSIVE', 'start');
+
+  // Perceptual inversion ring -- the inner, dashed points.
+  for (const p of INNER) {
+    const [px, py] = toPx(p.v, p.psi);
+    svg.appendChild(svgEl('circle', { cx: px, cy: py, r: 5, fill: '#ffffff',
+      'fill-opacity': 0.5, stroke: p.color, 'stroke-opacity': 0.8,
+      'stroke-width': 1, 'stroke-dasharray': '2 2' }));
+    const t = svgEl('text', { x: px, y: py + 15, fill: p.color, 'fill-opacity': 0.95,
+                              'font-size': 7, 'text-anchor': 'middle',
+                              stroke: '#ffffff', 'stroke-width': 2,
+                              'paint-order': 'stroke' });
+    t.textContent = p.label; svg.appendChild(t);
+  }
+
+  // Centre node.
+  svg.appendChild(svgEl('circle', { cx, cy, r: 15, fill: '#ffffff',
+    stroke: '#46505e', 'stroke-opacity': 0.6, 'stroke-width': 1.2 }));
+  const cn = svgEl('text', { x: cx, y: cy - 1, fill: '#16202b', 'font-size': 7.5,
+                             'text-anchor': 'middle', 'font-weight': 'bold' });
+  cn.textContent = 'No-one'; svg.appendChild(cn);
+  const cc = svgEl('text', { x: cx, y: cy + 8, fill: '#46505e', 'font-size': 6.5,
+                             'text-anchor': 'middle' });
+  cc.textContent = 'Confusion'; svg.appendChild(cc);
+
+  // The four canonical anchors. Halo behind each label so the names stay
+  // legible over the saturated ends of both gradients.
+  for (const a of ANCHORS) {
+    const [px, py] = toPx(a.v, a.psi);
+    svg.appendChild(svgEl('circle', { cx: px, cy: py, r: 9,
+      fill: a.color, 'fill-opacity': 0.30, stroke: a.color, 'stroke-width': 1.8 }));
+    const t1 = svgEl('text', { x: px, y: py - 15, fill: a.color, 'font-size': 9.5,
+                               'text-anchor': 'middle', 'font-weight': 'bold',
+                               stroke: '#ffffff', 'stroke-width': 2.6,
+                               'paint-order': 'stroke' });
+    t1.textContent = a.label; svg.appendChild(t1);
+    const t2 = svgEl('text', { x: px, y: py + 21, fill: '#46505e', 'font-size': 7,
+                               'text-anchor': 'middle',
+                               stroke: '#ffffff', 'stroke-width': 2.2,
+                               'paint-order': 'stroke' });
+    t2.textContent = a.sub; svg.appendChild(t2);
+  }
+
+  // Good/Bad Preference -- ordinary taste, not moral stakes, so they sit on
+  // the pure v-axis (psi=0) rather than at a corner. Smaller and lighter
+  // than the four canonical anchors to read as secondary reference points.
+  // Confusion (the third non-directional point) already has its marker --
+  // the centre node above -- so it isn't redrawn here.
+  for (const p of EXTRA_POINTS) {
+    if (p.key === 'cf') continue;
+    const [px, py] = toPx(p.v, p.psi);
+    svg.appendChild(svgEl('circle', { cx: px, cy: py, r: 7,
+      fill: p.color, 'fill-opacity': 0.25, stroke: p.color, 'stroke-width': 1.4 }));
+    const t = svgEl('text', { x: px, y: py - 12, fill: p.color, 'font-size': 8,
+                              'text-anchor': 'middle', 'font-weight': 'bold',
+                              stroke: '#ffffff', 'stroke-width': 2.2,
+                              'paint-order': 'stroke' });
+    t.textContent = p.label; svg.appendChild(t);
+  }
+
+  // Placed tokens, drawn last so they sit above everything.
+  const layer = svgEl('g', { class: 'tokens' });
+  svg.appendChild(layer);
+  return { svg, layer };
+}
+
+function drawTokens(step, layer) {
+  layer.textContent = '';
+  const placed = state.placements[step.id] || {};
+  for (const tok of step.tokens) {
+    const p = placed[tok.id];
+    if (!p) continue;
+    const [px, py] = toPx(p.v, p.psi);
+    const g = svgEl('g', { class: 'tok', 'data-token': tok.id, tabindex: '0',
+                           role: 'button',
+                           'aria-label': `${tok.label}, placed at ${quadrant(p.v, p.psi)}. Drag to move.` });
+    g.appendChild(svgEl('line', { x1: px, y1: py, x2: px, y2: py })); // hit padding
+    g.appendChild(svgEl('circle', { cx: px, cy: py, r: 11, fill: 'transparent' }));
+    g.appendChild(svgEl('circle', { cx: px, cy: py, r: 6.5, fill: tok.color,
+      stroke: '#ffffff', 'stroke-width': 2 }));
+    // Label sits beside the dot, not above it: the anchors already own the
+    // space above (their name) and below (their sub-title), so a centred
+    // label lands right on top of "Greater Good" whenever a token is placed
+    // near an anchor -- which is most of the time.
+    const flip = px > S - 110;                  // too close to the right edge
+    const t = svgEl('text', { x: px + (flip ? -13 : 13), y: py + 3.5,
+                              fill: '#16202b', 'font-size': 8.5, 'font-weight': 'bold',
+                              'text-anchor': flip ? 'end' : 'start' });
+    t.textContent = tok.label;
+    g.appendChild(t);
+    layer.appendChild(g);
+
+    // Backing plate, sized from the text once it's laid out, so the label
+    // stays readable over the grid and the saturated end of either field.
+    const bb = t.getBBox();
+    const plate = svgEl('rect', { x: bb.x - 3, y: bb.y - 2,
+      width: bb.width + 6, height: bb.height + 4, rx: 2,
+      fill: '#ffffff', 'fill-opacity': 0.88, stroke: tok.color,
+      'stroke-opacity': 0.5, 'stroke-width': 0.7 });
+    g.insertBefore(plate, t);
+  }
+}
+
+/* ------------------------------------------------------------------ *
+ * Place step: map + tray + live distance readout
+ * ------------------------------------------------------------------ */
+function renderPlace(step, host) {
+  const row = document.createElement('div');
+  row.className = 'maprow';
+
+  const mapbox = document.createElement('div');
+  mapbox.className = 'mapbox';
+  const { svg, layer } = buildMap(step);
+  mapbox.appendChild(svg);
+
+  const tray = document.createElement('div');
+  tray.className = 'tray';
+  tray.innerHTML = '<h3>Items to place</h3>';
+
+  row.appendChild(mapbox);
+  row.appendChild(tray);
+  host.appendChild(row);
+
+  if (!state.placements[step.id]) state.placements[step.id] = {};
+  const placed = state.placements[step.id];
+  let selected = step.tokens.find(t => !placed[t.id])?.id || step.tokens[0].id;
+
+  const chips = new Map();
+  for (const tok of step.tokens) {
+    const chip = document.createElement('div');
+    chip.className = 'chip';
+    chip.dataset.token = tok.id;
+    chip.innerHTML = `<span class="dot" style="background:${tok.color}"></span><span>${tok.label}</span>`;
+    chip.tabIndex = 0;
+    chip.addEventListener('click', () => { selected = tok.id; paint(); });
+    chip.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selected = tok.id; paint(); }
+    });
+    startDragFrom(chip, tok.id);
+    tray.appendChild(chip);
+    chips.set(tok.id, chip);
+  }
+
+  const hint = document.createElement('div');
+  hint.className = 'hint';
+  hint.textContent = step.tokens.length > 1
+    ? 'Drag each item onto the map, or select one and click where it belongs. Drag a placed dot to move it.'
+    : 'Drag the item onto the map, or just click where it belongs.';
+  tray.appendChild(hint);
+
+  const readout = document.createElement('div');
+  readout.className = 'readout';
+  tray.appendChild(readout);
+
+  const clear = document.createElement('button');
+  clear.className = 'clr';
+  clear.type = 'button';
+  clear.textContent = 'Clear placements';
+  clear.addEventListener('click', () => {
+    state.placements[step.id] = {};
+    selected = step.tokens[0].id;
+    saveState(); paint();
+  });
+  tray.appendChild(clear);
+
+  /* ---- placing ---- */
+  // Screen -> viewBox via the SVG's own transform. Doing this with
+  // getBoundingClientRect arithmetic instead is wrong by however much
+  // preserveAspectRatio letterboxes the drawing inside a not-exactly-square
+  // box -- about 0.025 units here, enough to miss an anchor you clicked on.
+  function svgPoint(evt) {
+    const pt = svg.createSVGPoint();
+    pt.x = evt.clientX; pt.y = evt.clientY;
+    const { x, y } = pt.matrixTransform(svg.getScreenCTM().inverse());
+    return toVPsi(x, y).map(clamp);
+  }
+
+  function place(tokenId, v, psi) {
+    const existing = state.placements[step.id][tokenId];
+    const seq = existing ? existing.seq
+              : Object.keys(state.placements[step.id]).length + 1;
+    state.placements[step.id][tokenId] = { v, psi, seq };
+    saveState();
+    paint();
+  }
+
+  // Click-to-place for the selected token, and keyboard users.
+  svg.addEventListener('click', e => {
+    if (dragging) return;                    // pointerup already handled it
+    const [v, psi] = svgPoint(e);
+    place(selected, v, psi);
+    const next = step.tokens.find(t => !state.placements[step.id][t.id]);
+    if (next) selected = next.id;
+    paint();
+  });
+
+  // One pointer-drag implementation, shared by tray chips and placed dots.
+  let dragging = null, ghost = null;
+
+  function startDragFrom(el, tokenId) {
+    el.addEventListener('pointerdown', e => {
+      e.preventDefault();
+      dragging = tokenId;
+      selected = tokenId;
+      el.setPointerCapture?.(e.pointerId);
+      ghost = document.createElement('div');
+      ghost.className = 'dragghost';
+      const tok = step.tokens.find(t => t.id === tokenId);
+      ghost.innerHTML = `<span class="dot" style="width:11px;height:11px;border-radius:50%;background:${tok.color}"></span>${tok.label}`;
+      document.body.appendChild(ghost);
+      moveGhost(e);
+
+      const onMove = ev => moveGhost(ev);
+      const onUp = ev => {
+        document.removeEventListener('pointermove', onMove);
+        document.removeEventListener('pointerup', onUp);
+        if (ghost) { ghost.remove(); ghost = null; }
+        const r = svg.getBoundingClientRect();
+        const inside = ev.clientX >= r.left && ev.clientX <= r.right &&
+                       ev.clientY >= r.top  && ev.clientY <= r.bottom;
+        if (inside) { const [v, psi] = svgPoint(ev); place(tokenId, v, psi); }
+        // Defer clearing so the svg click handler above can see it was a drag.
+        setTimeout(() => { dragging = null; }, 0);
+        paint();
+      };
+      document.addEventListener('pointermove', onMove);
+      document.addEventListener('pointerup', onUp);
+    });
+  }
+
+  function moveGhost(e) {
+    if (!ghost) return;
+    ghost.style.left = e.clientX + 'px';
+    ghost.style.top  = e.clientY + 'px';
+  }
+
+  /* ---- paint ---- */
+  function paint() {
+    drawTokens(step, layer);
+    // Re-arm drag on the freshly drawn dots.
+    for (const g of layer.querySelectorAll('.tok')) startDragFrom(g, g.dataset.token);
+
+    for (const [id, chip] of chips) {
+      chip.dataset.placed = !!state.placements[step.id][id];
+      chip.classList.toggle('sel', id === selected);
+    }
+
+    const rows = [];
+    for (const tok of step.tokens) {
+      const p = state.placements[step.id][tok.id];
+      if (!p) continue;
+      const near = nearestAnchor(p.v, p.psi);
+      rows.push(`
+        <div style="margin-bottom:12px">
+          <div style="font-size:12px;color:var(--ink-soft);margin-bottom:5px">${tok.label}</div>
+          <table class="rd">
+            <tr><th></th><th>closeness</th></tr>
+            ${REFERENCE_POINTS.map(a => `
+              <tr class="${a.key === near.key ? 'near' : ''}">
+                <td>${a.label}</td><td>${closeness(Math.hypot(p.v - a.v, p.psi - a.psi)).toFixed(2)}%</td>
+              </tr>`).join('')}
+            <tr><td colspan="2" style="padding-top:6px;color:var(--ink-soft)">
+              v ${p.v.toFixed(2)} &nbsp; ψ ${p.psi.toFixed(2)} &nbsp; · &nbsp; ${quadrant(p.v, p.psi)}
+            </td></tr>
+          </table>
+        </div>`);
+    }
+    readout.innerHTML = rows.length ? rows.join('') :
+      '<div style="font-size:12.5px;color:var(--ink-soft)">Nothing placed yet.</div>';
+    clear.style.display = rows.length ? '' : 'none';
+
+    updateNav();
+  }
+
+  paint();
+  return () => step.tokens.every(t => state.placements[step.id][t.id]);
+}
+
+/* ------------------------------------------------------------------ *
+ * Step rendering
+ * ------------------------------------------------------------------ */
+let isComplete = () => true;
+
+function render() {
+  const step = SURVEY.steps[stepIndex];
+  const view = document.getElementById('view');
+  view.textContent = '';
+  isComplete = () => true;
+
+  state.stepIndex = stepIndex;
+  saveState();
+
+  const eyebrow = document.createElement('p');
+  eyebrow.className = 'eyebrow';
+  eyebrow.textContent = `Step ${stepIndex + 1} of ${SURVEY.steps.length}`;
+  view.appendChild(eyebrow);
+
+  const h = document.createElement('h1');
+  h.textContent = step.heading;
+  view.appendChild(h);
+
+  if (step.body) {
+    const prose = document.createElement('div');
+    prose.className = 'prose';
+    for (const para of step.body) {
+      const p = document.createElement('p');
+      p.textContent = para;
+      prose.appendChild(p);
+    }
+    view.appendChild(prose);
+  }
+
+  if (step.type === 'choice')      isComplete = renderChoice(step, view);
+  else if (step.type === 'place')  isComplete = renderPlace(step, view);
+  else if (step.type === 'text')   isComplete = renderText(step, view);
+  else if (step.type === 'review') isComplete = renderReview(step, view);
+  else if (step.type === 'menu')   isComplete = renderMenu(step, view);
+
+  if (step.type === 'place' && step.follow_up) {
+    const lbl = document.createElement('p');
+    lbl.style.cssText = 'margin:26px 0 8px;font-size:15px';
+    lbl.textContent = step.follow_up;
+    view.appendChild(lbl);
+    const ta = document.createElement('textarea');
+    ta.value = state.texts[step.id] || '';
+    ta.addEventListener('input', () => { state.texts[step.id] = ta.value; saveState(); });
+    view.appendChild(ta);
+  }
+
+  renderNav(view, step);
+  updateNav();
+  view.focus();
+  window.scrollTo(0, 0);
+}
+
+function renderChoice(step, host) {
+  const box = document.createElement('div');
+  box.className = 'opts';
+  const multi = !!step.multiple;
+  const cur = state.choices[step.id] || [];
+
+  for (const opt of step.options) {
+    const label = document.createElement('label');
+    const input = document.createElement('input');
+    input.type = multi ? 'checkbox' : 'radio';
+    input.name = step.id;
+    input.value = opt;
+    input.checked = cur.includes(opt);
+    input.addEventListener('change', () => {
+      const sel = [...box.querySelectorAll('input:checked')].map(i => i.value);
+      state.choices[step.id] = sel;
+      saveState(); updateNav();
+    });
+    label.appendChild(input);
+    label.appendChild(document.createTextNode(opt));
+    box.appendChild(label);
+  }
+  host.appendChild(box);
+  return () => !step.required || (state.choices[step.id] || []).length > 0;
+}
+
+function renderText(step, host) {
+  const ta = document.createElement('textarea');
+  ta.value = state.texts[step.id] || '';
+  ta.addEventListener('input', () => {
+    state.texts[step.id] = ta.value; saveState(); updateNav();
+  });
+  host.appendChild(ta);
+  return () => !step.required || (state.texts[step.id] || '').trim().length > 0;
+}
+
+function renderReview(step, host) {
+  const p = document.createElement('p');
+  p.className = 'prose';
+  p.textContent = 'Optional: a name or alias and a rough area, so responses can be told apart and grouped. Neither is used to identify you.';
+  host.appendChild(p);
+
+  const mk = (key, ph) => {
+    const i = document.createElement('input');
+    i.type = 'text'; i.placeholder = ph;
+    i.style.marginBottom = '10px';
+    i.value = (state[key] || '');
+    i.addEventListener('input', () => { state[key] = i.value; saveState(); });
+    host.appendChild(i);
+    host.appendChild(document.createElement('br'));
+  };
+  mk('labelName', 'Name or alias (optional)');
+  mk('labelLocation', 'Suburb or region (optional)');
+
+  return () => true;
+}
+
+function renderMenu(step, host) {
+  const list = document.createElement('div');
+  list.style.cssText = 'display:flex;flex-direction:column;gap:8px;margin:20px 0 0;max-width:560px';
+
+  for (const sec of (SURVEY.sections || [])) {
+    const range = SECTION_RANGE[sec.id];
+    const secSteps = SURVEY.steps.filter(s => s.section === sec.id && s.required);
+    const secDone = secSteps.filter(stepAnswered).length;
+    const pct = secSteps.length ? (secDone / secSteps.length * 100) : 0;
+    const done = isSectionComplete(sec.id);
+    const card = document.createElement('button');
+    card.type = 'button';
+    card.className = 'btn ghost';
+    card.style.cssText = 'display:block;width:100%;text-align:left;padding:13px 16px';
+    card.innerHTML = `<strong>${done ? '✓ ' : ''}${sec.title}</strong>` +
+      `<div style="font-size:12.5px;color:var(--ink-soft);margin-top:3px;font-weight:400">${sec.blurb}</div>` +
+      `<div style="display:flex;align-items:center;gap:8px;margin-top:9px">` +
+      `<div style="flex:1;height:4px;background:var(--panel-2);border-radius:99px;overflow:hidden">` +
+      `<i style="display:block;height:100%;width:${pct}%;background:${done ? 'var(--gg)' : 'var(--focus)'}"></i></div>` +
+      `<span style="font-family:var(--mono);font-size:10.5px;color:var(--ink-soft);white-space:nowrap">${secDone}/${secSteps.length}</span>` +
+      `</div>`;
+    card.disabled = !range;
+    card.addEventListener('click', () => { stepIndex = range.first; render(); });
+    list.appendChild(card);
+  }
+  host.appendChild(list);
+
+  const reviewBtn = document.createElement('button');
+  reviewBtn.type = 'button';
+  reviewBtn.className = 'btn';
+  reviewBtn.style.marginTop = '18px';
+  reviewBtn.textContent = 'Review & Submit';
+  const reviewIndex = SURVEY.steps.findIndex(s => s.type === 'review');
+  reviewBtn.addEventListener('click', () => { stepIndex = reviewIndex; render(); });
+  host.appendChild(reviewBtn);
+
+  return () => true;
+}
+
+/* ------------------------------------------------------------------ *
+ * Navigation
+ * ------------------------------------------------------------------ */
+function renderNav(host, step) {
+  const nav = document.createElement('div');
+  nav.className = 'nav';
+  nav.id = 'nav';
+
+  const range = step.section ? SECTION_RANGE[step.section] : null;
+
+  const back = document.createElement('button');
+  back.className = 'btn ghost';
+  back.type = 'button';
+  back.textContent = 'Back';
+  back.disabled = stepIndex === 0;
+  back.addEventListener('click', () => {
+    stepIndex = (range && stepIndex === range.first && MENU_INDEX >= 0) ? MENU_INDEX : stepIndex - 1;
+    render();
+  });
+  nav.appendChild(back);
+
+  const last = stepIndex === SURVEY.steps.length - 1;
+
+  // The menu has no "Continue" of its own -- topic cards and the Review
+  // & Submit button are how it moves forward.
+  if (step.type !== 'menu') {
+    const next = document.createElement('button');
+    next.className = 'btn';
+    next.id = 'nextBtn';
+    next.type = 'button';
+    next.textContent = last ? 'Submit' : 'Continue';
+    next.addEventListener('click', () => {
+      if (last) { submit(); return; }
+      stepIndex = (range && stepIndex === range.last && MENU_INDEX >= 0) ? MENU_INDEX : stepIndex + 1;
+      render();
+    });
+    nav.appendChild(next);
+  }
+
+  const msg = document.createElement('span');
+  msg.className = 'msg';
+  msg.id = 'navMsg';
+  nav.appendChild(msg);
+
+  host.appendChild(nav);
+}
+
+function updateNav() {
+  const btn = document.getElementById('nextBtn');
+  if (btn) btn.disabled = !isComplete();
+
+  const bar = document.getElementById('progBar');
+  const num = document.getElementById('progNum');
+  const required = SURVEY.steps.filter(s => s.required);
+  const done = required.filter(stepAnswered).length;
+  if (bar) bar.style.width = (required.length ? (done / required.length * 100) : 0) + '%';
+  if (num) num.textContent = `${done}/${required.length}`;
+
+  // A second, per-topic bar -- once you're inside a section, the overall
+  // bar barely moves per question, so show progress within *this* topic too.
+  const step = SURVEY.steps[stepIndex];
+  const row = document.getElementById('sectionProgRow');
+  if (step && step.section) {
+    const secSteps = SURVEY.steps.filter(s => s.section === step.section && s.required);
+    const secDone = secSteps.filter(stepAnswered).length;
+    const secTitle = (SURVEY.sections || []).find(s => s.id === step.section)?.title || step.section;
+    document.getElementById('sectionLabel').textContent = secTitle;
+    document.getElementById('sectionProgBar').style.width = (secSteps.length ? (secDone / secSteps.length * 100) : 0) + '%';
+    document.getElementById('sectionProgNum').textContent = `${secDone}/${secSteps.length}`;
+    row.style.display = '';
+  } else {
+    row.style.display = 'none';
+  }
+}
+
+// Click anywhere on the top progress bar to jump straight to the step at
+// that relative position, instead of only walking Back/Continue one at a time.
+document.getElementById('progBar').closest('.prog').addEventListener('click', e => {
+  const rect = e.currentTarget.getBoundingClientRect();
+  const frac = Math.min(1, Math.max(0, (e.clientX - rect.left) / rect.width));
+  const target = Math.round(frac * (SURVEY.steps.length - 1));
+  stepIndex = Math.min(target, computeFrontier());
+  render();
+});
+
+// Persistent one-click way back to the topic hub from anywhere inside a
+// section -- Back/Continue alone only reach it from a section's first or
+// last question, which buries it once you're a couple questions in.
+document.getElementById('toTopicsBtn').addEventListener('click', () => {
+  if (MENU_INDEX >= 0) { stepIndex = MENU_INDEX; render(); }
+});
+
+/* ------------------------------------------------------------------ *
+ * Export + submit
+ * ------------------------------------------------------------------ */
+function buildExport() {
+  const placements = {};
+  for (const [stepId, toks] of Object.entries(state.placements)) {
+    for (const [tokenId, p] of Object.entries(toks)) {
+      (placements[stepId] ||= {})[tokenId] = {
+        ...distances(p.v, p.psi),
+        v: p.v, psi: p.psi,
+        nearest: nearestAnchor(p.v, p.psi).label,
+        quadrant: quadrant(p.v, p.psi),
+        sequence: p.seq,
+      };
+    }
+  }
+  return {
+    survey_id: SURVEY.id,
+    version: 1,
+    completed_at: new Date().toISOString(),
+    label: { name: state.labelName || null, location: state.labelLocation || null },
+    choices: state.choices,
+    texts: state.texts,
+    placements,
+  };
+}
+
+async function submit() {
+  const msg = document.getElementById('navMsg');
+  const btn = document.getElementById('nextBtn');
+  const set = (t, err) => { msg.textContent = t; msg.className = 'msg' + (err ? ' err' : ''); };
+
+  if (!supa) { set('Supabase is not configured — nothing was sent.', true); return; }
+  btn.disabled = true;
+  set('Submitting…');
+
+  const { session, error: authErr } = await ensureSession();
+  if (authErr) { set(authErr.message, true); btn.disabled = false; return; }
+
+  const payload = buildExport();
+  // Reuse the id from an earlier run so this updates rather than duplicates.
+  const responseId = state.responseId || crypto.randomUUID();
+
+  const { error: e1 } = await supa.from('survey_responses').upsert({
+    id: responseId,
+    respondent_id: session.user.id,
+    survey_id: SURVEY.id,
+    raw: payload,
+    updated_at: new Date().toISOString(),
+    label_name: payload.label.name,
+    label_location: payload.label.location,
+  }, { onConflict: 'id' });
+  if (e1) { set(e1.message, true); btn.disabled = false; return; }
+
+  state.responseId = responseId;
+  saveState();
+
+  // Delete-then-insert, so a cleared placement actually disappears rather
+  // than lingering from the previous run.
+  const rows = [];
+  for (const [stepId, toks] of Object.entries(state.placements)) {
+    for (const [tokenId, p] of Object.entries(toks)) {
+      rows.push({ response_id: responseId, step_id: stepId, token_id: tokenId,
+                  ...distances(p.v, p.psi), u: p.v, will: p.psi,
+                  map_variant: 'outer', sequence: p.seq });
+    }
+  }
+  const answers = [];
+  for (const [stepId, choice] of Object.entries(state.choices))
+    answers.push({ response_id: responseId, step_id: stepId, choice });
+  for (const [stepId, text] of Object.entries(state.texts)) {
+    if (!text || !text.trim()) continue;
+    const row = answers.find(a => a.step_id === stepId);
+    if (row) row.text_answer = text; else
+      answers.push({ response_id: responseId, step_id: stepId, text_answer: text });
+  }
+
+  for (const [table, data] of [['survey_placements', rows], ['survey_answers', answers]]) {
+    const { error: delErr } = await supa.from(table).delete().eq('response_id', responseId);
+    if (delErr) { set(`${table} cleanup: ${delErr.message}`, true); btn.disabled = false; return; }
+    if (!data.length) continue;
+    const { error } = await supa.from(table).insert(data);
+    if (error) { set(`${table}: ${error.message}`, true); btn.disabled = false; return; }
+  }
+
+  set(`Submitted. ${rows.length} placements recorded.`);
+  btn.textContent = 'Resubmit';
+  btn.disabled = false;
+}
+
+render();
+</script>
+</body>
+</html>
