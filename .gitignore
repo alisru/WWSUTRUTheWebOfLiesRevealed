@@ -7,6 +7,8 @@
 .env
 **/.env
 
+survey-platform/archive
+
 # Survey builder & viewer: admin-only tools, deliberately not published with the site.
 # They talk to Supabase directly and are gated by owner login or direct credentials.
 survey-platform/builder.html

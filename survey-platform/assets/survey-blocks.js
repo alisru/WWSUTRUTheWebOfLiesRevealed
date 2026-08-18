@@ -16,7 +16,7 @@
      texts      string
      numbers    number
      ranks      [label]        best first
-     placements { tokenId: { u, will, seq } }                              */
+     placements { tokenId: { u, will, seq, isVector, u_target, will_target, du, dwill, magnitude, descriptor } } */
 (function (global) {
   'use strict';
 
@@ -34,10 +34,9 @@
     { type: 'rank',   name: 'Ranking',
       blurb: 'Put a list in order, best first.' },
     { type: 'place',  name: 'Hegemony placement',
-      blurb: 'Drag one or more items onto the map. Stores four distances each.' },
+      blurb: 'Drag one or more items/vectors onto the map. Stores coordinates, distances, and trajectories.' },
   ];
 
-  // A fresh block of each type, for the builder's "add" menu.
   function blankBlock(type, n) {
     const id = `${type}_${n}`;
     switch (type) {
@@ -50,6 +49,7 @@
       case 'rank':   return { id, type, heading: 'Put these in order', required: true,
                               items: ['First thing', 'Second thing', 'Third thing'] };
       case 'place':  return { id, type, heading: 'Where would you place this?', required: true,
+                              mode: 'point', nonInverted: false, variant: 'perceptual',
                               tokens: [{ id: 'item', label: 'the item', color: '#3bde84' }] };
       default: throw new Error('unknown block type: ' + type);
     }
@@ -58,10 +58,7 @@
   const blankState = () => ({ choices: {}, texts: {}, numbers: {}, ranks: {}, placements: {} });
 
   /* ------------------------------------------------------------------ *
-   * Rendering. Each renderer appends into `host` and returns a function
-   * reporting whether the step is answered well enough to continue.
-   * `onChange` is called after every edit so the caller can persist and
-   * re-evaluate the Continue button.
+   * Rendering
    * ------------------------------------------------------------------ */
   function renderStep(step, host, state, onChange, opts) {
     const o = opts || {};
@@ -87,7 +84,6 @@
       img.className = 'stepimg';
       img.src = step.image;
       img.alt = '';
-      // A dead image URL should not leave a broken icon mid-survey.
       img.addEventListener('error', () => img.remove());
       host.appendChild(img);
     }
@@ -167,7 +163,6 @@
     return () => {
       if (!step.required) return true;
       if (!cur.selected.length) return false;
-      // Picking "Something else" without typing anything is not an answer.
       if (cur.selected.includes('__other__') && !(cur.other || '').trim()) return false;
       return true;
     };
@@ -218,10 +213,7 @@
   }
 
   function renderRank(step, host, state, onChange) {
-    // Seed from the definition on first view, then keep the respondent's order.
     if (!state.ranks[step.id]) state.ranks[step.id] = (step.items || []).slice();
-    // If the author edited the items after someone started, drop and append
-    // rather than showing stale entries.
     const items = state.ranks[step.id].filter(i => (step.items || []).includes(i));
     for (const i of step.items || []) if (!items.includes(i)) items.push(i);
     state.ranks[step.id] = items;
@@ -257,25 +249,53 @@
     };
     paint();
     host.appendChild(list);
-    return () => true;   // an order always exists
+    return () => true;
   }
 
   function renderPlace(step, host, state, onChange, opts) {
     const tokens = step.tokens || [];
-    const variant = step.variant || 'outer';
+    const variant = step.variant || (step.nonInverted ? 'non_inverted' : 'perceptual');
+    const isVectorMode = (step.mode === 'vector' || step.placementMode === 'vector');
+
     if (!state.placements[step.id]) state.placements[step.id] = {};
     const placed = state.placements[step.id];
     const readonly = !!opts.readonly;
 
     const row = document.createElement('div');
     row.className = 'maprow';
+
     const mapbox = document.createElement('div');
     mapbox.className = 'mapbox';
-    const { svg, layer } = H.draw({});
+
+    const size = Math.max(30, Math.min(100, (step.mapSize != null && Number(step.mapSize) > 0) ? Number(step.mapSize) : 100));
+    if (size !== 100) {
+      mapbox.style.width = size + '%';
+      mapbox.style.margin = '0 auto';
+    } else {
+      mapbox.style.width = '100%';
+    }
+
+    const { svg, layer, markerId } = H.draw({ variant });
     mapbox.appendChild(svg);
     const tray = document.createElement('div');
     tray.className = 'tray';
-    tray.innerHTML = '<h3>' + (readonly ? 'Where you put them' : 'Items to place') + '</h3>';
+    tray.innerHTML = `
+      <div class="map-legend" style="background:var(--panel-2,#f6f8fa);border:1px solid var(--rule,#e5e7eb);border-radius:6px;padding:8px 10px;margin-bottom:12px;font-size:11px;line-height:1.4">
+        <div style="font-weight:700;color:var(--ink,#111827);margin-bottom:5px;font-size:11.5px;letter-spacing:.02em">Map Coordinate Legend</div>
+        <div style="margin-bottom:5px;color:var(--ink-soft,#4b5563)">
+          <strong style="color:var(--ink,#111827)">&upsilon; (Morality / Benefit):</strong>
+          <div style="font-size:10px;color:var(--ink-soft,#6b7280);margin-top:1px">
+            <span style="color:#0d6b2f">+2</span> Everyone &middot; <span style="color:#15708c">+1</span> Others &middot; <span style="color:#46505e">0</span> Neutral &middot; <span style="color:#9c3a20">-1</span> My Group &middot; <span style="color:#b81f1f">-2</span> Only Me
+          </div>
+        </div>
+        <div style="color:var(--ink-soft,#4b5563)">
+          <strong style="color:var(--ink,#111827)">&psi; (Will):</strong>
+          <div style="font-size:10px;color:var(--ink-soft,#6b7280);margin-top:1px">
+            <span style="color:#0d6b2f">+2</span> Active &middot; <span style="color:#15708c">+1</span> Proactive &middot; <span style="color:#46505e">0</span> Neutral &middot; <span style="color:#9c3a20">-1</span> Passive &middot; <span style="color:#b81f1f">-2</span> Suppressive
+          </div>
+        </div>
+      </div>
+      <h3>${readonly ? 'Where you put them' : (isVectorMode ? 'Vectors to place' : 'Items to place')}</h3>`;
     row.append(mapbox, tray);
     host.appendChild(row);
 
@@ -298,7 +318,6 @@
         chip.addEventListener('keydown', e => {
           if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selected = tok.id; paint(); }
         });
-        armDrag(chip, tok.id);
       }
       tray.appendChild(chip);
       chips.set(tok.id, chip);
@@ -307,9 +326,13 @@
     if (!readonly) {
       const hint = document.createElement('div');
       hint.className = 'hint';
-      hint.textContent = tokens.length > 1
-        ? 'Drag each item onto the map, or select one and click where it belongs. Drag a placed dot to move it.'
-        : 'Drag the item onto the map, or just click where it belongs.';
+      if (isVectorMode) {
+        hint.textContent = 'Click & drag on the map to set direction & magnitude from the starting point.';
+      } else {
+        hint.textContent = tokens.length > 1
+          ? 'Drag each item onto the map, or select one and click where it belongs. Drag a placed dot to move it.'
+          : 'Drag the item onto the map, or just click where it belongs.';
+      }
       tray.appendChild(hint);
     }
 
@@ -332,70 +355,120 @@
       tray.appendChild(clear);
     }
 
-    function place(tokenId, u, will) {
+    function placePoint(tokenId, u, will) {
       const existing = placed[tokenId];
-      placed[tokenId] = { u, will, seq: existing ? existing.seq : Object.keys(placed).length + 1 };
+      placed[tokenId] = { u, will, isVector: false, seq: existing ? existing.seq : Object.keys(placed).length + 1 };
       paint(); onChange();
     }
 
-    let dragging = null, ghost = null;
+    function placeVector(tokenId, u0, will0, u1, will1) {
+      const existing = placed[tokenId];
+      const va = H.vectorAnalysis(u0, will0, u1, will1);
+      placed[tokenId] = {
+        u: u0, will: will0,
+        u_target: u1, will_target: will1,
+        isVector: true,
+        du: va.du,
+        dwill: va.dwill,
+        magnitude: va.magnitude,
+        descriptor: va.descriptor,
+        trajectoryLabel: va.label,
+        seq: existing ? existing.seq : Object.keys(placed).length + 1
+      };
+      paint(); onChange();
+    }
+
+    let activeDrag = null;
 
     if (!readonly) {
-      svg.addEventListener('click', e => {
-        if (dragging) return;                 // pointerup already handled it
-        const { u, will } = H.pointFromEvent(svg, e);
-        place(selected, u, will);
-        const next = tokens.find(t => !placed[t.id]);
-        if (next) selected = next.id;
-        paint();
-      });
-    }
+      svg.style.touchAction = 'none';
 
-    // One pointer-drag implementation, shared by tray chips and placed dots.
-    function armDrag(node, tokenId) {
-      node.addEventListener('pointerdown', e => {
-        e.preventDefault();
-        dragging = tokenId;
-        selected = tokenId;
-        const tok = tokens.find(t => t.id === tokenId) || {};
-        ghost = document.createElement('div');
-        ghost.className = 'dragghost';
-        const d = document.createElement('span');
-        d.style.cssText = `width:11px;height:11px;border-radius:50%;background:${tok.color || '#3bde84'}`;
-        ghost.append(d, document.createTextNode(tok.label || ''));
-        document.body.appendChild(ghost);
-        moveGhost(e);
+      svg.addEventListener('pointerdown', e => {
+        const target = e.target;
+        const handleType = target.dataset.handle;
+        const targetTok = target.dataset.token;
+        const pt = H.pointFromEvent(svg, e);
 
-        const onMove = ev => moveGhost(ev);
-        const onUp = ev => {
-          document.removeEventListener('pointermove', onMove);
-          document.removeEventListener('pointerup', onUp);
-          if (ghost) { ghost.remove(); ghost = null; }
-          const r = svg.getBoundingClientRect();
-          if (ev.clientX >= r.left && ev.clientX <= r.right &&
-              ev.clientY >= r.top  && ev.clientY <= r.bottom) {
-            const { u, will } = H.pointFromEvent(svg, ev);
-            place(tokenId, u, will);
+        if (isVectorMode) {
+          e.preventDefault();
+          try { svg.setPointerCapture(e.pointerId); } catch(err) {}
+
+          if (handleType && targetTok && placed[targetTok]) {
+            // Dragging an existing vector handle
+            activeDrag = {
+              mode: 'handle',
+              handle: handleType,
+              tokenId: targetTok,
+              pointerId: e.pointerId,
+              orig: Object.assign({}, placed[targetTok])
+            };
+          } else {
+            // Dragging a new vector from point
+            activeDrag = {
+              mode: 'new_vector',
+              tokenId: selected,
+              pointerId: e.pointerId,
+              u0: pt.u, will0: pt.will,
+              u1: pt.u, will1: pt.will,
+              moved: false
+            };
+            placeVector(selected, pt.u, pt.will, pt.u, pt.will);
           }
-          // Deferred so the svg click handler can tell this was a drag.
-          setTimeout(() => { dragging = null; }, 0);
+        } else {
+          // Standard Point Click / Drag
+          const { u, will } = H.pointFromEvent(svg, e);
+          placePoint(selected, u, will);
+          const next = tokens.find(t => !placed[t.id]);
+          if (next) selected = next.id;
           paint();
-        };
-        document.addEventListener('pointermove', onMove);
-        document.addEventListener('pointerup', onUp);
+        }
       });
-    }
 
-    function moveGhost(e) {
-      if (!ghost) return;
-      ghost.style.left = e.clientX + 'px';
-      ghost.style.top  = e.clientY + 'px';
+      svg.addEventListener('pointermove', e => {
+        if (!activeDrag || !isVectorMode) return;
+        const pt = H.pointFromEvent(svg, e);
+
+        if (activeDrag.mode === 'new_vector') {
+          activeDrag.moved = true;
+          activeDrag.u1 = pt.u;
+          activeDrag.will1 = pt.will;
+          placeVector(activeDrag.tokenId, activeDrag.u0, activeDrag.will0, pt.u, pt.will);
+        } else if (activeDrag.mode === 'handle') {
+          const cur = placed[activeDrag.tokenId];
+          if (activeDrag.handle === 'origin') {
+            const du = (cur.u_target != null ? cur.u_target : cur.u) - cur.u;
+            const dwill = (cur.will_target != null ? cur.will_target : cur.will) - cur.will;
+            placeVector(activeDrag.tokenId, pt.u, pt.will, H.clamp(pt.u + du), H.clamp(pt.will + dwill));
+          } else if (activeDrag.handle === 'tip') {
+            placeVector(activeDrag.tokenId, cur.u, cur.will, pt.u, pt.will);
+          }
+        }
+      });
+
+      const finishDrag = e => {
+        if (!activeDrag || !isVectorMode) return;
+        try { svg.releasePointerCapture(e.pointerId); } catch(err) {}
+
+        if (activeDrag.mode === 'new_vector') {
+          const cur = placed[activeDrag.tokenId];
+          // If clicked without dragging, give a clear initial default arrow length (0.4w)
+          if (!activeDrag.moved || Math.hypot(cur.u_target - cur.u, cur.will_target - cur.will) < 0.05) {
+            const targetWill = cur.will >= 1.6 ? cur.will - 0.4 : cur.will + 0.4;
+            placeVector(activeDrag.tokenId, cur.u, cur.will, cur.u, H.clamp(targetWill));
+          }
+          const next = tokens.find(t => !placed[t.id]);
+          if (next) selected = next.id;
+        }
+        activeDrag = null;
+        paint();
+      };
+
+      svg.addEventListener('pointerup', finishDrag);
+      svg.addEventListener('pointercancel', finishDrag);
     }
 
     function paint() {
-      H.drawTokens(svg, layer, tokens, placed, { readonly });
-      if (!readonly)
-        for (const g of layer.querySelectorAll('.tok')) armDrag(g, g.dataset.token);
+      H.drawTokens(svg, layer, tokens, placed, { readonly, markerId });
 
       for (const [id, chip] of chips) {
         chip.dataset.placed = !!placed[id];
@@ -408,20 +481,39 @@
         if (!p) continue;
         const d = H.distances(p.u, p.will);
         const near = H.nearestAnchor(p.u, p.will);
-        rows.push(`
-          <div style="margin-bottom:12px">
-            <div style="font-size:12px;color:var(--ink-soft);margin-bottom:5px">${esc(tok.label)}</div>
-            <table class="rd">
-              <tr><th></th><th>distance</th></tr>
-              ${H.ANCHORS.map(a => `
-                <tr class="${a.key === near.key ? 'near' : ''}">
-                  <td>${a.label}</td><td>${d['d_' + a.key].toFixed(4)}</td>
-                </tr>`).join('')}
-              <tr><td colspan="2" style="padding-top:6px;color:var(--ink-soft)">
-                u ${p.u.toFixed(2)} &nbsp; will ${p.will.toFixed(2)} &nbsp; · &nbsp; ${H.quadrant(p.u, p.will)}
-              </td></tr>
-            </table>
-          </div>`);
+
+        if (p.isVector || isVectorMode) {
+          const u1 = p.u_target != null ? p.u_target : p.u;
+          const will1 = p.will_target != null ? p.will_target : p.will;
+          const va = H.vectorAnalysis(p.u, p.will, u1, will1);
+          rows.push(`
+            <div style="margin-bottom:14px;background:var(--panel-2);padding:10px;border-radius:6px;border:1px solid var(--rule)">
+              <div style="font-size:13px;font-weight:bold;margin-bottom:4px">${esc(tok.label)}</div>
+              <div style="font-family:var(--mono);font-size:12px;color:var(--gg);margin-bottom:6px">
+                Vector: [${esc(va.startQuadrant)}, ${va.magnitude.toFixed(2)}, ${esc(va.endQuadrant)}]
+              </div>
+              <div style="font-family:var(--mono);font-size:11px;color:var(--ink-soft);line-height:1.6">
+                Start: (&upsilon; ${p.u.toFixed(2)}, &psi; ${p.will.toFixed(2)}) &middot; ${esc(va.startQuadrant)}<br>
+                Target: (&upsilon; ${u1.toFixed(2)}, &psi; ${will1.toFixed(2)}) &middot; ${esc(va.endQuadrant)}<br>
+                &Delta;&upsilon;: ${va.du >= 0 ? '+' : ''}${va.du.toFixed(2)} &middot; &Delta;&psi;: ${va.dwill >= 0 ? '+' : ''}${va.dwill.toFixed(2)} &middot; |v| = ${va.magnitude.toFixed(2)}
+              </div>
+            </div>`);
+        } else {
+          rows.push(`
+            <div style="margin-bottom:12px">
+              <div style="font-size:12px;color:var(--ink-soft);margin-bottom:5px">${esc(tok.label)}</div>
+              <table class="rd">
+                <tr><th></th><th>distance</th></tr>
+                ${[...H.ANCHORS, ...(H.PREFERENCES||[])].map(a => `
+                  <tr class="${a.key === near.key ? 'near' : ''}">
+                    <td>${a.label}</td><td>${(d['d_' + a.key] != null ? d['d_' + a.key] : 0).toFixed(4)}</td>
+                  </tr>`).join('')}
+                <tr><td colspan="2" style="padding-top:6px;color:var(--ink-soft)">
+                  (&upsilon; ${p.u.toFixed(2)}, &psi; ${p.will.toFixed(2)}) &nbsp; · &nbsp; ${H.quadrant(p.u, p.will)}
+                </td></tr>
+              </table>
+            </div>`);
+        }
       }
       readout.innerHTML = rows.length ? rows.join('')
         : '<div style="font-size:12.5px;color:var(--ink-soft)">Nothing placed yet.</div>';
@@ -448,21 +540,32 @@
     ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
   /* ------------------------------------------------------------------ *
-   * Payload
+   * Payload Export
    * ------------------------------------------------------------------ */
-
-  // The whole run, as stored in survey_responses.raw. Source of truth for
-  // anything the normalized tables don't cover.
   function buildExport(survey, state) {
     const placements = {};
     for (const [stepId, toks] of Object.entries(state.placements)) {
       for (const [tokenId, p] of Object.entries(toks)) {
+        const step = (survey.steps || []).find(s => s.id === stepId) || {};
+        const isVec = !!(p.isVector || p.u_target != null);
+        const u1 = isVec ? (p.u_target != null ? p.u_target : p.u) : p.u;
+        const will1 = isVec ? (p.will_target != null ? p.will_target : p.will) : p.will;
+        const va = isVec ? H.vectorAnalysis(p.u, p.will, u1, will1) : null;
+
         (placements[stepId] ||= {})[tokenId] = Object.assign(
           H.distances(p.u, p.will),
-          { u: p.u, will: p.will,
+          {
+            u: p.u, will: p.will,
+            placement_mode: isVec ? 'vector' : 'point',
+            u_target: isVec ? u1 : null,
+            will_target: isVec ? will1 : null,
+            magnitude: isVec ? va.magnitude : null,
+            vector_descriptor: isVec ? va.descriptor : null,
+            map_variant: step.variant || (step.nonInverted ? 'non_inverted' : 'perceptual'),
             nearest: H.nearestAnchor(p.u, p.will).label,
             quadrant: H.quadrant(p.u, p.will),
-            sequence: p.seq });
+            sequence: p.seq
+          });
       }
     }
     return {
@@ -474,15 +577,31 @@
     };
   }
 
-  // Rows for the normalized tables, so aggregate queries are plain SQL.
-  function toRows(responseId, state) {
+  function toRows(responseId, state, survey) {
     const placements = [];
+    const steps = (survey && survey.steps) || [];
     for (const [stepId, toks] of Object.entries(state.placements)) {
+      const step = steps.find(s => s.id === stepId) || {};
+      const mapVariant = step.variant || (step.nonInverted ? 'non_inverted' : 'perceptual');
       for (const [tokenId, p] of Object.entries(toks)) {
+        const isVec = !!(p.isVector || p.u_target != null);
+        const u1 = isVec ? (p.u_target != null ? p.u_target : p.u) : p.u;
+        const will1 = isVec ? (p.will_target != null ? p.will_target : p.will) : p.will;
+        const va = isVec ? H.vectorAnalysis(p.u, p.will, u1, will1) : null;
+
         placements.push(Object.assign(
           { response_id: responseId, step_id: stepId, token_id: tokenId },
           H.distances(p.u, p.will),
-          { u: p.u, will: p.will, map_variant: 'outer', sequence: p.seq }));
+          {
+            u: p.u, will: p.will,
+            placement_mode: isVec ? 'vector' : 'point',
+            u_target: isVec ? u1 : null,
+            will_target: isVec ? will1 : null,
+            magnitude: isVec ? va.magnitude : null,
+            vector_descriptor: isVec ? JSON.stringify(va.descriptor) : null,
+            map_variant: mapVariant,
+            sequence: p.seq
+          }));
       }
     }
 
@@ -494,8 +613,6 @@
     for (const [id, c] of Object.entries(state.choices)) {
       if (!c || !c.selected || !c.selected.length) continue;
       const r = row(id);
-      // Store the write-in under its own column rather than as the literal
-      // sentinel, so `choice` only ever holds real option labels.
       r.choice = c.selected.map(s => (s === '__other__' ? 'Other' : s));
       if (c.selected.includes('__other__') && (c.other || '').trim()) r.other_text = c.other.trim();
     }

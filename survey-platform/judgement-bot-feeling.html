@@ -1,0 +1,1711 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How do you feel about judgement bot</title>
+<style>
+/* Shared chrome for the runner and the builder. Dark page, light map --
+   the hegemony artwork is white-grounded and its two fields wash toward
+   white, which only reads against white. */
+:root{
+  --bg:#0d0f16; --panel:#12141c; --panel-2:#171a24; --rule:#252a38;
+  --ink:#e6e9f2; --ink-soft:#9aa3b8; --focus:#30c8e0;
+  --gg:#3bde84; --le:#f05060; --ge:#e04080; --lg:#30c8e0;
+  --mono:ui-monospace,"JetBrains Mono","IBM Plex Mono",monospace;
+  --sans:system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6}
+.wrap{max-width:1020px;margin:0 auto;padding:0 20px}
+.wrap.wide{max-width:1240px}
+
+header.mast{border-bottom:1px solid var(--rule);position:sticky;top:0;background:var(--bg);z-index:40}
+.mast-in{max-width:1020px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:16px}
+.mast-in.wide{max-width:1240px}
+.brand{font-weight:700;font-size:15px;white-space:nowrap}
+.brand span{display:block;font-family:var(--mono);font-size:10px;font-weight:400;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
+.prog{flex:1;height:4px;background:var(--panel-2);border-radius:99px;overflow:hidden;min-width:60px}
+.prog i{display:block;height:100%;background:var(--gg);transition:width .35s ease}
+.progn{font-family:var(--mono);font-size:11px;color:var(--ink-soft);white-space:nowrap}
+
+main{padding:34px 0 90px}
+h1{font-size:clamp(24px,4.5vw,36px);line-height:1.14;letter-spacing:-.02em;margin:0 0 14px}
+h2{font-size:21px;letter-spacing:-.01em;margin:0 0 10px}
+h3{font-size:16px;margin:0 0 8px}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ink-soft);margin:0 0 10px}
+.prose{max-width:66ch;color:var(--ink-soft)}
+.prose p{margin:0 0 14px}
+.prose p:last-child{margin-bottom:0}
+.stepimg{max-width:100%;border-radius:6px;border:1px solid var(--rule);margin:18px 0 0;display:block}
+
+/* ---------- inputs ---------- */
+.opts{display:flex;flex-direction:column;gap:8px;margin:20px 0 0;max-width:560px}
+.opts label{display:flex;gap:11px;align-items:flex-start;padding:11px 14px;border:1px solid var(--rule);
+  border-radius:6px;background:var(--panel);cursor:pointer}
+.opts label:hover{border-color:var(--ink-soft)}
+.opts input{margin-top:5px;accent-color:var(--gg);flex:none}
+.opts label:has(input:checked){border-color:var(--gg);background:#3bde840f}
+.opts .otherwrap{padding-left:36px;margin-top:-2px}
+textarea{width:100%;max-width:66ch;min-height:150px;font-family:inherit;font-size:16px;padding:12px;
+  border:1px solid var(--rule);background:var(--panel);border-radius:6px;color:var(--ink);resize:vertical}
+input[type=text],input[type=email],input[type=password],input[type=number],select{
+  font-family:inherit;font-size:15px;padding:9px 12px;border:1px solid var(--rule);
+  background:var(--panel);border-radius:6px;color:var(--ink);width:100%;max-width:340px}
+textarea:focus,input:focus,select:focus{outline:2px solid var(--focus);outline-offset:1px}
+label.field{display:block;font-size:13px;color:var(--ink-soft);margin:14px 0 5px}
+
+/* scale */
+.scalerow{display:flex;gap:6px;flex-wrap:wrap;margin:18px 0 8px}
+.scalerow input{position:absolute;opacity:0;width:0;height:0}
+.scalerow label{font-family:var(--mono);font-size:14px;min-width:44px;height:44px;display:grid;
+  place-items:center;border:1px solid var(--rule);background:var(--panel);border-radius:6px;cursor:pointer}
+.scalerow input:checked+label{background:var(--gg);color:#08120c;border-color:var(--gg)}
+.scalerow input:focus-visible+label{outline:2px solid var(--focus);outline-offset:2px}
+.scaleends{display:flex;justify-content:space-between;max-width:420px;font-size:12.5px;color:var(--ink-soft)}
+
+/* ranking */
+.ranklist{list-style:none;padding:0;margin:18px 0 0;max-width:520px}
+.ranklist li{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--rule);
+  background:var(--panel);border-radius:6px;margin-bottom:7px}
+.ranklist .n{font-family:var(--mono);font-size:12px;color:var(--ink-soft);width:1.6em;flex:none}
+.ranklist .t{flex:1}
+.ranklist button{background:var(--panel-2);border:1px solid var(--rule);color:var(--ink);
+  border-radius:4px;width:28px;height:28px;cursor:pointer;font-size:13px}
+.ranklist button:disabled{opacity:.35;cursor:not-allowed}
+
+/* ---------- map ---------- */
+.maprow{display:grid;grid-template-columns:minmax(0,1fr) 268px;gap:26px;margin:22px 0 0;align-items:start}
+@media(max-width:840px){.maprow{grid-template-columns:1fr}}
+.mapbox{background:#fff;border:1px solid var(--rule);border-radius:8px;padding:10px;
+  touch-action:none;position:relative}
+svg.hgm{display:block;width:100%;height:auto;cursor:crosshair}
+svg.hgm text{font-family:var(--mono);pointer-events:none;user-select:none}
+.tok{cursor:grab}
+.tok.ro{cursor:default}
+
+.tray{background:var(--panel);border:1px solid var(--rule);border-radius:8px;padding:14px}
+.tray h3{font-family:var(--mono);font-size:10px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ink-soft);margin:0 0 10px;font-weight:400}
+.chip{display:flex;align-items:center;gap:9px;padding:9px 11px;border:1px solid var(--rule);
+  border-radius:6px;background:var(--panel-2);margin-bottom:7px;cursor:grab;touch-action:none;
+  font-size:14px;user-select:none}
+.chip:last-child{margin-bottom:0}
+.chip .dot{width:11px;height:11px;border-radius:50%;flex:none}
+.chip[data-placed=true]{opacity:.42}
+.chip.sel{border-color:var(--focus);box-shadow:0 0 0 1px var(--focus)}
+/* Deliberately NOT .ghost -- .btn.ghost is the secondary button style, and a
+   bare .ghost rule would give those buttons position:fixed and
+   pointer-events:none, making them unclickable. */
+.dragghost{position:fixed;z-index:99;pointer-events:none;padding:7px 11px;border-radius:6px;
+  background:var(--panel-2);border:1px solid var(--focus);font-size:14px;display:flex;gap:8px;
+  align-items:center;transform:translate(-50%,-50%);white-space:nowrap}
+.hint{font-size:12.5px;color:var(--ink-soft);margin-top:12px;line-height:1.5}
+
+.readout{margin-top:14px;border-top:1px solid var(--rule);padding-top:12px}
+table.rd{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:11.5px}
+table.rd th{text-align:right;font-weight:400;color:var(--ink-soft);padding:3px 0 3px 8px}
+table.rd th:first-child{text-align:left;padding-left:0}
+table.rd td{text-align:right;padding:3px 0 3px 8px;font-variant-numeric:tabular-nums}
+table.rd td:first-child{text-align:left;padding-left:0;color:var(--ink-soft)}
+table.rd tr.near td{color:var(--gg)}
+.clr{font-family:var(--mono);font-size:11px;background:none;border:none;color:var(--ink-soft);
+  cursor:pointer;text-decoration:underline;padding:0;margin-top:10px}
+
+/* ---------- buttons / nav ---------- */
+.nav{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:34px;padding-top:22px;
+  border-top:1px solid var(--rule)}
+.btn{font-family:inherit;font-weight:600;font-size:15px;padding:11px 20px;border-radius:6px;
+  border:1px solid var(--gg);background:var(--gg);color:#08120c;cursor:pointer;text-decoration:none;
+  display:inline-block}
+.btn.ghost{background:none;color:var(--ink);border-color:var(--rule)}
+.btn.danger{background:none;color:var(--le);border-color:var(--le)}
+.btn.sm{font-size:13px;padding:7px 12px}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.msg{font-size:13.5px;color:var(--ink-soft)}
+.msg.err{color:var(--le)}
+.msg.ok{color:var(--gg)}
+pre.out{font-family:var(--mono);font-size:11.5px;background:var(--panel);border:1px solid var(--rule);
+  padding:14px;border-radius:6px;overflow:auto;max-height:340px;white-space:pre-wrap;word-break:break-all}
+.card{background:var(--panel);border:1px solid var(--rule);border-radius:8px;padding:16px;margin-bottom:12px}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.spacer{flex:1}
+.tag{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;
+  padding:3px 7px;border-radius:99px;border:1px solid var(--rule);color:var(--ink-soft)}
+.tag.live{color:var(--gg);border-color:var(--gg)}
+
+/* ---------- intro screen ---------- */
+.intro-badges{display:flex;gap:8px;flex-wrap:wrap;margin:22px 0 28px}
+.intro-badge{font-family:var(--mono);font-size:12px;padding:6px 12px;border-radius:6px;border:1px solid var(--rule);background:var(--panel-2);color:var(--ink-soft);display:flex;align-items:center;gap:6px}
+.intro-badge strong{color:var(--ink)}
+.intro-card{background:var(--panel);border:1px solid var(--rule);border-radius:8px;padding:24px;margin-top:20px}
+
+/* ---------- footer & privacy modal ---------- */
+.survey-footer{margin-top:60px;padding:24px 20px 40px;border-top:1px solid var(--rule);font-size:12.5px;color:var(--ink-soft);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.survey-footer strong{color:var(--ink)}
+.survey-footer button.link{background:none;border:none;color:var(--ink-soft);text-decoration:underline;cursor:pointer;font-family:inherit;font-size:inherit;padding:0}
+.survey-footer button.link:hover{color:var(--ink)}
+
+dialog.privacy-modal{background:var(--panel);color:var(--ink);border:1px solid var(--rule);border-radius:8px;padding:24px;max-width:580px;width:calc(100% - 36px);box-shadow:0 16px 40px rgba(0,0,0,0.7);margin:auto}
+dialog.privacy-modal::backdrop{background:rgba(0,0,0,0.75);backdrop-filter:blur(3px)}
+dialog.privacy-modal h2{margin-top:0;font-size:19px;color:var(--ink)}
+dialog.privacy-modal p{font-size:13.5px;color:var(--ink-soft);line-height:1.6;margin:0 0 10px}
+dialog.privacy-modal ul{padding-left:20px;font-size:13px;color:var(--ink-soft);line-height:1.55;margin:0 0 16px}
+dialog.privacy-modal li{margin-bottom:6px}
+dialog.privacy-modal strong{color:var(--ink)}
+dialog.privacy-modal .modal-actions{display:flex;justify-content:space-between;align-items:center;margin-top:18px;padding-top:12px;border-top:1px solid var(--rule)}
+
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+@media print{
+  body{background:#ffffff!important;color:#111111!important}
+  header.mast,.nav,button,.clr,.survey-footer,dialog{display:none!important}
+  .wrap{max-width:100%!important;padding:0!important}
+  .card,.tray,.mapbox{border:1px solid #ccc!important;background:#ffffff!important;color:#111111!important}
+  .prose,.hint,.eyebrow{color:#444444!important}
+  table.rd td,table.rd th{color:#222222!important}
+}
+
+</style>
+</head>
+<body>
+<header class="mast">
+  <div class="mast-in">
+    <div class="brand">How do you feel about judgement bot<span>The Web Of Lies Revealed</span></div>
+    <div class="prog"><i id="progBar" style="width:0"></i></div>
+    <div class="progn" id="progNum"></div>
+  </div>
+</header>
+<main id="view" class="wrap" tabindex="-1"></main>
+
+<footer class="survey-footer wrap">
+  <div><strong>The Web Of Lies Revealed</strong> &middot; Civic & Hegemony Research</div>
+  <div><button type="button" class="link" id="openPrivacyBtn">Privacy Policy</button></div>
+</footer>
+
+<dialog id="privacyModal" class="privacy-modal">
+  <h2>Privacy Notice & Research Architecture</h2>
+  <p>This research platform is designed with a strict privacy-first architecture:</p>
+  <ul>
+    <li><strong>No Mandatory Personal Info:</strong> You are never required to provide your legal name, email, phone number, or password.</li>
+    <li><strong>Anonymous Authentication:</strong> Submissions use anonymous cryptographic session tokens so you can revisit and edit your response without creating an account.</li>
+    <li><strong>Local Storage:</strong> In-progress answers are saved in your browser's local storage so you don't lose progress if you refresh.</li>
+    <li><strong>No Third-Party Trackers:</strong> We do not use advertising networks, tracking beacons, or cross-site fingerprinting.</li>
+    <li><strong>Data Ownership:</strong> You can download your full response as a JSON or PDF file at completion.</li>
+  </ul>
+  <div class="modal-actions">
+    <a href="privacy.html" target="_blank" style="font-size:12px;color:var(--ink-soft);text-decoration:underline">Full Privacy Policy page</a>
+    <button type="button" class="btn sm ghost" id="closePrivacyBtn">Close</button>
+  </div>
+</dialog>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+window.SUPABASE_URL = "https://iaudayzofxrgzwutittm.supabase.co";
+window.SUPABASE_ANON_KEY = "sb_publishable_WlfhOxEkAGDwAk5oZV2YrA_BIFfI0XN";
+window.makeSupabase = function () { return window.supabase ? window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY) : null; };
+window.__SURVEY_SLUG__ = "feeling about judgement";
+window.__SURVEY_STEPS__ = [{"id":"place_2","type":"place","heading":"How do you feel about judgement bot","required":true,"tokens":[{"label":"Feeling","color":"#3bde84","id":"item"}],"mode":"point","placementMode":"point"}];
+window.__SURVEY_INTRO__ = {"enabled":true,"eyebrow":"Research Survey","heading":"How do you feel about judgement bot","body":"This survey is part of The Web Of Lies Revealed civic and economic research initiative.\nYour responses help map perceptions and systemic alignment. Nothing you enter is linked to your legal identity.","image":"","estimatedMinutes":1,"startButtonText":"Start Survey"};
+window.__SURVEY_ENDING__ = {"title":"Thank you","body":"Your response has been recorded. Below is what you said — yours only; nobody else’s answers are shown.","allowJson":true,"allowPdf":true};
+
+</script>
+<script>
+/* The Psochic Hegemony map: geometry, the distance encoding, rendering, and
+   drag-to-place. Shared by the runner (survey.html) and the builder preview,
+   so both draw the same figure from the same numbers.
+
+   Axes, matching CoreTools/hegemony_map.html:
+     u    = Good <-> Bad          (+u is Good, and draws to the LEFT)
+     will = Active <-> Suppressive (+will is Active, draws UP)
+   The grid spans -2..2 on both; the four canonical anchors sit at +/-1.
+
+   A placement is stored as four numbers: the distance from the dropped
+   point to each anchor. See ../quad-encoding.md.                          */
+(function (global) {
+  'use strict';
+
+  const S = 400;                                   // svg viewBox size
+
+  // Straight out of canonicalAnchors in hegemony_map.html, with the colours
+  // darkened for a white ground.
+  const ANCHORS = [
+    { key: 'gg', label: 'Greater Good', sub: 'Productive · The Good Truth', u:  1, will:  1, color: '#0d6b2f' },
+    { key: 'le', label: 'Lesser Evil',  sub: 'Reductive · The Bad Lie',    u: -1, will:  1, color: '#9c3a20' },
+    { key: 'ge', label: 'Greater Evil', sub: 'Regressive · The Bad Truth', u: -1, will: -1, color: '#b81f1f' },
+    { key: 'lg', label: 'Lesser Good',  sub: 'Constructive · The Good Lie',   u:  1, will: -1, color: '#15708c' },
+  ];
+
+  // The 2 Preferences at +-1u, 0will.
+  const PREFERENCES = [
+    { key: 'gp', label: 'Good Preference', sub: 'Productive Alignment', u:  1, will:  0, color: '#1faf52' },
+    { key: 'bp', label: 'Bad Preference',  sub: 'Reductive Alignment',  u: -1, will:  0, color: '#d93b34' },
+  ];
+
+  // The perceptual inversion ring. Standing where Greater Good *feels* right
+  // puts you at (-0.5u, -0.5will), which is nearest Greater Evil -- the
+  // inversion the calibration section is about.
+  const INNER = [
+    { label: 'Perc. Greater Evil', u:  0.5, will:  0.5, color: '#b81f1f' },
+    { label: 'Perc. Lesser Good',  u: -0.5, will:  0.5, color: '#15708c' },
+    { label: 'Perc. Lesser Evil',  u:  0.5, will: -0.5, color: '#9c3a20' },
+    { label: 'Perc. Greater Good', u: -0.5, will: -0.5, color: '#0d6b2f' },
+  ];
+
+  const toPx    = (u, will) => [ (2 - u) * S / 4, (2 - will) * S / 4 ];
+  const toUWill = (x, y)    => [ 2 - x * 4 / S, 2 - y * 4 / S ];
+  const clamp   = n => Math.max(-2, Math.min(2, n));
+
+  /* ---- the encoding ---- */
+
+  function distances(u, will) {
+    const d = {};
+    for (const a of ANCHORS) d['d_' + a.key] = Math.hypot(u - a.u, will - a.will);
+    for (const p of PREFERENCES) d['d_' + p.key] = Math.hypot(u - p.u, will - p.will);
+    return d;
+  }
+
+  function fromDistances(d) {
+    return {
+      u:    (d.d_le ** 2 - d.d_gg ** 2 + d.d_ge ** 2 - d.d_lg ** 2) / 8,
+      will: (d.d_lg ** 2 - d.d_gg ** 2 + d.d_ge ** 2 - d.d_le ** 2) / 8,
+    };
+  }
+
+  function nearestAnchor(u, will) {
+    const all = [...ANCHORS, ...PREFERENCES];
+    let best = all[0], bestD = Infinity;
+    for (const a of all) {
+      const d = Math.hypot(u - a.u, will - a.will);
+      if (d < bestD) { bestD = d; best = a; }
+    }
+    return best;
+  }
+
+  function quadrant(u, will) {
+    if (u >  0 && will >  0) return 'Productive';
+    if (u <= 0 && will >  0) return 'Reductive';
+    if (u >  0 && will <= 0) return 'Constructive';
+    return 'Regressive';
+  }
+
+  function quadrantFullName(u, will) {
+    if (u >  0 && will >  0) return 'Productive (Greater Good)';
+    if (u <= 0 && will >  0) return 'Reductive (Lesser Evil)';
+    if (u >  0 && will <= 0) return 'Constructive (Lesser Good)';
+    return 'Regressive (Greater Evil)';
+  }
+
+  // Vector analysis: [start quadrant, magnitude, linear end quadrant]
+  function vectorAnalysis(u0, will0, u1, will1) {
+    const startQuad = quadrant(u0, will0);
+    const endQuad = quadrant(u1, will1);
+    const du = u1 - u0;
+    const dwill = will1 - will0;
+    const mag = Math.hypot(du, dwill);
+    return {
+      startQuadrant: startQuad,
+      endQuadrant: endQuad,
+      magnitude: Number(mag.toFixed(3)),
+      du: Number(du.toFixed(3)),
+      dwill: Number(dwill.toFixed(3)),
+      // [start quadrant, magnitude, linear end quadrant]
+      descriptor: [startQuad, Number(mag.toFixed(2)), endQuad],
+      label: `[${startQuad}, ${mag.toFixed(2)}, ${endQuad}]`
+    };
+  }
+
+  /* ---- rendering ---- */
+
+  function el(name, attrs) {
+    const node = document.createElementNS('http://www.w3.org/2000/svg', name);
+    for (const [k, v] of Object.entries(attrs || {})) node.setAttribute(k, v);
+    return node;
+  }
+
+  const HANDLE = 1.4;
+
+  function draw(opts) {
+    const o = opts || {};
+    const isNonInverted = (o.variant === 'non_inverted' || o.variant === 'outer' || o.hideInner === true || o.inversion === false || o.nonInverted === true);
+
+    const svg = el('svg', {
+      class: 'hgm', viewBox: `0 0 ${S} ${S}`, role: 'application',
+      'aria-label': o.label || 'Psochic Hegemony map. Drag each item onto the map to place it.',
+    });
+
+    const P = (u, will) => toPx(u, will).join(' ');
+    const CURVE      = `C ${P(-HANDLE, 0)}, ${P(HANDLE, 0)}, ${P(0, -2)}`;
+    const GOOD_FIELD = `M 0 0 L ${P(0, 2)} ${CURVE} L 0 ${S} Z`;
+    const BAD_FIELD  = `M ${S} 0 L ${P(0, 2)} ${CURVE} L ${S} ${S} Z`;
+    const SPLIT      = `M ${P(0, 2)} ${CURVE}`;
+
+    const uid  = 'hgm' + Math.random().toString(36).slice(2, 8);
+    const defs = el('defs', {});
+    const grad = (id, stops) => {
+      const g = el('linearGradient',
+        { id, gradientUnits: 'userSpaceOnUse', x1: 0, y1: 0, x2: 0, y2: S });
+      for (const [offset, color, opacity] of stops)
+        g.appendChild(el('stop', { offset, 'stop-color': color, 'stop-opacity': opacity }));
+      defs.appendChild(g);
+    };
+
+    grad(uid + 'good', [['0%', '#1faf52', 0.95], ['30%', '#1faf52', 0.78],
+                        ['60%', '#22b355', 0.56], ['85%', '#26b95c', 0.40],
+                        ['100%','#2cc063', 0.32]]);
+    grad(uid + 'bad',  [['0%', '#d93b34', 0.32], ['15%', '#d93b34', 0.40],
+                        ['40%', '#d63029', 0.56], ['70%', '#d62a23', 0.78],
+                        ['100%','#d4231c', 0.95]]);
+    
+    // Arrow marker definitions for vector answer mode
+    const marker = el('marker', {
+      id: uid + '-arrow', viewBox: '0 0 10 10', refX: '7', refY: '5',
+      markerWidth: '6', markerHeight: '6', orient: 'auto-start-reverse'
+    });
+    marker.appendChild(el('path', { d: 'M 0 1.5 L 8 5 L 0 8.5 z', fill: '#16202b' }));
+    defs.appendChild(marker);
+
+    svg.appendChild(defs);
+
+    svg.appendChild(el('rect', { x: 0, y: 0, width: S, height: S, fill: '#ffffff' }));
+    svg.appendChild(el('path', { d: GOOD_FIELD, fill: `url(#${uid}good)` }));
+    svg.appendChild(el('path', { d: BAD_FIELD,  fill: `url(#${uid}bad)`  }));
+    svg.appendChild(el('path', { d: SPLIT, fill: 'none', stroke: '#6b7280',
+      'stroke-opacity': 0.20, 'stroke-width': 11, 'stroke-linecap': 'round' }));
+    svg.appendChild(el('path', { d: SPLIT, fill: 'none', stroke: '#4b5563',
+      'stroke-opacity': 0.45, 'stroke-width': 1.2 }));
+
+    for (let i = -2; i <= 2; i += 0.5) {
+      const [gx] = toPx(i, 0), [, gy] = toPx(0, i);
+      const major = Number.isInteger(i);
+      svg.appendChild(el('line', { x1: gx, y1: 0, x2: gx, y2: S,
+        stroke: '#16202b', 'stroke-opacity': major ? 0.16 : 0.07, 'stroke-width': 1 }));
+      svg.appendChild(el('line', { x1: 0, y1: gy, x2: S, y2: gy,
+        stroke: '#16202b', 'stroke-opacity': major ? 0.16 : 0.07, 'stroke-width': 1 }));
+    }
+
+    const [cx, cy] = toPx(0, 0);
+    svg.appendChild(el('line', { x1: 0, y1: cy, x2: S, y2: cy,
+      stroke: '#16202b', 'stroke-opacity': 0.42, 'stroke-width': 1.2 }));
+    svg.appendChild(el('line', { x1: cx, y1: 0, x2: cx, y2: S,
+      stroke: '#16202b', 'stroke-opacity': 0.42, 'stroke-width': 1.2 }));
+
+    const halo = { stroke: '#ffffff', 'stroke-width': 2.6, 'paint-order': 'stroke' };
+    const text = (attrs, s) => {
+      const t = el('text', Object.assign({}, halo, attrs));
+      t.textContent = s; svg.appendChild(t); return t;
+    };
+
+    // Corner quadrant labels: Productive (TL), Reductive (TR), Constructive (BL), Regressive (BR)
+    text({ x: 8,      y: 22,     fill: '#0d6b2f', 'font-size': 8.5, 'text-anchor': 'start',
+           'letter-spacing': '.08em', 'font-weight': 'bold' }, 'PRODUCTIVE');
+    text({ x: S - 8,  y: 22,     fill: '#9c3a20', 'font-size': 8.5, 'text-anchor': 'end',
+           'letter-spacing': '.08em', 'font-weight': 'bold' }, 'REDUCTIVE');
+    text({ x: 8,      y: S - 12, fill: '#15708c', 'font-size': 8.5, 'text-anchor': 'start',
+           'letter-spacing': '.08em', 'font-weight': 'bold' }, 'CONSTRUCTIVE');
+    text({ x: S - 8,  y: S - 12, fill: '#b81f1f', 'font-size': 8.5, 'text-anchor': 'end',
+           'letter-spacing': '.08em', 'font-weight': 'bold' }, 'REGRESSIVE');
+
+    text({ x: 8,      y: cy - 7, fill: '#46505e', 'font-size': 9, 'text-anchor': 'start',
+           'letter-spacing': '.08em' }, 'GOOD  +u');
+    text({ x: S - 8,  y: cy - 7, fill: '#46505e', 'font-size': 9, 'text-anchor': 'end',
+           'letter-spacing': '.08em' }, '-u  BAD');
+    text({ x: cx + 7, y: 13,     fill: '#46505e', 'font-size': 9, 'text-anchor': 'start',
+           'letter-spacing': '.08em' }, 'ACTIVE  +will');
+    text({ x: cx + 7, y: S - 6,  fill: '#46505e', 'font-size': 9, 'text-anchor': 'start',
+           'letter-spacing': '.08em' }, '-will  SUPPRESSIVE');
+
+    for (const n of [2, 1, -1, -2]) {
+      const [tx] = toPx(n, 0), [, ty] = toPx(0, n);
+      text({ x: tx, y: 10, fill: '#77808d', 'font-size': 7.5, 'text-anchor': 'middle',
+             'stroke-width': 2 }, `${n}u`);
+      text({ x: S - 4, y: ty + 2.6, fill: '#77808d', 'font-size': 7.5, 'text-anchor': 'end',
+             'stroke-width': 2 }, `${n}w`);
+    }
+
+    if (!isNonInverted) {
+      for (const p of INNER) {
+        const [px, py] = toPx(p.u, p.will);
+        svg.appendChild(el('circle', { cx: px, cy: py, r: 5, fill: '#ffffff',
+          'fill-opacity': 0.5, stroke: p.color, 'stroke-opacity': 0.8,
+          'stroke-width': 1, 'stroke-dasharray': '2 2' }));
+        text({ x: px, y: py + 15, fill: p.color, 'font-size': 7, 'text-anchor': 'middle',
+               'stroke-width': 2 }, p.label);
+      }
+    }
+
+    svg.appendChild(el('circle', { cx, cy, r: 15, fill: '#ffffff',
+      stroke: '#46505e', 'stroke-opacity': 0.6, 'stroke-width': 1.2 }));
+    text({ x: cx, y: cy - 1, fill: '#16202b', 'font-size': 7.5,
+           'text-anchor': 'middle', 'font-weight': 'bold', 'stroke-width': 2 }, 'No-one');
+    text({ x: cx, y: cy + 8, fill: '#46505e', 'font-size': 6.5,
+           'text-anchor': 'middle', 'stroke-width': 2 }, 'Confusion');
+
+    for (const p of PREFERENCES) {
+      const [px, py] = toPx(p.u, p.will);
+      svg.appendChild(el('circle', { cx: px, cy: py, r: 7.5, fill: p.color,
+        'fill-opacity': 0.28, stroke: p.color, 'stroke-width': 1.6 }));
+      text({ x: px, y: py - 12, fill: p.color, 'font-size': 8.5,
+             'text-anchor': 'middle', 'font-weight': 'bold', 'stroke-width': 2 }, p.label);
+      text({ x: px, y: py + 18, fill: '#46505e', 'font-size': 7,
+             'text-anchor': 'middle', 'stroke-width': 2 }, `(${p.u > 0 ? '+'+p.u : p.u}u, 0w)`);
+    }
+
+    for (const a of ANCHORS) {
+      const [px, py] = toPx(a.u, a.will);
+      svg.appendChild(el('circle', { cx: px, cy: py, r: 9, fill: a.color,
+        'fill-opacity': 0.30, stroke: a.color, 'stroke-width': 1.8 }));
+      text({ x: px, y: py - 15, fill: a.color, 'font-size': 9.5,
+             'text-anchor': 'middle', 'font-weight': 'bold' }, a.label);
+      text({ x: px, y: py + 21, fill: '#46505e', 'font-size': 7,
+             'text-anchor': 'middle', 'stroke-width': 2.2 }, a.sub);
+    }
+
+    const layer = el('g', { class: 'tokens' });
+    svg.appendChild(layer);
+    return { svg, layer, markerId: uid + '-arrow' };
+  }
+
+  // Draw placed tokens / vectors. Supports both point and vector placements.
+  function drawTokens(svg, layer, tokens, placed, opts) {
+    const readonly = !!(opts && opts.readonly);
+    const markerId = opts && opts.markerId;
+    layer.textContent = '';
+
+    for (const tok of tokens) {
+      const p = placed[tok.id];
+      if (!p) continue;
+      const col = tok.color || '#16202b';
+
+      if (p.isVector || p.u_target != null) {
+        // Vector mode rendering: arrow from (u, will) to (u_target, will_target)
+        const [x0, y0] = toPx(p.u, p.will);
+        const [x1, y1] = toPx(p.u_target != null ? p.u_target : p.u, p.will_target != null ? p.will_target : p.will);
+        const g = el('g', { class: 'tok vector-tok' + (readonly ? ' ro' : ''), 'data-token': tok.id });
+
+        const dx = x1 - x0, dy = y1 - y0;
+        const len = Math.hypot(dx, dy);
+
+        // Vector line shaft
+        g.appendChild(el('line', {
+          x1: x0, y1: y0, x2: x1, y2: y1,
+          stroke: col, 'stroke-width': 3.5, 'stroke-linecap': 'round'
+        }));
+
+        // Prominent Arrowhead at (x1, y1)
+        if (len > 3) {
+          const angle = Math.atan2(dy, dx);
+          const headLen = 12;
+          const a1 = angle - Math.PI / 6;
+          const a2 = angle + Math.PI / 6;
+          const p1x = x1 - headLen * Math.cos(a1);
+          const p1y = y1 - headLen * Math.sin(a1);
+          const p2x = x1 - headLen * Math.cos(a2);
+          const p2y = y1 - headLen * Math.sin(a2);
+          g.appendChild(el('polygon', {
+            points: `${x1},${y1} ${p1x},${p1y} ${p2x},${p2y}`,
+            fill: col
+          }));
+        }
+
+        // Origin point circle handle
+        g.appendChild(el('circle', {
+          cx: x0, cy: y0, r: 6.5, fill: col, stroke: '#ffffff', 'stroke-width': 2,
+          class: 'vec-origin-handle', 'data-handle': 'origin', 'data-token': tok.id
+        }));
+
+        // Destination tip handle
+        g.appendChild(el('circle', {
+          cx: x1, cy: y1, r: 8, fill: '#ffffff', stroke: col, 'stroke-width': 2.5,
+          class: 'vec-tip-handle', 'data-handle': 'tip', 'data-token': tok.id,
+          'fill-opacity': 0.4
+        }));
+
+        // Vector label placed near midpoint
+        const mx = (x0 + x1) / 2, my = (y0 + y1) / 2;
+        const vInfo = vectorAnalysis(p.u, p.will, p.u_target != null ? p.u_target : p.u, p.will_target != null ? p.will_target : p.will);
+        const labelText = `${tok.label}: ${vInfo.label}`;
+        const t = el('text', {
+          x: mx, y: my - 9, fill: '#16202b', 'font-size': 8.5, 'font-weight': 'bold',
+          'text-anchor': 'middle'
+        });
+        t.textContent = labelText;
+        g.appendChild(t);
+
+        layer.appendChild(g);
+
+        let bb;
+        try { bb = t.getBBox(); } catch(e) {}
+        if (!bb || !bb.width) {
+          const estWidth = labelText.length * 5.2 + 8;
+          bb = { x: mx - estWidth / 2, y: my - 17, width: estWidth, height: 12 };
+        }
+
+        const plate = el('rect', {
+          x: bb.x - 3, y: bb.y - 2, width: bb.width + 6, height: bb.height + 4, rx: 2,
+          fill: '#ffffff', 'fill-opacity': 0.92, stroke: col, 'stroke-opacity': 0.6, 'stroke-width': 0.8
+        });
+        g.insertBefore(plate, t);
+      } else {
+        // Standard Point mode rendering
+        const [px, py] = toPx(p.u, p.will);
+        const g = el('g', { class: 'tok' + (readonly ? ' ro' : ''), 'data-token': tok.id,
+          tabindex: readonly ? '-1' : '0', role: 'button',
+          'aria-label': `${tok.label}, ${quadrantFullName(p.u, p.will)}${readonly ? '' : '. Drag to move.'}` });
+        g.appendChild(el('circle', { cx: px, cy: py, r: 11, fill: 'transparent' }));
+        g.appendChild(el('circle', { cx: px, cy: py, r: 6.5, fill: col,
+          stroke: '#ffffff', 'stroke-width': 2 }));
+
+        const flip = px > S - 110;
+        const t = el('text', { x: px + (flip ? -13 : 13), y: py + 3.5,
+          fill: '#16202b', 'font-size': 8.5, 'font-weight': 'bold',
+          'text-anchor': flip ? 'end' : 'start' });
+        t.textContent = tok.label;
+        g.appendChild(t);
+        layer.appendChild(g);
+
+        const bb = t.getBBox();
+        const plate = el('rect', { x: bb.x - 3, y: bb.y - 2,
+          width: bb.width + 6, height: bb.height + 4, rx: 2,
+          fill: '#ffffff', 'fill-opacity': 0.88,
+          stroke: col, 'stroke-opacity': 0.5, 'stroke-width': 0.7 });
+        g.insertBefore(plate, t);
+      }
+    }
+  }
+
+  function pointFromEvent(svg, evt) {
+    const pt = svg.createSVGPoint();
+    pt.x = evt.clientX; pt.y = evt.clientY;
+    const { x, y } = pt.matrixTransform(svg.getScreenCTM().inverse());
+    const [u, will] = toUWill(x, y);
+    return { u: clamp(u), will: clamp(will) };
+  }
+
+  global.Hegemony = {
+    S, ANCHORS, PREFERENCES, INNER, HANDLE,
+    toPx, toUWill, clamp,
+    distances, fromDistances, nearestAnchor, quadrant, quadrantFullName, vectorAnalysis,
+    draw, drawTokens, pointFromEvent,
+  };
+})(window);
+
+</script>
+<script>
+/* Block types, rendering, and the answer payload. Shared by the runner and
+   the builder preview, so what an author sees while editing is what a
+   respondent gets.
+
+   A survey definition is { steps: [ block, ... ] }. Every block has:
+     id       stable string, unique within the survey. Answers key off this,
+              so renaming one orphans its existing answers.
+     type     one of BLOCK_TYPES below.
+     heading  the question
+     body     optional array of paragraphs shown under the heading
+     image    optional URL
+     required optional; ignored for `header`
+
+   Answer state, all keyed by step id:
+     choices    { selected: [label], other: '' }
+     texts      string
+     numbers    number
+     ranks      [label]        best first
+     placements { tokenId: { u, will, seq, isVector, u_target, will_target, du, dwill, magnitude, descriptor } } */
+(function (global) {
+  'use strict';
+
+  const H = global.Hegemony;
+
+  const BLOCK_TYPES = [
+    { type: 'header', name: 'Section / text',
+      blurb: 'Explanation with no input. Use for calibration copy and recaps.' },
+    { type: 'choice', name: 'Multiple choice',
+      blurb: 'Pick one, or several. Optional free-text "other".' },
+    { type: 'text',   name: 'Free text',
+      blurb: 'Short line or long-form answer.' },
+    { type: 'scale',  name: 'Scale',
+      blurb: 'A numeric run with labelled ends. Likert and similar.' },
+    { type: 'rank',   name: 'Ranking',
+      blurb: 'Put a list in order, best first.' },
+    { type: 'place',  name: 'Hegemony placement',
+      blurb: 'Drag one or more items/vectors onto the map. Stores coordinates, distances, and trajectories.' },
+  ];
+
+  function blankBlock(type, n) {
+    const id = `${type}_${n}`;
+    switch (type) {
+      case 'header': return { id, type, heading: 'Section heading', body: [''] };
+      case 'choice': return { id, type, heading: 'Your question?', required: true,
+                              options: ['Option one', 'Option two'], multiple: false, allowOther: false };
+      case 'text':   return { id, type, heading: 'Your question?', required: true, long: true };
+      case 'scale':  return { id, type, heading: 'Your question?', required: true,
+                              min: 1, max: 5, minLabel: 'Not at all', maxLabel: 'Completely' };
+      case 'rank':   return { id, type, heading: 'Put these in order', required: true,
+                              items: ['First thing', 'Second thing', 'Third thing'] };
+      case 'place':  return { id, type, heading: 'Where would you place this?', required: true,
+                              mode: 'point', nonInverted: false, variant: 'perceptual',
+                              tokens: [{ id: 'item', label: 'the item', color: '#3bde84' }] };
+      default: throw new Error('unknown block type: ' + type);
+    }
+  }
+
+  const blankState = () => ({ choices: {}, texts: {}, numbers: {}, ranks: {}, placements: {} });
+
+  /* ------------------------------------------------------------------ *
+   * Rendering
+   * ------------------------------------------------------------------ */
+  function renderStep(step, host, state, onChange, opts) {
+    const o = opts || {};
+
+    if (step.heading) {
+      const h = document.createElement('h1');
+      h.textContent = step.heading;
+      host.appendChild(h);
+    }
+    if (step.body && step.body.length) {
+      const prose = document.createElement('div');
+      prose.className = 'prose';
+      for (const para of step.body) {
+        if (!para) continue;
+        const p = document.createElement('p');
+        p.textContent = para;
+        prose.appendChild(p);
+      }
+      if (prose.childNodes.length) host.appendChild(prose);
+    }
+    if (step.image) {
+      const img = document.createElement('img');
+      img.className = 'stepimg';
+      img.src = step.image;
+      img.alt = '';
+      img.addEventListener('error', () => img.remove());
+      host.appendChild(img);
+    }
+
+    switch (step.type) {
+      case 'header': return () => true;
+      case 'choice': return renderChoice(step, host, state, onChange);
+      case 'text':   return renderText(step, host, state, onChange);
+      case 'scale':  return renderScale(step, host, state, onChange);
+      case 'rank':   return renderRank(step, host, state, onChange);
+      case 'place':  return renderPlace(step, host, state, onChange, o);
+      default: {
+        const p = document.createElement('p');
+        p.className = 'msg err';
+        p.textContent = `Unknown block type "${step.type}" — skipped.`;
+        host.appendChild(p);
+        return () => true;
+      }
+    }
+  }
+
+  function renderChoice(step, host, state, onChange) {
+    const cur = state.choices[step.id] || { selected: [], other: '' };
+    state.choices[step.id] = cur;
+
+    const box = document.createElement('div');
+    box.className = 'opts';
+    const multi = !!step.multiple;
+
+    for (const opt of step.options || []) {
+      const label = document.createElement('label');
+      const input = document.createElement('input');
+      input.type = multi ? 'checkbox' : 'radio';
+      input.name = step.id;
+      input.value = opt;
+      input.checked = cur.selected.includes(opt);
+      input.addEventListener('change', () => {
+        cur.selected = [...box.querySelectorAll('input[type=radio]:checked,input[type=checkbox]:checked')]
+          .map(i => i.value);
+        onChange();
+      });
+      label.appendChild(input);
+      label.appendChild(document.createTextNode(opt));
+      box.appendChild(label);
+    }
+
+    if (step.allowOther) {
+      const label = document.createElement('label');
+      const input = document.createElement('input');
+      input.type = multi ? 'checkbox' : 'radio';
+      input.name = step.id;
+      input.value = '__other__';
+      input.checked = cur.selected.includes('__other__');
+      label.appendChild(input);
+      label.appendChild(document.createTextNode('Something else'));
+      box.appendChild(label);
+
+      const wrap = document.createElement('div');
+      wrap.className = 'otherwrap';
+      const txt = document.createElement('input');
+      txt.type = 'text';
+      txt.placeholder = 'Your answer';
+      txt.value = cur.other || '';
+      txt.addEventListener('input', () => { cur.other = txt.value; onChange(); });
+      wrap.appendChild(txt);
+      box.appendChild(wrap);
+
+      input.addEventListener('change', () => {
+        cur.selected = [...box.querySelectorAll('input[type=radio]:checked,input[type=checkbox]:checked')]
+          .map(i => i.value);
+        if (input.checked) txt.focus();
+        onChange();
+      });
+    }
+
+    host.appendChild(box);
+    return () => {
+      if (!step.required) return true;
+      if (!cur.selected.length) return false;
+      if (cur.selected.includes('__other__') && !(cur.other || '').trim()) return false;
+      return true;
+    };
+  }
+
+  function renderText(step, host, state, onChange) {
+    const long = step.long !== false;
+    const input = document.createElement(long ? 'textarea' : 'input');
+    if (!long) input.type = 'text';
+    if (step.placeholder) input.placeholder = step.placeholder;
+    input.value = state.texts[step.id] || '';
+    input.addEventListener('input', () => { state.texts[step.id] = input.value; onChange(); });
+    host.appendChild(input);
+    return () => !step.required || (state.texts[step.id] || '').trim().length > 0;
+  }
+
+  function renderScale(step, host, state, onChange) {
+    const min = Number.isFinite(step.min) ? step.min : 1;
+    const max = Number.isFinite(step.max) ? step.max : 5;
+
+    const row = document.createElement('div');
+    row.className = 'scalerow';
+    for (let n = min; n <= max; n++) {
+      const input = document.createElement('input');
+      input.type = 'radio';
+      input.name = step.id;
+      input.id = `${step.id}_${n}`;
+      input.value = String(n);
+      input.checked = state.numbers[step.id] === n;
+      input.addEventListener('change', () => { state.numbers[step.id] = n; onChange(); });
+      const label = document.createElement('label');
+      label.htmlFor = input.id;
+      label.textContent = String(n);
+      row.appendChild(input);
+      row.appendChild(label);
+    }
+    host.appendChild(row);
+
+    if (step.minLabel || step.maxLabel) {
+      const ends = document.createElement('div');
+      ends.className = 'scaleends';
+      const a = document.createElement('span'); a.textContent = step.minLabel || '';
+      const b = document.createElement('span'); b.textContent = step.maxLabel || '';
+      ends.appendChild(a); ends.appendChild(b);
+      host.appendChild(ends);
+    }
+    return () => !step.required || Number.isFinite(state.numbers[step.id]);
+  }
+
+  function renderRank(step, host, state, onChange) {
+    if (!state.ranks[step.id]) state.ranks[step.id] = (step.items || []).slice();
+    const items = state.ranks[step.id].filter(i => (step.items || []).includes(i));
+    for (const i of step.items || []) if (!items.includes(i)) items.push(i);
+    state.ranks[step.id] = items;
+
+    const list = document.createElement('ol');
+    list.className = 'ranklist';
+    const paint = () => {
+      list.textContent = '';
+      state.ranks[step.id].forEach((item, idx) => {
+        const li = document.createElement('li');
+        const n = document.createElement('span');
+        n.className = 'n'; n.textContent = String(idx + 1);
+        const t = document.createElement('span');
+        t.className = 't'; t.textContent = item;
+        const up = document.createElement('button');
+        up.type = 'button'; up.textContent = '↑';
+        up.setAttribute('aria-label', `Move ${item} up`);
+        up.disabled = idx === 0;
+        up.addEventListener('click', () => { move(idx, idx - 1); });
+        const dn = document.createElement('button');
+        dn.type = 'button'; dn.textContent = '↓';
+        dn.setAttribute('aria-label', `Move ${item} down`);
+        dn.disabled = idx === state.ranks[step.id].length - 1;
+        dn.addEventListener('click', () => { move(idx, idx + 1); });
+        li.append(n, t, up, dn);
+        list.appendChild(li);
+      });
+    };
+    const move = (from, to) => {
+      const arr = state.ranks[step.id];
+      arr.splice(to, 0, arr.splice(from, 1)[0]);
+      paint(); onChange();
+    };
+    paint();
+    host.appendChild(list);
+    return () => true;
+  }
+
+  function renderPlace(step, host, state, onChange, opts) {
+    const tokens = step.tokens || [];
+    const variant = step.variant || (step.nonInverted ? 'non_inverted' : 'perceptual');
+    const isVectorMode = (step.mode === 'vector' || step.placementMode === 'vector');
+
+    if (!state.placements[step.id]) state.placements[step.id] = {};
+    const placed = state.placements[step.id];
+    const readonly = !!opts.readonly;
+
+    const row = document.createElement('div');
+    row.className = 'maprow';
+    const mapbox = document.createElement('div');
+    mapbox.className = 'mapbox';
+    const { svg, layer, markerId } = H.draw({ variant });
+    mapbox.appendChild(svg);
+    const tray = document.createElement('div');
+    tray.className = 'tray';
+    tray.innerHTML = '<h3>' + (readonly ? 'Where you put them' : (isVectorMode ? 'Vectors to place' : 'Items to place')) + '</h3>';
+    row.append(mapbox, tray);
+    host.appendChild(row);
+
+    let selected = (tokens.find(t => !placed[t.id]) || tokens[0] || {}).id;
+    const chips = new Map();
+
+    for (const tok of tokens) {
+      const chip = document.createElement('div');
+      chip.className = 'chip';
+      chip.dataset.token = tok.id;
+      const dot = document.createElement('span');
+      dot.className = 'dot';
+      dot.style.background = tok.color || '#3bde84';
+      const name = document.createElement('span');
+      name.textContent = tok.label;
+      chip.append(dot, name);
+      if (!readonly) {
+        chip.tabIndex = 0;
+        chip.addEventListener('click', () => { selected = tok.id; paint(); });
+        chip.addEventListener('keydown', e => {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selected = tok.id; paint(); }
+        });
+      }
+      tray.appendChild(chip);
+      chips.set(tok.id, chip);
+    }
+
+    if (!readonly) {
+      const hint = document.createElement('div');
+      hint.className = 'hint';
+      if (isVectorMode) {
+        hint.textContent = 'Click & drag on the map to set direction & magnitude from the starting point.';
+      } else {
+        hint.textContent = tokens.length > 1
+          ? 'Drag each item onto the map, or select one and click where it belongs. Drag a placed dot to move it.'
+          : 'Drag the item onto the map, or just click where it belongs.';
+      }
+      tray.appendChild(hint);
+    }
+
+    const readout = document.createElement('div');
+    readout.className = 'readout';
+    tray.appendChild(readout);
+
+    let clear = null;
+    if (!readonly) {
+      clear = document.createElement('button');
+      clear.className = 'clr';
+      clear.type = 'button';
+      clear.textContent = 'Clear placements';
+      clear.addEventListener('click', () => {
+        state.placements[step.id] = {};
+        Object.keys(placed).forEach(k => delete placed[k]);
+        selected = (tokens[0] || {}).id;
+        paint(); onChange();
+      });
+      tray.appendChild(clear);
+    }
+
+    function placePoint(tokenId, u, will) {
+      const existing = placed[tokenId];
+      placed[tokenId] = { u, will, isVector: false, seq: existing ? existing.seq : Object.keys(placed).length + 1 };
+      paint(); onChange();
+    }
+
+    function placeVector(tokenId, u0, will0, u1, will1) {
+      const existing = placed[tokenId];
+      const va = H.vectorAnalysis(u0, will0, u1, will1);
+      placed[tokenId] = {
+        u: u0, will: will0,
+        u_target: u1, will_target: will1,
+        isVector: true,
+        du: va.du,
+        dwill: va.dwill,
+        magnitude: va.magnitude,
+        descriptor: va.descriptor,
+        trajectoryLabel: va.label,
+        seq: existing ? existing.seq : Object.keys(placed).length + 1
+      };
+      paint(); onChange();
+    }
+
+    let activeDrag = null;
+
+    if (!readonly) {
+      svg.style.touchAction = 'none';
+
+      svg.addEventListener('pointerdown', e => {
+        const target = e.target;
+        const handleType = target.dataset.handle;
+        const targetTok = target.dataset.token;
+        const pt = H.pointFromEvent(svg, e);
+
+        if (isVectorMode) {
+          e.preventDefault();
+          try { svg.setPointerCapture(e.pointerId); } catch(err) {}
+
+          if (handleType && targetTok && placed[targetTok]) {
+            // Dragging an existing vector handle
+            activeDrag = {
+              mode: 'handle',
+              handle: handleType,
+              tokenId: targetTok,
+              pointerId: e.pointerId,
+              orig: Object.assign({}, placed[targetTok])
+            };
+          } else {
+            // Dragging a new vector from point
+            activeDrag = {
+              mode: 'new_vector',
+              tokenId: selected,
+              pointerId: e.pointerId,
+              u0: pt.u, will0: pt.will,
+              u1: pt.u, will1: pt.will,
+              moved: false
+            };
+            placeVector(selected, pt.u, pt.will, pt.u, pt.will);
+          }
+        } else {
+          // Standard Point Click / Drag
+          const { u, will } = H.pointFromEvent(svg, e);
+          placePoint(selected, u, will);
+          const next = tokens.find(t => !placed[t.id]);
+          if (next) selected = next.id;
+          paint();
+        }
+      });
+
+      svg.addEventListener('pointermove', e => {
+        if (!activeDrag || !isVectorMode) return;
+        const pt = H.pointFromEvent(svg, e);
+
+        if (activeDrag.mode === 'new_vector') {
+          activeDrag.moved = true;
+          activeDrag.u1 = pt.u;
+          activeDrag.will1 = pt.will;
+          placeVector(activeDrag.tokenId, activeDrag.u0, activeDrag.will0, pt.u, pt.will);
+        } else if (activeDrag.mode === 'handle') {
+          const cur = placed[activeDrag.tokenId];
+          if (activeDrag.handle === 'origin') {
+            const du = (cur.u_target != null ? cur.u_target : cur.u) - cur.u;
+            const dwill = (cur.will_target != null ? cur.will_target : cur.will) - cur.will;
+            placeVector(activeDrag.tokenId, pt.u, pt.will, H.clamp(pt.u + du), H.clamp(pt.will + dwill));
+          } else if (activeDrag.handle === 'tip') {
+            placeVector(activeDrag.tokenId, cur.u, cur.will, pt.u, pt.will);
+          }
+        }
+      });
+
+      const finishDrag = e => {
+        if (!activeDrag || !isVectorMode) return;
+        try { svg.releasePointerCapture(e.pointerId); } catch(err) {}
+
+        if (activeDrag.mode === 'new_vector') {
+          const cur = placed[activeDrag.tokenId];
+          // If clicked without dragging, give a clear initial default arrow length (0.4w)
+          if (!activeDrag.moved || Math.hypot(cur.u_target - cur.u, cur.will_target - cur.will) < 0.05) {
+            const targetWill = cur.will >= 1.6 ? cur.will - 0.4 : cur.will + 0.4;
+            placeVector(activeDrag.tokenId, cur.u, cur.will, cur.u, H.clamp(targetWill));
+          }
+          const next = tokens.find(t => !placed[t.id]);
+          if (next) selected = next.id;
+        }
+        activeDrag = null;
+        paint();
+      };
+
+      svg.addEventListener('pointerup', finishDrag);
+      svg.addEventListener('pointercancel', finishDrag);
+    }
+
+    function paint() {
+      H.drawTokens(svg, layer, tokens, placed, { readonly, markerId });
+
+      for (const [id, chip] of chips) {
+        chip.dataset.placed = !!placed[id];
+        chip.classList.toggle('sel', !readonly && id === selected);
+      }
+
+      const rows = [];
+      for (const tok of tokens) {
+        const p = placed[tok.id];
+        if (!p) continue;
+        const d = H.distances(p.u, p.will);
+        const near = H.nearestAnchor(p.u, p.will);
+
+        if (p.isVector || isVectorMode) {
+          const u1 = p.u_target != null ? p.u_target : p.u;
+          const will1 = p.will_target != null ? p.will_target : p.will;
+          const va = H.vectorAnalysis(p.u, p.will, u1, will1);
+          rows.push(`
+            <div style="margin-bottom:14px;background:var(--panel-2);padding:10px;border-radius:6px;border:1px solid var(--rule)">
+              <div style="font-size:13px;font-weight:bold;margin-bottom:4px">${esc(tok.label)}</div>
+              <div style="font-family:var(--mono);font-size:12px;color:var(--gg);margin-bottom:6px">
+                Vector: [${esc(va.startQuadrant)}, ${va.magnitude.toFixed(2)}, ${esc(va.endQuadrant)}]
+              </div>
+              <div style="font-family:var(--mono);font-size:11px;color:var(--ink-soft);line-height:1.6">
+                Start: u ${p.u.toFixed(2)}, will ${p.will.toFixed(2)} (${esc(va.startQuadrant)})<br>
+                Target: u ${u1.toFixed(2)}, will ${will1.toFixed(2)} (${esc(va.endQuadrant)})<br>
+                &Delta;u: ${va.du >= 0 ? '+' : ''}${va.du.toFixed(2)} &middot; &Delta;will: ${va.dwill >= 0 ? '+' : ''}${va.dwill.toFixed(2)} &middot; |v| = ${va.magnitude.toFixed(2)}
+              </div>
+            </div>`);
+        } else {
+          rows.push(`
+            <div style="margin-bottom:12px">
+              <div style="font-size:12px;color:var(--ink-soft);margin-bottom:5px">${esc(tok.label)}</div>
+              <table class="rd">
+                <tr><th></th><th>distance</th></tr>
+                ${[...H.ANCHORS, ...(H.PREFERENCES||[])].map(a => `
+                  <tr class="${a.key === near.key ? 'near' : ''}">
+                    <td>${a.label}</td><td>${(d['d_' + a.key] != null ? d['d_' + a.key] : 0).toFixed(4)}</td>
+                  </tr>`).join('')}
+                <tr><td colspan="2" style="padding-top:6px;color:var(--ink-soft)">
+                  u ${p.u.toFixed(2)} &nbsp; will ${p.will.toFixed(2)} &nbsp; · &nbsp; ${H.quadrant(p.u, p.will)}
+                </td></tr>
+              </table>
+            </div>`);
+        }
+      }
+      readout.innerHTML = rows.length ? rows.join('')
+        : '<div style="font-size:12.5px;color:var(--ink-soft)">Nothing placed yet.</div>';
+      if (clear) clear.style.display = rows.length ? '' : 'none';
+    }
+
+    paint();
+
+    if (step.followUp && !readonly) {
+      const lbl = document.createElement('p');
+      lbl.style.cssText = 'margin:26px 0 8px;font-size:15px';
+      lbl.textContent = step.followUp;
+      host.appendChild(lbl);
+      const ta = document.createElement('textarea');
+      ta.value = state.texts[step.id] || '';
+      ta.addEventListener('input', () => { state.texts[step.id] = ta.value; onChange(); });
+      host.appendChild(ta);
+    }
+
+    return () => !step.required || tokens.every(t => placed[t.id]);
+  }
+
+  const esc = s => String(s).replace(/[&<>"]/g, c =>
+    ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+  /* ------------------------------------------------------------------ *
+   * Payload Export
+   * ------------------------------------------------------------------ */
+  function buildExport(survey, state) {
+    const placements = {};
+    for (const [stepId, toks] of Object.entries(state.placements)) {
+      for (const [tokenId, p] of Object.entries(toks)) {
+        const step = (survey.steps || []).find(s => s.id === stepId) || {};
+        const isVec = !!(p.isVector || p.u_target != null);
+        const u1 = isVec ? (p.u_target != null ? p.u_target : p.u) : p.u;
+        const will1 = isVec ? (p.will_target != null ? p.will_target : p.will) : p.will;
+        const va = isVec ? H.vectorAnalysis(p.u, p.will, u1, will1) : null;
+
+        (placements[stepId] ||= {})[tokenId] = Object.assign(
+          H.distances(p.u, p.will),
+          {
+            u: p.u, will: p.will,
+            placement_mode: isVec ? 'vector' : 'point',
+            u_target: isVec ? u1 : null,
+            will_target: isVec ? will1 : null,
+            magnitude: isVec ? va.magnitude : null,
+            vector_descriptor: isVec ? va.descriptor : null,
+            map_variant: step.variant || (step.nonInverted ? 'non_inverted' : 'perceptual'),
+            nearest: H.nearestAnchor(p.u, p.will).label,
+            quadrant: H.quadrant(p.u, p.will),
+            sequence: p.seq
+          });
+      }
+    }
+    return {
+      survey_id: survey.id, survey_slug: survey.slug, version: 1,
+      completed_at: new Date().toISOString(),
+      label: { name: state.labelName || null, location: state.labelLocation || null },
+      choices: state.choices, texts: state.texts, numbers: state.numbers,
+      ranks: state.ranks, placements,
+    };
+  }
+
+  function toRows(responseId, state, survey) {
+    const placements = [];
+    const steps = (survey && survey.steps) || [];
+    for (const [stepId, toks] of Object.entries(state.placements)) {
+      const step = steps.find(s => s.id === stepId) || {};
+      const mapVariant = step.variant || (step.nonInverted ? 'non_inverted' : 'perceptual');
+      for (const [tokenId, p] of Object.entries(toks)) {
+        const isVec = !!(p.isVector || p.u_target != null);
+        const u1 = isVec ? (p.u_target != null ? p.u_target : p.u) : p.u;
+        const will1 = isVec ? (p.will_target != null ? p.will_target : p.will) : p.will;
+        const va = isVec ? H.vectorAnalysis(p.u, p.will, u1, will1) : null;
+
+        placements.push(Object.assign(
+          { response_id: responseId, step_id: stepId, token_id: tokenId },
+          H.distances(p.u, p.will),
+          {
+            u: p.u, will: p.will,
+            placement_mode: isVec ? 'vector' : 'point',
+            u_target: isVec ? u1 : null,
+            will_target: isVec ? will1 : null,
+            magnitude: isVec ? va.magnitude : null,
+            vector_descriptor: isVec ? JSON.stringify(va.descriptor) : null,
+            map_variant: mapVariant,
+            sequence: p.seq
+          }));
+      }
+    }
+
+    const byStep = new Map();
+    const row = id => {
+      if (!byStep.has(id)) byStep.set(id, { response_id: responseId, step_id: id });
+      return byStep.get(id);
+    };
+    for (const [id, c] of Object.entries(state.choices)) {
+      if (!c || !c.selected || !c.selected.length) continue;
+      const r = row(id);
+      r.choice = c.selected.map(s => (s === '__other__' ? 'Other' : s));
+      if (c.selected.includes('__other__') && (c.other || '').trim()) r.other_text = c.other.trim();
+    }
+    for (const [id, t] of Object.entries(state.texts)) {
+      if (!t || !t.trim()) continue;
+      row(id).text_answer = t;
+    }
+    for (const [id, n] of Object.entries(state.numbers)) {
+      if (!Number.isFinite(n)) continue;
+      row(id).number_answer = n;
+    }
+    for (const [id, arr] of Object.entries(state.ranks)) {
+      if (!arr || !arr.length) continue;
+      row(id).rank_order = arr;
+    }
+    return { placements, answers: [...byStep.values()] };
+  }
+
+  global.SurveyBlocks = {
+    BLOCK_TYPES, blankBlock, blankState, renderStep, buildExport, toRows,
+  };
+})(window);
+
+</script>
+<script>
+/* Driving logic for a self-contained exported survey page. Embedded whole
+   into the exported HTML by builder.html's "Export survey HTML" -- this
+   file is never loaded via <script src> itself, only its text content is
+   copied inline, so it must not assume any other file exists alongside it.
+
+   Two globals are set by a small inline <script> immediately before this
+   one runs:
+     window.__SURVEY_SLUG__   string, used as survey_id in Supabase writes
+     window.__SURVEY_STEPS__  the steps array from the embedded definition  */
+(function () {
+'use strict';
+
+const supa = window.makeSupabase ? window.makeSupabase() : null;
+const B = window.SurveyBlocks;
+const survey = { id: window.__SURVEY_SLUG__, slug: window.__SURVEY_SLUG__ };
+const steps = window.__SURVEY_STEPS__ || [];
+
+const view    = document.getElementById('view');
+const progBar = document.getElementById('progBar');
+const progNum = document.getElementById('progNum');
+
+let state = B.blankState();
+let stepIndex = 0;
+let savedStep = 0;
+let isComplete = () => true;
+let responseId = null;
+let submitted = false;
+
+const storeKey = 'survey:' + survey.slug;
+
+let intro = {};
+try {
+  if (window.__SURVEY_INTRO__) {
+    intro = typeof window.__SURVEY_INTRO__ === 'string' ? JSON.parse(window.__SURVEY_INTRO__) : window.__SURVEY_INTRO__;
+  }
+} catch (e) {}
+
+function restore() {
+  try {
+    const raw = localStorage.getItem(storeKey);
+    if (!raw) {
+      stepIndex = (intro.enabled !== false) ? -1 : 0;
+      return;
+    }
+    const saved = JSON.parse(raw);
+    state = Object.assign(B.blankState(), saved.state || {});
+    responseId = saved.responseId || null;
+    savedStep = (saved.stepIndex != null && saved.stepIndex >= 0) ? saved.stepIndex : 0;
+    // When intro is enabled, always land on Intro screen first so respondents see the welcome & resume button
+    stepIndex = (intro.enabled !== false) ? -1 : savedStep;
+  } catch (e) {
+    stepIndex = (intro.enabled !== false) ? -1 : 0;
+  }
+}
+function persist() {
+  try { localStorage.setItem(storeKey, JSON.stringify({ state, responseId, stepIndex: Math.max(0, stepIndex) })); }
+  catch (e) { /* storage blocked -- the run still works in memory */ }
+}
+
+function render() {
+  view.textContent = '';
+  if (submitted) return renderDone();
+  if (stepIndex === -1 && intro.enabled !== false) return renderIntro();
+
+  const onLast = stepIndex >= steps.length;
+  const eyebrow = document.createElement('p');
+  eyebrow.className = 'eyebrow';
+  eyebrow.textContent = onLast
+    ? 'Review · ' + (steps.length + 1) + ' of ' + (steps.length + 1)
+    : 'Step ' + (stepIndex + 1) + ' of ' + (steps.length + 1);
+  view.appendChild(eyebrow);
+
+  if (onLast) isComplete = renderReview();
+  else isComplete = B.renderStep(steps[stepIndex], view, state, () => { persist(); updateNav(); });
+
+  renderNav();
+  updateNav();
+  view.focus();
+  window.scrollTo(0, 0);
+}
+
+function renderIntro() {
+  const eyebrow = document.createElement('p');
+  eyebrow.className = 'eyebrow';
+  eyebrow.textContent = intro.eyebrow || 'Research Survey';
+  view.appendChild(eyebrow);
+
+  const h = document.createElement('h1');
+  h.textContent = intro.heading || (survey.title || 'Welcome');
+  view.appendChild(h);
+
+  const bodyLines = Array.isArray(intro.body) ? intro.body : (intro.body ? intro.body.split('\n') : []);
+  if (bodyLines.length) {
+    const prose = document.createElement('div');
+    prose.className = 'prose';
+    for (const line of bodyLines) {
+      if (!line.trim()) continue;
+      const p = document.createElement('p');
+      p.textContent = line;
+      prose.appendChild(p);
+    }
+    view.appendChild(prose);
+  }
+
+  if (intro.image) {
+    const img = document.createElement('img');
+    img.className = 'stepimg';
+    img.src = intro.image;
+    img.alt = '';
+    view.appendChild(img);
+  }
+
+  const badges = document.createElement('div');
+  badges.className = 'intro-badges';
+
+  const estMins = intro.estimatedMinutes || Math.max(5, Math.ceil(steps.length * 1.2));
+  const qCount = steps.filter(s => s.type !== 'header').length;
+  const placeCount = steps.filter(s => s.type === 'place').length;
+
+  const b1 = document.createElement('div');
+  b1.className = 'intro-badge';
+  b1.innerHTML = `⏱️ <strong>~${estMins} mins</strong>`;
+  badges.appendChild(b1);
+
+  const b2 = document.createElement('div');
+  b2.className = 'intro-badge';
+  b2.innerHTML = `📋 <strong>${qCount} questions</strong>${placeCount ? ` · ${placeCount} map${placeCount > 1 ? 's' : ''}` : ''}`;
+  badges.appendChild(b2);
+
+  const b3 = document.createElement('div');
+  b3.className = 'intro-badge';
+  b3.innerHTML = `🔒 <strong>Anonymous & Private</strong>`;
+  badges.appendChild(b3);
+
+  const b4 = document.createElement('div');
+  b4.className = 'intro-badge';
+  b4.innerHTML = `💾 <strong>JSON / PDF Export</strong>`;
+  badges.appendChild(b4);
+
+  view.appendChild(badges);
+
+  const answeredSteps = Object.keys(state.choices).length + Object.keys(state.texts).length + Object.keys(state.numbers).length + Object.keys(state.ranks).length + Object.keys(state.placements).length;
+
+  const ctaWrap = document.createElement('div');
+  ctaWrap.className = 'nav';
+  ctaWrap.style.marginTop = '28px';
+
+  if (answeredSteps > 0) {
+    const resumeBtn = document.createElement('button');
+    resumeBtn.className = 'btn';
+    resumeBtn.textContent = 'Resume Survey (Step ' + (savedStep + 1) + ' of ' + (steps.length + 1) + ') →';
+    resumeBtn.addEventListener('click', () => {
+      stepIndex = savedStep;
+      persist();
+      render();
+    });
+    ctaWrap.appendChild(resumeBtn);
+
+    const restartBtn = document.createElement('button');
+    restartBtn.className = 'btn ghost';
+    restartBtn.textContent = 'Start Fresh';
+    restartBtn.addEventListener('click', () => {
+      state = B.blankState();
+      stepIndex = 0;
+      savedStep = 0;
+      persist();
+      render();
+    });
+    ctaWrap.appendChild(restartBtn);
+  } else {
+    const startBtn = document.createElement('button');
+    startBtn.className = 'btn';
+    startBtn.textContent = (intro.startButtonText || 'Start Survey') + ' →';
+    startBtn.addEventListener('click', () => {
+      stepIndex = 0;
+      savedStep = 0;
+      persist();
+      render();
+    });
+    ctaWrap.appendChild(startBtn);
+  }
+
+  view.appendChild(ctaWrap);
+
+  progBar.style.width = '0%';
+  progNum.textContent = '0/' + (steps.length + 1);
+  view.focus();
+  window.scrollTo(0, 0);
+}
+
+function renderReview() {
+  const h = document.createElement('h1'); h.textContent = 'Review and submit';
+  const p = document.createElement('p'); p.className = 'prose';
+  p.textContent = 'Optional: a name or alias and a rough area, so responses can be told apart and grouped. Neither is used to identify you.';
+  view.append(h, p);
+
+  const field = (key, label, ph) => {
+    const l = document.createElement('label'); l.className = 'field'; l.textContent = label;
+    const i = document.createElement('input');
+    i.type = 'text'; i.placeholder = ph; i.value = state[key] || '';
+    i.addEventListener('input', () => { state[key] = i.value; persist(); });
+    view.append(l, i);
+  };
+  field('labelName', 'Name or alias', 'Optional');
+  field('labelLocation', 'Suburb or region', 'Optional');
+
+  const answered = steps.filter(s => s.type !== 'header').length;
+  const placed = Object.values(state.placements).reduce((n, t) => n + Object.keys(t).length, 0);
+  const sum = document.createElement('p');
+  sum.className = 'msg'; sum.style.marginTop = '20px';
+  sum.textContent = answered + ' questions · ' + placed + ' map placements.';
+  view.appendChild(sum);
+  return () => true;
+}
+
+function renderDone() {
+  let ending = {};
+  try {
+    if (window.__SURVEY_ENDING__) {
+      ending = typeof window.__SURVEY_ENDING__ === 'string' ? JSON.parse(window.__SURVEY_ENDING__) : window.__SURVEY_ENDING__;
+    }
+  } catch(e) {}
+
+  const h = document.createElement('h1'); h.textContent = ending.title || 'Thank you';
+  const p = document.createElement('p'); p.className = 'prose';
+  p.textContent = ending.body || 'Your response has been recorded. Below is what you said — yours only; nobody else’s answers are shown.';
+  view.append(h, p);
+
+  for (const step of steps) {
+    if (step.type !== 'place') continue;
+    if (!state.placements[step.id] || !Object.keys(state.placements[step.id]).length) continue;
+    const wrap = document.createElement('div');
+    wrap.style.margin = '34px 0 0';
+    const t = document.createElement('h2'); t.textContent = step.heading;
+    wrap.appendChild(t);
+    view.appendChild(wrap);
+    B.renderStep(Object.assign({}, step, { heading: null, body: null, image: null, followUp: null }),
+                 view, state, () => {}, { readonly: true });
+  }
+
+  const again = document.createElement('div');
+  again.className = 'nav';
+
+  if (ending.pushOnPreCompletion === false) {
+    const saveOnlineBtn = document.createElement('button');
+    saveOnlineBtn.className = 'btn';
+    saveOnlineBtn.id = 'saveOnlineBtn';
+    saveOnlineBtn.type = 'button';
+    saveOnlineBtn.textContent = 'Save Response Online (Supabase)';
+    const onlineStatus = document.createElement('span');
+    onlineStatus.className = 'msg';
+    onlineStatus.id = 'onlineSaveMsg';
+
+    saveOnlineBtn.addEventListener('click', async () => {
+      saveOnlineBtn.disabled = true;
+      onlineStatus.className = 'msg';
+      onlineStatus.textContent = 'Saving online…';
+
+      if (!supa) {
+        onlineStatus.className = 'msg err';
+        onlineStatus.textContent = 'Supabase is not configured — unable to save online.';
+        saveOnlineBtn.disabled = false;
+        return;
+      }
+
+      const { session, error: authErr } = await ensureSession();
+      if (authErr) {
+        onlineStatus.className = 'msg err';
+        onlineStatus.textContent = authErr.message;
+        saveOnlineBtn.disabled = false;
+        return;
+      }
+
+      const payload = B.buildExport(survey, state);
+      const id = responseId || crypto.randomUUID();
+
+      const { error: e1 } = await supa.from('survey_responses').upsert({
+        id: id, survey_id: survey.slug, respondent_id: session.user.id,
+        raw: payload, updated_at: new Date().toISOString(),
+        label_name: payload.label.name, label_location: payload.label.location,
+      }, { onConflict: 'id' });
+      if (e1) {
+        onlineStatus.className = 'msg err';
+        onlineStatus.textContent = e1.message;
+        saveOnlineBtn.disabled = false;
+        return;
+      }
+
+      responseId = id;
+      persist();
+
+      const rows = B.toRows(id, state, survey);
+      for (const pair of [['survey_placements', rows.placements], ['survey_answers', rows.answers]]) {
+        const table = pair[0], data = pair[1];
+        const { error: delErr } = await supa.from(table).delete().eq('response_id', id);
+        if (delErr) {
+          onlineStatus.className = 'msg err';
+          onlineStatus.textContent = table + ' cleanup: ' + delErr.message;
+          saveOnlineBtn.disabled = false;
+          return;
+        }
+        if (!data.length) continue;
+        const { error } = await supa.from(table).insert(data);
+        if (error) {
+          onlineStatus.className = 'msg err';
+          onlineStatus.textContent = table + ': ' + error.message;
+          saveOnlineBtn.disabled = false;
+          return;
+        }
+      }
+
+      onlineStatus.className = 'msg ok';
+      onlineStatus.textContent = 'Saved online successfully ✓';
+      saveOnlineBtn.textContent = 'Saved Online ✓';
+    });
+
+    again.append(saveOnlineBtn, onlineStatus);
+  }
+
+  if (ending.allowJson !== false) {
+    const dlJson = document.createElement('button');
+    dlJson.className = 'btn ghost';
+    dlJson.type = 'button';
+    dlJson.textContent = 'Download My Answers (JSON)';
+    dlJson.addEventListener('click', () => {
+      const payload = B.buildExport(survey, state);
+      const filename = `response-${survey.slug || 'survey'}-${(responseId || 'export').slice(0, 8)}.json`;
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    });
+    again.appendChild(dlJson);
+  }
+
+  if (ending.allowPdf !== false) {
+    const dlPdf = document.createElement('button');
+    dlPdf.className = 'btn ghost';
+    dlPdf.type = 'button';
+    dlPdf.textContent = 'Download / Print PDF';
+    dlPdf.addEventListener('click', () => {
+      window.print();
+    });
+    again.appendChild(dlPdf);
+  }
+
+  const edit = document.createElement('button');
+  edit.className = 'btn ghost'; edit.textContent = 'Change my answers';
+  edit.addEventListener('click', () => { submitted = false; stepIndex = 0; render(); });
+  again.appendChild(edit);
+  view.appendChild(again);
+
+  progBar.style.width = '100%';
+  progNum.textContent = 'done';
+}
+
+function finishLocal() {
+  submitted = true;
+  persist();
+  render();
+}
+
+function renderNav() {
+  const nav = document.createElement('div');
+  nav.className = 'nav'; nav.id = 'nav';
+
+  const hasIntro = intro.enabled !== false;
+  const back = document.createElement('button');
+  back.className = 'btn ghost'; back.type = 'button'; back.textContent = 'Back';
+  back.disabled = stepIndex === 0 && !hasIntro;
+  back.addEventListener('click', () => {
+    if (stepIndex === 0 && hasIntro) stepIndex = -1;
+    else stepIndex--;
+    persist(); render();
+  });
+  nav.appendChild(back);
+
+  let ending = {};
+  try {
+    if (window.__SURVEY_ENDING__) {
+      ending = typeof window.__SURVEY_ENDING__ === 'string' ? JSON.parse(window.__SURVEY_ENDING__) : window.__SURVEY_ENDING__;
+    }
+  } catch(e) {}
+
+  const pushAuto = ending.pushOnPreCompletion !== false;
+  const onLast = stepIndex >= steps.length;
+  const next = document.createElement('button');
+  next.className = 'btn'; next.id = 'nextBtn'; next.type = 'button';
+  next.textContent = onLast ? (pushAuto ? 'Submit' : 'Finish Survey →') : 'Continue';
+  next.addEventListener('click', onLast ? (pushAuto ? submit : finishLocal) : () => { stepIndex++; persist(); render(); });
+  nav.appendChild(next);
+
+  const msg = document.createElement('span');
+  msg.className = 'msg'; msg.id = 'navMsg';
+  nav.appendChild(msg);
+  view.appendChild(nav);
+}
+
+function updateNav() {
+  const btn = document.getElementById('nextBtn');
+  if (btn) btn.disabled = !isComplete();
+  const curStep = Math.max(0, stepIndex + 1);
+  const totalSteps = steps.length + 1;
+  progBar.style.width = (Math.max(0, stepIndex) / steps.length * 100) + '%';
+  progNum.textContent = curStep + '/' + totalSteps;
+}
+
+// Anonymous sign-in gives a stable respondent id, so a second run from this
+// browser updates the first row instead of creating a duplicate.
+async function ensureSession() {
+  if (!supa) return { error: { message: 'Supabase is not configured.' } };
+  const { data: { session } } = await supa.auth.getSession();
+  if (session) return { session };
+  const { data, error } = await supa.auth.signInAnonymously();
+  if (error) return { error };
+  return { session: data.session };
+}
+
+async function submit() {
+  const msg = document.getElementById('navMsg');
+  const btn = document.getElementById('nextBtn');
+  const set = (t, cls) => { msg.textContent = t; msg.className = 'msg' + (cls ? ' ' + cls : ''); };
+
+  if (!supa) { set('Supabase is not configured — nothing was sent.', 'err'); return; }
+  btn.disabled = true;
+  set('Submitting…');
+
+  const { session, error: authErr } = await ensureSession();
+  if (authErr) { set(authErr.message, 'err'); btn.disabled = false; return; }
+
+  const payload = B.buildExport(survey, state);
+  const id = responseId || crypto.randomUUID();
+
+  const { error: e1 } = await supa.from('survey_responses').upsert({
+    id: id, survey_id: survey.slug, respondent_id: session.user.id,
+    raw: payload, updated_at: new Date().toISOString(),
+    label_name: payload.label.name, label_location: payload.label.location,
+  }, { onConflict: 'id' });
+  if (e1) { set(e1.message, 'err'); btn.disabled = false; return; }
+
+  responseId = id;
+  persist();
+
+  const rows = B.toRows(id, state);
+  for (const pair of [['survey_placements', rows.placements], ['survey_answers', rows.answers]]) {
+    const table = pair[0], data = pair[1];
+    const { error: delErr } = await supa.from(table).delete().eq('response_id', id);
+    if (delErr) { set(table + ' cleanup: ' + delErr.message, 'err'); btn.disabled = false; return; }
+    if (!data.length) continue;
+    const { error } = await supa.from(table).insert(data);
+    if (error) { set(table + ': ' + error.message, 'err'); btn.disabled = false; return; }
+  }
+
+  submitted = true;
+  render();
+}
+
+function setupPrivacyModal() {
+  const modal = document.getElementById('privacyModal');
+  const openBtn = document.getElementById('openPrivacyBtn');
+  const closeBtn = document.getElementById('closePrivacyBtn');
+  if (!modal) return;
+  if (openBtn) {
+    openBtn.addEventListener('click', () => {
+      if (typeof modal.showModal === 'function') modal.showModal();
+      else modal.setAttribute('open', '');
+    });
+  }
+  if (closeBtn) {
+    closeBtn.addEventListener('click', () => {
+      if (typeof modal.close === 'function') modal.close();
+      else modal.removeAttribute('open');
+    });
+  }
+  modal.addEventListener('click', e => {
+    if (e.target === modal) {
+      if (typeof modal.close === 'function') modal.close();
+      else modal.removeAttribute('open');
+    }
+  });
+}
+
+setupPrivacyModal();
+
+if (!steps.length) {
+  view.innerHTML = '';
+  view.appendChild(Object.assign(document.createElement('p'),
+    { className: 'msg err', textContent: 'This survey has no questions.' }));
+} else {
+  restore();
+  render();
+}
+})();
+
+</script>
+</body>
+</html>

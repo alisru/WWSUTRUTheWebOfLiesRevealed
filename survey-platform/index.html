@@ -1,42 +1,81 @@
 <!DOCTYPE html>
 <html lang="en-AU">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Surveys</title>
-<link rel="stylesheet" href="assets/survey.css">
-<style>
-.startgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:720px;margin-top:20px}
-@media(max-width:620px){.startgrid{grid-template-columns:1fr}}
-.starttile{border:1px solid var(--rule);background:var(--panel);border-radius:8px;padding:18px}
-.starttile h2{margin:0 0 6px;font-size:19px}
-.starttile p{margin:0 0 14px;font-size:13px;color:var(--ink-soft)}
-</style>
-</head>
-<body>
-<header class="mast">
-  <div class="mast-in">
-    <div class="brand">Surveys<span>The Web Of Lies Revealed</span></div>
-  </div>
-</header>
-<main class="wrap">
-  <h1>Open surveys</h1>
-  <p class="prose">Nothing here talks to a server until you answer one and submit.</p>
 
-  <!--
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Surveys</title>
+  <link rel="stylesheet" href="assets/survey.css">
+  <style>
+    .startgrid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      max-width: 720px;
+      margin-top: 20px
+    }
+
+    @media(max-width:620px) {
+      .startgrid {
+        grid-template-columns: 1fr
+      }
+    }
+
+    .starttile {
+      border: 1px solid var(--rule);
+      background: var(--panel);
+      border-radius: 8px;
+      padding: 18px
+    }
+
+    .starttile h2 {
+      margin: 0 0 6px;
+      font-size: 19px
+    }
+
+    .starttile p {
+      margin: 0 0 14px;
+      font-size: 13px;
+      color: var(--ink-soft)
+    }
+  </style>
+</head>
+
+<body>
+  <header class="mast">
+    <div class="mast-in">
+      <div class="brand">Surveys<span>The Web Of Lies Revealed</span></div>
+    </div>
+  </header>
+  <main class="wrap">
+    <h1>Open surveys</h1>
+    <p class="prose">Nothing here talks to a server until you answer one and submit.</p>
+
+    <!--
     Plain hand-edited list -- there is no server here to scan the folder for
     survey files, so add one card per exported survey, same as any other
     index page in this repo. Copy the block below for each one.
   -->
-  <div class="startgrid">
+    <div class="startgrid">
 
-    <div class="starttile">
-      <h2>Judgement</h2>
-      <p>The Psochic Hegemony — judging ideas, concepts and people through relative morality.</p>
-      <a class="btn" href="hegemony-survey.html">Start</a>
+      <div class="starttile">
+        <h2>Judgement</h2>
+        <p>The Psochic Hegemony — judging ideas, concepts and people through relative morality.</p>
+        <a class="btn" href="hegemony-survey.html">Start</a>
+      </div>
+      <div class="starttile">
+        <h2>Feeling about Judgement Bot</h2>
+        <p>A 1-question survey to ask how you feel about <a href="https://bsky.app/profile/judgement-bot.bsky.social" target="_blank">Judgement Bot</a>.</p>
+        <a class="btn" href="judgement-bot-feeling.html">Start</a>
+      </div>
+
     </div>
+  </main>
 
-  </div>
-</main>
+  <footer class="survey-footer wrap">
+    <div><strong>The Web Of Lies Revealed</strong> &middot; Civic & Hegemony Research</div>
+    <div><a href="privacy.html">Privacy Policy</a></div>
+  </footer>
 </body>
+
 </html>
