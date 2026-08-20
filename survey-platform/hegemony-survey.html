@@ -99,6 +99,19 @@ table.rd tr.near td{color:var(--gg)}
 .btn:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
 .msg{font-size:13.5px;color:var(--ink-soft)}
 .msg.err{color:var(--le)}
+
+/* ---------- collapsible theory ---------- */
+details.more{max-width:66ch;margin:16px 0 0;border:1px solid var(--rule);
+  border-radius:6px;background:var(--panel);overflow:hidden}
+details.more summary{cursor:pointer;padding:11px 14px;font-size:13.5px;font-weight:600;
+  color:var(--ink);list-style:none;display:flex;align-items:center;gap:9px}
+details.more summary::-webkit-details-marker{display:none}
+details.more summary::before{content:'▸';color:var(--ink-soft);font-size:12px;flex:none}
+details.more[open] summary::before{content:'▾'}
+details.more summary:hover{background:var(--panel-2)}
+details.more summary:focus-visible{outline:2px solid var(--focus);outline-offset:-2px}
+details.more > .prose{padding:0 14px 13px;border-top:1px solid var(--rule);margin-top:0}
+details.more > .prose p:first-child{margin-top:13px}
 pre.out{font-family:var(--mono);font-size:11.5px;background:var(--panel);border:1px solid var(--rule);
   padding:14px;border-radius:6px;overflow:auto;max-height:340px;white-space:pre-wrap;word-break:break-all}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
@@ -126,25 +139,30 @@ pre.out{font-family:var(--mono);font-size:11.5px;background:var(--panel);border:
 {
   "id": "judgement",
   "title": "The Psochic Hegemony",
+  "groups": [
+    { "id": "core",    "title": "Core topics" },
+    { "id": "compass", "title": "Political Compass", "blurb": "Where political ideas sit, split by axis." },
+    { "id": "temper",  "title": "Temperament",       "blurb": "How individual people run, split by lens." }
+  ],
   "sections": [
-    { "id": "econ", "title": "Money & Economy", "blurb": "Pricing, effort, and fairness in exchange." },
-    { "id": "control", "title": "Control Questions", "blurb": "Where welfare policy ideas originate." },
-    { "id": "trust", "title": "Trust & Loyalty", "blurb": "Loyalty, honesty, and betrayal between people who know each other." },
-    { "id": "power", "title": "Power & Authority", "blurb": "How power is taken, given up, or quietly kept." },
-    { "id": "work", "title": "Work & Recognition", "blurb": "Credit, effort, and who gets acknowledged for it." },
-    { "id": "info", "title": "Knowledge & Information", "blurb": "Truth, suppression, and who controls what's known." },
-    { "id": "preference", "title": "Everyday Preference", "blurb": "Ordinary likes and dislikes with no real moral stakes." },
-    { "id": "confusion", "title": "Genuine Ambiguity", "blurb": "Cases that resist a clean answer." },
-    { "id": "compass_econ", "title": "Political Compass — Economic", "blurb": "State provision vs free markets." },
-    { "id": "compass_social", "title": "Political Compass — Social", "blurb": "Order and authority vs personal liberty." },
-    { "id": "compass_physics", "title": "Political Compass — Social Physics", "blurb": "Power, justification, projection, and problems, applied to politics." },
-    { "id": "mbti_classic", "title": "Temperament — Classic", "blurb": "How people recharge, decide, and plan." },
-    { "id": "mbti_physics", "title": "Temperament — Social Physics", "blurb": "Selfish vs altruistic patterns in everyday behaviour." }
+    { "id": "econ", "group": "core", "color": "#f4a300", "title": "Money & Economy", "blurb": "Pricing, effort, and fairness in exchange." },
+    { "id": "control", "group": "core", "color": "#7c5cff", "title": "Control Questions", "blurb": "Where welfare policy ideas originate." },
+    { "id": "trust", "group": "core", "color": "#00b3a4", "title": "Trust & Loyalty", "blurb": "Loyalty, honesty, and betrayal between people who know each other." },
+    { "id": "power", "group": "core", "color": "#ff5da2", "title": "Power & Authority", "blurb": "How power is taken, given up, or quietly kept." },
+    { "id": "work", "group": "core", "color": "#4f8fff", "title": "Work & Recognition", "blurb": "Credit, effort, and who gets acknowledged for it." },
+    { "id": "info", "group": "core", "color": "#c9a227", "title": "Knowledge & Information", "blurb": "Truth, suppression, and who controls what's known." },
+    { "id": "preference", "group": "core", "color": "#8bc34a", "title": "Everyday Preference", "blurb": "Ordinary likes and dislikes with no real moral stakes." },
+    { "id": "confusion", "group": "core", "color": "#9aa3b8", "title": "Genuine Ambiguity", "blurb": "Cases that resist a clean answer." },
+    { "id": "compass_econ", "group": "compass", "color": "#ff7043", "title": "Economic", "blurb": "State provision vs free markets." },
+    { "id": "compass_social", "group": "compass", "color": "#ff3d81", "title": "Social", "blurb": "Order and authority vs personal liberty." },
+    { "id": "compass_physics", "group": "compass", "color": "#ab47bc", "title": "Social Physics", "blurb": "Power, justification, projection, and problems, applied to politics." },
+    { "id": "mbti_classic", "group": "temper", "color": "#26c6da", "title": "Classic", "blurb": "How people recharge, decide, and plan." },
+    { "id": "mbti_physics", "group": "temper", "color": "#26a69a", "title": "Social Physics", "blurb": "Selfish vs altruistic patterns in everyday behaviour." }
   ],
   "steps": [
     { "id": "intro", "type": "header", "heading": "The Psochic Hegemony",
       "body": ["Judging ideas, concepts and people through relative morality.",
-               "This runs about 15 minutes. Nothing you enter identifies you."] },
+               "A short calibration comes first — about 10 minutes. After that you pick topics from a menu in any order and stop whenever you like; you can submit after a single topic or work through all thirteen. Nothing you enter identifies you."] },
 
     { "id": "pre_knowledge", "type": "choice", "required": true,
       "heading": "A pre-knowledge test. How do you feel about the Psochic Hegemony Graph?",
@@ -156,8 +174,9 @@ pre.out{font-family:var(--mono);font-size:11.5px;background:var(--panel);border:
 
     { "id": "calibration", "type": "header", "heading": "Calibration",
       "body": ["To begin we must calibrate your understanding. Some people are able to feel the Psochic Hegemony, the Ruling Principle of the Mind, the Map of Good and Evil naturally — when they look at Greater Good and think Greater Evil, they'll feel a gradient or a discernable bodily feeling.",
-               "Most people cannot, since 'like' only interacts with 'like' and 'like' understands 'like'. Good and Evil can only be felt as strongly as one understands it. Your Body understands Good more than your Mind does; a starving person never says \"good is an illusion\" when being handed sustenance, as that is an example of Good. Similarly they'd never say \"bad is an illusion\" if you took the sustenance from their starving mouth and sold it to another. They would, however, if you gave them a rock and took it away.",
-               "In the following section, imagine you are and have been in a desert, you're starving and parched. Place each scenario where you feel it belongs. Do not overthink it. Yes, it's as simple as it seems."] },
+               "In the following section, imagine you are and have been in a desert, you're starving and parched. Place each scenario where you feel it belongs. Do not overthink it. Yes, it's as simple as it seems."],
+      "more_label": "Why most people can't feel it directly",
+      "more": ["Most people cannot, since 'like' only interacts with 'like' and 'like' understands 'like'. Good and Evil can only be felt as strongly as one understands it. Your Body understands Good more than your Mind does; a starving person never says \"good is an illusion\" when being handed sustenance, as that is an example of Good. Similarly they'd never say \"bad is an illusion\" if you took the sustenance from their starving mouth and sold it to another. They would, however, if you gave them a rock and took it away."] },
 
     { "id": "cal_give_food", "type": "place", "required": true,
       "heading": "You're starving and parched, I give you food and water",
@@ -183,10 +202,11 @@ pre.out{font-family:var(--mono);font-size:11.5px;background:var(--panel);border:
 
     { "id": "cal_recap", "type": "header", "heading": "Calibration Recap",
       "body": ["If you assume the rock has intrinsic value you may have placed it toward Good Preference when given, and toward Bad Preference or Lesser Evil when taken and sold — because the rock has assumed a value you missed, and was 'stolen' from you.",
-               "The Lesser Evil is the greed zone; in this context the Greater Evil is the effects of greed. From the perspective of Greed, taking the rock and selling it from under you is the Greater Evil, as that's opposite to what they wanted to do with it. If you recognize the rock still has no intrinsic value, you'd land near the centre — confusion as to why they took it at all.",
+               "A thing's objective worth comes from its objective benefit relative to completing a task. Survival is the one shared goal of all Life, so sustenance has universal benefit and universal understanding of benefit. The lesson is that periods of abundance mute the sense of suffering, and the understanding of Bad. This in turn mutes the sense of Good, and is easily achieved by overthinking."],
+      "more_label": "The greed zone, the rock, and the will axis — in full",
+      "more": ["The Lesser Evil is the greed zone; in this context the Greater Evil is the effects of greed. From the perspective of Greed, taking the rock and selling it from under you is the Greater Evil, as that's opposite to what they wanted to do with it. If you recognize the rock still has no intrinsic value, you'd land near the centre — confusion as to why they took it at all.",
                "We did not say 'Sulphur in the context of medicine', or 'Gemstone', 'metal', or even 'Ore'. Even a starving person in the desert can find a rock for themselves.",
-               "Note the reactions of the will axis. Having something sold from you, even something as worthless as sand in the desert, opposes your sense of fairness and generates will. Willpower is generated from a reaction of external events against one's worldview, determined by magnitude of opposition or support and justification.",
-               "A thing's objective worth comes from its objective benefit relative to completing a task. Survival is the one shared goal of all Life, so sustenance has universal benefit and universal understanding of benefit. The lesson is that periods of abundance mute the sense of suffering, and the understanding of Bad. This in turn mutes the sense of Good, and is easily achieved by overthinking."] },
+               "Note the reactions of the will axis. Having something sold from you, even something as worthless as sand in the desert, opposes your sense of fairness and generates will. Willpower is generated from a reaction of external events against one's worldview, determined by magnitude of opposition or support and justification."] },
 
     { "id": "fruit_basket", "type": "place", "required": true,
       "heading": "The fruit basket experiment",
@@ -470,53 +490,82 @@ const toVPsi = (x, y)  => [ 2 - x * 4 / S, 2 - y * 4 / S ];
 // Colours are the darkened variants of the map's palette -- the field
 // behind them is white-to-saturated now, not the dark canvas, so the
 // bright originals wash out against it.
-const ANCHORS = [
-  { key: 'gg', label: 'Greater Good', sub: 'Productive · The Good Truth',  v:  1, psi:  1, color: '#0d6b2f' },
-  { key: 'le', label: 'Lesser Evil',  sub: 'Reductive · The Bad Lie',     v: -1, psi:  1, color: '#9c3a20' },
-  { key: 'ge', label: 'Greater Evil', sub: 'Regressive · The Bad Truth',   v: -1, psi: -1, color: '#b81f1f' },
-  { key: 'lg', label: 'Lesser Good',  sub: 'Constructive · The Good Lie',    v:  1, psi: -1, color: '#15708c' },
+// Every fixture on the map, in one list. `draw` says how buildMap renders
+// it: 'anchor' = a canonical corner, 'minor' = the smaller preference
+// markers, 'ring' = the dashed perceptual-inversion points, 'centre' = the
+// No-one/Confusion node that owns the origin. `stored` marks the points
+// survey_placements has real distance columns for.
+//
+// This was four overlapping arrays (ANCHORS / INNER / EXTRA_POINTS /
+// REFERENCE_POINTS) plus a `key === 'cf'` skip in the draw loop. Worse, the
+// ring was decorative -- drawn, but excluded from classification -- so a
+// respondent who followed the recap's instruction to place on the marked
+// inner ring was told they were closest to that ring point's exact
+// inversion. One list with flags removes the special-casing and lets the
+// ring classify.
+const POINTS = [
+  { key: 'gg', label: 'Greater Good', sub: 'Productive · The Good Truth',   v:  1, psi:  1, color: '#0d6b2f', draw: 'anchor', stored: true },
+  { key: 'le', label: 'Lesser Evil',  sub: 'Reductive · The Bad Lie',       v: -1, psi:  1, color: '#9c3a20', draw: 'anchor', stored: true },
+  { key: 'ge', label: 'Greater Evil', sub: 'Regressive · The Bad Truth',    v: -1, psi: -1, color: '#b81f1f', draw: 'anchor', stored: true },
+  { key: 'lg', label: 'Lesser Good',  sub: 'Constructive · The Good Lie',   v:  1, psi: -1, color: '#15708c', draw: 'anchor', stored: true },
+
+  // No active/suppressive charge, so these sit on the psi=0 axis rather
+  // than at a corner. Both have columns in survey_placements (d_gp/d_bp).
+  { key: 'gp', label: 'Good Preference', v:  1, psi: 0, color: '#4a8a6e', draw: 'minor', stored: true },
+  { key: 'bp', label: 'Bad Preference',  v: -1, psi: 0, color: '#8a5a4a', draw: 'minor', stored: true },
+  { key: 'cf', label: 'Confusion',       v:  0, psi: 0, color: '#46505e', draw: 'centre' },
+
+  // The perceptual inversion ring: each sits at half magnitude inside the
+  // quadrant of its own opposite. That inversion is the entire point.
+  { key: 'pge', label: 'Perc. Greater Evil', v:  0.5, psi:  0.5, color: '#b81f1f', draw: 'ring', inverts: 'gg' },
+  { key: 'plg', label: 'Perc. Lesser Good',  v: -0.5, psi:  0.5, color: '#15708c', draw: 'ring', inverts: 'le' },
+  { key: 'ple', label: 'Perc. Lesser Evil',  v:  0.5, psi: -0.5, color: '#9c3a20', draw: 'ring', inverts: 'lg' },
+  { key: 'pgg', label: 'Perc. Greater Good', v: -0.5, psi: -0.5, color: '#0d6b2f', draw: 'ring', inverts: 'ge' },
 ];
 
-const INNER = [
-  { label: 'Perc. Greater Evil', v:  0.5, psi:  0.5, color: '#b81f1f' },
-  { label: 'Perc. Lesser Good',  v: -0.5, psi:  0.5, color: '#15708c' },
-  { label: 'Perc. Lesser Evil',  v:  0.5, psi: -0.5, color: '#9c3a20' },
-  { label: 'Perc. Greater Good', v: -0.5, psi: -0.5, color: '#0d6b2f' },
-];
+const byKey    = k => POINTS.find(p => p.key === k);
+const ANCHORS  = POINTS.filter(p => p.draw === 'anchor');
+const STORED   = POINTS.filter(p => p.stored);
+// Everything the readout lists a closeness figure for. The ring is excluded
+// -- it is reported as a callout when you land on one, not as four more
+// rows of numbers on every single question.
+const REFERENCE_POINTS = POINTS.filter(p => p.draw !== 'ring');
 
-// The three non-directional points from the original hegemony_7 answer set
-// -- no active/suppressive charge, so they sit on the psi=0 axis (the
-// preferences) or dead centre (confusion), rather than at the four
-// canonical corners.
-const EXTRA_POINTS = [
-  { key: 'gp', label: 'Good Preference', v:  1, psi: 0, color: '#4a8a6e' },
-  { key: 'bp', label: 'Bad Preference',  v: -1, psi: 0, color: '#8a5a4a' },
-  { key: 'cf', label: 'Confusion',       v:  0, psi: 0, color: '#46505e' },
-];
-
-// All seven reference points, for "which one is this closest to" purposes --
-// the readout and nearest-point classification should be able to land on a
-// preference or confusion, not just the four moral corners.
-const REFERENCE_POINTS = ANCHORS.concat(EXTRA_POINTS);
-
-// The stored answer: straight-line distance from the placed point to each
-// of the four canonical anchors. 0 on the anchor itself, 2 to either
-// side-neighbour, 2*sqrt(2) diagonally opposite, sqrt(2) to all four from
-// the origin. Only the four canonical keys are stored -- survey_placements
-// has columns for exactly those four, not the extra reference points.
+// The stored answer: straight-line distance from the placed point to every
+// point survey_placements has a column for -- the four canonical anchors
+// plus the two preference anchors. 0 on the point itself, 2 to either
+// side-neighbour, 2*sqrt(2) diagonally opposite.
 function distances(v, psi) {
   const d = {};
-  for (const a of ANCHORS) d['d_' + a.key] = Math.hypot(v - a.v, psi - a.psi);
+  for (const a of STORED) d['d_' + a.key] = Math.hypot(v - a.v, psi - a.psi);
   return d;
 }
 
+// How close counts as "on" a marked ring point. The ring sits at half
+// magnitude, exactly sqrt(0.5) from three other fixtures at once, so it can
+// never win on distance alone -- (0.5, 0.5) is equidistant from Greater
+// Good, Good Preference and Confusion, and the old scan silently returned
+// whichever came first in the array, which was the ring point's own
+// inversion.
+//
+// Snapping instead of tie-breaking is deliberate. A tie-break would also
+// claim points like (0, 1) that are merely nearest-to a ring point without
+// being on one, and would disagree with the equivalent test in schema.sql.
+// This threshold is a radius in map units (the grid spans -2..2), so it is
+// the same test in both layers.
+const RING_SNAP = 0.2;
+
+// Exact ties are common on this map -- (0, 1) is precisely 1.0 from Greater
+// Good, Lesser Evil AND Confusion at once -- so the ordering has to be fully
+// determined rather than left to whichever entry the array happens to list
+// first. Distance, then label alphabetically: the same `order by dist, label`
+// that nearest_point() in schema.sql uses, so the live readout and the
+// server-side classification cannot disagree about the same placement.
 function nearestAnchor(v, psi) {
-  let best = null, bestD = Infinity;
-  for (const a of REFERENCE_POINTS) {
-    const d = Math.hypot(v - a.v, psi - a.psi);
-    if (d < bestD) { bestD = d; best = a; }
-  }
-  return best;
+  return POINTS
+    .filter(a => a.draw !== 'ring' || Math.hypot(v - a.v, psi - a.psi) <= RING_SNAP)
+    .map(a => [a, Math.hypot(v - a.v, psi - a.psi)])
+    .sort((x, y) => x[1] - y[1] || x[0].label.localeCompare(y[0].label))[0][0];
 }
 
 function quadrant(v, psi) {
@@ -528,15 +577,9 @@ function quadrant(v, psi) {
 
 const clamp = n => Math.max(-2, Math.min(2, n));
 
-// One colour per topic section, for the collated overlay -- distinct from
-// the anchor palette above so scatter points never get mistaken for map
-// furniture.
-const SECTION_COLORS = {
-  econ: '#f4a300', control: '#7c5cff', trust: '#00b3a4', power: '#ff5da2',
-  work: '#4f8fff', info: '#c9a227', preference: '#8bc34a', confusion: '#9aa3b8',
-  compass_econ: '#ff7043', compass_social: '#ff3d81', compass_physics: '#ab47bc',
-  mbti_classic: '#26c6da', mbti_physics: '#26a69a'
-};
+// Topic colours live on the section objects in survey-data, not in a second
+// lookup keyed by section id -- that arrangement had to be hand-synced, and
+// renaming a section silently dropped its colour to grey.
 
 // A distance-based readout is hard to feel: is 1.9142 close or far? Convert
 // to closeness instead, 0-100%: 100% right on the point, 0% at 2*sqrt(2)
@@ -573,20 +616,55 @@ function stepAnswered(step) {
   return true;
 }
 
-// The furthest point a respondent has actually earned the right to see:
-// the first required question still unanswered, in survey order. This is
-// both where "resume" lands and the ceiling for the progress-bar scrubber
-// -- it lets you revisit anything you've already done, plus the very next
-// unanswered question, but never lets you skip ahead into ones you haven't.
+// Calibration is the only part that has to happen in order: everything
+// before the menu is a linear run the respondent must finish before topics
+// unlock. Past the menu the survey is hub-and-spoke and order is the
+// respondent's business.
+const CALIBRATION_DONE = () =>
+  SURVEY.steps.slice(0, MENU_INDEX).every(s => !s.required || stepAnswered(s));
+
+// The ceiling for the progress-bar scrubber.
+//
+// This used to be "the first required unanswered step in array order",
+// which quietly assumed a linear survey. It is not one: pick a late topic
+// off the menu, finish it, and the frontier still pointed at the first
+// question of the first topic you skipped -- so the scrubber refused to
+// return you to work you had actually completed, and reload dumped you
+// into a topic you had deliberately passed over.
+//
+// During calibration the old linear rule is exactly right. After it, every
+// answered step is fair game, plus the next unanswered step in whatever
+// section you are currently in.
 function computeFrontier() {
-  const idx = SURVEY.steps.findIndex(s => s.required && !stepAnswered(s));
-  return idx === -1 ? SURVEY.steps.length - 1 : idx;
+  if (!CALIBRATION_DONE()) {
+    const idx = SURVEY.steps.findIndex(s => s.required && !stepAnswered(s));
+    return idx === -1 ? SURVEY.steps.length - 1 : idx;
+  }
+  let last = MENU_INDEX;
+  SURVEY.steps.forEach((s, i) => {
+    if (!s.required || stepAnswered(s)) last = Math.max(last, i);
+  });
+  const step = SURVEY.steps[stepIndex];
+  const range = step && step.section ? SECTION_RANGE[step.section] : null;
+  if (range) {
+    const next = SURVEY.steps.findIndex((s, i) =>
+      i >= range.first && i <= range.last && s.required && !stepAnswered(s));
+    if (next !== -1) last = Math.max(last, next);
+  }
+  return last;
 }
 
-// A brand-new session (no stepIndex ever saved) starts at the real intro;
-// a returning one resumes at the frontier, not wherever it last happened
-// to be sitting (which might be mid-browse of an already-answered topic).
-let stepIndex = state.stepIndex ? computeFrontier() : 0;
+// Where a returning respondent lands. Mid-calibration they resume exactly
+// where they stopped, because that run is linear and has to be finished.
+// Once calibration is done the hub is the honest answer -- it is the screen
+// they were actually navigating from, and dropping them back into some
+// half-finished topic they chose to leave is a worse guess than the menu.
+function resumeIndex() {
+  if (!state.stepIndex) return 0;
+  return CALIBRATION_DONE() ? MENU_INDEX : computeFrontier();
+}
+
+let stepIndex = 0;
 function isSectionComplete(id) {
   return SURVEY.steps.filter(s => s.section === id && s.required).every(stepAnswered);
 }
@@ -613,7 +691,49 @@ function svgEl(name, attrs) {
   return el;
 }
 
+// One text helper for every label on the map, so the halo-behind-text
+// treatment isn't respelled at each call site.
+function mapTxt(host, x, y, str, o) {
+  const t = svgEl('text', { x, y, fill: o.fill, 'font-size': o.size,
+                            'text-anchor': o.anchor || 'middle' });
+  if (o.bold)    t.setAttribute('font-weight', 'bold');
+  if (o.opacity) t.setAttribute('fill-opacity', o.opacity);
+  if (o.halo !== false) {
+    t.setAttribute('stroke', '#ffffff');
+    t.setAttribute('stroke-width', o.halo || 2.2);
+    t.setAttribute('paint-order', 'stroke');
+  }
+  t.textContent = str;
+  host.appendChild(t);
+  return t;
+}
+
+/* ------------------------------------------------------------------ *
+ * Map type scale.
+ *
+ * The map is drawn in a 400-unit viewBox and scaled to whatever width the
+ * column gives it, so declared font-size is NOT rendered size. At 375px
+ * the box lands around 313px -- a scale of ~0.78 -- which pushed the
+ * 6.5-9.5 range down to 5.1-7.4 real pixels. Sub-6px type is not readable,
+ * and this map carried 28 labels at once.
+ *
+ * So the scale is chosen from the viewport rather than fixed: phones get
+ * larger type on the few labels that matter and lose the secondary lines
+ * (anchor sub-titles, preference coordinates, ring names) entirely. The
+ * fixtures stay drawn and stay classifiable -- only their captions go.
+ * ------------------------------------------------------------------ */
+function typeScale() {
+  const narrow = window.matchMedia('(max-width: 700px)').matches;
+  return narrow
+    ? { anchor: 13, minor: 11.5, primary: 10, sub: 9, ring: 9.5, axis: 11,
+        showSub: false, showRingLabel: false }
+    : { anchor: 9.5, minor: 8.5, primary: 7.5, sub: 7, ring: 7, axis: 9,
+        showSub: true,  showRingLabel: true };
+}
+let TYPE = typeScale();
+
 function buildMap(step) {
+  TYPE = typeScale();
   const svg = svgEl('svg', { class: 'map', viewBox: `0 0 ${S} ${S}`,
                              role: 'application',
                              'aria-label': 'Psochic Hegemony map. Drag each item onto the map to place it.' });
@@ -699,67 +819,47 @@ function buildMap(step) {
   svg.appendChild(svgEl('line', { x1: cx, y1: 0, x2: cx, y2: S,
     stroke: '#16202b', 'stroke-opacity': 0.42, 'stroke-width': 1.2 }));
 
-  // Perceptual inversion ring -- the inner, dashed points.
-  for (const p of INNER) {
+  // Every fixture, one pass over POINTS. `draw` picks the treatment; the
+  // secondary lines (anchor sub-titles, preference coordinates, the ring
+  // names) are the first thing to go on a narrow screen -- see TYPE below.
+  for (const p of POINTS) {
     const [px, py] = toPx(p.v, p.psi);
-    svg.appendChild(svgEl('circle', { cx: px, cy: py, r: 5, fill: '#ffffff',
-      'fill-opacity': 0.5, stroke: p.color, 'stroke-opacity': 0.8,
-      'stroke-width': 1, 'stroke-dasharray': '2 2' }));
-    const t = svgEl('text', { x: px, y: py + 15, fill: p.color, 'fill-opacity': 0.95,
-                              'font-size': 7, 'text-anchor': 'middle',
-                              stroke: '#ffffff', 'stroke-width': 2,
-                              'paint-order': 'stroke' });
-    t.textContent = p.label; svg.appendChild(t);
-  }
 
-  // Centre node.
-  svg.appendChild(svgEl('circle', { cx, cy, r: 15, fill: '#ffffff',
-    stroke: '#46505e', 'stroke-opacity': 0.6, 'stroke-width': 1.2 }));
-  const cn = svgEl('text', { x: cx, y: cy - 1, fill: '#16202b', 'font-size': 7.5,
-                             'text-anchor': 'middle', 'font-weight': 'bold' });
-  cn.textContent = 'No-one'; svg.appendChild(cn);
-  const cc = svgEl('text', { x: cx, y: cy + 8, fill: '#46505e', 'font-size': 6.5,
-                             'text-anchor': 'middle' });
-  cc.textContent = 'Confusion'; svg.appendChild(cc);
+    if (p.draw === 'centre') {
+      svg.appendChild(svgEl('circle', { cx: px, cy: py, r: 15, fill: '#ffffff',
+        stroke: '#46505e', 'stroke-opacity': 0.6, 'stroke-width': 1.2 }));
+      mapTxt(svg, px, py - 1, 'No-one', { size: TYPE.primary, fill: '#16202b', bold: true });
+      if (TYPE.showSub) mapTxt(svg, px, py + 8, p.label, { size: TYPE.sub, fill: '#46505e' });
+      continue;
+    }
 
-  // The four canonical anchors. Halo behind each label so the names stay
-  // legible over the saturated ends of both gradients.
-  for (const a of ANCHORS) {
-    const [px, py] = toPx(a.v, a.psi);
-    svg.appendChild(svgEl('circle', { cx: px, cy: py, r: 9,
-      fill: a.color, 'fill-opacity': 0.30, stroke: a.color, 'stroke-width': 1.8 }));
-    const t1 = svgEl('text', { x: px, y: py - 15, fill: a.color, 'font-size': 9.5,
-                               'text-anchor': 'middle', 'font-weight': 'bold',
-                               stroke: '#ffffff', 'stroke-width': 2.6,
-                               'paint-order': 'stroke' });
-    t1.textContent = a.label; svg.appendChild(t1);
-    const t2 = svgEl('text', { x: px, y: py + 21, fill: '#4b5563', 'fill-opacity': '0.65', 'font-size': 7,
-                               'text-anchor': 'middle',
-                               stroke: '#ffffff', 'stroke-width': 2.2,
-                               'paint-order': 'stroke' });
-    t2.textContent = a.sub; svg.appendChild(t2);
-  }
+    if (p.draw === 'ring') {
+      svg.appendChild(svgEl('circle', { cx: px, cy: py, r: 5, fill: '#ffffff',
+        'fill-opacity': 0.5, stroke: p.color, 'stroke-opacity': 0.8,
+        'stroke-width': 1, 'stroke-dasharray': '2 2' }));
+      if (TYPE.showRingLabel)
+        mapTxt(svg, px, py + 15, p.label, { size: TYPE.ring, fill: p.color, halo: 2 });
+      continue;
+    }
 
-  // Good/Bad Preference -- ordinary taste, not moral stakes
-  for (const p of EXTRA_POINTS) {
-    if (p.key === 'cf') continue;
-    const [px, py] = toPx(p.v, p.psi);
-    svg.appendChild(svgEl('circle', { cx: px, cy: py, r: 7.5,
-      fill: p.color, 'fill-opacity': 0.28, stroke: p.color, 'stroke-width': 1.6 }));
-    const t = svgEl('text', { x: px, y: py - 12, fill: p.color, 'font-size': 8.5,
-                              'text-anchor': 'middle', 'font-weight': 'bold',
-                              stroke: '#ffffff', 'stroke-width': 2.2,
-                              'paint-order': 'stroke' });
-    t.textContent = p.label; svg.appendChild(t);
-    const tSub = svgEl('text', { x: px, y: py + 18, fill: '#4b5563', 'fill-opacity': '0.65', 'font-size': 7,
-                                 'text-anchor': 'middle', stroke: '#ffffff', 'stroke-width': 2,
-                                 'paint-order': 'stroke' });
-    tSub.textContent = `(${p.v > 0 ? '+'+p.v : p.v}υ, 0ψ)`; svg.appendChild(tSub);
+    // 'anchor' and 'minor' differ only in weight.
+    const big = p.draw === 'anchor';
+    svg.appendChild(svgEl('circle', { cx: px, cy: py, r: big ? 9 : 7.5,
+      fill: p.color, 'fill-opacity': big ? 0.30 : 0.28,
+      stroke: p.color, 'stroke-width': big ? 1.8 : 1.6 }));
+    mapTxt(svg, px, py - (big ? 15 : 12), p.label,
+      { size: big ? TYPE.anchor : TYPE.minor, fill: p.color, bold: true, halo: 2.6 });
+    if (TYPE.showSub) {
+      const sub = big ? p.sub : `(${p.v > 0 ? '+' + p.v : p.v}υ, 0ψ)`;
+      mapTxt(svg, px, py + (big ? 21 : 18), sub,
+        { size: TYPE.sub, fill: '#4b5563', opacity: 0.65, halo: 2.2 });
+    }
   }
 
   // --- OVERLAY: Axis names, Corner Quadrants & Numeric Ticks (rendered above nodes) ---
   const axisTxt = (x, y, t, anchor, col, op) => {
-    const el = svgEl('text', { x, y, fill: col || '#374151', 'font-size': col ? 8.5 : 9,
+    const el = svgEl('text', { x, y, fill: col || '#374151',
+                               'font-size': col ? TYPE.axis - 0.5 : TYPE.axis,
                                'text-anchor': anchor, 'letter-spacing': '.08em',
                                'font-weight': 'bold',
                                stroke: '#ffffff', 'stroke-width': 2.6,
@@ -812,7 +912,7 @@ function drawTokens(step, layer) {
     // near an anchor -- which is most of the time.
     const flip = px > S - 110;                  // too close to the right edge
     const t = svgEl('text', { x: px + (flip ? -13 : 13), y: py + 3.5,
-                              fill: '#16202b', 'font-size': 8.5, 'font-weight': 'bold',
+                              fill: '#16202b', 'font-size': TYPE.minor, 'font-weight': 'bold',
                               'text-anchor': flip ? 'end' : 'start' });
     t.textContent = tok.label;
     g.appendChild(t);
@@ -995,13 +1095,22 @@ function renderPlace(step, host) {
       const p = state.placements[step.id][tok.id];
       if (!p) continue;
       const near = nearestAnchor(p.v, p.psi);
+      // Landing on a ring point is the perceptual inversion the calibration
+      // taught, so say so outright. Without this the readout just names the
+      // point's opposite and reads as a bug.
+      const inv = near.draw === 'ring' ? byKey(near.inverts) : null;
       rows.push(`
         <div style="margin-bottom:12px">
           <div style="font-size:12px;color:var(--ink-soft);margin-bottom:5px">${tok.label}</div>
+          ${inv ? `<div style="font-size:11.5px;line-height:1.45;margin:0 0 8px;padding:7px 9px;
+              border:1px solid ${near.color}55;border-left:2px solid ${near.color};border-radius:4px;
+              background:${near.color}12;color:var(--ink)">
+              On <strong>${near.label}</strong> — the perceived point. True reading:
+              <strong>${inv.label}</strong>.</div>` : ''}
           <table class="rd">
             <tr><th></th><th>closeness</th></tr>
             ${REFERENCE_POINTS.map(a => `
-              <tr class="${a.key === near.key ? 'near' : ''}">
+              <tr class="${a.key === near.key || (inv && a.key === inv.key) ? 'near' : ''}">
                 <td>${a.label}</td><td>${closeness(Math.hypot(p.v - a.v, p.psi - a.psi)).toFixed(2)}%</td>
               </tr>`).join('')}
             <tr><td colspan="2" style="padding-top:6px;color:var(--ink-soft)">
@@ -1053,6 +1162,27 @@ function render() {
       prose.appendChild(p);
     }
     view.appendChild(prose);
+  }
+
+  // Theory that supports a step without gating it. The calibration recaps
+  // ran to five dense paragraphs before any interaction, which is a lot of
+  // reading to demand of someone mid-run; the argument is kept in full,
+  // just folded away by default.
+  if (step.more && step.more.length) {
+    const d = document.createElement('details');
+    d.className = 'more';
+    const sum = document.createElement('summary');
+    sum.textContent = step.more_label || 'Read more';
+    d.appendChild(sum);
+    const inner = document.createElement('div');
+    inner.className = 'prose';
+    for (const para of step.more) {
+      const p = document.createElement('p');
+      p.textContent = para;
+      inner.appendChild(p);
+    }
+    d.appendChild(inner);
+    view.appendChild(d);
   }
 
   if (step.type === 'choice')      isComplete = renderChoice(step, view);
@@ -1136,52 +1266,87 @@ function renderReview(step, host) {
   return () => true;
 }
 
+// Per-topic progress, used by both the menu cards and the collated legend.
+function sectionStats(id) {
+  const steps = SURVEY.steps.filter(s => s.section === id && s.required);
+  const done  = steps.filter(stepAnswered).length;
+  return { steps, done, total: steps.length,
+           pct: steps.length ? done / steps.length * 100 : 0,
+           complete: steps.length > 0 && done === steps.length };
+}
+
 function renderMenu(step, host) {
-  const list = document.createElement('div');
-  list.style.cssText = 'display:flex;flex-direction:column;gap:8px;margin:20px 0 0;max-width:560px';
+  const wrap = document.createElement('div');
+  wrap.style.cssText = 'margin:20px 0 0;max-width:560px';
 
-  for (const sec of (SURVEY.sections || [])) {
-    const range = SECTION_RANGE[sec.id];
-    const secSteps = SURVEY.steps.filter(s => s.section === sec.id && s.required);
-    const secDone = secSteps.filter(stepAnswered).length;
-    const pct = secSteps.length ? (secDone / secSteps.length * 100) : 0;
-    const done = isSectionComplete(sec.id);
-    const card = document.createElement('button');
-    card.type = 'button';
-    card.className = 'btn ghost';
-    card.style.cssText = 'display:block;width:100%;text-align:left;padding:13px 16px';
-    card.innerHTML = `<strong>${done ? '✓ ' : ''}${sec.title}</strong>` +
-      `<div style="font-size:12.5px;color:var(--ink-soft);margin-top:3px;font-weight:400">${sec.blurb}</div>` +
-      `<div style="display:flex;align-items:center;gap:8px;margin-top:9px">` +
-      `<div style="flex:1;height:4px;background:var(--panel-2);border-radius:99px;overflow:hidden">` +
-      `<i style="display:block;height:100%;width:${pct}%;background:${done ? 'var(--gg)' : 'var(--focus)'}"></i></div>` +
-      `<span style="font-family:var(--mono);font-size:10.5px;color:var(--ink-soft);white-space:nowrap">${secDone}/${secSteps.length}</span>` +
-      `</div>`;
-    card.disabled = !range;
-    card.addEventListener('click', () => { stepIndex = range.first; render(); });
-    list.appendChild(card);
+  // Sections are grouped so the five Political Compass / Temperament
+  // sub-topics read as two families rather than as five near-identical
+  // rows with a repeated prefix.
+  const groups = SURVEY.groups || [{ id: null, title: null }];
+  for (const g of groups) {
+    const secs = (SURVEY.sections || []).filter(s => (s.group || null) === g.id);
+    if (!secs.length) continue;
+
+    if (g.title) {
+      const gd = sectionStats;
+      const gDone  = secs.reduce((n, s) => n + gd(s.id).done,  0);
+      const gTotal = secs.reduce((n, s) => n + gd(s.id).total, 0);
+      const h = document.createElement('div');
+      h.style.cssText = 'display:flex;align-items:baseline;gap:9px;margin:22px 0 9px';
+      h.innerHTML =
+        `<span style="font-family:var(--mono);font-size:10.5px;letter-spacing:.11em;` +
+        `text-transform:uppercase;color:var(--ink-soft)">${g.title}</span>` +
+        (g.blurb ? `<span style="font-size:12px;color:var(--ink-soft);flex:1">${g.blurb}</span>` : '<span style="flex:1"></span>') +
+        `<span style="font-family:var(--mono);font-size:10.5px;color:var(--ink-soft)">${gDone}/${gTotal}</span>`;
+      wrap.appendChild(h);
+    }
+
+    const list = document.createElement('div');
+    list.style.cssText = 'display:flex;flex-direction:column;gap:8px';
+    for (const sec of secs) {
+      const range = SECTION_RANGE[sec.id];
+      const st = sectionStats(sec.id);
+      const card = document.createElement('button');
+      card.type = 'button';
+      card.className = 'btn ghost';
+      card.style.cssText = 'display:block;width:100%;text-align:left;padding:13px 16px';
+      card.innerHTML =
+        `<span style="display:flex;align-items:center;gap:8px">` +
+        `<span style="width:9px;height:9px;border-radius:50%;flex:none;background:${sec.color}"></span>` +
+        `<strong>${st.complete ? '✓ ' : ''}${sec.title}</strong></span>` +
+        `<div style="font-size:12.5px;color:var(--ink-soft);margin-top:3px;font-weight:400">${sec.blurb}</div>` +
+        `<div style="display:flex;align-items:center;gap:8px;margin-top:9px">` +
+        `<div style="flex:1;height:4px;background:var(--panel-2);border-radius:99px;overflow:hidden">` +
+        `<i style="display:block;height:100%;width:${st.pct}%;background:${st.complete ? 'var(--gg)' : 'var(--focus)'}"></i></div>` +
+        `<span style="font-family:var(--mono);font-size:10.5px;color:var(--ink-soft);white-space:nowrap">${st.done}/${st.total}</span>` +
+        `</div>`;
+      card.disabled = !range;
+      card.addEventListener('click', () => { stepIndex = range.first; render(); });
+      list.appendChild(card);
+    }
+    wrap.appendChild(list);
   }
-  host.appendChild(list);
+  host.appendChild(wrap);
 
-  const reviewBtn = document.createElement('button');
-  reviewBtn.type = 'button';
-  reviewBtn.className = 'btn';
-  reviewBtn.style.marginTop = '18px';
-  reviewBtn.textContent = 'Review & Submit';
-  const reviewIndex = SURVEY.steps.findIndex(s => s.type === 'review');
-  reviewBtn.addEventListener('click', () => { stepIndex = reviewIndex; render(); });
-  host.appendChild(reviewBtn);
-
-  const collatedIndex = SURVEY.steps.findIndex(s => s.type === 'collated');
-  if (collatedIndex !== -1) {
-    const collatedBtn = document.createElement('button');
-    collatedBtn.type = 'button';
-    collatedBtn.className = 'btn ghost';
-    collatedBtn.style.marginTop = '10px';
-    collatedBtn.textContent = 'View Collated Hegemony';
-    collatedBtn.addEventListener('click', () => { stepIndex = collatedIndex; render(); });
-    host.appendChild(collatedBtn);
-  }
+  // The collated map is the payoff for the work, so it leads -- and it is
+  // the step Review continues from, rather than a dead end reachable only
+  // from here.
+  const anyPlaced = collectCollatedItems().length > 0;
+  const go = (type, label, primary, enabled) => {
+    const idx = SURVEY.steps.findIndex(s => s.type === type);
+    if (idx === -1) return;
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'btn' + (primary ? '' : ' ghost');
+    b.style.marginTop = '18px';
+    b.style.marginRight = '10px';
+    b.textContent = label;
+    b.disabled = enabled === false;
+    b.addEventListener('click', () => { stepIndex = idx; render(); });
+    host.appendChild(b);
+  };
+  go('collated', 'View your Collated Hegemony', true, anyPlaced);
+  go('review',   'Review & Submit', false);
 
   return () => true;
 }
@@ -1214,6 +1379,20 @@ function centroidOf(items) {
 function renderCollated(step, host) {
   const items = collectCollatedItems();
 
+  // One pass builds everything both the legend and the overlay need, so a
+  // topic's colour, count and centroid are computed once rather than
+  // rediscovered by three separate loops over SURVEY.sections.
+  const bySection = new Map();
+  for (const it of items) {
+    if (!bySection.has(it.section)) bySection.set(it.section, []);
+    bySection.get(it.section).push(it);
+  }
+  const topics = (SURVEY.sections || []).map(sec => {
+    const own = bySection.get(sec.id) || [];
+    return { ...sec, items: own, stats: sectionStats(sec.id), centroid: centroidOf(own) };
+  });
+  const overall = centroidOf(items);
+
   const row = document.createElement('div');
   row.className = 'maprow';
 
@@ -1230,67 +1409,66 @@ function renderCollated(step, host) {
   row.appendChild(tray);
   host.appendChild(row);
 
-  const bySection = {};
-  for (const it of items) (bySection[it.section] || (bySection[it.section] = [])).push(it);
-
-  for (const sec of (SURVEY.sections || [])) {
-    if (!SECTION_COLORS[sec.id]) continue;
-    const secItems = bySection[sec.id] || [];
-    const secSteps = SURVEY.steps.filter(s => s.section === sec.id && s.required);
-    const row2 = document.createElement('div');
-    row2.style.cssText = 'display:flex;align-items:center;gap:9px;font-size:13px;margin-bottom:8px';
-    row2.innerHTML = `<span style="width:11px;height:11px;border-radius:50%;background:${SECTION_COLORS[sec.id]};flex:none"></span>` +
-      `<span style="flex:1">${sec.title}</span>` +
-      `<span style="font-family:var(--mono);font-size:11px;color:var(--ink-soft)">${secItems.length}/${secSteps.length}</span>`;
-    tray.appendChild(row2);
+  for (const t of topics) {
+    const line = document.createElement('div');
+    line.style.cssText = 'display:flex;align-items:center;gap:9px;font-size:13px;margin-bottom:8px' +
+      (t.items.length ? '' : ';opacity:.4');
+    line.innerHTML =
+      `<span style="width:11px;height:11px;border-radius:50%;background:${t.color};flex:none"></span>` +
+      `<span style="flex:1">${t.title}</span>` +
+      `<span style="font-family:var(--mono);font-size:11px;color:var(--ink-soft)">${t.items.length}/${t.stats.total}</span>`;
+    tray.appendChild(line);
   }
 
-  const overall = centroidOf(items);
   const summary = document.createElement('div');
   summary.className = 'readout';
   if (overall) {
     const near = nearestAnchor(overall.v, overall.psi);
+    const inv = near.draw === 'ring' ? byKey(near.inverts) : null;
     summary.innerHTML = `<div style="font-size:12px;color:var(--ink-soft);margin-bottom:6px">
-      Overall centre (${items.length} placements) &middot; closest to <strong>${near.label}</strong></div>
+      Overall centre (${items.length} placements) &middot; closest to <strong>${near.label}</strong>${
+        inv ? ` <span style="color:${near.color}">(perceived — true reading ${inv.label})</span>` : ''}</div>
       <div style="font-family:var(--mono);font-size:11.5px;color:var(--ink-soft)">
         v ${overall.v.toFixed(2)} &nbsp; ψ ${overall.psi.toFixed(2)} &nbsp; · &nbsp; ${quadrant(overall.v, overall.psi)}
       </div>`;
   } else {
-    summary.innerHTML = '<div style="font-size:12.5px;color:var(--ink-soft)">Nothing placed yet -- do a topic first.</div>';
+    summary.innerHTML = '<div style="font-size:12.5px;color:var(--ink-soft)">Nothing placed yet — do a topic first.</div>';
   }
   tray.appendChild(summary);
 
   const hint = document.createElement('div');
   hint.className = 'hint';
-  hint.textContent = 'Hover a dot for what it was. This view is read-only -- go back to a topic to change a placement.';
+  hint.textContent = 'Hover a dot for what it was. This view is read-only — go back to a topic to change a placement.';
   tray.appendChild(hint);
 
-  // ---- paint the overlay ----
+  // ---- overlay: scatter, then per-topic centroids, then the overall ----
   layer.textContent = '';
-  for (const it of items) {
-    const [px, py] = toPx(it.v, it.psi);
-    const color = SECTION_COLORS[it.section] || '#46505e';
-    const g = svgEl('g', {});
-    g.appendChild(svgEl('circle', { cx: px, cy: py, r: 4, fill: color, 'fill-opacity': 0.6,
-      stroke: '#ffffff', 'stroke-width': 1 }));
-    const title = svgEl('title', {});
-    title.textContent = it.label;
-    g.appendChild(title);
-    layer.appendChild(g);
+  for (const t of topics) {
+    for (const it of t.items) {
+      const [px, py] = toPx(it.v, it.psi);
+      const g = svgEl('g', {});
+      g.appendChild(svgEl('circle', { cx: px, cy: py, r: 4, fill: t.color,
+        'fill-opacity': 0.6, stroke: '#ffffff', 'stroke-width': 1 }));
+      const title = svgEl('title', {});
+      title.textContent = `${it.label} — ${t.title}`;
+      g.appendChild(title);
+      layer.appendChild(g);
+    }
   }
 
-  for (const sec of (SURVEY.sections || [])) {
-    const secItems = bySection[sec.id];
-    if (!secItems || !secItems.length) continue;
-    const c = centroidOf(secItems);
-    const color = SECTION_COLORS[sec.id] || '#46505e';
-    const [px, py] = toPx(c.v, c.psi);
-    layer.appendChild(svgEl('circle', { cx: px, cy: py, r: 9, fill: color, 'fill-opacity': 0.28,
-      stroke: color, 'stroke-width': 2.2 }));
-    const t = svgEl('text', { x: px, y: py - 13, fill: color, 'font-size': 8, 'font-weight': 'bold',
-      'text-anchor': 'middle', stroke: '#ffffff', 'stroke-width': 2.4, 'paint-order': 'stroke' });
-    t.textContent = sec.title;
-    layer.appendChild(t);
+  for (const t of topics) {
+    if (!t.centroid) continue;
+    const [px, py] = toPx(t.centroid.v, t.centroid.psi);
+    layer.appendChild(svgEl('circle', { cx: px, cy: py, r: 9, fill: t.color,
+      'fill-opacity': 0.28, stroke: t.color, 'stroke-width': 2.2 }));
+    // Thirteen centroid captions on one map is unreadable at any size, and
+    // hopeless on a phone -- the legend already names every colour, so the
+    // labels are desktop-only and the <title> carries the name everywhere.
+    const tip = svgEl('title', {});
+    tip.textContent = `${t.title} — centre of ${t.items.length}`;
+    layer.lastChild.appendChild(tip);
+    if (TYPE.showSub)
+      mapTxt(layer, px, py - 13, t.title, { size: TYPE.sub + 1, fill: t.color, bold: true, halo: 2.4 });
   }
 
   if (overall) {
@@ -1298,10 +1476,8 @@ function renderCollated(step, host) {
     layer.appendChild(svgEl('rect', { x: px - 7, y: py - 7, width: 14, height: 14,
       transform: `rotate(45 ${px} ${py})`, fill: '#16202b', 'fill-opacity': 0.85,
       stroke: '#ffffff', 'stroke-width': 2 }));
-    const t = svgEl('text', { x: px, y: py - 16, fill: '#16202b', 'font-size': 9, 'font-weight': 'bold',
-      'text-anchor': 'middle', stroke: '#ffffff', 'stroke-width': 2.6, 'paint-order': 'stroke' });
-    t.textContent = 'Overall';
-    layer.appendChild(t);
+    mapTxt(layer, px, py - 16, 'Overall',
+      { size: TYPE.anchor, fill: '#16202b', bold: true, halo: 2.6 });
   }
 
   return () => true;
@@ -1330,17 +1506,30 @@ function renderNav(host, step) {
 
   const last = stepIndex === SURVEY.steps.length - 1;
 
-  // The menu has no "Continue" of its own -- topic cards and the Review
-  // & Submit button are how it moves forward.
+  // Finishing a topic returns you to the hub -- but say where you're going,
+  // because an unlabelled "Continue" that teleports you out of a section is
+  // disorienting. Finishing the LAST topic goes to the collated map
+  // instead: it is the payoff for the work and was otherwise reachable only
+  // from a button on the menu, so most respondents would never have seen it.
+  const atSectionEnd = range && stepIndex === range.last && MENU_INDEX >= 0;
+  const lastSectionId = (SURVEY.sections || []).slice(-1)[0]?.id;
+  const atFinalTopicEnd = atSectionEnd && step.section === lastSectionId;
+  const collatedIndex = SURVEY.steps.findIndex(s => s.type === 'collated');
+
   if (step.type !== 'menu') {
     const next = document.createElement('button');
     next.className = 'btn';
     next.id = 'nextBtn';
     next.type = 'button';
-    next.textContent = last ? 'Submit' : 'Continue';
+    next.textContent = last ? 'Submit'
+      : atFinalTopicEnd && collatedIndex !== -1 ? 'See your Collated Hegemony ▸'
+      : atSectionEnd ? 'Done — back to topics ▸'
+      : 'Continue';
     next.addEventListener('click', () => {
       if (last) { submit(); return; }
-      stepIndex = (range && stepIndex === range.last && MENU_INDEX >= 0) ? MENU_INDEX : stepIndex + 1;
+      stepIndex = atFinalTopicEnd && collatedIndex !== -1 ? collatedIndex
+                : atSectionEnd ? MENU_INDEX
+                : stepIndex + 1;
       render();
     });
     nav.appendChild(next);
@@ -1402,22 +1591,44 @@ document.getElementById('toTopicsBtn').addEventListener('click', () => {
 /* ------------------------------------------------------------------ *
  * Export + submit
  * ------------------------------------------------------------------ */
-function buildExport() {
-  const placements = {};
+// Single source for "what did they place, and what does it mean". Both the
+// JSON blob and the relational rows are derived from this, so the two can no
+// longer drift -- they previously ran their own near-identical loops and had
+// already diverged on field names (v/psi vs u/will).
+function eachPlacement(fn) {
   for (const [stepId, toks] of Object.entries(state.placements)) {
     for (const [tokenId, p] of Object.entries(toks)) {
-      (placements[stepId] ||= {})[tokenId] = {
-        ...distances(p.v, p.psi),
-        v: p.v, psi: p.psi,
-        nearest: nearestAnchor(p.v, p.psi).label,
+      const near = nearestAnchor(p.v, p.psi);
+      fn({
+        stepId, tokenId, p,
+        d: distances(p.v, p.psi),
+        nearest: near,
+        perceived: near.draw === 'ring' ? byKey(near.inverts) : null,
         quadrant: quadrant(p.v, p.psi),
-        sequence: p.seq,
-      };
+      });
     }
   }
+}
+
+function buildExport() {
+  const placements = {};
+  eachPlacement(({ stepId, tokenId, p, d, nearest, perceived, quadrant }) => {
+    (placements[stepId] ||= {})[tokenId] = {
+      ...d,
+      v: p.v, psi: p.psi,
+      nearest: nearest.label,
+      // A placement on the inversion ring means something specific: the
+      // respondent put it where it is *perceived* to sit. Record both, or
+      // the analysis can only ever see the perceived reading.
+      perceived_point: perceived ? nearest.label : null,
+      true_reading: perceived ? perceived.label : nearest.label,
+      quadrant,
+      sequence: p.seq,
+    };
+  });
   return {
     survey_id: SURVEY.id,
-    version: 1,
+    version: 2,
     completed_at: new Date().toISOString(),
     label: { name: state.labelName || null, location: state.labelLocation || null },
     choices: state.choices,
@@ -1439,10 +1650,17 @@ async function submit() {
   if (authErr) { set(authErr.message, true); btn.disabled = false; return; }
 
   const payload = buildExport();
-  // Reuse the id from an earlier run so this updates rather than duplicates.
   const responseId = state.responseId || crypto.randomUUID();
 
-  const { error: e1 } = await supa.from('survey_responses').upsert({
+  // Conflict on (survey_id, respondent_id) -- the invariant the schema
+  // actually enforces -- not on the primary key. Targeting `id` meant that
+  // if state.responseId was ever lost while the Supabase session survived
+  // (they live under different localStorage keys, so any partial clear or
+  // state migration does it) a fresh uuid was minted, sailed past the `id`
+  // conflict check, and hit the unique index instead: a raw Postgres
+  // constraint error in the respondent's face. Conflicting on the real
+  // invariant makes a re-submit an update no matter which id we arrive with.
+  const { data: saved, error: e1 } = await supa.from('survey_responses').upsert({
     id: responseId,
     respondent_id: session.user.id,
     survey_id: SURVEY.id,
@@ -1450,22 +1668,22 @@ async function submit() {
     updated_at: new Date().toISOString(),
     label_name: payload.label.name,
     label_location: payload.label.location,
-  }, { onConflict: 'id' });
+  }, { onConflict: 'survey_id,respondent_id' }).select('id').single();
   if (e1) { set(e1.message, true); btn.disabled = false; return; }
 
-  state.responseId = responseId;
+  // Use the id the row actually has -- on an update that is the original
+  // id, which may not be the one we just generated.
+  state.responseId = saved.id;
   saveState();
 
   // Delete-then-insert, so a cleared placement actually disappears rather
   // than lingering from the previous run.
   const rows = [];
-  for (const [stepId, toks] of Object.entries(state.placements)) {
-    for (const [tokenId, p] of Object.entries(toks)) {
-      rows.push({ response_id: responseId, step_id: stepId, token_id: tokenId,
-                  ...distances(p.v, p.psi), u: p.v, will: p.psi,
-                  map_variant: 'outer', sequence: p.seq });
-    }
-  }
+  eachPlacement(({ stepId, tokenId, p, d }) => {
+    rows.push({ response_id: saved.id, step_id: stepId, token_id: tokenId,
+                ...d, u: p.v, will: p.psi,
+                map_variant: 'perceptual', sequence: p.seq });
+  });
   const answers = [];
   for (const [stepId, choice] of Object.entries(state.choices))
     answers.push({ response_id: responseId, step_id: stepId, choice });
@@ -1489,6 +1707,7 @@ async function submit() {
   btn.disabled = false;
 }
 
+stepIndex = resumeIndex();
 render();
 </script>
 </body>

@@ -33,10 +33,10 @@
   // puts you at (-0.5u, -0.5will), which is nearest Greater Evil -- the
   // inversion the calibration section is about.
   const INNER = [
-    { label: 'Perc. Greater Evil', u:  0.5, will:  0.5, color: '#b81f1f' },
-    { label: 'Perc. Lesser Good',  u: -0.5, will:  0.5, color: '#15708c' },
-    { label: 'Perc. Lesser Evil',  u:  0.5, will: -0.5, color: '#9c3a20' },
-    { label: 'Perc. Greater Good', u: -0.5, will: -0.5, color: '#0d6b2f' },
+    { label: 'Perc. Greater Evil', u:  0.5, will:  0.5, color: '#b81f1f', ring: true, inverts: 'gg' },
+    { label: 'Perc. Lesser Good',  u: -0.5, will:  0.5, color: '#15708c', ring: true, inverts: 'le' },
+    { label: 'Perc. Lesser Evil',  u:  0.5, will: -0.5, color: '#9c3a20', ring: true, inverts: 'lg' },
+    { label: 'Perc. Greater Good', u: -0.5, will: -0.5, color: '#0d6b2f', ring: true, inverts: 'ge' },
   ];
 
   const toPx    = (u, will) => [ (2 - u) * S / 4, (2 - will) * S / 4 ];
@@ -59,14 +59,31 @@
     };
   }
 
+  // Confusion sits at the origin and is drawn as the centre node rather than
+  // listed with the anchors, so the classifier never had it as an option --
+  // a placement dead in the middle, the single most meaningful point on the
+  // map, came back as whichever corner happened to be least far away.
+  const CONFUSION = { key: 'cf', label: 'Confusion', u: 0, will: 0 };
+
+  // How close counts as "on" a marked inversion-ring point. The ring sits at
+  // half magnitude, exactly sqrt(0.5) from three other fixtures at once, so
+  // it can never win on distance alone and has to be found by proximity.
+  // Until now INNER was drawn but excluded from classification, so someone
+  // who followed the instruction to place on a marked ring point was told
+  // they were closest to that point's own inversion. Same 0.2 radius as
+  // RING_SNAP in hegemony-survey.html and inversion_ring_point() in
+  // schema.sql -- keep the three in step.
+  const RING_SNAP = 0.2;
+
   function nearestAnchor(u, will) {
-    const all = [...ANCHORS, ...PREFERENCES];
-    let best = all[0], bestD = Infinity;
-    for (const a of all) {
-      const d = Math.hypot(u - a.u, will - a.will);
-      if (d < bestD) { bestD = d; best = a; }
-    }
-    return best;
+    // Exact ties are common on this map -- (0, 1) is precisely 1.0 from
+    // Greater Good, Lesser Evil AND Confusion at once -- so the ordering is
+    // fully determined rather than left to whichever entry comes first:
+    // distance, then label, matching `order by dist, label` in the SQL.
+    return [...ANCHORS, ...PREFERENCES, CONFUSION, ...INNER]
+      .filter(a => !a.ring || Math.hypot(u - a.u, will - a.will) <= RING_SNAP)
+      .map(a => [a, Math.hypot(u - a.u, will - a.will)])
+      .sort((x, y) => x[1] - y[1] || x[0].label.localeCompare(y[0].label))[0][0];
   }
 
   function quadrant(u, will) {

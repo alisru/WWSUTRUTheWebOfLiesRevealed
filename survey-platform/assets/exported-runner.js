@@ -272,13 +272,20 @@ function renderDone() {
       }
 
       const payload = B.buildExport(survey, state);
-      const id = responseId || crypto.randomUUID();
+      let id = responseId || crypto.randomUUID();
 
-      const { error: e1 } = await supa.from('survey_responses').upsert({
+      // Conflict on (survey_id, respondent_id) -- the invariant the schema
+      // actually enforces -- rather than on the primary key. Targeting `id`
+      // meant that if the stored responseId was lost while the Supabase
+      // session survived (they live under different localStorage keys, so
+      // any partial clear does it) a fresh uuid sailed past the `id`
+      // conflict check and hit the unique index instead: a raw constraint
+      // error in the respondent's face.
+      const { data: saved, error: e1 } = await supa.from('survey_responses').upsert({
         id: id, survey_id: survey.slug, respondent_id: session.user.id,
         raw: payload, updated_at: new Date().toISOString(),
         label_name: payload.label.name, label_location: payload.label.location,
-      }, { onConflict: 'id' });
+      }, { onConflict: 'survey_id,respondent_id' }).select('id').single();
       if (e1) {
         onlineStatus.className = 'msg err';
         onlineStatus.textContent = e1.message;
@@ -286,6 +293,10 @@ function renderDone() {
         return;
       }
 
+      // On an update this is the original row's id, not the one just
+      // minted -- adopt it before the child-table writes below, or they
+      // reference a response_id that does not exist.
+      id = saved.id;
       responseId = id;
       persist();
 
@@ -432,15 +443,19 @@ async function submit() {
   if (authErr) { set(authErr.message, 'err'); btn.disabled = false; return; }
 
   const payload = B.buildExport(survey, state);
-  const id = responseId || crypto.randomUUID();
+  let id = responseId || crypto.randomUUID();
 
-  const { error: e1 } = await supa.from('survey_responses').upsert({
+  // See the note on the other upsert above: conflict on the unique index
+  // (survey_id, respondent_id), not on the primary key, and adopt whatever
+  // id the row actually ended up with.
+  const { data: saved, error: e1 } = await supa.from('survey_responses').upsert({
     id: id, survey_id: survey.slug, respondent_id: session.user.id,
     raw: payload, updated_at: new Date().toISOString(),
     label_name: payload.label.name, label_location: payload.label.location,
-  }, { onConflict: 'id' });
+  }, { onConflict: 'survey_id,respondent_id' }).select('id').single();
   if (e1) { set(e1.message, 'err'); btn.disabled = false; return; }
 
+  id = saved.id;
   responseId = id;
   persist();
 
