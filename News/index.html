@@ -2822,10 +2822,18 @@ Please construct a clean, premium 13-post Gnostic trinary assessment thread comp
     let _topicSortDir = 'desc';
     let _topicSort2Col = 'none';
     let _topicSort2Dir = 'asc';
+    let _actorRoleFilter = 'instigator'; // 'all', 'instigator', 'acted_upon', 'author', 'regulator', 'context'
     const _openLeaderboardDropdowns = new Set();
     const _leaderboardPageSizes = { actor: 100, outlet: 100, category: 100, topic: 100 };
     const _leaderboardSearches  = { actor: '', outlet: '', category: '', topic: '' };
     let _statsCache = { all: {}, live: {} };
+
+    function setActorRoleFilter(val) {
+      _actorRoleFilter = val;
+      _statsCache = { all: {}, live: {} };
+      _leaderboardPageSizes['actor'] = 100;
+      updateLeaderboard('actor');
+    }
 
     function setTableSearch(tableType, val) {
       _leaderboardSearches[tableType] = (val || '').trim().toLowerCase();
@@ -4167,7 +4175,16 @@ Please construct a clean, premium 13-post Gnostic trinary assessment thread comp
       }
       let keyFn;
       if (tableType === 'actor') {
-        keyFn = s => Array.isArray(s.actors) ? s.actors : [];
+        keyFn = s => {
+          if (!Array.isArray(s.actors)) return [];
+          if (_actorRoleFilter === 'all') return s.actors;
+          const roles = s.actor_roles || [];
+          if (roles.length > 0) {
+            return roles.filter(r => (r.role || 'instigator') === _actorRoleFilter).map(r => r.name);
+          }
+          // Fallback if actor_roles not present
+          return s.actors;
+        };
       } else if (tableType === 'outlet') {
         keyFn = s => {
           if (s._outlet) return [s._outlet];
@@ -4306,6 +4323,19 @@ Please construct a clean, premium 13-post Gnostic trinary assessment thread comp
         `;
       }
       
+      const roleSelect = tableType === 'actor' ? `
+        <div style="display:flex; align-items:center; gap:0.3rem;">
+          <span style="color:var(--text-muted);">Role:</span>
+          <select onchange="setActorRoleFilter(this.value)" style="background:rgba(0,0,0,0.25); border:1px solid var(--panel-border); color:var(--text-main); border-radius:4px; padding:0.15rem 0.4rem; outline:none; cursor:pointer; font-family:var(--font-outfit); font-size:0.72rem;">
+            <option value="instigator" ${_actorRoleFilter==='instigator'?'selected':''}>⚡ Instigators</option>
+            <option value="all"        ${_actorRoleFilter==='all'?'selected':''}>All Roles</option>
+            <option value="acted_upon" ${_actorRoleFilter==='acted_upon'?'selected':''}>🎯 Targets/Victims</option>
+            <option value="author"     ${_actorRoleFilter==='author'?'selected':''}>📰 Authors/Media</option>
+            <option value="regulator"  ${_actorRoleFilter==='regulator'?'selected':''}>⚖️ Regulators/Courts</option>
+            <option value="context"    ${_actorRoleFilter==='context'?'selected':''}>🗺️ Context/Nations</option>
+          </select>
+        </div>` : '';
+
       return `
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem; font-size:0.75rem; flex-wrap:wrap; gap:0.5rem;">
           <div style="display:flex; align-items:center; gap:0.4rem; flex-wrap:wrap;">
@@ -4314,15 +4344,18 @@ Please construct a clean, premium 13-post Gnostic trinary assessment thread comp
             ${sort2ColSelect}
             ${sort2DirSelect}
           </div>
-          <div style="display:flex; align-items:center; gap:0.4rem;">
-            <span style="color:var(--text-muted);">Min n:</span>
-            <select onchange="${onMinNChange}" style="background:rgba(0,0,0,0.25); border:1px solid var(--panel-border); color:var(--text-main); border-radius:4px; padding:0.15rem 0.4rem; outline:none; cursor:pointer; font-family:var(--font-outfit);">
-              <option value="1" ${currentMinN===1?'selected':''}>1+</option>
-              <option value="2" ${currentMinN===2?'selected':''}>2+</option>
-              <option value="5" ${currentMinN===5?'selected':''}>5+</option>
-              <option value="10" ${currentMinN===10?'selected':''}>10+</option>
-              <option value="25" ${currentMinN===25?'selected':''}>25+</option>
-            </select>
+          <div style="display:flex; align-items:center; gap:0.6rem; flex-wrap:wrap;">
+            ${roleSelect}
+            <div style="display:flex; align-items:center; gap:0.3rem;">
+              <span style="color:var(--text-muted);">Min n:</span>
+              <select onchange="${onMinNChange}" style="background:rgba(0,0,0,0.25); border:1px solid var(--panel-border); color:var(--text-main); border-radius:4px; padding:0.15rem 0.4rem; outline:none; cursor:pointer; font-family:var(--font-outfit);">
+                <option value="1" ${currentMinN===1?'selected':''}>1+</option>
+                <option value="2" ${currentMinN===2?'selected':''}>2+</option>
+                <option value="5" ${currentMinN===5?'selected':''}>5+</option>
+                <option value="10" ${currentMinN===10?'selected':''}>10+</option>
+                <option value="25" ${currentMinN===25?'selected':''}>25+</option>
+              </select>
+            </div>
           </div>
         </div>
         <div style="max-height: 400px; overflow-y: auto; padding-right: 0.5rem; border: 1px solid var(--panel-border); border-radius: 6px; background: rgba(0,0,0,0.12); margin-bottom: 0.5rem;">
