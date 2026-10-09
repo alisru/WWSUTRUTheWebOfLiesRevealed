@@ -32,4 +32,23 @@ drawing-board/
 !README.md
 !CONTRIBUTING.md
 
+# Archives
+*.zip
+WWSUTRUTheWebOfLiesRevealed.zip
+
+# Database schemas & local configs
+supabase_schema.sql
+survey-platform/schema.sql
+
+# CoreTools local scripts & working drafts
+CoreTools/fix_ollama.bat
+CoreTools/Hegemonic Strategic Interface v4.9_Fixed.html
+CoreTools/Hegemonic Stress Tensor - Copy.html
+CoreTools/hegemony-diagram-builder.html
+CoreTools/hegemony-map.js
+CoreTools/litellm_config.yaml
+CoreTools/objectivelock.html
+CoreTools/start_litellm.bat
+
+
 

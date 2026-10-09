@@ -729,6 +729,9 @@
     .avatar-bro {
       background: linear-gradient(135deg, #f59e0b, #eab308);
     }
+    .avatar-spirit {
+      background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+    }
 
     .content-col {
       flex: 1;
@@ -1243,6 +1246,10 @@
             <button onclick="filterByDomain('nytimes')" class="filter-pill" style="font-size:0.68rem; padding:0.1rem 0.3rem; border-color:transparent; background:rgba(255,255,255,0.03);">NYT</button>
             <button onclick="filterByDomain('reuters')" class="filter-pill" style="font-size:0.68rem; padding:0.1rem 0.3rem; border-color:transparent; background:rgba(255,255,255,0.03);">Reuters</button>
             <button onclick="filterByDomain('bbc')" class="filter-pill" style="font-size:0.68rem; padding:0.1rem 0.3rem; border-color:transparent; background:rgba(255,255,255,0.03);">BBC</button>
+            <button onclick="filterByDomain('scmp.com')" class="filter-pill" style="font-size:0.68rem; padding:0.1rem 0.3rem; border-color:transparent; background:rgba(255,255,255,0.03);">SCMP</button>
+            <button onclick="filterByDomain('sixthtone.com')" class="filter-pill" style="font-size:0.68rem; padding:0.1rem 0.3rem; border-color:transparent; background:rgba(255,255,255,0.03);">Sixth Tone</button>
+            <button onclick="filterByDomain('hongkongfp.com')" class="filter-pill" style="font-size:0.68rem; padding:0.1rem 0.3rem; border-color:transparent; background:rgba(255,255,255,0.03);">HKFP</button>
+            <button onclick="filterByDomain('chinadaily.com.cn')" class="filter-pill" style="font-size:0.68rem; padding:0.1rem 0.3rem; border-color:transparent; background:rgba(255,255,255,0.03);">China Daily</button>
             <button onclick="filterByDomain('abc.net.au')" class="filter-pill" style="font-size:0.68rem; padding:0.1rem 0.3rem; border-color:transparent; background:rgba(255,255,255,0.03);">ABC AU</button>
             <button onclick="filterByDomain('smh.com.au')" class="filter-pill" style="font-size:0.68rem; padding:0.1rem 0.3rem; border-color:transparent; background:rgba(255,255,255,0.03);">SMH</button>
             <button onclick="filterByDomain('techcrunch')" class="filter-pill" style="font-size:0.68rem; padding:0.1rem 0.3rem; border-color:transparent; background:rgba(255,255,255,0.03);">TechCrunch</button>
@@ -1271,6 +1278,21 @@
             <option value="alphabetical-desc" style="background:#121214;">Alphabetical (Z-A) 🔤</option>
             <option value="fall" style="background:#121214;">Greatest Fall (u Shift) 📉</option>
             <option value="grace" style="background:#121214;">Greatest Grace (u Shift) 📈</option>
+          </select>
+        </div>
+        <div style="display:flex; align-items:center; gap:0.4rem; width:100%; margin-top:0.15rem;">
+          <span style="font-size:0.75rem; color:var(--text-muted); font-family:var(--font-outfit); font-weight:500;">Tradition:</span>
+          <select id="traditionFilter" onchange="filterStories()" style="flex:1; background:rgba(255,255,255,0.05); color:var(--text-color); border:1px solid var(--panel-border); border-radius:6px; padding:0.25rem 0.5rem; font-size:0.8rem; font-family:var(--font-outfit); cursor:pointer; outline:none; transition:border-color 0.2s ease;">
+            <option value="all" style="background:#121214;">All Traditions 🌍</option>
+            <option value="taoism" style="background:#121214;">Taoism ☯️</option>
+            <option value="buddhism" style="background:#121214;">Buddhism ☸️</option>
+            <option value="hinduism" style="background:#121214;">Hinduism 🕉️</option>
+            <option value="christianity" style="background:#121214;">Christianity ✝️</option>
+            <option value="islam" style="background:#121214;">Islam & Sufi ☪️</option>
+            <option value="indigenous" style="background:#121214;">Indigenous & Custodial 🌿</option>
+            <option value="stoicism" style="background:#121214;">Stoicism & Classical 🏛️</option>
+            <option value="universal" style="background:#121214;">Universal & Other 🌌</option>
+            <option value="none" style="background:#121214;">No Spiritual Post ⚪</option>
           </select>
         </div>
         <div class="server-tip" style="font-size:0.7rem; color:var(--text-muted); background:rgba(255,255,255,0.03); border:1px dashed var(--panel-border); border-radius:6px; padding:0.4rem 0.5rem; margin-top:0.15rem; font-family:var(--font-mono); line-height:1.3; text-align:center; width:100%;">
@@ -1728,7 +1750,17 @@
           }
         }
       } else if (isCompactThread) {
-        displayPosts = rawPosts.slice(0, 4);
+        const isSpiritual = activeStory.spiritual === true || rawPosts.some(p => typeof p === 'string' && p.trim().startsWith('Spirithekanon:'));
+        if (isSpiritual) {
+          const spiritualPost = [...rawPosts].reverse().find(p => typeof p === 'string' && p.trim().startsWith('Spirithekanon:'));
+          if (spiritualPost) {
+            displayPosts = rawPosts.slice(0, 4).concat([spiritualPost]);
+          } else {
+            displayPosts = rawPosts.slice(0, 4);
+          }
+        } else {
+          displayPosts = rawPosts.slice(0, 4);
+        }
       }
 
       displayPosts.forEach((postText, index) => {
@@ -1753,6 +1785,32 @@
           displayName = 'Brothekanon';
           handle = '@brothekanon.bsky.social';
           postText = postText.replace('Brothekanon:\n', '');
+        } else if (postText.startsWith('Spirithekanon:')) {
+          avatarText = '🕊️';
+          avatarClass = 'avatar-spirit';
+          displayName = 'Spirithekanon';
+          handle = '@spirithekanon.bsky.social';
+          postText = postText.replace('Spirithekanon:\n', '').replace('Spirithekanon:', '').trim();
+
+          // Detect tradition for display badge
+          let tradition = activeStory.spiritual_audit?.tradition;
+          if (!tradition) {
+            const q = postText.toLowerCase();
+            if (q.includes('tao te ching') || q.includes('zhuangzi') || q.includes('daoist') || q.includes('taoist') || q.includes('laozi')) tradition = 'Taoism';
+            else if (q.includes('dhammapada') || q.includes('buddha') || q.includes('sutta') || q.includes('buddhist')) tradition = 'Buddhism';
+            else if (q.includes('gita') || q.includes('upanishad') || q.includes('vedic') || q.includes('hindu')) tradition = 'Hinduism';
+            else if (q.includes('quran') || q.includes('hadith') || q.includes('rumi') || q.includes('sufi')) tradition = 'Islam';
+            else if (q.includes('dreaming') || q.includes('alcheringa') || q.includes('ubuntu') || q.includes('indigenous') || q.includes('great law') || q.includes('kaitiakitanga')) tradition = 'Indigenous';
+            else if (q.includes('meditations') || q.includes('marcus aurelius') || q.includes('epictetus') || q.includes('seneca') || q.includes('stoic')) tradition = 'Stoicism';
+            else if (q.includes('proverbs') || q.includes('ecclesiastes') || q.includes('psalm') || q.includes('matthew') || q.includes('luke') || q.includes('john') || q.includes('corinthians') || q.includes('isaiah') || q.includes('bible')) tradition = 'Christianity';
+            else tradition = 'Universal';
+          }
+          const tradEmojis = {
+            'Taoism': '☯️', 'Buddhism': '☸️', 'Hinduism': '🕉️', 'Christianity': '✝️',
+            'Islam': '☪️', 'Indigenous': '🌿', 'Stoicism': '🏛️', 'Universal': '🌌'
+          };
+          const emoji = tradEmojis[tradition] || '🕊️';
+          displayName = `Spirithekanon <span style="font-size:0.75rem; font-weight:600; padding:0.1rem 0.4rem; border-radius:4px; background:rgba(255,255,255,0.08); color:var(--bsky-blue); margin-left:0.4rem; border:1px solid rgba(255,255,255,0.1);">${emoji} ${tradition}</span>`;
         }
 
         // Render embeds (graph image + info cards on Post 1 for compact/five-word, link preview card on Post 2 if link exists for standard, grounding link card on the post containing "Source:")
@@ -1803,8 +1861,8 @@
               </div>
             </a>
           `;
-        } else if (activeStory.grounding_url && postText.includes('Source: ')) {
-          // Render grounding link preview card on the post containing "Source:"
+        } else if (activeStory.grounding_url && (postText.includes('Alethekanon:') || postText.includes('Source: '))) {
+          // Render grounding link preview card on the Alethekanon post or post containing "Source:"
           const gUrl = activeStory.grounding_url;
           const title = "Verification Source | Aletheia Bot";
           const descText = `Fact-check verification source for ${activeStory.subject}`;
@@ -2137,12 +2195,48 @@
       document.getElementById('mapTrajectoryDynamics').innerText = explanation;
     }
 
+    function getSelectedTraditions() {
+      const keys = ['christianity', 'hinduism', 'buddhism', 'taoism', 'islam', 'indigenous', 'stoicism', 'other'];
+      const selected = [];
+      keys.forEach(k => {
+        const el = document.getElementById('trad_' + k);
+        if (el && el.checked) selected.push(k);
+      });
+      return selected;
+    }
+
+    window.setTraditionPreset = function(preset) {
+      const keys = ['christianity', 'hinduism', 'buddhism', 'taoism', 'islam', 'indigenous', 'stoicism', 'other'];
+      keys.forEach(k => {
+        const el = document.getElementById('trad_' + k);
+        if (!el) return;
+        if (preset === 'all') el.checked = true;
+        else if (preset === 'clear') el.checked = false;
+        else if (preset === 'core4') el.checked = ['christianity', 'hinduism', 'buddhism', 'taoism', 'other'].includes(k);
+        else if (preset === 'eastern') el.checked = ['taoism', 'buddhism', 'hinduism', 'other'].includes(k);
+        else if (preset === 'nature') el.checked = ['indigenous', 'taoism', 'other'].includes(k);
+      });
+      updateComposerTraditions();
+    };
+
+    window.updateComposerTraditions = function() {
+      if (activeStory) renderController();
+    };
+
     // Render Prompt Tabs & CLI Composer
     function renderController() {
       if (!activeStory) return;
 
+      const selTrad = getSelectedTraditions();
+      let tradFlag = '';
+      let tradPromptDesc = '';
+      if (selTrad.length > 0) {
+        tradFlag = ` --spiritual --spiritual-traditions "${selTrad.join(',')}"`;
+        tradPromptDesc = `\nSpiritual Traditions Sub-Selectors: ${selTrad.join(', ')}`;
+      }
+
       // Update terminal command
-      document.getElementById('terminalCmd').innerText = `python bluesky_bot/orchestrator.py --news-query "${activeStory.subject}"`;
+      document.getElementById('terminalCmd').innerText = `python bluesky_bot/google_ai_studio_one_shot.py --son --compact${tradFlag} --topic "${activeStory.subject}"`;
 
       // Update AI prompt generator
       const prompt = `Please analyze a new Bluesky news story with the Aletheia Bot orchestrator:
@@ -2150,9 +2244,9 @@
 Link URL: ${activeStory.link}
 Subject: ${activeStory.subject}
 Stated Claim Coordinates: (${activeStory.claim_u}, ${activeStory.claim_psi})
-Actual Reality Coordinates: (${activeStory.real_u}, ${activeStory.real_psi})
+Actual Reality Coordinates: (${activeStory.real_u}, ${activeStory.real_psi})${tradPromptDesc}
 
-Please construct a clean, premium 13-post Gnostic trinary assessment thread completely in Plain English without ellipses bridges, and save the compiled config locally.`;
+Please construct a clean, premium 13-post Gnostic trinary assessment thread completely in Plain English without ellipses bridges, evaluate spiritual canon against the active sub-selectors, and save the compiled config locally.`;
       
       document.getElementById('chatPrompt').innerText = prompt;
     }
@@ -2210,6 +2304,9 @@ Please construct a clean, premium 13-post Gnostic trinary assessment thread comp
     }
 
     function getFilteredStories(query) {
+      const tradCtrl = document.getElementById('traditionFilter');
+      const tradVal = tradCtrl ? tradCtrl.value : 'all';
+
       const filtered = STORIES_REGISTRY.filter(s => {
         let matchesSearch = !query || s.subject.toLowerCase().includes(query) || s.verdict.toLowerCase().includes(query);
         if (!matchesSearch && query && s.link) {
@@ -2234,7 +2331,19 @@ Please construct a clean, premium 13-post Gnostic trinary assessment thread comp
         } else if (_statusFilter === 'dry_run') {
           matchesFlag = s.status && s.status.toLowerCase().includes('dry run');
         }
-        return matchesSearch && matchesFlag;
+
+        let matchesTradition = true;
+        if (tradVal !== 'all') {
+          let stTrad = (s.spiritual_audit?.tradition || '').toLowerCase();
+          if (!stTrad && s.spiritual) stTrad = 'universal';
+          if (tradVal === 'none') {
+            if (s.spiritual || s.spiritual_audit) matchesTradition = false;
+          } else if (stTrad !== tradVal.toLowerCase()) {
+            matchesTradition = false;
+          }
+        }
+
+        return matchesSearch && matchesFlag && matchesTradition;
       });
 
       const sortCtrl = document.getElementById('sortControl');
