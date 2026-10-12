@@ -1,0 +1,4290 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>What Kind of Australian Are You? — The Australian Kanon ABCD Survey (7 · 49 · 353)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:        #FAF6EE;
+  --bg-card:   #FFFDF8;
+  --bg-subtle: #F2ECE0;
+  --bg-muted:  #E8E0D0;
+  --ink:       #1F2421;
+  --ink-soft:  #4A514C;
+  --ink-muted: #757C76;
+  --rule:      #DFD6C3;
+  --rule-strong:#C8BDA6;
+
+  --accent:        #1F5E4B;
+  --accent-soft:   #DCECE5;
+  --accent-warm:   #C86D3B;
+  --accent-warm-soft:#F7E3D6;
+  --gold:          #B98B22;
+  --gold-soft:     #F5EBD0;
+
+  --p1: #B98B22; /* Plane 1 Identity - Ochre Gold */
+  --p2: #D97706; /* Plane 2 Definition - Amber */
+  --p3: #1F7A6B; /* Plane 3 Land - Eucalyptus Teal */
+  --p4: #2E6F95; /* Plane 4 Drive - Southern Cross Blue */
+  --p5: #4A3E8E; /* Plane 5 Method - Indigo */
+  --p6: #7B3F8C; /* Plane 6 Cause - Deep Violet */
+  --p7: #B8423A; /* Plane 7 Result - Red Earth */
+
+  --ok:   #2D7A4F;
+  --warn: #C97A1B;
+  --bad:  #B8392E;
+
+  --radius: 10px;
+  --radius-sm: 6px;
+  --shadow-sm: 0 1px 2px rgba(31,36,33,0.05);
+  --shadow-md: 0 4px 16px rgba(31,36,33,0.08);
+}
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0; padding: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  scroll-behavior: smooth;
+}
+h1, h2, h3, h4, .serif {
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+  margin: 0;
+}
+.mono {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85em;
+}
+
+/* ---------- KANON SITE BANNER ---------- */
+.kanon-site-bar {
+  background: #141917;
+  color: #E5E0D5;
+  font-size: 0.8rem;
+  border-bottom: 1px solid #2C3531;
+}
+.kanon-site-bar-inner {
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: 8px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.kanon-site-links {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.kanon-site-links a {
+  color: #B5BDB8;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.15s;
+}
+.kanon-site-links a:hover { color: #FFF; }
+.kanon-site-links a.active {
+  color: #F5EBD0;
+  font-weight: 700;
+  border-bottom: 2px solid var(--gold);
+  padding-bottom: 2px;
+}
+
+/* ---------- STICKY APP HEADER ---------- */
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(250, 246, 238, 0.94);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--rule);
+}
+.header-inner {
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--ink);
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 1.05rem;
+  margin-right: auto;
+}
+.brand-mark {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, var(--p1), var(--p2), var(--p3), var(--p4), var(--p5), var(--p6), var(--p7), var(--p1));
+  box-shadow: inset 0 0 0 5px var(--bg), inset 0 0 0 6.5px var(--ink);
+  flex-shrink: 0;
+}
+.nav-pills {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.nav-pill {
+  appearance: none;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--ink-soft);
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.15s ease;
+}
+.nav-pill:hover {
+  background: var(--bg-subtle);
+  color: var(--ink);
+}
+.nav-pill.active {
+  background: var(--ink);
+  color: var(--bg);
+}
+.nav-pill .dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.tier-badge-top {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  padding: 4px 9px;
+  border-radius: 999px;
+  background: var(--gold-soft);
+  color: #6E500D;
+  border: 1px solid #E2CA87;
+  font-weight: 600;
+  cursor: pointer;
+}
+.progress-bar-wrap {
+  height: 3px;
+  background: var(--bg-subtle);
+  width: 100%;
+  overflow: hidden;
+}
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--p1), var(--p3), var(--p5), var(--p7));
+  width: 0%;
+  transition: width 0.3s ease;
+}
+
+/* ---------- MAIN CONTAINER ---------- */
+main {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 28px 20px 80px;
+}
+main.wide { max-width: 1220px; }
+
+/* ---------- TYPOGRAPHY & BUTTONS ---------- */
+.eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  font-weight: 600;
+}
+.lede {
+  font-size: 1.08rem;
+  color: var(--ink-soft);
+  max-width: 68ch;
+  line-height: 1.6;
+}
+.btn {
+  appearance: none;
+  border: 1px solid var(--ink);
+  background: var(--ink);
+  color: var(--bg);
+  font-family: inherit;
+  font-size: 0.92rem;
+  font-weight: 600;
+  padding: 10px 18px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+.btn:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.btn-secondary {
+  background: var(--bg-card);
+  color: var(--ink);
+  border: 1px solid var(--rule-strong);
+}
+.btn-secondary:hover {
+  background: var(--bg-subtle);
+  border-color: var(--ink);
+  color: var(--ink);
+}
+.btn-warm {
+  background: var(--accent-warm);
+  border-color: var(--accent-warm);
+  color: #fff;
+}
+.btn-warm:hover {
+  background: #A95527;
+  border-color: #A95527;
+}
+.btn-sm {
+  padding: 6px 12px;
+  font-size: 0.82rem;
+}
+
+/* ---------- CARDS & SURFACES ---------- */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  padding: 22px 24px;
+  box-shadow: var(--shadow-sm);
+}
+.card + .card { margin-top: 16px; }
+.callout {
+  background: var(--bg-subtle);
+  border-left: 3px solid var(--accent);
+  padding: 14px 18px;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-size: 0.94rem;
+  color: var(--ink-soft);
+}
+.callout strong { color: var(--ink); }
+.callout-warm {
+  background: var(--accent-warm-soft);
+  border-left-color: var(--accent-warm);
+}
+.callout-gold {
+  background: var(--gold-soft);
+  border-left-color: var(--gold);
+}
+
+/* ---------- 12AXES-STYLE INLINE GLOSSARY TOOLTIPS ---------- */
+.glossary-term {
+  border-bottom: 1.5px dotted var(--accent);
+  color: inherit;
+  cursor: help;
+  padding-bottom: 0.5px;
+  transition: background-color 0.12s ease, color 0.12s ease, border-color 0.12s ease;
+  border-radius: 2px;
+}
+.glossary-term:hover,
+.glossary-term:focus-visible,
+.glossary-term.is-active {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-bottom-style: solid;
+  outline: none;
+}
+.glossary-tooltip {
+  position: fixed;
+  z-index: 300;
+  width: min(330px, calc(100vw - 24px));
+  background: #161D1A;
+  color: #FAF6EE;
+  border: 1px solid #35473F;
+  border-radius: 10px;
+  padding: 11px 14px;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.32);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.82rem;
+  line-height: 1.48;
+  pointer-events: auto;
+  animation: tooltip-pop 0.14s ease-out;
+}
+.glossary-tooltip strong {
+  display: block;
+  font-family: 'Fraunces', serif;
+  font-size: 0.92rem;
+  color: #F5D77F;
+  margin-bottom: 4px;
+}
+.glossary-tooltip span {
+  display: block;
+  color: #E2DDD2;
+}
+@keyframes tooltip-pop {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- 12AXES-STYLE (?) INFO BUTTON & MODAL SHEET ---------- */
+.info-btn {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  height: 28px;
+  padding: 0 10px;
+  border-radius: 999px;
+  border: 1px solid var(--rule-strong);
+  background: var(--bg);
+  color: var(--ink-soft);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.73rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.14s ease;
+  flex-shrink: 0;
+}
+.info-btn svg {
+  width: 15px;
+  height: 15px;
+  fill: currentColor;
+}
+.info-btn:hover,
+.info-btn:focus-visible {
+  background: var(--ink);
+  color: var(--bg);
+  border-color: var(--ink);
+}
+.info-sheet-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 250;
+  background: rgba(20, 25, 23, 0.54);
+  backdrop-filter: blur(3px);
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  animation: sheet-fade 0.18s ease;
+}
+.info-sheet {
+  position: relative;
+  width: min(580px, 100%);
+  max-height: calc(100dvh - 40px);
+  overflow-y: auto;
+  background: var(--bg-card);
+  border: 1px solid var(--rule-strong);
+  border-top: 5px solid var(--sheet-accent, var(--accent));
+  border-radius: 16px;
+  padding: 24px 26px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+  animation: sheet-pop 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.info-sheet-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--rule-strong);
+  background: var(--bg);
+  color: var(--ink);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  font-size: 1.1rem;
+  line-height: 1;
+}
+.info-sheet-close:hover {
+  background: var(--ink);
+  color: var(--bg);
+}
+.explain-sides-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 14px 0;
+}
+@media (max-width: 640px) {
+  .explain-sides-grid { grid-template-columns: 1fr; }
+  .info-sheet-backdrop { place-items: end stretch; padding: 0; }
+  .info-sheet { border-radius: 18px 18px 0 0; max-height: 88dvh; }
+}
+.explain-box {
+  background: var(--bg);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  font-size: 0.86rem;
+}
+.explain-box.is-high {
+  border-left: 3px solid var(--ok);
+  background: #F4FAF6;
+}
+.explain-box.is-low {
+  border-left: 3px solid var(--bad);
+  background: #FDF5F4;
+}
+.explain-box h4 {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.74rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.explain-box.is-high h4 { color: var(--ok); }
+.explain-box.is-low h4 { color: var(--bad); }
+.explain-box p { margin: 0; color: var(--ink-soft); line-height: 1.48; }
+
+@keyframes sheet-fade { from { opacity: 0; } }
+@keyframes sheet-pop { from { opacity: 0; transform: translateY(10px) scale(0.98); } }
+
+/* ---------- TIER SELECTOR CARDS (7 · 49 · 353) ---------- */
+.tier-selector-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin: 18px 0 24px;
+}
+@media (max-width: 820px) {
+  .tier-selector-grid { grid-template-columns: 1fr; }
+}
+.tier-card {
+  background: var(--bg-card);
+  border: 2px solid var(--rule);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  cursor: pointer;
+  transition: all 0.16s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+}
+.tier-card:hover {
+  border-color: var(--ink-soft);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+.tier-card.active {
+  border-color: var(--accent);
+  background: linear-gradient(180deg, #F4FAF7 0%, var(--bg-card) 100%);
+  box-shadow: 0 4px 18px rgba(31,94,75,0.12);
+}
+.tier-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+.tier-num {
+  font-family: 'Fraunces', serif;
+  font-size: 1.85rem;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1;
+}
+.tier-card.active .tier-num { color: var(--accent); }
+.tier-pill {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.71rem;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--bg-subtle);
+  color: var(--ink-soft);
+  font-weight: 600;
+}
+.tier-card.active .tier-pill {
+  background: var(--accent);
+  color: #fff;
+}
+.tier-rec-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: var(--gold-soft);
+  color: #6E500D;
+  border: 1px solid #E2CA87;
+  font-weight: 700;
+}
+.tier-card h3 {
+  font-size: 1.05rem;
+  color: var(--ink);
+}
+.tier-card p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  line-height: 1.45;
+}
+.tier-card-meta {
+  margin-top: auto;
+  padding-top: 8px;
+  border-top: 1px dashed var(--rule);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.74rem;
+  color: var(--ink-muted);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.depth-dots {
+  display: inline-flex;
+  gap: 3px;
+  align-items: center;
+}
+.depth-dots i {
+  width: 10px;
+  height: 5px;
+  border-radius: 2px;
+  background: var(--rule-strong);
+  display: inline-block;
+}
+.depth-dots i.on {
+  background: var(--accent);
+}
+
+/* ---------- HUB PLANE GRID ---------- */
+.plane-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+  gap: 14px;
+  margin-top: 16px;
+}
+.plane-card {
+  background: var(--bg-card);
+  border: 1px solid var(--rule);
+  border-top: 4px solid var(--plane-color, var(--accent));
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+}
+.plane-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--rule-strong);
+  border-top-color: var(--plane-color, var(--accent));
+}
+.plane-card-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+.plane-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.76rem;
+  color: var(--ink-muted);
+  font-weight: 600;
+}
+.plane-status {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.73rem;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--bg-subtle);
+  color: var(--ink-soft);
+}
+.plane-status.done {
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 600;
+}
+.plane-status.partial {
+  background: var(--gold-soft);
+  color: #7A5A10;
+}
+.plane-card h3 { font-size: 1.18rem; }
+.plane-card .pillar-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--plane-color, var(--accent));
+  font-weight: 600;
+}
+.plane-card p {
+  margin: 0;
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+  flex: 1;
+}
+.plane-mini-bar {
+  height: 6px;
+  background: var(--bg-subtle);
+  border-radius: 999px;
+  overflow: hidden;
+  display: flex;
+}
+.plane-mini-bar > span {
+  height: 100%;
+  background: var(--plane-color, var(--accent));
+  transition: width 0.3s ease;
+}
+
+/* ---------- QUESTIONNAIRE / ABCD NODE VIEW ---------- */
+.plane-banner {
+  border-left: 5px solid var(--plane-color, var(--accent));
+  padding: 18px 22px;
+  background: var(--bg-card);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  border-top: 1px solid var(--rule);
+  border-right: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 18px;
+}
+.plane-banner-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 6px;
+}
+.plane-quote-box {
+  margin-top: 10px;
+  padding: 10px 14px;
+  background: var(--bg-subtle);
+  border-radius: var(--radius-sm);
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-size: 0.94rem;
+  color: var(--ink);
+}
+.plane-quote-box cite {
+  display: block;
+  margin-top: 4px;
+  font-family: 'JetBrains Mono', monospace;
+  font-style: normal;
+  font-size: 0.74rem;
+  color: var(--ink-muted);
+}
+
+.legend-sticky {
+  background: var(--bg-subtle);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  margin-bottom: 18px;
+  font-size: 0.81rem;
+  color: var(--ink-soft);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  align-items: center;
+  justify-content: space-between;
+}
+.legend-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+}
+.legend-items span strong {
+  color: var(--ink);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.view-mode-switch {
+  display: inline-flex;
+  background: var(--bg-card);
+  border: 1px solid var(--rule-strong);
+  border-radius: 999px;
+  padding: 2px;
+  gap: 2px;
+}
+.view-mode-btn {
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: var(--ink-soft);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.73rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+.view-mode-btn.active {
+  background: var(--ink);
+  color: var(--bg);
+}
+
+/* Focus Mode Stepper Bar */
+.focus-stepper-bar {
+  background: var(--bg-card);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-sm);
+  padding: 10px 16px;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.focus-counter {
+  font-family: 'Fraunces', serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+/* Filter bar for Tier 3 */
+.filter-bar {
+  background: var(--bg-card);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  margin-bottom: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+}
+.filter-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.filter-chip {
+  appearance: none;
+  border: 1px solid var(--rule-strong);
+  background: var(--bg);
+  color: var(--ink-soft);
+  font-size: 0.76rem;
+  font-family: 'JetBrains Mono', monospace;
+  padding: 4px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+.filter-chip.active {
+  background: var(--ink);
+  color: var(--bg);
+  border-color: var(--ink);
+}
+
+.sense-card {
+  background: var(--bg-card);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  padding: 20px 22px;
+  margin-bottom: 16px;
+  transition: border-color 0.15s ease;
+  position: relative;
+}
+.sense-card.answered {
+  border-color: #B7D4C8;
+}
+.sense-card.shadow-node {
+  border-left: 4px solid var(--accent-warm);
+}
+.sense-card.fn-node {
+  border-left: 4px solid var(--gold);
+}
+.sense-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--rule);
+}
+.sense-code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--plane-color, var(--accent));
+  background: var(--bg-subtle);
+  padding: 3px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+.sense-title {
+  font-size: 1.08rem;
+  font-weight: 600;
+  color: var(--ink);
+  flex: 1;
+}
+.node-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+.badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  padding: 2px 7px;
+  border-radius: 4px;
+  background: var(--bg-subtle);
+  color: var(--ink-soft);
+  font-weight: 600;
+  cursor: help;
+}
+.badge-fn {
+  background: var(--gold-soft);
+  color: #6E500D;
+  border: 1px solid #E2CA87;
+}
+.badge-shadow {
+  background: var(--accent-warm-soft);
+  color: #8F3E14;
+  border: 1px solid #E8B89A;
+}
+.badge-hit {
+  background: #DCECE5;
+  color: #1F5E4B;
+}
+.badge-fail {
+  background: #F9E0DE;
+  color: #9E2A22;
+}
+
+.node-lore {
+  background: #FBF8F1;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  margin-bottom: 14px;
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+}
+.node-lore blockquote {
+  margin: 0 0 8px 0;
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  color: var(--ink);
+  font-size: 0.95rem;
+}
+.node-lore cite {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.74rem;
+  color: var(--ink-muted);
+  font-style: normal;
+  display: block;
+  margin-top: 2px;
+}
+
+.probe-row {
+  padding: 10px 0;
+  border-bottom: 1px dashed var(--rule);
+}
+.probe-row:last-child {
+  border-bottom: none;
+  padding-bottom: 2px;
+}
+.probe-top {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.probe-letter {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 0.76rem;
+  padding: 2px 7px;
+  border-radius: 4px;
+  background: var(--ink);
+  color: var(--bg);
+  flex-shrink: 0;
+}
+.probe-letter.letter-a { background: var(--accent); }
+.probe-letter.letter-b { background: #2E6F95; }
+.probe-letter.letter-c { background: var(--gold); color: #fff; }
+.probe-letter.letter-d { background: var(--accent-warm); }
+.probe-kind {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.73rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-muted);
+  flex-shrink: 0;
+}
+.probe-text {
+  font-size: 0.94rem;
+  color: var(--ink);
+  font-weight: 500;
+}
+
+/* ABCD Scale Grid */
+.scale-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+}
+.seg-group {
+  display: grid;
+  grid-template-columns: repeat(11, minmax(28px, 1fr));
+  gap: 4px;
+}
+@media (max-width: 720px) {
+  .seg-group {
+    grid-template-columns: repeat(11, minmax(22px, 1fr));
+    gap: 2px;
+  }
+}
+.seg-btn {
+  appearance: none;
+  border: 1px solid var(--rule-strong);
+  background: var(--bg);
+  color: var(--ink-soft);
+  padding: 6px 3px;
+  border-radius: 5px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.74rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.12s ease;
+  line-height: 1.1;
+}
+.seg-btn[data-val="0"] {
+  border-style: dashed;
+  background: var(--bg-subtle);
+}
+.seg-btn .num {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 0.8rem;
+  display: block;
+  color: var(--ink);
+}
+.seg-btn .lbl {
+  font-size: 0.6rem;
+  color: var(--ink-muted);
+  display: block;
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+@media (max-width: 780px) {
+  .seg-btn .lbl { display: none; }
+}
+.seg-btn:hover {
+  border-color: var(--ink);
+  background: var(--bg-subtle);
+}
+.seg-btn.sel {
+  background: var(--ink);
+  border-color: var(--ink);
+  border-style: solid;
+  color: var(--bg);
+  font-weight: 600;
+}
+.seg-btn.sel .num,
+.seg-btn.sel .lbl { color: var(--bg); }
+
+.seg-btn.sel-a[data-val="-5"], .seg-btn.sel-b[data-val="-5"] { background: #8E2019; border-color: #8E2019; }
+.seg-btn.sel-a[data-val="-4"], .seg-btn.sel-b[data-val="-4"] { background: #A82E24; border-color: #A82E24; }
+.seg-btn.sel-a[data-val="-3"], .seg-btn.sel-b[data-val="-3"] { background: #BF432B; border-color: #BF432B; }
+.seg-btn.sel-a[data-val="-2"], .seg-btn.sel-b[data-val="-2"] { background: #C9602E; border-color: #C9602E; }
+.seg-btn.sel-a[data-val="-1"], .seg-btn.sel-b[data-val="-1"] { background: #B87B38; border-color: #B87B38; }
+.seg-btn.sel-a[data-val="0"],  .seg-btn.sel-b[data-val="0"]  { background: #6E6A5E; border-color: #6E6A5E; }
+.seg-btn.sel-a[data-val="1"],  .seg-btn.sel-b[data-val="1"]  { background: #558568; border-color: #558568; }
+.seg-btn.sel-a[data-val="2"],  .seg-btn.sel-b[data-val="2"]  { background: #437A5B; border-color: #437A5B; }
+.seg-btn.sel-a[data-val="3"],  .seg-btn.sel-b[data-val="3"]  { background: #326E4F; border-color: #326E4F; }
+.seg-btn.sel-a[data-val="4"],  .seg-btn.sel-b[data-val="4"]  { background: #236144; border-color: #236144; }
+.seg-btn.sel-a[data-val="5"],  .seg-btn.sel-b[data-val="5"]  { background: #165136; border-color: #165136; }
+
+.seg-btn.sel-c[data-val="-5"], .seg-btn.sel-d[data-val="-5"] { background: #264663; border-color: #264663; }
+.seg-btn.sel-c[data-val="-4"], .seg-btn.sel-d[data-val="-4"] { background: #32587A; border-color: #32587A; }
+.seg-btn.sel-c[data-val="-3"], .seg-btn.sel-d[data-val="-3"] { background: #41698E; border-color: #41698E; }
+.seg-btn.sel-c[data-val="-2"], .seg-btn.sel-d[data-val="-2"] { background: #52799D; border-color: #52799D; }
+.seg-btn.sel-c[data-val="-1"], .seg-btn.sel-d[data-val="-1"] { background: #6688A8; border-color: #6688A8; }
+.seg-btn.sel-c[data-val="0"],  .seg-btn.sel-d[data-val="0"]  { background: #6E6A5E; border-color: #6E6A5E; }
+.seg-btn.sel-c[data-val="1"],  .seg-btn.sel-d[data-val="1"]  { background: #8F7632; border-color: #8F7632; }
+.seg-btn.sel-c[data-val="2"],  .seg-btn.sel-d[data-val="2"]  { background: #B07828; border-color: #B07828; }
+.seg-btn.sel-c[data-val="3"],  .seg-btn.sel-d[data-val="3"]  { background: #C46428; border-color: #C46428; }
+.seg-btn.sel-c[data-val="4"],  .seg-btn.sel-d[data-val="4"]  { background: #BC4522; border-color: #BC4522; }
+.seg-btn.sel-c[data-val="5"],  .seg-btn.sel-d[data-val="5"]  { background: #9E241C; border-color: #9E241C; }
+
+.seg-clear {
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: var(--ink-muted);
+  font-size: 0.74rem;
+  cursor: pointer;
+  padding: 4px 6px;
+  font-family: 'JetBrains Mono', monospace;
+}
+.seg-clear:hover { color: var(--bad); }
+
+/* Blocker tags row */
+.blocker-chips-wrap {
+  margin-top: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  align-items: center;
+}
+.blocker-chip-btn {
+  appearance: none;
+  border: 1px solid var(--rule-strong);
+  background: var(--bg);
+  color: var(--ink-soft);
+  font-size: 0.73rem;
+  padding: 3px 9px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.12s;
+}
+.blocker-chip-btn:hover {
+  border-color: var(--accent-warm);
+  color: var(--ink);
+}
+.blocker-chip-btn.active {
+  background: var(--accent-warm);
+  border-color: var(--accent-warm);
+  color: #fff;
+  font-weight: 600;
+}
+
+/* ---------- RESULTS JUMP BAR (12AXES TOC STYLE) ---------- */
+.results-jump-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 10px 14px;
+  background: var(--bg-card);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-sm);
+  margin-bottom: 18px;
+  align-items: center;
+}
+.results-jump-bar a {
+  text-decoration: none;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--bg-subtle);
+  transition: all 0.12s;
+}
+.results-jump-bar a:hover {
+  background: var(--ink);
+  color: var(--bg);
+}
+
+/* ---------- ARCHETYPE HERO (12AXES STYLE) ---------- */
+.archetype-hero {
+  background: linear-gradient(135deg, #18221F 0%, #24352F 60%, #2C2519 100%);
+  color: #FAF6EE;
+  border-radius: var(--radius);
+  padding: 28px 30px;
+  margin-bottom: 22px;
+  box-shadow: var(--shadow-md);
+  border: 1px solid #394942;
+}
+.archetype-hero-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 24px;
+  align-items: center;
+}
+@media (max-width: 820px) {
+  .archetype-hero-grid { grid-template-columns: 1fr; }
+}
+.archetype-badge {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.74rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(185, 139, 34, 0.25);
+  color: #F5D77F;
+  border: 1px solid rgba(245, 215, 127, 0.4);
+  margin-bottom: 10px;
+}
+.archetype-hero h2 {
+  font-size: clamp(1.7rem, 3.2vw, 2.4rem);
+  color: #FFFDF8;
+  margin-bottom: 6px;
+}
+.archetype-sub {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  color: #D5CFC0;
+  font-size: 1.08rem;
+  margin-bottom: 12px;
+}
+.archetype-desc {
+  color: #E2DDD2;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+.archetype-stat-boxes {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+.arch-stat {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+}
+.arch-stat .num {
+  font-family: 'Fraunces', serif;
+  font-size: 1.55rem;
+  font-weight: 700;
+  color: #F5D77F;
+  line-height: 1.1;
+}
+.arch-stat .lbl {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  color: #B8C2BC;
+  margin-top: 4px;
+}
+
+/* ---------- 12AXES SIGNATURE CARDS ---------- */
+.signature-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-bottom: 20px;
+}
+@media (max-width: 860px) {
+  .signature-grid { grid-template-columns: 1fr; }
+}
+.sig-card {
+  background: var(--bg-card);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.sig-card.sig-strong {
+  background: linear-gradient(180deg, #F3FAF6 0%, var(--bg-card) 100%);
+  border-color: #B7D4C8;
+}
+.sig-card.sig-tension {
+  background: linear-gradient(180deg, #FCF3EE 0%, var(--bg-card) 100%);
+  border-color: #E8C5B0;
+}
+.sig-big {
+  font-family: 'Fraunces', serif;
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+/* ---------- CLOSENESS PIN TRACK (YOU VS THEM) ---------- */
+.closeness-row {
+  margin-bottom: 14px;
+}
+.closeness-head {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.82rem;
+  margin-bottom: 6px;
+}
+.closeness-track {
+  position: relative;
+  height: 8px;
+  background: var(--bg-subtle);
+  border: 1px solid var(--rule-strong);
+  border-radius: 999px;
+  margin: 10px 10px 6px;
+}
+.closeness-pin {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 700;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+.closeness-pin.pin-you {
+  background: var(--accent);
+  color: #fff;
+  z-index: 2;
+  border: 2px solid #fff;
+}
+.closeness-pin.pin-them {
+  background: var(--gold);
+  color: #fff;
+  z-index: 1;
+  border: 2px solid #fff;
+}
+
+/* ---------- 12AXES-STYLE 7-PLANE BARS ---------- */
+.axes-row {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--rule);
+}
+.axes-row:last-child { border-bottom: none; }
+.axes-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+.axes-dual-track {
+  display: grid;
+  grid-template-columns: 110px 1fr 52px;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 5px;
+  font-size: 0.8rem;
+}
+.axes-bar-outer {
+  height: 12px;
+  background: var(--bg-subtle);
+  border-radius: 999px;
+  overflow: hidden;
+  border: 1px solid var(--rule);
+}
+.axes-bar-inner {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
+/* ---------- BOOKS / READINGS GRID ---------- */
+.books-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 14px;
+  margin-top: 14px;
+}
+.book-card {
+  background: var(--bg);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* ---------- DASHBOARD / RESULTS ---------- */
+.dash-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .dash-grid { grid-template-columns: 1fr; }
+}
+.keyring-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+}
+.keyring-stage svg {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  overflow: visible;
+}
+.plane-stars-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 14px;
+  margin-top: 16px;
+}
+.plane-star-card {
+  background: var(--bg-card);
+  border: 1px solid var(--rule);
+  border-top: 3px solid var(--plane-color, var(--accent));
+  border-radius: var(--radius);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.plane-star-card svg {
+  width: 100%;
+  max-width: 185px;
+  height: auto;
+}
+.stat-Strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+  margin: 16px 0;
+}
+.stat-box {
+  background: var(--bg-card);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+}
+.stat-box .val {
+  font-family: 'Fraunces', serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.1;
+}
+.stat-box .lbl {
+  font-size: 0.74rem;
+  color: var(--ink-muted);
+  font-family: 'JetBrains Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-top: 4px;
+}
+
+.rank-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.87rem;
+}
+.rank-table th, .rank-table td {
+  text-align: left;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--rule);
+}
+.rank-table th {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-muted);
+  background: var(--bg-subtle);
+}
+.pill-score {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 600;
+  font-size: 0.76rem;
+  padding: 2px 7px;
+  border-radius: 999px;
+  display: inline-block;
+}
+.pill-low  { background: #F7DCD9; color: #8E2319; }
+.pill-mid  { background: #F5E6C8; color: #7A5411; }
+.pill-high { background: #D7ECE2; color: #1B5B44; }
+
+.page-footer-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid var(--rule);
+  flex-wrap: wrap;
+}
+
+.topic-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+.topic-chip {
+  appearance: none;
+  border: 1px solid var(--rule-strong);
+  background: var(--bg-card);
+  color: var(--ink-soft);
+  padding: 5px 11px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.12s ease;
+}
+.topic-chip:hover, .topic-chip.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+.search-input {
+  width: 100%;
+  padding: 11px 14px;
+  font-size: 0.98rem;
+  font-family: inherit;
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius-sm);
+  background: var(--bg-card);
+  color: var(--ink);
+}
+.search-input:focus {
+  outline: 2px solid var(--accent);
+  border-color: var(--accent);
+}
+
+/* Hegemony Canvas Wrap */
+.hegemony-canvas-wrap {
+  position: relative;
+  width: 100%;
+  background: #141917;
+  border-radius: var(--radius);
+  padding: 14px;
+  border: 1px solid #2C3531;
+  color: #E5E0D5;
+}
+.hegemony-canvas-wrap canvas {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 6px;
+  background: #181F1C;
+}
+
+@media print {
+  .kanon-site-bar, .app-header, .no-print { display: none !important; }
+  body { background: #fff; font-size: 11pt; }
+  main { max-width: 100%; padding: 0; }
+  .card, .sense-card, .plane-star-card { break-inside: avoid; box-shadow: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="kanon-site-bar no-print">
+  <div class="kanon-site-bar-inner">
+    <div style="font-family:'JetBrains Mono',monospace;font-weight:600;color:#F5D77F;">
+      AUSTRALIAN KANON · 7×7×7 NATIONAL IDENTITY MATRIX
+    </div>
+    <div class="kanon-site-links">
+      <a href="AustralianMatrix.html">The Kanon Matrix</a>
+      <a href="About_Australian_Kanon.html">About the Kanon</a>
+      <a href="Archetype_The_Stoic_Guardian.html">The Ideal Australian</a>
+      <a href="Australian_Kanon_Hegemony_Visualization.html">Hegemony Map</a>
+      <a href="Kanon_Survey.html" class="active">What Kind of Australian Are You? (Quiz)</a>
+      <a href="../Hanson_Audit/index.html">Hanson 353 Audit</a>
+    </div>
+  </div>
+</div>
+
+<header class="app-header">
+  <div class="header-inner">
+    <a href="#/hub" class="brand">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span>What Kind of Australian Are You?</span>
+    </a>
+    <button class="tier-badge-top" id="header-tier-btn" title="Click to switch between 7, 49, and 353/354 resolution tiers"></button>
+    <nav class="nav-pills" id="top-nav"></nav>
+  </div>
+  <div class="progress-bar-wrap"><div class="progress-bar-fill" id="global-progress"></div></div>
+</header>
+
+<main id="app" tabindex="-1"></main>
+<div id="portal-root"></div>
+
+<script src="kanon_survey_data.js"></script>
+<script>
+/* =========================================================================
+   THE AUSTRALIAN KANON ABCD SURVEY & DIAGNOSTIC ENGINE (7 · 49 · 353/354)
+   Combines 12Axes Archetype & Explainer QoL with WWSUTRU Welfare Keyring
+   ========================================================================= */
+
+const DATA = window.KANON_SURVEY_DATA;
+const PLANES = DATA.planes;
+const SENSES = DATA.senses;
+const VECTORS = DATA.vectors;
+const ARCHETYPES = DATA.archetypes;
+const FIGURES = DATA.figures;
+const GLOSSARY = DATA.glossary || [];
+const BOOKS = DATA.books || [];
+const BLOCKER_TAGS = DATA.blockerTags;
+
+// Index lookups for fast access
+const PLANE_BY_N = {};
+PLANES.forEach(p => { PLANE_BY_N[p.n] = p; });
+
+const SENSES_BY_PLANE = {};
+const SENSE_BY_ID = {};
+SENSES.forEach(s => {
+  SENSE_BY_ID[s.id] = s;
+  if (!SENSES_BY_PLANE[s.plane]) SENSES_BY_PLANE[s.plane] = [];
+  SENSES_BY_PLANE[s.plane].push(s);
+});
+
+const VECTORS_BY_PLANE = {};
+const VECTORS_BY_SENSE = {};
+const VECTOR_BY_UID = {};
+VECTORS.forEach(v => {
+  VECTOR_BY_UID[v.uid] = v;
+  if (!VECTORS_BY_PLANE[v.plane]) VECTORS_BY_PLANE[v.plane] = [];
+  VECTORS_BY_PLANE[v.plane].push(v);
+  if (!VECTORS_BY_SENSE[v.senseId]) VECTORS_BY_SENSE[v.senseId] = [];
+  VECTORS_BY_SENSE[v.senseId].push(v);
+});
+
+/* ---------- 12AXES-STYLE INLINE GLOSSARY ENGINE ---------- */
+const GLOSSARY_BY_ID = {};
+const GLOSSARY_PATTERNS = [];
+GLOSSARY.forEach(entry => {
+  GLOSSARY_BY_ID[entry.id] = entry;
+  (entry.match || []).forEach(m => {
+    if (m && m.length >= 3) {
+      GLOSSARY_PATTERNS.push({ phrase: m, phraseLower: m.toLowerCase(), id: entry.id });
+    }
+  });
+});
+// Sort longest phrase first so "White Australia Policy" matches before "White Australia"
+GLOSSARY_PATTERNS.sort((a, b) => b.phrase.length - a.phrase.length);
+
+function escapeHtml(str) {
+  return String(str || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+function isWordBoundaryChar(ch) {
+  if (!ch) return true;
+  return !/[A-Za-z0-9]/.test(ch);
+}
+
+// Finds non-overlapping glossary terms inside plain text and wraps them in <span class="glossary-term">
+function renderGlossaryHTML(text, excludeName = "") {
+  if (!text) return "";
+  const lower = text.toLowerCase();
+  const exLower = (excludeName || "").toLowerCase();
+  const spans = [];
+  const usedIds = new Set();
+
+  for (const pat of GLOSSARY_PATTERNS) {
+    if (usedIds.has(pat.id)) continue;
+    // Don't underline the card's own title over and over inside its own prompt if we want to keep it clean, or allow first occurrence!
+    let idx = lower.indexOf(pat.phraseLower);
+    while (idx !== -1) {
+      const end = idx + pat.phrase.length;
+      const before = idx > 0 ? text[idx - 1] : "";
+      const after = end < text.length ? text[end] : "";
+      if (isWordBoundaryChar(before) && isWordBoundaryChar(after)) {
+        // Check overlap with already claimed spans
+        const overlaps = spans.some(s => !(end <= s.start || idx >= s.end));
+        if (!overlaps) {
+          spans.push({ start: idx, end, id: pat.id });
+          usedIds.add(pat.id);
+          break;
+        }
+      }
+      idx = lower.indexOf(pat.phraseLower, idx + 1);
+    }
+  }
+
+  if (spans.length === 0) return escapeHtml(text);
+  spans.sort((a, b) => a.start - b.start);
+
+  let out = "";
+  let cursor = 0;
+  for (const sp of spans) {
+    if (sp.start > cursor) {
+      out += escapeHtml(text.slice(cursor, sp.start));
+    }
+    const surface = escapeHtml(text.slice(sp.start, sp.end));
+    out += `<span class="glossary-term" role="button" tabindex="0" data-glossary-id="${sp.id}">${surface}</span>`;
+    cursor = sp.end;
+  }
+  if (cursor < text.length) {
+    out += escapeHtml(text.slice(cursor));
+  }
+  return out;
+}
+
+// Global floating tooltip controller for .glossary-term and [data-badge-tip]
+let activeTooltipEl = null;
+let tooltipCloseTimer = null;
+
+function hideFloatingTooltip() {
+  if (activeTooltipEl) {
+    activeTooltipEl.remove();
+    activeTooltipEl = null;
+  }
+  document.querySelectorAll(".glossary-term.is-active").forEach(el => el.classList.remove("is-active"));
+}
+
+function showFloatingTooltip(anchorEl, title, body) {
+  clearTimeout(tooltipCloseTimer);
+  hideFloatingTooltip();
+  anchorEl.classList.add("is-active");
+
+  const tip = document.createElement("div");
+  tip.className = "glossary-tooltip";
+  tip.setAttribute("role", "tooltip");
+  tip.innerHTML = `<strong>${escapeHtml(title)}</strong><span>${escapeHtml(body)}</span>`;
+  document.body.appendChild(tip);
+  activeTooltipEl = tip;
+
+  const rect = anchorEl.getBoundingClientRect();
+  const tipRect = tip.getBoundingClientRect();
+  let top = rect.bottom + 8;
+  if (top + tipRect.height > window.innerHeight - 12) {
+    top = Math.max(12, rect.top - tipRect.height - 8);
+  }
+  let left = Math.max(12, Math.min(rect.left, window.innerWidth - tipRect.width - 12));
+  tip.style.top = `${top}px`;
+  tip.style.left = `${left}px`;
+}
+
+function setupGlobalTooltips() {
+  document.addEventListener("mouseover", (e) => {
+    const gEl = e.target.closest("[data-glossary-id]");
+    if (gEl) {
+      const entry = GLOSSARY_BY_ID[gEl.getAttribute("data-glossary-id")];
+      if (entry) showFloatingTooltip(gEl, entry.term, entry.definition);
+      return;
+    }
+    const bEl = e.target.closest("[data-badge-tip]");
+    if (bEl) {
+      showFloatingTooltip(bEl, bEl.getAttribute("data-badge-title") || "Kanon Metric", bEl.getAttribute("data-badge-tip"));
+    }
+  });
+
+  document.addEventListener("mouseout", (e) => {
+    const gEl = e.target.closest("[data-glossary-id], [data-badge-tip]");
+    if (gEl) {
+      tooltipCloseTimer = setTimeout(hideFloatingTooltip, 140);
+    }
+  });
+
+  document.addEventListener("focusin", (e) => {
+    const gEl = e.target.closest("[data-glossary-id]");
+    if (gEl) {
+      const entry = GLOSSARY_BY_ID[gEl.getAttribute("data-glossary-id")];
+      if (entry) showFloatingTooltip(gEl, entry.term, entry.definition);
+    }
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      hideFloatingTooltip();
+      closeInfoSheet();
+    }
+  });
+}
+
+/* ---------- 12AXES-STYLE (?) INFO SHEET MODAL CONTROLLER ---------- */
+function openNodeInfoSheet(prefix, id) {
+  let item = null;
+  let hue = "var(--accent)";
+  let headerLabel = "";
+
+  if (prefix === "P") {
+    item = PLANE_BY_N[Number(id)];
+    if (item) {
+      hue = item.hue;
+      headerLabel = `Plane ${item.n} · ${item.code} (${item.domain}) · Pillar: ${item.pillar}`;
+    }
+  } else if (prefix === "S") {
+    item = SENSE_BY_ID[id];
+    if (item) {
+      const p = PLANE_BY_N[item.plane];
+      hue = p.hue;
+      headerLabel = `Sense ${item.id} · ${item.addr} (Plane ${p.n}: ${p.name})`;
+    }
+  } else if (prefix === "V") {
+    item = VECTOR_BY_UID[id];
+    if (item) {
+      const p = PLANE_BY_N[item.plane];
+      hue = p.hue;
+      headerLabel = `Vector ${item.uid} · ${item.addr} · Role: ${item.role}`;
+    }
+  }
+
+  if (!item) return;
+  const h = item.help || {};
+  const title = item.name || item.title;
+
+  const portal = document.getElementById("portal-root");
+  if (!portal) return;
+
+  portal.innerHTML = `
+    <div class="info-sheet-backdrop" id="info-sheet-backdrop">
+      <div class="info-sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title" style="--sheet-accent:${hue}">
+        <button type="button" class="info-sheet-close" id="info-sheet-close" aria-label="Close">×</button>
+        <div class="eyebrow" style="color:${hue}">${escapeHtml(headerLabel)}</div>
+        <h3 id="sheet-title" style="font-size:1.4rem;margin:4px 36px 8px 0;">${escapeHtml(title)}</h3>
+        ${item.quote ? `
+          <div class="plane-quote-box" style="margin-bottom:12px;">
+            "${escapeHtml(item.quote)}"
+            <cite>— ${escapeHtml(item.attribution || "")}${item.source ? ` (${escapeHtml(item.source)})` : ""}</cite>
+          </div>
+        ` : ""}
+        <div class="explain-sides-grid">
+          <div class="explain-box is-high">
+            <h4>✓ Rating Positive (+1 to +5 · Greater Good / Proactive) on Should (A)</h4>
+            <p>${escapeHtml(h.highA || "")}</p>
+          </div>
+          <div class="explain-box is-low">
+            <h4>✕ Rating Negative (−1 to −5 · Extractive / Suppressive) on Should (A)</h4>
+            <p>${escapeHtml(h.lowA || "")}</p>
+          </div>
+          <div class="explain-box is-high">
+            <h4>✓ Rating Positive (+1 to +5 · Proactive Practice) on Would (B / C / D)</h4>
+            <p>${escapeHtml(h.highB || "")}</p>
+          </div>
+          <div class="explain-box is-low">
+            <h4>✕ Rating Negative (−1 to −5 · Suppressed / Blocked) on Would (B / C / D)</h4>
+            <p>${escapeHtml(h.lowB || "")}</p>
+          </div>
+        </div>
+        <div class="callout" style="margin-top:12px;font-size:0.84rem;">
+          <strong>Part 4 Axis Scale Guide (−5 to +5):</strong>
+          <code>−5 Extractive / Suppressive (−υ, −ψ)</code> takes from others or prevents/destroys ·
+          <code>0 Selfish / Inaction (Origin)</code> looks out only for narrow self-interest or does nothing ·
+          <code>+5 Greater Good / Proactive (+υ, +ψ)</code> actively builds and creates value for everyone.
+        </div>
+        ${h.note ? `
+          <div class="callout" style="margin-top:10px;font-size:0.86rem;">
+            <strong>Context & Kanon Framing:</strong><br/>
+            ${escapeHtml(h.note)}
+          </div>
+        ` : ""}
+      </div>
+    </div>
+  `;
+
+  document.getElementById("info-sheet-close")?.addEventListener("click", closeInfoSheet);
+  document.getElementById("info-sheet-backdrop")?.addEventListener("click", (e) => {
+    if (e.target.id === "info-sheet-backdrop") closeInfoSheet();
+  });
+}
+
+function openComparisonSheet(targetType, targetId) {
+  const profile = computeKanonProfile();
+  const list = targetType === "archetype" ? ARCHETYPES : FIGURES;
+  const target = list.find(x => (x.id || x.name) === targetId);
+  if (!target) return;
+
+  const userPlanes = profile.planeSummaries.map(s => s.total !== null ? Math.round(((s.total + 5) / 10) * 100) : 50);
+  const targetPlanes = (target.pillars || [0.5,0.5,0.5,0.5,0.5,0.5,0.5]).map(v => Math.round(v * 100));
+
+  const rows = PLANES.map((p, i) => ({
+    plane: p,
+    userPct: userPlanes[i],
+    targetPct: targetPlanes[i],
+    diff: Math.abs(userPlanes[i] - targetPlanes[i])
+  }));
+
+  const closest = [...rows].sort((a, b) => a.diff - b.diff).slice(0, 3);
+  const furthest = [...rows].sort((a, b) => b.diff - a.diff).slice(0, 2);
+
+  const portal = document.getElementById("portal-root");
+  if (!portal) return;
+
+  portal.innerHTML = `
+    <div class="info-sheet-backdrop" id="info-sheet-backdrop">
+      <div class="info-sheet" role="dialog" aria-modal="true" style="--sheet-accent:${target.color || "var(--accent)"}">
+        <button type="button" class="info-sheet-close" id="info-sheet-close" aria-label="Close">×</button>
+        <div class="eyebrow">${targetType === "archetype" ? "Australian Archetype Comparison" : "Historical & Audited Figure Comparison"}</div>
+        <h3 style="font-size:1.4rem;margin:4px 36px 4px 0;">You vs. ${escapeHtml(target.name)}</h3>
+        <div class="mono" style="font-size:0.78rem;color:var(--ink-muted);margin-bottom:10px;">
+          ${escapeHtml(target.subtitle || target.role || "")} · Coords (υ=${target.coords.v >= 0 ? "+" : ""}${target.coords.v}, ψ=${target.coords.psi >= 0 ? "+" : ""}${target.coords.psi})
+        </div>
+        <p style="font-size:0.88rem;color:var(--ink-soft);margin:0 0 14px;">${escapeHtml(target.desc)}</p>
+
+        <div class="mono" style="font-size:0.74rem;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:8px;">
+          What Pulls You Closest Together (Top 3 Planes)
+        </div>
+        ${closest.map(r => `
+          <div class="closeness-row">
+            <div class="closeness-head">
+              <strong>P${r.plane.n} · ${r.plane.name} (${r.plane.pillar})</strong>
+              <span class="mono">You: ${r.userPct}% · Them: ${r.targetPct}%</span>
+            </div>
+            <div class="closeness-track">
+              <span class="closeness-pin pin-them" style="left:${r.targetPct}%" title="${escapeHtml(target.name)}: ${r.targetPct}%">T</span>
+              <span class="closeness-pin pin-you" style="left:${r.userPct}%" title="You: ${r.userPct}%">Y</span>
+            </div>
+          </div>
+        `).join("")}
+
+        <div class="mono" style="font-size:0.74rem;text-transform:uppercase;color:var(--accent-warm);font-weight:700;margin:14px 0 8px;">
+          Where You Diverge Most
+        </div>
+        ${furthest.map(r => `
+          <div class="closeness-row">
+            <div class="closeness-head">
+              <strong>P${r.plane.n} · ${r.plane.name} (${r.plane.pillar})</strong>
+              <span class="mono">You: ${r.userPct}% vs Them: ${r.targetPct}% (Δ ${r.diff}%)</span>
+            </div>
+            <div class="closeness-track">
+              <span class="closeness-pin pin-them" style="left:${r.targetPct}%" title="${escapeHtml(target.name)}: ${r.targetPct}%">T</span>
+              <span class="closeness-pin pin-you" style="left:${r.userPct}%" title="You: ${r.userPct}%">Y</span>
+            </div>
+          </div>
+        `).join("")}
+      </div>
+    </div>
+  `;
+
+  document.getElementById("info-sheet-close")?.addEventListener("click", closeInfoSheet);
+  document.getElementById("info-sheet-backdrop")?.addEventListener("click", (e) => {
+    if (e.target.id === "info-sheet-backdrop") closeInfoSheet();
+  });
+}
+
+function closeInfoSheet() {
+  const portal = document.getElementById("portal-root");
+  if (portal) portal.innerHTML = "";
+}
+
+function fmtSigned(v, dec = 1) {
+  if (v === null || v === undefined || Number.isNaN(v)) return "—";
+  const n = Number(v);
+  return `${n > 0 ? "+" : ""}${n.toFixed(dec)}`;
+}
+
+// Part 4 Axis-Anchored Scales (-5 Extractive / Suppressive, 0 Selfish / Inaction, +5 Greater Good / Proactive)
+// A: Personal Ideal ("Should")
+const SCALE_A = [
+  { v: -5, lbl: "Extractive / Suppress", tip: "−5 Extractive / Suppressive (−υ, −ψ): Should be actively prevented, suppressed, or stripped away" },
+  { v: -4, lbl: "Reject / Prevent",      tip: "−4 Strongly Reject / Prevent (−υ, −ψ)" },
+  { v: -3, lbl: "Should Not Do",         tip: "−3 Should Not Do: Oppose this principle" },
+  { v: -2, lbl: "Restrict",              tip: "−2 Restrict / Limit" },
+  { v: -1, lbl: "Lean Against",          tip: "−1 Lean Against" },
+  { v: 0,  lbl: "Selfish / Inaction",    tip: "0 Origin (Selfish Interest / Inaction): Neutral, passive, or only for narrow self-interest" },
+  { v: 1,  lbl: "Lean Should",           tip: "+1 Lean Should: Mildly support" },
+  { v: 2,  lbl: "Support",               tip: "+2 Support: Worth upholding" },
+  { v: 3,  lbl: "Should Uphold",         tip: "+3 Should Uphold: Solid collective benefit" },
+  { v: 4,  lbl: "Proactive Build",       tip: "+4 Proactive Will (+ψ): Actively build and strengthen" },
+  { v: 5,  lbl: "Greater Good",          tip: "+5 Greater Good & Proactive (+υ, +ψ): Should actively build and uphold for everyone's benefit" }
+];
+
+// B: Personal Actual ("Would")
+const SCALE_B = [
+  { v: -5, lbl: "Extractive / Oppose",   tip: "−5 Extractive / Suppressive (−υ, −ψ): In practice I actively oppose, block, or take against this" },
+  { v: -4, lbl: "Actively Resist",       tip: "−4 Actively Resist / Refuse in practice" },
+  { v: -3, lbl: "Would Not Do",          tip: "−3 Would Not Do in the heat of the moment" },
+  { v: -2, lbl: "Withhold",              tip: "−2 Avoid or withhold support in practice" },
+  { v: -1, lbl: "Rarely Do",             tip: "−1 Rarely practise or stand up for this" },
+  { v: 0,  lbl: "Selfish / Inaction",    tip: "0 Origin (Selfish Interest / Inaction): Do nothing or look out only for myself in practice" },
+  { v: 1,  lbl: "Sometimes Do",          tip: "+1 Sometimes practise when convenient" },
+  { v: 2,  lbl: "Usually Do",            tip: "+2 Usually practise in daily life" },
+  { v: 3,  lbl: "Actively Do",           tip: "+3 Actively Do: Practise reliably in daily life" },
+  { v: 4,  lbl: "Proactively Build",     tip: "+4 Proactive Will (+ψ): Actively build and defend in practice" },
+  { v: 5,  lbl: "Greater Good",          tip: "+5 Greater Good & Proactive (+υ, +ψ): In the heat of the moment, I actively live and build this for all" }
+];
+
+// C: Your Community Circle ("Should & Would")
+const SCALE_C = [
+  { v: -5, lbl: "Extractive / Suppress", tip: "−5 Extractive / Suppressive (−υ, −ψ): My community circle actively suppresses or takes against this" },
+  { v: -4, lbl: "Actively Rejects",      tip: "−4 My circle actively rejects or prevents this" },
+  { v: -3, lbl: "Would Not Do",          tip: "−3 My circle would not back or practise this" },
+  { v: -2, lbl: "Dismisses",             tip: "−2 My circle dismisses or looks down on this" },
+  { v: -1, lbl: "Skeptical",             tip: "−1 My circle leans against this" },
+  { v: 0,  lbl: "Selfish / Inaction",    tip: "0 Origin (Selfish Interest / Inaction): My circle looks after its own narrow interest or stays passive" },
+  { v: 1,  lbl: "Mildly Backs",          tip: "+1 My circle mildly supports this" },
+  { v: 2,  lbl: "Says Should",           tip: "+2 My circle agrees we should do this" },
+  { v: 3,  lbl: "Does in Practice",      tip: "+3 My circle genuinely practises this" },
+  { v: 4,  lbl: "Proactively Builds",    tip: "+4 Proactive Will (+ψ): My circle actively builds and backs this" },
+  { v: 5,  lbl: "Greater Good",          tip: "+5 Greater Good & Proactive (+υ, +ψ): My community circle both believes we should and actively lives this for all" }
+];
+
+// D: Wider Australian Society & System ("Would" & Blockers)
+const SCALE_D = [
+  { v: -5, lbl: "Extractive / Suppress", tip: "−5 Extractive / Suppressive (−υ, −ψ): Wider Australian society & institutions actively extract from or suppress this" },
+  { v: -4, lbl: "Heavily Blocked",       tip: "−4 Heavily suppressed or locked out in practice" },
+  { v: -3, lbl: "Fails in Practice",     tip: "−3 Fails in practice despite rhetoric" },
+  { v: -2, lbl: "Lip Service Only",      tip: "−2 Stated ideal only; undermined in practice" },
+  { v: -1, lbl: "Sliding Back",          tip: "−1 Eroding or drifting backwards" },
+  { v: 0,  lbl: "Selfish / Inaction",    tip: "0 Origin (Selfish Interest / Inaction): Society does nothing or leaves people to fend for themselves" },
+  { v: 1,  lbl: "Slow Progress",         tip: "+1 Minor or uneven delivery" },
+  { v: 2,  lbl: "Partial Delivery",      tip: "+2 Partially working in Australian society" },
+  { v: 3,  lbl: "Works in Practice",     tip: "+3 Genuinely working in practice" },
+  { v: 4,  lbl: "Proactive System",      tip: "+4 Proactive Will (+ψ): Strong systemic delivery" },
+  { v: 5,  lbl: "Greater Good",          tip: "+5 Greater Good & Proactive (+υ, +ψ): Australian society and institutions actively deliver this for everyone" }
+];
+
+const TOPIC_MAP = [
+  { id: "mateship", label: "Mateship & Belonging" },
+  { id: "fair-go", label: "The Fair Go & Equality" },
+  { id: "housing", label: "Housing, Suburb & Home" },
+  { id: "work-wages", label: "Wages, Unions & Battler" },
+  { id: "governance", label: "Democracy, Law & Nanny State" },
+  { id: "land-climate", label: "Bush, Water, Fire & Climate" },
+  { id: "first-nations", label: "First Nations & Reconciliation" },
+  { id: "economy-mining", label: "Quarry, Luck & Innovation" },
+  { id: "borders-world", label: "Borders, Anzac & Sovereignty" },
+  { id: "culture-sport", label: "Sport, Humour & Pub Test" }
+];
+
+const STORAGE_KEY = "aus_kanon_abcd_survey_v2";
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      return {
+        tier: parsed.tier || 49,               // 7, 49, or 353
+        include354: !!parsed.include354,       // false = 353 Hanson Audit set, true = all 354 JSON nodes
+        viewMode: parsed.viewMode || "list",   // 'list' (all cards in plane) or 'focus' (1 card at a time like 12axes)
+        focusIdx: parsed.focusIdx || 0,        // active card index in focus mode
+        planeFilter: parsed.planeFilter || "all",
+        compareTargetId: parsed.compareTargetId || "monash",
+        answers: parsed.answers || {},
+        blockers: parsed.blockers || {},
+        notes: parsed.notes || {},
+        expandedSenses: parsed.expandedSenses || {}
+      };
+    }
+  } catch (e) {}
+  return {
+    tier: 49,
+    include354: false,
+    viewMode: "list",
+    focusIdx: 0,
+    planeFilter: "all",
+    compareTargetId: "monash",
+    answers: {},
+    blockers: {},
+    notes: {},
+    expandedSenses: {}
+  };
+}
+
+let STATE = loadState();
+
+function saveState() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(STATE)); } catch (e) {}
+  updateHeaderProgress();
+}
+
+function ansKey(prefix, id, probe) { return `${prefix}|${id}|${probe}`; }
+function getAns(prefix, id, probe) { return STATE.answers[ansKey(prefix, id, probe)] ?? null; }
+function setAns(prefix, id, probe, val) {
+  const k = ansKey(prefix, id, probe);
+  if (val === null || val === undefined) delete STATE.answers[k];
+  else STATE.answers[k] = Number(val);
+  saveState();
+}
+
+function getBlockers(prefix, id) {
+  return STATE.blockers[`${prefix}|${id}`] || [];
+}
+function toggleBlocker(prefix, id, tag) {
+  const k = `${prefix}|${id}`;
+  const arr = (STATE.blockers[k] || []).slice();
+  const idx = arr.indexOf(tag);
+  if (idx >= 0) arr.splice(idx, 1);
+  else arr.push(tag);
+  if (arr.length === 0) delete STATE.blockers[k];
+  else STATE.blockers[k] = arr;
+  saveState();
+}
+
+function activeTierVectors(planeNum = null) {
+  const list = planeNum ? (VECTORS_BY_PLANE[planeNum] || []) : VECTORS;
+  return STATE.include354 ? list : list.filter(v => v.inHanson353);
+}
+
+function isNodeAnswered(prefix, id) {
+  return (
+    getAns(prefix, id, "A") !== null ||
+    getAns(prefix, id, "B") !== null ||
+    getAns(prefix, id, "C") !== null ||
+    getAns(prefix, id, "D") !== null
+  );
+}
+
+/* ---------- HIERARCHICAL SCORE ENGINE (7 <-> 49 <-> 353/354) ---------- */
+function avgNums(arr) {
+  const v = arr.filter(x => x !== null && x !== undefined && !Number.isNaN(x));
+  return v.length ? v.reduce((a, b) => a + b, 0) / v.length : null;
+}
+
+function getSenseMultiTierProbe(senseId, probe) {
+  const s = SENSE_BY_ID[senseId];
+  if (!s) return { tier1: null, tier2: null, tier3: null, effective: null };
+  const t1 = getAns("P", s.plane, probe);
+  const t2 = getAns("S", senseId, probe);
+  const vecs = (VECTORS_BY_SENSE[senseId] || []).filter(v => STATE.include354 || v.inHanson353);
+  const t3 = avgNums(vecs.map(v => getAns("V", v.uid, probe)));
+
+  let effective = null;
+  if (STATE.tier === 7) effective = t1 ?? t2 ?? t3;
+  else if (STATE.tier === 49) effective = t2 ?? t3 ?? t1;
+  else effective = t3 ?? t2 ?? t1;
+
+  return { tier1: t1, tier2: t2, tier3: t3, effective };
+}
+
+function computeSenseSummary(senseId) {
+  const mA = getSenseMultiTierProbe(senseId, "A");
+  const mB = getSenseMultiTierProbe(senseId, "B");
+  const mC = getSenseMultiTierProbe(senseId, "C");
+  const mD = getSenseMultiTierProbe(senseId, "D");
+
+  const A = mA.effective; // Personal Ideal ("Should")
+  const B = mB.effective; // Personal Actual ("Would")
+  const C = mC.effective; // Community Circle ("Should & Would")
+  const D = mD.effective; // Australian Society ("Would" / Actual Outcome)
+
+  const total = avgNums([A, B, C, D]);
+  const personalMean = avgNums([A, B]);
+  const gapAB = (A !== null && B !== null) ? (A - B) : null; // Personal Should-Would Gap (ΔH_personal)
+  const gapAD = (A !== null && D !== null) ? (A - D) : null; // Social Contradiction Gap (Should A vs Society D)
+  return { A, B, C, D, total, personalMean, gapAB, gapAD, multiA: mA, multiB: mB };
+}
+
+function computePlaneSummary(pNum) {
+  const plane = PLANE_BY_N[pNum];
+  const senses = SENSES_BY_PLANE[pNum] || [];
+  const senseScores = senses.map(s => ({ sense: s, ...computeSenseSummary(s.id) }));
+
+  const A = avgNums(senseScores.map(x => x.A));
+  const B = avgNums(senseScores.map(x => x.B));
+  const C = avgNums(senseScores.map(x => x.C));
+  const D = avgNums(senseScores.map(x => x.D));
+  const total = avgNums(senseScores.map(x => x.total));
+
+  let totalNodes = 1;
+  let answeredNodes = 0;
+  if (STATE.tier === 7) {
+    totalNodes = 1;
+    answeredNodes = isNodeAnswered("P", pNum) ? 1 : (total !== null ? 1 : 0);
+  } else if (STATE.tier === 49) {
+    totalNodes = senses.length;
+    answeredNodes = senses.filter(s => isNodeAnswered("S", s.id) || computeSenseSummary(s.id).total !== null).length;
+  } else {
+    const vecs = activeTierVectors(pNum);
+    totalNodes = vecs.length;
+    answeredNodes = vecs.filter(v => isNodeAnswered("V", v.uid)).length;
+  }
+
+  return {
+    plane,
+    senses: senseScores,
+    A, B, C, D, total,
+    answeredNodes,
+    totalNodes
+  };
+}
+
+function computeGlobalProgress() {
+  if (STATE.tier === 7) {
+    const done = PLANES.filter(p => isNodeAnswered("P", p.n)).length;
+    return { done, total: 7, pct: Math.round((done / 7) * 100) };
+  } else if (STATE.tier === 49) {
+    const done = SENSES.filter(s => isNodeAnswered("S", s.id)).length;
+    return { done, total: 49, pct: Math.round((done / 49) * 100) };
+  } else {
+    const vecs = activeTierVectors();
+    const done = vecs.filter(v => isNodeAnswered("V", v.uid)).length;
+    return { done, total: vecs.length, pct: Math.round((done / vecs.length) * 100) };
+  }
+}
+
+/* ---------- ARCHETYPE, HEGEMONY (v, psi) & AUDIT ENGINE ---------- */
+function computeKanonProfile() {
+  const planeSummaries = PLANES.map(p => computePlaneSummary(p.n));
+  const answeredPlanes = planeSummaries.filter(p => p.total !== null);
+
+  // Normalize [-5, +5] -> [0, 1] via (val + 5) / 10
+  // Use personal Should/Would mean (or overall total) for personal archetype matching
+  const planeNormTotal = planeSummaries.map(p => {
+    const pm = avgNums([p.A, p.B, p.C]);
+    const ref = pm !== null ? pm : p.total;
+    return ref !== null ? (ref + 5) / 10 : 0.5;
+  });
+
+  const avgA = avgNums(planeSummaries.map(p => p.A));
+  const avgB = avgNums(planeSummaries.map(p => p.B));
+  const avgC = avgNums(planeSummaries.map(p => p.C));
+  const avgD = avgNums(planeSummaries.map(p => p.D));
+  const avgTot = avgNums(planeSummaries.map(p => p.total));
+
+  const alignmentPct = avgTot !== null ? Math.round(((avgTot + 5) / 10) * 100) : null;
+  const ethosPct = avgA !== null ? Math.round(((avgA + 5) / 10) * 100) : null;
+  const livedPct = avgB !== null ? Math.round(((avgB + 5) / 10) * 100) : null;
+  const communityPct = avgC !== null ? Math.round(((avgC + 5) / 10) * 100) : null;
+  const societyPct = avgD !== null ? Math.round(((avgD + 5) / 10) * 100) : null;
+
+  let sumWA = 0, vA = 0, psiA = 0;
+  let sumWB = 0, vB = 0, psiB = 0;
+
+  let hitCount = 0, failCount = 0, neutralCount = 0, totalEvaluated = 0;
+  let hansonAgree = 0, hansonCompared = 0;
+  let alboAgree = 0, alboCompared = 0;
+
+  const vecList = activeTierVectors();
+  vecList.forEach(vec => {
+    let a = getAns("V", vec.uid, "A");
+    let b = getAns("V", vec.uid, "B");
+    if (a === null && STATE.tier === 49) a = getAns("S", vec.senseId, "A");
+    if (b === null && STATE.tier === 49) b = getAns("S", vec.senseId, "B");
+    if (a === null && STATE.tier === 7) a = getAns("P", vec.plane, "A");
+    if (b === null && STATE.tier === 7) b = getAns("P", vec.plane, "B");
+
+    const nodeScore = avgNums([a, b]);
+    if (nodeScore !== null) {
+      totalEvaluated++;
+      let userVerdict = "NEUTRAL";
+      if (nodeScore >= 1.0) { hitCount++; userVerdict = "HIT"; }
+      else if (nodeScore <= -1.0) { failCount++; userVerdict = "FAIL"; }
+      else { neutralCount++; }
+
+      if (userVerdict !== "NEUTRAL") {
+        if (vec.hansonVerdict) {
+          hansonCompared++;
+          if (vec.hansonVerdict === userVerdict) hansonAgree++;
+        }
+        if (vec.alboVerdict) {
+          alboCompared++;
+          if (vec.alboVerdict === userVerdict) alboAgree++;
+        }
+      }
+    }
+
+    const targetV = vec.coords.v < 0 ? Math.abs(vec.coords.v) : vec.coords.v;
+    const targetPsi = vec.coords.v < 0 ? -vec.coords.psi : vec.coords.psi;
+
+    if (a !== null) {
+      const polA = a / 5;
+      vA += polA * targetV;
+      psiA += polA * targetPsi;
+      sumWA += 1;
+    }
+    if (b !== null) {
+      const polB = b / 5;
+      vB += polB * targetV;
+      psiB += polB * targetPsi;
+      sumWB += 1;
+    }
+  });
+
+  const coordsA = sumWA > 0 ? { v: +(vA / sumWA * 1.35).toFixed(2), psi: +(psiA / sumWA * 1.35).toFixed(2) } : { v: 0, psi: 0 };
+  const coordsB = sumWB > 0 ? { v: +(vB / sumWB * 1.35).toFixed(2), psi: +(psiB / sumWB * 1.35).toFixed(2) } : coordsA;
+
+  // Personal Should-Would gap (ΔH_personal) & Social Contradiction gap (Should A - Society D)
+  const personalGap = (avgA !== null && avgB !== null) ? Math.abs(avgA - avgB) : 0;
+  const socialGap = (avgA !== null && avgD !== null) ? (avgA - avgD) : ((avgA !== null && avgB !== null) ? (avgA - avgB) : 0);
+  const stressGap = Math.max(socialGap, (avgA !== null && avgB !== null) ? (avgA - avgB) : 0);
+
+  const archetypeMatches = ARCHETYPES.map(arch => {
+    let sqDist = 0;
+    for (let i = 0; i < 7; i++) {
+      const w = (arch.pillars || arch.weights)[i];
+      const diff = planeNormTotal[i] - w;
+      sqDist += diff * diff;
+    }
+    let rms = Math.sqrt(sqDist / 7);
+    let sim = Math.max(0, 1 - rms * 1.15);
+
+    if (arch.id === "betrayed_battler" && stressGap >= 1.5) {
+      sim = Math.min(0.99, sim + Math.min(0.28, stressGap * 0.045));
+    }
+    if (arch.id === "stoic_guardian" && avgTot !== null && avgTot >= 2.5 && stressGap < 1.8) {
+      sim = Math.min(0.99, sim + 0.12);
+    }
+
+    return {
+      ...arch,
+      matchPct: Math.round(sim * 100)
+    };
+  }).sort((a, b) => b.matchPct - a.matchPct);
+
+  const userOverallCoords = {
+    v: +((coordsA.v * 0.55 + coordsB.v * 0.45)).toFixed(2),
+    psi: +((coordsA.psi * 0.55 + coordsB.psi * 0.45)).toFixed(2)
+  };
+  const figureMatches = FIGURES.map(fig => {
+    const dv = userOverallCoords.v - fig.coords.v;
+    const dpsi = userOverallCoords.psi - fig.coords.psi;
+    const coordDist = Math.sqrt(dv * dv + dpsi * dpsi);
+    const alignDiff = alignmentPct !== null ? Math.abs(alignmentPct - fig.alignment) / 100 : 0.3;
+    let match = Math.max(5, Math.round((1 - (coordDist * 0.38 + alignDiff * 0.45)) * 100));
+
+    if (fig.name.includes("Pauline Hanson") && hansonCompared > 0) {
+      match = Math.round((hansonAgree / hansonCompared) * 100);
+    } else if (fig.name.includes("Anthony Albanese") && alboCompared > 0) {
+      match = Math.round((alboAgree / alboCompared) * 100);
+    }
+    return { ...fig, matchPct: Math.min(99, Math.max(4, match)) };
+  }).sort((a, b) => b.matchPct - a.matchPct);
+
+  const blockerCounts = {};
+  Object.values(STATE.blockers).forEach(arr => {
+    (arr || []).forEach(tag => {
+      blockerCounts[tag] = (blockerCounts[tag] || 0) + 1;
+    });
+  });
+  const topBlockers = Object.entries(blockerCounts)
+    .sort((a, b) => b[1] - a[1])
+    .map(([tag, count]) => ({ tag, count }));
+
+  return {
+    planeSummaries,
+    answeredPlanes,
+    avgA, avgB, avgC, avgD, avgTot,
+    personalGap, socialGap,
+    alignmentPct, ethosPct, livedPct, communityPct, societyPct,
+    coordsA, coordsB, userOverallCoords,
+    hitCount, failCount, neutralCount, totalEvaluated,
+    netAlignmentPct: totalEvaluated > 0 ? +(((hitCount - failCount) / totalEvaluated) * 100).toFixed(1) : 0,
+    hansonAgree, hansonCompared,
+    alboAgree, alboCompared,
+    archetypeMatches,
+    figureMatches,
+    topBlockers
+  };
+}
+
+/* ---------- DEMO PRESET PROFILES ---------- */
+function loadPresetProfile(presetId) {
+  STATE.answers = {};
+  STATE.blockers = {};
+
+  if (presetId === "stoic_guardian") {
+    PLANES.forEach(p => {
+      setAns("P", p.n, "A", 5); setAns("P", p.n, "B", 4); setAns("P", p.n, "C", 4); setAns("P", p.n, "D", 3);
+    });
+    SENSES.forEach((s, idx) => {
+      setAns("S", s.id, "A", idx % 3 === 0 ? 5 : 4);
+      setAns("S", s.id, "B", idx % 4 === 0 ? 5 : 4);
+      setAns("S", s.id, "C", 4);
+      setAns("S", s.id, "D", 3);
+    });
+  } else if (presetId === "betrayed_battler") {
+    const demoBlockers = ["Cost of Living / Priced Out", "Corporate / Political Capture", "Broken Trust / Burned Before"];
+    PLANES.forEach(p => {
+      setAns("P", p.n, "A", 5);
+      setAns("P", p.n, "B", 4);
+      setAns("P", p.n, "C", 3);
+      setAns("P", p.n, "D", p.n === 2 || p.n === 3 || p.n === 7 ? -3 : -2);
+      STATE.blockers[`P|${p.n}`] = [demoBlockers[p.n % demoBlockers.length]];
+    });
+    SENSES.forEach((s, idx) => {
+      setAns("S", s.id, "A", idx % 2 === 0 ? 5 : 4);
+      setAns("S", s.id, "B", idx % 3 === 0 ? 4 : 3);
+      setAns("S", s.id, "C", idx % 2 === 0 ? 3 : 2);
+      setAns("S", s.id, "D", (s.plane === 2 || s.plane === 3 || idx % 3 === 0) ? -3 : -2);
+      STATE.blockers[`S|${s.id}`] = [demoBlockers[idx % demoBlockers.length]];
+    });
+  } else if (presetId === "hanson_353") {
+    STATE.tier = 353;
+    STATE.include354 = false;
+    VECTORS.filter(v => v.inHanson353).forEach(v => {
+      const val = v.hansonVerdict === "HIT" ? 4 : -3;
+      STATE.answers[ansKey("V", v.uid, "A")] = val;
+      STATE.answers[ansKey("V", v.uid, "B")] = val;
+      STATE.answers[ansKey("V", v.uid, "C")] = val;
+      STATE.answers[ansKey("V", v.uid, "D")] = v.hansonVerdict === "FAIL" ? -3 : 2;
+    });
+  }
+  saveState();
+  render();
+}
+
+/* =========================================================================
+   KEYRING PLOT SVG GENERATOR (EXACT WWSUTRU WELFARE-SURVEY IMPLEMENTATION)
+   ========================================================================= */
+// Extracts the 3 Left ("Should") teeth and 3 Right ("Would") teeth (-5..+5 or null) for a Sense ("1.1".."7.7").
+// Left teeth (`aVals`) encode the Ideal ("Should", A) across the 3 horizons.
+// Right teeth (`bVals`) encode the Actual ("Would") across the 3 horizons:
+//   Slot 0 (Inner tooth): Personal Actual ("Would", B)
+//   Slot 1 (Middle tooth): Community Circle ("Should & Would", C)
+//   Slot 2 (Outer tooth): Australian Society ("Would", D)
+// When Tier 3 vectors are answered in that Sense, the 3 slots also incorporate the inner/middle/outer vector ratings.
+function subKeyringSlots(senseId) {
+  const sense = SENSE_BY_ID[senseId];
+  if (!sense) return { raw: [null, null, null, null, null, null], aVals: [null, null, null], bVals: [null, null, null], answered: [] };
+
+  const pA = getAns("P", sense.plane, "A");
+  const pB = getAns("P", sense.plane, "B");
+  const pC = getAns("P", sense.plane, "C");
+  const pD = getAns("P", sense.plane, "D");
+
+  const sA = getAns("S", senseId, "A");
+  const sB = getAns("S", senseId, "B");
+  const sC = getAns("S", senseId, "C");
+  const sD = getAns("S", senseId, "D");
+
+  const vecs = (VECTORS_BY_SENSE[senseId] || []).filter(v => STATE.include354 || v.inHanson353);
+  const vecNum = (v) => parseInt(String(v.addr || "").split(".")[2], 10) || 1;
+  const g0 = vecs.filter(v => vecNum(v) <= 3);
+  const g1 = vecs.filter(v => vecNum(v) === 4 || vecNum(v) === 5);
+  const g2 = vecs.filter(v => vecNum(v) >= 6);
+
+  const vA0 = avgNums(g0.map(v => getAns("V", v.uid, "A")));
+  const vB0 = avgNums(g0.map(v => getAns("V", v.uid, "B")));
+  const vA1 = avgNums(g1.map(v => getAns("V", v.uid, "A")));
+  const vB1 = avgNums(g1.map(v => getAns("V", v.uid, "C") ?? getAns("V", v.uid, "B")));
+  const vA2 = avgNums(g2.map(v => getAns("V", v.uid, "A")));
+  const vB2 = avgNums(g2.map(v => getAns("V", v.uid, "D") ?? getAns("V", v.uid, "B")));
+
+  const hasVecA = vA0 !== null || vA1 !== null || vA2 !== null;
+  const hasVecB = vB0 !== null || vB1 !== null || vB2 !== null;
+
+  const effA = sA ?? pA;
+  const effB = sB ?? pB ?? effA;
+  const effC = sC ?? pC ?? effB;
+  const effD = sD ?? pD ?? effB;
+
+  const aVals = hasVecA
+    ? [vA0 ?? effA, vA1 ?? effA, vA2 ?? effA]
+    : [effA, effA, effA];
+
+  const bVals = hasVecB
+    ? [vB0 ?? effB, vB1 ?? effC, vB2 ?? effD]
+    : [effB, effC, effD];
+
+  const raw = [aVals[0], bVals[0], aVals[1], bVals[1], aVals[2], bVals[2]];
+  const answered = raw.filter(v => v != null);
+  return { raw, aVals, bVals, answered };
+}
+
+// One arm = one key blade. Teeth are cut into both edges clustered near the
+// shaft's tip (85%-98% of its length) -- the Should (A) vector's 3 slots on the left
+// edge, the Would (B/C/D) vector's 3 on the right, each side's 3 slots sharing the same
+// radial positions so a left/right pair lines up directly opposite each other.
+// `showScale` draws the bracket framing the tooth zone with "Should:+5" and "Would:+5"
+// labeled at each end, showing what full-length teeth look like.
+function armSVG(cx, cy, angleDeg, armLen, hue, subId, labelSize, showScale) {
+  const ang = angleDeg * Math.PI / 180;
+  const dx = Math.cos(ang), dy = Math.sin(ang);
+  const px = -dy, py = dx;
+  const { aVals, bVals, answered } = subKeyringSlots(subId);
+  const parts = [];
+  const tipX = cx + dx * armLen, tipY = cy + dy * armLen;
+  if (!answered.length) {
+    parts.push(`<line x1="${cx.toFixed(1)}" y1="${cy.toFixed(1)}" x2="${tipX.toFixed(1)}" y2="${tipY.toFixed(1)}" stroke="var(--ink-soft)" stroke-width="1" opacity="0.3"/>`);
+  } else {
+    parts.push(`<line x1="${cx.toFixed(1)}" y1="${cy.toFixed(1)}" x2="${tipX.toFixed(1)}" y2="${tipY.toFixed(1)}" stroke="${hue}" stroke-width="4" stroke-linecap="round"/>`);
+    const slots = [0.85, 0.915, 0.98];
+    [[aVals, -1], [bVals, 1]].forEach(([vals, sgn]) => {
+      vals.forEach((v, i) => {
+        if (v == null) return;
+        const frac = slots[i];
+        const bx = cx + dx * armLen * frac, by = cy + dy * armLen * frac;
+        const norm = Math.max(0, Math.min(1, (v + 5) / 10));
+        const tlen = 3 + norm * 12;
+        const ex = bx + px * tlen * sgn, ey = by + py * tlen * sgn;
+        parts.push(`<line x1="${bx.toFixed(1)}" y1="${by.toFixed(1)}" x2="${ex.toFixed(1)}" y2="${ey.toFixed(1)}" stroke="${hue}" stroke-width="3" stroke-linecap="round"/>`);
+      });
+    });
+  }
+  if (showScale) {
+    const bx = cx + dx * armLen * 0.83, by = cy + dy * armLen * 0.83;
+    const fw = 15; // frame half-width, matches max tooth length (3+12=15)
+    const p1x = bx - px * fw, p1y = by - py * fw, p2x = bx + px * fw, p2y = by + py * fw;
+    const p3x = tipX - px * fw, p3y = tipY - py * fw, p4x = tipX + px * fw, p4y = tipY + py * fw;
+    parts.push(`<polyline points="${p1x.toFixed(1)},${p1y.toFixed(1)} ${p2x.toFixed(1)},${p2y.toFixed(1)}" stroke="var(--ink)" stroke-width="1" opacity="0.35"/>`);
+    parts.push(`<polyline points="${p1x.toFixed(1)},${p1y.toFixed(1)} ${p3x.toFixed(1)},${p3y.toFixed(1)}" stroke="var(--ink)" stroke-width="1" opacity="0.35"/>`);
+    parts.push(`<polyline points="${p2x.toFixed(1)},${p2y.toFixed(1)} ${p4x.toFixed(1)},${p4y.toFixed(1)}" stroke="var(--ink)" stroke-width="1" opacity="0.35"/>`);
+    parts.push(`<text x="${(p3x - px * 5).toFixed(1)}" y="${(p3y - py * 5).toFixed(1)}" font-size="8" fill="var(--ink)" opacity="0.5" text-anchor="middle" font-family="'JetBrains Mono', monospace">Should:+5</text>`);
+    parts.push(`<text x="${(p4x + px * 5).toFixed(1)}" y="${(p4y + py * 5).toFixed(1)}" font-size="8" fill="var(--ink)" opacity="0.5" text-anchor="middle" font-family="'JetBrains Mono', monospace">Would:+5</text>`);
+  }
+  if (labelSize) {
+    const lx = cx + dx * (armLen + labelSize + 4), ly = cy + dy * (armLen + labelSize + 4);
+    parts.push(`<text x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" font-size="${labelSize}" fill="var(--ink-soft)" text-anchor="middle" dominant-baseline="middle" font-family="'JetBrains Mono', monospace">${escapeHtml(subId)}</text>`);
+  }
+  return parts.join("");
+}
+
+function planeStarSVG(pNum, maxWidth = 200) {
+  const p = PLANE_BY_N[pNum];
+  const senses = SENSES_BY_PLANE[pNum] || [];
+  const cx = 100, cy = 100, armLen = 78;
+  const hue = p.hue;
+  const parts = senses.map((s, i) => armSVG(cx, cy, -90 + i * (360 / 7), armLen, hue, s.id, 9, true));
+  return `<svg viewBox="0 0 200 200" style="max-width:${maxWidth}px;display:block;margin:0 auto" role="img" aria-label="${escapeHtml(p.name)} diagnostic star">
+    <circle cx="${cx}" cy="${cy}" r="3" fill="${hue}"/>
+    ${parts.join("")}
+  </svg>`;
+}
+
+// One arm direction (Q1-Q7, the i-th sub-indicator slot, same generic
+// position every plane shares) carrying all 7 planes' teeth at once.
+// Each plane gets its own thin ring within the tooth zone, nested outer-to-inner
+// from Plane 1 (Identity) to Plane 7 (Result): 3 Should teeth on the left of that
+// ring, 3 Would teeth on the right -- 7 rings x 3 = 21 teeth per side, all on the one arm.
+function combinedArmSVG(cx, cy, angleDeg, armLen, i) {
+  const ang = angleDeg * Math.PI / 180;
+  const dx = Math.cos(ang), dy = Math.sin(ang);
+  const px = -dy, py = dx;
+  const parts = [];
+  const tipX = cx + dx * armLen, tipY = cy + dy * armLen;
+  parts.push(`<line x1="${cx.toFixed(1)}" y1="${cy.toFixed(1)}" x2="${tipX.toFixed(1)}" y2="${tipY.toFixed(1)}" stroke="var(--ink-soft)" stroke-width="1" opacity="0.3"/>`);
+  const maxTlen = 36;
+  const zoneStart = 0.5, zoneEnd = 0.98, ringW = (zoneEnd - zoneStart) / 7;
+  PLANES.forEach((p, pi) => {
+    const senseId = `${p.n}.${i + 1}`;
+    const { aVals, bVals } = subKeyringSlots(senseId);
+    const ringStart = zoneEnd - (pi + 1) * ringW;
+    const slotFracs = [ringStart + ringW * 0.2, ringStart + ringW * 0.5, ringStart + ringW * 0.8];
+    const hue = p.hue;
+    [[aVals, -1], [bVals, 1]].forEach(([vals, sgn]) => {
+      vals.forEach((v, k) => {
+        if (v == null) return;
+        const bx = cx + dx * armLen * slotFracs[k], by = cy + dy * armLen * slotFracs[k];
+        const norm = Math.max(0, Math.min(1, (v + 5) / 10));
+        const tlen = 4 + norm * maxTlen;
+        const ex = bx + px * tlen * sgn, ey = by + py * tlen * sgn;
+        parts.push(`<line x1="${bx.toFixed(1)}" y1="${by.toFixed(1)}" x2="${ex.toFixed(1)}" y2="${ey.toFixed(1)}" stroke="${hue}" stroke-width="3.2" stroke-linecap="round"/>`);
+      });
+    });
+  });
+  // Scale bracket — frames the full 7-plane tooth zone
+  const fw = maxTlen + 6;
+  const bx0 = cx + dx * armLen * zoneStart, by0 = cy + dy * armLen * zoneStart;
+  const bx1 = cx + dx * armLen * zoneEnd,   by1 = cy + dy * armLen * zoneEnd;
+  const p1x = bx0 - px * fw, p1y = by0 - py * fw, p2x = bx0 + px * fw, p2y = by0 + py * fw;
+  const p3x = bx1 - px * fw, p3y = by1 - py * fw, p4x = bx1 + px * fw, p4y = by1 + py * fw;
+  parts.push(`<polyline points="${p1x.toFixed(1)},${p1y.toFixed(1)} ${p2x.toFixed(1)},${p2y.toFixed(1)}" stroke="var(--ink)" stroke-width="1" opacity="0.3"/>`);
+  parts.push(`<polyline points="${p1x.toFixed(1)},${p1y.toFixed(1)} ${p3x.toFixed(1)},${p3y.toFixed(1)}" stroke="var(--ink)" stroke-width="1" opacity="0.3"/>`);
+  parts.push(`<polyline points="${p2x.toFixed(1)},${p2y.toFixed(1)} ${p4x.toFixed(1)},${p4y.toFixed(1)}" stroke="var(--ink)" stroke-width="1" opacity="0.3"/>`);
+  parts.push(`<text x="${(p3x - px * 5).toFixed(1)}" y="${(p3y - py * 5).toFixed(1)}" font-size="8" fill="var(--ink)" opacity="0.5" text-anchor="middle" font-family="'JetBrains Mono', monospace">Should:+5</text>`);
+  parts.push(`<text x="${(p4x + px * 5).toFixed(1)}" y="${(p4y + py * 5).toFixed(1)}" font-size="8" fill="var(--ink)" opacity="0.5" text-anchor="middle" font-family="'JetBrains Mono', monospace">Would:+5</text>`);
+  const lx = cx + dx * (armLen + 14), ly = cy + dy * (armLen + 14);
+  parts.push(`<text x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" font-size="10" fill="var(--ink-soft)" text-anchor="middle" dominant-baseline="middle" font-family="'JetBrains Mono', monospace">Q${i + 1}</text>`);
+  return parts.join("");
+}
+
+function combinedStarSVG() {
+  const cx = 220, cy = 220, armLen = 170;
+  const parts = [];
+  for (let i = 0; i < 7; i++) parts.push(combinedArmSVG(cx, cy, -90 + i * (360 / 7), armLen, i));
+  const legend = PLANES.map(p => `<span style="display:inline-flex;align-items:center;gap:5px;margin-right:12px"><span style="width:9px;height:9px;border-radius:50%;background:${p.hue};display:inline-block"></span>P${p.n} ${escapeHtml(p.name)}</span>`).join("");
+  return `<svg viewBox="0 0 440 440" style="max-width:440px;width:100%;display:block;margin:0 auto" role="img" aria-label="All seven planes overlaid, one arm per question position, plane 1 outermost to plane 7 innermost">
+    <circle cx="${cx}" cy="${cy}" r="3.5" fill="var(--ink)"/>
+    ${parts.join("")}
+  </svg>
+  <p style="font-size:12.5px;margin:10px 0 0;text-align:center;line-height:1.7">${legend}</p>`;
+}
+
+// Baked-in illustrative mini keyring diagram (from welfare-survey.html)
+function keyringExampleSVG() {
+  const cx = 100, cy = 100, r = 82, viewW = 200, viewH = 220;
+  const HUES_EX = PLANES.map(p => p.hue);
+  const DATA_EX = [
+    { a: [5, 4, 3], b: [5, 3, 2] }, // Plane 1 — Identity
+    { a: [3, 3, 4], b: [4, 2, 3] }, // Plane 2 — Definition
+    { a: [4, 4, 5], b: [2, 3, 4] }, // Plane 3 — Land
+    { a: [3, 2, 3], b: [3, 3, 2] }, // Plane 4 — Drive
+    { a: [5, 4, 4], b: [4, 3, 3] }, // Plane 5 — Method
+    { a: [2, 3, 2], b: [3, 2, 2] }, // Plane 6 — Cause
+    { a: [4, 3, 4], b: [3, 4, 3] }  // Plane 7 — Result
+  ];
+  const maxTlen = 18, zoneStart = 0.42, zoneEnd = 0.94;
+  const ringW = (zoneEnd - zoneStart) / 7;
+  const parts = [];
+  parts.push(`<circle cx="${cx}" cy="${cy}" r="3" fill="var(--ink)"/>`);
+  for (let ai = 0; ai < 7; ai++) {
+    const ang = (-90 + ai * (360 / 7)) * Math.PI / 180;
+    const dx = Math.cos(ang), dy = Math.sin(ang);
+    const px = -dy, py = dx;
+    const tipX = cx + dx * r, tipY = cy + dy * r;
+    parts.push(`<line x1="${cx}" y1="${cy}" x2="${tipX.toFixed(1)}" y2="${tipY.toFixed(1)}" stroke="var(--ink-soft)" stroke-width="1" opacity="0.3"/>`);
+    for (let ri = 0; ri < 7; ri++) {
+      const ringStart = zoneEnd - (ri + 1) * ringW;
+      const slots = [ringStart + ringW * 0.2, ringStart + ringW * 0.5, ringStart + ringW * 0.8];
+      const { a, b } = DATA_EX[ri];
+      [[a, -1], [b, 1]].forEach(([vals, sgn]) => {
+        vals.forEach((v, k) => {
+          const bx = cx + dx * r * slots[k], by = cy + dy * r * slots[k];
+          const tlen = 2 + (v - 1) / 4 * maxTlen;
+          parts.push(`<line x1="${bx.toFixed(1)}" y1="${by.toFixed(1)}" x2="${(bx + px * tlen * sgn).toFixed(1)}" y2="${(by + py * tlen * sgn).toFixed(1)}" stroke="${HUES_EX[ri]}" stroke-width="1.8" stroke-linecap="round"/>`);
+        });
+      });
+    }
+    if (ai === 0) {
+      const fw = maxTlen + 4;
+      const bx0 = cx + dx * r * zoneStart, by0 = cy + dy * r * zoneStart;
+      const bx1 = cx + dx * r * zoneEnd,   by1 = cy + dy * r * zoneEnd;
+      const p1x = bx0 - px * fw, p1y = by0 - py * fw, p2x = bx0 + px * fw, p2y = by0 + py * fw;
+      const p3x = bx1 - px * fw, p3y = by1 - py * fw, p4x = bx1 + px * fw, p4y = by1 + py * fw;
+      parts.push(`<polyline points="${p1x.toFixed(1)},${p1y.toFixed(1)} ${p2x.toFixed(1)},${p2y.toFixed(1)}" stroke="var(--ink)" stroke-width="0.8" opacity="0.3"/>`);
+      parts.push(`<polyline points="${p1x.toFixed(1)},${p1y.toFixed(1)} ${p3x.toFixed(1)},${p3y.toFixed(1)}" stroke="var(--ink)" stroke-width="0.8" opacity="0.3"/>`);
+      parts.push(`<polyline points="${p2x.toFixed(1)},${p2y.toFixed(1)} ${p4x.toFixed(1)},${p4y.toFixed(1)}" stroke="var(--ink)" stroke-width="0.8" opacity="0.3"/>`);
+      parts.push(`<text x="${(p3x - px * 5).toFixed(1)}" y="${(p3y - py * 5).toFixed(1)}" font-size="7" fill="var(--ink)" opacity="0.5" text-anchor="middle" font-family="'JetBrains Mono', monospace">Should:+5</text>`);
+      parts.push(`<text x="${(p4x + px * 5).toFixed(1)}" y="${(p4y + py * 5).toFixed(1)}" font-size="7" fill="var(--ink)" opacity="0.5" text-anchor="middle" font-family="'JetBrains Mono', monospace">Would:+5</text>`);
+    }
+    const lx = cx + dx * (r + 13), ly = cy + dy * (r + 13);
+    parts.push(`<text x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" font-size="8" fill="var(--ink-soft)" text-anchor="middle" dominant-baseline="middle" font-family="'JetBrains Mono', monospace">Q${ai + 1}</text>`);
+  }
+  PLANES.forEach((p, i) => {
+    const lx = 10 + i * 27, ly = viewH - 8;
+    parts.push(`<circle cx="${lx}" cy="${ly}" r="3" fill="${HUES_EX[i]}"/>`);
+  });
+  return `<svg viewBox="0 0 ${viewW} ${viewH}" style="width:100%;max-width:${viewW}px;flex-shrink:0;display:block" role="img" aria-label="Keyring plot mini example, 7 arms and 7 planes">${parts.join("")}</svg>`;
+}
+
+function keyringTutorialBoxHTML() {
+  return `
+    <div class="keyring-tutorial-box" style="border:1px solid var(--rule);border-radius:var(--radius-sm);background:var(--bg-inset);padding:16px 20px;margin:0 0 16px;text-align:left;display:flex;gap:22px;align-items:flex-start;flex-wrap:wrap;">
+      <div style="flex:1;min-width:260px;font-size:0.9rem;color:var(--ink-soft);line-height:1.55;">
+        <p style="margin:0 0 8px;color:var(--ink);">This is a <strong>keyring plot</strong> — each of the seven arms is a question position (<code>Q1–Q7</code>, corresponding to <code>.1 Who</code> through <code>.7 Effect</code>). The arms radiate like keys on a ring.</p>
+        <p style="margin:0 0 8px;">Think of each arm as a physical key blade. A <em>blank key</em> — smooth, uncut — is the ideal: every <strong>Should</strong> upheld (<code>+5 Greater Good</code>) and every <strong>Would</strong> lived in practice across yourself, your community, and Australian society. Life cuts the key. Each etch encodes where things actually stand.</p>
+        <p style="margin:0 0 8px;">On every arm, seven coloured rings sit nested from outermost (<strong>Plane 1 · Identity</strong>) to innermost (<strong>Plane 7 · Result</strong>). Within each ring, three tick marks run along the shaft. Ticks on the <strong>left</strong> of the shaft are <code>Should (A)</code> — what you believe should happen. Ticks on the <strong>right</strong> are <code>Would (B, C, D)</code> — what actually happens across Yourself (<code>B</code>), Your Community (<code>C</code>), and Australian Society (<code>D</code>). Tick length encodes the <code>−5</code> (Extractive/Suppressive) to <code>+5</code> (Greater Good/Proactive) score.</p>
+        <p style="margin:0;">The <code>Should:+5</code> and <code>Would:+5</code> labels at the tip of each bracket show what full-length ticks look like. When all ticks touch their bracket edge, the key is blank again.</p>
+      </div>
+      ${keyringExampleSVG()}
+    </div>
+  `;
+}
+
+/* ---------- PSOCHIC HEGEMONY (v, psi) CANVAS RENDERER ---------- */
+function drawHegemonyCanvas(profile) {
+  const canvas = document.getElementById("hegemony-canvas");
+  if (!canvas) return;
+  const ctx = canvas.getContext("2d");
+  const W = canvas.width;
+  const H = canvas.height;
+  ctx.clearRect(0, 0, W, H);
+
+  const pad = 44;
+  const plotW = W - pad * 2;
+  const plotH = H - pad * 2;
+  const range = 1.25;
+
+  const toX = (v) => pad + ((v + range) / (2 * range)) * plotW;
+  const toY = (psi) => pad + ((range - psi) / (2 * range)) * plotH;
+
+  ctx.fillStyle = "rgba(45, 122, 79, 0.12)";
+  ctx.fillRect(W / 2, pad, plotW / 2, plotH / 2);
+  ctx.fillStyle = "rgba(46, 111, 149, 0.10)";
+  ctx.fillRect(W / 2, H / 2, plotW / 2, plotH / 2);
+  ctx.fillStyle = "rgba(200, 109, 59, 0.11)";
+  ctx.fillRect(pad, pad, plotW / 2, plotH / 2);
+  ctx.fillStyle = "rgba(184, 57, 46, 0.12)";
+  ctx.fillRect(pad, H / 2, plotW / 2, plotH / 2);
+
+  ctx.strokeStyle = "rgba(255,255,255,0.08)";
+  ctx.lineWidth = 1;
+  [-1.0, -0.5, 0.5, 1.0].forEach(val => {
+    ctx.beginPath(); ctx.moveTo(toX(val), pad); ctx.lineTo(toX(val), H - pad); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(pad, toY(val)); ctx.lineTo(W - pad, toY(val)); ctx.stroke();
+  });
+
+  ctx.strokeStyle = "rgba(255,255,255,0.35)";
+  ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.moveTo(W / 2, pad); ctx.lineTo(W / 2, H - pad); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(pad, H / 2); ctx.lineTo(W - pad, H / 2); ctx.stroke();
+
+  ctx.font = "600 11px 'JetBrains Mono', monospace";
+  ctx.fillStyle = "#6CD49A";
+  ctx.textAlign = "right";
+  ctx.fillText("GREATER GOOD (+υ, +ψ)", W - pad - 8, pad + 18);
+  ctx.fillStyle = "#7BC0E3";
+  ctx.fillText("LESSER GOOD / STOIC PEACE (+υ, -ψ)", W - pad - 8, H - pad - 10);
+  ctx.textAlign = "left";
+  ctx.fillStyle = "#F29D6B";
+  ctx.fillText("GREATEST LIE / EXTRACTION (-υ, +ψ)", pad + 8, pad + 18);
+  ctx.fillStyle = "#E87A72";
+  ctx.fillText("GREATER EVIL / NEGLECT (-υ, -ψ)", pad + 8, H - pad - 10);
+
+  ctx.fillStyle = "#B5BDB8";
+  ctx.textAlign = "center";
+  ctx.font = "500 10px 'JetBrains Mono', monospace";
+  ctx.fillText("← Self / Group (-υ)          MORALITY (υ: Who benefits?)          All / Greater Good (+υ) →", W / 2, H - 12);
+
+  const vecs = activeTierVectors();
+  vecs.forEach(vec => {
+    const x = toX(vec.coords.v);
+    const y = toY(vec.coords.psi);
+    let a = getAns("V", vec.uid, "A");
+    let b = getAns("V", vec.uid, "B");
+    const sc = avgNums([a, b]);
+
+    ctx.beginPath();
+    ctx.arc(x, y, sc !== null ? 3.6 : 2.3, 0, Math.PI * 2);
+    if (sc === null) {
+      ctx.fillStyle = "rgba(229, 224, 213, 0.22)";
+    } else if (sc >= 1.0) {
+      ctx.fillStyle = "rgba(74, 210, 138, 0.85)";
+    } else if (sc <= -1.0) {
+      ctx.fillStyle = "rgba(235, 94, 85, 0.85)";
+    } else {
+      ctx.fillStyle = "rgba(245, 215, 127, 0.85)";
+    }
+    ctx.fill();
+  });
+
+  const drawMarker = (v, psi, label, color, r = 7) => {
+    const x = toX(Math.max(-range, Math.min(range, v)));
+    const y = toY(Math.max(-range, Math.min(range, psi)));
+    ctx.beginPath();
+    ctx.arc(x, y, r + 3, 0, Math.PI * 2);
+    ctx.fillStyle = "rgba(20, 25, 23, 0.85)";
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, Math.PI * 2);
+    ctx.fillStyle = color;
+    ctx.fill();
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = "#FFF";
+    ctx.stroke();
+
+    ctx.font = "600 10.5px 'JetBrains Mono', monospace";
+    ctx.fillStyle = color;
+    ctx.textAlign = x > W * 0.7 ? "right" : "left";
+    const offX = x > W * 0.7 ? -12 : 12;
+    ctx.fillText(label, x + offX, y + 4);
+  };
+
+  drawMarker(0.47, 0.23, "Stoic Guardian (+0.47, +0.23)", "#F5D77F", 6);
+  drawMarker(-0.05, -0.01, "Pauline Hanson (-0.05, -0.01)", "#E8836B", 5.5);
+  drawMarker(0.18, -0.12, "Albanese (+0.18, -0.12)", "#95B8D1", 5.5);
+
+  if (profile.answeredPlanes.length > 0) {
+    const xA = toX(Math.max(-range, Math.min(range, profile.coordsA.v)));
+    const yA = toY(Math.max(-range, Math.min(range, profile.coordsA.psi)));
+    const xB = toX(Math.max(-range, Math.min(range, profile.coordsB.v)));
+    const yB = toY(Math.max(-range, Math.min(range, profile.coordsB.psi)));
+
+    ctx.beginPath();
+    ctx.setLineDash([4, 3]);
+    ctx.moveTo(xA, yA);
+    ctx.lineTo(xB, yB);
+    ctx.strokeStyle = "#FFF";
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    drawMarker(profile.coordsB.v, profile.coordsB.psi, `YOUR LIVED REALITY B (${profile.coordsB.v >= 0 ? "+" : ""}${profile.coordsB.v}, ${profile.coordsB.psi >= 0 ? "+" : ""}${profile.coordsB.psi})`, "#5BC0EB", 8);
+    drawMarker(profile.coordsA.v, profile.coordsA.psi, `YOUR ETHOS A (${profile.coordsA.v >= 0 ? "+" : ""}${profile.coordsA.v}, ${profile.coordsA.psi >= 0 ? "+" : ""}${profile.coordsA.psi})`, "#4AD28A", 9);
+  }
+}
+
+/* ---------- 12AXES-STYLE SOCIAL SHARE CARD PNG GENERATOR ---------- */
+function downloadShareCardPNG(profile) {
+  const canvas = document.createElement("canvas");
+  canvas.width = 1080;
+  canvas.height = 1350;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return;
+
+  const arch = profile.archetypeMatches[0];
+  const topFig = profile.figureMatches[0];
+
+  // Background gradient
+  const grad = ctx.createLinearGradient(0, 0, 1080, 1350);
+  grad.addColorStop(0, "#141D1A");
+  grad.addColorStop(0.6, "#1F2E28");
+  grad.addColorStop(1, "#2A2318");
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, 1080, 1350);
+
+  // Border frame
+  ctx.strokeStyle = "rgba(245, 215, 127, 0.35)";
+  ctx.lineWidth = 3;
+  ctx.strokeRect(36, 36, 1008, 1278);
+
+  // Header eyebrow
+  ctx.fillStyle = "#F5D77F";
+  ctx.font = "700 22px 'JetBrains Mono', monospace";
+  ctx.fillText("WHAT KIND OF AUSTRALIAN ARE YOU? · THE AUSTRALIAN KANON", 76, 98);
+
+  // Archetype badge & title
+  ctx.fillStyle = "#6CD49A";
+  ctx.font = "600 24px 'JetBrains Mono', monospace";
+  ctx.fillText(`${arch.badge.toUpperCase()} · ${arch.matchPct}% MATCH`, 76, 165);
+
+  ctx.fillStyle = "#FFFDF8";
+  ctx.font = "700 58px 'Fraunces', Georgia, serif";
+  ctx.fillText(arch.name, 76, 235);
+
+  ctx.fillStyle = "#D5CFC0";
+  ctx.font = "italic 30px 'Fraunces', Georgia, serif";
+  ctx.fillText(arch.subtitle, 76, 282);
+
+  // 4 Key Stat Boxes
+  const stats = [
+    { lbl: "OVERALL KANON ALIGNMENT", val: `${profile.alignmentPct ?? "—"}%` },
+    { lbl: "ETHOS (A) VS LIVED (B)", val: `${profile.ethosPct ?? "—"}% vs ${profile.livedPct ?? "—"}%` },
+    { lbl: "HEGEMONY COORDINATE (υ, ψ)", val: `(${profile.userOverallCoords.v >= 0 ? "+" : ""}${profile.userOverallCoords.v}, ${profile.userOverallCoords.psi >= 0 ? "+" : ""}${profile.userOverallCoords.psi})` },
+    { lbl: "CLOSEST HISTORICAL FIGURE", val: `${topFig.name} (${topFig.matchPct}%)` }
+  ];
+
+  stats.forEach((st, i) => {
+    const col = i % 2;
+    const row = Math.floor(i / 2);
+    const bx = 76 + col * 470;
+    const by = 325 + row * 125;
+    ctx.fillStyle = "rgba(255,255,255,0.06)";
+    ctx.fillRect(bx, by, 450, 105);
+    ctx.strokeStyle = "rgba(255,255,255,0.15)";
+    ctx.lineWidth = 1.5;
+    ctx.strokeRect(bx, by, 450, 105);
+
+    ctx.fillStyle = "#F5D77F";
+    ctx.font = "700 32px 'Fraunces', Georgia, serif";
+    ctx.fillText(st.val, bx + 22, by + 52);
+
+    ctx.fillStyle = "#B8C2BC";
+    ctx.font = "600 16px 'JetBrains Mono', monospace";
+    ctx.fillText(st.lbl, bx + 22, by + 84);
+  });
+
+  // 7 Planes Dual Bars
+  ctx.fillStyle = "#FFFDF8";
+  ctx.font = "700 28px 'Fraunces', Georgia, serif";
+  ctx.fillText("The 7 Pillars of the Australian Kanon — Ethos (A) vs. Lived Reality (B)", 76, 625);
+
+  profile.planeSummaries.forEach((sum, idx) => {
+    const p = sum.plane;
+    const y = 665 + idx * 82;
+    const pctA = sum.A !== null ? Math.round(((sum.A + 5) / 10) * 100) : 50;
+    const pctB = sum.B !== null ? Math.round(((sum.B + 5) / 10) * 100) : 50;
+
+    ctx.fillStyle = "#FAF6EE";
+    ctx.font = "600 22px 'Inter', sans-serif";
+    ctx.fillText(`P${p.n} ${p.name} (${p.pillar})`, 76, y + 20);
+
+    ctx.fillStyle = "#B8C2BC";
+    ctx.font = "600 18px 'JetBrains Mono', monospace";
+    ctx.fillText(`Ethos A: ${pctA}%  |  Lived B: ${pctB}%`, 720, y + 20);
+
+    // Bar A
+    ctx.fillStyle = "rgba(255,255,255,0.1)";
+    ctx.fillRect(76, y + 32, 928, 14);
+    ctx.fillStyle = p.hue;
+    ctx.fillRect(76, y + 32, (928 * pctA) / 100, 14);
+
+    // Bar B
+    ctx.fillStyle = "rgba(255,255,255,0.1)";
+    ctx.fillRect(76, y + 50, 928, 10);
+    ctx.fillStyle = "#5BC0EB";
+    ctx.fillRect(76, y + 50, (928 * pctB) / 100, 10);
+  });
+
+  ctx.fillStyle = "#95A39C";
+  ctx.font = "500 18px 'JetBrains Mono', monospace";
+  ctx.fillText("Australian Kanon 7×7×7 Matrix · WWSUTRU ABCD Welfare Diagnostic (−5 to +5)", 76, 1280);
+
+  const link = document.createElement("a");
+  link.download = `australian-kanon-archetype-${new Date().toISOString().slice(0, 10)}.png`;
+  link.href = canvas.toDataURL("image/png");
+  link.click();
+}
+
+/* =========================================================================
+   HEADER & ROUTER
+   ========================================================================= */
+function updateHeaderProgress() {
+  const prog = computeGlobalProgress();
+  const bar = document.getElementById("global-progress");
+  if (bar) bar.style.width = `${prog.pct}%`;
+
+  const tierBtn = document.getElementById("header-tier-btn");
+  if (tierBtn) {
+    const tierLbl = STATE.tier === 7
+      ? "Tier 1: 7 Pillars"
+      : STATE.tier === 49
+        ? "Tier 2: 49 Senses"
+        : `Tier 3: ${STATE.include354 ? 354 : 353} Vectors`;
+    tierBtn.textContent = `${tierLbl} (${prog.done}/${prog.total})`;
+    tierBtn.onclick = () => {
+      if (STATE.tier === 7) STATE.tier = 49;
+      else if (STATE.tier === 49) STATE.tier = 353;
+      else STATE.tier = 7;
+      STATE.focusIdx = 0;
+      saveState();
+      render();
+    };
+  }
+}
+
+function renderNav(route) {
+  const nav = document.getElementById("top-nav");
+  const items = [
+    { href: "#/hub", label: "Hub", active: route.page === "hub" },
+    { href: "#/framework", label: "Scoring Key", active: route.page === "framework" },
+    ...PLANES.map(p => ({
+      href: `#/plane/${p.n}`,
+      label: `${p.n}·${p.name}`,
+      dot: p.hue,
+      active: route.page === "plane" && route.planeNum === p.n
+    })),
+    { href: "#/search", label: "Search", active: route.page === "search" },
+    { href: "#/review", label: "Review", active: route.page === "review" },
+    { href: "#/results", label: "Results & Archetype", active: route.page === "results" }
+  ];
+
+  nav.innerHTML = items.map(it => `
+    <a class="nav-pill ${it.active ? "active" : ""}" href="${it.href}">
+      ${it.dot ? `<span class="dot" style="background:${it.dot}"></span>` : ""}
+      <span>${it.label}</span>
+    </a>
+  `).join("");
+  updateHeaderProgress();
+}
+
+function parseRoute() {
+  const h = (location.hash || "#/hub").replace(/^#\/?/, "");
+  const parts = h.split("/");
+  if (parts[0] === "plane") {
+    const n = Math.min(7, Math.max(1, parseInt(parts[1] || "1", 10) || 1));
+    return { page: "plane", planeNum: n };
+  }
+  if (["framework", "results", "search", "review"].includes(parts[0])) {
+    return { page: parts[0] };
+  }
+  return { page: "hub" };
+}
+
+function render() {
+  hideFloatingTooltip();
+  const route = parseRoute();
+  renderNav(route);
+  const app = document.getElementById("app");
+  app.className = (route.page === "results" || route.page === "hub") ? "wide" : "";
+
+  if (route.page === "hub") renderHub(app);
+  else if (route.page === "framework") renderFramework(app);
+  else if (route.page === "plane") renderPlane(app, route.planeNum);
+  else if (route.page === "search") renderSearch(app);
+  else if (route.page === "review") renderReview(app);
+  else if (route.page === "results") renderResults(app);
+
+  window.scrollTo({ top: 0, behavior: "instant" });
+}
+window.addEventListener("hashchange", render);
+
+/* =========================================================================
+   TIER SELECTOR COMPONENT (WITH 12AXES DURATION & DEPTH METERS)
+   ========================================================================= */
+function renderTierSelectorHTML() {
+  const p7 = PLANES.filter(p => isNodeAnswered("P", p.n)).length;
+  const p49 = SENSES.filter(s => isNodeAnswered("S", s.id)).length;
+  const vecs = activeTierVectors();
+  const p353 = vecs.filter(v => isNodeAnswered("V", v.uid)).length;
+
+  return `
+    <div class="tier-selector-grid">
+      <div class="tier-card ${STATE.tier === 7 ? "active" : ""}" data-set-tier="7">
+        <div class="tier-card-top">
+          <span class="tier-num">7 <span style="font-size:0.9rem;font-weight:500;color:var(--ink-muted)">nodes</span></span>
+          <span class="tier-pill">${STATE.tier === 7 ? "ACTIVE TIER" : "Tier 1 · Quick"}</span>
+        </div>
+        <h3>7 Plane Summary (The 7 Pillars)</h3>
+        <p>1 ABCD question block per Plane (<em>The Egalitarian</em> through <em>The Reconciler</em>). Fast snapshot of your Australian ethos vs lived reality.</p>
+        <div class="tier-card-meta">
+          <span>⏱ ~2 min · Depth <span class="depth-dots"><i class="on"></i><i></i><i></i></span></span>
+          <span>${p7} / 7 answered</span>
+        </div>
+      </div>
+
+      <div class="tier-card ${STATE.tier === 49 ? "active" : ""}" data-set-tier="49">
+        <div class="tier-card-top">
+          <span class="tier-num">49 <span style="font-size:0.9rem;font-weight:500;color:var(--ink-muted)">nodes</span></span>
+          <div style="display:flex;gap:5px;align-items:center;">
+            <span class="tier-rec-badge">Recommended</span>
+            <span class="tier-pill">${STATE.tier === 49 ? "ACTIVE TIER" : "Tier 2 · Standard"}</span>
+          </div>
+        </div>
+        <h3>49 Matrix Senses (7×7 Grid)</h3>
+        <p>7 Sense question blocks per Plane (<code>Who.Who</code> to <code>Effect.Effect</code>). Full 7-arm Keyring Plot resolution + inline vector drawer.</p>
+        <div class="tier-card-meta">
+          <span>⏱ ~8 min · Depth <span class="depth-dots"><i class="on"></i><i class="on"></i><i></i></span></span>
+          <span>${p49} / 49 answered</span>
+        </div>
+      </div>
+
+      <div class="tier-card ${STATE.tier === 353 ? "active" : ""}" data-set-tier="353">
+        <div class="tier-card-top">
+          <span class="tier-num">${STATE.include354 ? "354" : "353"} <span style="font-size:0.9rem;font-weight:500;color:var(--ink-muted)">nodes</span></span>
+          <span class="tier-pill">${STATE.tier === 353 ? "ACTIVE TIER" : "Tier 3 · Deep Audit"}</span>
+        </div>
+        <h3>Full Kanon Vector Audit</h3>
+        <p>Every Australian Kanon node (<em>Mateship</em>, <em>The Fair Go</em>, <em>Terra Nullius</em>, <em>Songlines [FN]</em>) with direct comparison to the Pauline Hanson 353 Audit.</p>
+        <div class="tier-card-meta">
+          <span>⏱ ~35 min · Depth <span class="depth-dots"><i class="on"></i><i class="on"></i><i class="on"></i></span></span>
+          <span>${p353} / ${vecs.length} answered</span>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function bindTierSelectorEvents(container) {
+  container.querySelectorAll("[data-set-tier]").forEach(card => {
+    card.addEventListener("click", () => {
+      STATE.tier = parseInt(card.getAttribute("data-set-tier"), 10);
+      STATE.focusIdx = 0;
+      saveState();
+      render();
+    });
+  });
+}
+
+/* =========================================================================
+   VIEW 1: HUB (#/hub)
+   ========================================================================= */
+function renderHub(app) {
+  const prog = computeGlobalProgress();
+  const profile = computeKanonProfile();
+
+  const planeCardsHTML = PLANES.map(p => {
+    const sum = computePlaneSummary(p.n);
+    const pct = Math.round((sum.answeredNodes / sum.totalNodes) * 100);
+    let statusClass = "";
+    let statusText = `${sum.answeredNodes}/${sum.totalNodes} answered`;
+    if (sum.answeredNodes === sum.totalNodes && sum.totalNodes > 0) {
+      statusClass = "done";
+      statusText = `✓ Complete (${sum.total !== null ? fmtSigned(sum.total, 1) : "Done"})`;
+    } else if (sum.answeredNodes > 0) {
+      statusClass = "partial";
+    }
+
+    return `
+      <a class="plane-card" href="#/plane/${p.n}" style="--plane-color:${p.hue}">
+        <div class="plane-card-head">
+          <span class="plane-num">PLANE ${p.n} · ${p.code.toUpperCase()} · ${p.domain.toUpperCase()}</span>
+          <span class="plane-status ${statusClass}">${statusText}</span>
+        </div>
+        <h3>${p.name}</h3>
+        <div class="pillar-tag">Pillar ${p.n}: ${p.pillar} · τ = ${p.tau}d</div>
+        <p>${p.blurb}</p>
+        <div class="plane-mini-bar"><span style="width:${pct}%"></span></div>
+      </a>
+    `;
+  }).join("");
+
+  app.innerHTML = `
+    <section class="card" style="padding:28px 30px;margin-bottom:20px;">
+      <div class="eyebrow">Australian Kanon · 12Axes Archetype Quiz + Should/Would Judgment Protocol (−5 to +5)</div>
+      <h1 style="font-size:clamp(1.85rem,3.4vw,2.65rem);margin:6px 0 12px;">
+        What Kind of Australian Are You?
+      </h1>
+      <p class="lede" style="margin:0 0 16px;">
+        Map yourself against the <strong>Australian Kanon</strong>—the 7-Plane, 49-Sense, 353/354-Vector cultural DNA of the nation.
+        Instead of a flat political compass that only asks what you <em>reckon</em> in theory, each node measures four <strong>Should vs. Would</strong> perspectives on a bipolar <strong><code>−5</code> (Extractive / Suppressive) to <code>+5</code> (Greater Good / Proactive) scale</strong> (with <code>0</code> as Selfish Interest / Inaction):
+        <strong>A (Personal Should)</strong> what you believe we should uphold, <strong>B (Personal Would)</strong> what you actually do in practice,
+        <strong>C (Community Circle)</strong> what your everyday circle believes and does, and <strong>D (Australian Society)</strong> what wider Australian society and institutions actually deliver.
+      </p>
+
+      <div class="callout" style="margin-bottom:18px;">
+        <strong>💡 Plain-English Tooltips & Explainers Built In:</strong>
+        Hover or tap any <span class="glossary-term" data-glossary-id="harvester">dotted-underlined term</span> in a question for an instant plain-English definition, or click the <strong>(?) Explain</strong> button on any card to see what rating Positive (<code>+1 to +5 · Greater Good / Proactive</code>) vs. Negative (<code>−1 to −5 · Extractive / Suppressive</code>) means.
+      </div>
+
+      ${renderTierSelectorHTML()}
+
+      <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;padding-top:8px;border-top:1px solid var(--rule);">
+        <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+          <a class="btn" href="#/plane/1">Start at Plane 1: Identity →</a>
+          <a class="btn btn-warm" href="#/results">View Live Archetype & Keyring Results (${prog.done}/${prog.total})</a>
+          <a class="btn btn-secondary" href="#/search">Answer by Topic</a>
+          <a class="btn btn-secondary" href="#/framework">How the ABCD Key Works</a>
+        </div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;">
+          <span class="mono" style="font-size:0.75rem;color:var(--ink-muted);">Demo Presets:</span>
+          <button class="btn btn-secondary btn-sm" id="preset-battler" title="Preview a Betrayed Battler profile (High Personal Should/Would, Blocked Society D)">Load "Betrayed Battler"</button>
+          <button class="btn btn-secondary btn-sm" id="preset-guardian" title="Preview The Stoic Guardian profile">Load "Stoic Guardian"</button>
+          <button class="btn btn-secondary btn-sm" id="preset-hanson" title="Load Pauline Hanson's 353-Vector Audit verdicts">Load Hanson 353 Audit</button>
+        </div>
+      </div>
+    </section>
+
+    ${profile.answeredPlanes.length > 0 ? `
+      <section class="card" style="margin-bottom:20px;background:linear-gradient(90deg,#F5EFE2,#FFFDF8);border-left:4px solid var(--accent);">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+          <div>
+            <div class="eyebrow">Live Archetype Preview</div>
+            <h3 style="font-size:1.3rem;margin-top:2px;">
+              Current Match: <span style="color:var(--accent)">${profile.archetypeMatches[0].name}</span>
+              <span class="mono" style="font-size:0.85rem;color:var(--ink-muted);">(${profile.archetypeMatches[0].matchPct}% match · ${profile.alignmentPct ?? "—"}% Kanon Alignment)</span>
+            </h3>
+            <p style="margin:4px 0 0;font-size:0.9rem;color:var(--ink-soft);">
+              Personal Should (A): <strong>${fmtSigned(profile.avgA, 2)}</strong> ·
+              Personal Would (B): <strong>${fmtSigned(profile.avgB, 2)}</strong> ·
+              Community (C): <strong>${fmtSigned(profile.avgC, 2)}</strong> ·
+              Australian Society (D): <strong>${fmtSigned(profile.avgD, 2)}</strong>
+            </p>
+          </div>
+          <a class="btn btn-sm" href="#/results">Open Full Diagnostic Report →</a>
+        </div>
+      </section>
+    ` : ""}
+
+    <section>
+      <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+        <h2>The 7 Planes of the Australian Kanon</h2>
+        <span class="mono" style="color:var(--ink-muted)">Click any Plane to answer in Tier ${STATE.tier === 7 ? "1 (1 essence node)" : STATE.tier === 49 ? "2 (7 sense essence nodes)" : "3 (~50 vector nodes)"}</span>
+      </div>
+      <div class="plane-grid">
+        ${planeCardsHTML}
+      </div>
+    </section>
+  `;
+
+  bindTierSelectorEvents(app);
+  document.getElementById("preset-battler")?.addEventListener("click", () => loadPresetProfile("betrayed_battler"));
+  document.getElementById("preset-guardian")?.addEventListener("click", () => loadPresetProfile("stoic_guardian"));
+  document.getElementById("preset-hanson")?.addEventListener("click", () => {
+    loadPresetProfile("hanson_353");
+    location.hash = "#/results";
+  });
+}
+
+/* =========================================================================
+   VIEW 2: FRAMEWORK & SCORING KEY (#/framework)
+   ========================================================================= */
+function renderFramework(app) {
+  app.innerHTML = `
+    <article class="card">
+      <div class="eyebrow">Scoring Key & Methodology (A Framework for Judgment)</div>
+      <h1 style="font-size:2rem;margin:6px 0 10px;">How the Should / Would & Part 4 Axis Scale Works (−5 to +5)</h1>
+      <p class="lede">
+        Political quizzes like <em>12Axes</em> ask whether you agree with abstract policy statements.
+        Grounded in <strong>A Framework for Judgment</strong>, the Australian Kanon Survey evaluates both <strong>Should</strong> (the stated moral ideal) and <strong>Would</strong> (actual behaviour and outcome in practice) across four plain-English perspectives on a bipolar <strong><code>−5</code> to <code>+5</code> scale</strong>:
+      </p>
+
+      <div class="callout" style="margin:14px 0;">
+        <strong>Part 4 Axis Scale Anchors (−5 to +5):</strong>
+        <ul style="margin:6px 0 0;padding-left:20px;">
+          <li><strong><code>+1 to +5</code> · The Greater Good &amp; Proactive Will (<code>+υ, +ψ</code>):</strong> Creates net benefit, harmony, and freedom for everyone; actively builds, creates, and upholds the principle.</li>
+          <li><strong><code>0</code> · Selfish Interest &amp; Inaction (Origin):</strong> Looks out only for narrow self-interest or remains passive and does nothing.</li>
+          <li><strong><code>−1 to −5</code> · Extractive Evil &amp; Suppressive Will (<code>−υ, −ψ</code>):</strong> Actively takes from others for a select few, or prevents, suppresses, and destroys the principle.</li>
+        </ul>
+      </div>
+
+      <hr style="border:none;border-top:1px solid var(--rule);margin:22px 0;">
+
+      <h2>1. The 4 Should / Would Perspectives (A · B · C · D)</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin:14px 0 22px;">
+        <div class="card" style="padding:14px 16px;margin:0;border-top:3px solid var(--accent);">
+          <div class="mono" style="color:var(--accent);font-weight:700;">A · PERSONAL "SHOULD" (−5 to +5)</div>
+          <h3 style="font-size:1.02rem;margin:4px 0;">Your Moral Ideal</h3>
+          <p style="margin:0;font-size:0.86rem;color:var(--ink-soft);">
+            What do you believe we <strong>should</strong> uphold? From <code>−5 Extractive / Suppress</code> through <code>0 Selfish / Inaction</code> to <code>+5 Greater Good</code>.
+          </p>
+        </div>
+        <div class="card" style="padding:14px 16px;margin:0;border-top:3px solid #2E6F95;">
+          <div class="mono" style="color:#2E6F95;font-weight:700;">B · PERSONAL "WOULD" (−5 to +5)</div>
+          <h3 style="font-size:1.02rem;margin:4px 0;">Your Actual Practice</h3>
+          <p style="margin:0;font-size:0.86rem;color:var(--ink-soft);">
+            In the heat of everyday life, what <strong>would</strong> you actually do? The distance between <code>A</code> and <code>B</code> measures your personal <em>Should–Would Gap</em>.
+          </p>
+        </div>
+        <div class="card" style="padding:14px 16px;margin:0;border-top:3px solid var(--gold);">
+          <div class="mono" style="color:var(--gold);font-weight:700;">C · COMMUNITY CIRCLE (−5 to +5)</div>
+          <h3 style="font-size:1.02rem;margin:4px 0;">Your Everyday Circle's Should &amp; Would</h3>
+          <p style="margin:0;font-size:0.86rem;color:var(--ink-soft);">
+            What do the people in your immediate community circle believe we should do and actually practise day to day?
+          </p>
+        </div>
+        <div class="card" style="padding:14px 16px;margin:0;border-top:3px solid var(--accent-warm);">
+          <div class="mono" style="color:var(--accent-warm);font-weight:700;">D · AUSTRALIAN SOCIETY (−5 to +5 + Blockers)</div>
+          <h3 style="font-size:1.02rem;margin:4px 0;">Wider Society &amp; Systemic Outcome</h3>
+          <p style="margin:0;font-size:0.86rem;color:var(--ink-soft);">
+            What does wider Australian society and its institutions <strong>actually do</strong> in practice—plus clickable tags naming what is blocking the Greater Good.
+          </p>
+        </div>
+      </div>
+
+      <h2>2. Reading the 7-Arm Keyring Plot</h2>
+      ${keyringTutorialBoxHTML()}
+
+      <div class="callout callout-warm" style="margin:18px 0;">
+        <strong>Identifying Contradictions (Stated "Should" vs. Actual "Would"):</strong>
+        <ul style="margin:6px 0 0;padding-left:20px;">
+          <li><strong>Social Contradiction Gap (<code>A − D</code>) — The Betrayed Promise:</strong> You and your community uphold the Fair Go, Mateship, or affordable housing (<code>+3 to +5</code>), while wider Australian institutions and markets fail or extract in practice (<code>−1 to −5</code>).</li>
+          <li><strong>Personal Strain Gap (<code>A − B</code>):</strong> Where systemic pressure or habit makes it hard for your own daily actions (<code>B</code>) to live up to your stated ideal (<code>A</code>).</li>
+        </ul>
+      </div>
+
+      <h2>3. The Three Resolution Tiers (7 · 49 · 353/354)</h2>
+      <p style="color:var(--ink-soft);">
+        The Australian Kanon is a fractal $7 \\times 7 \\times 7$ matrix:
+      </p>
+      <ul style="color:var(--ink-soft);">
+        <li><strong>Tier 1 (7 Plane Essence Nodes):</strong> Evaluates the core functional essence of each of the 7 Planes directly (matched to the 7 Pillars of <a href="Archetype_The_Stoic_Guardian.html">The Stoic Guardian</a>).</li>
+        <li><strong>Tier 2 (49 Sense Essence Nodes):</strong> Evaluates the synthesised essence of each of the 49 Senses (<code>Who.Who</code> through <code>Effect.Effect</code>).</li>
+        <li><strong>Tier 3 (353 / 354 Vector Nodes):</strong> Evaluates every single vector node in the Australian Kanon, including the 11 First Nations <code>[FN]</code> perspective pairs. Toggle between the exact <strong>353 nodes</strong> audited in the <a href="../Hanson_Audit/index.html">Pauline Hanson Audit</a> or all <strong>354 nodes</strong> from the compact JSON files.</li>
+      </ul>
+
+      <div class="page-footer-nav">
+        <a class="btn btn-secondary" href="#/hub">← Back to Hub</a>
+        <a class="btn" href="#/plane/1">Start Plane 1: Identity →</a>
+      </div>
+    </article>
+  `;
+}
+
+/* =========================================================================
+   ABCD CARD RENDERER (WITH INLINE GLOSSARY TOOLTIPS & (?) EXPLAIN BUTTON)
+   ========================================================================= */
+function infoBtnHTML(prefix, id) {
+  return `
+    <button type="button" class="info-btn" data-open-info-prefix="${prefix}" data-open-info-id="${id}" title="Explain what positive/negative ratings mean and view historical context">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path fill-rule="evenodd" d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10m0-2a8 8 0 1 0 0-16a8 8 0 0 0 0 16m-1-4h2v2h-2zm0-1.992s2-.008 2 0C13 13.006 16 12 16 10c0-2.21-1.773-4-3.991-4A4 4 0 0 0 8 10h2c0-1.1.9-2 2-2s2 .9 2 2c0 .9-3 2.367-3 4.008"/>
+      </svg>
+      <span>Explain</span>
+    </button>
+  `;
+}
+
+function renderABCDBlockHTML(prefix, id, item, planeHue, extraHeaderHTML = "", extraFooterHTML = "") {
+  const valA = getAns(prefix, id, "A");
+  const valB = getAns(prefix, id, "B");
+  const valC = getAns(prefix, id, "C");
+  const valD = getAns(prefix, id, "D");
+  const chosenBlockers = getBlockers(prefix, id);
+  const answered = valA !== null || valB !== null || valC !== null || valD !== null;
+
+  const isShadow = item.coords && item.coords.v < 0;
+  const isFN = !!item.fn;
+
+  const makeRow = (probe, kindLabel, promptText, scaleList, curVal) => {
+    const selClass = `sel-${probe.toLowerCase()}`;
+    const letterClass = `letter-${probe.toLowerCase()}`;
+    return `
+      <div class="probe-row">
+        <div class="probe-top">
+          <span class="probe-letter ${letterClass}">${probe}</span>
+          <span class="probe-kind">${kindLabel}</span>
+          <span class="probe-text">${renderGlossaryHTML(promptText)}</span>
+        </div>
+        <div class="scale-row">
+          <div class="seg-group" role="radiogroup" aria-label="${probe} rating">
+            ${scaleList.map(opt => {
+              const sel = curVal === opt.v;
+              const numStr = opt.v > 0 ? `+${opt.v}` : `${opt.v}`;
+              return `
+                <button type="button"
+                  class="seg-btn ${sel ? `sel ${selClass}` : ""}"
+                  data-prefix="${prefix}" data-id="${id}" data-probe="${probe}" data-val="${opt.v}"
+                  title="${escapeHtml(opt.tip || `${numStr}: ${opt.lbl}`)}"
+                  aria-pressed="${sel ? "true" : "false"}">
+                  <span class="num">${numStr}</span>
+                  <span class="lbl">${opt.lbl}</span>
+                </button>
+              `;
+            }).join("")}
+          </div>
+          <button type="button" class="seg-clear" title="Clear row"
+            data-clear-prefix="${prefix}" data-clear-id="${id}" data-clear-probe="${probe}">clear</button>
+        </div>
+        ${probe === "D" ? `
+          <div class="blocker-chips-wrap">
+            <span class="mono" style="font-size:0.7rem;color:var(--ink-muted);margin-right:4px;">What's blocking it in Australia?</span>
+            ${BLOCKER_TAGS.map(tag => {
+              const active = chosenBlockers.includes(tag);
+              return `<button type="button" class="blocker-chip-btn ${active ? "active" : ""}" data-blocker-prefix="${prefix}" data-blocker-id="${id}" data-blocker-tag="${tag}">${tag}</button>`;
+            }).join("")}
+          </div>
+        ` : ""}
+      </div>
+    `;
+  };
+
+  return `
+    <section class="sense-card ${answered ? "answered" : ""} ${isShadow ? "shadow-node" : ""} ${isFN ? "fn-node" : ""}" id="node-${prefix}-${id}" style="--plane-color:${planeHue}">
+      ${extraHeaderHTML}
+      ${makeRow("A", "Personal · Should", item.qA, SCALE_A, valA)}
+      ${makeRow("B", "Personal · Would", item.qB, SCALE_B, valB)}
+      ${makeRow("C", "Community · Circle", item.qC, SCALE_C, valC)}
+      ${makeRow("D", "Society · Australia", item.qD, SCALE_D, valD)}
+      ${extraFooterHTML}
+    </section>
+  `;
+}
+
+function bindABCDDelegation(container, onUpdateCallback) {
+  container.addEventListener("click", (e) => {
+    // (?) Explain button
+    const infoBtn = e.target.closest("[data-open-info-prefix]");
+    if (infoBtn) {
+      openNodeInfoSheet(infoBtn.getAttribute("data-open-info-prefix"), infoBtn.getAttribute("data-open-info-id"));
+      return;
+    }
+
+    // Inline glossary term click (for touch/click devices)
+    const gTerm = e.target.closest("[data-glossary-id]");
+    if (gTerm) {
+      const entry = GLOSSARY_BY_ID[gTerm.getAttribute("data-glossary-id")];
+      if (entry) showFloatingTooltip(gTerm, entry.term, entry.definition);
+      return;
+    }
+
+    const segBtn = e.target.closest(".seg-btn");
+    if (segBtn) {
+      const prefix = segBtn.getAttribute("data-prefix");
+      const id = segBtn.getAttribute("data-id");
+      const probe = segBtn.getAttribute("data-probe");
+      const val = parseInt(segBtn.getAttribute("data-val"), 10);
+      const cur = getAns(prefix, id, probe);
+      setAns(prefix, id, probe, cur === val ? null : val);
+
+      const group = segBtn.parentElement;
+      const newVal = getAns(prefix, id, probe);
+      group.querySelectorAll(".seg-btn").forEach(b => {
+        const bVal = parseInt(b.getAttribute("data-val"), 10);
+        const sel = bVal === newVal;
+        b.classList.toggle("sel", sel);
+        b.classList.toggle(`sel-${probe.toLowerCase()}`, sel);
+        b.setAttribute("aria-pressed", sel ? "true" : "false");
+      });
+      const card = segBtn.closest(".sense-card");
+      if (card) card.classList.toggle("answered", isNodeAnswered(prefix, id));
+      if (onUpdateCallback) onUpdateCallback();
+      return;
+    }
+
+    const clrBtn = e.target.closest(".seg-clear");
+    if (clrBtn) {
+      const prefix = clrBtn.getAttribute("data-clear-prefix");
+      const id = clrBtn.getAttribute("data-clear-id");
+      const probe = clrBtn.getAttribute("data-clear-probe");
+      setAns(prefix, id, probe, null);
+      const row = clrBtn.closest(".scale-row");
+      if (row) {
+        row.querySelectorAll(".seg-btn").forEach(b => {
+          b.classList.remove("sel", "sel-a", "sel-b", "sel-c", "sel-d");
+          b.setAttribute("aria-pressed", "false");
+        });
+      }
+      const card = clrBtn.closest(".sense-card");
+      if (card) card.classList.toggle("answered", isNodeAnswered(prefix, id));
+      if (onUpdateCallback) onUpdateCallback();
+      return;
+    }
+
+    const blkBtn = e.target.closest(".blocker-chip-btn");
+    if (blkBtn) {
+      const prefix = blkBtn.getAttribute("data-blocker-prefix");
+      const id = blkBtn.getAttribute("data-blocker-id");
+      const tag = blkBtn.getAttribute("data-blocker-tag");
+      toggleBlocker(prefix, id, tag);
+      blkBtn.classList.toggle("active", getBlockers(prefix, id).includes(tag));
+      if (onUpdateCallback) onUpdateCallback();
+      return;
+    }
+
+    const expandSenseBtn = e.target.closest("[data-toggle-sense-vectors]");
+    if (expandSenseBtn) {
+      const sId = expandSenseBtn.getAttribute("data-toggle-sense-vectors");
+      STATE.expandedSenses[sId] = !STATE.expandedSenses[sId];
+      saveState();
+      render();
+      return;
+    }
+  });
+}
+
+/* =========================================================================
+   VIEW 3: PLANE QUESTIONNAIRE (#/plane/1 .. #/plane/7)
+   Supports both List Mode and 12Axes Focus Card Mode (1-at-a-time)
+   ========================================================================= */
+function renderPlane(app, pNum) {
+  const p = PLANE_BY_N[pNum];
+  const summary = computePlaneSummary(pNum);
+
+  let cardsArray = [];
+  let filterBarHTML = "";
+
+  if (STATE.tier === 7) {
+    const headerHTML = `
+      <div class="sense-header">
+        <div>
+          <span class="sense-code">PLANE ${p.n} ESSENCE · ${p.code.toUpperCase()}</span>
+          <h3 class="sense-title" style="margin-top:6px;font-size:1.25rem;">Pillar ${p.n}: ${p.pillar} — ${p.name} (${p.domain})</h3>
+        </div>
+        <div class="node-badges">
+          <span class="badge" data-badge-title="Psochic Hegemony Coordinate (υ, ψ)" data-badge-tip="Average moral/will coordinate of Plane ${p.n}: υ = ${p.coords.v >= 0 ? "+" : ""}${p.coords.v} (Who benefits), ψ = ${p.coords.psi >= 0 ? "+" : ""}${p.coords.psi} (Active vs passive energy).">υ = ${p.coords.v >= 0 ? "+" : ""}${p.coords.v} · ψ = ${p.coords.psi >= 0 ? "+" : ""}${p.coords.psi}</span>
+          ${infoBtnHTML("P", p.n)}
+        </div>
+      </div>
+      <div class="node-lore">
+        <blockquote>"${escapeHtml(p.quote)}" <cite>— ${escapeHtml(p.attribution)}</cite></blockquote>
+        <div>${renderGlossaryHTML(p.totality)}</div>
+      </div>
+    `;
+    cardsArray = [renderABCDBlockHTML("P", p.n, p, p.hue, headerHTML)];
+  } else if (STATE.tier === 49) {
+    const senses = SENSES_BY_PLANE[pNum] || [];
+    cardsArray = senses.map(s => {
+      const vecs = (VECTORS_BY_SENSE[s.id] || []).filter(v => STATE.include354 || v.inHanson353);
+      const expanded = !!STATE.expandedSenses[s.id];
+      const vecAnsCount = vecs.filter(v => isNodeAnswered("V", v.uid)).length;
+
+      const headerHTML = `
+        <div class="sense-header">
+          <div>
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+              <span class="sense-code">${s.id} · ${s.addr}</span>
+              <span class="badge" data-badge-title="Sense Coordinate (υ, ψ)" data-badge-tip="Mean Psochic Hegemony coordinate across the ${vecs.length} vectors in ${s.addr}: υ = ${s.coords.v >= 0 ? "+" : ""}${s.coords.v}, ψ = ${s.coords.psi >= 0 ? "+" : ""}${s.coords.psi}.">υ = ${s.coords.v >= 0 ? "+" : ""}${s.coords.v} · ψ = ${s.coords.psi >= 0 ? "+" : ""}${s.coords.psi}</span>
+            </div>
+            <h3 class="sense-title" style="margin-top:6px;">${escapeHtml(s.title)}</h3>
+          </div>
+          <div class="node-badges">
+            ${infoBtnHTML("S", s.id)}
+          </div>
+        </div>
+        <div class="node-lore">
+          <div style="margin-bottom:6px;">${renderGlossaryHTML(s.narrative)}</div>
+          <div class="mono" style="font-size:0.75rem;color:var(--ink-muted);">
+            <strong>Underlying Kanon Vectors (${vecs.length}):</strong> ${renderGlossaryHTML(vecs.map(v => v.cleanName).join(" · "))}
+          </div>
+        </div>
+      `;
+
+      const footerHTML = `
+        <div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+          <button type="button" class="btn btn-secondary btn-sm" data-toggle-sense-vectors="${s.id}">
+            ${expanded ? "▲ Hide" : "▼ Inspect / Rate"} the ${vecs.length} Individual Kanon Vectors in ${s.addr} (${vecAnsCount}/${vecs.length} rated)
+          </button>
+          <a href="Plane_${p.n}_${p.name === "Cause" ? "Foundation" : p.name}.html" target="_blank" class="mono" style="font-size:0.75rem;color:var(--accent);">Read full ${p.name} Kanon text ↗</a>
+        </div>
+        ${expanded ? `
+          <div style="margin-top:14px;padding-left:14px;border-left:3px solid ${p.hue};">
+            ${vecs.map(v => renderVectorCardHTML(v, p.hue)).join("")}
+          </div>
+        ` : ""}
+      `;
+
+      return renderABCDBlockHTML("S", s.id, s, p.hue, headerHTML, footerHTML);
+    });
+  } else {
+    const allPlaneVecs = activeTierVectors(pNum);
+    const senses = SENSES_BY_PLANE[pNum] || [];
+    const filteredVecs = allPlaneVecs.filter(v => {
+      if (STATE.planeFilter === "unanswered") return !isNodeAnswered("V", v.uid);
+      if (STATE.planeFilter === "shadow") return v.coords.v < 0;
+      if (STATE.planeFilter === "fn") return v.fn;
+      if (STATE.planeFilter.startsWith(`${pNum}.`)) return v.senseId === STATE.planeFilter;
+      return true;
+    });
+
+    filterBarHTML = `
+      <div class="filter-bar">
+        <div class="filter-chips">
+          <button type="button" class="filter-chip ${STATE.planeFilter === "all" ? "active" : ""}" data-plane-filter="all">All (${allPlaneVecs.length})</button>
+          <button type="button" class="filter-chip ${STATE.planeFilter === "unanswered" ? "active" : ""}" data-plane-filter="unanswered">Unanswered (${allPlaneVecs.filter(v => !isNodeAnswered("V", v.uid)).length})</button>
+          <button type="button" class="filter-chip ${STATE.planeFilter === "shadow" ? "active" : ""}" data-plane-filter="shadow">Shadow / Corrective (${allPlaneVecs.filter(v => v.coords.v < 0).length})</button>
+          <button type="button" class="filter-chip ${STATE.planeFilter === "fn" ? "active" : ""}" data-plane-filter="fn">First Nations [FN] (${allPlaneVecs.filter(v => v.fn).length})</button>
+          ${senses.map(s => `
+            <button type="button" class="filter-chip ${STATE.planeFilter === s.id ? "active" : ""}" data-plane-filter="${s.id}">${s.id} ${s.addr}</button>
+          `).join("")}
+        </div>
+        <label class="mono" style="font-size:0.74rem;color:var(--ink-soft);display:flex;align-items:center;gap:6px;cursor:pointer;">
+          <input type="checkbox" id="toggle-354-chk" ${STATE.include354 ? "checked" : ""} />
+          Include 354th JSON vector (Overland Telegraph)
+        </label>
+      </div>
+    `;
+
+    cardsArray = filteredVecs.map(v => renderVectorCardHTML(v, p.hue));
+  }
+
+  // Handle Focus Mode (1 card at a time) vs List Mode
+  const totalInView = cardsArray.length;
+  if (STATE.focusIdx >= totalInView) STATE.focusIdx = Math.max(0, totalInView - 1);
+
+  let bodyHTML = "";
+  if (totalInView === 0) {
+    bodyHTML = filterBarHTML + `<div class="card"><p style="margin:0;color:var(--ink-muted)">No nodes match this filter in Plane ${p.n}.</p></div>`;
+  } else if (STATE.viewMode === "focus" && totalInView > 1) {
+    const idx = STATE.focusIdx;
+    bodyHTML = `
+      ${filterBarHTML}
+      <div class="focus-stepper-bar">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="focus-counter">${String(idx + 1).padStart(2, "0")} / ${String(totalInView).padStart(2, "0")}</span>
+          <span class="mono" style="font-size:0.78rem;color:var(--ink-muted);">Focus Card Mode · Plane ${p.n} (${p.name})</span>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <button type="button" class="btn btn-secondary btn-sm" id="focus-prev-btn" ${idx <= 0 ? "disabled" : ""}>← Previous Card</button>
+          <button type="button" class="btn btn-sm" id="focus-next-btn" ${idx >= totalInView - 1 ? "disabled" : ""}>Next Card →</button>
+        </div>
+      </div>
+      ${cardsArray[idx]}
+    `;
+  } else {
+    bodyHTML = filterBarHTML + cardsArray.join("");
+  }
+
+  const prevLink = pNum > 1 ? `#/plane/${pNum - 1}` : "#/hub";
+  const prevLabel = pNum > 1 ? `← Plane ${pNum - 1}: ${PLANE_BY_N[pNum - 1].name}` : "← Back to Hub";
+  const nextLink = pNum < 7 ? `#/plane/${pNum + 1}` : "#/results";
+  const nextLabel = pNum < 7 ? `Next: Plane ${pNum + 1} (${PLANE_BY_N[pNum + 1].name}) →` : "View Your Australian Archetype & Keyring Results →";
+
+  app.innerHTML = `
+    ${renderTierSelectorHTML()}
+
+    <div class="plane-banner" style="--plane-color:${p.hue}">
+      <div class="plane-banner-top">
+        <div>
+          <div class="eyebrow" style="color:${p.hue}">Plane ${p.n} of 7 · ${p.code} (${p.domain}) · Pillar: ${p.pillar} · <span class="glossary-term" data-glossary-id="tau_constant">τ = ${p.tau}d</span></div>
+          <h1 style="font-size:1.85rem;margin-top:2px;">Plane ${p.n}: ${p.name}</h1>
+        </div>
+        <div style="text-align:right">
+          <div class="mono" id="plane-live-badge" style="font-size:0.85rem;color:var(--ink-soft)">
+            ${summary.answeredNodes}/${summary.totalNodes} nodes answered ${summary.total !== null ? `· Mean ${fmtSigned(summary.total, 2)}` : ""}
+          </div>
+          <a href="Plane_${p.n}_${p.name === "Cause" ? "Foundation" : p.name}.html" target="_blank" class="mono" style="font-size:0.75rem;color:${p.hue};">Open full Plane ${p.n} Matrix document ↗</a>
+        </div>
+      </div>
+      <p style="margin:4px 0 0;color:var(--ink-soft);">${renderGlossaryHTML(p.blurb)}</p>
+      <div class="plane-quote-box">
+        "${escapeHtml(p.quote)}"
+        <cite>— ${escapeHtml(p.attribution)}</cite>
+      </div>
+    </div>
+
+    <div class="legend-sticky">
+      <div class="legend-items">
+        <span><strong>A Should (−5..+5):</strong> Your Moral Ideal</span>
+        <span><strong>B Would (−5..+5):</strong> Your Actual Practice</span>
+        <span><strong>C Community (−5..+5):</strong> Your Circle's Practice</span>
+        <span><strong>D Society (−5..+5):</strong> Wider Australian Reality</span>
+      </div>
+      ${STATE.tier !== 7 ? `
+        <div class="view-mode-switch" role="group" aria-label="View mode">
+          <button type="button" class="view-mode-btn ${STATE.viewMode === "list" ? "active" : ""}" data-view-mode="list">📋 All Cards</button>
+          <button type="button" class="view-mode-btn ${STATE.viewMode === "focus" ? "active" : ""}" data-view-mode="focus">🎯 1-at-a-Time Focus</button>
+        </div>
+      ` : ""}
+    </div>
+
+    <div id="plane-nodes-container">
+      ${bodyHTML}
+    </div>
+
+    <div class="page-footer-nav">
+      <a class="btn btn-secondary" href="${prevLink}">${prevLabel}</a>
+      <a class="btn btn-warm" href="#/results">Jump to Results & Archetype</a>
+      <a class="btn" href="${nextLink}">${nextLabel}</a>
+    </div>
+  `;
+
+  bindTierSelectorEvents(app);
+
+  app.querySelectorAll("[data-view-mode]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      STATE.viewMode = btn.getAttribute("data-view-mode");
+      STATE.focusIdx = 0;
+      saveState();
+      render();
+    });
+  });
+
+  document.getElementById("focus-prev-btn")?.addEventListener("click", () => {
+    if (STATE.focusIdx > 0) {
+      STATE.focusIdx--;
+      saveState();
+      render();
+    }
+  });
+  document.getElementById("focus-next-btn")?.addEventListener("click", () => {
+    if (STATE.focusIdx < totalInView - 1) {
+      STATE.focusIdx++;
+      saveState();
+      render();
+    }
+  });
+
+  app.querySelectorAll("[data-plane-filter]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      STATE.planeFilter = btn.getAttribute("data-plane-filter");
+      STATE.focusIdx = 0;
+      saveState();
+      render();
+    });
+  });
+
+  const chk354 = document.getElementById("toggle-354-chk");
+  if (chk354) {
+    chk354.addEventListener("change", () => {
+      STATE.include354 = chk354.checked;
+      saveState();
+      render();
+    });
+  }
+
+  bindABCDDelegation(app, () => {
+    const newSum = computePlaneSummary(pNum);
+    const badge = document.getElementById("plane-live-badge");
+    if (badge) {
+      badge.textContent = `${newSum.answeredNodes}/${newSum.totalNodes} nodes answered ${newSum.total !== null ? `· Mean ${fmtSigned(newSum.total, 2)}` : ""}`;
+    }
+  });
+}
+
+function renderVectorCardHTML(v, planeHue) {
+  const isShadow = v.coords.v < 0;
+  const headerHTML = `
+    <div class="sense-header">
+      <div>
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+          <span class="sense-code">${v.uid} · ${v.addr}</span>
+          <span class="badge" data-badge-title="Kanon Structural Role: The ${escapeHtml(v.role)}" data-badge-tip="${escapeHtml(v.coreMeaning)}">Role: ${escapeHtml(v.role)}</span>
+          <span class="badge" data-badge-title="Psochic Hegemony Coordinate (${escapeHtml(v.zone)})" data-badge-tip="υ = ${v.coords.v >= 0 ? "+" : ""}${v.coords.v} (Morality: who benefits), ψ = ${v.coords.psi >= 0 ? "+" : ""}${v.coords.psi} (Will: active vs passive). Rationale: ${escapeHtml(v.rationale)}">υ=${v.coords.v >= 0 ? "+" : ""}${v.coords.v}, ψ=${v.coords.psi >= 0 ? "+" : ""}${v.coords.psi} (${escapeHtml(v.zone)})</span>
+          ${v.fn ? `<span class="badge badge-fn" data-badge-title="First Nations Perspective Node" data-badge-tip="Anchors the 65,000-year Indigenous continuum at address ${v.addr} alongside the post-1788 Commonwealth.">[FN] First Nations Perspective</span>` : ""}
+          ${isShadow ? `<span class="badge badge-shadow" data-badge-title="Shadow / Corrective Vector (υ < 0)" data-badge-tip="This node represents a negative shadow or failure mode in the Australian Kanon. Rating +1 to +5 means seeing through and overcoming this shadow (Kanon HIT); rating −1 to −5 means being captured by it (Kanon FAIL).">Shadow Vector (Corrective Scale)</span>` : ""}
+          ${v.hansonVerdict ? `<span class="badge ${v.hansonVerdict === "HIT" ? "badge-hit" : "badge-fail"}" data-badge-title="Pauline Hanson 353-Vector Audit Verdict" data-badge-tip="In the full 353-vector Kanon Audit, Pauline Hanson's record was scored as a ${v.hansonVerdict} on ${escapeHtml(v.cleanName)}.">Hanson Audit: ${v.hansonVerdict}</span>` : ""}
+          ${v.alboVerdict ? `<span class="badge ${v.alboVerdict === "HIT" ? "badge-hit" : "badge-fail"}" data-badge-title="Anthony Albanese Audit Verdict" data-badge-tip="In the Albanese Kanon Audit, his record was scored as a ${v.alboVerdict} on ${escapeHtml(v.cleanName)}.">Albo Audit: ${v.alboVerdict}</span>` : ""}
+        </div>
+        <h3 class="sense-title" style="margin-top:6px;">${escapeHtml(v.name)}</h3>
+      </div>
+      <div class="node-badges">
+        ${infoBtnHTML("V", v.uid)}
+      </div>
+    </div>
+    <div class="node-lore">
+      <blockquote>"${escapeHtml(v.quote)}" <cite>— ${escapeHtml(v.attribution)} (${escapeHtml(v.source)})</cite></blockquote>
+      <div>${renderGlossaryHTML(v.description)}</div>
+    </div>
+  `;
+  return renderABCDBlockHTML("V", v.uid, v, planeHue, headerHTML);
+}
+
+/* =========================================================================
+   VIEW 4: TOPIC SEARCH (#/search)
+   ========================================================================= */
+let activeTopic = "mateship";
+let searchQuery = "";
+
+function renderSearch(app) {
+  app.innerHTML = `
+    <section class="card">
+      <div class="eyebrow">Cross-Plane Topic & Keyword Explorer</div>
+      <h1 style="font-size:1.85rem;margin:4px 0 8px;">Answer by Australian Theme or Issue</h1>
+      <p style="margin:0 0 14px;color:var(--ink-soft);">
+        Jump straight to the Kanon nodes that matter to you right now—housing, Mateship, the Fair Go, First Nations reconciliation, bush/water stewardship, or work & wages.
+        Answers here update your Plane and Keyring results directly.
+      </p>
+      <input type="search" id="topic-search-input" class="search-input" placeholder="Search any Kanon concept (e.g. Mateship, Harvester, Medicare, Terra Nullius, Suburb, Anzac, Tall Poppy)…" value="${escapeHtml(searchQuery)}" />
+      <div class="topic-chips" id="topic-chips">
+        ${TOPIC_MAP.map(t => `
+          <button type="button" class="topic-chip ${activeTopic === t.id && !searchQuery ? "active" : ""}" data-topic="${t.id}">${t.label}</button>
+        `).join("")}
+      </div>
+    </section>
+    <div id="search-results" style="margin-top:18px;"></div>
+  `;
+
+  const input = document.getElementById("topic-search-input");
+  input.addEventListener("input", () => {
+    searchQuery = input.value.trim();
+    renderSearchResults();
+    document.querySelectorAll("#topic-chips .topic-chip").forEach(c => {
+      c.classList.toggle("active", !searchQuery && c.getAttribute("data-topic") === activeTopic);
+    });
+  });
+
+  document.getElementById("topic-chips").addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-topic]");
+    if (!btn) return;
+    activeTopic = btn.getAttribute("data-topic");
+    searchQuery = "";
+    input.value = "";
+    document.querySelectorAll("#topic-chips .topic-chip").forEach(c => {
+      c.classList.toggle("active", c.getAttribute("data-topic") === activeTopic);
+    });
+    renderSearchResults();
+  });
+
+  renderSearchResults();
+}
+
+function renderSearchResults() {
+  const box = document.getElementById("search-results");
+  const q = searchQuery.toLowerCase();
+
+  if (STATE.tier === 353 || q.length >= 2) {
+    const matchedVecs = activeTierVectors().filter(v => {
+      if (q) {
+        const hay = `${v.uid} ${v.addr} ${v.name} ${v.role} ${v.quote} ${v.attribution} ${v.description} ${(v.tags || []).join(" ")}`.toLowerCase();
+        return hay.includes(q);
+      }
+      return (v.tags || []).includes(activeTopic);
+    }).slice(0, 40);
+
+    box.innerHTML = `
+      <div style="margin-bottom:10px;font-family:'JetBrains Mono',monospace;font-size:0.8rem;color:var(--ink-muted);">
+        Showing ${matchedVecs.length} matching Kanon Vector node(s):
+      </div>
+      ${matchedVecs.map(v => renderVectorCardHTML(v, PLANE_BY_N[v.plane].hue)).join("")}
+    `;
+    bindABCDDelegation(box);
+  } else {
+    const matchedSenses = SENSES.filter(s => (s.tags || []).includes(activeTopic));
+    box.innerHTML = `
+      <div style="margin-bottom:10px;font-family:'JetBrains Mono',monospace;font-size:0.8rem;color:var(--ink-muted);">
+        Showing ${matchedSenses.length} matching 7×7 Sense node(s) (type in the search box above to search all 354 individual vectors):
+      </div>
+      ${matchedSenses.map(s => {
+        const p = PLANE_BY_N[s.plane];
+        const headerHTML = `
+          <div class="sense-header">
+            <div>
+              <span class="sense-code">Plane ${p.n} · ${s.id} ${s.addr}</span>
+              <h3 class="sense-title" style="margin-top:6px;">${escapeHtml(s.title)}</h3>
+            </div>
+            <div class="node-badges">${infoBtnHTML("S", s.id)}</div>
+          </div>
+          <div class="node-lore">${renderGlossaryHTML(s.narrative)}</div>
+        `;
+        return renderABCDBlockHTML("S", s.id, s, p.hue, headerHTML);
+      }).join("")}
+    `;
+    bindABCDDelegation(box);
+  }
+}
+
+/* =========================================================================
+   VIEW 5: REVIEW & EXPORT (#/review)
+   ========================================================================= */
+function renderReview(app) {
+  const prog = computeGlobalProgress();
+  app.innerHTML = `
+    <section class="card">
+      <div class="eyebrow">Review, Save & Export</div>
+      <h1 style="font-size:1.85rem;margin:4px 0 8px;">Your Saved Kanon Responses</h1>
+      <p style="margin:0 0 16px;color:var(--ink-soft);">
+        All answers are saved locally in your browser (<code>localStorage</code>) and never leave your device.
+        Export a JSON snapshot to save or compare profiles, or import a saved JSON file.
+      </p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        <a class="btn" href="#/results">View Archetype & Keyring Dashboard →</a>
+        <button type="button" class="btn btn-secondary" id="btn-export-json">Export Answers (JSON)</button>
+        <label class="btn btn-secondary" style="cursor:pointer;">
+          Import JSON <input type="file" id="input-import-json" accept="application/json" style="display:none" />
+        </label>
+        <button type="button" class="btn btn-secondary" onclick="window.print()">Print / Save PDF</button>
+        <button type="button" class="btn btn-secondary" id="btn-reset-all" style="color:var(--bad);border-color:var(--bad);">Reset All Answers</button>
+      </div>
+    </section>
+
+    <section class="card" style="margin-top:16px;">
+      <h2 style="margin-bottom:12px;">Plane-by-Plane Summary (${prog.done}/${prog.total} in active Tier ${STATE.tier})</h2>
+      <table class="rank-table">
+        <thead>
+          <tr>
+            <th>Plane</th>
+            <th>Pillar</th>
+            <th>Should (A)</th>
+            <th>Would (B)</th>
+            <th>Community (C)</th>
+            <th>Society (D)</th>
+            <th>Mean</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${PLANES.map(p => {
+            const sum = computePlaneSummary(p.n);
+            return `
+              <tr>
+                <td><strong style="color:${p.hue}">P${p.n} · ${p.name}</strong></td>
+                <td class="mono">${p.pillar}</td>
+                <td class="mono">${fmtSigned(sum.A, 2)}</td>
+                <td class="mono">${fmtSigned(sum.B, 2)}</td>
+                <td class="mono">${fmtSigned(sum.C, 2)}</td>
+                <td class="mono">${fmtSigned(sum.D, 2)}</td>
+                <td class="mono"><strong>${fmtSigned(sum.total, 2)}</strong></td>
+                <td><a href="#/plane/${p.n}" class="mono" style="color:var(--accent)">Edit →</a></td>
+              </tr>
+            `;
+          }).join("")}
+        </tbody>
+      </table>
+    </section>
+  `;
+
+  document.getElementById("btn-export-json").addEventListener("click", () => {
+    const blob = new Blob([JSON.stringify({
+      exportedAt: new Date().toISOString(),
+      survey: "Australian Kanon Should/Would Survey (7-49-353, -5..+5)",
+      state: STATE
+    }, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `australian-kanon-survey-${new Date().toISOString().slice(0,10)}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  });
+
+  document.getElementById("input-import-json").addEventListener("change", (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        const data = JSON.parse(reader.result);
+        const st = data.state || data;
+        if (st && st.answers) {
+          STATE = { ...STATE, ...st };
+          saveState();
+          render();
+        }
+      } catch (err) {
+        alert("Could not parse JSON file.");
+      }
+    };
+    reader.readAsText(file);
+  });
+
+  document.getElementById("btn-reset-all").addEventListener("click", () => {
+    if (confirm("Clear all saved answers across all tiers?")) {
+      STATE.answers = {};
+      STATE.blockers = {};
+      saveState();
+      render();
+    }
+  });
+}
+
+/* =========================================================================
+   VIEW 6: RESULTS, ARCHETYPE & KEYRING DASHBOARD (#/results)
+   Includes 12Axes Signature, Closeness Modal, Head-to-Head Compare, Books & PNG Export
+   ========================================================================= */
+function renderResults(app) {
+  const profile = computeKanonProfile();
+  const summaries = profile.planeSummaries;
+  const primaryArch = profile.archetypeMatches[0];
+  const secondaryArch = profile.archetypeMatches[1];
+
+  const answeredPlanes = profile.answeredPlanes;
+  let V_norm = null, V_signed = null;
+  if (answeredPlanes.length > 0) {
+    const norms = answeredPlanes.map(s => Math.max(0.05, (s.total + 5) / 10));
+    const prod = norms.reduce((acc, v) => acc * v, 1);
+    V_norm = Math.pow(prod, 1 / norms.length);
+    V_signed = -5 + 10 * V_norm;
+  }
+
+  // 12Axes-Style Signature Insights:
+  // 1. Defining Pillar (highest total or A)
+  const sortedByTotal = [...summaries].filter(s => s.total !== null).sort((a, b) => b.total - a.total);
+  const strongestPlane = sortedByTotal[0] || summaries[0];
+  const weakestPlane = sortedByTotal[sortedByTotal.length - 1] || summaries[6];
+
+  // 2. Biggest Betrayed Promise (Should A - Society D or Would B tension)
+  const sortedByGap = [...summaries]
+    .filter(s => s.A !== null && (s.D !== null || s.B !== null))
+    .map(s => ({ ...s, gap: s.D !== null ? (s.A - s.D) : (s.A - s.B) }))
+    .sort((a, b) => b.gap - a.gap);
+  const topTensionPlane = sortedByGap[0] || null;
+
+  const chainOrder = [1, 2, 5, 3, 4, 7, 6];
+  const chokepoints = summaries.filter(s => s.total !== null && s.total <= -0.5);
+
+  const allSenseRows = [];
+  summaries.forEach(sum => {
+    sum.senses.forEach(s => {
+      if (s.total !== null || s.C !== null || s.D !== null) {
+        const deficit = s.total !== null ? Math.max(0, (5 - s.total) / 10) : 0.4;
+        const socDeficit = s.D !== null ? Math.max(0, (5 - s.D) / 10) : deficit;
+        const gapBoost = s.gapAD !== null ? Math.max(0, s.gapAD) / 10 : 0.3;
+        const strainScore = ((deficit + socDeficit) / 2) * (1 + gapBoost) * (1 + 1 / sum.plane.tau);
+        allSenseRows.push({
+          plane: sum.plane,
+          code: s.sense.id,
+          addr: s.sense.addr,
+          title: s.sense.title,
+          A: s.A, B: s.B, C: s.C, D: s.D,
+          total: s.total,
+          gapAB: s.gapAB,
+          strainScore
+        });
+      }
+    });
+  });
+
+  const highestStrain = [...allSenseRows].sort((a, b) => b.strainScore - a.strainScore).slice(0, 8);
+  const strongestPillars = [...allSenseRows].filter(x => x.total !== null).sort((a, b) => b.total - a.total).slice(0, 8);
+
+  const scorePill = (v) => {
+    if (v === null || v === undefined) return `<span class="mono" style="color:var(--ink-muted)">—</span>`;
+    const cls = v <= -0.5 ? "pill-low" : (v < 1.5 ? "pill-mid" : "pill-high");
+    return `<span class="pill-score ${cls}">${fmtSigned(v, 2)}</span>`;
+  };
+
+  // Head-to-head compare target
+  const allCompareTargets = [
+    ...FIGURES.map(f => ({ id: f.id || f.name, name: f.name, kind: "Figure", role: f.role, pillars: f.pillars || [0.5,0.5,0.5,0.5,0.5,0.5,0.5], desc: f.desc })),
+    ...ARCHETYPES.map(a => ({ id: a.id, name: a.name, kind: "Archetype", role: a.subtitle, pillars: a.pillars, desc: a.desc }))
+  ];
+  const activeCompare = allCompareTargets.find(t => t.id === STATE.compareTargetId) || allCompareTargets[0];
+
+  app.innerHTML = `
+    <nav class="results-jump-bar no-print" aria-label="Jump to result section">
+      <span class="mono" style="font-size:0.72rem;color:var(--ink-muted);font-weight:700;">Sections:</span>
+      <a href="#sec-archetype">01 · Archetype</a>
+      <a href="#sec-signature">02 · Signature & Tension</a>
+      <a href="#sec-keyring">03 · Keyring & Hegemony Map</a>
+      <a href="#sec-planes">04 · 7 Pillars (Should vs Would)</a>
+      <a href="#sec-leaderboard">05 · Figures & Archetypes</a>
+      <a href="#sec-compare">06 · Head-to-Head Compare</a>
+      <a href="#sec-readings">07 · Australian Readings</a>
+      <a href="#sec-diagnostics">08 · Blockers & Strain</a>
+    </nav>
+
+    ${answeredPlanes.length === 0 ? `
+      <div class="callout callout-warm" style="margin-bottom:18px;">
+        <strong>No answers recorded yet!</strong> Answer the 7 Pillars in <a href="#/plane/1">Plane 1</a> (~2 mins) or click a Demo Preset below to see the full Australian Archetype & Keyring diagnostic in action:
+        <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;">
+          <button class="btn btn-sm" id="res-preset-battler">Load Demo: "The Betrayed Battler"</button>
+          <button class="btn btn-secondary btn-sm" id="res-preset-guardian">Load Demo: "The Stoic Guardian"</button>
+          <button class="btn btn-secondary btn-sm" id="res-preset-hanson">Load Pauline Hanson 353 Audit</button>
+        </div>
+      </div>
+    ` : ""}
+
+    <!-- 1. ARCHETYPE HERO CARD -->
+    <section class="archetype-hero" id="sec-archetype">
+      <div class="archetype-hero-grid">
+        <div>
+          <span class="archetype-badge">${escapeHtml(primaryArch.badge)} · ${primaryArch.matchPct}% Archetype Match</span>
+          <h2>${escapeHtml(primaryArch.name)}</h2>
+          <div class="archetype-sub">${escapeHtml(primaryArch.subtitle)}</div>
+          <p class="archetype-desc">${escapeHtml(primaryArch.desc)}</p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+            <span class="mono" style="font-size:0.78rem;color:#D5CFC0;">
+              Runner-up: <strong style="color:#F5D77F">${escapeHtml(secondaryArch.name)} (${secondaryArch.matchPct}%)</strong>
+            </span>
+            <button type="button" class="btn btn-sm" id="btn-download-png" style="background:#F5D77F;color:#18221F;border-color:#F5D77F;">🖼 Save Shareable Image (PNG)</button>
+            <button type="button" class="btn btn-secondary btn-sm" id="btn-copy-summary" style="background:rgba(255,255,255,0.1);color:#FFF;border-color:rgba(255,255,255,0.25);">📋 Copy Text Summary</button>
+          </div>
+        </div>
+        <div class="archetype-stat-boxes">
+          <div class="arch-stat">
+            <div class="num">${profile.alignmentPct !== null ? `${profile.alignmentPct}%` : "—"}</div>
+            <div class="lbl">Overall Kanon Alignment</div>
+          </div>
+          <div class="arch-stat">
+            <div class="num">${profile.ethosPct !== null ? `${profile.ethosPct}%` : "—"} <span style="font-size:0.9rem;color:#B8C2BC">vs</span> ${profile.livedPct !== null ? `${profile.livedPct}%` : "—"}</div>
+            <div class="lbl">Personal Should (A) vs Would (B)</div>
+          </div>
+          <div class="arch-stat">
+            <div class="num">${profile.totalEvaluated > 0 ? `${profile.hitCount}H / ${profile.failCount}F` : "—"}</div>
+            <div class="lbl">Vector Verdicts (${profile.netAlignmentPct >= 0 ? "+" : ""}${profile.netAlignmentPct}% Net)</div>
+          </div>
+          <div class="arch-stat">
+            <div class="num">(${profile.userOverallCoords.v >= 0 ? "+" : ""}${profile.userOverallCoords.v}, ${profile.userOverallCoords.psi >= 0 ? "+" : ""}${profile.userOverallCoords.psi})</div>
+            <div class="lbl"><span class="glossary-term" data-glossary-id="psochic_hegemony">Hegemony Coordinate (υ, ψ)</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. 12AXES-STYLE AUSTRALIAN SIGNATURE SECTION -->
+    <section id="sec-signature" class="signature-grid">
+      <div class="sig-card sig-strong">
+        <div class="eyebrow">Your Strongest Pillar</div>
+        <div class="sig-big" style="color:${strongestPlane.plane.hue}">P${strongestPlane.plane.n} · ${strongestPlane.plane.name} (${strongestPlane.plane.pillar})</div>
+        <p style="margin:0;font-size:0.86rem;color:var(--ink-soft);">
+          ${strongestPlane.total !== null
+            ? `Your highest anchor across the Kanon (${fmtSigned(strongestPlane.total, 2)} mean — Should A: ${fmtSigned(strongestPlane.A, 1)}, Would B: ${fmtSigned(strongestPlane.B, 1)}).`
+            : `Answer nodes to discover your strongest Australian Kanon pillar.`}
+        </p>
+      </div>
+
+      <div class="sig-card sig-tension">
+        <div class="eyebrow" style="color:var(--accent-warm)">Biggest Should vs. Would Contradiction</div>
+        <div class="sig-big">
+          ${topTensionPlane && topTensionPlane.gap > 0.5
+            ? `P${topTensionPlane.plane.n} · ${topTensionPlane.plane.name} (+${topTensionPlane.gap.toFixed(1)} gap)`
+            : "Aligned Should & Would"}
+        </div>
+        <p style="margin:0;font-size:0.86rem;color:var(--ink-soft);">
+          ${topTensionPlane && topTensionPlane.gap > 0.5
+            ? `You hold strongly to ${topTensionPlane.plane.pillar} (${fmtSigned(topTensionPlane.A, 1)} Should), while wider Australian society lags (${fmtSigned(topTensionPlane.D ?? topTensionPlane.B, 1)})—marking your sharpest systemic contradiction.`
+            : `Wider practice closely matches your stated Should ideals with minimal systemic contradiction.`}
+        </p>
+      </div>
+
+      <div class="sig-card">
+        <div class="eyebrow">Your Closest Historical Counterpart</div>
+        <div class="sig-big">${escapeHtml(profile.figureMatches[0].name)} (${profile.figureMatches[0].matchPct}%)</div>
+        <p style="margin:0;font-size:0.86rem;color:var(--ink-soft);">
+          ${escapeHtml(profile.figureMatches[0].role)} — <button type="button" class="info-btn" data-compare-type="figure" data-compare-id="${profile.figureMatches[0].id || profile.figureMatches[0].name}" style="display:inline-flex;margin-top:4px;">(?) Inspect Closeness</button>
+        </p>
+      </div>
+    </section>
+
+    <!-- 3. KEYRING PLOT + PSOCHIC HEGEMONY (v, psi) MAP -->
+    <div class="dash-grid" id="sec-keyring">
+      <div class="card keyring-stage">
+        <div class="eyebrow" style="align-self:flex-start;">WWSUTRU Dual-Vector Keyring Plot</div>
+        <h3 style="align-self:flex-start;margin:2px 0 8px;">All seven, overlaid — the keyring plot</h3>
+        ${keyringTutorialBoxHTML()}
+        <p style="color:var(--ink-soft);font-size:0.86rem;margin:0 0 8px;align-self:flex-start;">
+          7 planes · 7 question positions (<code>Q1–Q7</code>) · 3 horizons (Personal, Community, Society) · 2 vectors (<code>Should A</code> left, <code>Would B/C/D</code> right) — 294 data teeth in one diagram.
+        </p>
+        ${combinedStarSVG()}
+      </div>
+
+      <div class="card">
+        <div class="eyebrow">Psochic Hegemony Coordinate Plane</div>
+        <h3 style="margin:2px 0 8px;">Your Ideal Should (A) vs. Actual Would (B) across 354 Vectors</h3>
+        <div class="hegemony-canvas-wrap">
+          <canvas id="hegemony-canvas" width="520" height="400"></canvas>
+          <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:8px;font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:#B5BDB8;">
+            <span><strong style="color:#4AD28A">●</strong> Personal Should (A)</span>
+            <span><strong style="color:#5BC0EB">●</strong> Personal Would (B)</span>
+            <span><strong style="color:#F5D77F">●</strong> Stoic Guardian (+0.47, +0.23)</span>
+            <span><strong style="color:#E8836B">●</strong> Pauline Hanson (-0.05, -0.01)</span>
+          </div>
+        </div>
+
+        <div class="stat-Strip">
+          <div class="stat-box">
+            <div class="val">${V_signed !== null ? fmtSigned(V_signed, 2) : "—"}<span style="font-size:0.75rem;color:var(--ink-muted)"> (±5)</span></div>
+            <div class="lbl">True Balance V (Geometric)</div>
+          </div>
+          <div class="stat-box">
+            <div class="val">${fmtSigned(profile.avgC, 2)}<span style="font-size:0.75rem;color:var(--ink-muted)"> (±5)</span></div>
+            <div class="lbl">Community Circle (C)</div>
+          </div>
+          <div class="stat-box">
+            <div class="val">${fmtSigned(profile.avgD, 2)}<span style="font-size:0.75rem;color:var(--ink-muted)"> (±5)</span></div>
+            <div class="lbl">Australian Society (D)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. 12AXES-STYLE 7-PLANE SPLIT BARS -->
+    <section class="card" id="sec-planes" style="margin-top:20px;">
+      <div class="eyebrow">12Axes × Should/Would Plane Breakdown</div>
+      <h2 style="margin:2px 0 12px;">The 7 Pillars of the Australian Kanon: Should (A) vs. Would (B · C · D)</h2>
+      ${summaries.map(sum => {
+        const p = sum.plane;
+        const pctA = sum.A !== null ? Math.round(((sum.A + 5) / 10) * 100) : 50;
+        const pctB = sum.B !== null ? Math.round(((sum.B + 5) / 10) * 100) : 50;
+        const gap = (sum.A !== null && sum.D !== null) ? (sum.A - sum.D) : ((sum.A !== null && sum.B !== null) ? (sum.A - sum.B) : null);
+        return `
+          <div class="axes-row">
+            <div class="axes-head">
+              <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+                <a href="#/plane/${p.n}" style="text-decoration:none;color:var(--ink);font-weight:700;font-size:1.02rem;">
+                  <span style="color:${p.hue}">Plane ${p.n}: ${p.name}</span> — ${p.pillar}
+                </a>
+                <span class="mono" style="font-size:0.75rem;color:var(--ink-muted);">(${p.blurb})</span>
+                ${infoBtnHTML("P", p.n)}
+              </div>
+              <div class="mono" style="font-size:0.76rem;">
+                ${sum.C !== null ? `<span class="badge" style="background:var(--gold-soft);color:#6E500D;">Community C: ${fmtSigned(sum.C, 1)}</span>` : ""}
+                ${sum.D !== null ? `<span class="badge" style="background:var(--accent-warm-soft);color:#8F3E14;">Society D: ${fmtSigned(sum.D, 1)}</span>` : ""}
+                ${gap !== null && gap >= 1.5 ? `<span class="badge badge-fail">Contradiction Gap: +${gap.toFixed(1)}</span>` : ""}
+              </div>
+            </div>
+            <div class="axes-dual-track">
+              <span class="mono" style="color:var(--accent);font-weight:600;">A · Personal Should</span>
+              <div class="axes-bar-outer"><div class="axes-bar-inner" style="width:${pctA}%;background:${p.hue};"></div></div>
+              <span class="mono" style="text-align:right;font-weight:600;">${sum.A !== null ? `${fmtSigned(sum.A, 1)} (${pctA}%)` : "—"}</span>
+            </div>
+            <div class="axes-dual-track">
+              <span class="mono" style="color:#2E6F95;font-weight:600;">B · Personal Would</span>
+              <div class="axes-bar-outer"><div class="axes-bar-inner" style="width:${pctB}%;background:${p.hue};opacity:0.6;"></div></div>
+              <span class="mono" style="text-align:right;font-weight:600;">${sum.B !== null ? `${fmtSigned(sum.B, 1)} (${pctB}%)` : "—"}</span>
+            </div>
+          </div>
+        `;
+      }).join("")}
+    </section>
+
+    <!-- 5. ARCHETYPE & HISTORICAL FIGURE LEADERBOARD (WITH (?) CLOSENESS INSPECTOR) -->
+    <div class="dash-grid" id="sec-leaderboard" style="margin-top:20px;">
+      <section class="card">
+        <div class="eyebrow">Australian Archetype Spectrum</div>
+        <h3 style="margin:2px 0 12px;">All 8 Australian Archetypes Ranked</h3>
+        <table class="rank-table">
+          <thead>
+            <tr><th>Archetype</th><th>Coords (υ, ψ)</th><th>Match</th><th>Inspect</th></tr>
+          </thead>
+          <tbody>
+            ${profile.archetypeMatches.map((a, idx) => `
+              <tr>
+                <td>
+                  <strong>${idx === 0 ? "★ " : ""}${escapeHtml(a.name)}</strong>
+                  <div style="font-size:0.76rem;color:var(--ink-muted)">${escapeHtml(a.subtitle)}</div>
+                </td>
+                <td class="mono">(${a.coords.v >= 0 ? "+" : ""}${a.coords.v}, ${a.coords.psi >= 0 ? "+" : ""}${a.coords.psi})</td>
+                <td class="mono"><span class="pill-score ${a.matchPct >= 70 ? "pill-high" : a.matchPct >= 45 ? "pill-mid" : "pill-low"}">${a.matchPct}%</span></td>
+                <td><button type="button" class="info-btn" data-compare-type="archetype" data-compare-id="${a.id}">(?)</button></td>
+              </tr>
+            `).join("")}
+          </tbody>
+        </table>
+      </section>
+
+      <section class="card">
+        <div class="eyebrow">Historical & Audited Figures</div>
+        <h3 style="margin:2px 0 12px;">Closest Australian Figures & Kanon Audits</h3>
+        <table class="rank-table">
+          <thead>
+            <tr><th>Figure / Audited Record</th><th>Kanon</th><th>Proximity</th><th>Inspect</th></tr>
+          </thead>
+          <tbody>
+            ${profile.figureMatches.map(f => `
+              <tr>
+                <td>
+                  <strong>${escapeHtml(f.name)}</strong>
+                  <div style="font-size:0.76rem;color:var(--ink-muted)">${escapeHtml(f.role)}</div>
+                </td>
+                <td class="mono">${f.alignment}%</td>
+                <td class="mono"><span class="pill-score ${f.matchPct >= 70 ? "pill-high" : f.matchPct >= 45 ? "pill-mid" : "pill-low"}">${f.matchPct}%</span></td>
+                <td><button type="button" class="info-btn" data-compare-type="figure" data-compare-id="${f.id || f.name}">(?)</button></td>
+              </tr>
+            `).join("")}
+          </tbody>
+        </table>
+        ${profile.hansonCompared > 0 ? `
+          <div class="callout" style="margin-top:12px;font-size:0.84rem;">
+            <strong>Direct Audit Cross-Check:</strong> Across ${profile.hansonCompared} decisive vector(s), your ratings agreed with
+            <a href="../Hanson_Audit/index.html">Pauline Hanson's 353-Vector Audit</a> on <strong>${profile.hansonAgree}/${profile.hansonCompared} (${Math.round(profile.hansonAgree/profile.hansonCompared*100)}%)</strong>
+            ${profile.alboCompared > 0 ? ` and with Anthony Albanese's audited vectors on <strong>${profile.alboAgree}/${profile.alboCompared} (${Math.round(profile.alboAgree/profile.alboCompared*100)}%)</strong>` : ""}.
+          </div>
+        ` : ""}
+      </section>
+    </div>
+
+    <!-- 6. 12AXES-STYLE HEAD-TO-HEAD COMPARE PICKER -->
+    <section class="card" id="sec-compare" style="margin-top:20px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:14px;">
+        <div>
+          <div class="eyebrow">Interactive Profile Comparison</div>
+          <h2 style="margin-top:2px;">Compare Yourself Head-to-Head Across the 7 Planes</h2>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <label for="compare-select" class="mono" style="font-size:0.78rem;color:var(--ink-soft);">Compare with:</label>
+          <select id="compare-select" class="search-input" style="width:auto;padding:7px 12px;font-size:0.88rem;">
+            <optgroup label="Historical & Audited Figures">
+              ${FIGURES.map(f => `<option value="${f.id || f.name}" ${activeCompare.id === (f.id || f.name) ? "selected" : ""}>${escapeHtml(f.name)}</option>`).join("")}
+            </optgroup>
+            <optgroup label="Australian Archetypes">
+              ${ARCHETYPES.map(a => `<option value="${a.id}" ${activeCompare.id === a.id ? "selected" : ""}>${escapeHtml(a.name)}</option>`).join("")}
+            </optgroup>
+          </select>
+        </div>
+      </div>
+
+      <div class="callout" style="margin-bottom:16px;">
+        <strong>${escapeHtml(activeCompare.name)}</strong> (${escapeHtml(activeCompare.role)}): ${escapeHtml(activeCompare.desc)}
+      </div>
+
+      ${PLANES.map((p, i) => {
+        const sum = summaries[i];
+        const youPct = sum.total !== null ? Math.round(((sum.total + 5) / 10) * 100) : 50;
+        const themPct = Math.round((activeCompare.pillars[i] || 0.5) * 100);
+        return `
+          <div class="closeness-row" style="padding:6px 0;border-bottom:1px dashed var(--rule);">
+            <div class="closeness-head">
+              <span><strong style="color:${p.hue}">P${p.n} · ${p.name}</strong> (${p.pillar})</span>
+              <span class="mono"><strong style="color:var(--accent)">You: ${youPct}%</strong> vs <strong style="color:var(--gold)">${escapeHtml(activeCompare.name)}: ${themPct}%</strong></span>
+            </div>
+            <div class="closeness-track">
+              <span class="closeness-pin pin-them" style="left:${themPct}%" title="${escapeHtml(activeCompare.name)}: ${themPct}%">T</span>
+              <span class="closeness-pin pin-you" style="left:${youPct}%" title="You: ${youPct}%">Y</span>
+            </div>
+          </div>
+        `;
+      }).join("")}
+    </section>
+
+    <!-- 7. INDIVIDUAL PLANE KEYRING STARS -->
+    <section style="margin-top:24px;">
+      <h2>The 7 Individual Plane Keyring Stars</h2>
+      <p style="color:var(--ink-soft);margin:4px 0 12px;">
+        Each Plane's 7 Senses (<code>.1 Who</code> to <code>.7 Effect</code>) plotted separately. Click any card to edit that Plane's answers.
+      </p>
+      <div class="plane-stars-grid">
+        ${PLANES.map(p => {
+          const sum = summaries[p.n - 1];
+          return `
+            <a class="plane-star-card" href="#/plane/${p.n}" style="--plane-color:${p.hue};text-decoration:none;color:inherit;">
+              <div class="mono" style="font-size:0.74rem;color:${p.hue};font-weight:600;">PLANE ${p.n} · ${p.pillar.toUpperCase()}</div>
+              <h3 style="font-size:1.05rem;margin:2px 0 6px;">${p.name}</h3>
+              ${planeStarSVG(p.n, 195)}
+              <div class="mono" style="font-size:0.74rem;color:var(--ink-soft);margin-top:4px;">
+                ${sum.total !== null ? `A: ${fmtSigned(sum.A, 1)} · B: ${fmtSigned(sum.B, 1)} · C: ${fmtSigned(sum.C, 1)}` : "Click to answer"}
+              </div>
+            </a>
+          `;
+        }).join("")}
+      </div>
+    </section>
+
+    <!-- 8. AUSTRALIAN READINGS & PRIMARY SOURCES (12AXES BOOKS SECTION) -->
+    <section class="card" id="sec-readings" style="margin-top:24px;">
+      <div class="eyebrow">Essential Australian Kanon Library</div>
+      <h2 style="margin:2px 0 6px;">Primary Sources & Classic Works Matched to Your Profile</h2>
+      <p style="margin:0;color:var(--ink-soft);font-size:0.9rem;">
+        Foundational texts that forged the vectors in your strongest and most contested Planes:
+      </p>
+      <div class="books-grid">
+        ${BOOKS.map(b => `
+          <div class="book-card">
+            <div class="mono" style="font-size:0.72rem;color:var(--accent);">Planes ${b.planes.map(n => `P${n}`).join(", ")} · ${escapeHtml(b.year)}</div>
+            <h3 style="font-size:1.05rem;">${escapeHtml(b.title)}</h3>
+            <div class="mono" style="font-size:0.78rem;color:var(--ink-muted);">By ${escapeHtml(b.author)}</div>
+            <p style="margin:4px 0 0;font-size:0.84rem;color:var(--ink-soft);">${renderGlossaryHTML(b.desc)}</p>
+          </div>
+        `).join("")}
+      </div>
+    </section>
+
+    <!-- 9. WELFARE DIAGNOSTICS: BLOCKERS, CHAIN REACTION & TENSION -->
+    <section class="card" id="sec-diagnostics" style="margin-top:24px;">
+      <div class="eyebrow">WWSUTRU Systemic Welfare Diagnostics</div>
+      <h2 style="margin:4px 0 12px;">Where the Australian Promise Is Blocked vs. Flourishing</h2>
+
+      ${profile.topBlockers.length > 0 ? `
+        <div class="callout callout-warm" style="margin-bottom:16px;">
+          <strong>Top Named Systemic Blockers (D):</strong>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;">
+            ${profile.topBlockers.map(b => `
+              <span class="badge badge-shadow" style="font-size:0.8rem;padding:4px 10px;">${escapeHtml(b.tag)}: <strong>${b.count}×</strong></span>
+            `).join("")}
+          </div>
+        </div>
+      ` : ""}
+
+      ${chokepoints.length > 0 ? `
+        <div class="callout" style="margin-bottom:16px;">
+          <strong>Chain Reaction Chokepoint Alert (1 Identity → 2 Definition → 5 Method → 3 Land → 4 Drive → 7 Result → 6 Cause → 1):</strong>
+          <ul style="margin:6px 0 0;padding-left:20px;">
+            ${chokepoints.map(cp => {
+              const idx = chainOrder.indexOf(cp.plane.n);
+              const nextP = PLANE_BY_N[chainOrder[(idx + 1) % 7]];
+              return `<li><strong>Plane ${cp.plane.n} (${cp.plane.name} — ${fmtSigned(cp.total, 2)})</strong> is strained, which directly starves downstream <strong>Plane ${nextP.n} (${nextP.name} — ${nextP.pillar})</strong>.</li>`;
+            }).join("")}
+          </ul>
+        </div>
+      ` : ""}
+
+      <div class="dash-grid">
+        <div>
+          <h3 style="margin-bottom:8px;color:var(--bad);">Largest Social Contradictions (Should vs Society)</h3>
+          <table class="rank-table">
+            <thead>
+              <tr><th>Sense</th><th>Should A</th><th>Would B</th><th>Circle C</th><th>Society D</th></tr>
+            </thead>
+            <tbody>
+              ${highestStrain.length ? highestStrain.map(r => `
+                <tr>
+                  <td><strong>${r.code}</strong> ${r.addr}<div style="font-size:0.75rem;color:var(--ink-muted)">${escapeHtml(r.title)}</div></td>
+                  <td>${scorePill(r.A)}</td>
+                  <td>${scorePill(r.B)}</td>
+                  <td>${scorePill(r.C)}</td>
+                  <td>${scorePill(r.D)}</td>
+                </tr>
+              `).join("") : `<tr><td colspan="5" style="color:var(--ink-muted)">Answer nodes to see priority strain rankings.</td></tr>`}
+            </tbody>
+          </table>
+        </div>
+
+        <div>
+          <h3 style="margin-bottom:8px;color:var(--ok);">Strongest Australian Kanon Pillars</h3>
+          <table class="rank-table">
+            <thead>
+              <tr><th>Sense</th><th>Should A</th><th>Would B</th><th>Mean</th></tr>
+            </thead>
+            <tbody>
+              ${strongestPillars.length ? strongestPillars.map(r => `
+                <tr>
+                  <td><strong>${r.code}</strong> ${r.addr}<div style="font-size:0.75rem;color:var(--ink-muted)">${escapeHtml(r.title)}</div></td>
+                  <td>${scorePill(r.A)}</td>
+                  <td>${scorePill(r.B)}</td>
+                  <td>${scorePill(r.total)}</td>
+                </tr>
+              `).join("") : `<tr><td colspan="4" style="color:var(--ink-muted)">Answer nodes to see strongest pillars.</td></tr>`}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  `;
+
+  setTimeout(() => drawHegemonyCanvas(profile), 0);
+
+  document.getElementById("res-preset-battler")?.addEventListener("click", () => loadPresetProfile("betrayed_battler"));
+  document.getElementById("res-preset-guardian")?.addEventListener("click", () => loadPresetProfile("stoic_guardian"));
+  document.getElementById("res-preset-hanson")?.addEventListener("click", () => loadPresetProfile("hanson_353"));
+
+  document.getElementById("btn-download-png")?.addEventListener("click", () => downloadShareCardPNG(profile));
+
+  document.getElementById("compare-select")?.addEventListener("change", (e) => {
+    STATE.compareTargetId = e.target.value;
+    saveState();
+    renderResults(app);
+  });
+
+  app.querySelectorAll("[data-open-info-prefix]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      openNodeInfoSheet(btn.getAttribute("data-open-info-prefix"), btn.getAttribute("data-open-info-id"));
+    });
+  });
+
+  app.querySelectorAll("[data-compare-type]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      openComparisonSheet(btn.getAttribute("data-compare-type"), btn.getAttribute("data-compare-id"));
+    });
+  });
+
+  document.getElementById("btn-copy-summary")?.addEventListener("click", (e) => {
+    const text = [
+      `🇦🇺 What Kind of Australian Are You? — Australian Kanon Should / Would Survey`,
+      `Archetype: ${primaryArch.name} (${primaryArch.matchPct}% match) — ${primaryArch.subtitle}`,
+      `Overall Kanon Alignment: ${profile.alignmentPct ?? "—"}% (Personal Should A: ${profile.ethosPct ?? "—"}% | Personal Would B: ${profile.livedPct ?? "—"}% | Society D: ${profile.societyPct ?? "—"}%)`,
+      `Psochic Hegemony Coordinate: (υ = ${profile.userOverallCoords.v >= 0 ? "+" : ""}${profile.userOverallCoords.v}, ψ = ${profile.userOverallCoords.psi >= 0 ? "+" : ""}${profile.userOverallCoords.psi})`,
+      `Vector Verdicts: ${profile.hitCount} HIT / ${profile.failCount} FAIL (${profile.netAlignmentPct >= 0 ? "+" : ""}${profile.netAlignmentPct}% Net)`
+    ].join("\n");
+    navigator.clipboard?.writeText(text);
+    const btn = e.currentTarget;
+    const orig = btn.textContent;
+    btn.textContent = "✓ Copied Summary!";
+    setTimeout(() => { btn.textContent = orig; }, 2000);
+  });
+}
+
+// Initial mount
+setupGlobalTooltips();
+render();
+</script>
+</body>
+</html>
