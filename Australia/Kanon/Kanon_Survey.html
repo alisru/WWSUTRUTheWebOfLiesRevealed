@@ -2095,27 +2095,27 @@ function openNodeInfoSheet(prefix, id) {
         ` : ""}
         <div class="explain-sides-grid">
           <div class="explain-box is-high">
-            <h4>✓ Rating Positive (+1 to +5 · Greater Good / Proactive) on Should (A)</h4>
+            <h4>✓ Rating Positive (+1 to +5 · Strong Support &amp; Living the Standard)</h4>
             <p>${escapeHtml(h.highA || "")}</p>
           </div>
           <div class="explain-box is-low">
-            <h4>✕ Rating Negative (−1 to −5 · Extractive / Suppressive) on Should (A)</h4>
+            <h4>✕ Rating Negative (−1 to −5 · Oppose or Disregard the Standard)</h4>
             <p>${escapeHtml(h.lowA || "")}</p>
           </div>
           <div class="explain-box is-high">
-            <h4>✓ Rating Positive (+1 to +5 · Proactive Practice) on Would (B / C / D)</h4>
+            <h4>✓ Rating Positive (+1 to +5 · Thriving &amp; Delivered in Daily Reality)</h4>
             <p>${escapeHtml(h.highB || "")}</p>
           </div>
           <div class="explain-box is-low">
-            <h4>✕ Rating Negative (−1 to −5 · Suppressed / Blocked) on Would (B / C / D)</h4>
+            <h4>✕ Rating Negative (−1 to −5 · Broken, Neglected, or Blocked by Systemic Friction)</h4>
             <p>${escapeHtml(h.lowB || "")}</p>
           </div>
         </div>
         <div class="callout" style="margin-top:12px;font-size:0.84rem;">
-          <strong>Part 4 Axis Scale Guide (−5 to +5):</strong>
-          <code>−5 Extractive / Suppressive (−υ, −ψ)</code> takes from others or prevents/destroys ·
-          <code>0 Selfish / Inaction (Origin)</code> looks out only for narrow self-interest or does nothing ·
-          <code>+5 Greater Good / Proactive (+υ, +ψ)</code> actively builds and creates value for everyone.
+          <strong>Rating Scale Guide (−5 to +5):</strong>
+          <code>−5 Strongly Oppose / Broken &amp; Exploitative</code> ·
+          <code>0 Neutral / Indifferent / Self-Interest Only</code> ·
+          <code>+5 Strongly Champion / Thriving &amp; Built for All</code>.
         </div>
         ${h.note ? `
           <div class="callout" style="margin-top:10px;font-size:0.86rem;">
@@ -2960,7 +2960,7 @@ function keyringTutorialBoxHTML() {
       <div style="flex:1;min-width:260px;font-size:0.9rem;color:var(--ink-soft);line-height:1.55;">
         <p style="margin:0 0 8px;color:var(--ink);">This is a <strong>keyring plot</strong> — each of the seven arms is a question position (<code>Q1–Q7</code>, corresponding to <code>.1 Who</code> through <code>.7 Effect</code>). The arms radiate like keys on a ring.</p>
         <p style="margin:0 0 8px;">Think of each arm as a physical key blade. A <em>blank key</em> — smooth, uncut — is the ideal: every <strong>Should</strong> upheld (<code>+5 Greater Good</code>) and every <strong>Would</strong> lived in practice across yourself, your community, and Australian society. Life cuts the key. Each etch encodes where things actually stand.</p>
-        <p style="margin:0 0 8px;">On every arm, seven coloured rings sit nested from outermost (<strong>Plane 1 · Identity</strong>) to innermost (<strong>Plane 7 · Result</strong>). Within each ring, three tick marks run along the shaft. Ticks on the <strong>left</strong> of the shaft are <code>Should (A)</code> — what you believe should happen. Ticks on the <strong>right</strong> are <code>Would (B, C, D)</code> — what actually happens across Yourself (<code>B</code>), Your Community (<code>C</code>), and Australian Society (<code>D</code>). Tick length encodes the <code>−5</code> (Extractive/Suppressive) to <code>+5</code> (Greater Good/Proactive) score.</p>
+        <p style="margin:0 0 8px;">On every arm, seven coloured rings sit nested from outermost (<strong>Plane 1 · Identity</strong>) to innermost (<strong>Plane 7 · Result</strong>). Within each ring, three tick marks run along the shaft. Ticks on the <strong>left</strong> of the shaft are <code>Should (A)</code> — what you believe should happen. Ticks on the <strong>right</strong> are <code>Would (B, C, D)</code> — what actually happens across Yourself (<code>B</code>), Your Community (<code>C</code>), and Australian Society (<code>D</code>). Tick length encodes the <code>−5</code> (Oppose / Broken) to <code>+5</code> (Support / Thriving) score.</p>
         <p style="margin:0;">The <code>Should:+5</code> and <code>Would:+5</code> labels at the tip of each bracket show what full-length ticks look like. When all ticks touch their bracket edge, the key is blank again.</p>
       </div>
       ${keyringExampleSVG()}
@@ -3037,8 +3037,7 @@ function drawHegemonyCanvas(profile) {
 
   ctx.fillStyle = "#64748B";
   ctx.textAlign = "center";
-  ctx.font = "600 10px 'Inter', sans-serif";
-  ctx.fillText("← υ = +1 (Universal / Greater Good)          MORALITY (υ)          υ = -1 (Self / Extractive) →", W / 2, H - 12);
+  ctx.fillText("← υ = +1 (All Beings / Universal)          MORALITY (υ)          υ = -1 (Self-Only / Narrow Group) →", W / 2, H - 12);
 
   // Plot all 354 Kanon vectors
   const vecs = activeTierVectors();
@@ -3440,14 +3439,16 @@ function renderHub(app) {
       </h1>
       <p class="lede" style="margin:0 0 16px;">
         Map yourself against the <strong>Australian Kanon</strong>—the 7-Plane, 49-Sense, 354-Vector cultural DNA of the nation.
-        Instead of a flat political compass that only asks what you <em>reckon</em> in theory, each node measures four <strong>Should vs. Would</strong> perspectives on a bipolar <strong><code>−5</code> (Extractive / Suppressive) to <code>+5</code> (Greater Good / Proactive) scale</strong> (with <code>0</code> as Neutral / Self-Only):
-        <strong>A (Personal Should)</strong> what you believe we should uphold, <strong>B (Personal Would)</strong> what you actually do in practice,
-        <strong>C (Community Circle)</strong> what your everyday circle believes and does, and <strong>D (Australian Society)</strong> what wider Australian society and institutions actually deliver.
+        Instead of a flat quiz that only asks what you reckon in theory, each question measures four <strong>Should vs. Would</strong> perspectives on a <strong><code>−5</code> (Strongly Disagree / Opposed / Broken) to <code>+5</code> (Strongly Agree / Champion / Thriving) scale</strong> (with <code>0</code> as Neutral):
+        <strong>A (Personal Should)</strong> what you believe Australia should uphold,
+        <strong>B (Personal Would)</strong> what you actually practise in everyday life,
+        <strong>C (Community Circle)</strong> what your friends, family, and peers practise, and
+        <strong>D (Australian Society)</strong> what our wider institutions, markets, and leaders actually deliver today.
       </p>
 
       <div class="callout" style="margin-bottom:18px;">
-        <strong>💡 Plain-English Tooltips & Explainers Built In:</strong>
-        Hover or tap any <span class="glossary-term" data-glossary-id="harvester">dotted-underlined term</span> in a question for an instant plain-English definition, or click the <strong>(?) Explain</strong> button on any card to see what rating Positive (<code>+1 to +5 · Greater Good / Proactive</code>) vs. Negative (<code>−1 to −5 · Extractive / Suppressive</code>) means.
+        <strong>💡 Plain-English Help Built In:</strong>
+        Hover or tap any <span class="glossary-term" data-glossary-id="harvester">dotted-underlined term</span> in a question for a plain-English explanation, or click the <strong>(?) Explain</strong> button on any card to see a breakdown of the question and what positive vs. negative ratings mean.
       </div>
 
       ${renderTierSelectorHTML()}
@@ -3523,11 +3524,11 @@ function renderFramework(app) {
       </p>
 
       <div class="callout" style="margin:14px 0;">
-        <strong>Part 4 Axis Scale Anchors (−5 to +5):</strong>
+        <strong>How to Read the Scale (−5 to +5):</strong>
         <ul style="margin:6px 0 0;padding-left:20px;">
-          <li><strong><code>+1 to +5</code> · The Greater Good &amp; Proactive Will (<code>+υ, +ψ</code>):</strong> Creates net benefit, harmony, and freedom for everyone; actively builds, creates, and upholds the principle.</li>
-          <li><strong><code>0</code> · Neutral / Self-Only &amp; Mixed / Stagnant (Origin):</strong> Looks out only for narrow self-interest or remains passive and does nothing.</li>
-          <li><strong><code>−1 to −5</code> · Extractive Evil &amp; Suppressive Will (<code>−υ, −ψ</code>):</strong> Actively takes from others for a select few, or prevents, suppresses, and destroys the principle.</li>
+          <li><strong><code>+1 to +5</code> · Strongly Support &amp; Active Practice:</strong> Strongly believe in the principle, or experience it as thriving, reliable, and accessible for all.</li>
+          <li><strong><code>0</code> · Neutral / Indifferent:</strong> No strong feeling, neutral, or looks out only for self-interest.</li>
+          <li><strong><code>−1 to −5</code> · Strongly Oppose / Broken &amp; Exploitative:</strong> Reject the principle, or experience it as broken, priced out, or captured by greed and bureaucracy in everyday life.</li>
         </ul>
       </div>
 
@@ -3539,7 +3540,7 @@ function renderFramework(app) {
           <div class="mono" style="color:var(--accent);font-weight:700;">A · PERSONAL "SHOULD" (−5 to +5)</div>
           <h3 style="font-size:1.02rem;margin:4px 0;">Your Moral Ideal</h3>
           <p style="margin:0;font-size:0.86rem;color:var(--ink-soft);">
-            What do you believe we <strong>should</strong> uphold? From <code>−5 Extractive / Suppress</code> through <code>0 Neutral / Self-Only</code> to <code>+5 Greater Good</code>.
+            What do you believe Australia <strong>should</strong> uphold? From <code>−5 Strongly Reject</code> through <code>0 Neutral</code> to <code>+5 Strongly Champion</code>.
           </p>
         </div>
         <div class="card" style="padding:14px 16px;margin:0;border-top:3px solid #2E6F95;">
@@ -3822,23 +3823,11 @@ function renderPlane(app, pNum) {
           ${infoBtnHTML("P", p.n)}
         </div>
       </div>
-      <div class="node-lore">
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-bottom:8px;">
-          <div style="background:#ECFDF5;border:1px solid #A7F3D0;border-radius:8px;padding:10px 12px;font-size:0.83rem;">
-            <strong style="color:#065F46;display:block;font-family:'JetBrains Mono',monospace;font-size:0.72rem;margin-bottom:3px;">+1 TO +5 · GREATER GOOD (+υ, +ψ)</strong>
-            ${escapeHtml(p.help?.highA || "")}
-          </div>
-          <div style="background:#FFFBEB;border:1px solid #FDE68A;border-radius:8px;padding:10px 12px;font-size:0.83rem;">
-            <strong style="color:#92400E;display:block;font-family:'JetBrains Mono',monospace;font-size:0.72rem;margin-bottom:3px;">0 · NEUTRAL / SELF-ONLY (ORIGIN)</strong>
-            Looks out only for narrow self-interest or remains passive when ${escapeHtml(p.name)} is tested.
-          </div>
-          <div style="background:#FEF2F2;border:1px solid #FECACA;border-radius:8px;padding:10px 12px;font-size:0.83rem;">
-            <strong style="color:#991B1B;display:block;font-family:'JetBrains Mono',monospace;font-size:0.72rem;margin-bottom:3px;">−1 TO −5 · EXTRACTIVE / SUPPRESS (−υ, −ψ)</strong>
-            ${escapeHtml(p.help?.lowA || "")}
-          </div>
-        </div>
-        <div class="mono" style="font-size:0.75rem;color:var(--ink-muted);">
-          <strong>Synthesises 7 Senses &amp; 49 Vectors:</strong> ${planeSenses.map(s => `${s.id} ${s.addr} (${s.title.replace(/^The [A-Za-z]+ of the [A-Za-z]+\s*/, "")})`).join(" · ")}
+      <div class="node-lore" style="font-size:0.95rem;line-height:1.6;color:var(--ink-soft);padding:14px 18px;background:var(--bg-card);border:1px solid var(--rule);border-radius:10px;margin-bottom:14px;">
+        <p style="margin:0 0 8px;"><strong>The Principle:</strong> ${escapeHtml(p.pillarSummary || p.blurb)}</p>
+        <p style="margin:0 0 8px;font-size:0.88rem;color:var(--ink-muted);"><strong>In Everyday Life:</strong> ${escapeHtml(p.practicalText || "")}</p>
+        <div style="font-size:0.8rem;color:var(--ink-muted);border-top:1px dashed var(--rule);padding-top:6px;margin-top:6px;">
+          <strong>7 Key Senses in this Plane:</strong> ${planeSenses.map(s => s.shortTitle || s.title).join(" · ")}
         </div>
       </div>
     `;
