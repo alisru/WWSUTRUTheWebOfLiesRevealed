@@ -567,7 +567,7 @@ main.wide { max-width: 1280px; }
 @keyframes sheet-fade { from { opacity: 0; } }
 @keyframes sheet-pop { from { opacity: 0; transform: translateY(10px) scale(0.98); } }
 
-/* ---------- TIER SELECTOR CARDS (7 · 49 · 353) ---------- */
+/* ---------- TIER SELECTOR CARDS (7 · 49 · 354) ---------- */
 .tier-selector-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -2358,8 +2358,8 @@ function loadState() {
     if (raw) {
       const parsed = JSON.parse(raw);
       return {
-        tier: parsed.tier || 49,               // 7, 49, or 353
-        include354: !!parsed.include354,       // false = 353 Hanson Audit set, true = all 354 JSON nodes
+        tier: (parsed.tier === 353 ? 354 : (parsed.tier || 49)), // 7, 49, or 354
+        include354: true,                                       // unified 354 Kanon vectors
         viewMode: parsed.viewMode || "list",   // 'list' (all cards in plane) or 'focus' (1 card at a time like 12axes)
         focusIdx: parsed.focusIdx || 0,        // active card index in focus mode
         planeFilter: parsed.planeFilter || "all",
@@ -3333,7 +3333,7 @@ function renderTierSelectorHTML() {
   const p7 = PLANES.filter(p => isNodeAnswered("P", p.n)).length;
   const p49 = SENSES.filter(s => isNodeAnswered("S", s.id)).length;
   const vecs = activeTierVectors();
-  const p353 = vecs.filter(v => isNodeAnswered("V", v.uid)).length;
+  const p354 = vecs.filter(v => isNodeAnswered("V", v.uid)).length;
 
   return `
     <div class="tier-selector-grid">
@@ -3375,7 +3375,7 @@ function renderTierSelectorHTML() {
         <p>Every Australian Kanon node (<em>Mateship</em>, <em>The Fair Go</em>, <em>Terra Nullius</em>, <em>Songlines [FN]</em>) with direct comparison to the Pauline Hanson 354 Audit.</p>
         <div class="tier-card-meta">
           <span>⏱ ~35 min · Depth <span class="depth-dots"><i class="on"></i><i class="on"></i><i class="on"></i></span></span>
-          <span>${p353} / ${vecs.length} answered</span>
+          <span>${p354} / ${vecs.length} answered</span>
         </div>
       </div>
     </div>
@@ -4165,7 +4165,7 @@ function renderVectorCardHTML(v, planeHue) {
           <span class="badge" data-badge-title="Psochic Hegemony Coordinate (${escapeHtml(v.zone)})" data-badge-tip="υ = ${v.coords.v >= 0 ? "+" : ""}${v.coords.v} (Morality: who benefits), ψ = ${v.coords.psi >= 0 ? "+" : ""}${v.coords.psi} (Will: active vs passive). Rationale: ${escapeHtml(v.rationale)}">υ=${v.coords.v >= 0 ? "+" : ""}${v.coords.v}, ψ=${v.coords.psi >= 0 ? "+" : ""}${v.coords.psi} (${escapeHtml(v.zone)})</span>
           ${v.fn ? `<span class="badge badge-fn" data-badge-title="First Nations Perspective Node" data-badge-tip="Anchors the 65,000-year Indigenous continuum at address ${v.addr} alongside the post-1788 Commonwealth.">[FN] First Nations Perspective</span>` : ""}
           ${isShadow ? `<span class="badge badge-shadow" data-badge-title="Shadow / Corrective Vector (υ < 0)" data-badge-tip="This node represents a negative shadow or failure mode in the Australian Kanon. Rating +1 to +5 means seeing through and overcoming this shadow (Kanon HIT); rating −1 to −5 means being captured by it (Kanon FAIL).">Shadow Vector (Corrective Scale)</span>` : ""}
-          ${v.hansonVerdict ? `<span class="badge ${v.hansonVerdict === "HIT" ? "badge-hit" : "badge-fail"}" data-badge-title="Pauline Hanson 354-Vector Audit Verdict" data-badge-tip="In the full 353-vector Kanon Audit, Pauline Hanson's record was scored as a ${v.hansonVerdict} on ${escapeHtml(v.cleanName)}.">Hanson Audit: ${v.hansonVerdict}</span>` : ""}
+          ${v.hansonVerdict ? `<span class="badge ${v.hansonVerdict === "HIT" ? "badge-hit" : "badge-fail"}" data-badge-title="Pauline Hanson 354-Vector Audit Verdict" data-badge-tip="In the full 354-vector Kanon Audit, Pauline Hanson's record was scored as a ${v.hansonVerdict} on ${escapeHtml(v.cleanName)}.">Hanson Audit: ${v.hansonVerdict}</span>` : ""}
           ${v.alboVerdict ? `<span class="badge ${v.alboVerdict === "HIT" ? "badge-hit" : "badge-fail"}" data-badge-title="Anthony Albanese Audit Verdict" data-badge-tip="In the Albanese Kanon Audit, his record was scored as a ${v.alboVerdict} on ${escapeHtml(v.cleanName)}.">Albo Audit: ${v.alboVerdict}</span>` : ""}
         </div>
         <h3 class="sense-title" style="margin-top:6px;">${escapeHtml(v.name)}</h3>
@@ -4337,7 +4337,7 @@ function renderReview(app) {
   document.getElementById("btn-export-json").addEventListener("click", () => {
     const blob = new Blob([JSON.stringify({
       exportedAt: new Date().toISOString(),
-      survey: "Australian Kanon Should/Would Survey (7-49-353, -5..+5)",
+      survey: "Australian Kanon Should/Would Survey (7-49-354, -5..+5)",
       state: STATE
     }, null, 2)], { type: "application/json" });
     const url = URL.createObjectURL(blob);
