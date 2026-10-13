@@ -3700,8 +3700,8 @@ function renderABCDBlockHTML(prefix, id, item, planeHue, extraHeaderHTML = "", e
   `;
 }
 
-function bindABCDDelegation(container, onUpdateCallback) {
-  container.addEventListener("click", (e) => {
+function setupGlobalABCDDelegation() {
+  document.addEventListener("click", (e) => {
     // (?) Explain button
     const infoBtn = e.target.closest("[data-open-info-prefix]");
     if (infoBtn) {
@@ -3737,7 +3737,16 @@ function bindABCDDelegation(container, onUpdateCallback) {
       });
       const card = segBtn.closest(".sense-card");
       if (card) card.classList.toggle("answered", isNodeAnswered(prefix, id));
-      if (onUpdateCallback) onUpdateCallback();
+
+      // Update live plane badge if visible
+      const route = parseRoute();
+      if (route.page === "plane") {
+        const newSum = computePlaneSummary(route.planeNum);
+        const badge = document.getElementById("plane-live-badge");
+        if (badge) {
+          badge.textContent = `${newSum.answeredNodes}/${newSum.totalNodes} nodes answered ${newSum.total !== null ? `· Mean ${fmtSigned(newSum.total, 2)}` : ""}`;
+        }
+      }
       return;
     }
 
@@ -3756,7 +3765,15 @@ function bindABCDDelegation(container, onUpdateCallback) {
       }
       const card = clrBtn.closest(".sense-card");
       if (card) card.classList.toggle("answered", isNodeAnswered(prefix, id));
-      if (onUpdateCallback) onUpdateCallback();
+
+      const route = parseRoute();
+      if (route.page === "plane") {
+        const newSum = computePlaneSummary(route.planeNum);
+        const badge = document.getElementById("plane-live-badge");
+        if (badge) {
+          badge.textContent = `${newSum.answeredNodes}/${newSum.totalNodes} nodes answered ${newSum.total !== null ? `· Mean ${fmtSigned(newSum.total, 2)}` : ""}`;
+        }
+      }
       return;
     }
 
@@ -3767,7 +3784,6 @@ function bindABCDDelegation(container, onUpdateCallback) {
       const tag = blkBtn.getAttribute("data-blocker-tag");
       toggleBlocker(prefix, id, tag);
       blkBtn.classList.toggle("active", getBlockers(prefix, id).includes(tag));
-      if (onUpdateCallback) onUpdateCallback();
       return;
     }
 
@@ -4136,13 +4152,7 @@ function renderPlane(app, pNum) {
     });
   }
 
-  bindABCDDelegation(app, () => {
-    const newSum = computePlaneSummary(pNum);
-    const badge = document.getElementById("plane-live-badge");
-    if (badge) {
-      badge.textContent = `${newSum.answeredNodes}/${newSum.totalNodes} nodes answered ${newSum.total !== null ? `· Mean ${fmtSigned(newSum.total, 2)}` : ""}`;
-    }
-  });
+  // ABCD delegation is bound once globally on document
 }
 
 
@@ -4242,7 +4252,6 @@ function renderSearchResults() {
       </div>
       ${matchedVecs.map(v => renderVectorCardHTML(v, PLANE_BY_N[v.plane].hue)).join("")}
     `;
-    bindABCDDelegation(box);
   } else {
     const matchedSenses = SENSES.filter(s => (s.tags || []).includes(activeTopic));
     box.innerHTML = `
@@ -4264,7 +4273,6 @@ function renderSearchResults() {
         return renderABCDBlockHTML("S", s.id, s, p.hue, headerHTML);
       }).join("")}
     `;
-    bindABCDDelegation(box);
   }
 }
 
@@ -4883,6 +4891,7 @@ function renderResults(app) {
 
 // Initial mount
 setupGlobalTooltips();
+setupGlobalABCDDelegation();
 render();
 </script>
 </body>
