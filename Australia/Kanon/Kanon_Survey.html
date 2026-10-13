@@ -399,7 +399,7 @@ main.wide { max-width: 1280px; }
   border-left-color: #EAB308;
 }
 
-/* ---------- 12AXES-STYLE INLINE GLOSSARY TOOLTIPS ---------- */
+/* ---------- INLINE GLOSSARY TOOLTIPS ---------- */
 .glossary-term {
   border-bottom: 1.5px dotted #4F46E5;
   color: inherit;
@@ -449,7 +449,7 @@ main.wide { max-width: 1280px; }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* ---------- 12AXES-STYLE (?) INFO BUTTON & MODAL SHEET ---------- */
+/* ---------- (?) INFO BUTTON & MODAL SHEET ---------- */
 .info-btn {
   appearance: none;
   display: inline-flex;
@@ -1305,7 +1305,7 @@ main.wide { max-width: 1280px; }
   font-weight: 600;
 }
 
-/* ---------- RESULTS JUMP BAR (12AXES TOC STYLE) ---------- */
+/* ---------- RESULTS JUMP BAR (SECTION TOC) ---------- */
 .results-jump-bar {
   display: flex;
   flex-wrap: wrap;
@@ -1412,7 +1412,7 @@ main.wide { max-width: 1280px; }
   margin-top: 4px;
 }
 
-/* ---------- 12AXES SIGNATURE CARDS ---------- */
+/* ---------- NATIONAL SIGNATURE CARDS ---------- */
 .signature-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -1492,7 +1492,7 @@ main.wide { max-width: 1280px; }
   border: 2px solid #fff;
 }
 
-/* ---------- 12AXES-STYLE 7-PLANE BARS ---------- */
+/* ---------- 7-PLANE SPLIT BARS ---------- */
 .axes-row {
   padding: 14px 0;
   border-bottom: 1px solid var(--rule);
@@ -1860,7 +1860,6 @@ main.wide { max-width: 1280px; }
 <script>
 /* =========================================================================
    THE AUSTRALIAN KANON ABCD SURVEY & DIAGNOSTIC ENGINE (7 · 49 · 354)
-   Combines 12Axes Archetype & Explainer QoL with WWSUTRU Welfare Keyring
    ========================================================================= */
 
 const DATA = window.KANON_SURVEY_DATA;
@@ -1896,7 +1895,7 @@ VECTORS.forEach(v => {
   VECTORS_BY_SENSE[v.senseId].push(v);
 });
 
-/* ---------- 12AXES-STYLE INLINE GLOSSARY ENGINE ---------- */
+/* ---------- INLINE GLOSSARY ENGINE ---------- */
 const GLOSSARY_BY_ID = {};
 const GLOSSARY_PATTERNS = [];
 GLOSSARY.forEach(entry => {
@@ -2046,7 +2045,7 @@ function setupGlobalTooltips() {
   });
 }
 
-/* ---------- 12AXES-STYLE (?) INFO SHEET MODAL CONTROLLER ---------- */
+/* ---------- (?) INFO SHEET MODAL CONTROLLER ---------- */
 function openNodeInfoSheet(prefix, id) {
   let item = null;
   let hue = "var(--accent)";
@@ -2360,10 +2359,12 @@ function loadState() {
       return {
         tier: (parsed.tier === 353 ? 354 : (parsed.tier || 49)), // 7, 49, or 354
         include354: true,                                       // unified 354 Kanon vectors
-        viewMode: parsed.viewMode || "list",   // 'list' (all cards in plane) or 'focus' (1 card at a time like 12axes)
+        viewMode: parsed.viewMode || "list",   // 'list' (all cards in plane) or 'focus' (1 card at a time)
         focusIdx: parsed.focusIdx || 0,        // active card index in focus mode
         planeFilter: parsed.planeFilter || "all",
         compareTargetId: parsed.compareTargetId || "monash",
+        keyringTier: parsed.keyringTier || null,
+        keyringT3Plane: parsed.keyringT3Plane || 1,
         answers: parsed.answers || {},
         blockers: parsed.blockers || {},
         notes: parsed.notes || {},
@@ -2378,6 +2379,8 @@ function loadState() {
     focusIdx: 0,
     planeFilter: "all",
     compareTargetId: "monash",
+    keyringTier: null,
+    keyringT3Plane: 1,
     answers: {},
     blockers: {},
     notes: {},
@@ -2720,18 +2723,28 @@ function loadPresetProfile(presetId) {
 }
 
 /* =========================================================================
-   KEYRING PLOT SVG GENERATOR (EXACT WWSUTRU WELFARE-SURVEY IMPLEMENTATION)
+   KEYRING PLOT SVG GENERATOR: BIPOLAR LAYERED GEOMETRY (−5 .. 0 .. +5)
+   =========================================================================
+   Shaft = 0 Axis (Neutral).
+   Right deflection (+1..+5) = Positive / Support / Thriving (Plane Hue).
+   Left deflection (-1..-5) = Negative / Opposed / Broken / Betrayal (#DC2626 Crimson).
+   Layers along the blade = Perspectives A (Should), B (Personal Would), C (Circle), D (Society).
    ========================================================================= */
-// Extracts the 3 Left ("Should") teeth and 3 Right ("Would") teeth (-5..+5 or null) for a Sense ("1.1".."7.7").
-// Left teeth (`aVals`) encode the Ideal ("Should", A) across the 3 horizons.
-// Right teeth (`bVals`) encode the Actual ("Would") across the 3 horizons:
-//   Slot 0 (Inner tooth): Personal Actual ("Would", B)
-//   Slot 1 (Middle tooth): Community Circle ("Should & Would", C)
-//   Slot 2 (Outer tooth): Australian Society ("Would", D)
-// When Tier 3 vectors are answered in that Sense, the 3 slots also incorporate the inner/middle/outer vector ratings.
+
 function subKeyringSlots(senseId) {
   const sense = SENSE_BY_ID[senseId];
-  if (!sense) return { raw: [null, null, null, null, null, null], aVals: [null, null, null], bVals: [null, null, null], answered: [] };
+  if (!sense) {
+    return {
+      A: null, B: null, C: null, D: null,
+      layers: [
+        { id: "A", label: "Should", v: null },
+        { id: "B", label: "Personal", v: null },
+        { id: "C", label: "Circle", v: null },
+        { id: "D", label: "Society", v: null }
+      ],
+      answered: []
+    };
+  }
 
   const pA = getAns("P", sense.plane, "A");
   const pB = getAns("P", sense.plane, "B");
@@ -2744,82 +2757,89 @@ function subKeyringSlots(senseId) {
   const sD = getAns("S", senseId, "D");
 
   const vecs = (VECTORS_BY_SENSE[senseId] || []);
-  const vecNum = (v) => parseInt(String(v.addr || "").split(".")[2], 10) || 1;
-  const g0 = vecs.filter(v => vecNum(v) <= 3);
-  const g1 = vecs.filter(v => vecNum(v) === 4 || vecNum(v) === 5);
-  const g2 = vecs.filter(v => vecNum(v) >= 6);
+  const vA = avgNums(vecs.map(v => getAns("V", v.uid, "A")));
+  const vB = avgNums(vecs.map(v => getAns("V", v.uid, "B")));
+  const vC = avgNums(vecs.map(v => getAns("V", v.uid, "C")));
+  const vD = avgNums(vecs.map(v => getAns("V", v.uid, "D")));
 
-  const vA0 = avgNums(g0.map(v => getAns("V", v.uid, "A")));
-  const vB0 = avgNums(g0.map(v => getAns("V", v.uid, "B")));
-  const vA1 = avgNums(g1.map(v => getAns("V", v.uid, "A")));
-  const vB1 = avgNums(g1.map(v => getAns("V", v.uid, "C") ?? getAns("V", v.uid, "B")));
-  const vA2 = avgNums(g2.map(v => getAns("V", v.uid, "A")));
-  const vB2 = avgNums(g2.map(v => getAns("V", v.uid, "D") ?? getAns("V", v.uid, "B")));
+  const effA = vA ?? sA ?? pA;
+  const effB = vB ?? sB ?? pB ?? effA;
+  const effC = vC ?? sC ?? pC ?? effB;
+  const effD = vD ?? sD ?? pD ?? effB;
 
-  const hasVecA = vA0 !== null || vA1 !== null || vA2 !== null;
-  const hasVecB = vB0 !== null || vB1 !== null || vB2 !== null;
+  const layers = [
+    { id: "A", label: "Should", v: effA },
+    { id: "B", label: "Personal", v: effB },
+    { id: "C", label: "Circle", v: effC },
+    { id: "D", label: "Society", v: effD }
+  ];
 
-  const effA = sA ?? pA;
-  const effB = sB ?? pB ?? effA;
-  const effC = sC ?? pC ?? effB;
-  const effD = sD ?? pD ?? effB;
-
-  const aVals = hasVecA
-    ? [vA0 ?? effA, vA1 ?? effA, vA2 ?? effA]
-    : [effA, effA, effA];
-
-  const bVals = hasVecB
-    ? [vB0 ?? effB, vB1 ?? effC, vB2 ?? effD]
-    : [effB, effC, effD];
-
-  const raw = [aVals[0], bVals[0], aVals[1], bVals[1], aVals[2], bVals[2]];
-  const answered = raw.filter(v => v != null);
-  return { raw, aVals, bVals, answered };
+  const answered = layers.filter(l => l.v !== null);
+  return { A: effA, B: effB, C: effC, D: effD, layers, answered };
 }
 
-// One arm = one key blade. Teeth are cut into both edges clustered near the
-// shaft's tip (85%-98% of its length) -- the Should (A) vector's 3 slots on the left
-// edge, the Would (B/C/D) vector's 3 on the right, each side's 3 slots sharing the same
-// radial positions so a left/right pair lines up directly opposite each other.
-// `showScale` draws the bracket framing the tooth zone with "Should:+5" and "Would:+5"
-// labeled at each end, showing what full-length teeth look like.
+// Draw a single bipolar layered arm for a Sense (Tier 2 / Tier 3 Star)
 function armSVG(cx, cy, angleDeg, armLen, hue, subId, labelSize, showScale) {
   const ang = angleDeg * Math.PI / 180;
   const dx = Math.cos(ang), dy = Math.sin(ang);
-  const px = -dy, py = dx;
-  const { aVals, bVals, answered } = subKeyringSlots(subId);
+  const px = -dy, py = dx; // Perpendicular vector (points to the right side of the blade)
+  const { layers, answered } = subKeyringSlots(subId);
   const parts = [];
   const tipX = cx + dx * armLen, tipY = cy + dy * armLen;
+  const maxTlen = 16; // Maximum deflection for +-5
+
   if (!answered.length) {
-    parts.push(`<line x1="${cx.toFixed(1)}" y1="${cy.toFixed(1)}" x2="${tipX.toFixed(1)}" y2="${tipY.toFixed(1)}" stroke="var(--ink-soft)" stroke-width="1" opacity="0.3"/>`);
+    parts.push(`<line x1="${cx.toFixed(1)}" y1="${cy.toFixed(1)}" x2="${tipX.toFixed(1)}" y2="${tipY.toFixed(1)}" stroke="var(--ink-soft)" stroke-width="1.2" opacity="0.3"/>`);
   } else {
-    parts.push(`<line x1="${cx.toFixed(1)}" y1="${cy.toFixed(1)}" x2="${tipX.toFixed(1)}" y2="${tipY.toFixed(1)}" stroke="${hue}" stroke-width="4" stroke-linecap="round"/>`);
-    const slots = [0.85, 0.915, 0.98];
-    [[aVals, -1], [bVals, 1]].forEach(([vals, sgn]) => {
-      vals.forEach((v, i) => {
-        if (v == null) return;
-        const frac = slots[i];
-        const bx = cx + dx * armLen * frac, by = cy + dy * armLen * frac;
-        const norm = Math.max(0, Math.min(1, (v + 5) / 10));
-        const tlen = 3 + norm * 12;
-        const ex = bx + px * tlen * sgn, ey = by + py * tlen * sgn;
-        parts.push(`<line x1="${bx.toFixed(1)}" y1="${by.toFixed(1)}" x2="${ex.toFixed(1)}" y2="${ey.toFixed(1)}" stroke="${hue}" stroke-width="3" stroke-linecap="round"/>`);
-      });
+    // Centerline shaft (0 axis)
+    parts.push(`<line x1="${cx.toFixed(1)}" y1="${cy.toFixed(1)}" x2="${tipX.toFixed(1)}" y2="${tipY.toFixed(1)}" stroke="${hue}" stroke-width="3" stroke-linecap="round"/>`);
+    // 4 Layered slots along the blade: A (0.64), B (0.76), C (0.87), D (0.97)
+    const slotFracs = [0.64, 0.76, 0.87, 0.97];
+    layers.forEach((layer, i) => {
+      const v = layer.v;
+      const frac = slotFracs[i];
+      const bx = cx + dx * armLen * frac, by = cy + dy * armLen * frac;
+      if (v === null || v === undefined) {
+        parts.push(`<circle cx="${bx.toFixed(1)}" cy="${by.toFixed(1)}" r="1.5" fill="var(--ink-soft)" opacity="0.4"/>`);
+        return;
+      }
+      if (v === 0) {
+        parts.push(`<circle cx="${bx.toFixed(1)}" cy="${by.toFixed(1)}" r="2.2" fill="#64748B"/>`);
+        return;
+      }
+      const isPos = v > 0;
+      const norm = Math.min(1, Math.abs(v) / 5);
+      const tlen = 3 + norm * maxTlen;
+      const sgn = isPos ? 1 : -1; // +1 right (Plane Hue), -1 left (Crimson #DC2626)
+      const toothHue = isPos ? hue : "#DC2626";
+      const ex = bx + px * tlen * sgn, ey = by + py * tlen * sgn;
+      parts.push(`<line x1="${bx.toFixed(1)}" y1="${by.toFixed(1)}" x2="${ex.toFixed(1)}" y2="${ey.toFixed(1)}" stroke="${toothHue}" stroke-width="3.2" stroke-linecap="round"/>`);
     });
   }
+
   if (showScale) {
-    const bx = cx + dx * armLen * 0.83, by = cy + dy * armLen * 0.83;
-    const fw = 15; // frame half-width, matches max tooth length (3+12=15)
-    const p1x = bx - px * fw, p1y = by - py * fw, p2x = bx + px * fw, p2y = by + py * fw;
-    const p3x = tipX - px * fw, p3y = tipY - py * fw, p4x = tipX + px * fw, p4y = tipY + py * fw;
-    parts.push(`<polyline points="${p1x.toFixed(1)},${p1y.toFixed(1)} ${p2x.toFixed(1)},${p2y.toFixed(1)}" stroke="var(--ink)" stroke-width="1" opacity="0.35"/>`);
-    parts.push(`<polyline points="${p1x.toFixed(1)},${p1y.toFixed(1)} ${p3x.toFixed(1)},${p3y.toFixed(1)}" stroke="var(--ink)" stroke-width="1" opacity="0.35"/>`);
-    parts.push(`<polyline points="${p2x.toFixed(1)},${p2y.toFixed(1)} ${p4x.toFixed(1)},${p4y.toFixed(1)}" stroke="var(--ink)" stroke-width="1" opacity="0.35"/>`);
-    parts.push(`<text x="${(p3x - px * 5).toFixed(1)}" y="${(p3y - py * 5).toFixed(1)}" font-size="8" fill="var(--ink)" opacity="0.5" text-anchor="middle" font-family="'JetBrains Mono', monospace">Should:+5</text>`);
-    parts.push(`<text x="${(p4x + px * 5).toFixed(1)}" y="${(p4y + py * 5).toFixed(1)}" font-size="8" fill="var(--ink)" opacity="0.5" text-anchor="middle" font-family="'JetBrains Mono', monospace">Would:+5</text>`);
+    const fw = maxTlen + 4;
+    const bx0 = cx + dx * armLen * 0.60, by0 = cy + dy * armLen * 0.60;
+    const bx1 = tipX, by1 = tipY;
+    const pLeft0 = { x: bx0 - px * fw, y: by0 - py * fw };
+    const pRight0 = { x: bx0 + px * fw, y: by0 + py * fw };
+    const pLeft1 = { x: bx1 - px * fw, y: by1 - py * fw };
+    const pRight1 = { x: bx1 + px * fw, y: by1 + py * fw };
+
+    // U-bracket framing [-5, +5] around shaft (0)
+    parts.push(`<polyline points="${pLeft0.x.toFixed(1)},${pLeft0.y.toFixed(1)} ${pRight0.x.toFixed(1)},${pRight0.y.toFixed(1)}" stroke="var(--ink)" stroke-width="0.7" opacity="0.25"/>`);
+    parts.push(`<polyline points="${pLeft0.x.toFixed(1)},${pLeft0.y.toFixed(1)} ${pLeft1.x.toFixed(1)},${pLeft1.y.toFixed(1)}" stroke="#DC2626" stroke-width="0.7" opacity="0.35"/>`);
+    parts.push(`<polyline points="${pRight0.x.toFixed(1)},${pRight0.y.toFixed(1)} ${pRight1.x.toFixed(1)},${pRight1.y.toFixed(1)}" stroke="${hue}" stroke-width="0.7" opacity="0.35"/>`);
+
+    if (Math.abs(angleDeg - (-90)) < 1) { // Top arm gets explicit scale callouts
+      parts.push(`<text x="${(pLeft1.x - px * 3).toFixed(1)}" y="${(pLeft1.y - py * 3).toFixed(1)}" font-size="7.5" fill="#DC2626" opacity="0.7" text-anchor="middle" font-family="'JetBrains Mono', monospace">−5</text>`);
+      parts.push(`<text x="${bx1.toFixed(1)}" y="${(by1 - py * 3).toFixed(1)}" font-size="7" fill="var(--ink-soft)" opacity="0.6" text-anchor="middle" font-family="'JetBrains Mono', monospace">0</text>`);
+      parts.push(`<text x="${(pRight1.x + px * 3).toFixed(1)}" y="${(pRight1.y + py * 3).toFixed(1)}" font-size="7.5" fill="${hue}" opacity="0.7" text-anchor="middle" font-family="'JetBrains Mono', monospace">+5</text>`);
+    }
   }
+
   if (labelSize) {
-    const lx = cx + dx * (armLen + labelSize + 4), ly = cy + dy * (armLen + labelSize + 4);
+    const lx = cx + dx * (armLen + labelSize + 6), ly = cy + dy * (armLen + labelSize + 6);
     parts.push(`<text x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" font-size="${labelSize}" fill="var(--ink-soft)" text-anchor="middle" dominant-baseline="middle" font-family="'JetBrains Mono', monospace">${escapeHtml(subId)}</text>`);
   }
   return parts.join("");
@@ -2828,89 +2848,330 @@ function armSVG(cx, cy, angleDeg, armLen, hue, subId, labelSize, showScale) {
 function planeStarSVG(pNum, maxWidth = 200) {
   const p = PLANE_BY_N[pNum];
   const senses = SENSES_BY_PLANE[pNum] || [];
-  const cx = 100, cy = 100, armLen = 78;
+  const cx = 100, cy = 100, armLen = 76;
   const hue = p.hue;
-  const parts = senses.map((s, i) => armSVG(cx, cy, -90 + i * (360 / 7), armLen, hue, s.id, 9, true));
+  const parts = senses.map((s, i) => armSVG(cx, cy, -90 + i * (360 / 7), armLen, hue, s.id, 8.5, true));
   return `<svg viewBox="0 0 200 200" style="max-width:${maxWidth}px;display:block;margin:0 auto" role="img" aria-label="${escapeHtml(p.name)} diagnostic star">
     <circle cx="${cx}" cy="${cy}" r="3" fill="${hue}"/>
     ${parts.join("")}
   </svg>`;
 }
 
-// One arm direction (Q1-Q7, the i-th sub-indicator slot, same generic
-// position every plane shares) carrying all 7 planes' teeth at once.
-// Each plane gets its own thin ring within the tooth zone, nested outer-to-inner
-// from Plane 1 (Identity) to Plane 7 (Result): 3 Should teeth on the left of that
-// ring, 3 Would teeth on the right -- 7 rings x 3 = 21 teeth per side, all on the one arm.
+/* ---------- TIER 2: 49 SENSES OVERLAID KEYRING STAR (7 ARMS X 7 PLANE RINGS) ---------- */
 function combinedArmSVG(cx, cy, angleDeg, armLen, i) {
   const ang = angleDeg * Math.PI / 180;
   const dx = Math.cos(ang), dy = Math.sin(ang);
-  const px = -dy, py = dx;
+  const px = -dy, py = dx; // Perpendicular: +right, -left
   const parts = [];
   const tipX = cx + dx * armLen, tipY = cy + dy * armLen;
-  parts.push(`<line x1="${cx.toFixed(1)}" y1="${cy.toFixed(1)}" x2="${tipX.toFixed(1)}" y2="${tipY.toFixed(1)}" stroke="var(--ink-soft)" stroke-width="1" opacity="0.3"/>`);
-  const maxTlen = 36;
-  const zoneStart = 0.5, zoneEnd = 0.98, ringW = (zoneEnd - zoneStart) / 7;
+
+  // Shaft (0 axis)
+  parts.push(`<line x1="${cx.toFixed(1)}" y1="${cy.toFixed(1)}" x2="${tipX.toFixed(1)}" y2="${tipY.toFixed(1)}" stroke="var(--ink-soft)" stroke-width="1.2" opacity="0.35"/>`);
+
+  const maxTlen = 24;
+  const zoneStart = 0.45, zoneEnd = 0.98;
+  const ringW = (zoneEnd - zoneStart) / 7;
+
+  // 7 nested Plane rings from outer (Plane 1) to inner (Plane 7)
   PLANES.forEach((p, pi) => {
     const senseId = `${p.n}.${i + 1}`;
-    const { aVals, bVals } = subKeyringSlots(senseId);
+    const { layers } = subKeyringSlots(senseId);
     const ringStart = zoneEnd - (pi + 1) * ringW;
-    const slotFracs = [ringStart + ringW * 0.2, ringStart + ringW * 0.5, ringStart + ringW * 0.8];
-    const hue = p.hue;
-    [[aVals, -1], [bVals, 1]].forEach(([vals, sgn]) => {
-      vals.forEach((v, k) => {
-        if (v == null) return;
-        const bx = cx + dx * armLen * slotFracs[k], by = cy + dy * armLen * slotFracs[k];
-        const norm = Math.max(0, Math.min(1, (v + 5) / 10));
-        const tlen = 4 + norm * maxTlen;
-        const ex = bx + px * tlen * sgn, ey = by + py * tlen * sgn;
-        parts.push(`<line x1="${bx.toFixed(1)}" y1="${by.toFixed(1)}" x2="${ex.toFixed(1)}" y2="${ey.toFixed(1)}" stroke="${hue}" stroke-width="3.2" stroke-linecap="round"/>`);
-      });
+    // 3 layered teeth per ring: Should (A), Personal (B), Society (D)
+    const slotFracs = [ringStart + ringW * 0.22, ringStart + ringW * 0.55, ringStart + ringW * 0.85];
+    const pickedLayers = [layers[0], layers[1], layers[3]]; // A, B, D
+
+    pickedLayers.forEach((layer, k) => {
+      const v = layer.v;
+      if (v === null || v === undefined) return;
+      const frac = slotFracs[k];
+      const bx = cx + dx * armLen * frac, by = cy + dy * armLen * frac;
+      if (v === 0) {
+        parts.push(`<circle cx="${bx.toFixed(1)}" cy="${by.toFixed(1)}" r="1.8" fill="#64748B"/>`);
+        return;
+      }
+      const isPos = v > 0;
+      const norm = Math.min(1, Math.abs(v) / 5);
+      const tlen = 3 + norm * maxTlen;
+      const sgn = isPos ? 1 : -1; // +1 right in Plane Hue, -1 left in Crimson #DC2626
+      const toothHue = isPos ? p.hue : "#DC2626";
+      const ex = bx + px * tlen * sgn, ey = by + py * tlen * sgn;
+      parts.push(`<line x1="${bx.toFixed(1)}" y1="${by.toFixed(1)}" x2="${ex.toFixed(1)}" y2="${ey.toFixed(1)}" stroke="${toothHue}" stroke-width="2.6" stroke-linecap="round"/>`);
     });
   });
-  // Scale bracket — frames the full 7-plane tooth zone
-  const fw = maxTlen + 6;
+
+  // Bipolar scale bracket framing the entire 7-plane zone
+  const fw = maxTlen + 4;
   const bx0 = cx + dx * armLen * zoneStart, by0 = cy + dy * armLen * zoneStart;
-  const bx1 = cx + dx * armLen * zoneEnd,   by1 = cy + dy * armLen * zoneEnd;
-  const p1x = bx0 - px * fw, p1y = by0 - py * fw, p2x = bx0 + px * fw, p2y = by0 + py * fw;
-  const p3x = bx1 - px * fw, p3y = by1 - py * fw, p4x = bx1 + px * fw, p4y = by1 + py * fw;
-  parts.push(`<polyline points="${p1x.toFixed(1)},${p1y.toFixed(1)} ${p2x.toFixed(1)},${p2y.toFixed(1)}" stroke="var(--ink)" stroke-width="1" opacity="0.3"/>`);
-  parts.push(`<polyline points="${p1x.toFixed(1)},${p1y.toFixed(1)} ${p3x.toFixed(1)},${p3y.toFixed(1)}" stroke="var(--ink)" stroke-width="1" opacity="0.3"/>`);
-  parts.push(`<polyline points="${p2x.toFixed(1)},${p2y.toFixed(1)} ${p4x.toFixed(1)},${p4y.toFixed(1)}" stroke="var(--ink)" stroke-width="1" opacity="0.3"/>`);
-  parts.push(`<text x="${(p3x - px * 5).toFixed(1)}" y="${(p3y - py * 5).toFixed(1)}" font-size="8" fill="var(--ink)" opacity="0.5" text-anchor="middle" font-family="'JetBrains Mono', monospace">Should:+5</text>`);
-  parts.push(`<text x="${(p4x + px * 5).toFixed(1)}" y="${(p4y + py * 5).toFixed(1)}" font-size="8" fill="var(--ink)" opacity="0.5" text-anchor="middle" font-family="'JetBrains Mono', monospace">Would:+5</text>`);
+  const bx1 = tipX, by1 = tipY;
+  const pLeft0 = { x: bx0 - px * fw, y: by0 - py * fw };
+  const pRight0 = { x: bx0 + px * fw, y: by0 + py * fw };
+  const pLeft1 = { x: bx1 - px * fw, y: by1 - py * fw };
+  const pRight1 = { x: bx1 + px * fw, y: by1 + py * fw };
+
+  parts.push(`<polyline points="${pLeft0.x.toFixed(1)},${pLeft0.y.toFixed(1)} ${pRight0.x.toFixed(1)},${pRight0.y.toFixed(1)}" stroke="var(--ink)" stroke-width="0.8" opacity="0.25"/>`);
+  parts.push(`<polyline points="${pLeft0.x.toFixed(1)},${pLeft0.y.toFixed(1)} ${pLeft1.x.toFixed(1)},${pLeft1.y.toFixed(1)}" stroke="#DC2626" stroke-width="0.8" opacity="0.35"/>`);
+  parts.push(`<polyline points="${pRight0.x.toFixed(1)},${pRight0.y.toFixed(1)} ${pRight1.x.toFixed(1)},${pRight1.y.toFixed(1)}" stroke="var(--accent)" stroke-width="0.8" opacity="0.35"/>`);
+
+  if (i === 0) { // Q1 arm gets scale callouts
+    parts.push(`<text x="${(pLeft1.x - px * 4).toFixed(1)}" y="${(pLeft1.y - py * 4).toFixed(1)}" font-size="8" fill="#DC2626" opacity="0.75" text-anchor="middle" font-family="'JetBrains Mono', monospace">−5</text>`);
+    parts.push(`<text x="${bx1.toFixed(1)}" y="${(by1 - py * 4).toFixed(1)}" font-size="7.5" fill="var(--ink-soft)" opacity="0.6" text-anchor="middle" font-family="'JetBrains Mono', monospace">0</text>`);
+    parts.push(`<text x="${(pRight1.x + px * 4).toFixed(1)}" y="${(pRight1.y + py * 4).toFixed(1)}" font-size="8" fill="var(--accent)" opacity="0.75" text-anchor="middle" font-family="'JetBrains Mono', monospace">+5</text>`);
+  }
+
   const S_NAMES = [".1 Who", ".2 What", ".3 Where", ".4 Why", ".5 How", ".6 Cause", ".7 Effect"];
-  const lx = cx + dx * (armLen + 16), ly = cy + dy * (armLen + 16);
+  const lx = cx + dx * (armLen + 18), ly = cy + dy * (armLen + 18);
   parts.push(`<text x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" font-size="9" font-weight="600" fill="var(--ink)" text-anchor="middle" dominant-baseline="middle" font-family="'JetBrains Mono', monospace">Q${i + 1} (${S_NAMES[i]})</text>`);
   return parts.join("");
 }
 
+/* ---------- TIER 1 KEYRING: 7 PILLARS MASTER KEY (1 ARM PER PLANE, 4 BIPOLAR LAYERS) ---------- */
+function pillarArmSVG(cx, cy, angleDeg, armLen, pNum) {
+  const p = PLANE_BY_N[pNum];
+  const sum = computePlaneSummary(pNum);
+  const ang = angleDeg * Math.PI / 180;
+  const dx = Math.cos(ang), dy = Math.sin(ang);
+  const px = -dy, py = dx; // Perpendicular: +1 right, -1 left
+  const parts = [];
+  const tipX = cx + dx * armLen, tipY = cy + dy * armLen;
+
+  const hasAns = isNodeAnswered("P", pNum) || sum.total !== null;
+  const shaftColor = hasAns ? p.hue : "var(--ink-soft)";
+  const shaftWidth = hasAns ? 4.5 : 1.5;
+  const shaftOpacity = hasAns ? 1 : 0.25;
+
+  // Centerline shaft (0 Axis)
+  parts.push(`<line x1="${cx.toFixed(1)}" y1="${cy.toFixed(1)}" x2="${tipX.toFixed(1)}" y2="${tipY.toFixed(1)}" stroke="${shaftColor}" stroke-width="${shaftWidth}" opacity="${shaftOpacity}" stroke-linecap="round"/>`);
+
+  const maxTlen = 26; // Maximum deflection for +-5
+  // 4 Horizon Layers along the blade:
+  const layers = [
+    { tag: "A", name: "Should (A)", frac: 0.62, v: sum.A },
+    { tag: "B", name: "Personal (B)", frac: 0.74, v: sum.B },
+    { tag: "C", name: "Circle (C)", frac: 0.86, v: sum.C },
+    { tag: "D", name: "Society (D)", frac: 0.98, v: sum.D }
+  ];
+
+  if (hasAns) {
+    layers.forEach(layer => {
+      const v = layer.v;
+      const bx = cx + dx * armLen * layer.frac, by = cy + dy * armLen * layer.frac;
+      if (v === null || v === undefined) {
+        parts.push(`<circle cx="${bx.toFixed(1)}" cy="${by.toFixed(1)}" r="2" fill="var(--ink-soft)" opacity="0.4"/>`);
+        return;
+      }
+      if (v === 0) {
+        parts.push(`<circle cx="${bx.toFixed(1)}" cy="${by.toFixed(1)}" r="2.8" fill="#64748B"/>`);
+        return;
+      }
+      const isPos = v > 0;
+      const norm = Math.min(1, Math.abs(v) / 5);
+      const tlen = 4 + norm * maxTlen;
+      const sgn = isPos ? 1 : -1; // +1 right in Plane Hue, -1 left in Crimson #DC2626
+      const toothHue = isPos ? p.hue : "#DC2626";
+      const ex = bx + px * tlen * sgn, ey = by + py * tlen * sgn;
+      parts.push(`<line x1="${bx.toFixed(1)}" y1="${by.toFixed(1)}" x2="${ex.toFixed(1)}" y2="${ey.toFixed(1)}" stroke="${toothHue}" stroke-width="3.8" stroke-linecap="round"/>`);
+      // Layer label tag along the shaft
+      parts.push(`<text x="${(bx - dx * 4).toFixed(1)}" y="${(by - dy * 4).toFixed(1)}" font-size="6.5" font-weight="700" fill="var(--ink-soft)" opacity="0.6" text-anchor="middle" dominant-baseline="middle" font-family="'JetBrains Mono', monospace">${layer.tag}</text>`);
+    });
+  }
+
+  // Scale bracket framing the 4-layer tooth zone [-5, +5]
+  const fw = maxTlen + 4;
+  const bx0 = cx + dx * armLen * 0.58, by0 = cy + dy * armLen * 0.58;
+  const bx1 = tipX, by1 = tipY;
+  const pLeft0 = { x: bx0 - px * fw, y: by0 - py * fw };
+  const pRight0 = { x: bx0 + px * fw, y: by0 + py * fw };
+  const pLeft1 = { x: bx1 - px * fw, y: by1 - py * fw };
+  const pRight1 = { x: bx1 + px * fw, y: by1 + py * fw };
+
+  parts.push(`<polyline points="${pLeft0.x.toFixed(1)},${pLeft0.y.toFixed(1)} ${pRight0.x.toFixed(1)},${pRight0.y.toFixed(1)}" stroke="var(--ink)" stroke-width="0.8" opacity="0.25"/>`);
+  parts.push(`<polyline points="${pLeft0.x.toFixed(1)},${pLeft0.y.toFixed(1)} ${pLeft1.x.toFixed(1)},${pLeft1.y.toFixed(1)}" stroke="#DC2626" stroke-width="0.8" opacity="0.4"/>`);
+  parts.push(`<polyline points="${pRight0.x.toFixed(1)},${pRight0.y.toFixed(1)} ${pRight1.x.toFixed(1)},${pRight1.y.toFixed(1)}" stroke="${p.hue}" stroke-width="0.8" opacity="0.4"/>`);
+
+  if (pNum === 1) { // Top arm gets explicit scale text
+    parts.push(`<text x="${(pLeft1.x - px * 5).toFixed(1)}" y="${(pLeft1.y - py * 5).toFixed(1)}" font-size="8" fill="#DC2626" opacity="0.8" text-anchor="middle" font-family="'JetBrains Mono', monospace">−5</text>`);
+    parts.push(`<text x="${bx1.toFixed(1)}" y="${(by1 - py * 5).toFixed(1)}" font-size="7.5" fill="var(--ink-soft)" opacity="0.7" text-anchor="middle" font-family="'JetBrains Mono', monospace">0</text>`);
+    parts.push(`<text x="${(pRight1.x + px * 5).toFixed(1)}" y="${(pRight1.y + py * 5).toFixed(1)}" font-size="8" fill="${p.hue}" opacity="0.8" text-anchor="middle" font-family="'JetBrains Mono', monospace">+5</text>`);
+  }
+
+  // Label at tip
+  const labelDist = armLen + 22;
+  const lx = cx + dx * labelDist, ly = cy + dy * labelDist;
+  parts.push(`<text x="${lx.toFixed(1)}" y="${(ly - 5).toFixed(1)}" font-size="9.5" font-weight="700" fill="${p.hue}" text-anchor="middle" dominant-baseline="middle" font-family="'JetBrains Mono', monospace">P${p.n} ${escapeHtml(p.name)}</text>`);
+  parts.push(`<text x="${lx.toFixed(1)}" y="${(ly + 8).toFixed(1)}" font-size="7.5" fill="var(--ink-soft)" text-anchor="middle" dominant-baseline="middle" font-family="'Inter', sans-serif">${escapeHtml(p.pillar)}</text>`);
+
+  return parts.join("");
+}
+
+function pillarKeyringSVG() {
+  const cx = 240, cy = 240, armLen = 160;
+  const parts = [];
+  for (let i = 0; i < 7; i++) {
+    parts.push(pillarArmSVG(cx, cy, -90 + i * (360 / 7), armLen, i + 1));
+  }
+  const legend = PLANES.map(p => {
+    const sum = computePlaneSummary(p.n);
+    const scoreStr = sum.total !== null ? fmtSigned(sum.total, 1) : "—";
+    return `<span style="display:inline-flex;align-items:center;gap:5px;margin:3px 10px;font-size:12px;"><span style="width:10px;height:10px;border-radius:50%;background:${p.hue};display:inline-block"></span><strong>P${p.n} ${escapeHtml(p.name)}:</strong> <span class="mono">${scoreStr}</span></span>`;
+  }).join("");
+
+  return `<svg viewBox="0 0 480 480" style="max-width:460px;width:100%;display:block;margin:0 auto" role="img" aria-label="Tier 1 Master Keyring: 7 Pillars, 1 arm per Plane, 4 Bipolar Layers">
+    <circle cx="${cx}" cy="${cy}" r="4" fill="var(--ink)"/>
+    <circle cx="${cx}" cy="${cy}" r="12" fill="none" stroke="var(--ink-soft)" stroke-width="1.2" opacity="0.4"/>
+    ${parts.join("")}
+  </svg>
+  <div style="margin:12px 0 0;text-align:center;line-height:1.6">${legend}</div>`;
+}
+
 function combinedStarSVG() {
-  const cx = 220, cy = 220, armLen = 170;
+  const cx = 220, cy = 220, armLen = 165;
   const parts = [];
   for (let i = 0; i < 7; i++) parts.push(combinedArmSVG(cx, cy, -90 + i * (360 / 7), armLen, i));
   const legend = PLANES.map(p => `<span style="display:inline-flex;align-items:center;gap:5px;margin-right:12px"><span style="width:9px;height:9px;border-radius:50%;background:${p.hue};display:inline-block"></span>P${p.n} ${escapeHtml(p.name)}</span>`).join("");
-  return `<svg viewBox="0 0 440 440" style="max-width:440px;width:100%;display:block;margin:0 auto" role="img" aria-label="All seven planes overlaid, one arm per question position, plane 1 outermost to plane 7 innermost">
+  return `<svg viewBox="0 0 440 440" style="max-width:440px;width:100%;display:block;margin:0 auto" role="img" aria-label="Tier 2 Keyring: All seven planes overlaid, one arm per question position, bipolar layers">
     <circle cx="${cx}" cy="${cy}" r="3.5" fill="var(--ink)"/>
     ${parts.join("")}
   </svg>
   <p style="font-size:12.5px;margin:10px 0 0;text-align:center;line-height:1.7">${legend}</p>`;
 }
 
-// Baked-in illustrative mini keyring diagram (from welfare-survey.html)
+/* ---------- TIER 3 KEYRING: 354 VECTORS DIAGNOSTIC FLEET & ZOOM INSPECTOR ---------- */
+function tier3KeyringHTML(selectedPlane = 1) {
+  const p = selectedPlane === "all" ? null : (PLANE_BY_N[selectedPlane] || PLANE_BY_N[1]);
+  const tabs = PLANES.map(pl => {
+    const isActive = selectedPlane !== "all" && pl.n === (p ? p.n : 1);
+    const vCount = activeTierVectors(pl.n).length;
+    return `<button type="button" class="btn btn-sm ${isActive ? 'btn-warm' : 'btn-secondary'}" data-t3-plane="${pl.n}" style="${isActive ? `background:${pl.hue};border-color:${pl.hue};color:#fff;font-weight:700;` : 'font-size:0.75rem;'}">P${pl.n} ${pl.name} (${vCount}v)</button>`;
+  }).join("");
+  const allActive = selectedPlane === "all";
+  const allBtn = `<button type="button" class="btn btn-sm ${allActive ? 'btn-warm' : 'btn-secondary'}" data-t3-plane="all" style="${allActive ? 'background:#0e1235;border-color:#0e1235;color:#fff;font-weight:700;' : 'font-size:0.75rem;'}">All 7 Planes Fleet</button>`;
+
+  let contentHTML = "";
+  if (selectedPlane === "all") {
+    contentHTML = `
+      <div class="plane-stars-grid" style="margin-top:12px;width:100%;">
+        ${PLANES.map(pl => {
+          const sum = computePlaneSummary(pl.n);
+          const vecs = activeTierVectors(pl.n);
+          const ansVecs = vecs.filter(v => isNodeAnswered("V", v.uid)).length;
+          return `
+            <div class="plane-star-card" style="--plane-color:${pl.hue};cursor:pointer;" data-t3-plane="${pl.n}" title="Click to zoom into Plane ${pl.n}">
+              <div class="mono" style="font-size:0.74rem;color:${pl.hue};font-weight:700;">PLANE ${pl.n} · ${pl.pillar.toUpperCase()}</div>
+              <h4 style="font-size:1.02rem;margin:3px 0 6px;">${pl.name}</h4>
+              ${planeStarSVG(pl.n, 180)}
+              <div class="mono" style="font-size:0.74rem;color:var(--ink-soft);margin-top:6px;">
+                ${ansVecs}/${vecs.length} vectors · ${sum.total !== null ? `Mean ${fmtSigned(sum.total, 1)}` : "Unrated"}
+              </div>
+            </div>
+          `;
+        }).join("")}
+      </div>
+    `;
+  } else {
+    const sum = computePlaneSummary(p.n);
+    const vecs = activeTierVectors(p.n);
+    const ansVecs = vecs.filter(v => isNodeAnswered("V", v.uid)).length;
+    const pSenses = SENSES_BY_PLANE[p.n] || [];
+
+    contentHTML = `
+      <div style="display:flex;flex-direction:column;align-items:center;width:100%;margin-top:8px;">
+        <div style="text-align:center;margin-bottom:8px;">
+          <span class="mono" style="color:${p.hue};font-weight:700;font-size:0.8rem;">PLANE ${p.n} · ${p.pillar.toUpperCase()}</span>
+          <h3 style="font-size:1.35rem;margin:2px 0;">${p.name} — ${escapeHtml(p.blurb)}</h3>
+          <p style="margin:0;font-size:0.85rem;color:var(--ink-soft);">
+            Deep Vector Resolution: 7 Senses (Arms) · ${ansVecs}/${vecs.length} Vectors Rated · ${sum.total !== null ? `Mean: ${fmtSigned(sum.total, 2)}` : "Unrated"}
+          </p>
+        </div>
+        ${planeStarSVG(p.n, 340)}
+        <div style="margin-top:14px;width:100%;max-width:540px;">
+          <div style="font-size:0.82rem;font-weight:700;margin-bottom:6px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:0.04em;">7 Sense Arms in Plane ${p.n}:</div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:6px;">
+            ${pSenses.map(s => {
+              const sSum = computeSenseSummary(s.id);
+              const sVecs = VECTORS_BY_SENSE[s.id] || [];
+              const sAns = sVecs.filter(v => isNodeAnswered("V", v.uid)).length;
+              return `
+                <div style="background:var(--bg-inset);padding:7px 10px;border-radius:6px;border:1px solid var(--rule);font-size:0.8rem;">
+                  <div style="font-weight:700;display:flex;justify-content:space-between;align-items:baseline;">
+                    <span>${s.id} · ${escapeHtml(s.title)}</span>
+                    <span class="mono" style="color:${p.hue}">${sSum.total !== null ? fmtSigned(sSum.total, 1) : "—"}</span>
+                  </div>
+                  <div class="mono" style="font-size:0.71rem;color:var(--ink-muted);margin-top:2px;">
+                    ${sAns}/${sVecs.length}v · Should A: ${fmtSigned(sSum.A, 1)} · Personal B: ${fmtSigned(sSum.B, 1)} · Society D: ${fmtSigned(sSum.D, 1)}
+                  </div>
+                </div>
+              `;
+            }).join("")}
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  return `
+    <div style="display:flex;gap:5px;flex-wrap:wrap;justify-content:center;margin-bottom:12px;width:100%;">
+      ${tabs}
+      ${allBtn}
+    </div>
+    ${contentHTML}
+  `;
+}
+
+/* ---------- KEYRING SECTION CONTAINER WITH INTERACTIVE TIER SWITCHER ---------- */
+function renderKeyringStageHTML(activeTier, selectedT3Plane = 1) {
+  let title = "";
+  let sub = "";
+  let plotHTML = "";
+
+  if (activeTier === 7) {
+    title = "Tier 1: 7 Pillars Master Key";
+    sub = "7 arms radiating outward (one arm per Plane) · 4 Bipolar Layers (Should A, Personal B, Circle C, Society D) along each blade.";
+    plotHTML = pillarKeyringSVG();
+  } else if (activeTier === 354) {
+    title = "Tier 3: 354 Vectors Diagnostic Dashboard";
+    sub = "Deep vector resolution across 354 Kanon vectors. Inspect individual Plane diagnostic stars with vector-derived tooth depths.";
+    plotHTML = tier3KeyringHTML(selectedT3Plane);
+  } else {
+    title = "Tier 2: 49 Senses Overlaid Keyring Star";
+    sub = "7 question arms (Q1–Q7) overlaid with 7 nested Plane rings (P1 outermost to P7 innermost) · Bipolar layers along each arm.";
+    plotHTML = combinedStarSVG();
+  }
+
+  return `
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;width:100%;margin-bottom:12px;">
+      <div>
+        <div class="eyebrow" style="align-self:flex-start;">Bipolar Layered Keyring Plot (−5 .. 0 .. +5)</div>
+        <h3 style="align-self:flex-start;margin:2px 0 4px;">${escapeHtml(title)}</h3>
+        <p style="color:var(--ink-soft);font-size:0.85rem;margin:0;line-height:1.45;align-self:flex-start;">
+          ${escapeHtml(sub)}
+        </p>
+      </div>
+      <div class="keyring-tier-toggle" style="display:inline-flex;background:var(--bg-inset);padding:3px;border-radius:8px;border:1px solid var(--rule);flex-shrink:0;">
+        <button type="button" class="btn btn-sm ${activeTier === 7 ? 'active' : ''}" data-keyring-tier="7" style="border:none;padding:5px 11px;font-size:0.77rem;font-weight:700;${activeTier === 7 ? 'background:#0e1235;color:#fff;' : 'background:transparent;color:var(--ink-soft);'}">Tier 1 · 7 Pillars</button>
+        <button type="button" class="btn btn-sm ${activeTier === 49 ? 'active' : ''}" data-keyring-tier="49" style="border:none;padding:5px 11px;font-size:0.77rem;font-weight:700;${activeTier === 49 ? 'background:#0e1235;color:#fff;' : 'background:transparent;color:var(--ink-soft);'}">Tier 2 · 49 Senses</button>
+        <button type="button" class="btn btn-sm ${activeTier === 354 ? 'active' : ''}" data-keyring-tier="354" style="border:none;padding:5px 11px;font-size:0.77rem;font-weight:700;${activeTier === 354 ? 'background:#0e1235;color:#fff;' : 'background:transparent;color:var(--ink-soft);'}">Tier 3 · 354 Vectors</button>
+      </div>
+    </div>
+    ${keyringTutorialBoxHTML(activeTier)}
+    ${plotHTML}
+  `;
+}
+
+// Baked-in illustrative mini keyring diagram demonstrating bipolar layered cuts
 function keyringExampleSVG() {
   const cx = 100, cy = 100, r = 82, viewW = 200, viewH = 220;
   const HUES_EX = PLANES.map(p => p.hue);
   const DATA_EX = [
-    { a: [5, 4, 3], b: [5, 3, 2] }, // Plane 1 — Identity
-    { a: [3, 3, 4], b: [4, 2, 3] }, // Plane 2 — Definition
-    { a: [4, 4, 5], b: [2, 3, 4] }, // Plane 3 — Land
-    { a: [3, 2, 3], b: [3, 3, 2] }, // Plane 4 — Drive
-    { a: [5, 4, 4], b: [4, 3, 3] }, // Plane 5 — Method
-    { a: [2, 3, 2], b: [3, 2, 2] }, // Plane 6 — Cause
-    { a: [4, 3, 4], b: [3, 4, 3] }  // Plane 7 — Result
+    { a: 5, b: 4, d: -3 }, // Plane 1: Should +5, Personal +4, Society -3
+    { a: 3, b: 2, d: -2 }, // Plane 2
+    { a: 4, b: 4, d: 2 },  // Plane 3
+    { a: 3, b: 1, d: -4 }, // Plane 4: High Should, failing Society
+    { a: 5, b: 3, d: 3 },  // Plane 5
+    { a: 2, b: -1, d: -3 },// Plane 6
+    { a: 4, b: 3, d: 1 }   // Plane 7
   ];
-  const maxTlen = 18, zoneStart = 0.42, zoneEnd = 0.94;
+  const maxTlen = 16, zoneStart = 0.45, zoneEnd = 0.96;
   const ringW = (zoneEnd - zoneStart) / 7;
   const parts = [];
   parts.push(`<circle cx="${cx}" cy="${cy}" r="3" fill="var(--ink)"/>`);
@@ -2919,30 +3180,37 @@ function keyringExampleSVG() {
     const dx = Math.cos(ang), dy = Math.sin(ang);
     const px = -dy, py = dx;
     const tipX = cx + dx * r, tipY = cy + dy * r;
+    // Shaft (0 axis)
     parts.push(`<line x1="${cx}" y1="${cy}" x2="${tipX.toFixed(1)}" y2="${tipY.toFixed(1)}" stroke="var(--ink-soft)" stroke-width="1" opacity="0.3"/>`);
     for (let ri = 0; ri < 7; ri++) {
       const ringStart = zoneEnd - (ri + 1) * ringW;
-      const slots = [ringStart + ringW * 0.2, ringStart + ringW * 0.5, ringStart + ringW * 0.8];
-      const { a, b } = DATA_EX[ri];
-      [[a, -1], [b, 1]].forEach(([vals, sgn]) => {
-        vals.forEach((v, k) => {
-          const bx = cx + dx * r * slots[k], by = cy + dy * r * slots[k];
-          const tlen = 2 + (v - 1) / 4 * maxTlen;
-          parts.push(`<line x1="${bx.toFixed(1)}" y1="${by.toFixed(1)}" x2="${(bx + px * tlen * sgn).toFixed(1)}" y2="${(by + py * tlen * sgn).toFixed(1)}" stroke="${HUES_EX[ri]}" stroke-width="1.8" stroke-linecap="round"/>`);
-        });
+      const slots = [ringStart + ringW * 0.25, ringStart + ringW * 0.55, ringStart + ringW * 0.85];
+      const exVal = DATA_EX[ri];
+      const vals = [exVal.a, exVal.b, exVal.d];
+      vals.forEach((v, k) => {
+        const bx = cx + dx * r * slots[k], by = cy + dy * r * slots[k];
+        const isPos = v > 0;
+        const norm = Math.min(1, Math.abs(v) / 5);
+        const tlen = 2 + norm * maxTlen;
+        const sgn = isPos ? 1 : -1; // +1 right, -1 left
+        const hue = isPos ? HUES_EX[ri] : "#DC2626";
+        parts.push(`<line x1="${bx.toFixed(1)}" y1="${by.toFixed(1)}" x2="${(bx + px * tlen * sgn).toFixed(1)}" y2="${(by + py * tlen * sgn).toFixed(1)}" stroke="${hue}" stroke-width="1.8" stroke-linecap="round"/>`);
       });
     }
     if (ai === 0) {
       const fw = maxTlen + 4;
       const bx0 = cx + dx * r * zoneStart, by0 = cy + dy * r * zoneStart;
-      const bx1 = cx + dx * r * zoneEnd,   by1 = cy + dy * r * zoneEnd;
-      const p1x = bx0 - px * fw, p1y = by0 - py * fw, p2x = bx0 + px * fw, p2y = by0 + py * fw;
-      const p3x = bx1 - px * fw, p3y = by1 - py * fw, p4x = bx1 + px * fw, p4y = by1 + py * fw;
-      parts.push(`<polyline points="${p1x.toFixed(1)},${p1y.toFixed(1)} ${p2x.toFixed(1)},${p2y.toFixed(1)}" stroke="var(--ink)" stroke-width="0.8" opacity="0.3"/>`);
-      parts.push(`<polyline points="${p1x.toFixed(1)},${p1y.toFixed(1)} ${p3x.toFixed(1)},${p3y.toFixed(1)}" stroke="var(--ink)" stroke-width="0.8" opacity="0.3"/>`);
-      parts.push(`<polyline points="${p2x.toFixed(1)},${p2y.toFixed(1)} ${p4x.toFixed(1)},${p4y.toFixed(1)}" stroke="var(--ink)" stroke-width="0.8" opacity="0.3"/>`);
-      parts.push(`<text x="${(p3x - px * 5).toFixed(1)}" y="${(p3y - py * 5).toFixed(1)}" font-size="7" fill="var(--ink)" opacity="0.5" text-anchor="middle" font-family="'JetBrains Mono', monospace">Should:+5</text>`);
-      parts.push(`<text x="${(p4x + px * 5).toFixed(1)}" y="${(p4y + py * 5).toFixed(1)}" font-size="7" fill="var(--ink)" opacity="0.5" text-anchor="middle" font-family="'JetBrains Mono', monospace">Would:+5</text>`);
+      const bx1 = tipX, by1 = tipY;
+      const pLeft0 = { x: bx0 - px * fw, y: by0 - py * fw };
+      const pRight0 = { x: bx0 + px * fw, y: by0 + py * fw };
+      const pLeft1 = { x: bx1 - px * fw, y: by1 - py * fw };
+      const pRight1 = { x: bx1 + px * fw, y: by1 + py * fw };
+      parts.push(`<polyline points="${pLeft0.x.toFixed(1)},${pLeft0.y.toFixed(1)} ${pRight0.x.toFixed(1)},${pRight0.y.toFixed(1)}" stroke="var(--ink)" stroke-width="0.7" opacity="0.25"/>`);
+      parts.push(`<polyline points="${pLeft0.x.toFixed(1)},${pLeft0.y.toFixed(1)} ${pLeft1.x.toFixed(1)},${pLeft1.y.toFixed(1)}" stroke="#DC2626" stroke-width="0.7" opacity="0.35"/>`);
+      parts.push(`<polyline points="${pRight0.x.toFixed(1)},${pRight0.y.toFixed(1)} ${pRight1.x.toFixed(1)},${pRight1.y.toFixed(1)}" stroke="var(--accent)" stroke-width="0.7" opacity="0.35"/>`);
+      parts.push(`<text x="${(pLeft1.x - px * 3).toFixed(1)}" y="${(pLeft1.y - py * 3).toFixed(1)}" font-size="7" fill="#DC2626" opacity="0.7" text-anchor="middle" font-family="'JetBrains Mono', monospace">−5</text>`);
+      parts.push(`<text x="${bx1.toFixed(1)}" y="${(by1 - py * 3).toFixed(1)}" font-size="6.5" fill="var(--ink-soft)" opacity="0.6" text-anchor="middle" font-family="'JetBrains Mono', monospace">0</text>`);
+      parts.push(`<text x="${(pRight1.x + px * 3).toFixed(1)}" y="${(pRight1.y + py * 3).toFixed(1)}" font-size="7" fill="var(--accent)" opacity="0.7" text-anchor="middle" font-family="'JetBrains Mono', monospace">+5</text>`);
     }
     const lx = cx + dx * (r + 13), ly = cy + dy * (r + 13);
     parts.push(`<text x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" font-size="8" fill="var(--ink-soft)" text-anchor="middle" dominant-baseline="middle" font-family="'JetBrains Mono', monospace">Q${ai + 1}</text>`);
@@ -2951,17 +3219,37 @@ function keyringExampleSVG() {
     const lx = 10 + i * 27, ly = viewH - 8;
     parts.push(`<circle cx="${lx}" cy="${ly}" r="3" fill="${HUES_EX[i]}"/>`);
   });
-  return `<svg viewBox="0 0 ${viewW} ${viewH}" style="width:100%;max-width:${viewW}px;flex-shrink:0;display:block" role="img" aria-label="Keyring plot mini example, 7 arms and 7 planes">${parts.join("")}</svg>`;
+  return `<svg viewBox="0 0 ${viewW} ${viewH}" style="width:100%;max-width:${viewW}px;flex-shrink:0;display:block" role="img" aria-label="Bipolar keyring mini example, 7 arms and 7 planes">${parts.join("")}</svg>`;
 }
 
-function keyringTutorialBoxHTML() {
+function keyringTutorialBoxHTML(activeTier = 49) {
+  let tierDesc = "";
+  if (activeTier === 7) {
+    tierDesc = `
+      <p style="margin:0 0 8px;color:var(--ink);">This is the <strong>Tier 1 Master Keyring</strong> — each of the seven arms represents one of the <strong>7 Pillars</strong> (Planes 1–7).</p>
+      <p style="margin:0 0 8px;">The central shaft of each key is the <strong>0 Axis (Neutral)</strong>. Cuts to the <strong>RIGHT</strong> (+1 to +5 in Plane hue) show positive upholding and thriving practice. Cuts to the <strong>LEFT</strong> (−1 to −5 in <span style="color:#DC2626;font-weight:700;">Crimson</span>) show opposition, breakdown, or systemic betrayal.</p>
+      <p style="margin:0 0 8px;">Along each blade, four distinct horizon layers are positioned from base to tip: <code>A (Should)</code>, <code>B (Personal Would)</code>, <code>C (Community Circle)</code>, and <code>D (Australian Society)</code>.</p>
+      <p style="margin:0;">When personal ideals (<code>A</code>) point right while societal delivery (<code>D</code>) pulls left, the contradiction gap becomes immediately visible across the key blade.</p>
+    `;
+  } else if (activeTier === 354) {
+    tierDesc = `
+      <p style="margin:0 0 8px;color:var(--ink);">This is the <strong>Tier 3 Deep Audit Diagnostic Dashboard</strong> — calculated directly from all <strong>354 Australian Kanon vector audits</strong>.</p>
+      <p style="margin:0 0 8px;">Each Plane star has 7 radiating Sense arms. Along each arm, the four horizon layers (<code>A Should</code>, <code>B Personal</code>, <code>C Circle</code>, <code>D Society</code>) deflect right (+1 to +5) or left (−1 to −5 in <span style="color:#DC2626;font-weight:700;">Crimson</span>) based on vector averages.</p>
+      <p style="margin:0 0 8px;">Use the tabs above to zoom into any of the 7 Planes, or switch to <strong>All 7 Planes Fleet</strong> to view the entire national cultural architecture side by side.</p>
+    `;
+  } else {
+    tierDesc = `
+      <p style="margin:0 0 8px;color:var(--ink);">This is the <strong>Tier 2 Overlaid Keyring Star</strong> — seven question arms (<code>Q1–Q7</code>) carrying 7 nested Plane rings (Plane 1 outermost to Plane 7 innermost).</p>
+      <p style="margin:0 0 8px;">The central shaft of each key is the <strong>0 Axis (Neutral)</strong>. Cuts to the <strong>RIGHT</strong> (+1 to +5 in Plane hue) indicate positive support and active practice. Cuts to the <strong>LEFT</strong> (−1 to −5 in <span style="color:#DC2626;font-weight:700;">Crimson</span>) indicate breakdown, privatisation, or institutional failure.</p>
+      <p style="margin:0 0 8px;">Within each Plane ring, three horizon layers are plotted along the shaft: <code>A (Should)</code>, <code>B (Personal Would)</code>, and <code>D (Australian Society)</code>.</p>
+      <p style="margin:0;">The bracket labels at the tip frame the <code>−5</code> (Left), <code>0</code> (Center), and <code>+5</code> (Right) scale.</p>
+    `;
+  }
+
   return `
-    <div class="keyring-tutorial-box" style="border:1px solid var(--rule);border-radius:var(--radius-sm);background:var(--bg-inset);padding:16px 20px;margin:0 0 16px;text-align:left;display:flex;gap:22px;align-items:flex-start;flex-wrap:wrap;">
+    <div class="keyring-tutorial-box" style="border:1px solid var(--rule);border-radius:var(--radius-sm);background:var(--bg-inset);padding:16px 20px;margin:0 0 16px;text-align:left;display:flex;gap:22px;align-items:flex-start;flex-wrap:wrap;width:100%;">
       <div style="flex:1;min-width:260px;font-size:0.9rem;color:var(--ink-soft);line-height:1.55;">
-        <p style="margin:0 0 8px;color:var(--ink);">This is a <strong>keyring plot</strong> — each of the seven arms is a question position (<code>Q1–Q7</code>, corresponding to <code>.1 Who</code> through <code>.7 Effect</code>). The arms radiate like keys on a ring.</p>
-        <p style="margin:0 0 8px;">Think of each arm as a physical key blade. A <em>blank key</em> — smooth, uncut — is the ideal: every <strong>Should</strong> upheld (<code>+5 Greater Good</code>) and every <strong>Would</strong> lived in practice across yourself, your community, and Australian society. Life cuts the key. Each etch encodes where things actually stand.</p>
-        <p style="margin:0 0 8px;">On every arm, seven coloured rings sit nested from outermost (<strong>Plane 1 · Identity</strong>) to innermost (<strong>Plane 7 · Result</strong>). Within each ring, three tick marks run along the shaft. Ticks on the <strong>left</strong> of the shaft are <code>Should (A)</code> — what you believe should happen. Ticks on the <strong>right</strong> are <code>Would (B, C, D)</code> — what actually happens across Yourself (<code>B</code>), Your Community (<code>C</code>), and Australian Society (<code>D</code>). Tick length encodes the <code>−5</code> (Oppose / Broken) to <code>+5</code> (Support / Thriving) score.</p>
-        <p style="margin:0;">The <code>Should:+5</code> and <code>Would:+5</code> labels at the tip of each bracket show what full-length ticks look like. When all ticks touch their bracket edge, the key is blank again.</p>
+        ${tierDesc}
       </div>
       ${keyringExampleSVG()}
     </div>
@@ -3111,7 +3399,7 @@ function drawHegemonyCanvas(profile) {
   }
 }
 
-/* ---------- 12AXES-STYLE SOCIAL SHARE CARD PNG GENERATOR ---------- */
+/* ---------- SOCIAL SHARE CARD PNG GENERATOR ---------- */
 function downloadShareCardPNG(profile) {
   const canvas = document.createElement("canvas");
   canvas.width = 1080;
@@ -3248,6 +3536,7 @@ function updateHeaderProgress() {
       if (STATE.tier === 7) STATE.tier = 49;
       else if (STATE.tier === 49) STATE.tier = 354;
       else STATE.tier = 7;
+      STATE.keyringTier = STATE.tier;
       STATE.focusIdx = 0;
       saveState();
       render();
@@ -3326,7 +3615,7 @@ function render(opts = {}) {
 window.addEventListener("hashchange", () => render());
 
 /* =========================================================================
-   TIER SELECTOR COMPONENT (WITH 12AXES DURATION & DEPTH METERS)
+   TIER SELECTOR COMPONENT (WITH DURATION & DEPTH METERS)
    ========================================================================= */
 function renderTierSelectorHTML() {
   const p7 = PLANES.filter(p => isNodeAnswered("P", p.n)).length;
@@ -3385,6 +3674,7 @@ function bindTierSelectorEvents(container) {
   container.querySelectorAll("[data-set-tier]").forEach(card => {
     card.addEventListener("click", () => {
       STATE.tier = parseInt(card.getAttribute("data-set-tier"), 10);
+      STATE.keyringTier = STATE.tier;
       STATE.focusIdx = 0;
       saveState();
       render();
@@ -3433,7 +3723,7 @@ function renderHub(app) {
 
   app.innerHTML = `
     <section class="card" style="padding:28px 30px;margin-bottom:20px;">
-      <div class="eyebrow">Australian Kanon · 12Axes Archetype Quiz + Should/Would Judgment Protocol (−5 to +5)</div>
+      <div class="eyebrow">Australian Kanon · Archetype Diagnostic & Should/Would Protocol (−5 to +5)</div>
       <h1 style="font-size:clamp(1.85rem,3.4vw,2.65rem);margin:6px 0 12px;">
         What Kind of Australian Are You?
       </h1>
@@ -3519,7 +3809,7 @@ function renderFramework(app) {
       <div class="eyebrow">Scoring Key & Methodology (A Framework for Judgment)</div>
       <h1 style="font-size:2rem;margin:6px 0 10px;">How the Should / Would & Part 4 Axis Scale Works (−5 to +5)</h1>
       <p class="lede">
-        Political quizzes like <em>12Axes</em> ask whether you agree with abstract policy statements.
+        Conventional political quizzes ask whether you agree with abstract policy statements.
         Grounded in <strong>A Framework for Judgment</strong>, the Australian Kanon Survey evaluates both <strong>Should</strong> (the stated moral ideal) and <strong>Would</strong> (actual behaviour and outcome in practice) across four plain-English perspectives on a bipolar <strong><code>−5</code> to <code>+5</code> scale</strong>:
       </p>
 
@@ -3799,7 +4089,7 @@ function setupGlobalABCDDelegation() {
 
 /* =========================================================================
    VIEW 3: PLANE QUESTIONNAIRE (#/plane/1 .. #/plane/7)
-   Supports both List Mode and 12Axes Focus Card Mode (1-at-a-time)
+   Supports both List Mode and Focus Card Mode (1-at-a-time)
    ========================================================================= */
 function renderPlane(app, pNum) {
   const p = PLANE_BY_N[pNum];
@@ -4369,13 +4659,15 @@ function renderReview(app) {
 
 /* =========================================================================
    VIEW 6: RESULTS, ARCHETYPE & KEYRING DASHBOARD (#/results)
-   Includes 12Axes Signature, Closeness Modal, Head-to-Head Compare, Books & PNG Export
+   Includes National Signature, Closeness Modal, Head-to-Head Compare, Books & PNG Export
    ========================================================================= */
 function renderResults(app) {
   const profile = computeKanonProfile();
   const summaries = profile.planeSummaries;
   const primaryArch = profile.archetypeMatches[0];
   const secondaryArch = profile.archetypeMatches[1];
+  const activeKeyringTier = STATE.keyringTier || STATE.tier;
+  const selectedT3Plane = STATE.keyringT3Plane || 1;
 
   const answeredPlanes = profile.answeredPlanes;
   let V_norm = null, V_signed = null;
@@ -4386,7 +4678,7 @@ function renderResults(app) {
     V_signed = -5 + 10 * V_norm;
   }
 
-  // 12Axes-Style Signature Insights:
+  // National Signature Insights:
   // 1. Defining Pillar (highest total or A)
   const sortedByTotal = [...summaries].filter(s => s.total !== null).sort((a, b) => b.total - a.total);
   const strongestPlane = sortedByTotal[0] || summaries[0];
@@ -4501,7 +4793,7 @@ function renderResults(app) {
       </div>
     </section>
 
-    <!-- 2. 12AXES-STYLE AUSTRALIAN SIGNATURE SECTION -->
+    <!-- 2. AUSTRALIAN NATIONAL SIGNATURE SECTION -->
     <section id="sec-signature" class="signature-grid">
       <div class="sig-card sig-strong">
         <div class="eyebrow">Your Strongest Pillar</div>
@@ -4538,14 +4830,8 @@ function renderResults(app) {
 
     <!-- 3. KEYRING PLOT + PSOCHIC HEGEMONY (v, psi) MAP -->
     <div class="dash-grid" id="sec-keyring">
-      <div class="card keyring-stage">
-        <div class="eyebrow" style="align-self:flex-start;">WWSUTRU Dual-Vector Keyring Plot</div>
-        <h3 style="align-self:flex-start;margin:2px 0 8px;">All seven, overlaid — the keyring plot</h3>
-        ${keyringTutorialBoxHTML()}
-        <p style="color:var(--ink-soft);font-size:0.86rem;margin:0 0 8px;align-self:flex-start;">
-          7 planes · 7 question positions (<code>Q1–Q7</code>) · 3 horizons (Personal, Community, Society) · 2 vectors (<code>Should A</code> left, <code>Would B/C/D</code> right) — 294 data teeth in one diagram.
-        </p>
-        ${combinedStarSVG()}
+      <div class="card keyring-stage" id="keyring-stage-card">
+        ${renderKeyringStageHTML(activeKeyringTier, selectedT3Plane)}
       </div>
 
       <div class="card">
@@ -4581,9 +4867,9 @@ function renderResults(app) {
       </div>
     </div>
 
-    <!-- 4. 12AXES-STYLE 7-PLANE SPLIT BARS -->
+    <!-- 4. 7-PLANE SPLIT BARS -->
     <section class="card" id="sec-planes" style="margin-top:20px;">
-      <div class="eyebrow">12Axes × Should/Would Plane Breakdown</div>
+      <div class="eyebrow">The 7 Pillars · Should vs. Would Analysis</div>
       <h2 style="margin:2px 0 12px;">The 7 Pillars of the Australian Kanon: Should (A) vs. Would (B · C · D)</h2>
       ${summaries.map(sum => {
         const p = sum.plane;
@@ -4677,7 +4963,7 @@ function renderResults(app) {
       </section>
     </div>
 
-    <!-- 6. 12AXES-STYLE HEAD-TO-HEAD COMPARE PICKER -->
+    <!-- 6. HEAD-TO-HEAD COMPARE PICKER -->
     <section class="card" id="sec-compare" style="margin-top:20px;">
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:14px;">
         <div>
@@ -4743,7 +5029,7 @@ function renderResults(app) {
       </div>
     </section>
 
-    <!-- 8. AUSTRALIAN READINGS & PRIMARY SOURCES (12AXES BOOKS SECTION) -->
+    <!-- 8. AUSTRALIAN READINGS & PRIMARY SOURCES (CANONICAL TEXTS) -->
     <section class="card" id="sec-readings" style="margin-top:24px;">
       <div class="eyebrow">Essential Australian Kanon Library</div>
       <h2 style="margin:2px 0 6px;">Primary Sources & Classic Works Matched to Your Profile</h2>
@@ -4857,6 +5143,24 @@ function renderResults(app) {
   app.querySelectorAll("[data-compare-type]").forEach(btn => {
     btn.addEventListener("click", () => {
       openComparisonSheet(btn.getAttribute("data-compare-type"), btn.getAttribute("data-compare-id"));
+    });
+  });
+
+  app.querySelectorAll("[data-keyring-tier]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const tier = parseInt(btn.getAttribute("data-keyring-tier"), 10);
+      STATE.keyringTier = tier;
+      saveState();
+      renderResults(app);
+    });
+  });
+
+  app.querySelectorAll("[data-t3-plane]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const p = btn.getAttribute("data-t3-plane");
+      STATE.keyringT3Plane = p === "all" ? "all" : parseInt(p, 10);
+      saveState();
+      renderResults(app);
     });
   });
 

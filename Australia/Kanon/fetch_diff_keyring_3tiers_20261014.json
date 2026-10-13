@@ -1,0 +1,278 @@
+The following changes were made by the replace_file_content tool to: e:\china russia\git\WWSUTRUTheWebOfLiesRevealed\Australia\Kanon\Kanon_Survey.html. If relevant, proactively run terminal commands to execute this code for the USER. Don't ask for permission.
+[diff_block_start]
+@@ -2889,6 +2889,100 @@
+   return parts.join("");
+ }
+ 
++/* ---------- TIER 1 KEYRING: 7 PILLARS MASTER KEY (1 ARM PER PLANE) ---------- */
++function pillarArmSVG(cx, cy, angleDeg, armLen, pNum) {
++  const p = PLANE_BY_N[pNum];
++  const sum = computePlaneSummary(pNum);
++  const ang = angleDeg * Math.PI / 180;
++  const dx = Math.cos(ang), dy = Math.sin(ang);
++  const px = -dy, py = dx;
++  const parts = [];
++  const tipX = cx + dx * armLen, tipY = cy + dy * armLen;
++
++  const hasAns = isNodeAnswered("P", pNum) || sum.total !== null;
++  const shaftColor = hasAns ? p.hue : "var(--ink-soft)";
++  const shaftWidth = hasAns ? 4.5 : 1.5;
++  const shaftOpacity = hasAns ? 1 : 0.25;
++
++  parts.push(`<line x1="${cx.toFixed(1)}" y1="${cy.toFixed(1)}" x2="${tipX.toFixed(1)}" y2="${tipY.toFixed(1)}" stroke="${shaftColor}" stroke-width="${shaftWidth}" opacity="${shaftOpacity}" stroke-linecap="round"/>`);
++
++  const slots = [0.72, 0.84, 0.96];
++  const maxTlen = 26;
++
++  const aVal = sum.A;
++  const bVals = [sum.B, sum.C, sum.D];
++
++  if (hasAns) {
++    // Left: Personal Should (A) — 3 teeth along shaft
++    if (aVal !== null && aVal !== undefined) {
++      const normA = Math.max(0, Math.min(1, (aVal + 5) / 10));
++      const tlenA = 4 + normA * maxTlen;
++      slots.forEach(frac => {
++        const bx = cx + dx * armLen * frac, by = cy + dy * armLen * frac;
++        const ex = bx - px * tlenA, ey = by - py * tlenA;
++        parts.push(`<line x1="${bx.toFixed(1)}" y1="${by.toFixed(1)}" x2="${ex.toFixed(1)}" y2="${ey.toFixed(1)}" stroke="${p.hue}" stroke-width="3.6" stroke-linecap="round"/>`);
++      });
++    }
++
++    // Right: Would (B Personal, C Community, D Australian Society)
++    bVals.forEach((v, idx) => {
++      if (v === null || v === undefined) return;
++      const frac = slots[idx];
++      const normB = Math.max(0, Math.min(1, (v + 5) / 10));
++      const tlenB = 4 + normB * maxTlen;
++      const bx = cx + dx * armLen * frac, by = cy + dy * armLen * frac;
++      const ex = bx + px * tlenB, ey = by + py * tlenB;
++      parts.push(`<line x1="${bx.toFixed(1)}" y1="${by.toFixed(1)}" x2="${ex.toFixed(1)}" y2="${ey.toFixed(1)}" stroke="${p.hue}" stroke-width="3.6" stroke-linecap="round"/>`);
++    });
++  }
++
++  // Scale bracket framing the tooth zone
++  const fw = maxTlen + 6;
++  const bx0 = cx + dx * armLen * 0.70, by0 = cy + dy * armLen * 0.70;
++  const bx1 = cx + dx * armLen * 0.98, by1 = cy + dy * armLen * 0.98;
++  const p1x = bx0 - px * fw, p1y = by0 - py * fw;
++  const p2x = bx0 + px * fw, p2y = by0 + py * fw;
++  const p3x = bx1 - px * fw, p3y = by1 - py * fw;
++  const p4x = bx1 + px * fw, p4y = by1 + py * fw;
++  parts.push(`<polyline points="${p1x.toFixed(1)},${p1y.toFixed(1)} ${p2x.toFixed(1)},${p2y.toFixed(1)}" stroke="var(--ink)" stroke-width="0.8" opacity="0.3"/>`);
++  parts.push(`<polyline points="${p1x.toFixed(1)},${p1y.toFixed(1)} ${p3x.toFixed(1)},${p3y.toFixed(1)}" stroke="var(--ink)" stroke-width="0.8" opacity="0.3"/>`);
++  parts.push(`<polyline points="${p2x.toFixed(1)},${p2y.toFixed(1)} ${p4x.toFixed(1)},${p4y.toFixed(1)}" stroke="var(--ink)" stroke-width="0.8" opacity="0.3"/>`);
++
++  if (pNum === 1) { // Top arm gets explicit scale text
++    parts.push(`<text x="${(p3x - px * 6).toFixed(1)}" y="${(p3y - py * 4).toFixed(1)}" font-size="8" fill="var(--ink)" opacity="0.6" text-anchor="middle" font-family="'JetBrains Mono', monospace">Should:+5</text>`);
++    parts.push(`<text x="${(p4x + px * 6).toFixed(1)}" y="${(p4y + py * 4).toFixed(1)}" font-size="8" fill="var(--ink)" opacity="0.6" text-anchor="middle" font-family="'JetBrains Mono', monospace">Would:+5</text>`);
++  }
++
++  // Label at tip
++  const labelDist = armLen + 22;
++  const lx = cx + dx * labelDist, ly = cy + dy * labelDist;
++  parts.push(`<text x="${lx.toFixed(1)}" y="${(ly - 5).toFixed(1)}" font-size="9.5" font-weight="700" fill="${p.hue}" text-anchor="middle" dominant-baseline="middle" font-family="'JetBrains Mono', monospace">P${p.n} ${escapeHtml(p.name)}</text>`);
++  parts.push(`<text x="${lx.toFixed(1)}" y="${(ly + 8).toFixed(1)}" font-size="7.5" fill="var(--ink-soft)" text-anchor="middle" dominant-baseline="middle" font-family="'Inter', sans-serif">${escapeHtml(p.pillar)}</text>`);
++
++  return parts.join("");
++}
++
++function pillarKeyringSVG() {
++  const cx = 240, cy = 240, armLen = 160;
++  const parts = [];
++  for (let i = 0; i < 7; i++) {
++    parts.push(pillarArmSVG(cx, cy, -90 + i * (360 / 7), armLen, i + 1));
++  }
++  const legend = PLANES.map(p => {
++    const sum = computePlaneSummary(p.n);
++    const scoreStr = sum.total !== null ? fmtSigned(sum.total, 1) : "—";
++    return `<span style="display:inline-flex;align-items:center;gap:5px;margin:3px 10px;font-size:12px;"><span style="width:10px;height:10px;border-radius:50%;background:${p.hue};display:inline-block"></span><strong>P${p.n} ${escapeHtml(p.name)}:</strong> <span class="mono">${scoreStr}</span></span>`;
++  }).join("");
++
++  return `<svg viewBox="0 0 480 480" style="max-width:460px;width:100%;display:block;margin:0 auto" role="img" aria-label="Tier 1 Master Keyring: 7 Pillars, 1 arm per Plane">
++    <circle cx="${cx}" cy="${cy}" r="4" fill="var(--ink)"/>
++    <circle cx="${cx}" cy="${cy}" r="12" fill="none" stroke="var(--ink-soft)" stroke-width="1.2" opacity="0.4"/>
++    ${parts.join("")}
++  </svg>
++  <div style="margin:12px 0 0;text-align:center;line-height:1.6">${legend}</div>`;
++}
++
++/* ---------- TIER 2 KEYRING: 49 SENSES OVERLAID STAR (7 ARMS X 7 PLANE RINGS) ---------- */
+ function combinedStarSVG() {
+   const cx = 220, cy = 220, armLen = 170;
+   const parts = [];
+@@ -2900,6 +2900,128 @@
+   <p style="font-size:12.5px;margin:10px 0 0;text-align:center;line-height:1.7">${legend}</p>`;
+ }
+ 
++/* ---------- TIER 3 KEYRING: 354 VECTORS DIAGNOSTIC FLEET & ZOOM INSPECTOR ---------- */
++function tier3KeyringHTML(selectedPlane = 1) {
++  const p = selectedPlane === "all" ? null : (PLANE_BY_N[selectedPlane] || PLANE_BY_N[1]);
++  const tabs = PLANES.map(pl => {
++    const isActive = selectedPlane !== "all" && pl.n === (p ? p.n : 1);
++    const vCount = activeTierVectors(pl.n).length;
++    return `<button type="button" class="btn btn-sm ${isActive ? 'btn-warm' : 'btn-secondary'}" data-t3-plane="${pl.n}" style="${isActive ? `background:${pl.hue};border-color:${pl.hue};color:#fff;font-weight:700;` : 'font-size:0.75rem;'}">P${pl.n} ${pl.name} (${vCount}v)</button>`;
++  }).join("");
++  const allActive = selectedPlane === "all";
++  const allBtn = `<button type="button" class="btn btn-sm ${allActive ? 'btn-warm' : 'btn-secondary'}" data-t3-plane="all" style="${allActive ? 'background:#0e1235;border-color:#0e1235;color:#fff;font-weight:700;' : 'font-size:0.75rem;'}">All 7 Planes Fleet</button>`;
++
++  let contentHTML = "";
++  if (selectedPlane === "all") {
++    contentHTML = `
++      <div class="plane-stars-grid" style="margin-top:12px;width:100%;">
++        ${PLANES.map(pl => {
++          const sum = computePlaneSummary(pl.n);
++          const vecs = activeTierVectors(pl.n);
++          const ansVecs = vecs.filter(v => isNodeAnswered("V", v.uid)).length;
++          return `
++            <div class="plane-star-card" style="--plane-color:${pl.hue};cursor:pointer;" data-t3-plane="${pl.n}" title="Click to zoom into Plane ${pl.n}">
++              <div class="mono" style="font-size:0.74rem;color:${pl.hue};font-weight:700;">PLANE ${pl.n} · ${pl.pillar.toUpperCase()}</div>
++              <h4 style="font-size:1.02rem;margin:3px 0 6px;">${pl.name}</h4>
++              ${planeStarSVG(pl.n, 180)}
++              <div class="mono" style="font-size:0.74rem;color:var(--ink-soft);margin-top:6px;">
++                ${ansVecs}/${vecs.length} vectors · ${sum.total !== null ? `Mean ${fmtSigned(sum.total, 1)}` : "Unrated"}
++              </div>
++            </div>
++          `;
++        }).join("")}
++      </div>
++    `;
++  } else {
++    const sum = computePlaneSummary(p.n);
++    const vecs = activeTierVectors(p.n);
++    const ansVecs = vecs.filter(v => isNodeAnswered("V", v.uid)).length;
++    const pSenses = SENSES_BY_PLANE[p.n] || [];
++
++    contentHTML = `
++      <div style="display:flex;flex-direction:column;align-items:center;width:100%;margin-top:8px;">
++        <div style="text-align:center;margin-bottom:8px;">
++          <span class="mono" style="color:${p.hue};font-weight:700;font-size:0.8rem;">PLANE ${p.n} · ${p.pillar.toUpperCase()}</span>
++          <h3 style="font-size:1.35rem;margin:2px 0;">${p.name} — ${escapeHtml(p.blurb)}</h3>
++          <p style="margin:0;font-size:0.85rem;color:var(--ink-soft);">
++            Deep Vector Resolution: 7 Senses (Arms) · ${ansVecs}/${vecs.length} Vectors Rated · ${sum.total !== null ? `Mean: ${fmtSigned(sum.total, 2)}` : "Unrated"}
++          </p>
++        </div>
++        ${planeStarSVG(p.n, 340)}
++        <div style="margin-top:14px;width:100%;max-width:540px;">
++          <div style="font-size:0.82rem;font-weight:700;margin-bottom:6px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:0.04em;">7 Sense Arms in Plane ${p.n}:</div>
++          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:6px;">
++            ${pSenses.map(s => {
++              const sSum = computeSenseSummary(s.id);
++              const sVecs = VECTORS_BY_SENSE[s.id] || [];
++              const sAns = sVecs.filter(v => isNodeAnswered("V", v.uid)).length;
++              return `
++                <div style="background:var(--bg-inset);padding:7px 10px;border-radius:6px;border:1px solid var(--rule);font-size:0.8rem;">
++                  <div style="font-weight:700;display:flex;justify-content:space-between;align-items:baseline;">
++                    <span>${s.id} · ${escapeHtml(s.title)}</span>
++                    <span class="mono" style="color:${p.hue}">${sSum.total !== null ? fmtSigned(sSum.total, 1) : "—"}</span>
++                  </div>
++                  <div class="mono" style="font-size:0.71rem;color:var(--ink-muted);margin-top:2px;">
++                    ${sAns}/${sVecs.length}v · Should A: ${fmtSigned(sSum.A, 1)} · Would B: ${fmtSigned(sSum.B, 1)}
++                  </div>
++                </div>
++              `;
++            }).join("")}
++          </div>
++        </div>
++      </div>
++    `;
++  }
++
++  return `
++    <div style="display:flex;gap:5px;flex-wrap:wrap;justify-content:center;margin-bottom:12px;width:100%;">
++      ${tabs}
++      ${allBtn}
++    </div>
++    ${contentHTML}
++  `;
++}
++
++/* ---------- KEYRING SECTION CONTAINER WITH INTERACTIVE TIER SWITCHER ---------- */
++function renderKeyringStageHTML(activeTier, selectedT3Plane = 1) {
++  let title = "";
++  let sub = "";
++  let plotHTML = "";
++
++  if (activeTier === 7) {
++    title = "Tier 1: 7 Pillars Master Key";
++    sub = "7 arms radiating outward (one arm per Plane) · Should (A) on the left vs Would (B Personal, C Community, D Australian Society) on the right.";
++    plotHTML = pillarKeyringSVG();
++  } else if (activeTier === 354) {
++    title = "Tier 3: 354 Vectors Diagnostic Dashboard";
++    sub = "Deep vector resolution across 354 Kanon vectors. Inspect individual Plane diagnostic stars with vector-derived tooth depths.";
++    plotHTML = tier3KeyringHTML(selectedT3Plane);
++  } else {
++    title = "Tier 2: 49 Senses Overlaid Keyring Star";
++    sub = "7 question arms (Q1–Q7) overlaid with 7 nested Plane rings (P1 outermost to P7 innermost) · 294 data teeth in one diagram.";
++    plotHTML = combinedStarSVG();
++  }
++
++  return `
++    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;width:100%;margin-bottom:12px;">
++      <div>
++        <div class="eyebrow" style="align-self:flex-start;">WWSUTRU Dual-Vector Keyring Plot</div>
++        <h3 style="align-self:flex-start;margin:2px 0 4px;">${escapeHtml(title)}</h3>
++        <p style="color:var(--ink-soft);font-size:0.85rem;margin:0;line-height:1.45;align-self:flex-start;">
++          ${escapeHtml(sub)}
++        </p>
++      </div>
++      <div class="keyring-tier-toggle" style="display:inline-flex;background:var(--bg-inset);padding:3px;border-radius:8px;border:1px solid var(--rule);flex-shrink:0;">
++        <button type="button" class="btn btn-sm ${activeTier === 7 ? 'active' : ''}" data-keyring-tier="7" style="border:none;padding:5px 11px;font-size:0.77rem;font-weight:700;${activeTier === 7 ? 'background:#0e1235;color:#fff;' : 'background:transparent;color:var(--ink-soft);'}">Tier 1 · 7 Pillars</button>
++        <button type="button" class="btn btn-sm ${activeTier === 49 ? 'active' : ''}" data-keyring-tier="49" style="border:none;padding:5px 11px;font-size:0.77rem;font-weight:700;${activeTier === 49 ? 'background:#0e1235;color:#fff;' : 'background:transparent;color:var(--ink-soft);'}">Tier 2 · 49 Senses</button>
++        <button type="button" class="btn btn-sm ${activeTier === 354 ? 'active' : ''}" data-keyring-tier="354" style="border:none;padding:5px 11px;font-size:0.77rem;font-weight:700;${activeTier === 354 ? 'background:#0e1235;color:#fff;' : 'background:transparent;color:var(--ink-soft);'}">Tier 3 · 354 Vectors</button>
++      </div>
++    </div>
++    ${keyringTutorialBoxHTML(activeTier)}
++    ${plotHTML}
++  `;
++}
++
+ // Baked-in illustrative mini keyring diagram (from welfare-survey.html)
+ function keyringExampleSVG() {
+   const cx = 100, cy = 100, r = 82, viewW = 200, viewH = 220;
+@@ -2956,14 +2956,35 @@
+   return `<svg viewBox="0 0 ${viewW} ${viewH}" style="width:100%;max-width:${viewW}px;flex-shrink:0;display:block" role="img" aria-label="Keyring plot mini example, 7 arms and 7 planes">${parts.join("")}</svg>`;
+ }
+ 
+-function keyringTutorialBoxHTML() {
+-  return `
+-    <div class="keyring-tutorial-box" style="border:1px solid var(--rule);border-radius:var(--radius-sm);background:var(--bg-inset);padding:16px 20px;margin:0 0 16px;text-align:left;display:flex;gap:22px;align-items:flex-start;flex-wrap:wrap;">
++function keyringTutorialBoxHTML(activeTier = 49) {
++  let tierDesc = "";
++  if (activeTier === 7) {
++    tierDesc = `
++      <p style="margin:0 0 8px;color:var(--ink);">This is the <strong>Tier 1 Master Keyring</strong> — each of the seven arms represents one of the <strong>7 Planes</strong> (Planes 1–7 / The 7 Pillars of the Australian Kanon). The arms radiate like keys on a ring.</p>
++      <p style="margin:0 0 8px;">Think of each arm as a physical key blade. A <em>blank key</em> — smooth, uncut — is the ideal: every <strong>Should</strong> upheld (<code>+5 Greater Good</code>) and every <strong>Would</strong> lived in practice across yourself, your community, and Australian society. Life cuts the key. Each etch encodes where things actually stand.</p>
++      <p style="margin:0 0 8px;">On every Plane arm, tick marks run along the shaft. Ticks on the <strong>left</strong> of the shaft are <code>Should (A)</code> — what you believe Australia should uphold. Ticks on the <strong>right</strong> are <code>Would (B, C, D)</code> — what actually happens across Yourself (<code>B</code>), Your Community (<code>C</code>), and Australian Society (<code>D</code>). Tick length encodes the <code>−5</code> (Oppose / Broken) to <code>+5</code> (Support / Thriving) score.</p>
++      <p style="margin:0;">The <code>Should:+5</code> and <code>Would:+5</code> labels at the tip show what full-length ticks look like. When all ticks touch their bracket edge, the key is blank again.</p>
++    `;
++  } else if (activeTier === 354) {
++    tierDesc = `
++      <p style="margin:0 0 8px;color:var(--ink);">This is the <strong>Tier 3 Deep Audit Keyring Dashboard</strong> — displaying individual Plane diagnostic stars calculated directly from the <strong>354 Australian Kanon vector audits</strong>.</p>
++      <p style="margin:0 0 8px;">Each Plane star has <strong>7 radiating arms</strong> (one for each of its 7 Senses, <code>.1 Who</code> through <code>.7 Effect</code>). Along each arm, the teeth are cut by the average ratings of its sub-vectors.</p>
++      <p style="margin:0 0 8px;">Ticks on the <strong>left</strong> are <code>Should (A)</code>. Ticks on the <strong>right</strong> are <code>Would (B Personal, C Community, D Australian Society)</code>. You can switch between individual Plane stars using the tabs above, or view the <strong>All 7 Planes Fleet</strong> to see the entire national cultural architecture at once.</p>
++      <p style="margin:0;">When a Plane has high Should but low Society Would, the right-hand teeth are cut shallow or negative—marking systemic betrayal in that domain.</p>
++    `;
++  } else {
++    tierDesc = `
++      <p style="margin:0 0 8px;color:var(--ink);">This is the <strong>Tier 2 Matrix Keyring</strong> — each of the seven arms is a question position (<code>Q1–Q7</code>, corresponding to <code>.1 Who</code> through <code>.7 Effect</code>). The arms radiate like keys on a ring.</p>
++      <p style="margin:0 0 8px;">Think of each arm as a physical key blade. A <em>blank key</em> — smooth, uncut — is the ideal: every <strong>Should</strong> upheld (<code>+5 Greater Good</code>) and every <strong>Would</strong> lived in practice across yourself, your community, and Australian society. Life cuts the key. Each etch encodes where things actually stand.</p>
++      <p style="margin:0 0 8px;">On every arm, seven coloured rings sit nested from outermost (<strong>Plane 1 · Identity</strong>) to innermost (<strong>Plane 7 · Result</strong>). Within each ring, three tick marks run along the shaft. Ticks on the <strong>left</strong> of the shaft are <code>Should (A)</code> — what you believe should happen. Ticks on the <strong>right</strong> are <code>Would (B, C, D)</code> — what actually happens across Yourself (<code>B</code>), Your Community (<code>C</code>), and Australian Society (<code>D</code>). Tick length encodes the <code>−5</code> (Oppose / Broken) to <code>+5</code> (Support / Thriving) score.</p>
++      <p style="margin:0;">The <code>Should:+5</code> and <code>Would:+5</code> labels at the tip of each bracket show what full-length ticks look like. When all ticks touch their bracket edge, the key is blank again.</p>
++    `;
++  }
++
++  return `
++    <div class="keyring-tutorial-box" style="border:1px solid var(--rule);border-radius:var(--radius-sm);background:var(--bg-inset);padding:16px 20px;margin:0 0 16px;text-align:left;display:flex;gap:22px;align-items:flex-start;flex-wrap:wrap;width:100%;">
+       <div style="flex:1;min-width:260px;font-size:0.9rem;color:var(--ink-soft);line-height:1.55;">
+-        <p style="margin:0 0 8px;color:var(--ink);">This is a <strong>keyring plot</strong> — each of the seven arms is a question position (<code>Q1–Q7</code>, corresponding to <code>.1 Who</code> through <code>.7 Effect</code>). The arms radiate like keys on a ring.</p>
+-        <p style="margin:0 0 8px;">Think of each arm as a physical key blade. A <em>blank key</em> — smooth, uncut — is the ideal: every <strong>Should</strong> upheld (<code>+5 Greater Good</code>) and every <strong>Would</strong> lived in practice across yourself, your community, and Australian society. Life cuts the key. Each etch encodes where things actually stand.</p>
+-        <p style="margin:0 0 8px;">On every arm, seven coloured rings sit nested from outermost (<strong>Plane 1 · Identity</strong>) to innermost (<strong>Plane 7 · Result</strong>). Within each ring, three tick marks run along the shaft. Ticks on the <strong>left</strong> of the shaft are <code>Should (A)</code> — what you believe should happen. Ticks on the <strong>right</strong> are <code>Would (B, C, D)</code> — what actually happens across Yourself (<code>B</code>), Your Community (<code>C</code>), and Australian Society (<code>D</code>). Tick length encodes the <code>−5</code> (Oppose / Broken) to <code>+5</code> (Support / Thriving) score.</p>
+-        <p style="margin:0;">The <code>Should:+5</code> and <code>Would:+5</code> labels at the tip of each bracket show what full-length ticks look like. When all ticks touch their bracket edge, the key is blank again.</p>
++        ${tierDesc}
+       </div>
+       ${keyringExampleSVG()}
+     </div>
+[diff_block_end]
+
+Please note that the above snippet only shows the MODIFIED lines from the last change. It shows up to 3 lines of unchanged lines before and after the modified lines. The actual file contents may have many more lines not shown.
