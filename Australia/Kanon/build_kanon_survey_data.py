@@ -26,6 +26,72 @@ S_SUBTITLES = {
     "Effect": "Legacy & Outcome",
 }
 
+# Grounded Plain-English Titles for All 49 Senses (removes cryptic "The Who of the Who" jargon)
+SENSE_HUMAN_TITLES = {
+    # Plane 1: Identity (Who)
+    "1.1": "Australian Character, Mateship & Quiet Grit",
+    "1.2": "The Level Playing Field & The Fair Go",
+    "1.3": "Living Connection to Land, Coast & Country",
+    "1.4": "Homegrown Talent & Confidence (Free of Cringe)",
+    "1.5": "The Pub Test & Accountability to Ordinary People",
+    "1.6": "Living Heritage: First Nations, Settlers & Migrants",
+    "1.7": "Caring for Our Own & Being a Good Regional Neighbour",
+
+    # Plane 2: Definition (What — Civic Contract)
+    "2.1": "The Sovereign Citizen vs. Bureaucratic Overreach",
+    "2.2": "Constitutional Rule of Law & Judicial Independence",
+    "2.3": "Fair Regional Federation & Shared National Revenue",
+    "2.4": "The Common Wealth: Public Parks, Air & Commons",
+    "2.5": "Free Press, Public Broadcasting & Transparent Truth",
+    "2.6": "Treaty, Voice & First Nations Sovereignty",
+    "2.7": "Universal Civic Franchise & Protected Secret Ballot",
+
+    # Plane 3: Land (Where — Continental Setting)
+    "3.1": "Continental Reality: Ancient Shield, Desert & Fire",
+    "3.2": "Secure Housing, Land Rights & Suburban Home",
+    "3.3": "Living with Drought, Flood & Extreme Weather",
+    "3.4": "Water Cycles: The Murray-Darling & Great Artesian Basin",
+    "3.5": "Coastal Ecology, Great Barrier Reef & Oceans",
+    "3.6": "First Nations Songlines & Deep Custodial Mapping",
+    "3.7": "Regional Towns, Remote Bush & Essential Services",
+
+    # Plane 4: Drive (Why — Motivation & Yakka)
+    "4.1": "Honest Yakka, Working Battlers & Fair Reward",
+    "4.2": "The Eight-Hour Day, The Weekend & Protected Rest",
+    "4.3": "Volunteer Spirit in Crises (RFS, SES & Surf Life Saving)",
+    "4.4": "The Quiet Life: Family, Recreation & Backyard Freedom",
+    "4.5": "Confronting Complacency ('She'll Be Right') & Greed",
+    "4.6": "Sporting Fair Play, Grassroots Clubs & Humour",
+    "4.7": "Looking After Mates: Battlers Backing Battlers",
+
+    # Plane 5: Method (How — Practice & Innovation)
+    "5.1": "Stringybark Ingenuity & Practical Bush Mechanics",
+    "5.2": "The Independent Umpire & Humane Workplace Awards",
+    "5.3": "Plain-English Honesty vs. Managerial Jargon & Spin",
+    "5.4": "World-Class Public Science (CSIRO, Solar, WiFi, Medicine)",
+    "5.5": "Standing Up to Bullies: Collective Action & Solidarity",
+    "5.6": "Grassroots Consultation & Resolving Gridlock Fairly",
+    "5.7": "Compassionate Discretion over Blind Box-Ticking",
+
+    # Plane 6: Foundation (Cause — History & Memory)
+    "6.1": "Truth-Telling: Settlement, Frontier Wars & Survival",
+    "6.2": "Convict Survival & Skepticism of Imported Nobility",
+    "6.3": "Eureka Stockade: Rebellion for Democratic Rights",
+    "6.4": "Overcoming the Great Silence & Honouring Native Title (Mabo)",
+    "6.5": "The Migrant Journey: Postwar Waves & Multicultural Strength",
+    "6.6": "Anzac Sacrifice, Memory & the Reality of War",
+    "6.7": "The Living Constitution & Intergenerational Legacy",
+
+    # Plane 7: Result (Effect — The Commonwealth Harvest)
+    "7.1": "Universal Care: Medicare, PBS & Public Hospitals",
+    "7.2": "Secure Retirement: Superannuation & Fair Pensions",
+    "7.3": "Shared Resource Wealth vs. Private Quarry Extraction",
+    "7.4": "Affordable Housing & Home Ownership for the Next Generation",
+    "7.5": "Free Public Education, TAFE & Fair University Access",
+    "7.6": "Independent Defence & Confident Regional Diplomacy",
+    "7.7": "The Fair Go for Future Australians (Intergenerational Justice)",
+}
+
 PLANE_META = [
     {
         "n": 1,
@@ -54,7 +120,7 @@ PLANE_META = [
         "id": "P2",
         "code": "What",
         "name": "Definition",
-        "fullTitle": "Values of Australian Definition",
+        "fullTitle": "Democracy, Law & the Civic Contract",
         "pillar": "The Constituent",
         "pillarBadge": "Skeptical Civil Duty",
         "domain": "Possible",
@@ -568,8 +634,8 @@ def _clean_rationale(rationale):
     return txt.rstrip(".")
 
 
-# Nodes whose title is an environmental condition, historical object, or complacency trap
-# where "practise and stand up for [Name]" sounds robotic unless framed around its lesson:
+# Nodes whose title is an environmental condition, historical object, or physical asset
+# where "practise the ethic of [Name]" sounds awkward unless framed around its practical lesson:
 PRINCIPLE_OVERRIDES = {
     "The Drought": "stoic endurance, water conservation, and mutual support through dry seasons",
     "The Flood": "respecting floodplains and pitching in to rescue neighbours when floodwaters surge",
@@ -589,6 +655,14 @@ PRINCIPLE_OVERRIDES = {
     "The Black Box": "backing world-leading Australian safety engineering and scientific invention",
     "The Wifi": "funding public research (like CSIRO) and keeping sovereign inventions for the public good",
     "The Home Owner": "ensuring secure, affordable home ownership is achievable for ordinary working families",
+    "The Overland Telegraph": "investing in bold, sovereign national communication links that unite remote communities",
+    "The Flying Doctor": "delivering universal, lifeline medical care across remote and regional Australia",
+    "The School of the Air": "guaranteeing every child in the bush quality public education regardless of isolation",
+    "The Water Tank": "sensible household water conservation and resilience against drought",
+    "The Tin Canoe": "humble grassroots ingenuity and pitch-in rescue effort in emergencies",
+    "The Ute": "honest, practical utility and hard yakka over flashy status symbols",
+    "The Hills Hoist": "simple, durable homegrown design that serves everyday suburban family life",
+    "The Victa Mower": "practical suburban self-reliance and homegrown manufacturing",
 }
 
 
@@ -624,13 +698,13 @@ def build_vector_questions(name, clean_name, role, core_meaning, v, psi, zone, i
         principle_phrase = PRINCIPLE_OVERRIDES.get(clean_name)
         if principle_phrase:
             qA = f"We should uphold the Australian lesson of {clean_name}{rtag}—{principle_phrase} ({cm_low})."
-            qB = f"In my own choices and civic stance, I actively support {principle_phrase}."
+            qB = f"In my own daily choices and habits, I actively support {principle_phrase}."
             qC = f"People in my everyday circle value and practise {principle_phrase}."
             qD = f"Across Australia today, our society and institutions actually deliver {principle_phrase} in practice."
         else:
             qA = f"We should uphold the Australian principle of {clean_name}{rtag}: {cm_low}."
-            qB = f"In my own everyday life and civic choices, I actually stand by and practise the ethic of {clean_name}."
-            qC = f"The people in my everyday circle believe in the ethic of {clean_name} and actually live it out."
+            qB = f"In my own daily life and civic choices, I actively stand by and practise {clean_name}."
+            qC = f"The people in my everyday circle believe in {clean_name} and actually live it out."
             qD = f"Across Australia today, our society and institutions actually uphold and deliver {clean_name} in practice."
     elif v < 0:
         # Negative / Shadow Kanon Vector (Greatest Lie, Greater Evil, Lesser Evil)
@@ -729,7 +803,9 @@ def main():
         for s_idx, s_code in enumerate(S_ORDER, 1):
             sense_id = f"{pnum}.{s_idx}"
             sense_addr = f"{pmeta['code']}.{s_code}"
-            raw_title = s_titles[s_idx - 1].strip() if s_idx <= len(s_titles) else f"The {s_code} of the {pmeta['code']}"
+            human_name = SENSE_HUMAN_TITLES.get(sense_id, "")
+            raw_title = human_name if human_name else (s_titles[s_idx - 1].strip() if s_idx <= len(s_titles) else f"The {s_code} of the {pmeta['code']}")
+            matrix_title = s_titles[s_idx - 1].strip() if s_idx <= len(s_titles) else f"The {s_code} of the {pmeta['code']}"
             raw_narr = clean_html(s_narrs[s_idx - 1]) if s_idx <= len(s_narrs) else ""
             # Remove leading "The Narrative of ...:" prefix if present
             raw_narr = re.sub(r"^The Narrative of [^:]+:\s*", "", raw_narr)
@@ -890,7 +966,8 @@ def main():
                 "senseIdx": s_idx,
                 "senseCode": s_code,
                 "title": raw_title,
-                "shortTitle": f"{sense_addr} · {S_SUBTITLES[s_code]}",
+                "matrixTitle": matrix_title,
+                "shortTitle": f"{sense_addr} · {raw_title}",
                 "narrative": raw_narr,
                 "coords": {"v": s_u, "psi": s_psi},
                 "vectorNames": v_names_list,
