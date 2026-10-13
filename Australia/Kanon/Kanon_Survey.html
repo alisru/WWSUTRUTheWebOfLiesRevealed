@@ -1836,7 +1836,7 @@ main.wide { max-width: 1280px; }
   <div class="kanon-hero-inner">
     <h1 class="kanon-hero-title">THE AUSTRALIAN KANON</h1>
     <p class="kanon-hero-quote">"What Kind of Australian Are You? — The Ideal We Keep Returning To"</p>
-    <p class="kanon-hero-sub">7 Planes · 49 Senses · 353/354 Vectors · Should vs. Would Judgment Diagnostic</p>
+    <p class="kanon-hero-sub">7 Planes · 49 Senses · 354 Vectors · Should vs. Would Judgment Diagnostic</p>
     <div class="kanon-hero-bar"></div>
   </div>
 </div>
@@ -1847,7 +1847,7 @@ main.wide { max-width: 1280px; }
       <span class="brand-mark" aria-hidden="true"></span>
       <span>Australian Kanon Quiz</span>
     </a>
-    <button class="tier-badge-top" id="header-tier-btn" title="Click to switch between 7, 49, and 353/354 resolution tiers"></button>
+    <button class="tier-badge-top" id="header-tier-btn" title="Click to switch between 7, 49, and 354 resolution tiers"></button>
     <nav class="nav-pills" id="top-nav"></nav>
   </div>
   <div class="progress-bar-wrap"><div class="progress-bar-fill" id="global-progress"></div></div>
@@ -1859,7 +1859,7 @@ main.wide { max-width: 1280px; }
 <script src="kanon_survey_data.js"></script>
 <script>
 /* =========================================================================
-   THE AUSTRALIAN KANON ABCD SURVEY & DIAGNOSTIC ENGINE (7 · 49 · 353/354)
+   THE AUSTRALIAN KANON ABCD SURVEY & DIAGNOSTIC ENGINE (7 · 49 · 354)
    Combines 12Axes Archetype & Explainer QoL with WWSUTRU Welfare Keyring
    ========================================================================= */
 
@@ -2416,8 +2416,7 @@ function toggleBlocker(prefix, id, tag) {
 }
 
 function activeTierVectors(planeNum = null) {
-  const list = planeNum ? (VECTORS_BY_PLANE[planeNum] || []) : VECTORS;
-  return STATE.include354 ? list : list.filter(v => v.inHanson353);
+  return planeNum ? (VECTORS_BY_PLANE[planeNum] || []) : VECTORS;
 }
 
 function isNodeAnswered(prefix, id) {
@@ -2429,7 +2428,7 @@ function isNodeAnswered(prefix, id) {
   );
 }
 
-/* ---------- HIERARCHICAL SCORE ENGINE (7 <-> 49 <-> 353/354) ---------- */
+/* ---------- HIERARCHICAL SCORE ENGINE (7 <-> 49 <-> 354) ---------- */
 function avgNums(arr) {
   const v = arr.filter(x => x !== null && x !== undefined && !Number.isNaN(x));
   return v.length ? v.reduce((a, b) => a + b, 0) / v.length : null;
@@ -2440,7 +2439,7 @@ function getSenseMultiTierProbe(senseId, probe) {
   if (!s) return { tier1: null, tier2: null, tier3: null, effective: null };
   const t1 = getAns("P", s.plane, probe);
   const t2 = getAns("S", senseId, probe);
-  const vecs = (VECTORS_BY_SENSE[senseId] || []).filter(v => STATE.include354 || v.inHanson353);
+  const vecs = (VECTORS_BY_SENSE[senseId] || []);
   const t3 = avgNums(vecs.map(v => getAns("V", v.uid, probe)));
 
   let effective = null;
@@ -2706,10 +2705,10 @@ function loadPresetProfile(presetId) {
       setAns("S", s.id, "D", (s.plane === 2 || s.plane === 3 || idx % 3 === 0) ? -3 : -2);
       STATE.blockers[`S|${s.id}`] = [demoBlockers[idx % demoBlockers.length]];
     });
-  } else if (presetId === "hanson_353") {
+  } else if (presetId === "hanson_354") {
     STATE.tier = 353;
     STATE.include354 = false;
-    VECTORS.filter(v => v.inHanson353).forEach(v => {
+    VECTORS.forEach(v =>.forEach(v => {
       const val = v.hansonVerdict === "HIT" ? 4 : -3;
       STATE.answers[ansKey("V", v.uid, "A")] = val;
       STATE.answers[ansKey("V", v.uid, "B")] = val;
@@ -2745,7 +2744,7 @@ function subKeyringSlots(senseId) {
   const sC = getAns("S", senseId, "C");
   const sD = getAns("S", senseId, "D");
 
-  const vecs = (VECTORS_BY_SENSE[senseId] || []).filter(v => STATE.include354 || v.inHanson353);
+  const vecs = (VECTORS_BY_SENSE[senseId] || []);
   const vecNum = (v) => parseInt(String(v.addr || "").split(".")[2], 10) || 1;
   const g0 = vecs.filter(v => vecNum(v) <= 3);
   const g1 = vecs.filter(v => vecNum(v) === 4 || vecNum(v) === 5);
@@ -3374,7 +3373,7 @@ function renderTierSelectorHTML() {
           <span class="tier-pill">${STATE.tier === 353 ? "ACTIVE TIER" : "Tier 3 · Deep Audit"}</span>
         </div>
         <h3>Full Kanon Vector Audit</h3>
-        <p>Every Australian Kanon node (<em>Mateship</em>, <em>The Fair Go</em>, <em>Terra Nullius</em>, <em>Songlines [FN]</em>) with direct comparison to the Pauline Hanson 353 Audit.</p>
+        <p>Every Australian Kanon node (<em>Mateship</em>, <em>The Fair Go</em>, <em>Terra Nullius</em>, <em>Songlines [FN]</em>) with direct comparison to the Pauline Hanson 354 Audit.</p>
         <div class="tier-card-meta">
           <span>⏱ ~35 min · Depth <span class="depth-dots"><i class="on"></i><i class="on"></i><i class="on"></i></span></span>
           <span>${p353} / ${vecs.length} answered</span>
@@ -3441,7 +3440,7 @@ function renderHub(app) {
         What Kind of Australian Are You?
       </h1>
       <p class="lede" style="margin:0 0 16px;">
-        Map yourself against the <strong>Australian Kanon</strong>—the 7-Plane, 49-Sense, 353/354-Vector cultural DNA of the nation.
+        Map yourself against the <strong>Australian Kanon</strong>—the 7-Plane, 49-Sense, 354-Vector cultural DNA of the nation.
         Instead of a flat political compass that only asks what you <em>reckon</em> in theory, each node measures four <strong>Should vs. Would</strong> perspectives on a bipolar <strong><code>−5</code> (Extractive / Suppressive) to <code>+5</code> (Greater Good / Proactive) scale</strong> (with <code>0</code> as Neutral / Self-Only):
         <strong>A (Personal Should)</strong> what you believe we should uphold, <strong>B (Personal Would)</strong> what you actually do in practice,
         <strong>C (Community Circle)</strong> what your everyday circle believes and does, and <strong>D (Australian Society)</strong> what wider Australian society and institutions actually deliver.
@@ -3465,7 +3464,7 @@ function renderHub(app) {
           <span class="mono" style="font-size:0.75rem;color:var(--ink-muted);">Demo Presets:</span>
           <button class="btn btn-secondary btn-sm" id="preset-battler" title="Preview a Betrayed Battler profile (High Personal Should/Would, Blocked Society D)">Load "Betrayed Battler"</button>
           <button class="btn btn-secondary btn-sm" id="preset-guardian" title="Preview The Stoic Guardian profile">Load "Stoic Guardian"</button>
-          <button class="btn btn-secondary btn-sm" id="preset-hanson" title="Load Pauline Hanson's 353-Vector Audit verdicts">Load Hanson 353 Audit</button>
+          <button class="btn btn-secondary btn-sm" id="preset-hanson" title="Load Pauline Hanson's 354-Vector Audit verdicts">Load Hanson 354 Audit</button>
         </div>
       </div>
     </section>
@@ -3506,7 +3505,7 @@ function renderHub(app) {
   document.getElementById("preset-battler")?.addEventListener("click", () => loadPresetProfile("betrayed_battler"));
   document.getElementById("preset-guardian")?.addEventListener("click", () => loadPresetProfile("stoic_guardian"));
   document.getElementById("preset-hanson")?.addEventListener("click", () => {
-    loadPresetProfile("hanson_353");
+    loadPresetProfile("hanson_354");
     location.hash = "#/results";
   });
 }
@@ -3578,14 +3577,14 @@ function renderFramework(app) {
         </ul>
       </div>
 
-      <h2>3. The Three Resolution Tiers (7 · 49 · 353/354)</h2>
+      <h2>3. The Three Resolution Tiers (7 · 49 · 354)</h2>
       <p style="color:var(--ink-soft);">
         The Australian Kanon is a fractal <strong>7 × 7 × 7</strong> matrix:
       </p>
       <ul style="color:var(--ink-soft);">
         <li><strong>Tier 1 (7 Plane Essence Nodes):</strong> Evaluates the core functional essence of each of the 7 Planes directly (matched to the 7 Pillars of <a href="Archetype_The_Stoic_Guardian.html">The Stoic Guardian</a>).</li>
         <li><strong>Tier 2 (49 Sense Essence Nodes):</strong> Evaluates the synthesised essence of each of the 49 Senses (<code>Who.Who</code> through <code>Effect.Effect</code>).</li>
-        <li><strong>Tier 3 (353 / 354 Vector Nodes):</strong> Evaluates every single vector node in the Australian Kanon, including the 11 First Nations <code>[FN]</code> perspective pairs. Toggle between the exact <strong>353 nodes</strong> audited in the <a href="../Hanson_Audit/index.html">Pauline Hanson Audit</a> or all <strong>354 nodes</strong> from the compact JSON files.</li>
+        <li><strong>Tier 3 (354 Vector Nodes):</strong> Evaluates every single vector node in the Australian Kanon, including the 11 First Nations <code>[FN]</code> perspective pairs. Toggle between the exact <strong>353 nodes</strong> audited in the <a href="../Hanson_Audit/index.html">Pauline Hanson Audit</a> or all <strong>354 nodes</strong> from the compact JSON files.</li>
       </ul>
 
       <div class="page-footer-nav">
@@ -3847,7 +3846,7 @@ function renderPlane(app, pNum) {
     cardsArray = [renderABCDBlockHTML("P", p.n, p, p.hue, headerHTML)];
   } else if (STATE.tier === 49) {
     cardsArray = planeSenses.map(s => {
-      const vecs = (VECTORS_BY_SENSE[s.id] || []).filter(v => STATE.include354 || v.inHanson353);
+      const vecs = (VECTORS_BY_SENSE[s.id] || []);
       const expanded = !!STATE.expandedSenses[s.id];
       const vecAnsCount = vecs.filter(v => isNodeAnswered("V", v.uid)).length;
 
@@ -4167,7 +4166,7 @@ function renderVectorCardHTML(v, planeHue) {
           <span class="badge" data-badge-title="Psochic Hegemony Coordinate (${escapeHtml(v.zone)})" data-badge-tip="υ = ${v.coords.v >= 0 ? "+" : ""}${v.coords.v} (Morality: who benefits), ψ = ${v.coords.psi >= 0 ? "+" : ""}${v.coords.psi} (Will: active vs passive). Rationale: ${escapeHtml(v.rationale)}">υ=${v.coords.v >= 0 ? "+" : ""}${v.coords.v}, ψ=${v.coords.psi >= 0 ? "+" : ""}${v.coords.psi} (${escapeHtml(v.zone)})</span>
           ${v.fn ? `<span class="badge badge-fn" data-badge-title="First Nations Perspective Node" data-badge-tip="Anchors the 65,000-year Indigenous continuum at address ${v.addr} alongside the post-1788 Commonwealth.">[FN] First Nations Perspective</span>` : ""}
           ${isShadow ? `<span class="badge badge-shadow" data-badge-title="Shadow / Corrective Vector (υ < 0)" data-badge-tip="This node represents a negative shadow or failure mode in the Australian Kanon. Rating +1 to +5 means seeing through and overcoming this shadow (Kanon HIT); rating −1 to −5 means being captured by it (Kanon FAIL).">Shadow Vector (Corrective Scale)</span>` : ""}
-          ${v.hansonVerdict ? `<span class="badge ${v.hansonVerdict === "HIT" ? "badge-hit" : "badge-fail"}" data-badge-title="Pauline Hanson 353-Vector Audit Verdict" data-badge-tip="In the full 353-vector Kanon Audit, Pauline Hanson's record was scored as a ${v.hansonVerdict} on ${escapeHtml(v.cleanName)}.">Hanson Audit: ${v.hansonVerdict}</span>` : ""}
+          ${v.hansonVerdict ? `<span class="badge ${v.hansonVerdict === "HIT" ? "badge-hit" : "badge-fail"}" data-badge-title="Pauline Hanson 354-Vector Audit Verdict" data-badge-tip="In the full 353-vector Kanon Audit, Pauline Hanson's record was scored as a ${v.hansonVerdict} on ${escapeHtml(v.cleanName)}.">Hanson Audit: ${v.hansonVerdict}</span>` : ""}
           ${v.alboVerdict ? `<span class="badge ${v.alboVerdict === "HIT" ? "badge-hit" : "badge-fail"}" data-badge-title="Anthony Albanese Audit Verdict" data-badge-tip="In the Albanese Kanon Audit, his record was scored as a ${v.alboVerdict} on ${escapeHtml(v.cleanName)}.">Albo Audit: ${v.alboVerdict}</span>` : ""}
         </div>
         <h3 class="sense-title" style="margin-top:6px;">${escapeHtml(v.name)}</h3>
@@ -4472,7 +4471,7 @@ function renderResults(app) {
         <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;">
           <button class="btn btn-sm" id="res-preset-battler">Load Demo: "The Betrayed Battler"</button>
           <button class="btn btn-secondary btn-sm" id="res-preset-guardian">Load Demo: "The Stoic Guardian"</button>
-          <button class="btn btn-secondary btn-sm" id="res-preset-hanson">Load Pauline Hanson 353 Audit</button>
+          <button class="btn btn-secondary btn-sm" id="res-preset-hanson">Load Pauline Hanson 354 Audit</button>
         </div>
       </div>
     ` : ""}
@@ -4683,7 +4682,7 @@ function renderResults(app) {
         ${profile.hansonCompared > 0 ? `
           <div class="callout" style="margin-top:12px;font-size:0.84rem;">
             <strong>Direct Audit Cross-Check:</strong> Across ${profile.hansonCompared} decisive vector(s), your ratings agreed with
-            <a href="../Hanson_Audit/index.html">Pauline Hanson's 353-Vector Audit</a> on <strong>${profile.hansonAgree}/${profile.hansonCompared} (${Math.round(profile.hansonAgree/profile.hansonCompared*100)}%)</strong>
+            <a href="../Hanson_Audit/index.html">Pauline Hanson's 354-Vector Audit</a> on <strong>${profile.hansonAgree}/${profile.hansonCompared} (${Math.round(profile.hansonAgree/profile.hansonCompared*100)}%)</strong>
             ${profile.alboCompared > 0 ? ` and with Anthony Albanese's audited vectors on <strong>${profile.alboAgree}/${profile.alboCompared} (${Math.round(profile.alboAgree/profile.alboCompared*100)}%)</strong>` : ""}.
           </div>
         ` : ""}
@@ -4851,7 +4850,7 @@ function renderResults(app) {
 
   document.getElementById("res-preset-battler")?.addEventListener("click", () => loadPresetProfile("betrayed_battler"));
   document.getElementById("res-preset-guardian")?.addEventListener("click", () => loadPresetProfile("stoic_guardian"));
-  document.getElementById("res-preset-hanson")?.addEventListener("click", () => loadPresetProfile("hanson_353"));
+  document.getElementById("res-preset-hanson")?.addEventListener("click", () => loadPresetProfile("hanson_354"));
 
   document.getElementById("btn-download-png")?.addEventListener("click", () => downloadShareCardPNG(profile));
 
