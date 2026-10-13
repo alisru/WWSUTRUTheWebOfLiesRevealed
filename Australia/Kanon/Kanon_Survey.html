@@ -1728,6 +1728,59 @@ main.wide { max-width: 1280px; }
   main { max-width: 100%; padding: 0; }
   .card, .sense-card, .plane-star-card { break-inside: avoid; box-shadow: none; }
 }
+
+.plane-lore-drawer {
+  margin-top: 12px;
+  border: 1px solid #CBD5E1;
+  border-radius: 12px;
+  background: #F8FAFC;
+  overflow: hidden;
+}
+.plane-lore-drawer > summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 11px 16px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #0F172A;
+  background: linear-gradient(90deg, #F1F5F9 0%, #FFFFFF 100%);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  user-select: none;
+}
+.plane-lore-drawer > summary::-webkit-details-marker { display: none; }
+.plane-lore-drawer > summary:hover { background: #E2E8F0; }
+.plane-lore-drawer[open] > summary { border-bottom: 1px solid #CBD5E1; }
+.plane-lore-drawer-body { padding: 14px 16px; background: #FFFFFF; }
+
+.scale-endpoints {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.67rem;
+  color: #64748B;
+  margin: 4px 0 3px;
+  padding: 0 2px;
+}
+.scale-endpoints .ep-neg { color: #B91C1C; font-weight: 600; }
+.scale-endpoints .ep-mid { color: #475569; }
+.scale-endpoints .ep-pos { color: #047857; font-weight: 600; }
+
+.shadow-alert-strip {
+  background: #FEF2F2;
+  border: 1px solid #FECACA;
+  border-left: 4px solid #DC2626;
+  border-radius: 8px;
+  padding: 9px 13px;
+  margin-bottom: 12px;
+  font-size: 0.83rem;
+  color: #7F1D1D;
+  line-height: 1.45;
+}
 </style>
 </head>
 <body>
@@ -1754,7 +1807,7 @@ main.wide { max-width: 1280px; }
   </div>
 </nav>
 
-<div class="kanon-hero-banner no-print">
+<div class="kanon-hero-banner no-print" id="site-hero-banner">
   <div class="kanon-hero-flag">
     <svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 10080 5040" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
       <defs>
@@ -1859,6 +1912,9 @@ GLOSSARY_PATTERNS.sort((a, b) => b.phrase.length - a.phrase.length);
 
 function escapeHtml(str) {
   return String(str || "")
+    .replace(/\*\*([^*]+)\*\*/g, "$1")
+    .replace(/\*([^*]+)\*/g, "$1")
+    .replace(/\*/g, "")
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
@@ -2162,15 +2218,15 @@ function fmtSigned(v, dec = 1) {
   return `${n > 0 ? "+" : ""}${n.toFixed(dec)}`;
 }
 
-// Part 4 Axis-Anchored Scales (-5 Extractive / Suppressive, 0 Selfish / Inaction, +5 Greater Good / Proactive)
+// Part 4 Axis-Anchored Scales (-5 Extractive / Suppressive, 0 Neutral / Self-Only, +5 Greater Good / Proactive)
 // A: Personal Ideal ("Should")
 const SCALE_A = [
   { v: -5, lbl: "Extractive / Suppress", tip: "−5 Extractive / Suppressive (−υ, −ψ): Should be actively prevented, suppressed, or stripped away" },
-  { v: -4, lbl: "Reject / Prevent",      tip: "−4 Strongly Reject / Prevent (−υ, −ψ)" },
+  { v: -4, lbl: "Strongly Reject",       tip: "−4 Strongly Reject / Prevent (−υ, −ψ)" },
   { v: -3, lbl: "Should Not Do",         tip: "−3 Should Not Do: Oppose this principle" },
   { v: -2, lbl: "Restrict",              tip: "−2 Restrict / Limit" },
   { v: -1, lbl: "Lean Against",          tip: "−1 Lean Against" },
-  { v: 0,  lbl: "Selfish / Inaction",    tip: "0 Origin (Selfish Interest / Inaction): Neutral, passive, or only for narrow self-interest" },
+  { v: 0,  lbl: "Neutral / Self-Only",   tip: "0 Origin (Self-Interest / Inaction): Neutral, passive, or only for narrow self-interest" },
   { v: 1,  lbl: "Lean Should",           tip: "+1 Lean Should: Mildly support" },
   { v: 2,  lbl: "Support",               tip: "+2 Support: Worth upholding" },
   { v: 3,  lbl: "Should Uphold",         tip: "+3 Should Uphold: Solid collective benefit" },
@@ -2185,7 +2241,7 @@ const SCALE_B = [
   { v: -3, lbl: "Would Not Do",          tip: "−3 Would Not Do in the heat of the moment" },
   { v: -2, lbl: "Withhold",              tip: "−2 Avoid or withhold support in practice" },
   { v: -1, lbl: "Rarely Do",             tip: "−1 Rarely practise or stand up for this" },
-  { v: 0,  lbl: "Selfish / Inaction",    tip: "0 Origin (Selfish Interest / Inaction): Do nothing or look out only for myself in practice" },
+  { v: 0,  lbl: "Neutral / Self-Only",   tip: "0 Origin (Self-Interest / Inaction): Do nothing or look out only for myself in practice" },
   { v: 1,  lbl: "Sometimes Do",          tip: "+1 Sometimes practise when convenient" },
   { v: 2,  lbl: "Usually Do",            tip: "+2 Usually practise in daily life" },
   { v: 3,  lbl: "Actively Do",           tip: "+3 Actively Do: Practise reliably in daily life" },
@@ -2200,7 +2256,7 @@ const SCALE_C = [
   { v: -3, lbl: "Would Not Do",          tip: "−3 My circle would not back or practise this" },
   { v: -2, lbl: "Dismisses",             tip: "−2 My circle dismisses or looks down on this" },
   { v: -1, lbl: "Skeptical",             tip: "−1 My circle leans against this" },
-  { v: 0,  lbl: "Selfish / Inaction",    tip: "0 Origin (Selfish Interest / Inaction): My circle looks after its own narrow interest or stays passive" },
+  { v: 0,  lbl: "Neutral / Self-Only",   tip: "0 Origin (Self-Interest / Inaction): My circle looks after its own narrow interest or stays passive" },
   { v: 1,  lbl: "Mildly Backs",          tip: "+1 My circle mildly supports this" },
   { v: 2,  lbl: "Says Should",           tip: "+2 My circle agrees we should do this" },
   { v: 3,  lbl: "Does in Practice",      tip: "+3 My circle genuinely practises this" },
@@ -2215,12 +2271,70 @@ const SCALE_D = [
   { v: -3, lbl: "Fails in Practice",     tip: "−3 Fails in practice despite rhetoric" },
   { v: -2, lbl: "Lip Service Only",      tip: "−2 Stated ideal only; undermined in practice" },
   { v: -1, lbl: "Sliding Back",          tip: "−1 Eroding or drifting backwards" },
-  { v: 0,  lbl: "Selfish / Inaction",    tip: "0 Origin (Selfish Interest / Inaction): Society does nothing or leaves people to fend for themselves" },
+  { v: 0,  lbl: "Mixed / Stagnant",      tip: "0 Origin (Self-Interest / Inaction): Society does nothing or leaves people to fend for themselves" },
   { v: 1,  lbl: "Slow Progress",         tip: "+1 Minor or uneven delivery" },
   { v: 2,  lbl: "Partial Delivery",      tip: "+2 Partially working in Australian society" },
   { v: 3,  lbl: "Works in Practice",     tip: "+3 Genuinely working in practice" },
   { v: 4,  lbl: "Proactive System",      tip: "+4 Proactive Will (+ψ): Strong systemic delivery" },
   { v: 5,  lbl: "Greater Good",          tip: "+5 Greater Good & Proactive (+υ, +ψ): Australian society and institutions actively deliver this for everyone" }
+];
+
+// Dedicated Corrective Scales for Shadow / Flaw Nodes (υ < 0, e.g. The Bludger, The Squatter, Terra Nullius)
+// Removes double-negative confusion: -5 = Excuse/Practise/Captured by Flaw, +5 = Reject & Overcome Flaw
+const SCALE_A_SHADOW = [
+  { v: -5, lbl: "Champion Flaw",         tip: "−5 Excuse or champion this national flaw (Kanon FAIL)" },
+  { v: -4, lbl: "Defend Flaw",           tip: "−4 Defend or justify this flaw" },
+  { v: -3, lbl: "Accept Flaw",           tip: "−3 Accept this flaw as normal" },
+  { v: -2, lbl: "Excuse It",             tip: "−2 Make excuses for this flaw" },
+  { v: -1, lbl: "Downplay It",           tip: "−1 Downplay the harm of this flaw" },
+  { v: 0,  lbl: "Passive / Unsure",      tip: "0 Passive or indifferent toward this flaw" },
+  { v: 1,  lbl: "Dislike Flaw",          tip: "+1 Recognise this as a problem" },
+  { v: 2,  lbl: "Should Reject",         tip: "+2 Agree we should reject this flaw" },
+  { v: 3,  lbl: "Firmly Reject",         tip: "+3 Firmly reject this flaw" },
+  { v: 4,  lbl: "Actively Reform",       tip: "+4 Actively work to reform and dismantle this flaw" },
+  { v: 5,  lbl: "Reject & Overcome",     tip: "+5 Completely reject and overcome this flaw for the Greater Good (Kanon HIT)" }
+];
+
+const SCALE_B_SHADOW = [
+  { v: -5, lbl: "Practise Flaw",         tip: "−5 In practice, I actively practise or exploit this flaw (Kanon FAIL)" },
+  { v: -4, lbl: "Often Go Along",        tip: "−4 Often go along with this flaw" },
+  { v: -3, lbl: "Give In To It",         tip: "−3 Give in to this flaw when convenient" },
+  { v: -2, lbl: "Excuse It",             tip: "−2 Excuse or tolerate it in my own actions" },
+  { v: -1, lbl: "Sometimes Slip",        tip: "−1 Sometimes slip into this habit" },
+  { v: 0,  lbl: "Passive / Bystander",   tip: "0 Stay passive and do nothing either way" },
+  { v: 1,  lbl: "Try to Avoid",          tip: "+1 Try to avoid this flaw" },
+  { v: 2,  lbl: "Usually Refuse",        tip: "+2 Usually refuse to go along with this flaw" },
+  { v: 3,  lbl: "Refuse in Practice",    tip: "+3 Consistently refuse to practise this flaw" },
+  { v: 4,  lbl: "Call It Out",           tip: "+4 Actively call out and resist this flaw" },
+  { v: 5,  lbl: "Actively Overcome",     tip: "+5 Actively resist and model the antidote in daily life (Kanon HIT)" }
+];
+
+const SCALE_C_SHADOW = [
+  { v: -5, lbl: "Entrenched in Circle",  tip: "−5 My circle celebrates or is entrenched in this flaw" },
+  { v: -4, lbl: "Practises Flaw",        tip: "−4 My circle regularly practises this flaw" },
+  { v: -3, lbl: "Excuses Flaw",          tip: "−3 My circle excuses this flaw" },
+  { v: -2, lbl: "Tolerates It",          tip: "−2 My circle shrugs and tolerates it" },
+  { v: -1, lbl: "Looks Away",            tip: "−1 My circle mostly looks the other way" },
+  { v: 0,  lbl: "Mixed / Passive",       tip: "0 My circle is split or passive" },
+  { v: 1,  lbl: "Frowns On It",          tip: "+1 My circle frowns on this flaw" },
+  { v: 2,  lbl: "Disapproves",           tip: "+2 My circle disapproves of this flaw" },
+  { v: 3,  lbl: "Rejects in Practice",   tip: "+3 My circle refuses to practise or excuse this flaw" },
+  { v: 4,  lbl: "Calls It Out",          tip: "+4 My circle actively calls out this flaw" },
+  { v: 5,  lbl: "Overcomes Flaw",        tip: "+5 My circle has genuinely overcome this flaw" }
+];
+
+const SCALE_D_SHADOW = [
+  { v: -5, lbl: "Captured by Flaw",      tip: "−5 Australian institutions & society are heavily captured by this flaw" },
+  { v: -4, lbl: "Deeply Entrenched",     tip: "−4 Deeply entrenched across Australian systems" },
+  { v: -3, lbl: "Rewarded by System",    tip: "−3 The system still rewards or protects this flaw" },
+  { v: -2, lbl: "Excused in Practice",   tip: "−2 Condemned in words, excused in practice" },
+  { v: -1, lbl: "Worsening",             tip: "−1 Drifting back into this flaw" },
+  { v: 0,  lbl: "Mixed / Stagnant",      tip: "0 Half-reformed, half-entrenched" },
+  { v: 1,  lbl: "Slow Reform",           tip: "+1 Beginning to reform this flaw" },
+  { v: 2,  lbl: "Partial Pushback",      tip: "+2 Partial institutional pushback against this flaw" },
+  { v: 3,  lbl: "Actively Resisted",     tip: "+3 Australian society actively resists and curbs this flaw" },
+  { v: 4,  lbl: "Dismantling Flaw",      tip: "+4 Strong systemic reform dismantling this flaw" },
+  { v: 5,  lbl: "Overcome in Practice",  tip: "+5 Australian society has genuinely overcome and dismantled this flaw" }
 ];
 
 const TOPIC_MAP = [
@@ -2422,6 +2536,8 @@ function computeKanonProfile() {
   const avgD = avgNums(planeSummaries.map(p => p.D));
   const avgTot = avgNums(planeSummaries.map(p => p.total));
 
+  const avgPersonal = avgNums([avgA, avgB]);
+  const personalAlignmentPct = avgPersonal !== null ? Math.round(((avgPersonal + 5) / 10) * 100) : null;
   const alignmentPct = avgTot !== null ? Math.round(((avgTot + 5) / 10) * 100) : null;
   const ethosPct = avgA !== null ? Math.round(((avgA + 5) / 10) * 100) : null;
   const livedPct = avgB !== null ? Math.round(((avgB + 5) / 10) * 100) : null;
@@ -2516,11 +2632,12 @@ function computeKanonProfile() {
     v: +((coordsA.v * 0.55 + coordsB.v * 0.45)).toFixed(2),
     psi: +((coordsA.psi * 0.55 + coordsB.psi * 0.45)).toFixed(2)
   };
+  const refAlignForFigures = personalAlignmentPct ?? alignmentPct;
   const figureMatches = FIGURES.map(fig => {
     const dv = userOverallCoords.v - fig.coords.v;
     const dpsi = userOverallCoords.psi - fig.coords.psi;
     const coordDist = Math.sqrt(dv * dv + dpsi * dpsi);
-    const alignDiff = alignmentPct !== null ? Math.abs(alignmentPct - fig.alignment) / 100 : 0.3;
+    const alignDiff = refAlignForFigures !== null ? Math.abs(refAlignForFigures - fig.alignment) / 100 : 0.3;
     let match = Math.max(5, Math.round((1 - (coordDist * 0.38 + alignDiff * 0.45)) * 100));
 
     if (fig.name.includes("Pauline Hanson") && hansonCompared > 0) {
@@ -2546,7 +2663,7 @@ function computeKanonProfile() {
     answeredPlanes,
     avgA, avgB, avgC, avgD, avgTot,
     personalGap, socialGap,
-    alignmentPct, ethosPct, livedPct, communityPct, societyPct,
+    personalAlignmentPct, alignmentPct, ethosPct, livedPct, communityPct, societyPct,
     coordsA, coordsB, userOverallCoords,
     hitCount, failCount, neutralCount, totalEvaluated,
     netAlignmentPct: totalEvaluated > 0 ? +(((hitCount - failCount) / totalEvaluated) * 100).toFixed(1) : 0,
@@ -2764,8 +2881,9 @@ function combinedArmSVG(cx, cy, angleDeg, armLen, i) {
   parts.push(`<polyline points="${p2x.toFixed(1)},${p2y.toFixed(1)} ${p4x.toFixed(1)},${p4y.toFixed(1)}" stroke="var(--ink)" stroke-width="1" opacity="0.3"/>`);
   parts.push(`<text x="${(p3x - px * 5).toFixed(1)}" y="${(p3y - py * 5).toFixed(1)}" font-size="8" fill="var(--ink)" opacity="0.5" text-anchor="middle" font-family="'JetBrains Mono', monospace">Should:+5</text>`);
   parts.push(`<text x="${(p4x + px * 5).toFixed(1)}" y="${(p4y + py * 5).toFixed(1)}" font-size="8" fill="var(--ink)" opacity="0.5" text-anchor="middle" font-family="'JetBrains Mono', monospace">Would:+5</text>`);
-  const lx = cx + dx * (armLen + 14), ly = cy + dy * (armLen + 14);
-  parts.push(`<text x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" font-size="10" fill="var(--ink-soft)" text-anchor="middle" dominant-baseline="middle" font-family="'JetBrains Mono', monospace">Q${i + 1}</text>`);
+  const S_NAMES = [".1 Who", ".2 What", ".3 Where", ".4 Why", ".5 How", ".6 Cause", ".7 Effect"];
+  const lx = cx + dx * (armLen + 16), ly = cy + dy * (armLen + 16);
+  parts.push(`<text x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" font-size="9" font-weight="600" fill="var(--ink)" text-anchor="middle" dominant-baseline="middle" font-family="'JetBrains Mono', monospace">Q${i + 1} (${S_NAMES[i]})</text>`);
   return parts.join("");
 }
 
@@ -3031,19 +3149,24 @@ function downloadShareCardPNG(profile) {
   ctx.fillText(`${arch.badge.toUpperCase()} · ${arch.matchPct}% MATCH`, 76, 165);
 
   ctx.fillStyle = "#FFFFFF";
-  ctx.font = "900 58px 'Inter', sans-serif";
-  ctx.fillText(arch.name, 76, 235);
+  let titleSize = 56;
+  ctx.font = `900 ${titleSize}px 'Inter', sans-serif`;
+  while (ctx.measureText(arch.name).width > 928 && titleSize > 34) {
+    titleSize -= 2;
+    ctx.font = `900 ${titleSize}px 'Inter', sans-serif`;
+  }
+  ctx.fillText(arch.name, 76, 232, 928);
 
   ctx.fillStyle = "#E2E8F0";
-  ctx.font = "italic 30px 'Merriweather', Georgia, serif";
-  ctx.fillText(arch.subtitle, 76, 282);
+  ctx.font = "italic 28px 'Merriweather', Georgia, serif";
+  ctx.fillText(arch.subtitle, 76, 282, 928);
 
   // 4 Key Stat Boxes
   const stats = [
-    { lbl: "OVERALL KANON ALIGNMENT", val: `${profile.alignmentPct ?? "—"}%` },
+    { lbl: "PERSONAL KANON ALIGNMENT (A & B)", val: `${profile.personalAlignmentPct ?? profile.alignmentPct ?? "—"}%` },
     { lbl: "PERSONAL SHOULD (A) VS WOULD (B)", val: `${profile.ethosPct ?? "—"}% vs ${profile.livedPct ?? "—"}%` },
     { lbl: "HEGEMONY COORDINATE (υ, ψ)", val: `(${profile.userOverallCoords.v >= 0 ? "+" : ""}${profile.userOverallCoords.v}, ${profile.userOverallCoords.psi >= 0 ? "+" : ""}${profile.userOverallCoords.psi})` },
-    { lbl: "CLOSEST HISTORICAL FIGURE", val: `${topFig.name} (${topFig.matchPct}%)` }
+    { lbl: "CLOSEST HISTORICAL FIGURE", val: `${topFig.name} (${topFig.matchPct}%)`, maxW: 406 }
   ];
 
   stats.forEach((st, i) => {
@@ -3058,12 +3181,12 @@ function downloadShareCardPNG(profile) {
     ctx.strokeRect(bx, by, 450, 105);
 
     ctx.fillStyle = "#FACC15";
-    ctx.font = "800 32px 'Inter', sans-serif";
-    ctx.fillText(st.val, bx + 22, by + 52);
+    ctx.font = "800 30px 'Inter', sans-serif";
+    ctx.fillText(st.val, bx + 22, by + 52, st.maxW || 406);
 
     ctx.fillStyle = "#94A3B8";
     ctx.font = "600 16px 'JetBrains Mono', monospace";
-    ctx.fillText(st.lbl, bx + 22, by + 84);
+    ctx.fillText(st.lbl, bx + 22, by + 84, 406);
   });
 
   // 7 Planes Dual Bars
@@ -3173,9 +3296,19 @@ function parseRoute() {
   return { page: "hub" };
 }
 
-function render() {
+let LAST_ROUTE_KEY = "";
+function render(opts = {}) {
   hideFloatingTooltip();
   const route = parseRoute();
+  const routeKey = `${route.page}:${route.planeNum || ""}`;
+  const routeChanged = routeKey !== LAST_ROUTE_KEY;
+  LAST_ROUTE_KEY = routeKey;
+
+  const heroBanner = document.getElementById("site-hero-banner");
+  if (heroBanner) {
+    heroBanner.style.display = (route.page === "plane") ? "none" : "";
+  }
+
   renderNav(route);
   const app = document.getElementById("app");
   app.className = (route.page === "results" || route.page === "hub") ? "wide" : "";
@@ -3187,9 +3320,13 @@ function render() {
   else if (route.page === "review") renderReview(app);
   else if (route.page === "results") renderResults(app);
 
-  window.scrollTo({ top: 0, behavior: "instant" });
+  if (routeChanged) {
+    window.scrollTo({ top: 0, behavior: "instant" });
+  } else if (opts.scrollToCards) {
+    document.getElementById("plane-nodes-container")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
 }
-window.addEventListener("hashchange", render);
+window.addEventListener("hashchange", () => render());
 
 /* =========================================================================
    TIER SELECTOR COMPONENT (WITH 12AXES DURATION & DEPTH METERS)
@@ -3285,7 +3422,7 @@ function renderHub(app) {
           <span class="plane-status ${statusClass}">${statusText}</span>
         </div>
         <h3>${p.name}: <span style="font-weight:600;font-size:1.05rem;color:var(--ink-soft)">${escapeHtml(p.fullTitle || `Values of Australian ${p.name}`)}</span></h3>
-        <div class="pillar-tag">Pillar ${p.n}: ${p.pillar} (${escapeHtml(p.pillarBadge || "")}) · υ=${p.coords.v >= 0 ? "+" : ""}${p.coords.v}, ψ=${p.coords.psi >= 0 ? "+" : ""}${p.coords.psi} · τ=${p.tau}d</div>
+        <div class="pillar-tag">Pillar ${p.n}: ${p.pillar} (${escapeHtml(p.pillarBadge || "")}) · υ=${p.coords.v >= 0 ? "+" : ""}${p.coords.v}, ψ=${p.coords.psi >= 0 ? "+" : ""}${p.coords.psi}</div>
         <p style="margin-bottom:4px;"><strong>Core Focus:</strong> ${escapeHtml(p.blurb)}.</p>
         ${p.pillarSummary ? `<p style="font-size:0.82rem;color:var(--ink-muted);margin-bottom:4px;">${escapeHtml(p.pillarSummary)}</p>` : ""}
         ${p.shadowTitle ? `<div class="mono" style="font-size:0.72rem;color:#334155;background:#F8FAFC;border:1px solid #E2E8F0;padding:5px 8px;border-radius:6px;"><strong>Shadow Integration:</strong> ${escapeHtml(p.shadowTitle)}</div>` : ""}
@@ -3305,7 +3442,7 @@ function renderHub(app) {
       </h1>
       <p class="lede" style="margin:0 0 16px;">
         Map yourself against the <strong>Australian Kanon</strong>—the 7-Plane, 49-Sense, 353/354-Vector cultural DNA of the nation.
-        Instead of a flat political compass that only asks what you <em>reckon</em> in theory, each node measures four <strong>Should vs. Would</strong> perspectives on a bipolar <strong><code>−5</code> (Extractive / Suppressive) to <code>+5</code> (Greater Good / Proactive) scale</strong> (with <code>0</code> as Selfish Interest / Inaction):
+        Instead of a flat political compass that only asks what you <em>reckon</em> in theory, each node measures four <strong>Should vs. Would</strong> perspectives on a bipolar <strong><code>−5</code> (Extractive / Suppressive) to <code>+5</code> (Greater Good / Proactive) scale</strong> (with <code>0</code> as Neutral / Self-Only):
         <strong>A (Personal Should)</strong> what you believe we should uphold, <strong>B (Personal Would)</strong> what you actually do in practice,
         <strong>C (Community Circle)</strong> what your everyday circle believes and does, and <strong>D (Australian Society)</strong> what wider Australian society and institutions actually deliver.
       </p>
@@ -3340,7 +3477,7 @@ function renderHub(app) {
             <div class="eyebrow">Live Archetype Preview</div>
             <h3 style="font-size:1.3rem;margin-top:2px;">
               Current Match: <span style="color:var(--accent)">${profile.archetypeMatches[0].name}</span>
-              <span class="mono" style="font-size:0.85rem;color:var(--ink-muted);">(${profile.archetypeMatches[0].matchPct}% match · ${profile.alignmentPct ?? "—"}% Kanon Alignment)</span>
+              <span class="mono" style="font-size:0.85rem;color:var(--ink-muted);">(${profile.archetypeMatches[0].matchPct}% match · ${profile.personalAlignmentPct ?? profile.alignmentPct ?? "—"}% Personal Alignment)</span>
             </h3>
             <p style="margin:4px 0 0;font-size:0.9rem;color:var(--ink-soft);">
               Personal Should (A): <strong>${fmtSigned(profile.avgA, 2)}</strong> ·
@@ -3391,7 +3528,7 @@ function renderFramework(app) {
         <strong>Part 4 Axis Scale Anchors (−5 to +5):</strong>
         <ul style="margin:6px 0 0;padding-left:20px;">
           <li><strong><code>+1 to +5</code> · The Greater Good &amp; Proactive Will (<code>+υ, +ψ</code>):</strong> Creates net benefit, harmony, and freedom for everyone; actively builds, creates, and upholds the principle.</li>
-          <li><strong><code>0</code> · Selfish Interest &amp; Inaction (Origin):</strong> Looks out only for narrow self-interest or remains passive and does nothing.</li>
+          <li><strong><code>0</code> · Neutral / Self-Only &amp; Mixed / Stagnant (Origin):</strong> Looks out only for narrow self-interest or remains passive and does nothing.</li>
           <li><strong><code>−1 to −5</code> · Extractive Evil &amp; Suppressive Will (<code>−υ, −ψ</code>):</strong> Actively takes from others for a select few, or prevents, suppresses, and destroys the principle.</li>
         </ul>
       </div>
@@ -3404,7 +3541,7 @@ function renderFramework(app) {
           <div class="mono" style="color:var(--accent);font-weight:700;">A · PERSONAL "SHOULD" (−5 to +5)</div>
           <h3 style="font-size:1.02rem;margin:4px 0;">Your Moral Ideal</h3>
           <p style="margin:0;font-size:0.86rem;color:var(--ink-soft);">
-            What do you believe we <strong>should</strong> uphold? From <code>−5 Extractive / Suppress</code> through <code>0 Selfish / Inaction</code> to <code>+5 Greater Good</code>.
+            What do you believe we <strong>should</strong> uphold? From <code>−5 Extractive / Suppress</code> through <code>0 Neutral / Self-Only</code> to <code>+5 Greater Good</code>.
           </p>
         </div>
         <div class="card" style="padding:14px 16px;margin:0;border-top:3px solid #2E6F95;">
@@ -3443,7 +3580,7 @@ function renderFramework(app) {
 
       <h2>3. The Three Resolution Tiers (7 · 49 · 353/354)</h2>
       <p style="color:var(--ink-soft);">
-        The Australian Kanon is a fractal $7 \\times 7 \\times 7$ matrix:
+        The Australian Kanon is a fractal <strong>7 × 7 × 7</strong> matrix:
       </p>
       <ul style="color:var(--ink-soft);">
         <li><strong>Tier 1 (7 Plane Essence Nodes):</strong> Evaluates the core functional essence of each of the 7 Planes directly (matched to the 7 Pillars of <a href="Archetype_The_Stoic_Guardian.html">The Stoic Guardian</a>).</li>
@@ -3484,15 +3621,37 @@ function renderABCDBlockHTML(prefix, id, item, planeHue, extraHeaderHTML = "", e
   const isShadow = item.coords && item.coords.v < 0;
   const isFN = !!item.fn;
 
+  const scA = isShadow ? SCALE_A_SHADOW : SCALE_A;
+  const scB = isShadow ? SCALE_B_SHADOW : SCALE_B;
+  const scC = isShadow ? SCALE_C_SHADOW : SCALE_C;
+  const scD = isShadow ? SCALE_D_SHADOW : SCALE_D;
+
+  const shadowAlertHTML = isShadow ? `
+    <div class="shadow-alert-strip">
+      <strong>⚠️ Shadow / Flaw Vector (${escapeHtml(item.cleanName || item.name || "")} · υ &lt; 0):</strong>
+      This card describes a historical flaw, failure, or shadow in Australian life.
+      Click <strong>+1 to +5 (Green · Reject &amp; Overcome Flaw)</strong> if we should call out and overcome this flaw;
+      click <strong>−1 to −5 (Red · Excuse / Captured by Flaw)</strong> if you excuse it or if society is still trapped inside it.
+    </div>
+  ` : "";
+
   const makeRow = (probe, kindLabel, promptText, scaleList, curVal) => {
     const selClass = `sel-${probe.toLowerCase()}`;
     const letterClass = `letter-${probe.toLowerCase()}`;
+    const leftLbl = scaleList[0].lbl;
+    const midLbl = scaleList[5].lbl;
+    const rightLbl = scaleList[10].lbl;
     return `
       <div class="probe-row">
         <div class="probe-top">
           <span class="probe-letter ${letterClass}">${probe}</span>
           <span class="probe-kind">${kindLabel}</span>
           <span class="probe-text">${renderGlossaryHTML(promptText)}</span>
+        </div>
+        <div class="scale-endpoints" aria-hidden="true">
+          <span class="ep-neg">← −5 ${leftLbl}</span>
+          <span class="ep-mid">0 ${midLbl}</span>
+          <span class="ep-pos">+5 ${rightLbl} →</span>
         </div>
         <div class="scale-row">
           <div class="seg-group" role="radiogroup" aria-label="${probe} rating">
@@ -3516,7 +3675,7 @@ function renderABCDBlockHTML(prefix, id, item, planeHue, extraHeaderHTML = "", e
         </div>
         ${probe === "D" ? `
           <div class="blocker-chips-wrap">
-            <span class="mono" style="font-size:0.7rem;color:var(--ink-muted);margin-right:4px;">What's blocking it in Australia?</span>
+            <span class="mono" style="font-size:0.7rem;color:var(--ink-muted);margin-right:4px;">What's blocking it in Australia? (optional)</span>
             ${BLOCKER_TAGS.map(tag => {
               const active = chosenBlockers.includes(tag);
               return `<button type="button" class="blocker-chip-btn ${active ? "active" : ""}" data-blocker-prefix="${prefix}" data-blocker-id="${id}" data-blocker-tag="${tag}">${tag}</button>`;
@@ -3530,10 +3689,11 @@ function renderABCDBlockHTML(prefix, id, item, planeHue, extraHeaderHTML = "", e
   return `
     <section class="sense-card ${answered ? "answered" : ""} ${isShadow ? "shadow-node" : ""} ${isFN ? "fn-node" : ""}" id="node-${prefix}-${id}" style="--plane-color:${planeHue}">
       ${extraHeaderHTML}
-      ${makeRow("A", "Personal · Should", item.qA, SCALE_A, valA)}
-      ${makeRow("B", "Personal · Would", item.qB, SCALE_B, valB)}
-      ${makeRow("C", "Community · Circle", item.qC, SCALE_C, valC)}
-      ${makeRow("D", "Society · Australia", item.qD, SCALE_D, valD)}
+      ${shadowAlertHTML}
+      ${makeRow("A", "Personal · Should", item.qA, scA, valA)}
+      ${makeRow("B", "Personal · Would", item.qB, scB, valB)}
+      ${makeRow("C", "Community · Circle", item.qC, scC, valC)}
+      ${makeRow("D", "Society · Australia", item.qD, scD, valD)}
       ${extraFooterHTML}
     </section>
   `;
@@ -3654,7 +3814,7 @@ function renderPlane(app, pNum) {
             ${escapeHtml(p.help?.highA || "")}
           </div>
           <div style="background:#FFFBEB;border:1px solid #FDE68A;border-radius:8px;padding:10px 12px;font-size:0.83rem;">
-            <strong style="color:#92400E;display:block;font-family:'JetBrains Mono',monospace;font-size:0.72rem;margin-bottom:3px;">0 · SELFISH / INACTION (ORIGIN)</strong>
+            <strong style="color:#92400E;display:block;font-family:'JetBrains Mono',monospace;font-size:0.72rem;margin-bottom:3px;">0 · NEUTRAL / SELF-ONLY (ORIGIN)</strong>
             Looks out only for narrow self-interest or remains passive when ${escapeHtml(p.name)} is tested.
           </div>
           <div style="background:#FEF2F2;border:1px solid #FECACA;border-radius:8px;padding:10px 12px;font-size:0.83rem;">
@@ -3755,6 +3915,11 @@ function renderPlane(app, pNum) {
     cardsArray = filteredVecs.map(v => renderVectorCardHTML(v, p.hue));
   }
 
+  const prevLink = pNum > 1 ? `#/plane/${pNum - 1}` : "#/hub";
+  const prevLabel = pNum > 1 ? `← Plane ${pNum - 1}: ${PLANE_BY_N[pNum - 1].name}` : "← Back to Hub";
+  const nextLink = pNum < 7 ? `#/plane/${pNum + 1}` : "#/results";
+  const nextLabel = pNum < 7 ? `Next: Plane ${pNum + 1} (${PLANE_BY_N[pNum + 1].name}) →` : "View Your Australian Archetype & Keyring Results →";
+
   // Handle Focus Mode (1 card at a time) vs List Mode
   const totalInView = cardsArray.length;
   if (STATE.focusIdx >= totalInView) STATE.focusIdx = Math.max(0, totalInView - 1);
@@ -3764,6 +3929,7 @@ function renderPlane(app, pNum) {
     bodyHTML = filterBarHTML + `<div class="card"><p style="margin:0;color:var(--ink-muted)">No nodes match this filter in Plane ${p.n}.</p></div>`;
   } else if (STATE.viewMode === "focus" && totalInView > 1) {
     const idx = STATE.focusIdx;
+    const isLastCard = idx >= totalInView - 1;
     bodyHTML = `
       ${filterBarHTML}
       <div class="focus-stepper-bar">
@@ -3773,7 +3939,10 @@ function renderPlane(app, pNum) {
         </div>
         <div style="display:flex;gap:8px;align-items:center;">
           <button type="button" class="btn btn-secondary btn-sm" id="focus-prev-btn" ${idx <= 0 ? "disabled" : ""}>← Previous Card</button>
-          <button type="button" class="btn btn-sm" id="focus-next-btn" ${idx >= totalInView - 1 ? "disabled" : ""}>Next Card →</button>
+          ${isLastCard
+            ? `<a class="btn btn-sm" href="${nextLink}">${pNum < 7 ? `Finish Plane ${p.n} → Plane ${pNum + 1}` : `Finish & View Results →`}</a>`
+            : `<button type="button" class="btn btn-sm" id="focus-next-btn">Next Card →</button>`
+          }
         </div>
       </div>
       ${cardsArray[idx]}
@@ -3781,11 +3950,6 @@ function renderPlane(app, pNum) {
   } else {
     bodyHTML = filterBarHTML + cardsArray.join("");
   }
-
-  const prevLink = pNum > 1 ? `#/plane/${pNum - 1}` : "#/hub";
-  const prevLabel = pNum > 1 ? `← Plane ${pNum - 1}: ${PLANE_BY_N[pNum - 1].name}` : "← Back to Hub";
-  const nextLink = pNum < 7 ? `#/plane/${pNum + 1}` : "#/results";
-  const nextLabel = pNum < 7 ? `Next: Plane ${pNum + 1} (${PLANE_BY_N[pNum + 1].name}) →` : "View Your Australian Archetype & Keyring Results →";
 
   app.innerHTML = `
     ${renderTierSelectorHTML()}
@@ -3797,8 +3961,7 @@ function renderPlane(app, pNum) {
             <span class="plane-code-pill">Plane ${p.n} · ${p.code}</span>
             <span class="eyebrow" style="color:${p.hue};margin:0;">
               ${p.domain} Domain · Pillar: ${p.pillar} (${escapeHtml(p.pillarBadge || "")}) ·
-              υ = ${p.coords.v >= 0 ? "+" : ""}${p.coords.v}, ψ = ${p.coords.psi >= 0 ? "+" : ""}${p.coords.psi} ·
-              <span class="glossary-term" data-glossary-id="tau_constant">τ = ${p.tau}d</span>
+              υ = ${p.coords.v >= 0 ? "+" : ""}${p.coords.v}, ψ = ${p.coords.psi >= 0 ? "+" : ""}${p.coords.psi}
             </span>
           </div>
           <h1 style="font-size:clamp(1.65rem,2.6vw,2.15rem);margin:2px 0 4px;">Plane ${p.n}: ${p.name} — ${escapeHtml(p.fullTitle || `Values of Australian ${p.name}`)}</h1>
@@ -3822,54 +3985,62 @@ function renderPlane(app, pNum) {
         <cite>— ${escapeHtml(p.attribution)}</cite>
       </div>
 
-      <div class="plane-totality-box">
-        <div class="plane-totality-title">
-          <span>The Totality of Australian ${escapeHtml(p.name)}</span>
-          <span class="mono" style="font-size:0.72rem;color:var(--ink-muted);font-family:'JetBrains Mono',monospace;">7 Senses · 49 Kanon Vectors</span>
-        </div>
-        <div>${renderGlossaryHTML(p.totality)}</div>
-      </div>
+      <details class="plane-lore-drawer" ${STATE.tier === 7 ? "open" : ""}>
+        <summary>
+          <span>📖 Deep Lore &amp; 7 Matrix Senses of Plane ${p.n}: ${escapeHtml(p.name)} (${escapeHtml(p.pillar)})</span>
+          <span class="mono" style="font-size:0.74rem;color:var(--ink-muted);">Click to expand / collapse</span>
+        </summary>
+        <div class="plane-lore-drawer-body">
+          <div class="plane-totality-box">
+            <div class="plane-totality-title">
+              <span>The Totality of Australian ${escapeHtml(p.name)}</span>
+              <span class="mono" style="font-size:0.72rem;color:var(--ink-muted);font-family:'JetBrains Mono',monospace;">7 Senses · 49 Kanon Vectors</span>
+            </div>
+            <div>${renderGlossaryHTML(p.totality)}</div>
+          </div>
 
-      <div class="plane-pillar-grid">
-        <div class="plane-pillar-col">
-          <strong class="col-head" style="color:${p.hue}">🏛️ The Ideal Pillar: ${escapeHtml(p.pillar)} (${escapeHtml(p.pillarBadge || "")})</strong>
-          ${renderGlossaryHTML(p.pillarSummary || p.blurb)}
-        </div>
-        <div class="plane-pillar-col">
-          <strong class="col-head" style="color:#B45309">⚖️ Shadow Integration: ${escapeHtml(p.shadowTitle || "")}</strong>
-          ${renderGlossaryHTML(p.shadowText || "")}
-        </div>
-        <div class="plane-pillar-col">
-          <strong class="col-head" style="color:#0F766E">🛠️ Everyday Australian Application</strong>
-          ${renderGlossaryHTML(p.practicalText || "")}
-        </div>
-      </div>
+          <div class="plane-pillar-grid">
+            <div class="plane-pillar-col">
+              <strong class="col-head" style="color:${p.hue}">🏛️ The Ideal Pillar: ${escapeHtml(p.pillar)} (${escapeHtml(p.pillarBadge || "")})</strong>
+              ${renderGlossaryHTML(p.pillarSummary || p.blurb)}
+            </div>
+            <div class="plane-pillar-col">
+              <strong class="col-head" style="color:#B45309">⚖️ Shadow Integration: ${escapeHtml(p.shadowTitle || "")}</strong>
+              ${renderGlossaryHTML(p.shadowText || "")}
+            </div>
+            <div class="plane-pillar-col">
+              <strong class="col-head" style="color:#0F766E">🛠️ Everyday Australian Application</strong>
+              ${renderGlossaryHTML(p.practicalText || "")}
+            </div>
+          </div>
 
-      <div class="plane-senses-strip">
-        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;">
-          <span class="mono" style="font-size:0.74rem;font-weight:700;color:#334155;text-transform:uppercase;letter-spacing:0.05em;">
-            Anatomy of Plane ${p.n} (${p.code}) — The 7 Matrix Senses (q1–q7):
-          </span>
-          <span class="mono" style="font-size:0.71rem;color:var(--ink-muted);">
-            Click any Sense to jump or inspect its 7 vectors
-          </span>
+          <div class="plane-senses-strip">
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;">
+              <span class="mono" style="font-size:0.74rem;font-weight:700;color:#334155;text-transform:uppercase;letter-spacing:0.05em;">
+                Anatomy of Plane ${p.n} (${p.code}) — The 7 Matrix Senses (q1–q7):
+              </span>
+              <span class="mono" style="font-size:0.71rem;color:var(--ink-muted);">
+                Click any Sense to jump or inspect its 7 vectors
+              </span>
+            </div>
+            <div class="plane-senses-grid">
+              ${planeSenses.map(s => {
+                const sSum = computeSenseSummary(s.id);
+                const cleanSub = s.title.replace(/^The [A-Za-z]+ of the [A-Za-z]+\s*/, "").replace(/^[()]+|[()]+$/g, "");
+                return `
+                  <button type="button" class="plane-sense-chip" data-jump-sense="${s.id}" title="${escapeHtml(s.narrative)}">
+                    <div class="sc-top">
+                      <span>${s.id} · ${s.addr}</span>
+                      <span>${sSum.total !== null ? fmtSigned(sSum.total, 1) : `υ=${s.coords.v >= 0 ? "+" : ""}${s.coords.v}`}</span>
+                    </div>
+                    <div class="sc-name">${escapeHtml(cleanSub || s.shortTitle)}</div>
+                  </button>
+                `;
+              }).join("")}
+            </div>
+          </div>
         </div>
-        <div class="plane-senses-grid">
-          ${planeSenses.map(s => {
-            const sSum = computeSenseSummary(s.id);
-            const cleanSub = s.title.replace(/^The [A-Za-z]+ of the [A-Za-z]+\s*/, "").replace(/^[()]+|[()]+$/g, "");
-            return `
-              <button type="button" class="plane-sense-chip" data-jump-sense="${s.id}" title="${escapeHtml(s.narrative)}">
-                <div class="sc-top">
-                  <span>${s.id} · ${s.addr}</span>
-                  <span>${sSum.total !== null ? fmtSigned(sSum.total, 1) : `υ=${s.coords.v >= 0 ? "+" : ""}${s.coords.v}`}</span>
-                </div>
-                <div class="sc-name">${escapeHtml(cleanSub || s.shortTitle)}</div>
-              </button>
-            `;
-          }).join("")}
-        </div>
-      </div>
+      </details>
     </div>
 
     <div class="legend-sticky">
@@ -3917,7 +4088,7 @@ function renderPlane(app, pNum) {
           if (idx >= 0) {
             STATE.focusIdx = idx;
             saveState();
-            render();
+            render({ scrollToCards: true });
           }
         } else {
           document.getElementById(`node-S-${sId}`)?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -3926,7 +4097,7 @@ function renderPlane(app, pNum) {
         STATE.planeFilter = sId;
         STATE.focusIdx = 0;
         saveState();
-        render();
+        render({ scrollToCards: true });
       }
     });
   });
@@ -3936,7 +4107,7 @@ function renderPlane(app, pNum) {
       STATE.viewMode = btn.getAttribute("data-view-mode");
       STATE.focusIdx = 0;
       saveState();
-      render();
+      render({ scrollToCards: true });
     });
   });
 
@@ -3944,14 +4115,14 @@ function renderPlane(app, pNum) {
     if (STATE.focusIdx > 0) {
       STATE.focusIdx--;
       saveState();
-      render();
+      render({ scrollToCards: true });
     }
   });
   document.getElementById("focus-next-btn")?.addEventListener("click", () => {
     if (STATE.focusIdx < totalInView - 1) {
       STATE.focusIdx++;
       saveState();
-      render();
+      render({ scrollToCards: true });
     }
   });
 
@@ -4324,15 +4495,15 @@ function renderResults(app) {
         </div>
         <div class="archetype-stat-boxes">
           <div class="arch-stat">
-            <div class="num">${profile.alignmentPct !== null ? `${profile.alignmentPct}%` : "—"}</div>
-            <div class="lbl">Overall Kanon Alignment</div>
+            <div class="num">${profile.personalAlignmentPct !== null ? `${profile.personalAlignmentPct}%` : (profile.alignmentPct !== null ? `${profile.alignmentPct}%` : "—")}</div>
+            <div class="lbl">Personal Kanon Alignment (A &amp; B)</div>
           </div>
           <div class="arch-stat">
             <div class="num">${profile.ethosPct !== null ? `${profile.ethosPct}%` : "—"} <span style="font-size:0.9rem;color:#94A3B8">vs</span> ${profile.livedPct !== null ? `${profile.livedPct}%` : "—"}</div>
             <div class="lbl">Personal Should (A) vs Would (B)</div>
           </div>
           <div class="arch-stat">
-            <div class="num">${profile.totalEvaluated > 0 ? `${profile.hitCount}H / ${profile.failCount}F` : "—"}</div>
+            <div class="num">${profile.totalEvaluated > 0 ? `${profile.hitCount} Hits / ${profile.failCount} Fails` : "—"}</div>
             <div class="lbl">Vector Verdicts (${profile.netAlignmentPct >= 0 ? "+" : ""}${profile.netAlignmentPct}% Net)</div>
           </div>
           <div class="arch-stat">

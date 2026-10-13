@@ -43,10 +43,10 @@ PLANE_META = [
         "shadowTitle": "Tall Poppy → Humble Excellence",
         "shadowText": "Transmutes envy into Humble Excellence. You are allowed to achieve greatness in Australia, but the price of admission is humility—never acting superior or pulling rank on your peers.",
         "practicalText": "Insisting on paying your round at the pub regardless of income; the CEO who eats in the staff canteen; the surgeon who introduces themselves by first name; treating the cleaner's view with the same baseline respect as the economist's.",
-        "qA": "What should we uphold? A person's worth in Australia should come from their character, resilience, and loyalty to the people beside them—never from wealth, title, or social rank.",
-        "qB": "What would you actually do? In the heat of everyday life, I actually treat everyone on a level playing field and stand by my mates rather than pulling rank or looking down on others.",
-        "qC": "What does your community circle believe and do? The people in my everyday circle believe we should treat everyone as equals and actually back one another without pretension.",
-        "qD": "What does wider Australian society actually do? Across Australia today, our society and institutions actually practise genuine peer-to-peer equality rather than rewarding class hierarchy.",
+        "qA": "A person's worth in Australia should come from their character, resilience, and loyalty to the people beside them—never from wealth, title, or social rank.",
+        "qB": "In the heat of everyday life, I actually treat everyone on a level playing field and stand by my mates rather than pulling rank or looking down on others.",
+        "qC": "The people in my everyday circle believe we should treat everyone as equals and actually back one another without pretension.",
+        "qD": "Across Australia today, our society and institutions actually practise genuine peer-to-peer equality rather than rewarding class hierarchy.",
         "tags": ["identity", "mateship", "egalitarianism", "belonging", "indigenous", "culture"],
     },
     {
@@ -65,10 +65,10 @@ PLANE_META = [
         "shadowTitle": "Apathy ('She'll Be Right') → Vigilance",
         "shadowText": "Transmutes passive 'She'll be right' complacency into active civic vigilance—recognising that the Quiet Life is only protected through noisy democratic accountability.",
         "practicalText": "Reading the fine print on a council development application and showing up at Town Hall; the union delegate who knows the enterprise agreement by heart; voting carefully and defending independent public institutions.",
-        "qA": "What should we uphold? Public institutions, laws, and political leaders should exist strictly as practical utilities to serve empowered citizens—never as masters ruling over passive subjects.",
-        "qB": "What would you actually do? In practice, I actively exercise my democratic voice, hold authorities to a fair standard, and refuse to act like a passive subject.",
-        "qC": "What does your community circle believe and do? People in my community expect government to serve ordinary citizens and actively push back against political arrogance.",
-        "qD": "What does wider Australian society actually do? In reality today, Australian parliaments, courts, and agencies actually operate as fair, transparent servants of the public rather than serving insiders.",
+        "qA": "Public institutions, laws, and political leaders should exist strictly as practical utilities to serve empowered citizens—never as masters ruling over passive subjects.",
+        "qB": "In practice, I actively exercise my democratic voice, hold authorities to a fair standard, and refuse to act like a passive subject.",
+        "qC": "People in my community expect government to serve ordinary citizens and actively push back against political arrogance.",
+        "qD": "In reality today, Australian parliaments, courts, and agencies actually operate as fair, transparent servants of the public rather than serving insiders.",
         "tags": ["democracy", "fair-go", "law", "governance", "voting", "rights"],
     },
     {
@@ -87,10 +87,10 @@ PLANE_META = [
         "shadowTitle": "The Terror of the Void → Respect & Custodianship",
         "shadowText": "Transmutes colonial fear and quarry-style extraction into ecological humility—connecting with the Red Heart, bush, and suburban commons rather than plundering or pricing people out of shelter.",
         "practicalText": "Checking the water tank and respecting river flows; backing Indigenous cultural burning in bushfire management; keeping beaches and public parks open to all; defending secure housing as a human foundation rather than a speculative casino.",
-        "qA": "What should we uphold? Living on this continent should mean humble stewardship of its fragile land and water cycles, alongside secure shelter and open public commons for every resident.",
-        "qB": "What would you actually do? In my own choices and daily habits, I actively care for my local environment, respect natural limits, and back fair access to housing and public space.",
-        "qC": "What does your community circle believe and do? My local community values and practises genuine stewardship of land, water, and neighbourhood housing security.",
-        "qD": "What does wider Australian society actually do? Across Australia, our policies and markets actually deliver secure housing, healthy rivers and bushland, and fair regional infrastructure rather than speculative extraction.",
+        "qA": "Living on this continent should mean humble stewardship of its fragile land and water cycles, alongside secure shelter and open public commons for every resident.",
+        "qB": "In my own choices and daily habits, I actively care for my local environment, respect natural limits, and back fair access to housing and public space.",
+        "qC": "My local community values and practises genuine stewardship of land, water, and neighbourhood housing security.",
+        "qD": "Across Australia, our policies and markets actually deliver secure housing, healthy rivers and bushland, and fair regional infrastructure rather than speculative extraction.",
         "tags": ["land", "housing", "environment", "bush", "coast", "infrastructure", "climate"],
     },
     {
@@ -109,10 +109,10 @@ PLANE_META = [
         "shadowTitle": "Bludging & Burnout → Service & Fair Reciprocity",
         "shadowText": "Transmutes both 'Bludging' (free-riding on mates) and extractive workaholic burnout into honourable service—where everyone pitches in when needed and everyone is guaranteed the Weekend and a fair living standard.",
         "practicalText": "Joining the RFS, SES, or Surf Life Saving; launching a tinny when neighbours are flooded; working honestly without performative hustle culture; defending penalty rates, the eight-hour day, and family time.",
-        "qA": "What should we uphold? Every person who puts in an honest effort should receive a living wage, protected rest and family time, and the community backing to have a fair crack at the good life.",
-        "qB": "What would you actually do? In practice, I pitch in when others need help, respect fair reciprocity, and protect a healthy balance between honest work and rest.",
-        "qC": "What does your community circle believe and do? People around me genuinely volunteer, pitch in during hard times, and respect fair wages and downtime.",
-        "qD": "What does wider Australian society actually do? In practice today, Australia's economy actually rewards honest work with a living wage and protected rest rather than burnout and extractive profiteering.",
+        "qA": "Every person who puts in an honest effort should receive a living wage, protected rest and family time, and the community backing to have a fair crack at the good life.",
+        "qB": "In practice, I pitch in when others need help, respect fair reciprocity, and protect a healthy balance between honest work and rest.",
+        "qC": "People around me genuinely volunteer, pitch in during hard times, and respect fair wages and downtime.",
+        "qD": "In practice today, Australia's economy actually rewards honest work with a living wage and protected rest rather than burnout and extractive profiteering.",
         "tags": ["work", "wages", "rest", "volunteering", "sport", "lifestyle", "burnout"],
     },
     {
@@ -131,10 +131,10 @@ PLANE_META = [
         "shadowTitle": "The Dodgy Shortcut → Pragmatic Innovation",
         "shadowText": "Transmutes corner-cutting and bureaucratic box-ticking into genuine innovation—cutting red tape and spin ruthlessly while respecting real-world safety and fair arbitration.",
         "practicalText": "Fixing problems on the spot with practical common sense; speaking plainly so anyone at the pub can verify the claim; backing public science (CSIRO, WiFi, bionic ear, solar) and fair workplace umpires.",
-        "qA": "What should we uphold? Problems in work and public life should be solved through plain-spoken honesty, practical ingenuity, and independent umpires—never spin, dodgy shortcuts, or robotic box-ticking.",
-        "qB": "What would you actually do? When a problem hits, I actually use practical common sense, speak plainly, and play by fair rules rather than hiding behind spin or red tape.",
-        "qC": "What does your community circle believe and do? In my workplace and local circle, people value practical competence, honest talk, and fair play over bureaucratic games.",
-        "qD": "What does wider Australian society actually do? Across Australia today, our workplaces and institutions actually empower practical problem-solving and independent umpires rather than punitive bureaucracy.",
+        "qA": "Problems in work and public life should be solved through plain-spoken honesty, practical ingenuity, and independent umpires—never spin, dodgy shortcuts, or robotic box-ticking.",
+        "qB": "When a problem hits, I actually use practical common sense, speak plainly, and play by fair rules rather than hiding behind spin or red tape.",
+        "qC": "In my workplace and local circle, people value practical competence, honest talk, and fair play over bureaucratic games.",
+        "qD": "Across Australia today, our workplaces and institutions actually empower practical problem-solving and independent umpires rather than punitive bureaucracy.",
         "tags": ["method", "innovation", "workplace", "unions", "pub-test", "bureaucracy", "science"],
     },
     {
@@ -153,10 +153,10 @@ PLANE_META = [
         "shadowTitle": "The Great Australian Silence → Truth-Telling",
         "shadowText": "Transmutes historical amnesia and Terra Nullius denial into courageous Truth-Telling—choosing honest reckoning and Mabo justice over the comfort of whitewashing.",
         "practicalText": "Holding both truths that 1788 was both Settlement and Invasion; respecting local Elders and native title; defending the hard-won democratic legacy of Eureka, women's suffrage, and the eight-hour day.",
-        "qA": "What should we uphold? A mature Australia should face the whole truth of its past—honouring 65,000 years of First Nations continuity alongside convict survival, democratic struggle, and migrant contribution without whitewashing injustice.",
-        "qB": "What would you actually do? In practice, I actively listen to and respect the full truth of Australian history and defend the hard-won rights inherited from past generations.",
-        "qC": "What does your community circle believe and do? People in my circle believe we should face our full history honestly and actually treat Indigenous, settler, and migrant heritage with respect.",
-        "qD": "What does wider Australian society actually do? Across Australia today, our civic culture, schools, and laws actually reckon honestly with our past and uphold our foundational democratic settlements.",
+        "qA": "A mature Australia should face the whole truth of its past—honouring 65,000 years of First Nations continuity alongside convict survival, democratic struggle, and migrant contribution without whitewashing injustice.",
+        "qB": "In practice, I actively listen to and respect the full truth of Australian history and defend the hard-won rights inherited from past generations.",
+        "qC": "People in my circle believe we should face our full history honestly and actually treat Indigenous, settler, and migrant heritage with respect.",
+        "qD": "Across Australia today, our civic culture, schools, and laws actually reckon honestly with our past and uphold our foundational democratic settlements.",
         "tags": ["history", "reconciliation", "indigenous", "eureka", "mabo", "heritage", "truth"],
     },
     {
@@ -175,348 +175,351 @@ PLANE_META = [
         "shadowTitle": "Isolation & Extraction → Shared Commonwealth",
         "shadowText": "Transmutes island paranoia and private resource plundering into universal civic security at home and constructive neighbourly partnership across the Pacific.",
         "practicalText": "Protecting universal Medicare, PBS, HECS, and Superannuation so no citizen falls through the floor; ensuring mineral wealth benefits future generations; showing up for Pacific neighbours in crisis as family, not charity.",
-        "qA": "What should we uphold? The Australian project should deliver a generous, sovereign commonwealth—universal healthcare, shared resource wealth, intergenerational fairness, and constructive partnership in our region.",
-        "qB": "What would you actually do? In my own civic choices and voting, I actively back universal care, intergenerational fairness, and Australia acting as a good neighbour.",
-        "qC": "What does your community circle believe and do? My circle believes Australia should share its wealth fairly across generations and actually looks out for neighbours in practice.",
-        "qD": "What does wider Australian society actually do? All things considered, the Australia we live in today actually delivers universal care, shared commonwealth prosperity, and a fair deal for the next generation.",
+        "qA": "The Australian project should deliver a generous, sovereign commonwealth—universal healthcare, shared resource wealth, intergenerational fairness, and constructive partnership in our region.",
+        "qB": "In my own civic choices and voting, I actively back universal care, intergenerational fairness, and Australia acting as a good neighbour.",
+        "qC": "My circle believes Australia should share its wealth fairly across generations and actually looks out for neighbours in practice.",
+        "qD": "All things considered, the Australia we live in today actually delivers universal care, shared commonwealth prosperity, and a fair deal for the next generation.",
         "tags": ["health", "medicare", "housing", "superannuation", "foreign-policy", "sovereignty", "future"],
     },
 ]
 
+import html
+
 # Unified Essence Questions for all 49 Senses (1.1 through 7.7)
-# Each question distils the functional intersection of Plane Q x Sense q without listing the 7 sub-vectors.
+# Each entry is an explicit 4-tuple:
+#   (qA: Personal Should, qB: Personal Would, qC: Community Circle, qD: Wider Australian Society)
 SENSE_QUESTIONS = {
     # PLANE 1: IDENTITY (WHO)
     "1.1": (
-        "When pressure hits, true Australian character shows up as quiet grit, resourceful improvisation, humor against arrogance, and unconditional loyalty to the person beside you.",
-        "The people in my daily circle genuinely back one another under pressure and judge people by their character rather than their status.",
-        "Should we strengthen this ethos of unconditional mutual loyalty and humble grit (+1 to +5), or move away from it (-1 to -5)?",
-        "How much is blocking authentic mutual loyalty and solidarity in your daily circle?",
+        "When pressure hits, true Australian character should show up as quiet grit, practical improvisation, dry humour against arrogance, and unconditional loyalty to the person beside you.",
+        "When things get tough in my own life or work, I actually pitch in, improvise practically, and stand by the people beside me rather than looking out only for myself.",
+        "The people in my everyday circle genuinely back one another under pressure and judge people by their character rather than their title or bank balance.",
+        "Across Australia today, our wider culture and institutions actually reward quiet grit and mutual loyalty rather than self-promotion and status.",
     ),
     "1.2": (
-        "The highest unwritten law of Australian social life is a level playing field: everyone gets a fair go, nobody is born better than anyone else, and self-important pretence should be punctured.",
-        "The workplaces and communities I move in actually operate on a level playing field where nobody pulls rank or demands deference.",
-        "Should we enforce a stricter level playing field and fair go (+1 to +5), or accept wider social hierarchy and class privilege (-1 to -5)?",
-        "How much is blocking peer-to-peer equality and the fair go in your daily environment?",
+        "The highest unwritten law of Australian social life should be a level playing field: everyone gets a fair go, nobody is born better than anyone else, and self-important pretence gets punctured.",
+        "In my own daily interactions, I actually treat everyone from the cleaner to the boss as an equal peer and refuse to pull rank or flatter power.",
+        "The workplaces and local circles I move in actually operate on a level playing field where people speak plainly as equals without demanding deference.",
+        "Across Australia today, our social and economic systems actually keep the playing field level rather than cementing class privilege and elitism.",
     ),
     "1.3": (
-        "Our identity is inseparable from the physical continent—its ancient bush, open coast, red interior, and suburbs—and requires respecting the land as a living home rather than an empty void.",
-        "I am able to live with a strong, grounded connection to my local landscape and community without being isolated or priced out.",
-        "Should we deepen our cultural connection and access to bush, coast, and Country (+1 to +5), or treat land purely as a commodity (-1 to -5)?",
-        "How much is blocking your connection to land, coast, and local community place?",
+        "Our identity is inseparable from the physical continent—its ancient bush, open coast, red interior, and suburbs—and we should respect the land as a living home rather than a commodity.",
+        "In my own lifestyle and habits, I actively spend time in, care for, and respect my local bush, coast, and neighbourhood commons.",
+        "People in my local community feel a grounded connection to our landscape and look after shared public spaces, parks, and beaches.",
+        "Across Australia today, urban planning, housing markets, and public policy actually keep people connected to the coast, bush, and liveable communities rather than locking them out.",
     ),
     "1.4": (
-        "Australians should back their own homegrown talent and have the courage to try bold things, free from the insecurity that something only matters if it is approved overseas.",
-        "People around me have the confidence and support to back local ideas and take a fair crack without being held back by cultural inferiority or lazy complacency.",
-        "Should we push harder to back homegrown capability and ambition (+1 to +5), or rely on overseas models and passive resource luck (-1 to -5)?",
-        "How much is blocking Australians from backing homegrown capability and creative ambition?",
+        "Australians should back our own homegrown talent, ideas, and makers with confidence, free from the 'Cultural Cringe' that assumes something only matters if approved overseas.",
+        "In my own choices, I actively support Australian creators, local businesses, and ambitious homegrown ideas rather than cutting down tall poppies or defaulting to overseas brands.",
+        "People in my everyday circle encourage local ambition and give people having a genuine crack fair support rather than cynical tall-poppy knocking.",
+        "Across Australia today, our institutions, media, and investors actually back homegrown capability and creative ambition rather than coasting on passive resource luck.",
     ),
     "1.5": (
-        "Power in Australia must always answer to plain-spoken common sense, collective workplace solidarity, and independent public inquiries that expose corruption.",
-        "In practice, our institutions and workplaces respect plain-English common sense, protect workers who band together, and act on public inquiries.",
-        "Should we strengthen grassroots accountability and collective voice (+1 to +5), or curtail them in favour of managerial authority (-1 to -5)?",
-        "How much is blocking everyday accountability and fair workplace voice?",
+        "Power in Australia should always answer to plain-spoken common sense (the Pub Test), collective workplace solidarity, and independent public inquiries that expose corruption.",
+        "When I see spin, unfairness, or bullying at work or in public life, I actually speak up plainly and back collective fairness rather than staying quiet.",
+        "In my workplace and community circle, people apply the Pub Test to authority and back coworkers who stand up for fair treatment.",
+        "Across Australia today, governments, corporations, and courts actually answer to plain-English accountability, worker solidarity, and public inquiries.",
     ),
     "1.6": (
-        "Modern Australian identity is woven from three living streams—65,000 years of First Nations custodial law, the hard-won egalitarianism of settlers and convicts, and the energy of migrants from every corner of the world.",
-        "In my community, people of Indigenous, settler, and migrant heritage are respected as equal co-authors of who we are.",
-        "Should we actively weave our Indigenous, settler, and multicultural roots closer together (+1 to +5), or pull back into a narrower monoculture (-1 to -5)?",
-        "How much is blocking honest unity across Australia's foundational cultural streams?",
+        "Modern Australian identity should weave together three living streams—65,000 years of First Nations custodial law, the hard-won egalitarianism of settlers and convicts, and the energy of migrants from every corner of the world.",
+        "In my own daily life, I actively welcome and respect Indigenous, settler, and multicultural neighbours as equal co-authors of modern Australia.",
+        "In my community circle, people of First Nations, settler, and migrant heritage actually get along and treat each other with everyday respect and inclusion.",
+        "Across Australia today, our national politics and media actually foster honest unity across our Indigenous, British, and multicultural roots rather than stoking division.",
     ),
     "1.7": (
-        "At our best, our national character produces a country that looks after the sick and vulnerable at home while acting as a generous, independent bridge-builder in our region.",
-        "I can see compassionate care at home and constructive, independent Australian leadership in the world operating in practice today.",
-        "Should we expand universal care at home and independent regional bridge-building (+1 to +5), or retreat from them (-1 to -5)?",
-        "How much is blocking Australia from living up to its compassionate and independent character?",
+        "At our best, Australian character should produce a nation that looks after the sick and vulnerable at home while acting as a generous, independent bridge-builder in our region.",
+        "In my own civic and personal choices, I support universal care for vulnerable Australians and constructive engagement with our regional neighbours.",
+        "People in my community circle genuinely care about looking after the vulnerable at home and being a good neighbour in the Asia-Pacific.",
+        "Across Australia today, our national policies actually deliver compassionate care at home and confident, independent bridge-building in the world.",
     ),
 
     # PLANE 2: DEFINITION (WHAT — CIVIC CONTRACT)
     "2.1": (
-        "In a true commonwealth, the citizen is the sovereign partner and employer of the state—never a passive subject to be managed, patronised, or ruled over.",
-        "When I interact with public servants, councils, or parliaments, I am treated as an empowered citizen rather than a compliance problem.",
-        "Should we strengthen citizen sovereignty over public agencies (+1 to +5), or accept more top-down administrative authority (-1 to -5)?",
-        "How much is blocking citizens from being respected as the true owners of government?",
+        "In a true commonwealth, the citizen should be the sovereign partner and employer of the state—never a passive subject to be managed, patronised, or ruled over.",
+        "When dealing with government agencies, councils, or rules, I actively insist on fair citizen rights and fulfill my civic duties rather than acting like a passive subject.",
+        "People in my community circle understand their rights as citizens and expect public officials to act as public servants, not bosses.",
+        "Across Australia today, public agencies, councils, and parliaments actually treat ordinary Australians as respected citizens rather than compliance problems.",
     ),
     "2.2": (
         "Our constitutional order should guarantee peace, order, and good government through an independent judiciary and strict rules that prevent any leader from seizing unchecked power.",
-        "Our constitutional checks and courts actually protect ordinary citizens from executive overreach and political stitch-ups.",
-        "Should we reinforce constitutional checks and judicial independence (+1 to +5), or loosen them for executive convenience (-1 to -5)?",
-        "How much is blocking fair, transparent constitutional governance in Australia?",
+        "In my own voting and civic stance, I support constitutional checks, the rule of law, and judicial independence even when my preferred party is in power.",
+        "People in my everyday circle value lawful, accountable governance and reject leaders who try to rig the rules or stack the courts.",
+        "Across Australia today, our constitutional checks, courts, and parliamentary rules actually protect citizens from executive overreach and political stitch-ups.",
     ),
     "2.3": (
-        "A fair federation requires sharing national revenue so that every state, regional town, and outer suburb enjoys the same baseline of hospitals, schools, and infrastructure as the wealthiest capital city.",
-        "My region or suburb receives a genuinely fair share of national funding, hospitals, transport, and public services.",
-        "Should we strengthen horizontal revenue-sharing for regions and outer suburbs (+1 to +5), or let wealthy postcodes pull further ahead (-1 to -5)?",
-        "How much is blocking fair regional and postcode-to-postcode resource sharing?",
+        "A fair federation should share national revenue so every state, regional town, and outer suburb enjoys the same baseline of hospitals, schools, and roads as the wealthiest capital city.",
+        "I personally support fair national tax-and-revenue sharing for outer suburbs and regional towns, even when the funding goes beyond my own postcode.",
+        "People in my local area believe every town and suburb deserves fair public services and support sharing national funding equitably.",
+        "Across Australia today, federal and state funding actually delivers a fair share of hospitals, schools, and transport to regional towns and outer suburbs.",
     ),
     "2.4": (
-        "The founding promise of the Australian Commonwealth is a secular, practical society where working people can enjoy fair wages, free internal movement, and a peaceful life free from sectarian fanatics.",
-        "Working households today can still rely on the Commonwealth promise of fair wages, civic peace, and a secure standard of living.",
-        "Should we renew this founding social contract for working households (+1 to +5), or dismantle it in favour of raw market competition (-1 to -5)?",
-        "How much is blocking working Australians from a secure, peaceful standard of living?",
+        "The founding promise of the Australian Commonwealth should guarantee a secular, practical society where working people enjoy fair wages, free internal movement, and peace free from sectarian fanaticism.",
+        "In my own work and civic life, I uphold secular tolerance and back fair living wages and working conditions for ordinary households.",
+        "In my community circle, people keep religion and politics respectful and support a fair living wage for working families.",
+        "Across Australia today, working households can actually rely on the Commonwealth promise of fair wages, civic peace, and a secure standard of living.",
     ),
     "2.5": (
-        "Democratic legitimacy depends on clean, independent elections where every citizen votes on equal terms—not backroom factional warlords, donor lobbies, or party-room coups.",
-        "Our electoral system and party politics actually deliver representatives and policies chosen by voters rather than factional insiders and donors.",
-        "Should we clean up party machines and donor capture (+1 to +5), or leave political parties and donors to operate as they do now (-1 to -5)?",
-        "How much is blocking genuine voter choice and clean democratic representation?",
+        "Democratic legitimacy should rest on clean, independent elections where every citizen votes on equal terms—not backroom factional warlords, donor lobbies, or party-room coups.",
+        "When I vote, I take my ballot seriously—looking past partisan spin and punishing backroom factional games and corporate donor capture.",
+        "People in my everyday circle take democratic voting seriously and are fed up with factional powerbrokers and corporate lobbying.",
+        "Across Australia today, our electoral system and political parties actually deliver leaders and policies chosen by voters rather than factional insiders and big donors.",
     ),
     "2.6": (
-        "Australian democracy was built from the ground up by ordinary people demanding representation and building public utilities to serve the common good rather than private monopolies.",
-        "Essential services and public infrastructure today are run for the public good rather than privatised price-gouging.",
-        "Should we restore public-interest ownership and democratic control over essential utilities (+1 to +5), or privatise more public assets (-1 to -5)?",
-        "How much is blocking essential services and utilities from serving the public good?",
+        "Essential services and core infrastructure—water, power, roads, banking access, and communications—should be built and run as public utilities for the common good rather than private price-gouging monopolies.",
+        "In my own civic choices and voting, I back public-interest ownership and strict accountability for essential utilities over privatisation.",
+        "People in my community circle believe essential utilities belong in public hands or under strict public-interest rules rather than toll-road and energy monopolies.",
+        "Across Australia today, essential services and infrastructure are actually run affordably for the public good rather than privatised price-gouging.",
     ),
     "2.7": (
-        "A mature civic order protects public safety and hears First Nations voices without suffocating everyday life in petty fines, over-policing, and nanny-state prohibitions.",
-        "Our laws strike a healthy balance—keeping people safe and included without burying everyday freedom in petty rules and revenue-raising fines.",
-        "Should we wind back petty nanny-state over-regulation while advancing genuine civic inclusion (+1 to +5), or increase paternalistic regulation (-1 to -5)?",
-        "How much is blocking a mature, self-confident, and un-micromanaged civic life?",
+        "A mature civic order should protect public safety and include First Nations voices without suffocating everyday life in petty fines, over-policing, and nanny-state prohibitions.",
+        "In my own life, I act responsibly toward others' safety while supporting common-sense personal freedom over petty nanny-state micromanagement.",
+        "People in my local community look out for safety with common sense without acting like wowsers or calling for petty rules on everything.",
+        "Across Australia today, our laws and councils actually strike a healthy balance—keeping people safe and included without burying daily life in revenue-raising fines and red tape.",
     ),
 
     # PLANE 3: LAND (WHERE — CONTINENT & HOME)
     "3.1": (
-        "The sheer scale and volatility of the Australian continent—its bushfires, droughts, and ancient spirit of place—demand humility and preparation rather than human arrogance.",
-        "My community is well-prepared for bushfire, flood, and heat extremes and builds in harmony with the landscape's natural limits.",
-        "Should we invest much more in climate resilience and landscape-aware planning (+1 to +5), or ignore environmental limits (-1 to -5)?",
-        "How much is blocking proper adaptation to Australia's harsh landscape and climate?",
+        "The sheer scale and volatility of the Australian continent—its bushfires, droughts, and ancient spirit of place—demand humility, respect, and preparation rather than human arrogance.",
+        "In my own home and habits, I actively prepare for heat, fire, storm, and water limits rather than assuming 'she'll be right' or ignoring the landscape.",
+        "My local community respects the bush and climate extremes, prepares practically for fire and flood seasons, and backs local emergency volunteers.",
+        "Across Australia today, national planning, building codes, and disaster systems actually adapt to the continent's harsh climate and natural limits.",
     ),
     "3.2": (
-        "Land in Australia must be shared fairly for families to live and farm on, while respecting First Nations native title—never locked up by land-banking monopolies or oligarchs.",
-        "Ordinary Australians can still secure a fair piece of land or a family home without being locked out by speculative property hoarding.",
-        "Should we break up land banking and housing monopolies (+1 to +5), or protect speculative property hoarding (-1 to -5)?",
-        "How much is blocking fair access to housing, land tenure, and Country?",
+        "Land in Australia should be shared fairly for families to live and farm on, while respecting First Nations native title—never locked up by land-banking monopolies or oligarchs.",
+        "In my own financial and voting choices, I treat housing as a human home first rather than backing speculative property hoarding that locks out young families.",
+        "People in my everyday circle believe every working person and family should be able to afford a secure home and respect native title.",
+        "Across Australia today, our housing and land laws actually enable ordinary Australians to secure a fair home without being locked out by speculative property monopolies.",
     ),
     "3.3": (
         "Australia's ancient soils, rivers, and unique native wildlife are irreplaceable treasures that must be protected from over-clearing, water theft, and ecological collapse.",
-        "Our local rivers, soils, bushland, and native species are actively protected and healthy rather than degraded or drained.",
-        "Should we enforce stronger protection for rivers, soils, and native wildlife (+1 to +5), or relax environmental protections for short-term extraction (-1 to -5)?",
-        "How much is blocking the restoration and protection of Australia's rivers, soils, and native species?",
+        "In my own daily choices, I actively reduce waste, respect local waterways and native bushland, and support conservation of native species.",
+        "People in my local area care for our rivers, parks, soils, and native wildlife rather than treating the environment as a dumping ground.",
+        "Across Australia today, governments and industries actually protect and restore our rivers, soils, bushland, and native species rather than letting them degrade.",
     ),
     "3.4": (
-        "On the driest inhabited continent, water and abundant solar/wind energy are shared national lifelines that must be managed for long-term survival rather than private cartel profit.",
-        "Water and clean energy are managed reliably and affordably for households and communities rather than hoarded or price-gouged.",
-        "Should we manage water and clean renewable energy as public lifelines (+1 to +5), or leave them to private trading and fossil/energy cartels (-1 to -5)?",
-        "How much is blocking fair water security and cheap, reliable clean power?",
+        "On the driest inhabited continent, water and abundant solar and wind energy should be managed as shared national lifelines for long-term survival rather than private cartel profit.",
+        "In my own household, I use water and energy responsibly and back practical transitions to clean, affordable power and water security.",
+        "People in my community circle conserve water when needed and support affordable, reliable clean power for local households.",
+        "Across Australia today, water basins and energy grids are actually managed reliably and affordably for households and farmers rather than hoarded or price-gouged.",
     ),
     "3.5": (
         "Because distance is Australia's great physical challenge, reliable transport, telecommunications, postal, and emergency medical networks must reach every town and suburb regardless of postcode.",
-        "My area has dependable public transport, roads, digital connectivity, and emergency medical access.",
-        "Should we expand public transport, regional health, and digital lifelines across the continent (+1 to +5), or cut back regional and outer-suburban services (-1 to -5)?",
-        "How much is blocking reliable transport, communications, and medical connectivity where you live?",
+        "I support investing public funds into regional roads, rail, digital connectivity, and emergency services like the Flying Doctor so no town is left stranded.",
+        "People in my local area look out for isolated neighbours and rely on connected local transport, communications, and medical lifelines.",
+        "Across Australia today, every regional town and outer suburb actually receives dependable roads, public transport, digital coverage, and emergency medical care.",
     ),
     "3.6": (
         "The mineral and energy wealth dug from beneath Australian soil belongs to all Australians and must fund lasting public prosperity without destroying sacred heritage or local environments.",
-        "Resource wealth extracted in Australia actually flows into public schools, hospitals, and sovereign funds rather than vanishing offshore untaxed.",
-        "Should we capture a much fairer public share of mineral and gas wealth (+1 to +5), or keep taxes and royalties low for multinational miners (-1 to -5)?",
-        "How much is blocking Australians from capturing a fair sovereign dividend from our resource wealth?",
+        "In my own voting and civic stance, I back taxing multinational resource extraction fairly to fund public schools, hospitals, and sovereign wealth while protecting sacred sites.",
+        "People in my everyday circle agree that Australia's mining and gas booms should leave lasting wealth for everyday Australians rather than vanishing offshore untaxed.",
+        "Across Australia today, our tax and royalty laws actually capture a fair sovereign dividend from our mineral and gas wealth for the public good.",
     ),
     "3.7": (
         "Every Australian town and suburb should offer the physical foundations of a good life: secure homes, green backyards or parks, free public beaches, and welcoming places for neighbours to gather.",
-        "My suburb or town offers affordable housing, green public space, and walkable community life rather than isolating sprawl or locked-out enclaves.",
-        "Should we redesign and fund our suburbs and towns for affordability and community life (+1 to +5), or leave urban development to speculative sprawl (-1 to -5)?",
-        "How much is blocking a liveable, affordable suburban or regional home environment?",
+        "In my own neighbourhood, I help keep local streets, parks, and beaches welcoming and support liveable, affordable town planning.",
+        "My suburb or town has a genuine neighbourhood spirit where people share beaches, parks, and local streets respectfully.",
+        "Across Australia today, urban and regional planning actually delivers affordable homes, green public space, and walkable community life rather than car-dependent sprawl.",
     ),
 
     # PLANE 4: DRIVE (WHY — MOTIVATION & THE GOOD LIFE)
     "4.1": (
         "We should honour the everyday people who pitch in—the volunteer on the fireline, the carer, and the honest worker—while calling out those who extract wealth without contributing.",
-        "In my workplace and community, people who pitch in and do the heavy lifting are genuinely supported rather than taken for granted or exploited.",
-        "Should we do more to reward everyday contributors and volunteers over rent-seekers (+1 to +5), or reward passive wealth extraction (-1 to -5)?",
-        "How much is blocking fair recognition and backing for volunteers and honest workers?",
+        "In my own life, I put in an honest share of effort at work and in the community rather than bludging on my mates or cutting down people who try.",
+        "In my workplace and local community, people who pitch in, volunteer, and do the heavy lifting are genuinely backed and appreciated.",
+        "Across Australia today, our economy and tax system actually reward honest workers, carers, and volunteers over corporate rent-seekers and speculators.",
     ),
     "4.2": (
-        "The whole point of a productive economy is a decent human life: a pay packet that covers a family's needs, a secure home, a protected two-day weekend, annual holidays, and a dignified retirement.",
-        "My household actually enjoys a pay packet with breathing room, a protected weekend, holiday rest, and confidence in retirement.",
-        "Should we defend and restore the living wage, the weekend, and retirement security (+1 to +5), or let work demands and living costs erode them (-1 to -5)?",
-        "How much is blocking your household from a secure pay packet, home, and protected rest?",
+        "The whole point of a productive economy should be a decent human life: a pay packet that covers a family's needs, a secure home, a protected two-day weekend, annual holidays, and a dignified retirement.",
+        "In my own work and family life, I actively protect proper rest, weekends, and fair pay standards rather than letting hustle culture or unpaid overtime take over.",
+        "People in my workplace and social circle respect the weekend, family time, and a fair living wage rather than glorifying burnout.",
+        "Across Australia today, working households actually enjoy a pay packet with breathing room, a secure home, a protected weekend, and confidence in retirement.",
     ),
     "4.3": (
         "Healthy communities need accessible 'third places' outside work and home—local pubs, surf and sports clubs, community sheds, parks, and beaches—where people can recharge and belong without paying a fortune.",
-        "I have welcoming, affordable local places where I can relax, play sport, and connect with neighbours.",
-        "Should we protect and fund non-commercial community third places and local clubs (+1 to +5), or let them be priced out and commercialised (-1 to -5)?",
-        "How much is blocking access to affordable community third places and recreational spaces?",
+        "I actively participate in or support local community spaces, clubs, parks, or beaches to stay connected with people outside work.",
+        "My local community keeps its sports clubs, sheds, parks, and gathering spots welcoming and active for locals of all ages.",
+        "Across Australia today, affordable community third places and grassroots clubs are actually protected and accessible rather than priced out or commercialised.",
     ),
     "4.4": (
         "Healthy ambition means striving for excellence while staying grounded—avoiding both tall-poppy envy that tears achievers down and status-obsessed panic that turns neighbours into rivals.",
-        "I feel free to pursue my goals and enjoy life at a humane pace without being driven by financial panic or cut down by resentment.",
-        "Should we foster a healthier balance of ambitious drive and grounded humility (+1 to +5), or embrace cut-throat status competition (-1 to -5)?",
-        "How much is blocking a confident, unhurried pursuit of the good life?",
+        "In my own goals, I strive to do good work while staying humble and grounded, without letting financial anxiety or status comparison rule my life.",
+        "People in my circle celebrate genuine skill and achievement while keeping each other grounded and realistic.",
+        "Across Australia today, people can actually pursue their goals and enjoy life at a humane pace without being driven by housing and cost-of-living panic.",
     ),
     "4.5": (
         "Everyday Australian trust is built on small rituals of reciprocity—taking turns fairly, shouting your round, pitching in, and refusing to let predatory gambling or price-gouging strip-mine our communities.",
-        "People around me still practice everyday generosity and fairness, and my community is protected from predatory pokies and betting apps.",
-        "Should we curb predatory gambling and rebuild everyday civic reciprocity (+1 to +5), or leave gambling and extractive industries unchecked (-1 to -5)?",
-        "How much is blocking everyday social reciprocity and protection from predatory gambling?",
+        "In my own habits, I always pay my fair share, return favours to mates, and refuse to let gambling or rip-off merchants take over social life.",
+        "People around me still practise everyday generosity—shouting their round, helping a neighbour move—without keeping petty score.",
+        "Across Australia today, our communities are actually protected from predatory pokies, relentless betting ads, and corporate price-gouging.",
     ),
     "4.6": (
         "The memory of past hardships—dispossession, convict chains, wartime sacrifice, and economic depressions—should make us determined never to let any neighbour fall into destitution.",
-        "When people in my community hit hard times, our social safety net and community solidarity catch them with dignity rather than punishment.",
-        "Should we build stronger, more compassionate safety nets against hard times (+1 to +5), or make welfare harsher and more punitive (-1 to -5)?",
-        "How much is blocking compassionate protection for people hit by economic or personal crisis?",
+        "When someone around me hits hard times, illness, or job loss, I actually check in and lend a hand rather than judging or looking away.",
+        "When people in my local community hit crisis or hardship, neighbours and local networks rally around them with practical support.",
+        "Across Australia today, our welfare safety net and public services actually catch people in hard times with dignity rather than punitive cruelty.",
     ),
     "4.7": (
-        "When a nation's drive is healthy, the result is a confident, self-reliant citizenry and broad middle-class stability—not widespread exhaustion and political cynicism.",
-        "Around me, I see genuine economic security and civic confidence rather than a hollowed-out middle class sliding into cynicism.",
-        "Should we act decisively to rebuild broad middle-class security and civic trust (+1 to +5), or accept growing inequality and disillusionment (-1 to -5)?",
-        "How much is blocking shared prosperity and civic confidence today?",
+        "When a nation's drive is healthy, the result should be a confident, self-reliant citizenry and broad middle-class stability—not widespread exhaustion and political cynicism.",
+        "Despite pressures, I work to stay constructive and engaged in my community rather than giving in to total cynicism or apathy.",
+        "Among my friends, coworkers, and neighbours, there is still a shared belief that we can build a decent, stable life together.",
+        "Across Australia today, our economic and political settings actually produce broad middle-class security and civic confidence rather than burnout and disillusionment.",
     ),
 
     # PLANE 5: METHOD (HOW — PRACTICAL MECHANICS)
     "5.1": (
         "Systems stay honest only when we empower practical problem-solvers—skilled tradespeople, scientists, frank public servants, union reps, independent umpires, and whistleblowers who call out wrongdoing.",
-        "In my experience, independent umpires, scientists, and whistleblowers are protected and listened to rather than silenced or punished.",
-        "Should we strengthen legal protections for whistleblowers, scientists, and independent umpires (+1 to +5), or give executives more power to silence them (-1 to -5)?",
-        "How much is blocking honest umpires, whistleblowers, and practical experts from doing their job?",
+        "In my own work and life, I respect genuine expertise, play by the umpire's fair rules, and back whistleblowers who tell uncomfortable truths.",
+        "In my workplace and circle, people respect skilled hands-on competence, honest union/worker reps, and independent umpires.",
+        "Across Australia today, our institutions and laws actually protect whistleblowers, independent scientists, and honest umpires so they can do their job without retaliation.",
     ),
     "5.2": (
         "Australia should be a country that invents, builds, and arbitrates fairly—investing in local science, practical engineering, and living-wage awards rather than offshoring our brains and undercutting workers.",
-        "We actually invest in homegrown research, local manufacturing, and fair wage-setting rather than letting our best inventions and jobs go offshore.",
-        "Should we boost local R&D, sovereign manufacturing, and fair wage arbitration (+1 to +5), or rely on imported technology and deregulated labour (-1 to -5)?",
-        "How much is blocking Australian invention, local making, and fair wage setting?",
+        "In my own work and spending, I value quality Australian engineering, practical innovation, and fair award wages over cheap corner-cutting.",
+        "People in my industry and circle take pride in solving problems ingeniously and support fair wage arbitration.",
+        "Across Australia today, government and industry actually invest in homegrown R&D (like CSIRO), sovereign manufacturing, and fair wage-setting.",
     ),
     "5.3": (
         "The everyday arenas of Australian democracy—the local public school, the Saturday polling booth, the courtroom, the workplace, and the volunteer surf club—must remain open and equal for every class.",
-        "Our local public schools, courts, workplaces, and community clubs are well-resourced and bring people from all backgrounds together as equals.",
-        "Should we reinvest in universal public schools, equal legal access, and civic spaces (+1 to +5), or let two-tier private segregation widen (-1 to -5)?",
-        "How much is blocking equal quality across public schools, courts, and community institutions?",
+        "I actively use, respect, and support shared public institutions—from the local public school and polling booth to community clubs.",
+        "In my local area, public schools, community clubs, and Saturday sausage-sizzle polling booths bring people from all backgrounds together as equals.",
+        "Across Australia today, our public schools, legal system, and civic spaces are actually funded to give every child and citizen an equal chance regardless of wealth.",
     ),
     "5.4": (
         "Every workplace and public system must balance practical efficiency with human fairness—efficiency that crushes people's dignity is a failure, not a success.",
-        "The systems I deal with at work and in public services are both practically competent and genuinely fair to the human beings inside them.",
-        "Should we require workplaces and agencies to put human fairness alongside efficiency (+1 to +5), or prioritise ruthless cost-cutting (-1 to -5)?",
-        "How much is blocking workplaces and public systems from being both competent and humane?",
+        "When managing tasks or working with others, I look for practical efficiency while always treating coworkers and customers as human beings first.",
+        "In my workplace and local services, people balance getting the job done efficiently with giving people a fair, humane hearing.",
+        "Across Australia today, corporate and government systems actually balance competence and efficiency with genuine human fairness.",
     ),
     "5.5": (
-        "Good work requires humane rhythms—proper rest breaks, predictable rosters, sick leave when needed, and doing the job properly rather than taking dangerous shortcuts or burying problems in another report.",
-        "My work and daily schedule respect humane breaks and safety, and real problems get fixed instead of being buried in box-ticking reports.",
-        "Should we enforce humane work rhythms and real quality standards (+1 to +5), or allow more gig-style insecurity and corner-cutting (-1 to -5)?",
-        "How much is blocking humane work rosters, rest breaks, and honest quality standards?",
+        "Good work requires humane rhythms—proper rest breaks (smoko), predictable rosters, sick leave when needed, and doing the job properly rather than taking dangerous shortcuts or burying problems in another report.",
+        "In my own work, I take pride in doing the job properly and safely, and I respect proper rest breaks and sick leave for myself and others.",
+        "In my workplace and circle, people respect smoko breaks, safe rosters, and fixing real problems rather than cutting dodgy corners.",
+        "Across Australia today, workplace rules and management practices actually enforce humane rosters, safe standards, and real action over box-ticking reports.",
     ),
     "5.6": (
         "Solving continental challenges requires combining modern engineering and science with 65,000 years of First Nations ecological knowledge and relational care for Country.",
-        "Our land, fire, and water management actively integrates Indigenous ecological methods alongside modern science.",
-        "Should we scale up the integration of First Nations ecological methods and modern science (+1 to +5), or keep them separate (-1 to -5)?",
-        "How much is blocking the synthesis of Indigenous ecological wisdom and modern governance?",
+        "I am open to learning from both modern science and traditional Indigenous knowledge (such as cultural burning and land care) to solve practical problems.",
+        "People in my community circle respect combining practical modern science with First Nations land and fire management.",
+        "Across Australia today, our environmental, fire, and water agencies actually integrate First Nations ecological wisdom alongside modern engineering.",
     ),
     "5.7": (
         "The bottom-line test of any government or corporate system is whether it delivers fair outcomes and working infrastructure in the real world—not automated robo-debt cruelty or bureaucratic maze-running.",
-        "Government and workplace rules actually help people solve problems in my life rather than trapping them in automated bureaucratic cruelty.",
-        "Should we strip out punitive bureaucracy and enforce human-centred service delivery (+1 to +5), or expand automated compliance enforcement (-1 to -5)?",
-        "How much is blocking bureaucracy from serving people instead of punishing them?",
+        "When dealing with rules or forms, I focus on real-world fairness and help others navigate bureaucratic mazes when they get stuck.",
+        "People in my circle judge policies by whether they actually help real people on the ground rather than how good they look in a press release.",
+        "Across Australia today, government services and corporate systems actually serve people humanely and effectively instead of trapping them in automated bureaucracy.",
     ),
 
     # PLANE 6: FOUNDATION (CAUSE — HISTORY & DEEP TIME)
     "6.1": (
         "To understand Australia, we must acknowledge every figure at our foundation—the 65,000-year First Nations Elder, the chained convict, the free settler, the gold digger, and the migrant—while honestly naming colonial dispossession.",
-        "Our national culture honours all of our founding peoples honestly without erasing Indigenous survival or whitewashing colonial land grabs.",
-        "Should we champion an honest, inclusive account of all who shaped Australia (+1 to +5), or revert to a one-sided myth (-1 to -5)?",
-        "How much is blocking an honest, unifying reckoning with Australia's founding figures?",
+        "I personally take the time to understand and respect all streams of Australia's past—Indigenous, convict, settler, and migrant—without whitewashing the hard parts.",
+        "People in my everyday circle can talk honestly about Australia's history—respecting both pioneer resilience and the truth of Indigenous dispossession.",
+        "Across Australia today, our schools, memorials, and national culture actually honour all of our founding peoples honestly without erasure or culture-war spin.",
     ),
     "6.2": (
         "Australia's greatest legal achievements are the milestones that expanded justice—Federation by popular vote, the living wage, compulsory voting, and the overturning of Terra Nullius and White Australia.",
-        "The legal guarantees of a living wage, equal voting power, and native title are actively upheld and carried forward today.",
-        "Should we defend and complete these foundational legal settlements (+1 to +5), or wind them back (-1 to -5)?",
-        "How much is blocking the full realization of wage justice, voting equality, and native title?",
+        "In my own civic stance, I actively defend Australia's landmark democratic achievements—equal voting, living wages, anti-discrimination, and native title.",
+        "People in my circle are proud of Australia's democratic reforms like the secret ballot, compulsory voting, the living wage, and Mabo.",
+        "Across Australia today, our parliaments and courts actively uphold and build upon wage justice, voting equality, multicultural inclusion, and native title.",
     ),
     "6.3": (
         "Australia has a sacred geography of memory—from ancient Indigenous songlines and Uluru to sites of convict pain, Eureka rebellion, wartime sacrifice, and democratic self-government—that must be protected from desecration.",
-        "Our sacred Indigenous Country and historic civic heritage sites are protected with dignity rather than blown up or commercialised.",
-        "Should we strengthen legal protection for sacred Country and historic heritage (+1 to +5), or allow commercial development to override them (-1 to -5)?",
-        "How much is blocking respect and protection for Australia's sacred and historic places?",
+        "When I visit or vote on historic and Indigenous heritage places, I treat them with genuine respect rather than as mere tourist backdrops or real estate.",
+        "People in my community respect sacred Indigenous sites, local war memorials, and historic civic landmarks.",
+        "Across Australia today, our heritage laws and mining/development approvals actually protect sacred Indigenous Country and historic sites from destruction.",
     ),
     "6.4": (
         "Australia's history has always been a contest between two drives: generous solidarity and redemption on one side, versus invasion paranoia and lazy reliance on resource luck on the other.",
-        "Our national choices today are guided by courage, solidarity, and long-term vision rather than fear-mongering or complacent luck.",
-        "Should we steer national policy toward courage and solidarity over fear and complacency (+1 to +5), or lean into border fear and resource complacency (-1 to -5)?",
-        "How much is blocking Australia from overcoming fear-driven politics and resource complacency?",
+        "In my own political and social views, I choose solidarity and long-term building over fear-mongering, scapegoating, or lazy 'she'll be right' complacency.",
+        "People in my everyday circle respond to national challenges with level-headed solidarity rather than panic or blaming minorities.",
+        "Across Australia today, our national leadership and media actually appeal to courage, solidarity, and long-term vision rather than fear-driven politics and resource complacency.",
     ),
     "6.5": (
         "Unlike nations forged in civil war, Australia built its best institutions through bush survival skills, organised labour, the secret ballot, industrial arbitration, and constitutional conventions.",
-        "Big national disagreements today are still resolved through fair arbitration, democratic reform, and peaceful consensus rather than division.",
-        "Should we revitalise fair arbitration and bottom-up democratic reform (+1 to +5), or let adversarial conflict and union-busting dominate (-1 to -5)?",
-        "How much is blocking fair arbitration and constructive democratic reform today?",
+        "When disagreements arise in my workplace or community, I back fair negotiation, democratic voting, and practical compromise over intimidation.",
+        "People in my workplace and local community resolve disputes through fair talk, representation, and agreed rules.",
+        "Across Australia today, major industrial and social disagreements are actually resolved through fair arbitration and democratic reform rather than union-busting or division.",
     ),
     "6.6": (
         "Our history does not begin in 1788; it is anchored in Deep Time—ancient Gondwanan ecosystems, the Great Barrier Reef, and 65,000 years of Indigenous fire-stick farming across an arid continent.",
-        "We actively apply the lessons of Deep Time—protecting the Reef, expanding cultural burning, and living within our arid continent's limits.",
-        "Should we ground our national policies in Deep Time ecological stewardship (+1 to +5), or treat the environment as a short-term quarry (-1 to -5)?",
-        "How much is blocking deep-time ecological care for the Reef and the continent?",
+        "I personally view Australia through a long-term lens—supporting the protection of ancient ecosystems like the Reef and learning from 65,000 years of human adaptation here.",
+        "People in my circle appreciate the ancient depth of Australia's natural wonders and 65,000-year Indigenous history.",
+        "Across Australia today, our climate, land, and Reef policies actually honour our deep-time ecological inheritance rather than sacrificing it for short-term extraction.",
     ),
     "6.7": (
         "Our historical inheritance leaves us with both proud achievements—the welfare safety net and civic consensus—and urgent unfinished business in First Nations justice, treaty, and truth-telling.",
-        "Australia is actively repairing its social safety net while making real, good-faith progress on the unfinished business of Indigenous reconciliation.",
-        "Should we finish the unfinished business of reconciliation and welfare repair (+1 to +5), or abandon them (-1 to -5)?",
-        "How much is blocking the repair of our welfare safety net and historical reconciliation?",
+        "I personally support finishing Australia's unfinished historical business—backing practical Indigenous justice, truth-telling, and a strong social safety net.",
+        "People in my circle believe we should keep strengthening our social safety net and work in good faith toward lasting First Nations reconciliation.",
+        "Across Australia today, our nation is actually repairing its social safety net and making real, good-faith progress on the unfinished business of reconciliation.",
     ),
 
     # PLANE 7: RESULT (EFFECT — SHARED COMMONWEALTH & FUTURE)
     "7.1": (
-        "A healthy Australia produces citizens who combine quiet civic decency, multicultural openness, and neighbourly care—rejecting the 'I've got mine' selfishness that turns housing and wealth into a zero-sum game.",
-        "In my community, people across different backgrounds and generations still look out for one another rather than splintering into selfish competition.",
-        "Should we foster generous, cohesive citizenship over 'I've got mine' individualism (+1 to +5), or encourage pure self-interest (-1 to -5)?",
-        "How much is blocking social cohesion and neighbourly care in modern Australia?",
+        "A healthy Australia should produce citizens who combine quiet civic decency, multicultural openness, and neighbourly care—rejecting the 'I've got mine' selfishness that turns housing and wealth into a zero-sum game.",
+        "In my own life, I try to live as a generous neighbour and citizen—rejecting 'I've got mine' greed even when the system rewards selfishness.",
+        "In my local community, people across different cultural backgrounds and generations still look out for one another as good neighbours.",
+        "Across Australia today, our tax, housing, and social settings actually foster neighbourly cohesion rather than splintering us into 'I've got mine' competition.",
     ),
     "7.2": (
         "The tangible dividend of the Australian Commonwealth should be universal and rock-solid: bulk-billed Medicare, secure housing, accessible education, dignified superannuation, clean energy, and thriving biodiversity.",
-        "I actually experience these core dividends in my life today—affordable housing, free healthcare at the point of need, accessible education, and retirement security.",
-        "Should we guarantee and rebuild universal Medicare, housing, education, and Super (+1 to +5), or shift more costs onto individuals (-1 to -5)?",
-        "How much is blocking these core pillars of Australian security from working for you?",
+        "In my own voting and civic choices, I consistently defend universal Medicare, public education, housing affordability, and fair superannuation for all.",
+        "In my everyday circle, people rely on and strongly support universal Medicare, affordable education, secure housing, and dignified retirement.",
+        "Across Australia today, our society and institutions actually deliver these core pillars—bulk-billed healthcare, affordable housing, accessible education, and clean energy—in practice.",
     ),
     "7.3": (
         "In the wider world, Australia should stand on its own two feet as an independent middle power, a respected Pacific family member, and a value-adding economy—not a passive quarry or uncritical client state.",
-        "Australia today acts with genuine diplomatic independence, adds value to our resources onshore, and engages as a trusted equal in the Pacific and Asia.",
-        "Should we build sovereign economic complexity and an independent foreign policy (+1 to +5), or remain a raw-materials quarry and compliant deputy (-1 to -5)?",
-        "How much is blocking Australia from standing as an independent, value-adding nation in our region?",
+        "I personally support Australia building sovereign manufacturing capability, acting independently in foreign policy, and treating Pacific neighbours as family.",
+        "People in my circle believe Australia should process more of what we dig up onshore and make our own independent decisions in the world.",
+        "Across Australia today, our foreign and economic policies actually make us an independent, value-adding middle power and trusted Pacific partner.",
     ),
     "7.4": (
         "When forced to choose between competing national directions, Australia must put the Fair Go over raw market rule, sustainability over extraction, regional equity alongside cities, and reconciliation over division.",
-        "Current Australian economic and social policies are actually tilted toward the Fair Go, sustainability, regional balance, and unity.",
-        "Should we rebalance national policy toward the Fair Go, sustainability, and unity (+1 to +5), or tilt further toward market extraction and division (-1 to -5)?",
-        "How much is blocking Australia from choosing the Fair Go and sustainability over market extraction?",
+        "When weighing up political choices, I put the Fair Go, environmental sustainability, regional fairness, and reconciliation ahead of short-term private self-interest.",
+        "People in my everyday circle favour a fair balance between economy and human dignity, cities and regions, and unity over division.",
+        "Across Australia today, our national policies actually choose the Fair Go, sustainability, regional equity, and reconciliation over market extraction and division.",
     ),
     "7.5": (
         "A self-governing people needs trustworthy instruments of truth—an independent electoral commission, honest public broadcasting and diverse media, royal commissions with teeth, and transparent economic reporting.",
-        "Our media landscape and public accountability bodies give citizens the unvarnished truth rather than billionaire propaganda and partisan spin.",
-        "Should we break up media concentration and strengthen truth and integrity bodies (+1 to +5), or leave media monopolies and political spin unchecked (-1 to -5)?",
-        "How much is blocking honest media reporting and institutional accountability in Australia?",
+        "In my own media habits, I seek out verifiable facts and independent reporting rather than echoing partisan spin or rage-bait.",
+        "People in my circle value honest journalism, independent public broadcasters, and corruption watchdogs with real teeth.",
+        "Across Australia today, our media landscape and integrity watchdogs actually give citizens the unvarnished truth rather than billionaire spin and cover-ups.",
     ),
     "7.6": (
         "The ultimate duty of every generation of Australians is to hand on a better commonwealth to the next—completing the clean energy transition, restoring housing fairness, and achieving full constitutional maturity.",
-        "Young Australians today are inheriting a fairer housing market, a safer climate, and a more sovereign, reconciled nation than the generation before.",
-        "Should we take bold action for intergenerational fairness, clean energy, and constitutional maturity (+1 to +5), or protect incumbent wealth at the expense of the young (-1 to -5)?",
-        "How much is blocking a fair deal and a proud future for the next generation of Australians?",
+        "In my own decisions and vote, I prioritise giving young Australians and the next generation a fairer housing market, a safe climate, and a more mature nation.",
+        "People in my circle care deeply about whether the next generation of Australians can afford a home and inherit a liveable climate.",
+        "Across Australia today, our policies actually ensure young Australians inherit a fairer housing market, a clean energy economy, and a more united nation.",
     ),
     "7.7": (
         "Stripped to its essence, the meaning of Australia is the Land of the Second Chance and the Fair Go—transforming a place of exile and dispossession into a reconciled, egalitarian home where nobody is left behind.",
-        "All things considered, the Australia I live in today truly honours the Second Chance and the Fair Go for everyone who calls this continent home.",
-        "Should we recommit whole-heartedly to the Australian promise of the Fair Go and the Second Chance (+1 to +5), or abandon it (-1 to -5)?",
-        "How much is blocking Australia from fulfilling its highest promise as the Land of the Fair Go?",
+        "In how I treat others every day, I try to live out the ethic of the Second Chance and the Fair Go so nobody around me is written off.",
+        "In my community circle, the spirit of the Second Chance and the Fair Go is still alive and practised between neighbours.",
+        "All things considered, the Australia we live in today actually fulfills its highest promise as the Land of the Second Chance and the Fair Go.",
     ),
 }
 
 
 def clean_html(raw):
-    text = re.sub(r"<[^>]+>", "", raw)
-    text = (
-        text.replace("&quot;", '"')
-        .replace("&#39;", "'")
-        .replace("&amp;", "&")
-        .replace("&mdash;", "—")
-        .replace("&ndash;", "–")
-    )
+    text = re.sub(r"<[^>]+>", "", raw or "")
+    text = html.unescape(text)
+    # Strip Markdown bold/italic asterisks (**text** and *text*)
+    text = re.sub(r"\*\*([^*]+)\*\*", r"\1", text)
+    text = re.sub(r"\*([^*]+)\*", r"\1", text)
+    text = text.replace("**", "").replace("*", "")
     return re.sub(r"\s+", " ", text).strip()
 
 
 def extract_role_and_meaning(establishes, name):
     m = re.search(r"This establishes [^.*]*\*\*([^*]+)\*\*\.\s*(.*)", establishes, re.S)
     if m:
-        role = m.group(1).strip()
-        rest = m.group(2).strip()
+        role = clean_html(m.group(1))
+        rest = clean_html(m.group(2))
     else:
         m2 = re.search(r"\*\*([^*]+)\*\*", establishes)
-        role = m2.group(1).strip() if m2 else name
-        rest = establishes
+        role = clean_html(m2.group(1)) if m2 else clean_html(name)
+        rest = clean_html(establishes)
+    # Remove leading "This establishes X as the Y." if still present in rest
+    rest = re.sub(r"^This establishes [^.]+?\.\s*", "", rest, flags=re.I)
     sents = re.split(r"(?<=[.!?])\s+", rest)
     core = sents[0].strip() if sents and sents[0] else rest[:220]
     if len(sents) > 1 and len(core) < 95:
@@ -549,61 +552,106 @@ def infer_tags(name, desc, estab, plane_num):
     return tags[:4]
 
 
-def build_vector_questions(name, clean_name, role, core_meaning, v, psi, zone, is_fn, rationale):
-    # Ensure core_meaning doesn't trail with awkward punctuation
+def _role_tag(clean_name, role):
+    """Return ' (Role)' only if role is meaningfully distinct from clean_name."""
+    cn_norm = re.sub(r"^the\s+", "", clean_name.lower()).strip()
+    rl_norm = re.sub(r"^the\s+", "", role.lower()).strip()
+    if not rl_norm or rl_norm == cn_norm or rl_norm in cn_norm:
+        return ""
+    return f" ({role})"
+
+
+def _clean_rationale(rationale):
+    """Strip raw (+ψ)/(-υ) math shorthand from rationale for plain-English reading."""
+    txt = clean_html(rationale)
+    txt = re.sub(r"\s*\([+-][υψv]\)", "", txt)
+    return txt.rstrip(".")
+
+
+# Nodes whose title is an environmental condition, historical object, or complacency trap
+# where "practise and stand up for [Name]" sounds robotic unless framed around its lesson:
+PRINCIPLE_OVERRIDES = {
+    "The Drought": "stoic endurance, water conservation, and mutual support through dry seasons",
+    "The Flood": "respecting floodplains and pitching in to rescue neighbours when floodwaters surge",
+    "The Sunburnt Country": "resilient love and respect for Australia's harsh, volatile landscape",
+    "The Weird Melancholy": "quiet reflection and solidarity amidst the ancient stillness of the bush",
+    "The Never-Never": "humility and respect toward the vast, remote interior of the continent",
+    "The Saltbush": "hardy adaptation and living within the arid limits of the land",
+    "The Marsupial": "adaptive efficiency—doing more with less in a fragile, unique ecosystem",
+    "Gondwana": "protecting Australia's irreplaceable Gondwanan wildlife and ancient evolutionary heritage",
+    "The Thirst": "careful water stewardship and engineering on the driest inhabited continent",
+    "The Windmill": "practical bush engineering that sustains life in dry country",
+    "The Sprawl": "making suburban growth liveable, connected, and affordable rather than car-dependent sprawl",
+    "The Wealth": "turning Australia's natural resource wealth into lasting public capability rather than lazy complacency",
+    "The Impact": "respecting the deep geological age and ancient scars of the Australian continent",
+    "The Stump Jump Plough": "inventing practical local tools that work with the Australian landscape",
+    "The Boomerang": "respecting Indigenous aerodynamic genius and sustainable resource design",
+    "The Black Box": "backing world-leading Australian safety engineering and scientific invention",
+    "The Wifi": "funding public research (like CSIRO) and keeping sovereign inventions for the public good",
+    "The Home Owner": "ensuring secure, affordable home ownership is achievable for ordinary working families",
+}
+
+
+def build_vector_questions(name, clean_name, role, core_meaning, v, psi, zone, is_fn, rationale, plane_num=1):
     cm = core_meaning.rstrip(".")
     cm_low = cm[0].lower() + cm[1:] if len(cm) > 1 else cm
+    rtag = _role_tag(clean_name, role)
+    rat_clean = _clean_rationale(rationale)
+
     if is_fn:
         if v < 0:
-            # Shadow FN node like Dispossession or Exclusion or Guilt
-            qA = f"What should we do? We should recognise the reality of {clean_name} ({role} — {cm_low}) and actively work to heal and overcome it."
-            qB = f"What would you actually do? In practice, I actively call out and refuse to perpetuate {clean_name} in my own choices and speech."
-            qC = f"What does your community circle believe and do? People in my everyday circle agree we should heal {clean_name} and actually treat First Nations people with fairness and respect."
-            qD = f"What does wider Australian society actually do? Across Australia today, our society and institutions actually address and dismantle {clean_name} rather than denying or entrenching it."
+            qA = f"We should recognise the historical wound of {clean_name}{rtag}—{cm_low}—and actively work to heal and overcome it."
+            qB = f"In my own choices and speech, I actively reject and refuse to excuse {clean_name}."
+            qC = f"People in my everyday circle agree we should heal {clean_name} and treat First Nations people with fairness and respect."
+            qD = f"Across Australia today, our society and institutions actually address and dismantle {clean_name} rather than denying or entrenching it."
         else:
-            qA = f"What should we uphold? We should honour the First Nations principle of {clean_name} ({role}): {cm_low}."
-            qB = f"What would you actually do? In my own daily life and decisions, I actively respect and practise {clean_name} rather than treating it as tokenism."
-            qC = f"What does your community circle believe and do? My immediate circle believes we should respect {clean_name} and actually honours it in practice."
-            qD = f"What does wider Australian society actually do? Across Australia today, our wider society and institutions actually uphold and integrate {clean_name} in practice."
+            qA = f"We should honour the First Nations principle of {clean_name}{rtag}: {cm_low}."
+            qB = f"In my own daily life and civic choices, I actively respect and support {clean_name} rather than treating it as tokenism."
+            qC = f"People in my everyday circle believe we should respect {clean_name} and actually honour it in practice."
+            qD = f"Across Australia today, our wider society and institutions actually uphold and integrate {clean_name} in practice."
+        return qA, qB, qC, qD
+
+    # Handle "A vs. B" tension vectors (e.g. "Sustainability vs. Extraction", "The Fair Go vs. The Market")
+    if " vs. " in clean_name:
+        left_side, right_side = [s.strip() for s in clean_name.split(" vs. ", 1)]
+        qA = f"When navigating the tension of {clean_name}{rtag}, Australia should prioritise {left_side} over raw {right_side}: {cm_low}."
+        qB = f"In my own daily choices and voting, I actually back {left_side} when it conflicts with {right_side}."
+        qC = f"People in my everyday circle believe we should put {left_side} ahead of {right_side} and act accordingly."
+        qD = f"Across Australia today, our economic and political institutions actually put {left_side} ahead of {right_side} in practice."
         return qA, qB, qC, qD
 
     if v > 0:
-        # Positive Kanon Vector (Greater Good, Good, Lesser Good, Tension Point with +v)
-        qA = f"What should we uphold? We should champion and uphold {clean_name} ({role}): {cm_low}."
-        qB = f"What would you actually do? In the heat of everyday life, I actually practise and stand up for {clean_name} through my own actions."
-        qC = f"What does your community circle believe and do? The people in my everyday circle believe we should uphold {clean_name} and actually live it out."
-        qD = f"What does wider Australian society actually do? Across Australia today, our society and institutions actually deliver and protect {clean_name} in practice."
+        principle_phrase = PRINCIPLE_OVERRIDES.get(clean_name)
+        if principle_phrase:
+            qA = f"We should uphold the Australian lesson of {clean_name}{rtag}—{principle_phrase} ({cm_low})."
+            qB = f"In my own choices and civic stance, I actively support {principle_phrase}."
+            qC = f"People in my everyday circle value and practise {principle_phrase}."
+            qD = f"Across Australia today, our society and institutions actually deliver {principle_phrase} in practice."
+        else:
+            qA = f"We should uphold the Australian principle of {clean_name}{rtag}: {cm_low}."
+            qB = f"In my own everyday life and civic choices, I actually stand by and practise the ethic of {clean_name}."
+            qC = f"The people in my everyday circle believe in the ethic of {clean_name} and actually live it out."
+            qD = f"Across Australia today, our society and institutions actually uphold and deliver {clean_name} in practice."
     elif v < 0:
         # Negative / Shadow Kanon Vector (Greatest Lie, Greater Evil, Lesser Evil)
-        qA = f"What should we do? We should see through the distortion of {clean_name} ({role} — {rationale.rstrip('.')}) and reject its extractive or divisive grip."
-        qB = f"What would you actually do? In the heat of the moment, I actually refuse to go along with {clean_name} even when it is convenient."
-        qC = f"What does your community circle believe and do? People in my everyday circle see through {clean_name} and refuse to practice or excuse it."
-        qD = f"What does wider Australian society actually do? Across Australia today, our wider society and institutions actually resist and dismantle {clean_name} rather than being captured by it."
+        qA = f"We should see through and reject the national flaw of {clean_name}{rtag} ({cm_low})."
+        qB = f"In my own everyday actions, I refuse to practise or excuse {clean_name} even when it would be convenient."
+        qC = f"People in my everyday circle see through {clean_name} and refuse to practise or excuse it."
+        qD = f"Across Australia today, our wider society and institutions actually resist and overcome {clean_name} rather than being captured by it."
     else:
-        # Neutral / Constraint / Tension Axis (v == 0)
-        if "Tension" in zone or "vs." in clean_name:
-            qA = f"What should we do? We should balance the tension of {clean_name} ({role}) in favour of the common good: {cm_low}."
-            qB = f"What would you actually do? In my own daily choices, I actually act to balance {clean_name} fairly for everyone."
-            qC = f"What does your community circle believe and do? People in my local circle believe in and practise a fair, practical balance on {clean_name}."
-            qD = f"What does wider Australian society actually do? Across Australia today, our society and economy actually strike a fair, constructive balance on {clean_name}."
-        else:
-            qA = f"What should we do? We should respect and prepare for the continental reality of {clean_name} ({role}): {cm_low}."
-            qB = f"What would you actually do? In practice, I actually adapt my habits and preparation to respect {clean_name}."
-            qC = f"What does your community circle believe and do? My local community takes {clean_name} seriously and prepares practically for it."
-            qD = f"What does wider Australian society actually do? Across Australia today, our infrastructure, planning, and institutions actually adapt to and endure {clean_name}."
+        # Neutral / Constraint / Continental Reality (v == 0)
+        qA = f"We should respect and adapt wisely to the continental reality of {clean_name}{rtag}: {cm_low}."
+        qB = f"In my own outlook and habits, I respect the reality of {clean_name} rather than ignoring it."
+        qC = f"People in my local community understand the reality of {clean_name} and adapt practically to it."
+        qD = f"Across Australia today, our infrastructure, planning, and institutions actually adapt wisely to {clean_name}."
 
     return qA, qB, qC, qD
 
 
 def format_sense_should_would(sense_tuple, sense_title):
-    raw_a, raw_b, raw_c, raw_d = sense_tuple
-    # Clean raw_d topic tail ("How much is blocking X?" -> "X")
-    topic_tail = re.sub(r"^How much is blocking\s+", "", raw_d).rstrip("?")
-    qA = f"What should we uphold? {raw_a}"
-    qB = f"What would you actually do? In the heat of everyday life, I personally stand by and practise this standard rather than taking the easy or selfish way out."
-    qC = f"What does your community circle believe and do? {raw_b}"
-    qD = f"What does wider Australian society actually do? Across Australia today, our society and institutions actually deliver {topic_tail} in practice."
+    qA, qB, qC, qD = sense_tuple
     return qA, qB, qC, qD
+
 
 
 def main():
@@ -685,6 +733,8 @@ def main():
             raw_narr = clean_html(s_narrs[s_idx - 1]) if s_idx <= len(s_narrs) else ""
             # Remove leading "The Narrative of ...:" prefix if present
             raw_narr = re.sub(r"^The Narrative of [^:]+:\s*", "", raw_narr)
+            # Strip any trailing "The Totality of Australian ..." that leaked from Plane footer
+            raw_narr = re.sub(r"\s*The Totality of Australian .*$", "", raw_narr, flags=re.S).strip()
 
             s_vecs = by_sense[s_code]
             s_u = round(sum(x["coordinates"]["v"] for x in s_vecs) / max(1, len(s_vecs)), 2)
@@ -697,6 +747,7 @@ def main():
             # Collect sense tags from constituent vectors
             sense_tags = []
             vec_uids = []
+            sense_vec_objs = []
 
             for v_pos, v_item in enumerate(s_vecs, 1):
                 addr = v_item["address"]
@@ -705,20 +756,32 @@ def main():
                 clean_nm = raw_name.replace("[First Nations Perspective]", "").strip()
                 uid = f"{sense_id}.{v_pos}"
 
-                role, core_meaning = extract_role_and_meaning(v_item.get("establishes", ""), clean_nm)
+                est_raw = v_item.get("establishes", "")
+                # Fix upstream data bug on 3.2.3 Custodianship [First Nations Perspective]
+                if uid == "3.2.3" and is_fn:
+                    est_raw = (
+                        "This establishes **Custodianship** as the **Law**. "
+                        "The land cannot be 'empty' because it is a living entity with which the people are in constant dialogue. "
+                        "Where colonial law saw a vacuum to be filled, Indigenous law saw a fullness to be maintained—shifting the legal framework from 'Rights of Possession' to 'Duties of Care.'"
+                    )
+                # Clarify 6.1.7 "The Immigrant" (which is the -0.6 White Australia Exclusion vector)
+                if uid == "6.1.7" and clean_nm == "The Immigrant":
+                    clean_nm = "The Immigrant (White Australia Exclusion)"
+                    raw_name = "The Immigrant (White Australia Exclusion)"
+
+                role, core_meaning = extract_role_and_meaning(est_raw, clean_nm)
                 v_coord = v_item["coordinates"]["v"]
                 psi_coord = v_item["coordinates"]["psi"]
                 zone = v_item.get("zone", "Good")
                 rationale = v_item.get("judgment_rationale", "")
 
                 vqA, vqB, vqC, vqD = build_vector_questions(
-                    raw_name, clean_nm, role, core_meaning, v_coord, psi_coord, zone, is_fn, rationale
+                    raw_name, clean_nm, role, core_meaning, v_coord, psi_coord, zone, is_fn, rationale, pnum
                 )
 
                 # Match Hanson verdict
-                hv = hanson_verdicts.get((addr, raw_name))
+                hv = hanson_verdicts.get((addr, v_item["name"]))
                 if not hv:
-                    # Try matching without [First Nations Perspective] or partial
                     for (ha, hn), hval in hanson_verdicts.items():
                         if ha == addr and (clean_nm.lower() in hn.lower() or hn.lower() in clean_nm.lower()):
                             hv = hval
@@ -726,19 +789,20 @@ def main():
                 in_hanson_353 = hv is not None
 
                 # Match Albo verdict
-                av = albo_verdicts.get((addr, raw_name))
+                av = albo_verdicts.get((addr, v_item["name"]))
                 if not av:
                     for (aa, an), aval in albo_verdicts.items():
                         if aa == addr and (clean_nm.lower() in an.lower() or an.lower() in clean_nm.lower()):
                             av = aval
                             break
 
-                v_tags = infer_tags(clean_nm, v_item.get("description", ""), v_item.get("establishes", ""), pnum)
+                v_tags = infer_tags(clean_nm, v_item.get("description", ""), est_raw, pnum)
                 for tg in v_tags:
                     if tg not in sense_tags:
                         sense_tags.append(tg)
 
-                est_clean = clean_html(v_item.get("establishes", ""))
+                est_clean = clean_html(est_raw)
+                role_label = role if role.lower().startswith("the ") else f"The {role}"
                 if v_coord < 0:
                     help_obj = {
                         "highA": f"You see through and reject {clean_nm} ({role})—recognising how it distorts or betrays the Australian ethos ({core_meaning}).",
@@ -761,7 +825,7 @@ def main():
                         "lowA": f"You do not see {clean_nm} as an important or desirable part of the Australian ethos.",
                         "highB": f"You and the people around you actually experience and practise {clean_nm} in everyday Australian life.",
                         "lowB": f"Even if people talk about {clean_nm}, it is missing, eroded, or blocked in daily reality.",
-                        "note": f"Kanon Role — The {role} (υ = {v_coord:+g}, ψ = {psi_coord:+g} · {zone}): {est_clean}",
+                        "note": f"Kanon Role — {role_label} (υ = {v_coord:+g}, ψ = {psi_coord:+g} · {zone}): {est_clean}",
                     }
 
                 vec_obj = {
@@ -773,15 +837,15 @@ def main():
                     "cleanName": clean_nm,
                     "role": role,
                     "fn": is_fn,
-                    "quote": v_item.get("canonical_quote", ""),
-                    "attribution": v_item.get("attribution", ""),
-                    "source": v_item.get("source", ""),
-                    "description": v_item.get("description", ""),
+                    "quote": clean_html(v_item.get("canonical_quote", "")),
+                    "attribution": clean_html(v_item.get("attribution", "")),
+                    "source": clean_html(v_item.get("source", "")),
+                    "description": clean_html(v_item.get("description", "")),
                     "establishes": est_clean,
                     "coreMeaning": core_meaning,
                     "coords": {"v": v_coord, "psi": psi_coord},
                     "zone": zone,
-                    "rationale": rationale,
+                    "rationale": clean_html(rationale),
                     "hansonVerdict": hv,
                     "alboVerdict": av,
                     "inHanson353": in_hanson_353,
@@ -793,9 +857,24 @@ def main():
                     "tags": v_tags,
                 }
                 vectors_out.append(vec_obj)
+                sense_vec_objs.append(vec_obj)
                 vec_uids.append(uid)
 
-            v_names_list = [x["name"].replace("[First Nations Perspective]", "[FN]").strip() for x in s_vecs]
+            v_names_list = [v["name"].replace("[First Nations Perspective]", "[FN]").strip() for v in sense_vec_objs]
+            # If the upstream HTML had a placeholder narrative ("The Narrative of the ..."), synthesise a real narrative
+            if not raw_narr or raw_narr.lower().startswith("the narrative of ") or len(raw_narr) < 45:
+                pos_highlights = [f"{v['cleanName']} ({v['role']})" for v in sense_vec_objs if v["coords"]["v"] >= 0][:4]
+                shd_highlights = [f"{v['cleanName']} ({v['role']})" for v in sense_vec_objs if v["coords"]["v"] < 0]
+                shd_clause = (
+                    f", while confronting the shadow of {', '.join(shd_highlights)}"
+                    if shd_highlights
+                    else ""
+                )
+                raw_narr = (
+                    f"In Plane {pnum} ({pmeta['name']}), {sense_addr} ({S_SUBTITLES[s_code]}) maps how Australian {pmeta['name'].lower()} is expressed through "
+                    f"{', '.join(pos_highlights)}{shd_clause}. {qA}"
+                )
+
             sense_help = {
                 "highA": f"You strongly endorse the Australian ethos of {sense_addr} ({raw_title}), spanning {', '.join(v_names_list[:4])}, and more.",
                 "lowA": f"You feel disconnected from or skeptical of the traditional Australian values grouped under {sense_addr} ({raw_title}).",
@@ -834,7 +913,7 @@ def main():
             "lowA": f"You place lower personal weight on Pillar {pnum} ({pmeta['pillar']}) or disagree with how Australia defines {pmeta['name']}.",
             "highB": f"In your daily life and community, Pillar {pnum} ({pmeta['name']}) is thriving and experienced in practice.",
             "lowB": f"In daily reality, Pillar {pnum} ({pmeta['name']}) is eroded, blocked, or out of reach.",
-            "note": f"Plane {pnum} ({pmeta['code']} · {pmeta['domain']} Domain · Decay constant τ = {pmeta['tau']} days): {pmeta['totality']}",
+            "note": f"Plane {pnum} ({pmeta['code']} · {pmeta['domain']} Domain): {pmeta['totality']}",
         }
         planes_out.append(pmeta)
 
@@ -1085,21 +1164,7 @@ def main():
         {"id": "forgotten_people", "term": "The Forgotten People", "definition": "Robert Menzies' 1942 radio address defining the salaried middle class, small shopkeepers, and suburban home-builders not rich enough to be idle nor unionised in mass industry.", "match": ["Forgotten People"]},
         {"id": "pogg", "term": "Peace, Order, and Good Government", "definition": "The founding phrase in Section 51 of the Australian Constitution—contrasting with America's 'Life, Liberty and the Pursuit of Happiness' by prizing collective stability, fairness, and functional public order.", "match": ["Peace, Order, and Good Government"]},
         {"id": "psochic_hegemony", "term": "Psochic Hegemony (υ, ψ)", "definition": "The two-axis moral/will coordinate map: υ (Morality, horizontal) measures WHO benefits (+υ = everyone / greater good, -υ = self/ingroup extraction); ψ (Will, vertical) measures WHAT the energy does (+ψ = active creation/reform, -ψ = passive suppression or entropy).", "match": ["Psochic Hegemony", "Hegemony Coordinate"]},
-        {"id": "tau_constant", "term": "τ (Decay Constant)", "definition": "The number of days a Plane can be neglected or starved before acute systemic breakdown sets in (e.g., τ = 3 days for Physical Land/Shelter and Identity).", "match": ["τ = 3d", "τ = 14d", "τ = 2d", "τ = 90d", "τ = 7d", "τ = 365d", "τ = 30d"]},
     ]
-
-    # Also auto-register any Kanon vector cleanName >= 5 chars not already matched
-    existing_matches = {m.lower() for g in glossary for m in g["match"]}
-    for v in vectors_out:
-        cn = v["cleanName"]
-        if len(cn) >= 5 and cn.lower() not in existing_matches:
-            existing_matches.add(cn.lower())
-            glossary.append({
-                "id": f"vec_{v['uid']}",
-                "term": f"{cn} ({v['role']})",
-                "definition": f"{v['coreMeaning']} [{v['addr']} · υ={v['coords']['v']:+g}, ψ={v['coords']['psi']:+g}]",
-                "match": [cn],
-            })
 
     # 6. Classic Australian Reading & Primary Sources for Results Screen
     books = [
