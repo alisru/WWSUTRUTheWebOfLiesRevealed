@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>What Kind of Australian Are You? — The Australian Kanon Survey (7 · 49 · 353)</title>
+<title>What Kind of Australian Are You? — The Australian Kanon Survey (7 · 49 · 354)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -2706,9 +2706,8 @@ function loadPresetProfile(presetId) {
       STATE.blockers[`S|${s.id}`] = [demoBlockers[idx % demoBlockers.length]];
     });
   } else if (presetId === "hanson_354") {
-    STATE.tier = 353;
-    STATE.include354 = false;
-    VECTORS.forEach(v =>.forEach(v => {
+    STATE.tier = 354;
+    VECTORS.forEach(v => {
       const val = v.hansonVerdict === "HIT" ? 4 : -3;
       STATE.answers[ansKey("V", v.uid, "A")] = val;
       STATE.answers[ansKey("V", v.uid, "B")] = val;
@@ -3244,11 +3243,11 @@ function updateHeaderProgress() {
       ? "Tier 1: 7 Pillars"
       : STATE.tier === 49
         ? "Tier 2: 49 Senses"
-        : `Tier 3: ${STATE.include354 ? 354 : 353} Vectors`;
+        : "Tier 3: 354 Vectors";
     tierBtn.textContent = `${tierLbl} (${prog.done}/${prog.total})`;
     tierBtn.onclick = () => {
       if (STATE.tier === 7) STATE.tier = 49;
-      else if (STATE.tier === 49) STATE.tier = 353;
+      else if (STATE.tier === 49) STATE.tier = 354;
       else STATE.tier = 7;
       STATE.focusIdx = 0;
       saveState();
@@ -3367,10 +3366,10 @@ function renderTierSelectorHTML() {
         </div>
       </div>
 
-      <div class="tier-card ${STATE.tier === 353 ? "active" : ""}" data-set-tier="353">
+      <div class="tier-card ${STATE.tier === 354 ? "active" : ""}" data-set-tier="354">
         <div class="tier-card-top">
-          <span class="tier-num">${STATE.include354 ? "354" : "353"} <span style="font-size:0.9rem;font-weight:500;color:var(--ink-muted)">nodes</span></span>
-          <span class="tier-pill">${STATE.tier === 353 ? "ACTIVE TIER" : "Tier 3 · Deep Audit"}</span>
+          <span class="tier-num">354 <span style="font-size:0.9rem;font-weight:500;color:var(--ink-muted)">nodes</span></span>
+          <span class="tier-pill">${STATE.tier === 354 ? "ACTIVE TIER" : "Tier 3 · Deep Audit"}</span>
         </div>
         <h3>Full Kanon Vector Audit</h3>
         <p>Every Australian Kanon node (<em>Mateship</em>, <em>The Fair Go</em>, <em>Terra Nullius</em>, <em>Songlines [FN]</em>) with direct comparison to the Pauline Hanson 354 Audit.</p>
@@ -3584,7 +3583,7 @@ function renderFramework(app) {
       <ul style="color:var(--ink-soft);">
         <li><strong>Tier 1 (7 Plane Essence Nodes):</strong> Evaluates the core functional essence of each of the 7 Planes directly (matched to the 7 Pillars of <a href="Archetype_The_Stoic_Guardian.html">The Stoic Guardian</a>).</li>
         <li><strong>Tier 2 (49 Sense Essence Nodes):</strong> Evaluates the synthesised essence of each of the 49 Senses (<code>Who.Who</code> through <code>Effect.Effect</code>).</li>
-        <li><strong>Tier 3 (354 Vector Nodes):</strong> Evaluates every single vector node in the Australian Kanon, including the 11 First Nations <code>[FN]</code> perspective pairs. Toggle between the exact <strong>353 nodes</strong> audited in the <a href="../Hanson_Audit/index.html">Pauline Hanson Audit</a> or all <strong>354 nodes</strong> from the compact JSON files.</li>
+        <li><strong>Tier 3 (354 Vector Nodes):</strong> Evaluates every single vector node in the Australian Kanon, including the 11 First Nations <code>[FN]</code> perspective pairs and direct comparison against the <a href="../Hanson_Audit/index.html">Pauline Hanson Audit</a>.</li>
       </ul>
 
       <div class="page-footer-nav">
@@ -4236,7 +4235,7 @@ function renderSearchResults() {
   const box = document.getElementById("search-results");
   const q = searchQuery.toLowerCase();
 
-  if (STATE.tier === 353 || q.length >= 2) {
+  if (STATE.tier === 354 || q.length >= 2) {
     const matchedVecs = activeTierVectors().filter(v => {
       if (q) {
         const hay = `${v.uid} ${v.addr} ${v.name} ${v.role} ${v.quote} ${v.attribution} ${v.description} ${(v.tags || []).join(" ")}`.toLowerCase();
