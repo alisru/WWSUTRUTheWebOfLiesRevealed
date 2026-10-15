@@ -3922,20 +3922,12 @@ function renderABCDBlockHTML(prefix, id, item, planeHue, extraHeaderHTML = "", e
   const makeRow = (probe, kindLabel, promptText, scaleList, curVal) => {
     const selClass = `sel-${probe.toLowerCase()}`;
     const letterClass = `letter-${probe.toLowerCase()}`;
-    const leftLbl = scaleList[0].lbl;
-    const midLbl = scaleList[5].lbl;
-    const rightLbl = scaleList[10].lbl;
     return `
       <div class="probe-row">
         <div class="probe-top">
           <span class="probe-letter ${letterClass}">${probe}</span>
           <span class="probe-kind">${kindLabel}</span>
           <span class="probe-text">${renderGlossaryHTML(promptText)}</span>
-        </div>
-        <div class="scale-endpoints" aria-hidden="true">
-          <span class="ep-neg">← −5 ${leftLbl}</span>
-          <span class="ep-mid">0 ${midLbl}</span>
-          <span class="ep-pos">+5 ${rightLbl} →</span>
         </div>
         <div class="scale-row">
           <div class="seg-group" role="radiogroup" aria-label="${probe} rating">
