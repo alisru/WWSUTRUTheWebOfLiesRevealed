@@ -4020,7 +4020,7 @@ function setupGlobalABCDDelegation() {
         const newSum = computePlaneSummary(route.planeNum);
         const badge = document.getElementById("plane-live-badge");
         if (badge) {
-          badge.textContent = `${newSum.answeredNodes}/${newSum.totalNodes} nodes answered ${newSum.total !== null ? `· Mean ${fmtSigned(newSum.total, 2)}` : ""}`;
+          badge.textContent = `${newSum.answeredNodes}/${newSum.totalNodes} answered`;
         }
       }
       return;
@@ -4047,7 +4047,7 @@ function setupGlobalABCDDelegation() {
         const newSum = computePlaneSummary(route.planeNum);
         const badge = document.getElementById("plane-live-badge");
         if (badge) {
-          badge.textContent = `${newSum.answeredNodes}/${newSum.totalNodes} nodes answered ${newSum.total !== null ? `· Mean ${fmtSigned(newSum.total, 2)}` : ""}`;
+          badge.textContent = `${newSum.answeredNodes}/${newSum.totalNodes} answered`;
         }
       }
       return;
@@ -4232,7 +4232,7 @@ function renderPlane(app, pNum) {
         </div>
         <div style="text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
           <div class="mono" id="plane-live-badge" style="font-size:0.85rem;color:var(--ink-soft);background:#F8FAFC;border:1px solid #E2E8F0;padding:4px 10px;border-radius:8px;">
-            ${summary.answeredNodes}/${summary.totalNodes} answered ${summary.total !== null ? `· Mean ${fmtSigned(summary.total, 2)}` : ""}
+            ${summary.answeredNodes}/${summary.totalNodes} answered
           </div>
           <div style="display:flex;gap:10px;flex-wrap:wrap;">
             <a href="Plane_${p.n}_${p.name === "Cause" ? "Foundation" : p.name}.html" target="_blank" class="mono" style="font-size:0.75rem;color:${p.hue};font-weight:700;">Read full chapter ↗</a>
