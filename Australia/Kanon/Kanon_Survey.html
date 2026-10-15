@@ -4296,20 +4296,14 @@ function renderPlane(app, pNum) {
       </details>
     </div>
 
-    <div class="legend-sticky">
-      <div class="legend-items">
-        <span><strong>A Should (−5..+5):</strong> Your Moral Ideal</span>
-        <span><strong>B Would (−5..+5):</strong> Your Actual Practice</span>
-        <span><strong>C Community (−5..+5):</strong> Your Circle's Practice</span>
-        <span><strong>D Society (−5..+5):</strong> Wider Australian Reality</span>
-      </div>
       ${STATE.tier !== 7 ? `
-        <div class="view-mode-switch" role="group" aria-label="View mode">
-          <button type="button" class="view-mode-btn ${STATE.viewMode === "list" ? "active" : ""}" data-view-mode="list">📋 All Cards</button>
-          <button type="button" class="view-mode-btn ${STATE.viewMode === "focus" ? "active" : ""}" data-view-mode="focus">🎯 1-at-a-Time Focus</button>
+        <div class="legend-sticky" style="justify-content:flex-end;">
+          <div class="view-mode-switch" role="group" aria-label="View mode">
+            <button type="button" class="view-mode-btn ${STATE.viewMode === "list" ? "active" : ""}" data-view-mode="list">📋 All Cards</button>
+            <button type="button" class="view-mode-btn ${STATE.viewMode === "focus" ? "active" : ""}" data-view-mode="focus">🎯 1-at-a-Time Focus</button>
+          </div>
         </div>
       ` : ""}
-    </div>
 
     <div id="plane-nodes-container">
       ${bodyHTML}
