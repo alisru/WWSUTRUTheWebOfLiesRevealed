@@ -2220,120 +2220,120 @@ function fmtSigned(v, dec = 1) {
 // Part 4 Axis-Anchored Scales (-5 to +5) Tailored for Plain-English Clarity
 // A: Personal Ideal ("Should" — Support vs Oppose Principle)
 const SCALE_A = [
-  { v: -5, lbl: "Strongly Against", tip: "−5 Strongly Against: Principle should be firmly rejected" },
-  { v: -4, lbl: "Oppose",           tip: "−4 Oppose: Leaning strongly against" },
-  { v: -3, lbl: "Should Not",       tip: "−3 Should Not: Oppose this principle" },
-  { v: -2, lbl: "Lean Against",     tip: "−2 Lean Against: Mild opposition" },
-  { v: -1, lbl: "Slight Against",   tip: "−1 Slight Against: Minor reservations" },
-  { v: 0,  lbl: "Neutral",          tip: "0 Neutral: Neither support nor oppose" },
-  { v: 1,  lbl: "Slight Support",   tip: "+1 Slight Support: Leaning mildly in favour" },
-  { v: 2,  lbl: "Lean Support",     tip: "+2 Lean Support: Generally support this principle" },
-  { v: 3,  lbl: "Should Uphold",    tip: "+3 Should Uphold: Solid collective Australian principle" },
-  { v: 4,  lbl: "Strongly Support", tip: "+4 Strongly Support: Important core value" },
-  { v: 5,  lbl: "Core Principle",   tip: "+5 Core Principle: Essential standard for everyone" }
+  { v: -5, lbl: "Against",  tip: "−5 Against: Principle should be firmly rejected" },
+  { v: -4, lbl: "Oppose",   tip: "−4 Oppose: Leaning strongly against" },
+  { v: -3, lbl: "Reject",   tip: "−3 Reject: Oppose this principle" },
+  { v: -2, lbl: "Lean No",  tip: "−2 Lean No: Mild opposition" },
+  { v: -1, lbl: "Slight No", tip: "−1 Slight No: Minor reservations" },
+  { v: 0,  lbl: "Neutral",  tip: "0 Neutral: Neither support nor oppose" },
+  { v: 1,  lbl: "Slight Yes", tip: "+1 Slight Yes: Leaning mildly in favour" },
+  { v: 2,  lbl: "Lean Yes", tip: "+2 Lean Yes: Generally support this principle" },
+  { v: 3,  lbl: "Uphold",   tip: "+3 Uphold: Solid collective Australian principle" },
+  { v: 4,  lbl: "Support",  tip: "+4 Support: Important core value" },
+  { v: 5,  lbl: "Core",     tip: "+5 Core: Essential standard for everyone" }
 ];
 
 // B: Personal Actual ("Would" — Everyday Personal Practice)
 const SCALE_B = [
-  { v: -5, lbl: "Never",             tip: "−5 Never: In daily life, I actively do the opposite" },
-  { v: -4, lbl: "Almost Never",      tip: "−4 Almost Never: Rarely act on this" },
-  { v: -3, lbl: "Rarely",            tip: "−3 Rarely: Struggle to practise this in daily life" },
-  { v: -2, lbl: "Seldom",            tip: "−2 Seldom: Often compromise or yield" },
-  { v: -1, lbl: "Occasionally",      tip: "−1 Occasionally: Sometimes slip up" },
-  { v: 0,  lbl: "Neutral",           tip: "0 Neutral: Neither one way nor the other" },
-  { v: 1,  lbl: "Sometimes",         tip: "+1 Sometimes: Practise when convenient" },
-  { v: 2,  lbl: "Often",             tip: "+2 Often: Regularly try to practise this" },
-  { v: 3,  lbl: "Usually",           tip: "+3 Usually: Consistently stand by this in daily life" },
-  { v: 4,  lbl: "Almost Always",     tip: "+4 Almost Always: Firmly live and defend this" },
-  { v: 5,  lbl: "Always",            tip: "+5 Always: Actively live and stand by this under pressure" }
+  { v: -5, lbl: "Never",    tip: "−5 Never: In daily life, I actively do the opposite" },
+  { v: -4, lbl: "Rarely",   tip: "−4 Rarely: Almost never act on this" },
+  { v: -3, lbl: "Seldom",   tip: "−3 Seldom: Struggle to practise this in daily life" },
+  { v: -2, lbl: "Hardly",   tip: "−2 Hardly: Often compromise or yield" },
+  { v: -1, lbl: "Slip Up",  tip: "−1 Slip Up: Sometimes slip up" },
+  { v: 0,  lbl: "Neutral",  tip: "0 Neutral: Neither one way nor the other" },
+  { v: 1,  lbl: "Try",      tip: "+1 Try: Practise when convenient" },
+  { v: 2,  lbl: "Often",    tip: "+2 Often: Regularly try to practise this" },
+  { v: 3,  lbl: "Usually",  tip: "+3 Usually: Consistently stand by this in daily life" },
+  { v: 4,  lbl: "Mostly",   tip: "+4 Mostly: Firmly live and defend this" },
+  { v: 5,  lbl: "Always",   tip: "+5 Always: Actively live and stand by this under pressure" }
 ];
 
 // C: Your Community Circle ("Should & Would" — Everyday Culture)
 const SCALE_C = [
-  { v: -5, lbl: "Strongly Opposes",  tip: "−5 Strongly Opposes: My circle actively opposes or rejects this" },
-  { v: -4, lbl: "Rejects It",        tip: "−4 Rejects It: Mostly pushed aside or disapproved of" },
-  { v: -3, lbl: "Rarely Backs",      tip: "−3 Rarely Backs: Dismissed or paid little regard" },
-  { v: -2, lbl: "Talk Only",         tip: "−2 Talk Only: Some talk, but little actual action" },
-  { v: -1, lbl: "Fading",            tip: "−1 Fading: Leans against or eroding in my circle" },
-  { v: 0,  lbl: "Neutral",           tip: "0 Neutral: Neither supported nor opposed in my circle" },
-  { v: 1,  lbl: "Some Support",      tip: "+1 Some Support: Mild everyday support" },
-  { v: 2,  lbl: "Generally Backs",   tip: "+2 Generally Backs: Most people in my circle support this" },
-  { v: 3,  lbl: "Mostly Backs",      tip: "+3 Mostly Backs: Genuinely supported and practised" },
-  { v: 4,  lbl: "Strong Culture",    tip: "+4 Strong Culture: Strong shared norm in my circle" },
-  { v: 5,  lbl: "Always Backs",      tip: "+5 Always Backs: Deeply woven into my community's daily culture" }
+  { v: -5, lbl: "Opposes",  tip: "−5 Opposes: My circle actively opposes or rejects this" },
+  { v: -4, lbl: "Rejects",  tip: "−4 Rejects: Mostly pushed aside or disapproved of" },
+  { v: -3, lbl: "Ignores",  tip: "−3 Ignores: Dismissed or paid little regard" },
+  { v: -2, lbl: "Doubts",   tip: "−2 Doubts: Some talk, but little actual action" },
+  { v: -1, lbl: "Fading",   tip: "−1 Fading: Leans against or eroding in my circle" },
+  { v: 0,  lbl: "Neutral",  tip: "0 Neutral: Neither supported nor opposed in my circle" },
+  { v: 1,  lbl: "Mixed",    tip: "+1 Mixed: Mild everyday support" },
+  { v: 2,  lbl: "Backs",    tip: "+2 Backs: Most people in my circle support this" },
+  { v: 3,  lbl: "Upholds",  tip: "+3 Upholds: Genuinely supported and practised" },
+  { v: 4,  lbl: "Strong",   tip: "+4 Strong: Strong shared norm in my circle" },
+  { v: 5,  lbl: "Always",   tip: "+5 Always: Deeply woven into my community's daily culture" }
 ];
 
 // D: Wider Australian Society & System ("Would" & Delivery in Reality)
 const SCALE_D = [
-  { v: -5, lbl: "Completely Broken", tip: "−5 Completely Broken: Society & institutions actively extract or undermine this" },
-  { v: -4, lbl: "Failing Badly",     tip: "−4 Failing Badly: Heavily blocked or neglected in practice" },
-  { v: -3, lbl: "Struggling",        tip: "−3 Struggling: Stated on paper but fails ordinary people" },
-  { v: -2, lbl: "Lip Service Only",  tip: "−2 Lip Service Only: Institutions preach it, ignore in action" },
-  { v: -1, lbl: "Slipping Back",     tip: "−1 Slipping Back: Drifting backwards or eroding over time" },
-  { v: 0,  lbl: "Neutral",           tip: "0 Neutral: Balanced or unclear systemic impact" },
-  { v: 1,  lbl: "Muddling Through",  tip: "+1 Muddling Through: Minor or uneven delivery" },
-  { v: 2,  lbl: "Partial Delivery",  tip: "+2 Partial Delivery: Partially working in Australian society" },
-  { v: 3,  lbl: "Delivering",        tip: "+3 Delivering: Genuinely delivered for most Australians" },
-  { v: 4,  lbl: "Works Well",        tip: "+4 Works Well: Strong, reliable systemic delivery" },
-  { v: 5,  lbl: "Thriving",          tip: "+5 Thriving: Australian society and institutions reliably deliver this for all" }
+  { v: -5, lbl: "Broken",     tip: "−5 Broken: Society & institutions actively extract or undermine this" },
+  { v: -4, lbl: "Failing",    tip: "−4 Failing: Heavily blocked or neglected in practice" },
+  { v: -3, lbl: "Struggling", tip: "−3 Struggling: Stated on paper but fails ordinary people" },
+  { v: -2, lbl: "Eroding",    tip: "−2 Eroding: Institutions preach it, ignore in action" },
+  { v: -1, lbl: "Slipping",   tip: "−1 Slipping: Drifting backwards or eroding over time" },
+  { v: 0,  lbl: "Neutral",    tip: "0 Neutral: Balanced or unclear systemic impact" },
+  { v: 1,  lbl: "Patchy",     tip: "+1 Patchy: Minor or uneven delivery" },
+  { v: 2,  lbl: "Partial",    tip: "+2 Partial: Partially working in Australian society" },
+  { v: 3,  lbl: "Working",    tip: "+3 Working: Genuinely delivered for most Australians" },
+  { v: 4,  lbl: "Strong",     tip: "+4 Strong: Strong, reliable systemic delivery" },
+  { v: 5,  lbl: "Thriving",   tip: "+5 Thriving: Australian society and institutions reliably deliver this for all" }
 ];
 
 // Dedicated Corrective Scales for Shadow / Flaw Nodes (υ < 0, e.g. The Bludger, The Squatter, Terra Nullius)
 // Removes double-negative confusion: -5 = Excuse/Practise/Captured by Flaw, +5 = Reject & Overcome Flaw
 const SCALE_A_SHADOW = [
-  { v: -5, lbl: "Champion Flaw",         tip: "−5 Champion Flaw: Excuse or promote this national flaw" },
-  { v: -4, lbl: "Defend Flaw",           tip: "−4 Defend Flaw: Justify this flaw" },
-  { v: -3, lbl: "Accept Flaw",           tip: "−3 Accept Flaw: Accept this flaw as normal" },
-  { v: -2, lbl: "Excuse It",             tip: "−2 Excuse It: Make excuses for this flaw" },
-  { v: -1, lbl: "Downplay It",           tip: "−1 Downplay It: Downplay the harm of this flaw" },
-  { v: 0,  lbl: "Neutral",               tip: "0 Neutral: Neither defend nor reject" },
-  { v: 1,  lbl: "Dislike Flaw",          tip: "+1 Dislike Flaw: Recognise this as a problem" },
-  { v: 2,  lbl: "Should Reject",         tip: "+2 Should Reject: Agree we should reject this flaw" },
-  { v: 3,  lbl: "Firmly Reject",         tip: "+3 Firmly Reject: Firmly reject this flaw" },
-  { v: 4,  lbl: "Actively Reform",       tip: "+4 Actively Reform: Actively work to reform and dismantle this flaw" },
-  { v: 5,  lbl: "Reject & Overcome",     tip: "+5 Reject & Overcome: Completely reject and overcome this flaw" }
+  { v: -5, lbl: "Defend",   tip: "−5 Defend: Excuse or promote this national flaw" },
+  { v: -4, lbl: "Excuse",   tip: "−4 Excuse: Justify this flaw" },
+  { v: -3, lbl: "Accept",   tip: "−3 Accept: Accept this flaw as normal" },
+  { v: -2, lbl: "Tolerate", tip: "−2 Tolerate: Make excuses for this flaw" },
+  { v: -1, lbl: "Downplay", tip: "−1 Downplay: Downplay the harm of this flaw" },
+  { v: 0,  lbl: "Neutral",  tip: "0 Neutral: Neither defend nor reject" },
+  { v: 1,  lbl: "Dislike",  tip: "+1 Dislike: Recognise this as a problem" },
+  { v: 2,  lbl: "Oppose",   tip: "+2 Oppose: Agree we should reject this flaw" },
+  { v: 3,  lbl: "Reject",   tip: "+3 Reject: Firmly reject this flaw" },
+  { v: 4,  lbl: "Reform",   tip: "+4 Reform: Actively work to reform and dismantle this flaw" },
+  { v: 5,  lbl: "Overcome", tip: "+5 Overcome: Completely reject and overcome this flaw" }
 ];
 
 const SCALE_B_SHADOW = [
-  { v: -5, lbl: "Practise Flaw",         tip: "−5 Practise Flaw: In practice, I actively practise or exploit this flaw" },
-  { v: -4, lbl: "Often Go Along",        tip: "−4 Often Go Along: Often go along with this flaw" },
-  { v: -3, lbl: "Give In To It",         tip: "−3 Give In To It: Give in to this flaw when convenient" },
-  { v: -2, lbl: "Excuse It",             tip: "−2 Excuse It: Excuse or tolerate it in my own actions" },
-  { v: -1, lbl: "Sometimes Slip",        tip: "−1 Sometimes Slip: Sometimes slip into this habit" },
-  { v: 0,  lbl: "Neutral",               tip: "0 Neutral: Neither go along nor resist" },
-  { v: 1,  lbl: "Try to Avoid",          tip: "+1 Try to Avoid: Try to avoid this flaw" },
-  { v: 2,  lbl: "Usually Refuse",        tip: "+2 Usually Refuse: Usually refuse to go along with this flaw" },
-  { v: 3,  lbl: "Refuse in Practice",    tip: "+3 Refuse in Practice: Consistently refuse to practise this flaw" },
-  { v: 4,  lbl: "Call It Out",           tip: "+4 Call It Out: Actively call out and resist this flaw" },
-  { v: 5,  lbl: "Actively Overcome",     tip: "+5 Actively Overcome: Actively resist and model the antidote in daily life" }
+  { v: -5, lbl: "Practise", tip: "−5 Practise: In practice, I actively practise or exploit this flaw" },
+  { v: -4, lbl: "Go Along", tip: "−4 Go Along: Often go along with this flaw" },
+  { v: -3, lbl: "Give In",  tip: "−3 Give In: Give in to this flaw when convenient" },
+  { v: -2, lbl: "Excuse",   tip: "−2 Excuse: Excuse or tolerate it in my own actions" },
+  { v: -1, lbl: "Slip Up",  tip: "−1 Slip Up: Sometimes slip into this habit" },
+  { v: 0,  lbl: "Neutral",  tip: "0 Neutral: Neither go along nor resist" },
+  { v: 1,  lbl: "Avoid",    tip: "+1 Avoid: Try to avoid this flaw" },
+  { v: 2,  lbl: "Resist",   tip: "+2 Resist: Usually refuse to go along with this flaw" },
+  { v: 3,  lbl: "Refuse",   tip: "+3 Refuse: Consistently refuse to practise this flaw" },
+  { v: 4,  lbl: "Call Out", tip: "+4 Call Out: Actively call out and resist this flaw" },
+  { v: 5,  lbl: "Overcome", tip: "+5 Overcome: Actively resist and model the antidote in daily life" }
 ];
 
 const SCALE_C_SHADOW = [
-  { v: -5, lbl: "Entrenched in Circle",  tip: "−5 Entrenched: My circle celebrates or is entrenched in this flaw" },
-  { v: -4, lbl: "Practises Flaw",        tip: "−4 Practises Flaw: My circle regularly practises this flaw" },
-  { v: -3, lbl: "Excuses Flaw",          tip: "−3 Excuses Flaw: My circle excuses this flaw" },
-  { v: -2, lbl: "Tolerates It",          tip: "−2 Tolerates It: My circle shrugs and tolerates it" },
-  { v: -1, lbl: "Looks Away",            tip: "−1 Looks Away: My circle mostly looks the other way" },
-  { v: 0,  lbl: "Neutral",               tip: "0 Neutral: Neutral or divided in my circle" },
-  { v: 1,  lbl: "Frowns On It",          tip: "+1 Frowns On It: My circle frowns on this flaw" },
-  { v: 2,  lbl: "Disapproves",           tip: "+2 Disapproves: My circle disapproves of this flaw" },
-  { v: 3,  lbl: "Rejects in Practice",   tip: "+3 Rejects in Practice: My circle refuses to practise or excuse this flaw" },
-  { v: 4,  lbl: "Calls It Out",          tip: "+4 Calls It Out: My circle actively calls out this flaw" },
-  { v: 5,  lbl: "Overcomes Flaw",        tip: "+5 Overcomes Flaw: My circle has genuinely overcome this flaw" }
+  { v: -5, lbl: "Entrenched", tip: "−5 Entrenched: My circle celebrates or is entrenched in this flaw" },
+  { v: -4, lbl: "Practises",  tip: "−4 Practises: My circle regularly practises this flaw" },
+  { v: -3, lbl: "Excuses",    tip: "−3 Excuses: My circle excuses this flaw" },
+  { v: -2, lbl: "Tolerates",  tip: "−2 Tolerates: My circle shrugs and tolerates it" },
+  { v: -1, lbl: "Ignores",    tip: "−1 Ignores: My circle mostly looks the other way" },
+  { v: 0,  lbl: "Neutral",    tip: "0 Neutral: Neutral or divided in my circle" },
+  { v: 1,  lbl: "Doubts",     tip: "+1 Doubts: My circle frowns on this flaw" },
+  { v: 2,  lbl: "Opposes",    tip: "+2 Opposes: My circle disapproves of this flaw" },
+  { v: 3,  lbl: "Rejects",    tip: "+3 Rejects: My circle refuses to practise or excuse this flaw" },
+  { v: 4,  lbl: "Calls Out",  tip: "+4 Calls Out: My circle actively calls out this flaw" },
+  { v: 5,  lbl: "Overcomes",  tip: "+5 Overcomes: My circle has genuinely overcome this flaw" }
 ];
 
 const SCALE_D_SHADOW = [
-  { v: -5, lbl: "Captured by Flaw",      tip: "−5 Captured by Flaw: Australian institutions & society are heavily captured by this flaw" },
-  { v: -4, lbl: "Deeply Entrenched",     tip: "−4 Deeply Entrenched: Deeply entrenched across Australian systems" },
-  { v: -3, lbl: "Rewarded by System",    tip: "−3 Rewarded by System: The system still rewards or protects this flaw" },
-  { v: -2, lbl: "Excused in Practice",   tip: "−2 Excused in Practice: Condemned in words, excused in practice" },
-  { v: -1, lbl: "Worsening",             tip: "−1 Worsening: Drifting back into this flaw" },
-  { v: 0,  lbl: "Neutral",               tip: "0 Neutral: Neither growing nor receding" },
-  { v: 1,  lbl: "Slow Reform",           tip: "+1 Slow Reform: Beginning to reform this flaw" },
-  { v: 2,  lbl: "Partial Pushback",      tip: "+2 Partial Pushback: Partial institutional pushback against this flaw" },
-  { v: 3,  lbl: "Actively Resisted",     tip: "+3 Actively Resisted: Australian society actively resists and curbs this flaw" },
-  { v: 4,  lbl: "Dismantling Flaw",      tip: "+4 Dismantling Flaw: Strong systemic reform dismantling this flaw" },
-  { v: 5,  lbl: "Overcome in Practice",  tip: "+5 Overcome in Practice: Australian society has genuinely overcome and dismantled this flaw" }
+  { v: -5, lbl: "Captured",   tip: "−5 Captured: Australian institutions & society are heavily captured by this flaw" },
+  { v: -4, lbl: "Entrenched", tip: "−4 Entrenched: Deeply entrenched across Australian systems" },
+  { v: -3, lbl: "Rewarded",   tip: "−3 Rewarded: The system still rewards or protects this flaw" },
+  { v: -2, lbl: "Excused",    tip: "−2 Excused: Condemned in words, excused in practice" },
+  { v: -1, lbl: "Worsening",  tip: "−1 Worsening: Drifting back into this flaw" },
+  { v: 0,  lbl: "Neutral",    tip: "0 Neutral: Neither growing nor receding" },
+  { v: 1,  lbl: "Slow",       tip: "+1 Slow: Beginning to reform this flaw" },
+  { v: 2,  lbl: "Partial",    tip: "+2 Partial: Partial institutional pushback against this flaw" },
+  { v: 3,  lbl: "Resisted",   tip: "+3 Resisted: Australian society actively resists and curbs this flaw" },
+  { v: 4,  lbl: "Reforming",  tip: "+4 Reforming: Strong systemic reform dismantling this flaw" },
+  { v: 5,  lbl: "Overcome",   tip: "+5 Overcome: Australian society has genuinely overcome and dismantled this flaw" }
 ];
 
 const TOPIC_MAP = [
@@ -4281,12 +4281,13 @@ function renderPlane(app, pNum) {
             </div>
             <div class="plane-senses-grid">
               ${planeSenses.map(s => {
+                const ans = isNodeAnswered("S", s.id);
                 const sSum = computeSenseSummary(s.id);
                 return `
                   <button type="button" class="plane-sense-chip" data-jump-sense="${s.id}" title="${escapeHtml(s.narrative)}">
                     <div class="sc-top">
                       <span>Theme ${s.id}</span>
-                      <span>${sSum.total !== null ? fmtSigned(sSum.total, 1) : "—"}</span>
+                      <span>${ans && sSum.total !== null ? fmtSigned(sSum.total, 1) : ""}</span>
                     </div>
                     <div class="sc-name">${escapeHtml(s.title)}</div>
                   </button>
