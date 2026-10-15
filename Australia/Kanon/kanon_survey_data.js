@@ -17093,7 +17093,7 @@ window.KANON_SURVEY_DATA = {
       "quote": "We fight it down, and we live it down, or we bear it bravely well.",
       "badge": "The Betrayed Promise",
       "color": "#B98B22",
-      "desc": "You hold the Australian promise deeply in your heart (high Sense)—you believe in the Fair Go, Mateship, honest yakka, and a decent home—but systemic blockers like cost of living, housing lockouts, or institutional capture stop you from living it (low Use). You are the living proof of why the Kanon matters: you feel the betrayal because you still keep the faith.",
+      "desc": "You hold the Australian promise deeply in your heart—you believe in the Fair Go, Mateship, honest yakka, and a decent home—but systemic blockers like cost of living, housing lockouts, or institutional capture stop you from living it fully. You are the living proof of why the Kanon matters: you feel the betrayal because you still keep the faith.",
       "pillars": [
         0.8,
         0.65,
@@ -17137,7 +17137,7 @@ window.KANON_SURVEY_DATA = {
       },
       "zone": "Greater Good",
       "quote": "Stringy-bark and Green-hide are the mainstay of Australia.",
-      "badge": "The Bricoleur",
+      "badge": "The Bush Inventor",
       "color": "#2E5B8A",
       "desc": "You judge everything by whether it actually works. Descending from the Bush Mechanic, the Stump Jump Plough, and CSIRO inventors, you cut through red tape to build practical solutions, value generalist capability over titled specialists, and volunteer quietly when the job needs doing.",
       "pillars": [

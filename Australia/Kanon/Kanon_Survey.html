@@ -1836,7 +1836,7 @@ main.wide { max-width: 1280px; }
   <div class="kanon-hero-inner">
     <h1 class="kanon-hero-title">THE AUSTRALIAN KANON</h1>
     <p class="kanon-hero-quote">"What Kind of Australian Are You? — The Ideal We Keep Returning To"</p>
-    <p class="kanon-hero-sub">7 Planes · 49 Senses · 354 Vectors · Should vs. Would Judgment Diagnostic</p>
+    <p class="kanon-hero-sub">7 Core Values · Compare Your Ideals with Everyday Reality</p>
     <div class="kanon-hero-bar"></div>
   </div>
 </div>
@@ -2220,120 +2220,120 @@ function fmtSigned(v, dec = 1) {
 // Part 4 Axis-Anchored Scales (-5 to +5) Tailored for Plain-English Clarity
 // A: Personal Ideal ("Should" — Support vs Oppose Principle)
 const SCALE_A = [
-  { v: -5, lbl: "Strongly Against", tip: "−5 Strongly Against: Principle should be firmly rejected or prevented" },
+  { v: -5, lbl: "Strongly Against", tip: "−5 Strongly Against: Principle should be firmly rejected" },
   { v: -4, lbl: "Oppose",           tip: "−4 Oppose: Leaning strongly against" },
-  { v: -3, lbl: "Should Not",       tip: "−3 Should Not: Oppose this principle in Australia" },
+  { v: -3, lbl: "Should Not",       tip: "−3 Should Not: Oppose this principle" },
   { v: -2, lbl: "Lean Against",     tip: "−2 Lean Against: Mild opposition" },
   { v: -1, lbl: "Slight Against",   tip: "−1 Slight Against: Minor reservations" },
-  { v: 0,  lbl: "Neutral / Unsure", tip: "0 Neutral / Unsure / Indifferent" },
+  { v: 0,  lbl: "Neutral",          tip: "0 Neutral: Neither support nor oppose" },
   { v: 1,  lbl: "Slight Support",   tip: "+1 Slight Support: Leaning mildly in favour" },
   { v: 2,  lbl: "Lean Support",     tip: "+2 Lean Support: Generally support this principle" },
   { v: 3,  lbl: "Should Uphold",    tip: "+3 Should Uphold: Solid collective Australian principle" },
   { v: 4,  lbl: "Strongly Support", tip: "+4 Strongly Support: Important core value" },
-  { v: 5,  lbl: "Core Principle",   tip: "+5 Core Principle: Essential standard for everyone in Australia" }
+  { v: 5,  lbl: "Core Principle",   tip: "+5 Core Principle: Essential standard for everyone" }
 ];
 
 // B: Personal Actual ("Would" — Everyday Personal Practice)
 const SCALE_B = [
-  { v: -5, lbl: "Do Opposite",       tip: "−5 Do the Opposite: In daily practice, I actively do the opposite" },
-  { v: -4, lbl: "Rarely Do",         tip: "−4 Rarely Do: Almost never act on this" },
-  { v: -3, lbl: "Often Fall Short",  tip: "−3 Often Fall Short: Struggle to practise this in daily life" },
-  { v: -2, lbl: "Give In",           tip: "−2 Give In: Often compromise or yield to pressure" },
-  { v: -1, lbl: "Sometimes Slip",   tip: "−1 Sometimes Slip: Occasionally fall short of this" },
-  { v: 0,  lbl: "50/50 / Passive",   tip: "0 50/50 / Passive: Neutral or indifferent in everyday practice" },
-  { v: 1,  lbl: "Try When Easy",     tip: "+1 Try When Easy: Practise when convenient" },
-  { v: 2,  lbl: "Usually Do",        tip: "+2 Usually Do: Try to practise this in daily life" },
-  { v: 3,  lbl: "Practise Mostly",   tip: "+3 Practise Mostly: Consistently stand by this in daily life" },
-  { v: 4,  lbl: "Stand By It",       tip: "+4 Stand By It: Firmly live and defend this in practice" },
-  { v: 5,  lbl: "Always Live It",    tip: "+5 Always Live It: Actively model and stand by this under pressure" }
+  { v: -5, lbl: "Never",             tip: "−5 Never: In daily life, I actively do the opposite" },
+  { v: -4, lbl: "Almost Never",      tip: "−4 Almost Never: Rarely act on this" },
+  { v: -3, lbl: "Rarely",            tip: "−3 Rarely: Struggle to practise this in daily life" },
+  { v: -2, lbl: "Seldom",            tip: "−2 Seldom: Often compromise or yield" },
+  { v: -1, lbl: "Occasionally",      tip: "−1 Occasionally: Sometimes slip up" },
+  { v: 0,  lbl: "Neutral",           tip: "0 Neutral: Neither one way nor the other" },
+  { v: 1,  lbl: "Sometimes",         tip: "+1 Sometimes: Practise when convenient" },
+  { v: 2,  lbl: "Often",             tip: "+2 Often: Regularly try to practise this" },
+  { v: 3,  lbl: "Usually",           tip: "+3 Usually: Consistently stand by this in daily life" },
+  { v: 4,  lbl: "Almost Always",     tip: "+4 Almost Always: Firmly live and defend this" },
+  { v: 5,  lbl: "Always",            tip: "+5 Always: Actively live and stand by this under pressure" }
 ];
 
 // C: Your Community Circle ("Should & Would" — Everyday Culture)
 const SCALE_C = [
-  { v: -5, lbl: "Dead Against",      tip: "−5 Dead Against It: My circle actively opposes or rejects this" },
+  { v: -5, lbl: "Strongly Opposes",  tip: "−5 Strongly Opposes: My circle actively opposes or rejects this" },
   { v: -4, lbl: "Rejects It",        tip: "−4 Rejects It: Mostly pushed aside or disapproved of" },
-  { v: -3, lbl: "Mostly Ignores",    tip: "−3 Mostly Ignores: Dismissed or paid little regard" },
+  { v: -3, lbl: "Rarely Backs",      tip: "−3 Rarely Backs: Dismissed or paid little regard" },
   { v: -2, lbl: "Talk Only",         tip: "−2 Talk Only: Some talk, but little actual action" },
-  { v: -1, lbl: "Fading Fast",       tip: "−1 Fading Fast: Leans against or eroding in my circle" },
-  { v: 0,  lbl: "Mixed / Split",     tip: "0 Mixed / Split: Divided opinions or largely passive" },
-  { v: 1,  lbl: "Some Try",          tip: "+1 Some Try: Mild everyday support" },
+  { v: -1, lbl: "Fading",            tip: "−1 Fading: Leans against or eroding in my circle" },
+  { v: 0,  lbl: "Neutral",           tip: "0 Neutral: Neither supported nor opposed in my circle" },
+  { v: 1,  lbl: "Some Support",      tip: "+1 Some Support: Mild everyday support" },
   { v: 2,  lbl: "Generally Backs",   tip: "+2 Generally Backs: Most people in my circle support this" },
-  { v: 3,  lbl: "Practises Mostly",  tip: "+3 Practises Mostly: Genuinely supported and practised" },
+  { v: 3,  lbl: "Mostly Backs",      tip: "+3 Mostly Backs: Genuinely supported and practised" },
   { v: 4,  lbl: "Strong Culture",    tip: "+4 Strong Culture: Strong shared norm in my circle" },
-  { v: 5,  lbl: "Lives It Fully",    tip: "+5 Lives It Fully: Deeply woven into my community's daily culture" }
+  { v: 5,  lbl: "Always Backs",      tip: "+5 Always Backs: Deeply woven into my community's daily culture" }
 ];
 
 // D: Wider Australian Society & System ("Would" & Delivery in Reality)
 const SCALE_D = [
-  { v: -5, lbl: "Rigged / Broken",   tip: "−5 Rigged / Broken: Society & institutions actively extract or undermine this" },
+  { v: -5, lbl: "Completely Broken", tip: "−5 Completely Broken: Society & institutions actively extract or undermine this" },
   { v: -4, lbl: "Failing Badly",     tip: "−4 Failing Badly: Heavily blocked or neglected in practice" },
-  { v: -3, lbl: "Fails in Practice", tip: "−3 Fails in Practice: Stated on paper but fails ordinary people" },
-  { v: -2, lbl: "Lip Service Only",  tip: "−2 Lip Service Only: Politicians/institutions preach it, ignore in action" },
+  { v: -3, lbl: "Struggling",        tip: "−3 Struggling: Stated on paper but fails ordinary people" },
+  { v: -2, lbl: "Lip Service Only",  tip: "−2 Lip Service Only: Institutions preach it, ignore in action" },
   { v: -1, lbl: "Slipping Back",     tip: "−1 Slipping Back: Drifting backwards or eroding over time" },
-  { v: 0,  lbl: "Mixed / Patchy",    tip: "0 Mixed / Patchy: Works in some places, fails in others" },
+  { v: 0,  lbl: "Neutral",           tip: "0 Neutral: Balanced or unclear systemic impact" },
   { v: 1,  lbl: "Muddling Through",  tip: "+1 Muddling Through: Minor or uneven delivery" },
   { v: 2,  lbl: "Partial Delivery",  tip: "+2 Partial Delivery: Partially working in Australian society" },
-  { v: 3,  lbl: "Works Mostly",      tip: "+3 Works Mostly: Genuinely delivered for most Australians" },
+  { v: 3,  lbl: "Delivering",        tip: "+3 Delivering: Genuinely delivered for most Australians" },
   { v: 4,  lbl: "Works Well",        tip: "+4 Works Well: Strong, reliable systemic delivery" },
-  { v: 5,  lbl: "Fair & Working",    tip: "+5 Fair & Working: Australian society and institutions reliably deliver this for all" }
+  { v: 5,  lbl: "Thriving",          tip: "+5 Thriving: Australian society and institutions reliably deliver this for all" }
 ];
 
 // Dedicated Corrective Scales for Shadow / Flaw Nodes (υ < 0, e.g. The Bludger, The Squatter, Terra Nullius)
 // Removes double-negative confusion: -5 = Excuse/Practise/Captured by Flaw, +5 = Reject & Overcome Flaw
 const SCALE_A_SHADOW = [
-  { v: -5, lbl: "Champion Flaw",         tip: "−5 Excuse or champion this national flaw (Kanon FAIL)" },
-  { v: -4, lbl: "Defend Flaw",           tip: "−4 Defend or justify this flaw" },
-  { v: -3, lbl: "Accept Flaw",           tip: "−3 Accept this flaw as normal" },
-  { v: -2, lbl: "Excuse It",             tip: "−2 Make excuses for this flaw" },
-  { v: -1, lbl: "Downplay It",           tip: "−1 Downplay the harm of this flaw" },
-  { v: 0,  lbl: "Passive / Unsure",      tip: "0 Passive or indifferent toward this flaw" },
-  { v: 1,  lbl: "Dislike Flaw",          tip: "+1 Recognise this as a problem" },
-  { v: 2,  lbl: "Should Reject",         tip: "+2 Agree we should reject this flaw" },
-  { v: 3,  lbl: "Firmly Reject",         tip: "+3 Firmly reject this flaw" },
-  { v: 4,  lbl: "Actively Reform",       tip: "+4 Actively work to reform and dismantle this flaw" },
-  { v: 5,  lbl: "Reject & Overcome",     tip: "+5 Completely reject and overcome this flaw for the Greater Good (Kanon HIT)" }
+  { v: -5, lbl: "Champion Flaw",         tip: "−5 Champion Flaw: Excuse or promote this national flaw" },
+  { v: -4, lbl: "Defend Flaw",           tip: "−4 Defend Flaw: Justify this flaw" },
+  { v: -3, lbl: "Accept Flaw",           tip: "−3 Accept Flaw: Accept this flaw as normal" },
+  { v: -2, lbl: "Excuse It",             tip: "−2 Excuse It: Make excuses for this flaw" },
+  { v: -1, lbl: "Downplay It",           tip: "−1 Downplay It: Downplay the harm of this flaw" },
+  { v: 0,  lbl: "Neutral",               tip: "0 Neutral: Neither defend nor reject" },
+  { v: 1,  lbl: "Dislike Flaw",          tip: "+1 Dislike Flaw: Recognise this as a problem" },
+  { v: 2,  lbl: "Should Reject",         tip: "+2 Should Reject: Agree we should reject this flaw" },
+  { v: 3,  lbl: "Firmly Reject",         tip: "+3 Firmly Reject: Firmly reject this flaw" },
+  { v: 4,  lbl: "Actively Reform",       tip: "+4 Actively Reform: Actively work to reform and dismantle this flaw" },
+  { v: 5,  lbl: "Reject & Overcome",     tip: "+5 Reject & Overcome: Completely reject and overcome this flaw" }
 ];
 
 const SCALE_B_SHADOW = [
-  { v: -5, lbl: "Practise Flaw",         tip: "−5 In practice, I actively practise or exploit this flaw (Kanon FAIL)" },
-  { v: -4, lbl: "Often Go Along",        tip: "−4 Often go along with this flaw" },
-  { v: -3, lbl: "Give In To It",         tip: "−3 Give in to this flaw when convenient" },
-  { v: -2, lbl: "Excuse It",             tip: "−2 Excuse or tolerate it in my own actions" },
-  { v: -1, lbl: "Sometimes Slip",        tip: "−1 Sometimes slip into this habit" },
-  { v: 0,  lbl: "Passive / Bystander",   tip: "0 Stay passive and do nothing either way" },
-  { v: 1,  lbl: "Try to Avoid",          tip: "+1 Try to avoid this flaw" },
-  { v: 2,  lbl: "Usually Refuse",        tip: "+2 Usually refuse to go along with this flaw" },
-  { v: 3,  lbl: "Refuse in Practice",    tip: "+3 Consistently refuse to practise this flaw" },
-  { v: 4,  lbl: "Call It Out",           tip: "+4 Actively call out and resist this flaw" },
-  { v: 5,  lbl: "Actively Overcome",     tip: "+5 Actively resist and model the antidote in daily life (Kanon HIT)" }
+  { v: -5, lbl: "Practise Flaw",         tip: "−5 Practise Flaw: In practice, I actively practise or exploit this flaw" },
+  { v: -4, lbl: "Often Go Along",        tip: "−4 Often Go Along: Often go along with this flaw" },
+  { v: -3, lbl: "Give In To It",         tip: "−3 Give In To It: Give in to this flaw when convenient" },
+  { v: -2, lbl: "Excuse It",             tip: "−2 Excuse It: Excuse or tolerate it in my own actions" },
+  { v: -1, lbl: "Sometimes Slip",        tip: "−1 Sometimes Slip: Sometimes slip into this habit" },
+  { v: 0,  lbl: "Neutral",               tip: "0 Neutral: Neither go along nor resist" },
+  { v: 1,  lbl: "Try to Avoid",          tip: "+1 Try to Avoid: Try to avoid this flaw" },
+  { v: 2,  lbl: "Usually Refuse",        tip: "+2 Usually Refuse: Usually refuse to go along with this flaw" },
+  { v: 3,  lbl: "Refuse in Practice",    tip: "+3 Refuse in Practice: Consistently refuse to practise this flaw" },
+  { v: 4,  lbl: "Call It Out",           tip: "+4 Call It Out: Actively call out and resist this flaw" },
+  { v: 5,  lbl: "Actively Overcome",     tip: "+5 Actively Overcome: Actively resist and model the antidote in daily life" }
 ];
 
 const SCALE_C_SHADOW = [
-  { v: -5, lbl: "Entrenched in Circle",  tip: "−5 My circle celebrates or is entrenched in this flaw" },
-  { v: -4, lbl: "Practises Flaw",        tip: "−4 My circle regularly practises this flaw" },
-  { v: -3, lbl: "Excuses Flaw",          tip: "−3 My circle excuses this flaw" },
-  { v: -2, lbl: "Tolerates It",          tip: "−2 My circle shrugs and tolerates it" },
-  { v: -1, lbl: "Looks Away",            tip: "−1 My circle mostly looks the other way" },
-  { v: 0,  lbl: "Mixed / Passive",       tip: "0 My circle is split or passive" },
-  { v: 1,  lbl: "Frowns On It",          tip: "+1 My circle frowns on this flaw" },
-  { v: 2,  lbl: "Disapproves",           tip: "+2 My circle disapproves of this flaw" },
-  { v: 3,  lbl: "Rejects in Practice",   tip: "+3 My circle refuses to practise or excuse this flaw" },
-  { v: 4,  lbl: "Calls It Out",          tip: "+4 My circle actively calls out this flaw" },
-  { v: 5,  lbl: "Overcomes Flaw",        tip: "+5 My circle has genuinely overcome this flaw" }
+  { v: -5, lbl: "Entrenched in Circle",  tip: "−5 Entrenched: My circle celebrates or is entrenched in this flaw" },
+  { v: -4, lbl: "Practises Flaw",        tip: "−4 Practises Flaw: My circle regularly practises this flaw" },
+  { v: -3, lbl: "Excuses Flaw",          tip: "−3 Excuses Flaw: My circle excuses this flaw" },
+  { v: -2, lbl: "Tolerates It",          tip: "−2 Tolerates It: My circle shrugs and tolerates it" },
+  { v: -1, lbl: "Looks Away",            tip: "−1 Looks Away: My circle mostly looks the other way" },
+  { v: 0,  lbl: "Neutral",               tip: "0 Neutral: Neutral or divided in my circle" },
+  { v: 1,  lbl: "Frowns On It",          tip: "+1 Frowns On It: My circle frowns on this flaw" },
+  { v: 2,  lbl: "Disapproves",           tip: "+2 Disapproves: My circle disapproves of this flaw" },
+  { v: 3,  lbl: "Rejects in Practice",   tip: "+3 Rejects in Practice: My circle refuses to practise or excuse this flaw" },
+  { v: 4,  lbl: "Calls It Out",          tip: "+4 Calls It Out: My circle actively calls out this flaw" },
+  { v: 5,  lbl: "Overcomes Flaw",        tip: "+5 Overcomes Flaw: My circle has genuinely overcome this flaw" }
 ];
 
 const SCALE_D_SHADOW = [
-  { v: -5, lbl: "Captured by Flaw",      tip: "−5 Australian institutions & society are heavily captured by this flaw" },
-  { v: -4, lbl: "Deeply Entrenched",     tip: "−4 Deeply entrenched across Australian systems" },
-  { v: -3, lbl: "Rewarded by System",    tip: "−3 The system still rewards or protects this flaw" },
-  { v: -2, lbl: "Excused in Practice",   tip: "−2 Condemned in words, excused in practice" },
-  { v: -1, lbl: "Worsening",             tip: "−1 Drifting back into this flaw" },
-  { v: 0,  lbl: "Mixed / Stagnant",      tip: "0 Half-reformed, half-entrenched" },
-  { v: 1,  lbl: "Slow Reform",           tip: "+1 Beginning to reform this flaw" },
-  { v: 2,  lbl: "Partial Pushback",      tip: "+2 Partial institutional pushback against this flaw" },
-  { v: 3,  lbl: "Actively Resisted",     tip: "+3 Australian society actively resists and curbs this flaw" },
-  { v: 4,  lbl: "Dismantling Flaw",      tip: "+4 Strong systemic reform dismantling this flaw" },
-  { v: 5,  lbl: "Overcome in Practice",  tip: "+5 Australian society has genuinely overcome and dismantled this flaw" }
+  { v: -5, lbl: "Captured by Flaw",      tip: "−5 Captured by Flaw: Australian institutions & society are heavily captured by this flaw" },
+  { v: -4, lbl: "Deeply Entrenched",     tip: "−4 Deeply Entrenched: Deeply entrenched across Australian systems" },
+  { v: -3, lbl: "Rewarded by System",    tip: "−3 Rewarded by System: The system still rewards or protects this flaw" },
+  { v: -2, lbl: "Excused in Practice",   tip: "−2 Excused in Practice: Condemned in words, excused in practice" },
+  { v: -1, lbl: "Worsening",             tip: "−1 Worsening: Drifting back into this flaw" },
+  { v: 0,  lbl: "Neutral",               tip: "0 Neutral: Neither growing nor receding" },
+  { v: 1,  lbl: "Slow Reform",           tip: "+1 Slow Reform: Beginning to reform this flaw" },
+  { v: 2,  lbl: "Partial Pushback",      tip: "+2 Partial Pushback: Partial institutional pushback against this flaw" },
+  { v: 3,  lbl: "Actively Resisted",     tip: "+3 Actively Resisted: Australian society actively resists and curbs this flaw" },
+  { v: 4,  lbl: "Dismantling Flaw",      tip: "+4 Dismantling Flaw: Strong systemic reform dismantling this flaw" },
+  { v: 5,  lbl: "Overcome in Practice",  tip: "+5 Overcome in Practice: Australian society has genuinely overcome and dismantled this flaw" }
 ];
 
 const TOPIC_MAP = [
@@ -3527,11 +3527,11 @@ function updateHeaderProgress() {
   const tierBtn = document.getElementById("header-tier-btn");
   if (tierBtn) {
     const tierLbl = STATE.tier === 7
-      ? "Tier 1: 7 Pillars"
+      ? "Quiz: Quick (7)"
       : STATE.tier === 49
-        ? "Tier 2: 49 Senses"
-        : "Tier 3: 354 Vectors";
-    tierBtn.textContent = `${tierLbl} (${prog.done}/${prog.total})`;
+        ? "Quiz: Standard (49)"
+        : "Quiz: Deep Audit (354)";
+    tierBtn.textContent = `${tierLbl} · ${prog.done}/${prog.total}`;
     tierBtn.onclick = () => {
       if (STATE.tier === 7) STATE.tier = 49;
       else if (STATE.tier === 49) STATE.tier = 354;
@@ -3548,16 +3548,16 @@ function renderNav(route) {
   const nav = document.getElementById("top-nav");
   const items = [
     { href: "#/hub", label: "Hub", active: route.page === "hub" },
-    { href: "#/framework", label: "Scoring Key", active: route.page === "framework" },
+    { href: "#/framework", label: "How It Works", active: route.page === "framework" },
     ...PLANES.map(p => ({
       href: `#/plane/${p.n}`,
-      label: `${p.n}·${p.name}`,
+      label: `Pillar ${p.n}: ${p.name}`,
       dot: p.hue,
       active: route.page === "plane" && route.planeNum === p.n
     })),
-    { href: "#/search", label: "Search", active: route.page === "search" },
+    { href: "#/search", label: "Topics", active: route.page === "search" },
     { href: "#/review", label: "Review", active: route.page === "review" },
-    { href: "#/results", label: "Results & Archetype", active: route.page === "results" }
+    { href: "#/results", label: "Results", active: route.page === "results" }
   ];
 
   nav.innerHTML = items.map(it => `
@@ -3627,11 +3627,11 @@ function renderTierSelectorHTML() {
     <div class="tier-selector-grid">
       <div class="tier-card ${STATE.tier === 7 ? "active" : ""}" data-set-tier="7">
         <div class="tier-card-top">
-          <span class="tier-num">7 <span style="font-size:0.9rem;font-weight:500;color:var(--ink-muted)">nodes</span></span>
+          <span class="tier-num">7 <span style="font-size:0.9rem;font-weight:500;color:var(--ink-muted)">pillars</span></span>
           <span class="tier-pill">${STATE.tier === 7 ? "ACTIVE TIER" : "Tier 1 · Quick"}</span>
         </div>
-        <h3>7 Plane Summary (The 7 Pillars)</h3>
-        <p>1 ABCD question block per Plane (<em>The Egalitarian</em> through <em>The Reconciler</em>). Fast snapshot of your Australian ethos vs lived reality.</p>
+        <h3>7 Core Pillars</h3>
+        <p>1 question block per core pillar. Fast 2-minute snapshot of where you stand on Australia's foundational values.</p>
         <div class="tier-card-meta">
           <span>⏱ ~2 min · Depth <span class="depth-dots"><i class="on"></i><i></i><i></i></span></span>
           <span>${p7} / 7 answered</span>
@@ -3640,14 +3640,14 @@ function renderTierSelectorHTML() {
 
       <div class="tier-card ${STATE.tier === 49 ? "active" : ""}" data-set-tier="49">
         <div class="tier-card-top">
-          <span class="tier-num">49 <span style="font-size:0.9rem;font-weight:500;color:var(--ink-muted)">nodes</span></span>
+          <span class="tier-num">49 <span style="font-size:0.9rem;font-weight:500;color:var(--ink-muted)">themes</span></span>
           <div style="display:flex;gap:5px;align-items:center;">
             <span class="tier-rec-badge">Recommended</span>
             <span class="tier-pill">${STATE.tier === 49 ? "ACTIVE TIER" : "Tier 2 · Standard"}</span>
           </div>
         </div>
-        <h3>49 Matrix Senses (7×7 Grid)</h3>
-        <p>7 Sense question blocks per Plane (<code>Who.Who</code> to <code>Effect.Effect</code>). Full 7-arm Keyring Plot resolution + inline vector drawer.</p>
+        <h3>49 National Themes</h3>
+        <p>7 questions per pillar. Full Keyring Plot breakdown + deep insights into personal values vs reality.</p>
         <div class="tier-card-meta">
           <span>⏱ ~8 min · Depth <span class="depth-dots"><i class="on"></i><i class="on"></i><i></i></span></span>
           <span>${p49} / 49 answered</span>
@@ -3656,11 +3656,11 @@ function renderTierSelectorHTML() {
 
       <div class="tier-card ${STATE.tier === 354 ? "active" : ""}" data-set-tier="354">
         <div class="tier-card-top">
-          <span class="tier-num">354 <span style="font-size:0.9rem;font-weight:500;color:var(--ink-muted)">nodes</span></span>
+          <span class="tier-num">354 <span style="font-size:0.9rem;font-weight:500;color:var(--ink-muted)">topics</span></span>
           <span class="tier-pill">${STATE.tier === 354 ? "ACTIVE TIER" : "Tier 3 · Deep Audit"}</span>
         </div>
-        <h3>Full Kanon Vector Audit</h3>
-        <p>Every Australian Kanon node (<em>Mateship</em>, <em>The Fair Go</em>, <em>Terra Nullius</em>, <em>Songlines [FN]</em>) with direct comparison to the Pauline Hanson 354 Audit.</p>
+        <h3>Full Kanon Audit</h3>
+        <p>Every single historical and cultural topic across the nation, exploring the deep stories that shaped Australia.</p>
         <div class="tier-card-meta">
           <span>⏱ ~35 min · Depth <span class="depth-dots"><i class="on"></i><i class="on"></i><i class="on"></i></span></span>
           <span>${p354} / ${vecs.length} answered</span>
@@ -3692,7 +3692,6 @@ function renderHub(app) {
   const planeCardsHTML = PLANES.map(p => {
     const sum = computePlaneSummary(p.n);
     const pct = Math.round((sum.answeredNodes / sum.totalNodes) * 100);
-    const pSenses = SENSES_BY_PLANE[p.n] || [];
     let statusClass = "";
     let statusText = `${sum.answeredNodes}/${sum.totalNodes} answered`;
     if (sum.answeredNodes === sum.totalNodes && sum.totalNodes > 0) {
@@ -3705,31 +3704,27 @@ function renderHub(app) {
     return `
       <a class="plane-card" href="#/plane/${p.n}" style="--plane-color:${p.hue}">
         <div class="plane-card-head">
-          <span class="plane-num">PLANE ${p.n} · ${p.code.toUpperCase()} · ${p.domain.toUpperCase()}</span>
+          <span class="plane-num">PILLAR ${p.n} · ${p.domain.toUpperCase()}</span>
           <span class="plane-status ${statusClass}">${statusText}</span>
         </div>
         <h3>${p.name}: <span style="font-weight:600;font-size:1.05rem;color:var(--ink-soft)">${escapeHtml(p.fullTitle || `Values of Australian ${p.name}`)}</span></h3>
-        <div class="pillar-tag">Pillar ${p.n}: ${p.pillar} (${escapeHtml(p.pillarBadge || "")}) · υ=${p.coords.v >= 0 ? "+" : ""}${p.coords.v}, ψ=${p.coords.psi >= 0 ? "+" : ""}${p.coords.psi}</div>
-        <p style="margin-bottom:4px;"><strong>Core Focus:</strong> ${escapeHtml(p.blurb)}.</p>
-        ${p.pillarSummary ? `<p style="font-size:0.82rem;color:var(--ink-muted);margin-bottom:4px;">${escapeHtml(p.pillarSummary)}</p>` : ""}
-        ${p.shadowTitle ? `<div class="mono" style="font-size:0.72rem;color:#334155;background:#F8FAFC;border:1px solid #E2E8F0;padding:5px 8px;border-radius:6px;"><strong>Shadow Integration:</strong> ${escapeHtml(p.shadowTitle)}</div>` : ""}
-        <div class="mono" style="font-size:0.7rem;color:var(--ink-muted);line-height:1.45;">
-          <strong>7 Senses:</strong> ${pSenses.map(s => `${s.id} ${s.addr}`).join(" · ")}
-        </div>
-        <div class="plane-mini-bar"><span style="width:${pct}%"></span></div>
+        <div class="pillar-tag">${escapeHtml(p.pillarBadge || p.pillar)}</div>
+        <p style="margin:6px 0 8px;font-size:0.9rem;line-height:1.45;color:var(--ink);"><strong>Core Focus:</strong> ${escapeHtml(p.blurb)}.</p>
+        ${p.pillarSummary ? `<p style="font-size:0.82rem;color:var(--ink-muted);margin-bottom:6px;">${escapeHtml(p.pillarSummary)}</p>` : ""}
+        <div class="plane-mini-bar" style="margin-top:auto;"><span style="width:${pct}%"></span></div>
       </a>
     `;
   }).join("");
 
   app.innerHTML = `
     <section class="card" style="padding:28px 30px;margin-bottom:20px;">
-      <div class="eyebrow">Australian Kanon · Archetype Diagnostic & Should/Would Protocol (−5 to +5)</div>
+      <div class="eyebrow">Australian Kanon · Archetype Diagnostic</div>
       <h1 style="font-size:clamp(1.85rem,3.4vw,2.65rem);margin:6px 0 12px;">
         What Kind of Australian Are You?
       </h1>
       <p class="lede" style="margin:0 0 16px;">
-        Map yourself against the <strong>Australian Kanon</strong>—the 7-Plane, 49-Sense, 354-Vector cultural DNA of the nation.
-        Instead of a flat quiz that only asks what you reckon in theory, each question measures four <strong>Should vs. Would</strong> perspectives on a <strong><code>−5</code> (Strongly Disagree / Opposed / Broken) to <code>+5</code> (Strongly Agree / Champion / Thriving) scale</strong> (with <code>0</code> as Neutral):
+        Map yourself against the <strong>Australian Kanon</strong>—the cultural DNA of our nation across 7 foundational pillars.
+        Instead of a flat quiz that only asks what you reckon in theory, each question measures four <strong>Should vs. Would</strong> perspectives on a <strong><code>−5</code> (Broken / Opposed) to <code>+5</code> (Thriving / Supported) scale</strong> (with <code>0</code> as Neutral):
         <strong>A (Personal Should)</strong> what you believe Australia should uphold,
         <strong>B (Personal Would)</strong> what you actually practise in everyday life,
         <strong>C (Community Circle)</strong> what your friends, family, and peers practise, and
@@ -3738,23 +3733,23 @@ function renderHub(app) {
 
       <div class="callout" style="margin-bottom:18px;">
         <strong>💡 Plain-English Help Built In:</strong>
-        Hover or tap any <span class="glossary-term" data-glossary-id="harvester">dotted-underlined term</span> in a question for a plain-English explanation, or click the <strong>(?) Explain</strong> button on any card to see a breakdown of the question and what positive vs. negative ratings mean.
+        Hover or tap any <span class="glossary-term" data-glossary-id="harvester">dotted-underlined term</span> in a question for a plain-English explanation, or click the <strong>(?) Explain</strong> button on any card to see a breakdown of the question.
       </div>
 
       ${renderTierSelectorHTML()}
 
       <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;padding-top:8px;border-top:1px solid var(--rule);">
         <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
-          <a class="btn" href="#/plane/1">Start at Plane 1: Identity →</a>
-          <a class="btn btn-warm" href="#/results">View Live Archetype & Keyring Results (${prog.done}/${prog.total})</a>
+          <a class="btn" href="#/plane/1">Start at Pillar 1: Identity →</a>
+          <a class="btn btn-warm" href="#/results">View Results (${prog.done}/${prog.total})</a>
           <a class="btn btn-secondary" href="#/search">Answer by Topic</a>
-          <a class="btn btn-secondary" href="#/framework">How the ABCD Key Works</a>
+          <a class="btn btn-secondary" href="#/framework">How the Questions Work</a>
         </div>
         <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;">
           <span class="mono" style="font-size:0.75rem;color:var(--ink-muted);">Demo Presets:</span>
-          <button class="btn btn-secondary btn-sm" id="preset-battler" title="Preview a Betrayed Battler profile (High Personal Should/Would, Blocked Society D)">Load "Betrayed Battler"</button>
-          <button class="btn btn-secondary btn-sm" id="preset-guardian" title="Preview The Stoic Guardian profile">Load "Stoic Guardian"</button>
-          <button class="btn btn-secondary btn-sm" id="preset-hanson" title="Load Pauline Hanson's 354-Vector Audit verdicts">Load Hanson 354 Audit</button>
+          <button class="btn btn-secondary btn-sm" id="preset-battler" title="Preview a Betrayed Battler profile">"Betrayed Battler"</button>
+          <button class="btn btn-secondary btn-sm" id="preset-guardian" title="Preview The Stoic Guardian profile">"Stoic Guardian"</button>
+          <button class="btn btn-secondary btn-sm" id="preset-hanson" title="Load Pauline Hanson's 354 Audit">"Hanson Audit"</button>
         </div>
       </div>
     </section>
@@ -3862,24 +3857,24 @@ function renderFramework(app) {
       <div class="callout callout-warm" style="margin:18px 0;">
         <strong>Identifying Contradictions (Stated "Should" vs. Actual "Would"):</strong>
         <ul style="margin:6px 0 0;padding-left:20px;">
-          <li><strong>Social Contradiction Gap (<code>A − D</code>) — The Betrayed Promise:</strong> You and your community uphold the Fair Go, Mateship, or affordable housing (<code>+3 to +5</code>), while wider Australian institutions and markets fail or extract in practice (<code>−1 to −5</code>).</li>
-          <li><strong>Personal Strain Gap (<code>A − B</code>):</strong> Where systemic pressure or habit makes it hard for your own daily actions (<code>B</code>) to live up to your stated ideal (<code>A</code>).</li>
+          <li><strong>Social Contradiction Gap (<code>A − D</code>) — The Betrayed Promise:</strong> Where you and your community uphold a fair go, mateship, or affordable living, but institutions and systems fail to deliver in practice.</li>
+          <li><strong>Personal Strain Gap (<code>A − B</code>):</strong> Where everyday cost of living, workplace pressures, or stress make it hard for daily actions (<code>B</code>) to match your stated ideal (<code>A</code>).</li>
         </ul>
       </div>
 
-      <h2>3. The Three Resolution Tiers (7 · 49 · 354)</h2>
+      <h2>3. The Three Depth Levels (7 · 49 · 354)</h2>
       <p style="color:var(--ink-soft);">
-        The Australian Kanon is a fractal <strong>7 × 7 × 7</strong> matrix:
+        Choose the depth that fits your time:
       </p>
       <ul style="color:var(--ink-soft);">
-        <li><strong>Tier 1 (7 Plane Essence Nodes):</strong> Evaluates the core functional essence of each of the 7 Planes directly (matched to the 7 Pillars of <a href="Archetype_The_Stoic_Guardian.html">The Stoic Guardian</a>).</li>
-        <li><strong>Tier 2 (49 Sense Essence Nodes):</strong> Evaluates the synthesised essence of each of the 49 Senses (<code>Who.Who</code> through <code>Effect.Effect</code>).</li>
-        <li><strong>Tier 3 (354 Vector Nodes):</strong> Evaluates every single vector node in the Australian Kanon, including the 11 First Nations <code>[FN]</code> perspective pairs and direct comparison against the <a href="../Hanson_Audit/index.html">Pauline Hanson Audit</a>.</li>
+        <li><strong>Tier 1 · Quick Snapshot (7 Core Pillars):</strong> 1 question block per core pillar. Takes about 2 minutes for a high-level overview.</li>
+        <li><strong>Tier 2 · Standard Assessment (49 National Themes):</strong> 7 questions per pillar. Full breakdown of where you stand compared to everyday reality.</li>
+        <li><strong>Tier 3 · Deep Audit (354 Cultural Topics):</strong> Covers every cultural and historical topic across the country.</li>
       </ul>
 
       <div class="page-footer-nav">
         <a class="btn btn-secondary" href="#/hub">← Back to Hub</a>
-        <a class="btn" href="#/plane/1">Start Plane 1: Identity →</a>
+        <a class="btn" href="#/plane/1">Start Pillar 1: Identity →</a>
       </div>
     </article>
   `;
@@ -4104,10 +4099,9 @@ function renderPlane(app, pNum) {
       <div class="sense-header">
         <div>
           <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-            <span class="sense-code">TIER 1 · PLANE ${p.n} PILLAR QUESTION</span>
-            <span class="badge" data-badge-title="Psochic Hegemony Coordinate (υ, ψ)" data-badge-tip="Average moral/will coordinate of Plane ${p.n}: υ = ${p.coords.v >= 0 ? "+" : ""}${p.coords.v} (Who benefits), ψ = ${p.coords.psi >= 0 ? "+" : ""}${p.coords.psi} (Active vs passive energy).">υ = ${p.coords.v >= 0 ? "+" : ""}${p.coords.v} · ψ = ${p.coords.psi >= 0 ? "+" : ""}${p.coords.psi}</span>
+            <span class="sense-code">PILLAR ${p.n} CORE QUESTION</span>
           </div>
-          <h3 class="sense-title" style="margin-top:6px;font-size:1.25rem;">Pillar ${p.n}: ${p.pillar} — ${p.name} (${p.domain} Domain)</h3>
+          <h3 class="sense-title" style="margin-top:6px;font-size:1.25rem;">Pillar ${p.n}: ${p.pillar} — ${p.name}</h3>
         </div>
         <div class="node-badges">
           ${infoBtnHTML("P", p.n)}
@@ -4116,9 +4110,6 @@ function renderPlane(app, pNum) {
       <div class="node-lore" style="font-size:0.95rem;line-height:1.6;color:var(--ink-soft);padding:14px 18px;background:var(--bg-card);border:1px solid var(--rule);border-radius:10px;margin-bottom:14px;">
         <p style="margin:0 0 8px;"><strong>The Principle:</strong> ${escapeHtml(p.pillarSummary || p.blurb)}</p>
         <p style="margin:0 0 8px;font-size:0.88rem;color:var(--ink-muted);"><strong>In Everyday Life:</strong> ${escapeHtml(p.practicalText || "")}</p>
-        <div style="font-size:0.8rem;color:var(--ink-muted);border-top:1px dashed var(--rule);padding-top:6px;margin-top:6px;">
-          <strong>7 Key Senses in this Plane:</strong> ${planeSenses.map(s => s.shortTitle || s.title).join(" · ")}
-        </div>
       </div>
     `;
     cardsArray = [renderABCDBlockHTML("P", p.n, p, p.hue, headerHTML)];
@@ -4132,25 +4123,19 @@ function renderPlane(app, pNum) {
         <div class="sense-header">
           <div>
             <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-              <span class="sense-code">SENSE q${s.senseIdx} · ${s.id} (${s.addr})</span>
-              <span class="badge" data-badge-title="Sense Coordinate (υ, ψ)" data-badge-tip="Mean Psochic Hegemony coordinate across the ${vecs.length} vectors in ${s.addr}: υ = ${s.coords.v >= 0 ? "+" : ""}${s.coords.v}, ψ = ${s.coords.psi >= 0 ? "+" : ""}${s.coords.psi}.">υ = ${s.coords.v >= 0 ? "+" : ""}${s.coords.v} · ψ = ${s.coords.psi >= 0 ? "+" : ""}${s.coords.psi}</span>
-              <span class="badge">${vecs.length} Vectors</span>
+              <span class="sense-code">THEME ${s.id}</span>
+              <span class="badge">${vecs.length} Topics</span>
             </div>
             <h3 class="sense-title" style="margin-top:6px;">${escapeHtml(s.title)}</h3>
-            <div class="mono" style="font-size:0.75rem;color:var(--ink-muted);margin-top:2px;">Matrix Address: ${escapeHtml(s.addr)} · ${escapeHtml(s.matrixTitle || "")}</div>
           </div>
           <div class="node-badges">
             ${infoBtnHTML("S", s.id)}
           </div>
         </div>
         <div class="node-lore">
-          <div style="line-height:1.65;margin-bottom:8px;">
+          <div style="line-height:1.65;">
             <strong style="color:#111827;font-family:'Merriweather',serif;">The Living Ethos of ${escapeHtml(s.title)}:</strong><br>
             ${renderGlossaryHTML(s.narrative)}
-          </div>
-          <div class="mono" style="font-size:0.74rem;color:var(--ink-muted);display:flex;flex-wrap:wrap;gap:5px;align-items:center;">
-            <strong style="color:#334155;">7 Kanon Vectors in ${s.addr}:</strong>
-            ${vecs.map(v => `<span class="badge" style="font-size:0.7rem;background:#FFFFFF;" data-badge-title="${escapeHtml(v.name)} (${escapeHtml(v.role)})" data-badge-tip="${escapeHtml(v.coreMeaning)} · Coordinate: υ=${v.coords.v >= 0 ? "+" : ""}${v.coords.v}, ψ=${v.coords.psi >= 0 ? "+" : ""}${v.coords.psi}">${escapeHtml(v.cleanName)} <em>(${escapeHtml(v.role)})</em></span>`).join("")}
           </div>
         </div>
       `;
@@ -4158,9 +4143,9 @@ function renderPlane(app, pNum) {
       const footerHTML = `
         <div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
           <button type="button" class="btn btn-secondary btn-sm" data-toggle-sense-vectors="${s.id}">
-            ${expanded ? "▲ Hide" : "▼ Inspect / Rate"} the ${vecs.length} Individual Kanon Vectors in ${s.addr} (${vecAnsCount}/${vecs.length} rated)
+            ${expanded ? "▲ Hide" : "▼ View / Rate"} Individual Topics (${vecAnsCount}/${vecs.length} rated)
           </button>
-          <a href="Plane_${p.n}_${p.name === "Cause" ? "Foundation" : p.name}.html" target="_blank" class="mono" style="font-size:0.75rem;color:var(--accent);">Read full ${p.name} Kanon text ↗</a>
+          <a href="Plane_${p.n}_${p.name === "Cause" ? "Foundation" : p.name}.html" target="_blank" class="mono" style="font-size:0.75rem;color:var(--accent);">Read full ${p.name} chapter ↗</a>
         </div>
         ${expanded ? `
           <div style="margin-top:14px;padding-left:14px;border-left:3px solid ${p.hue};">
@@ -4243,24 +4228,22 @@ function renderPlane(app, pNum) {
       <div class="plane-banner-top">
         <div>
           <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:6px;">
-            <span class="plane-code-pill">Plane ${p.n} · ${p.code}</span>
+            <span class="plane-code-pill">Pillar ${p.n}</span>
             <span class="eyebrow" style="color:${p.hue};margin:0;">
-              ${p.domain} Domain · Pillar: ${p.pillar} (${escapeHtml(p.pillarBadge || "")}) ·
-              υ = ${p.coords.v >= 0 ? "+" : ""}${p.coords.v}, ψ = ${p.coords.psi >= 0 ? "+" : ""}${p.coords.psi}
+              ${escapeHtml(p.pillarBadge || p.pillar)}
             </span>
           </div>
-          <h1 style="font-size:clamp(1.65rem,2.6vw,2.15rem);margin:2px 0 4px;">Plane ${p.n}: ${p.name} — ${escapeHtml(p.fullTitle || `Values of Australian ${p.name}`)}</h1>
+          <h1 style="font-size:clamp(1.65rem,2.6vw,2.15rem);margin:2px 0 4px;">Pillar ${p.n}: ${p.name} — ${escapeHtml(p.fullTitle || `Values of Australian ${p.name}`)}</h1>
           <p style="margin:0;color:var(--ink-soft);font-size:0.96rem;">
             <strong>Core Focus:</strong> ${renderGlossaryHTML(p.blurb)}
           </p>
         </div>
         <div style="text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
           <div class="mono" id="plane-live-badge" style="font-size:0.85rem;color:var(--ink-soft);background:#F8FAFC;border:1px solid #E2E8F0;padding:4px 10px;border-radius:8px;">
-            ${summary.answeredNodes}/${summary.totalNodes} nodes answered ${summary.total !== null ? `· Mean ${fmtSigned(summary.total, 2)}` : ""}
+            ${summary.answeredNodes}/${summary.totalNodes} answered ${summary.total !== null ? `· Mean ${fmtSigned(summary.total, 2)}` : ""}
           </div>
           <div style="display:flex;gap:10px;flex-wrap:wrap;">
-            <a href="Plane_${p.n}_${p.name === "Cause" ? "Foundation" : p.name}.html" target="_blank" class="mono" style="font-size:0.75rem;color:${p.hue};font-weight:700;">Open full Plane ${p.n} Matrix document ↗</a>
-            <a href="Archetype_The_Stoic_Guardian.html" target="_blank" class="mono" style="font-size:0.75rem;color:var(--ink-muted);">Pillar ${p.n} in The Stoic Guardian ↗</a>
+            <a href="Plane_${p.n}_${p.name === "Cause" ? "Foundation" : p.name}.html" target="_blank" class="mono" style="font-size:0.75rem;color:${p.hue};font-weight:700;">Read full chapter ↗</a>
           </div>
         </div>
       </div>
@@ -4272,29 +4255,28 @@ function renderPlane(app, pNum) {
 
       <details class="plane-lore-drawer" ${STATE.tier === 7 ? "open" : ""}>
         <summary>
-          <span>📖 Deep Lore &amp; 7 Matrix Senses of Plane ${p.n}: ${escapeHtml(p.name)} (${escapeHtml(p.pillar)})</span>
+          <span>📖 Background &amp; Everyday Meaning of Pillar ${p.n}: ${escapeHtml(p.name)}</span>
           <span class="mono" style="font-size:0.74rem;color:var(--ink-muted);">Click to expand / collapse</span>
         </summary>
         <div class="plane-lore-drawer-body">
           <div class="plane-totality-box">
             <div class="plane-totality-title">
-              <span>The Totality of Australian ${escapeHtml(p.name)}</span>
-              <span class="mono" style="font-size:0.72rem;color:var(--ink-muted);font-family:'JetBrains Mono',monospace;">7 Senses · 49 Kanon Vectors</span>
+              <span>The Big Picture</span>
             </div>
             <div>${renderGlossaryHTML(p.totality)}</div>
           </div>
 
           <div class="plane-pillar-grid">
             <div class="plane-pillar-col">
-              <strong class="col-head" style="color:${p.hue}">🏛️ The Ideal Pillar: ${escapeHtml(p.pillar)} (${escapeHtml(p.pillarBadge || "")})</strong>
+              <strong class="col-head" style="color:${p.hue}">🏛️ The Core Ideal: ${escapeHtml(p.pillar)}</strong>
               ${renderGlossaryHTML(p.pillarSummary || p.blurb)}
             </div>
             <div class="plane-pillar-col">
-              <strong class="col-head" style="color:#B45309">⚖️ Shadow Integration: ${escapeHtml(p.shadowTitle || "")}</strong>
+              <strong class="col-head" style="color:#B45309">⚖️ The Pitfall to Watch: ${escapeHtml(p.shadowTitle || "")}</strong>
               ${renderGlossaryHTML(p.shadowText || "")}
             </div>
             <div class="plane-pillar-col">
-              <strong class="col-head" style="color:#0F766E">🛠️ Everyday Australian Application</strong>
+              <strong class="col-head" style="color:#0F766E">🛠️ In Everyday Practice</strong>
               ${renderGlossaryHTML(p.practicalText || "")}
             </div>
           </div>
@@ -4302,23 +4284,19 @@ function renderPlane(app, pNum) {
           <div class="plane-senses-strip">
             <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;">
               <span class="mono" style="font-size:0.74rem;font-weight:700;color:#334155;text-transform:uppercase;letter-spacing:0.05em;">
-                Anatomy of Plane ${p.n} (${p.code}) — The 7 Matrix Senses (q1–q7):
-              </span>
-              <span class="mono" style="font-size:0.71rem;color:var(--ink-muted);">
-                Click any Sense to jump or inspect its 7 vectors
+                Jump to a theme in Pillar ${p.n}:
               </span>
             </div>
             <div class="plane-senses-grid">
               ${planeSenses.map(s => {
                 const sSum = computeSenseSummary(s.id);
-                const cleanSub = s.title.replace(/^The [A-Za-z]+ of the [A-Za-z]+\s*/, "").replace(/^[()]+|[()]+$/g, "");
                 return `
                   <button type="button" class="plane-sense-chip" data-jump-sense="${s.id}" title="${escapeHtml(s.narrative)}">
                     <div class="sc-top">
-                      <span>${s.id} · ${s.addr}</span>
-                      <span>${sSum.total !== null ? fmtSigned(sSum.total, 1) : `υ=${s.coords.v >= 0 ? "+" : ""}${s.coords.v}`}</span>
+                      <span>Theme ${s.id}</span>
+                      <span>${sSum.total !== null ? fmtSigned(sSum.total, 1) : "—"}</span>
                     </div>
-                    <div class="sc-name">${escapeHtml(s.title || cleanSub || s.shortTitle)}</div>
+                    <div class="sc-name">${escapeHtml(s.title)}</div>
                   </button>
                 `;
               }).join("")}
@@ -4439,13 +4417,10 @@ function renderVectorCardHTML(v, planeHue) {
     <div class="sense-header">
       <div>
         <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
-          <span class="sense-code">${v.uid} · ${v.addr}</span>
-          <span class="badge" data-badge-title="Kanon Structural Role: The ${escapeHtml(v.role)}" data-badge-tip="${escapeHtml(v.coreMeaning)}">Role: ${escapeHtml(v.role)}</span>
-          <span class="badge" data-badge-title="Psochic Hegemony Coordinate (${escapeHtml(v.zone)})" data-badge-tip="υ = ${v.coords.v >= 0 ? "+" : ""}${v.coords.v} (Morality: who benefits), ψ = ${v.coords.psi >= 0 ? "+" : ""}${v.coords.psi} (Will: active vs passive). Rationale: ${escapeHtml(v.rationale)}">υ=${v.coords.v >= 0 ? "+" : ""}${v.coords.v}, ψ=${v.coords.psi >= 0 ? "+" : ""}${v.coords.psi} (${escapeHtml(v.zone)})</span>
-          ${v.fn ? `<span class="badge badge-fn" data-badge-title="First Nations Perspective Node" data-badge-tip="Anchors the 65,000-year Indigenous continuum at address ${v.addr} alongside the post-1788 Commonwealth.">[FN] First Nations Perspective</span>` : ""}
-          ${isShadow ? `<span class="badge badge-shadow" data-badge-title="Shadow / Corrective Vector (υ < 0)" data-badge-tip="This node represents a negative shadow or failure mode in the Australian Kanon. Rating +1 to +5 means seeing through and overcoming this shadow (Kanon HIT); rating −1 to −5 means being captured by it (Kanon FAIL).">Shadow Vector (Corrective Scale)</span>` : ""}
-          ${v.hansonVerdict ? `<span class="badge ${v.hansonVerdict === "HIT" ? "badge-hit" : "badge-fail"}" data-badge-title="Pauline Hanson 354-Vector Audit Verdict" data-badge-tip="In the full 354-vector Kanon Audit, Pauline Hanson's record was scored as a ${v.hansonVerdict} on ${escapeHtml(v.cleanName)}.">Hanson Audit: ${v.hansonVerdict}</span>` : ""}
-          ${v.alboVerdict ? `<span class="badge ${v.alboVerdict === "HIT" ? "badge-hit" : "badge-fail"}" data-badge-title="Anthony Albanese Audit Verdict" data-badge-tip="In the Albanese Kanon Audit, his record was scored as a ${v.alboVerdict} on ${escapeHtml(v.cleanName)}.">Albo Audit: ${v.alboVerdict}</span>` : ""}
+          <span class="sense-code">${v.uid}</span>
+          <span class="badge" data-badge-title="Role: ${escapeHtml(v.role)}" data-badge-tip="${escapeHtml(v.coreMeaning)}">${escapeHtml(v.role)}</span>
+          ${v.fn ? `<span class="badge badge-fn" data-badge-title="First Nations Perspective" data-badge-tip="Indigenous perspective on this national theme.">[FN] First Nations Perspective</span>` : ""}
+          ${isShadow ? `<span class="badge badge-shadow" data-badge-title="Shadow / National Flaw" data-badge-tip="This topic represents a recognized national challenge or blind spot. +1 to +5 means actively overcoming it; −1 to −5 means tolerating or falling into it.">National Challenge</span>` : ""}
         </div>
         <h3 class="sense-title" style="margin-top:6px;">${escapeHtml(v.name)}</h3>
       </div>
@@ -4786,8 +4761,8 @@ function renderResults(app) {
             <div class="lbl">Kanon Alignment (${profile.netAlignmentPct >= 0 ? "+" : ""}${profile.netAlignmentPct}% Net Score)</div>
           </div>
           <div class="arch-stat">
-            <div class="num">(${profile.userOverallCoords.v >= 0 ? "+" : ""}${profile.userOverallCoords.v}, ${profile.userOverallCoords.psi >= 0 ? "+" : ""}${profile.userOverallCoords.psi})</div>
-            <div class="lbl"><span class="glossary-term" data-glossary-id="psochic_hegemony">Hegemony Coordinate (υ, ψ)</span></div>
+            <div class="num">${profile.userOverallCoords.v >= 0 ? "+" : ""}${(profile.userOverallCoords.v * 100).toFixed(0)}%</div>
+            <div class="lbl">Greater Good Outlook</div>
           </div>
         </div>
       </div>
@@ -4801,7 +4776,7 @@ function renderResults(app) {
         <p style="margin:0;font-size:0.86rem;color:var(--ink-soft);">
           ${strongestPlane.total !== null
             ? `Your highest anchor across the Kanon (${fmtSigned(strongestPlane.total, 2)} mean — Should A: ${fmtSigned(strongestPlane.A, 1)}, Would B: ${fmtSigned(strongestPlane.B, 1)}).`
-            : `Answer nodes to discover your strongest Australian Kanon pillar.`}
+            : `Answer questions to discover your strongest Australian Kanon pillar.`}
         </p>
       </div>
 
@@ -4828,32 +4803,32 @@ function renderResults(app) {
       </div>
     </section>
 
-    <!-- 3. KEYRING PLOT + PSOCHIC HEGEMONY (v, psi) MAP -->
+    <!-- 3. KEYRING PLOT + COMPASS MAP -->
     <div class="dash-grid" id="sec-keyring">
       <div class="card keyring-stage" id="keyring-stage-card">
         ${renderKeyringStageHTML(activeKeyringTier, selectedT3Plane)}
       </div>
 
       <div class="card">
-        <div class="eyebrow">Psochic Hegemony Coordinate Plane</div>
-        <h3 style="margin:2px 0 4px;">Your Ideal Should (A) vs. Actual Would (B) across 354 Vectors</h3>
+        <div class="eyebrow">National Values Compass</div>
+        <h3 style="margin:2px 0 4px;">Where You Sit: Ideals vs Everyday Action</h3>
         <p style="margin:0 0 10px;font-size:0.83rem;color:var(--ink-soft);line-height:1.45;">
-          <strong>How to read this map:</strong> Left side = <strong>Universal Good (+υ)</strong> · Right side = <strong>Narrow Self-Interest (−υ)</strong> · Top = <strong>Active Creation (+ψ)</strong> · Bottom = <strong>Destructive / Passive (−ψ)</strong>.
+          <strong>How to read this map:</strong> Left side = <strong>The Greater Good</strong> · Right side = <strong>Narrow Self-Interest</strong> · Top = <strong>Taking Action</strong> · Bottom = <strong>Passive / Withholding</strong>.
         </p>
         <div class="hegemony-canvas-wrap">
           <canvas id="hegemony-canvas" width="520" height="400"></canvas>
           <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:10px;font-family:'JetBrains Mono',monospace;font-size:0.73rem;color:#475569;">
             <span><strong style="color:#059669">●</strong> Personal Should (A)</span>
             <span><strong style="color:#2563EB">●</strong> Personal Would (B)</span>
-            <span><strong style="color:#CA8A04">●</strong> Stoic Guardian (+0.47, +0.23)</span>
-            <span><strong style="color:#DC2626">●</strong> Pauline Hanson (-0.05, -0.01)</span>
+            <span><strong style="color:#CA8A04">●</strong> Stoic Guardian</span>
+            <span><strong style="color:#DC2626">●</strong> Pauline Hanson</span>
           </div>
         </div>
 
         <div class="stat-Strip">
           <div class="stat-box">
             <div class="val">${V_signed !== null ? fmtSigned(V_signed, 2) : "—"}<span style="font-size:0.75rem;color:var(--ink-muted)"> (±5)</span></div>
-            <div class="lbl">True Balance V (Geometric)</div>
+            <div class="lbl">Overall Value Alignment</div>
           </div>
           <div class="stat-box">
             <div class="val">${fmtSigned(profile.avgC, 2)}<span style="font-size:0.75rem;color:var(--ink-muted)"> (±5)</span></div>
@@ -5050,12 +5025,12 @@ function renderResults(app) {
 
     <!-- 9. WELFARE DIAGNOSTICS: BLOCKERS, CHAIN REACTION & TENSION -->
     <section class="card" id="sec-diagnostics" style="margin-top:24px;">
-      <div class="eyebrow">WWSUTRU Systemic Welfare Diagnostics</div>
+      <div class="eyebrow">National Reality Check</div>
       <h2 style="margin:4px 0 12px;">Where the Australian Promise Is Blocked vs. Flourishing</h2>
 
       ${profile.topBlockers.length > 0 ? `
         <div class="callout callout-warm" style="margin-bottom:16px;">
-          <strong>Top Named Systemic Blockers (D):</strong>
+          <strong>Top Systemic Blockers Reported in Society:</strong>
           <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;">
             ${profile.topBlockers.map(b => `
               <span class="badge badge-shadow" style="font-size:0.8rem;padding:4px 10px;">${escapeHtml(b.tag)}: <strong>${b.count}×</strong></span>
@@ -5066,12 +5041,12 @@ function renderResults(app) {
 
       ${chokepoints.length > 0 ? `
         <div class="callout" style="margin-bottom:16px;">
-          <strong>Chain Reaction Chokepoint Alert (1 Identity → 2 Definition → 5 Method → 3 Land → 4 Drive → 7 Result → 6 Cause → 1):</strong>
+          <strong>Chokepoint Alert:</strong>
           <ul style="margin:6px 0 0;padding-left:20px;">
             ${chokepoints.map(cp => {
               const idx = chainOrder.indexOf(cp.plane.n);
               const nextP = PLANE_BY_N[chainOrder[(idx + 1) % 7]];
-              return `<li><strong>Plane ${cp.plane.n} (${cp.plane.name} — ${fmtSigned(cp.total, 2)})</strong> is strained, which directly starves downstream <strong>Plane ${nextP.n} (${nextP.name} — ${nextP.pillar})</strong>.</li>`;
+              return `<li><strong>Pillar ${cp.plane.n} (${cp.plane.name} — ${fmtSigned(cp.total, 2)})</strong> is strained, putting pressure on <strong>Pillar ${nextP.n} (${nextP.name})</strong>.</li>`;
             }).join("")}
           </ul>
         </div>
@@ -5079,40 +5054,40 @@ function renderResults(app) {
 
       <div class="dash-grid">
         <div>
-          <h3 style="margin-bottom:8px;color:var(--bad);">Largest Social Contradictions (Should vs Society)</h3>
+          <h3 style="margin-bottom:8px;color:var(--bad);">Largest Contradictions (Your Ideals vs Society Today)</h3>
           <table class="rank-table">
             <thead>
-              <tr><th>Sense</th><th>Should A</th><th>Would B</th><th>Circle C</th><th>Society D</th></tr>
+              <tr><th>Theme</th><th>Should</th><th>Would</th><th>Circle</th><th>Society</th></tr>
             </thead>
             <tbody>
               ${highestStrain.length ? highestStrain.map(r => `
                 <tr>
-                  <td><strong>${r.code}</strong> ${r.addr}<div style="font-size:0.75rem;color:var(--ink-muted)">${escapeHtml(r.title)}</div></td>
+                  <td><strong>${r.code}</strong><div style="font-size:0.75rem;color:var(--ink-muted)">${escapeHtml(r.title)}</div></td>
                   <td>${scorePill(r.A)}</td>
                   <td>${scorePill(r.B)}</td>
                   <td>${scorePill(r.C)}</td>
                   <td>${scorePill(r.D)}</td>
                 </tr>
-              `).join("") : `<tr><td colspan="5" style="color:var(--ink-muted)">Answer nodes to see priority strain rankings.</td></tr>`}
+              `).join("") : `<tr><td colspan="5" style="color:var(--ink-muted)">Answer questions to see priority strain rankings.</td></tr>`}
             </tbody>
           </table>
         </div>
 
         <div>
-          <h3 style="margin-bottom:8px;color:var(--ok);">Strongest Australian Kanon Pillars</h3>
+          <h3 style="margin-bottom:8px;color:var(--ok);">Strongest Core Values</h3>
           <table class="rank-table">
             <thead>
-              <tr><th>Sense</th><th>Should A</th><th>Would B</th><th>Mean</th></tr>
+              <tr><th>Theme</th><th>Should</th><th>Would</th><th>Score</th></tr>
             </thead>
             <tbody>
               ${strongestPillars.length ? strongestPillars.map(r => `
                 <tr>
-                  <td><strong>${r.code}</strong> ${r.addr}<div style="font-size:0.75rem;color:var(--ink-muted)">${escapeHtml(r.title)}</div></td>
+                  <td><strong>${r.code}</strong><div style="font-size:0.75rem;color:var(--ink-muted)">${escapeHtml(r.title)}</div></td>
                   <td>${scorePill(r.A)}</td>
                   <td>${scorePill(r.B)}</td>
                   <td>${scorePill(r.total)}</td>
                 </tr>
-              `).join("") : `<tr><td colspan="4" style="color:var(--ink-muted)">Answer nodes to see strongest pillars.</td></tr>`}
+              `).join("") : `<tr><td colspan="4" style="color:var(--ink-muted)">Answer questions to see strongest pillars.</td></tr>`}
             </tbody>
           </table>
         </div>
