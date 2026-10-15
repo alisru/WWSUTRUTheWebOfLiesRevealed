@@ -4273,28 +4273,25 @@ function renderPlane(app, pNum) {
             </div>
           </div>
 
-          <div class="plane-senses-strip">
-            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;">
-              <span class="mono" style="font-size:0.74rem;font-weight:700;color:#334155;text-transform:uppercase;letter-spacing:0.05em;">
-                Jump to a theme in Pillar ${p.n}:
-              </span>
-            </div>
-            <div class="plane-senses-grid">
-              ${planeSenses.map(s => {
-                const ans = isNodeAnswered("S", s.id);
-                const sSum = computeSenseSummary(s.id);
-                return `
+          ${STATE.tier !== 7 ? `
+            <div class="plane-senses-strip">
+              <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;">
+                <span class="mono" style="font-size:0.74rem;font-weight:700;color:#334155;text-transform:uppercase;letter-spacing:0.05em;">
+                  Jump to a theme in Pillar ${p.n}:
+                </span>
+              </div>
+              <div class="plane-senses-grid">
+                ${planeSenses.map(s => `
                   <button type="button" class="plane-sense-chip" data-jump-sense="${s.id}" title="${escapeHtml(s.narrative)}">
                     <div class="sc-top">
                       <span>Theme ${s.id}</span>
-                      <span>${ans && sSum.total !== null ? fmtSigned(sSum.total, 1) : ""}</span>
                     </div>
                     <div class="sc-name">${escapeHtml(s.title)}</div>
                   </button>
-                `;
-              }).join("")}
+                `).join("")}
+              </div>
             </div>
-          </div>
+          ` : ""}
         </div>
       </details>
     </div>
