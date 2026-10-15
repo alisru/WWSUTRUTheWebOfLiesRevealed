@@ -2426,8 +2426,7 @@ function isNodeAnswered(prefix, id) {
   return (
     getAns(prefix, id, "A") !== null ||
     getAns(prefix, id, "B") !== null ||
-    getAns(prefix, id, "C") !== null ||
-    getAns(prefix, id, "D") !== null
+    getAns(prefix, id, "C") !== null
   );
 }
 
@@ -2457,18 +2456,16 @@ function computeSenseSummary(senseId) {
   const mA = getSenseMultiTierProbe(senseId, "A");
   const mB = getSenseMultiTierProbe(senseId, "B");
   const mC = getSenseMultiTierProbe(senseId, "C");
-  const mD = getSenseMultiTierProbe(senseId, "D");
 
   const A = mA.effective; // Personal Ideal ("Should")
   const B = mB.effective; // Personal Actual ("Would")
-  const C = mC.effective; // Community Circle ("Should & Would")
-  const D = mD.effective; // Australian Society ("Would" / Actual Outcome)
+  const C = mC.effective; // Australian Society ("Systemic Reality")
 
-  const total = avgNums([A, B, C, D]);
+  const total = avgNums([A, B, C]);
   const personalMean = avgNums([A, B]);
-  const gapAB = (A !== null && B !== null) ? (A - B) : null; // Personal Should-Would Gap (ΔH_personal)
-  const gapAD = (A !== null && D !== null) ? (A - D) : null; // Social Contradiction Gap (Should A vs Society D)
-  return { A, B, C, D, total, personalMean, gapAB, gapAD, multiA: mA, multiB: mB };
+  const gapAB = (A !== null && B !== null) ? (A - B) : null; // Personal Should-Would Gap
+  const gapAC = (A !== null && C !== null) ? (A - C) : null; // Social Contradiction Gap (Should A vs Society C)
+  return { A, B, C, D: C, total, personalMean, gapAB, gapAC, gapAD: gapAC, multiA: mA, multiB: mB };
 }
 
 function computePlaneSummary(pNum) {
@@ -2479,7 +2476,7 @@ function computePlaneSummary(pNum) {
   const A = avgNums(senseScores.map(x => x.A));
   const B = avgNums(senseScores.map(x => x.B));
   const C = avgNums(senseScores.map(x => x.C));
-  const D = avgNums(senseScores.map(x => x.D));
+  const D = C;
   const total = avgNums(senseScores.map(x => x.total));
 
   let totalNodes = 1;
@@ -2535,7 +2532,7 @@ function computeKanonProfile() {
   const avgA = avgNums(planeSummaries.map(p => p.A));
   const avgB = avgNums(planeSummaries.map(p => p.B));
   const avgC = avgNums(planeSummaries.map(p => p.C));
-  const avgD = avgNums(planeSummaries.map(p => p.D));
+  const avgD = avgC;
   const avgTot = avgNums(planeSummaries.map(p => p.total));
 
   const avgPersonal = avgNums([avgA, avgB]);
@@ -2543,8 +2540,8 @@ function computeKanonProfile() {
   const alignmentPct = avgTot !== null ? Math.round(((avgTot + 5) / 10) * 100) : null;
   const ethosPct = avgA !== null ? Math.round(((avgA + 5) / 10) * 100) : null;
   const livedPct = avgB !== null ? Math.round(((avgB + 5) / 10) * 100) : null;
-  const communityPct = avgC !== null ? Math.round(((avgC + 5) / 10) * 100) : null;
-  const societyPct = avgD !== null ? Math.round(((avgD + 5) / 10) * 100) : null;
+  const societyPct = avgC !== null ? Math.round(((avgC + 5) / 10) * 100) : null;
+  const communityPct = societyPct;
 
   let sumWA = 0, vA = 0, psiA = 0;
   let sumWB = 0, vB = 0, psiB = 0;
@@ -2604,7 +2601,7 @@ function computeKanonProfile() {
 
   // Personal Should-Would gap (ΔH_personal) & Social Contradiction gap (Should A - Society D)
   const personalGap = (avgA !== null && avgB !== null) ? Math.abs(avgA - avgB) : 0;
-  const socialGap = (avgA !== null && avgD !== null) ? (avgA - avgD) : ((avgA !== null && avgB !== null) ? (avgA - avgB) : 0);
+  const socialGap = (avgA !== null && avgC !== null) ? (avgA - avgC) : ((avgA !== null && avgB !== null) ? (avgA - avgB) : 0);
   const stressGap = Math.max(socialGap, (avgA !== null && avgB !== null) ? (avgA - avgB) : 0);
 
   const archetypeMatches = ARCHETYPES.map(arch => {
@@ -2684,28 +2681,25 @@ function loadPresetProfile(presetId) {
 
   if (presetId === "stoic_guardian") {
     PLANES.forEach(p => {
-      setAns("P", p.n, "A", 5); setAns("P", p.n, "B", 4); setAns("P", p.n, "C", 4); setAns("P", p.n, "D", 3);
+      setAns("P", p.n, "A", 5); setAns("P", p.n, "B", 4); setAns("P", p.n, "C", 3);
     });
     SENSES.forEach((s, idx) => {
       setAns("S", s.id, "A", idx % 3 === 0 ? 5 : 4);
       setAns("S", s.id, "B", idx % 4 === 0 ? 5 : 4);
-      setAns("S", s.id, "C", 4);
-      setAns("S", s.id, "D", 3);
+      setAns("S", s.id, "C", 3);
     });
   } else if (presetId === "betrayed_battler") {
     const demoBlockers = ["Cost of Living / Priced Out", "Corporate / Political Capture", "Broken Trust / Burned Before"];
     PLANES.forEach(p => {
       setAns("P", p.n, "A", 5);
       setAns("P", p.n, "B", 4);
-      setAns("P", p.n, "C", 3);
-      setAns("P", p.n, "D", p.n === 2 || p.n === 3 || p.n === 7 ? -3 : -2);
+      setAns("P", p.n, "C", p.n === 2 || p.n === 3 || p.n === 7 ? -3 : -2);
       STATE.blockers[`P|${p.n}`] = [demoBlockers[p.n % demoBlockers.length]];
     });
     SENSES.forEach((s, idx) => {
       setAns("S", s.id, "A", idx % 2 === 0 ? 5 : 4);
       setAns("S", s.id, "B", idx % 3 === 0 ? 4 : 3);
-      setAns("S", s.id, "C", idx % 2 === 0 ? 3 : 2);
-      setAns("S", s.id, "D", (s.plane === 2 || s.plane === 3 || idx % 3 === 0) ? -3 : -2);
+      setAns("S", s.id, "C", (s.plane === 2 || s.plane === 3 || idx % 3 === 0) ? -3 : -2);
       STATE.blockers[`S|${s.id}`] = [demoBlockers[idx % demoBlockers.length]];
     });
   } else if (presetId === "hanson_354") {
@@ -2714,8 +2708,7 @@ function loadPresetProfile(presetId) {
       const val = v.hansonVerdict === "HIT" ? 4 : -3;
       STATE.answers[ansKey("V", v.uid, "A")] = val;
       STATE.answers[ansKey("V", v.uid, "B")] = val;
-      STATE.answers[ansKey("V", v.uid, "C")] = val;
-      STATE.answers[ansKey("V", v.uid, "D")] = v.hansonVerdict === "FAIL" ? -3 : 2;
+      STATE.answers[ansKey("V", v.uid, "C")] = v.hansonVerdict === "FAIL" ? -3 : 2;
     });
   }
   saveState();
@@ -2739,8 +2732,7 @@ function subKeyringSlots(senseId) {
       layers: [
         { id: "A", label: "Should", v: null },
         { id: "B", label: "Personal", v: null },
-        { id: "C", label: "Circle", v: null },
-        { id: "D", label: "Society", v: null }
+        { id: "C", label: "Society", v: null }
       ],
       answered: []
     };
@@ -2749,33 +2741,28 @@ function subKeyringSlots(senseId) {
   const pA = getAns("P", sense.plane, "A");
   const pB = getAns("P", sense.plane, "B");
   const pC = getAns("P", sense.plane, "C");
-  const pD = getAns("P", sense.plane, "D");
 
   const sA = getAns("S", senseId, "A");
   const sB = getAns("S", senseId, "B");
   const sC = getAns("S", senseId, "C");
-  const sD = getAns("S", senseId, "D");
 
   const vecs = (VECTORS_BY_SENSE[senseId] || []);
   const vA = avgNums(vecs.map(v => getAns("V", v.uid, "A")));
   const vB = avgNums(vecs.map(v => getAns("V", v.uid, "B")));
   const vC = avgNums(vecs.map(v => getAns("V", v.uid, "C")));
-  const vD = avgNums(vecs.map(v => getAns("V", v.uid, "D")));
 
   const effA = vA ?? sA ?? pA;
   const effB = vB ?? sB ?? pB ?? effA;
   const effC = vC ?? sC ?? pC ?? effB;
-  const effD = vD ?? sD ?? pD ?? effB;
 
   const layers = [
     { id: "A", label: "Should", v: effA },
     { id: "B", label: "Personal", v: effB },
-    { id: "C", label: "Circle", v: effC },
-    { id: "D", label: "Society", v: effD }
+    { id: "C", label: "Society", v: effC }
   ];
 
   const answered = layers.filter(l => l.v !== null);
-  return { A: effA, B: effB, C: effC, D: effD, layers, answered };
+  return { A: effA, B: effB, C: effC, D: effC, layers, answered };
 }
 
 // Draw a single bipolar layered arm for a Sense (Tier 2 / Tier 3 Star)
@@ -2793,8 +2780,8 @@ function armSVG(cx, cy, angleDeg, armLen, hue, subId, labelSize, showScale) {
   } else {
     // Centerline shaft (0 axis)
     parts.push(`<line x1="${cx.toFixed(1)}" y1="${cy.toFixed(1)}" x2="${tipX.toFixed(1)}" y2="${tipY.toFixed(1)}" stroke="${hue}" stroke-width="3" stroke-linecap="round"/>`);
-    // 4 Layered slots along the blade: A (0.64), B (0.76), C (0.87), D (0.97)
-    const slotFracs = [0.64, 0.76, 0.87, 0.97];
+    // 3 Layered slots along the blade: A (0.65), B (0.80), C (0.95)
+    const slotFracs = [0.65, 0.80, 0.95];
     layers.forEach((layer, i) => {
       const v = layer.v;
       const frac = slotFracs[i];
@@ -2877,9 +2864,9 @@ function combinedArmSVG(cx, cy, angleDeg, armLen, i) {
     const senseId = `${p.n}.${i + 1}`;
     const { layers } = subKeyringSlots(senseId);
     const ringStart = zoneEnd - (pi + 1) * ringW;
-    // 3 layered teeth per ring: Should (A), Personal (B), Society (D)
+    // 3 layered teeth per ring: Should (A), Personal (B), Society (C)
     const slotFracs = [ringStart + ringW * 0.22, ringStart + ringW * 0.55, ringStart + ringW * 0.85];
-    const pickedLayers = [layers[0], layers[1], layers[3]]; // A, B, D
+    const pickedLayers = [layers[0], layers[1], layers[2]]; // A, B, C
 
     pickedLayers.forEach((layer, k) => {
       const v = layer.v;
@@ -2944,12 +2931,11 @@ function pillarArmSVG(cx, cy, angleDeg, armLen, pNum) {
   parts.push(`<line x1="${cx.toFixed(1)}" y1="${cy.toFixed(1)}" x2="${tipX.toFixed(1)}" y2="${tipY.toFixed(1)}" stroke="${shaftColor}" stroke-width="${shaftWidth}" opacity="${shaftOpacity}" stroke-linecap="round"/>`);
 
   const maxTlen = 26; // Maximum deflection for +-5
-  // 4 Horizon Layers along the blade:
+  // 3 Horizon Layers along the blade:
   const layers = [
-    { tag: "A", name: "Should (A)", frac: 0.62, v: sum.A },
-    { tag: "B", name: "Personal (B)", frac: 0.74, v: sum.B },
-    { tag: "C", name: "Circle (C)", frac: 0.86, v: sum.C },
-    { tag: "D", name: "Society (D)", frac: 0.98, v: sum.D }
+    { tag: "A", name: "Should (A)", frac: 0.65, v: sum.A },
+    { tag: "B", name: "Personal (B)", frac: 0.80, v: sum.B },
+    { tag: "C", name: "Society (C)", frac: 0.95, v: sum.C }
   ];
 
   if (hasAns) {
@@ -3733,11 +3719,10 @@ function renderHub(app) {
       </h1>
       <p class="lede" style="margin:0 0 16px;">
         Map yourself against the <strong>Australian Kanon</strong>—the cultural DNA of our nation across 7 foundational pillars.
-        Instead of a flat quiz that only asks what you reckon in theory, each question measures four <strong>Should vs. Would</strong> perspectives on a <strong><code>−5</code> (Broken / Opposed) to <code>+5</code> (Thriving / Supported) scale</strong> (with <code>0</code> as Neutral):
+        Instead of a flat quiz that only asks what you reckon in theory, each question measures three <strong>Values Triangle</strong> perspectives on a <strong><code>−5</code> (Broken / Opposed) to <code>+5</code> (Thriving / Supported) scale</strong> (with <code>0</code> as Neutral):
         <strong>A (Personal Should)</strong> what you believe Australia should uphold,
-        <strong>B (Personal Would)</strong> what you actually practise in everyday life,
-        <strong>C (Community Circle)</strong> what your friends, family, and peers practise, and
-        <strong>D (Australian Society)</strong> what our wider institutions, markets, and leaders actually deliver today.
+        <strong>B (Personal Would)</strong> what you actually practise in everyday life, and
+        <strong>C (Australian Society)</strong> what our wider institutions, markets, and leaders actually deliver today.
       </p>
 
       <div class="callout" style="margin-bottom:18px;">
@@ -3775,8 +3760,7 @@ function renderHub(app) {
             <p style="margin:4px 0 0;font-size:0.9rem;color:var(--ink-soft);">
               Personal Should (A): <strong>${fmtSigned(profile.avgA, 2)}</strong> ·
               Personal Would (B): <strong>${fmtSigned(profile.avgB, 2)}</strong> ·
-              Community (C): <strong>${fmtSigned(profile.avgC, 2)}</strong> ·
-              Australian Society (D): <strong>${fmtSigned(profile.avgD, 2)}</strong>
+              Australian Society (C): <strong>${fmtSigned(profile.avgC, 2)}</strong>
             </p>
           </div>
           <a class="btn btn-sm" href="#/results">Open Full Diagnostic Report →</a>
@@ -3828,34 +3812,27 @@ function renderFramework(app) {
 
       <hr style="border:none;border-top:1px solid var(--rule);margin:22px 0;">
 
-      <h2>1. The 4 Perspectives (A · B · C · D)</h2>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin:14px 0 22px;">
+      <h2>1. The Values Triangle (A · B · C)</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin:14px 0 22px;">
         <div class="card" style="padding:14px 16px;margin:0;border-top:3px solid var(--accent);">
-          <div class="mono" style="color:var(--accent);font-weight:700;">A · PERSONAL "SHOULD" (−5 to +5)</div>
+          <div class="mono" style="color:var(--accent);font-weight:700;">A · PERSONAL SHOULD (−5 to +5)</div>
           <h3 style="font-size:1.02rem;margin:4px 0;">Your Moral Ideal</h3>
           <p style="margin:0;font-size:0.86rem;color:var(--ink-soft);">
-            What do you believe Australia <strong>should</strong> uphold? From <code>−5 Against</code> through <code>0 Neutral</code> to <code>+5 Core Principle</code>.
+            What do you believe Australia <strong>should</strong> uphold? From <code>−5 Against</code> through <code>0 Neutral</code> to <code>+5 Core Standard</code>.
           </p>
         </div>
         <div class="card" style="padding:14px 16px;margin:0;border-top:3px solid #2E6F95;">
-          <div class="mono" style="color:#2E6F95;font-weight:700;">B · PERSONAL "WOULD" (−5 to +5)</div>
-          <h3 style="font-size:1.02rem;margin:4px 0;">Your Actual Practice</h3>
+          <div class="mono" style="color:#2E6F95;font-weight:700;">B · PERSONAL WOULD (−5 to +5)</div>
+          <h3 style="font-size:1.02rem;margin:4px 0;">Your Everyday Practice</h3>
           <p style="margin:0;font-size:0.86rem;color:var(--ink-soft);">
-            In the heat of everyday life, what <strong>would</strong> you actually do? The distance between <code>A</code> and <code>B</code> measures your personal <em>Should–Would Gap</em>.
-          </p>
-        </div>
-        <div class="card" style="padding:14px 16px;margin:0;border-top:3px solid var(--gold);">
-          <div class="mono" style="color:var(--gold);font-weight:700;">C · COMMUNITY CIRCLE (−5 to +5)</div>
-          <h3 style="font-size:1.02rem;margin:4px 0;">Your Everyday Circle's Should &amp; Would</h3>
-          <p style="margin:0;font-size:0.86rem;color:var(--ink-soft);">
-            What do the people in your immediate community circle believe we should do and actually practise day to day?
+            In daily life under real-world pressure, what do you <strong>actually do</strong>? Measures your personal <em>Should–Would Gap</em> (<code>A − B</code>).
           </p>
         </div>
         <div class="card" style="padding:14px 16px;margin:0;border-top:3px solid var(--accent-warm);">
-          <div class="mono" style="color:var(--accent-warm);font-weight:700;">D · AUSTRALIAN SOCIETY (−5 to +5 + Blockers)</div>
-          <h3 style="font-size:1.02rem;margin:4px 0;">Wider Society &amp; Systemic Outcome</h3>
+          <div class="mono" style="color:var(--accent-warm);font-weight:700;">C · AUSTRALIAN SOCIETY (−5 to +5 + Blockers)</div>
+          <h3 style="font-size:1.02rem;margin:4px 0;">Systemic Delivery &amp; Reality</h3>
           <p style="margin:0;font-size:0.86rem;color:var(--ink-soft);">
-            What does wider Australian society and its institutions <strong>actually do</strong> in practice—plus clickable tags naming what is blocking the Greater Good.
+            What do our wider institutions, markets, and leaders <strong>actually deliver today</strong>—with clickable tags naming what is blocking it.
           </p>
         </div>
       </div>
@@ -3866,7 +3843,7 @@ function renderFramework(app) {
       <div class="callout callout-warm" style="margin:18px 0;">
         <strong>Identifying Contradictions (Stated "Should" vs. Actual "Would"):</strong>
         <ul style="margin:6px 0 0;padding-left:20px;">
-          <li><strong>Social Contradiction Gap (<code>A − D</code>) — The Betrayed Promise:</strong> Where you and your community uphold a fair go, mateship, or affordable living, but institutions and systems fail to deliver in practice.</li>
+          <li><strong>Social Contradiction Gap (<code>A − C</code>) — The Betrayed Promise:</strong> Where you uphold a fair go, mateship, or affordable living, but institutions and systems fail to deliver in practice.</li>
           <li><strong>Personal Strain Gap (<code>A − B</code>):</strong> Where everyday cost of living, workplace pressures, or stress make it hard for daily actions (<code>B</code>) to match your stated ideal (<code>A</code>).</li>
         </ul>
       </div>
@@ -3907,17 +3884,15 @@ function renderABCDBlockHTML(prefix, id, item, planeHue, extraHeaderHTML = "", e
   const valA = getAns(prefix, id, "A");
   const valB = getAns(prefix, id, "B");
   const valC = getAns(prefix, id, "C");
-  const valD = getAns(prefix, id, "D");
   const chosenBlockers = getBlockers(prefix, id);
-  const answered = valA !== null || valB !== null || valC !== null || valD !== null;
+  const answered = valA !== null || valB !== null || valC !== null;
 
   const isShadow = item.coords && item.coords.v < 0;
   const isFN = !!item.fn;
 
   const scA = isShadow ? SCALE_A_SHADOW : SCALE_A;
   const scB = isShadow ? SCALE_B_SHADOW : SCALE_B;
-  const scC = isShadow ? SCALE_C_SHADOW : SCALE_C;
-  const scD = isShadow ? SCALE_D_SHADOW : SCALE_D;
+  const scC = isShadow ? SCALE_D_SHADOW : SCALE_D; // Uses Systemic Delivery scale for Society C
 
   const shadowAlertHTML = isShadow ? `
     <div class="shadow-alert-strip">
@@ -3927,6 +3902,9 @@ function renderABCDBlockHTML(prefix, id, item, planeHue, extraHeaderHTML = "", e
       click <strong>−1 to −5 (Red · Excuse / Captured by Flaw)</strong> if you excuse it or if society is still trapped inside it.
     </div>
   ` : "";
+
+  // Support item.qD as society text if present, else fallback to item.qC
+  const promptC = item.qD || item.qC;
 
   const makeRow = (probe, kindLabel, promptText, scaleList, curVal) => {
     const selClass = `sel-${probe.toLowerCase()}`;
@@ -3959,7 +3937,7 @@ function renderABCDBlockHTML(prefix, id, item, planeHue, extraHeaderHTML = "", e
           <button type="button" class="seg-clear" title="Clear row"
             data-clear-prefix="${prefix}" data-clear-id="${id}" data-clear-probe="${probe}">clear</button>
         </div>
-        ${probe === "D" ? `
+        ${probe === "C" ? `
           <div class="blocker-chips-wrap">
             <span class="mono" style="font-size:0.7rem;color:var(--ink-muted);margin-right:4px;">What's blocking it in Australia? (optional)</span>
             ${BLOCKER_TAGS.map(tag => {
@@ -3978,8 +3956,7 @@ function renderABCDBlockHTML(prefix, id, item, planeHue, extraHeaderHTML = "", e
       ${shadowAlertHTML}
       ${makeRow("A", "Personal · Should", item.qA, scA, valA)}
       ${makeRow("B", "Personal · Would", item.qB, scB, valB)}
-      ${makeRow("C", "Community · Circle", item.qC, scC, valC)}
-      ${makeRow("D", "Society · Australia", item.qD, scD, valD)}
+      ${makeRow("C", "Society · Australia", promptC, scC, valC)}
       ${extraFooterHTML}
     </section>
   `;
@@ -4824,12 +4801,12 @@ function renderResults(app) {
             <div class="lbl">Overall Value Alignment</div>
           </div>
           <div class="stat-box">
-            <div class="val">${fmtSigned(profile.avgC, 2)}<span style="font-size:0.75rem;color:var(--ink-muted)"> (±5)</span></div>
-            <div class="lbl">Community Circle (C)</div>
+            <div class="val">${fmtSigned(profile.avgB, 2)}<span style="font-size:0.75rem;color:var(--ink-muted)"> (±5)</span></div>
+            <div class="lbl">Personal Practice (B)</div>
           </div>
           <div class="stat-box">
-            <div class="val">${fmtSigned(profile.avgD, 2)}<span style="font-size:0.75rem;color:var(--ink-muted)"> (±5)</span></div>
-            <div class="lbl">Australian Society (D)</div>
+            <div class="val">${fmtSigned(profile.avgC, 2)}<span style="font-size:0.75rem;color:var(--ink-muted)"> (±5)</span></div>
+            <div class="lbl">Australian Society (C)</div>
           </div>
         </div>
       </div>
@@ -4838,7 +4815,7 @@ function renderResults(app) {
     <!-- 4. 7-PLANE SPLIT BARS -->
     <section class="card" id="sec-planes" style="margin-top:20px;">
       <div class="eyebrow">The 7 Pillars · Should vs. Would Analysis</div>
-      <h2 style="margin:2px 0 12px;">The 7 Pillars of the Australian Kanon: Should (A) vs. Would (B · C · D)</h2>
+      <h2 style="margin:2px 0 12px;">The 7 Pillars of the Australian Kanon: Should (A) vs. Would (B · C)</h2>
       ${summaries.map(sum => {
         const p = sum.plane;
         const pctA = sum.A !== null ? Math.round(((sum.A + 5) / 10) * 100) : 50;
@@ -4855,8 +4832,7 @@ function renderResults(app) {
                 ${infoBtnHTML("P", p.n)}
               </div>
               <div class="mono" style="font-size:0.76rem;">
-                ${sum.C !== null ? `<span class="badge" style="background:var(--gold-soft);color:#854D0E;">Community C: ${fmtSigned(sum.C, 1)}</span>` : ""}
-                ${sum.D !== null ? `<span class="badge" style="background:var(--accent-warm-soft);color:#92400E;">Society D: ${fmtSigned(sum.D, 1)}</span>` : ""}
+                ${sum.C !== null ? `<span class="badge" style="background:var(--accent-warm-soft);color:#92400E;">Society C: ${fmtSigned(sum.C, 1)}</span>` : ""}
                 ${gap !== null && gap >= 1.5 ? `<span class="badge badge-fail">Contradiction Gap: +${gap.toFixed(1)}</span>` : ""}
               </div>
             </div>
@@ -5050,7 +5026,7 @@ function renderResults(app) {
           <h3 style="margin-bottom:8px;color:var(--bad);">Largest Contradictions (Your Ideals vs Society Today)</h3>
           <table class="rank-table">
             <thead>
-              <tr><th>Theme</th><th>Should</th><th>Would</th><th>Circle</th><th>Society</th></tr>
+              <tr><th>Theme</th><th>Should A</th><th>Would B</th><th>Society C</th><th>Gap</th></tr>
             </thead>
             <tbody>
               ${highestStrain.length ? highestStrain.map(r => `
@@ -5059,7 +5035,7 @@ function renderResults(app) {
                   <td>${scorePill(r.A)}</td>
                   <td>${scorePill(r.B)}</td>
                   <td>${scorePill(r.C)}</td>
-                  <td>${scorePill(r.D)}</td>
+                  <td>${scorePill(r.gapAB !== null ? r.gapAB : (r.A !== null && r.C !== null ? r.A - r.C : null))}</td>
                 </tr>
               `).join("") : `<tr><td colspan="5" style="color:var(--ink-muted)">Answer questions to see priority strain rankings.</td></tr>`}
             </tbody>
