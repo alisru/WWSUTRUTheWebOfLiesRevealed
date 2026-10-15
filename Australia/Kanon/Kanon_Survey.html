@@ -3141,7 +3141,7 @@ function renderKeyringStageHTML(activeTier, selectedT3Plane = 1) {
   return `
     <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;width:100%;margin-bottom:12px;">
       <div>
-        <div class="eyebrow" style="align-self:flex-start;">Bipolar Layered Keyring Plot (−5 .. 0 .. +5)</div>
+        <div class="eyebrow" style="align-self:flex-start;">Values Compass (−5 to +5)</div>
         <h3 style="align-self:flex-start;margin:2px 0 4px;">${escapeHtml(title)}</h3>
         <p style="color:var(--ink-soft);font-size:0.85rem;margin:0;line-height:1.45;align-self:flex-start;">
           ${escapeHtml(sub)}
@@ -3226,23 +3226,21 @@ function keyringTutorialBoxHTML(activeTier = 49) {
   let tierDesc = "";
   if (activeTier === 7) {
     tierDesc = `
-      <p style="margin:0 0 8px;color:var(--ink);">This is the <strong>Tier 1 Master Keyring</strong> — each of the seven arms represents one of the <strong>7 Pillars</strong> (Planes 1–7).</p>
-      <p style="margin:0 0 8px;">The central shaft of each key is the <strong>0 Axis (Neutral)</strong>. Cuts to the <strong>RIGHT</strong> (+1 to +5 in Plane hue) show positive upholding and thriving practice. Cuts to the <strong>LEFT</strong> (−1 to −5 in <span style="color:#DC2626;font-weight:700;">Crimson</span>) show opposition, breakdown, or systemic betrayal.</p>
-      <p style="margin:0 0 8px;">Along each blade, four distinct horizon layers are positioned from base to tip: <code>A (Should)</code>, <code>B (Personal Would)</code>, <code>C (Community Circle)</code>, and <code>D (Australian Society)</code>.</p>
-      <p style="margin:0;">When personal ideals (<code>A</code>) point right while societal delivery (<code>D</code>) pulls left, the contradiction gap becomes immediately visible across the key blade.</p>
+      <p style="margin:0 0 8px;color:var(--ink);">This is your <strong>7-Pillar Values Compass</strong> — each of the seven arms represents one of Australia's core pillars.</p>
+      <p style="margin:0 0 8px;">Bars extending to the <strong>RIGHT</strong> (+1 to +5) show values that are supported, thriving, and working well. Bars extending to the <strong>LEFT</strong> (−1 to −5 in <span style="color:#DC2626;font-weight:700;">Red</span>) highlight areas you find broken, neglected, or opposed.</p>
+      <p style="margin:0;">When your personal ideals (<code>A</code>) point right while societal delivery (<code>D</code>) pulls left, the contradiction gap between your values and everyday reality becomes immediately visible.</p>
     `;
   } else if (activeTier === 354) {
     tierDesc = `
-      <p style="margin:0 0 8px;color:var(--ink);">This is the <strong>Tier 3 Deep Audit Diagnostic Dashboard</strong> — calculated directly from all <strong>354 Australian Kanon vector audits</strong>.</p>
-      <p style="margin:0 0 8px;">Each Plane star has 7 radiating Sense arms. Along each arm, the four horizon layers (<code>A Should</code>, <code>B Personal</code>, <code>C Circle</code>, <code>D Society</code>) deflect right (+1 to +5) or left (−1 to −5 in <span style="color:#DC2626;font-weight:700;">Crimson</span>) based on vector averages.</p>
-      <p style="margin:0 0 8px;">Use the tabs above to zoom into any of the 7 Planes, or switch to <strong>All 7 Planes Fleet</strong> to view the entire national cultural architecture side by side.</p>
+      <p style="margin:0 0 8px;color:var(--ink);">This is your <strong>Deep Audit Dashboard</strong> — calculated directly from all 354 Australian cultural topics.</p>
+      <p style="margin:0 0 8px;">Each pillar shows 7 theme arms. Bars pointing right (+1 to +5) reflect strength; bars pointing left (−1 to −5 in <span style="color:#DC2626;font-weight:700;">Red</span>) pinpoint specific systemic failures.</p>
+      <p style="margin:0;">Use the tabs above to zoom into any pillar, or view the full national fleet side by side.</p>
     `;
   } else {
     tierDesc = `
-      <p style="margin:0 0 8px;color:var(--ink);">This is the <strong>Tier 2 Overlaid Keyring Star</strong> — seven question arms (<code>Q1–Q7</code>) carrying 7 nested Plane rings (Plane 1 outermost to Plane 7 innermost).</p>
-      <p style="margin:0 0 8px;">The central shaft of each key is the <strong>0 Axis (Neutral)</strong>. Cuts to the <strong>RIGHT</strong> (+1 to +5 in Plane hue) indicate positive support and active practice. Cuts to the <strong>LEFT</strong> (−1 to −5 in <span style="color:#DC2626;font-weight:700;">Crimson</span>) indicate breakdown, privatisation, or institutional failure.</p>
-      <p style="margin:0 0 8px;">Within each Plane ring, three horizon layers are plotted along the shaft: <code>A (Should)</code>, <code>B (Personal Would)</code>, and <code>D (Australian Society)</code>.</p>
-      <p style="margin:0;">The bracket labels at the tip frame the <code>−5</code> (Left), <code>0</code> (Center), and <code>+5</code> (Right) scale.</p>
+      <p style="margin:0 0 8px;color:var(--ink);">This is your <strong>49-Theme Values Compass</strong> — 7 core pillars mapped across 7 shared national questions.</p>
+      <p style="margin:0 0 8px;">Bars extending to the <strong>RIGHT</strong> (+1 to +5) mean you or society uphold the value. Bars extending to the <strong>LEFT</strong> (−1 to −5 in <span style="color:#DC2626;font-weight:700;">Red</span>) mean it's struggling or failing in practice.</p>
+      <p style="margin:0;">The scale runs from <code>−5 Broken / Opposed</code> on the left to <code>+5 Thriving / Supported</code> on the right, with <code>0</code> as Neutral in the centre.</p>
     `;
   }
 
@@ -3692,11 +3690,22 @@ function renderHub(app) {
   const planeCardsHTML = PLANES.map(p => {
     const sum = computePlaneSummary(p.n);
     const pct = Math.round((sum.answeredNodes / sum.totalNodes) * 100);
+    const planeNamesPlain = {
+      1: "Identity & Character",
+      2: "Democracy & Law",
+      3: "Land & Home",
+      4: "Work & Rest",
+      5: "Fair Rules & Innovation",
+      6: "History & Truth",
+      7: "Community & Society"
+    };
+    const plainDomain = planeNamesPlain[p.n] || p.domain.toUpperCase();
+
     let statusClass = "";
     let statusText = `${sum.answeredNodes}/${sum.totalNodes} answered`;
     if (sum.answeredNodes === sum.totalNodes && sum.totalNodes > 0) {
       statusClass = "done";
-      statusText = `✓ Complete (${sum.total !== null ? fmtSigned(sum.total, 1) : "Done"})`;
+      statusText = `✓ Done`;
     } else if (sum.answeredNodes > 0) {
       statusClass = "partial";
     }
@@ -3704,7 +3713,7 @@ function renderHub(app) {
     return `
       <a class="plane-card" href="#/plane/${p.n}" style="--plane-color:${p.hue}">
         <div class="plane-card-head">
-          <span class="plane-num">PILLAR ${p.n} · ${p.domain.toUpperCase()}</span>
+          <span class="plane-num">PILLAR ${p.n} · ${plainDomain.toUpperCase()}</span>
           <span class="plane-status ${statusClass}">${statusText}</span>
         </div>
         <h3>${p.name}: <span style="font-weight:600;font-size:1.05rem;color:var(--ink-soft)">${escapeHtml(p.fullTitle || `Values of Australian ${p.name}`)}</span></h3>
@@ -3776,9 +3785,9 @@ function renderHub(app) {
     ` : ""}
 
     <section>
-      <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;">
-        <h2>The 7 Planes of the Australian Kanon</h2>
-        <span class="mono" style="color:var(--ink-muted)">Click any Plane to answer in Tier ${STATE.tier === 7 ? "1 (1 essence node)" : STATE.tier === 49 ? "2 (7 sense essence nodes)" : "3 (~50 vector nodes)"}</span>
+      <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px;">
+        <h2>The 7 Core Pillars of Australia</h2>
+        <span class="mono" style="color:var(--ink-muted);font-size:0.85rem;">Click any pillar below to answer</span>
       </div>
       <div class="plane-grid">
         ${planeCardsHTML}
@@ -3801,31 +3810,31 @@ function renderHub(app) {
 function renderFramework(app) {
   app.innerHTML = `
     <article class="card">
-      <div class="eyebrow">Scoring Key & Methodology (A Framework for Judgment)</div>
-      <h1 style="font-size:2rem;margin:6px 0 10px;">How the Should / Would & Part 4 Axis Scale Works (−5 to +5)</h1>
+      <div class="eyebrow">Scoring Key & Methodology</div>
+      <h1 style="font-size:2rem;margin:6px 0 10px;">How the Should / Would Rating Scale Works (−5 to +5)</h1>
       <p class="lede">
         Conventional political quizzes ask whether you agree with abstract policy statements.
-        Grounded in <strong>A Framework for Judgment</strong>, the Australian Kanon Survey evaluates both <strong>Should</strong> (the stated moral ideal) and <strong>Would</strong> (actual behaviour and outcome in practice) across four plain-English perspectives on a bipolar <strong><code>−5</code> to <code>+5</code> scale</strong>:
+        The Australian Kanon Survey evaluates both <strong>Should</strong> (your stated moral ideal) and <strong>Would</strong> (actual behaviour and outcome in practice) across four plain-English perspectives on a <strong>two-way <code>−5</code> to <code>+5</code> scale</strong>:
       </p>
 
       <div class="callout" style="margin:14px 0;">
         <strong>How to Read the Scale (−5 to +5):</strong>
         <ul style="margin:6px 0 0;padding-left:20px;">
-          <li><strong><code>+1 to +5</code> · Strongly Support &amp; Active Practice:</strong> Strongly believe in the principle, or experience it as thriving, reliable, and accessible for all.</li>
-          <li><strong><code>0</code> · Neutral / Indifferent:</strong> No strong feeling, neutral, or looks out only for self-interest.</li>
-          <li><strong><code>−1 to −5</code> · Strongly Oppose / Broken &amp; Exploitative:</strong> Reject the principle, or experience it as broken, priced out, or captured by greed and bureaucracy in everyday life.</li>
+          <li><strong><code>+1 to +5</code> · Support &amp; Active Practice:</strong> Strongly believe in the principle, or experience it as working and accessible for all.</li>
+          <li><strong><code>0</code> · Neutral:</strong> Balanced, in-between, or neither one way nor the other.</li>
+          <li><strong><code>−1 to −5</code> · Oppose &amp; Systemic Failure:</strong> Reject the principle, or experience it as broken, priced out, or captured in everyday life.</li>
         </ul>
       </div>
 
       <hr style="border:none;border-top:1px solid var(--rule);margin:22px 0;">
 
-      <h2>1. The 4 Should / Would Perspectives (A · B · C · D)</h2>
+      <h2>1. The 4 Perspectives (A · B · C · D)</h2>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin:14px 0 22px;">
         <div class="card" style="padding:14px 16px;margin:0;border-top:3px solid var(--accent);">
           <div class="mono" style="color:var(--accent);font-weight:700;">A · PERSONAL "SHOULD" (−5 to +5)</div>
           <h3 style="font-size:1.02rem;margin:4px 0;">Your Moral Ideal</h3>
           <p style="margin:0;font-size:0.86rem;color:var(--ink-soft);">
-            What do you believe Australia <strong>should</strong> uphold? From <code>−5 Strongly Reject</code> through <code>0 Neutral</code> to <code>+5 Strongly Champion</code>.
+            What do you believe Australia <strong>should</strong> uphold? From <code>−5 Against</code> through <code>0 Neutral</code> to <code>+5 Core Principle</code>.
           </p>
         </div>
         <div class="card" style="padding:14px 16px;margin:0;border-top:3px solid #2E6F95;">
@@ -4180,9 +4189,9 @@ function renderPlane(app, pNum) {
   }
 
   const prevLink = pNum > 1 ? `#/plane/${pNum - 1}` : "#/hub";
-  const prevLabel = pNum > 1 ? `← Plane ${pNum - 1}: ${PLANE_BY_N[pNum - 1].name}` : "← Back to Hub";
+  const prevLabel = pNum > 1 ? `← Pillar ${pNum - 1}: ${PLANE_BY_N[pNum - 1].name}` : "← Back to Hub";
   const nextLink = pNum < 7 ? `#/plane/${pNum + 1}` : "#/results";
-  const nextLabel = pNum < 7 ? `Next: Plane ${pNum + 1} (${PLANE_BY_N[pNum + 1].name}) →` : "View Your Australian Archetype & Keyring Results →";
+  const nextLabel = pNum < 7 ? `Next: Pillar ${pNum + 1} (${PLANE_BY_N[pNum + 1].name}) →` : "View Results →";
 
   // Handle Focus Mode (1 card at a time) vs List Mode
   const totalInView = cardsArray.length;
@@ -4873,7 +4882,7 @@ function renderResults(app) {
         <h3 style="margin:2px 0 12px;">All 8 Australian Archetypes Ranked</h3>
         <table class="rank-table">
           <thead>
-            <tr><th>Archetype</th><th>Coords (υ, ψ)</th><th>Match</th><th>Inspect</th></tr>
+            <tr><th>Archetype</th><th>Outlook</th><th>Match</th><th>Inspect</th></tr>
           </thead>
           <tbody>
             ${profile.archetypeMatches.map((a, idx) => `
@@ -4882,7 +4891,7 @@ function renderResults(app) {
                   <strong>${idx === 0 ? "★ " : ""}${escapeHtml(a.name)}</strong>
                   <div style="font-size:0.76rem;color:var(--ink-muted)">${escapeHtml(a.subtitle)}</div>
                 </td>
-                <td class="mono">(${a.coords.v >= 0 ? "+" : ""}${a.coords.v}, ${a.coords.psi >= 0 ? "+" : ""}${a.coords.psi})</td>
+                <td class="mono">${a.coords.v >= 0 ? "+" : ""}${(a.coords.v * 100).toFixed(0)}% Good</td>
                 <td class="mono"><span class="pill-score ${a.matchPct >= 70 ? "pill-high" : a.matchPct >= 45 ? "pill-mid" : "pill-low"}">${a.matchPct}%</span></td>
                 <td><button type="button" class="info-btn" data-compare-type="archetype" data-compare-id="${a.id}">(?)</button></td>
               </tr>
