@@ -3576,7 +3576,7 @@ function render(opts = {}) {
 
   const heroBanner = document.getElementById("site-hero-banner");
   if (heroBanner) {
-    heroBanner.style.display = (route.page === "plane") ? "none" : "";
+    heroBanner.style.display = (["plane", "search", "review"].includes(route.page)) ? "none" : "";
   }
 
   renderNav(route);
@@ -3938,13 +3938,17 @@ function renderABCDBlockHTML(prefix, id, item, planeHue, extraHeaderHTML = "", e
             data-clear-prefix="${prefix}" data-clear-id="${id}" data-clear-probe="${probe}">clear</button>
         </div>
         ${probe === "C" ? `
-          <div class="blocker-chips-wrap">
-            <span class="mono" style="font-size:0.7rem;color:var(--ink-muted);margin-right:4px;">What's blocking it in Australia? (optional)</span>
-            ${BLOCKER_TAGS.map(tag => {
-              const active = chosenBlockers.includes(tag);
-              return `<button type="button" class="blocker-chip-btn ${active ? "active" : ""}" data-blocker-prefix="${prefix}" data-blocker-id="${id}" data-blocker-tag="${tag}">${tag}</button>`;
-            }).join("")}
-          </div>
+          <details class="blocker-disclosure" ${chosenBlockers.length > 0 ? "open" : ""} style="margin-top:8px;">
+            <summary class="mono" style="font-size:0.73rem;color:var(--ink-muted);cursor:pointer;user-select:none;display:inline-flex;align-items:center;gap:4px;">
+              <span>+ Tag what's blocking this in Australia ${chosenBlockers.length > 0 ? `(${chosenBlockers.length} tagged)` : "(optional)"}</span>
+            </summary>
+            <div class="blocker-chips-wrap" style="margin-top:6px;">
+              ${BLOCKER_TAGS.map(tag => {
+                const active = chosenBlockers.includes(tag);
+                return `<button type="button" class="blocker-chip-btn ${active ? "active" : ""}" data-blocker-prefix="${prefix}" data-blocker-id="${id}" data-blocker-tag="${tag}">${tag}</button>`;
+              }).join("")}
+            </div>
+          </details>
         ` : ""}
       </div>
     `;
@@ -4085,10 +4089,9 @@ function renderPlane(app, pNum) {
           ${infoBtnHTML("P", p.n)}
         </div>
       </div>
-      <div class="node-lore" style="font-size:0.95rem;line-height:1.6;color:var(--ink-soft);padding:14px 18px;background:var(--bg-card);border:1px solid var(--rule);border-radius:10px;margin-bottom:14px;">
-        <p style="margin:0 0 8px;"><strong>The Principle:</strong> ${escapeHtml(p.pillarSummary || p.blurb)}</p>
-        <p style="margin:0 0 8px;font-size:0.88rem;color:var(--ink-muted);"><strong>In Everyday Life:</strong> ${escapeHtml(p.practicalText || "")}</p>
-      </div>
+      <p style="margin:6px 0 14px;font-size:0.94rem;color:var(--ink-soft);line-height:1.55;">
+        ${escapeHtml(p.pillarSummary || p.blurb)}
+      </p>
     `;
     cardsArray = [renderABCDBlockHTML("P", p.n, p, p.hue, headerHTML)];
   } else if (STATE.tier === 49) {
@@ -4194,92 +4197,32 @@ function renderPlane(app, pNum) {
   }
 
   app.innerHTML = `
-    <div class="plane-banner" style="--plane-color:${p.hue}">
-      <div class="plane-banner-top">
+    <div class="plane-banner" style="--plane-color:${p.hue};padding:14px 20px;margin-bottom:14px;">
+      <div class="plane-banner-top" style="align-items:center;">
         <div>
-          <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:6px;">
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:2px;">
             <span class="plane-code-pill">Pillar ${p.n}</span>
-            <span class="eyebrow" style="color:${p.hue};margin:0;">
-              ${escapeHtml(p.pillarBadge || p.pillar)}
-            </span>
+            <h1 style="font-size:1.35rem;margin:0;">${p.name} — ${escapeHtml(p.pillar)}</h1>
           </div>
-          <h1 style="font-size:clamp(1.65rem,2.6vw,2.15rem);margin:2px 0 4px;">Pillar ${p.n}: ${p.name} — ${escapeHtml(p.fullTitle || `Values of Australian ${p.name}`)}</h1>
-          <p style="margin:0;color:var(--ink-soft);font-size:0.96rem;">
-            <strong>Core Focus:</strong> ${renderGlossaryHTML(p.blurb)}
+          <p style="margin:2px 0 0;color:var(--ink-soft);font-size:0.88rem;">
+            ${renderGlossaryHTML(p.blurb)}
           </p>
         </div>
-        <div style="text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:8px;">
-          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-            ${STATE.tier !== 7 ? `
-              <div class="view-mode-switch" role="group" aria-label="View mode">
-                <button type="button" class="view-mode-btn ${STATE.viewMode === "list" ? "active" : ""}" data-view-mode="list">📋 All</button>
-                <button type="button" class="view-mode-btn ${STATE.viewMode === "focus" ? "active" : ""}" data-view-mode="focus">🎯 Focus</button>
-              </div>
-            ` : ""}
-            <div class="mono" id="plane-live-badge" style="font-size:0.85rem;color:var(--ink-soft);background:#F8FAFC;border:1px solid #E2E8F0;padding:4px 10px;border-radius:8px;font-weight:600;">
-              ${summary.answeredNodes}/${summary.totalNodes} answered
-            </div>
-          </div>
-          <div style="display:flex;gap:10px;flex-wrap:wrap;">
-            <a href="Plane_${p.n}_${p.name === "Cause" ? "Foundation" : p.name}.html" target="_blank" class="mono" style="font-size:0.75rem;color:${p.hue};font-weight:700;">Read full chapter ↗</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="plane-quote-box">
-        "${escapeHtml(p.quote)}"
-        <cite>— ${escapeHtml(p.attribution)}</cite>
-      </div>
-
-      <details class="plane-lore-drawer" ${STATE.tier === 7 ? "open" : ""}>
-        <summary>
-          <span>📖 Background &amp; Everyday Meaning of Pillar ${p.n}: ${escapeHtml(p.name)}</span>
-          <span class="mono" style="font-size:0.74rem;color:var(--ink-muted);">Click to expand / collapse</span>
-        </summary>
-        <div class="plane-lore-drawer-body">
-          <div class="plane-totality-box">
-            <div class="plane-totality-title">
-              <span>The Big Picture</span>
-            </div>
-            <div>${renderGlossaryHTML(p.totality)}</div>
-          </div>
-
-          <div class="plane-pillar-grid">
-            <div class="plane-pillar-col">
-              <strong class="col-head" style="color:${p.hue}">🏛️ The Core Ideal: ${escapeHtml(p.pillar)}</strong>
-              ${renderGlossaryHTML(p.pillarSummary || p.blurb)}
-            </div>
-            <div class="plane-pillar-col">
-              <strong class="col-head" style="color:#B45309">⚖️ The Pitfall to Watch: ${escapeHtml(p.shadowTitle || "")}</strong>
-              ${renderGlossaryHTML(p.shadowText || "")}
-            </div>
-            <div class="plane-pillar-col">
-              <strong class="col-head" style="color:#0F766E">🛠️ In Everyday Practice</strong>
-              ${renderGlossaryHTML(p.practicalText || "")}
-            </div>
-          </div>
-
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
           ${STATE.tier !== 7 ? `
-            <div class="plane-senses-strip">
-              <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;">
-                <span class="mono" style="font-size:0.74rem;font-weight:700;color:#334155;text-transform:uppercase;letter-spacing:0.05em;">
-                  Jump to a theme in Pillar ${p.n}:
-                </span>
-              </div>
-              <div class="plane-senses-grid">
-                ${planeSenses.map(s => `
-                  <button type="button" class="plane-sense-chip" data-jump-sense="${s.id}" title="${escapeHtml(s.narrative)}">
-                    <div class="sc-top">
-                      <span>Theme ${s.id}</span>
-                    </div>
-                    <div class="sc-name">${escapeHtml(s.title)}</div>
-                  </button>
-                `).join("")}
-              </div>
+            <div class="view-mode-switch" role="group" aria-label="View mode">
+              <button type="button" class="view-mode-btn ${STATE.viewMode === "list" ? "active" : ""}" data-view-mode="list">📋 All</button>
+              <button type="button" class="view-mode-btn ${STATE.viewMode === "focus" ? "active" : ""}" data-view-mode="focus">🎯 Focus</button>
             </div>
           ` : ""}
+          <div class="mono" id="plane-live-badge" style="font-size:0.82rem;color:var(--ink-soft);background:#F8FAFC;border:1px solid #E2E8F0;padding:4px 10px;border-radius:8px;font-weight:600;">
+            ${summary.answeredNodes}/${summary.totalNodes} answered
+          </div>
+          <button type="button" class="info-btn" data-open-info-prefix="P" data-open-info-id="${p.n}" title="Read background &amp; everyday meaning of Pillar ${p.n}">
+            <span>📖 Overview</span>
+          </button>
         </div>
-      </details>
+      </div>
     </div>
 
 
@@ -4391,10 +4334,9 @@ function renderVectorCardHTML(v, planeHue) {
         ${infoBtnHTML("V", v.uid)}
       </div>
     </div>
-    <div class="node-lore">
-      <blockquote>"${escapeHtml(v.quote)}" <cite>— ${escapeHtml(v.attribution)} (${escapeHtml(v.source)})</cite></blockquote>
-      <div>${renderGlossaryHTML(v.description)}</div>
-    </div>
+    <p style="margin:6px 0 14px;font-size:0.92rem;color:var(--ink-soft);line-height:1.55;">
+      ${renderGlossaryHTML(v.description)}
+    </p>
   `;
   return renderABCDBlockHTML("V", v.uid, v, planeHue, headerHTML);
 }
@@ -4483,7 +4425,7 @@ function renderSearchResults() {
             </div>
             <div class="node-badges">${infoBtnHTML("S", s.id)}</div>
           </div>
-          <div class="node-lore">${renderGlossaryHTML(s.narrative)}</div>
+          <p style="margin:6px 0 14px;font-size:0.92rem;color:var(--ink-soft);line-height:1.55;">${renderGlossaryHTML(s.narrative)}</p>
         `;
         return renderABCDBlockHTML("S", s.id, s, p.hue, headerHTML);
       }).join("")}
