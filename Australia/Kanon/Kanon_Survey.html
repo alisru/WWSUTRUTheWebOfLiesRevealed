@@ -4213,7 +4213,7 @@ function renderPlane(app, pNum) {
               ${escapeHtml(p.pillarBadge || p.pillar)}
             </span>
           </div>
-          <h1 style="font-size:clamp(1.65rem,2.6vw,2.15rem);margin:2px 0 4px;">Pillar ${p.n}: ${p.name} — ${escapeHtml(p.fullTitle || `Values of Australian ${p.name}`)}</h1>
+          <h1 style="font-size:clamp(1.5rem,2.4vw,2rem);margin:2px 0 4px;">Pillar ${p.n}: ${p.name} — ${escapeHtml(p.pillarBadge || p.domain || p.pillar)}</h1>
           <p style="margin:0;color:var(--ink-soft);font-size:0.96rem;">
             <strong>Core Focus:</strong> ${renderGlossaryHTML(p.blurb)}
           </p>
@@ -4235,7 +4235,7 @@ function renderPlane(app, pNum) {
         <cite>— ${escapeHtml(p.attribution)}</cite>
       </div>
 
-      <details class="plane-lore-drawer" ${STATE.tier === 7 ? "open" : ""}>
+      <details class="plane-lore-drawer">
         <summary>
           <span>📖 Background &amp; Everyday Meaning of Pillar ${p.n}: ${escapeHtml(p.name)}</span>
           <span class="mono" style="font-size:0.74rem;color:var(--ink-muted);">Click to expand / collapse</span>
