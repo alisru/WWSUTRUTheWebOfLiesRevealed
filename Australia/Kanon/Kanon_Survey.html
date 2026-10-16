@@ -2741,46 +2741,6 @@ function computeKanonProfile() {
   };
 }
 
-/* ---------- DEMO PRESET PROFILES ---------- */
-function loadPresetProfile(presetId) {
-  STATE.answers = {};
-  STATE.blockers = {};
-
-  if (presetId === "stoic_guardian") {
-    PLANES.forEach(p => {
-      setAns("P", p.n, "A", 5); setAns("P", p.n, "B", 4); setAns("P", p.n, "C", 3);
-    });
-    SENSES.forEach((s, idx) => {
-      setAns("S", s.id, "A", idx % 3 === 0 ? 5 : 4);
-      setAns("S", s.id, "B", idx % 4 === 0 ? 5 : 4);
-      setAns("S", s.id, "C", 3);
-    });
-  } else if (presetId === "betrayed_battler") {
-    const demoBlockers = ["Cost of Living / Priced Out", "Corporate / Political Capture", "Broken Trust / Burned Before"];
-    PLANES.forEach(p => {
-      setAns("P", p.n, "A", 5);
-      setAns("P", p.n, "B", 4);
-      setAns("P", p.n, "C", p.n === 2 || p.n === 3 || p.n === 7 ? -3 : -2);
-      STATE.blockers[`P|${p.n}`] = [demoBlockers[p.n % demoBlockers.length]];
-    });
-    SENSES.forEach((s, idx) => {
-      setAns("S", s.id, "A", idx % 2 === 0 ? 5 : 4);
-      setAns("S", s.id, "B", idx % 3 === 0 ? 4 : 3);
-      setAns("S", s.id, "C", (s.plane === 2 || s.plane === 3 || idx % 3 === 0) ? -3 : -2);
-      STATE.blockers[`S|${s.id}`] = [demoBlockers[idx % demoBlockers.length]];
-    });
-  } else if (presetId === "hanson_354") {
-    STATE.tier = 354;
-    VECTORS.forEach(v => {
-      const val = v.hansonVerdict === "HIT" ? 4 : -3;
-      STATE.answers[ansKey("V", v.uid, "A")] = val;
-      STATE.answers[ansKey("V", v.uid, "B")] = val;
-      STATE.answers[ansKey("V", v.uid, "C")] = v.hansonVerdict === "FAIL" ? -3 : 2;
-    });
-  }
-  saveState();
-  render();
-}
 
 /* =========================================================================
    KEYRING PLOT SVG GENERATOR: BIPOLAR LAYERED GEOMETRY (−5 .. 0 .. +5)
@@ -3792,19 +3752,12 @@ function renderHub(app) {
 
       ${renderTierSelectorHTML()}
 
-      <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;padding-top:8px;border-top:1px solid var(--rule);">
-        <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
-          <a class="btn" href="#/plane/1">Start at Pillar 1: Identity →</a>
-          <a class="btn btn-warm" href="#/results">View Results (${prog.done}/${prog.total})</a>
-          <a class="btn btn-secondary" href="#/search">Answer by Topic</a>
-          <a class="btn btn-secondary" href="#/framework">How the Questions Work</a>
-        </div>
-        <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;">
-          <span class="mono" style="font-size:0.75rem;color:var(--ink-muted);">Demo Presets:</span>
-          <button class="btn btn-secondary btn-sm" id="preset-battler" title="Preview a Betrayed Battler profile">"Betrayed Battler"</button>
-          <button class="btn btn-secondary btn-sm" id="preset-guardian" title="Preview The Stoic Guardian profile">"Stoic Guardian"</button>
-          <button class="btn btn-secondary btn-sm" id="preset-hanson" title="Load Pauline Hanson's 354 Audit">"Hanson Audit"</button>
-        </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;padding-top:8px;border-top:1px solid var(--rule);">
+        <a class="btn" href="#/plane/1">Start at Pillar 1: Identity →</a>
+        <a class="btn btn-warm" href="#/results">View Results (${prog.done}/${prog.total})</a>
+        <a class="btn btn-secondary" href="#/archetypes">See Archetypes</a>
+        <a class="btn btn-secondary" href="#/search">Answer by Topic</a>
+        <a class="btn btn-secondary" href="#/framework">How the Questions Work</a>
       </div>
     </section>
 
@@ -3840,12 +3793,6 @@ function renderHub(app) {
   `;
 
   bindTierSelectorEvents(app);
-  document.getElementById("preset-battler")?.addEventListener("click", () => loadPresetProfile("betrayed_battler"));
-  document.getElementById("preset-guardian")?.addEventListener("click", () => loadPresetProfile("stoic_guardian"));
-  document.getElementById("preset-hanson")?.addEventListener("click", () => {
-    loadPresetProfile("hanson_354");
-    location.hash = "#/results";
-  });
 }
 
 /* =========================================================================
