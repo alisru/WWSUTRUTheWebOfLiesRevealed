@@ -8,19 +8,19 @@ window.KANON_SURVEY_DATA = {
       "name": "Identity",
       "fullTitle": "Values of Australian Identity",
       "pillar": "The Egalitarian",
-      "pillarBadge": "Radical Horizontality",
-      "domain": "Metaphysical",
+      "pillarBadge": "Level Playing Field",
+      "domain": "Character & Soul",
       "tau": 3.0,
       "hue": "#CA8A04",
-      "blurb": "Character over rank, horizontal loyalty, skepticism toward pretension, and deep-time belonging",
-      "pillarSummary": "The Egalitarian does not believe in the destruction of hierarchy for chaos's sake, but for dignity's sake. They possess an innate inability to be impressed by status or titles: when the Prime Minister walks into the public bar, the Egalitarian does not bow or sneer—they simply nod and ask, 'What are you having?'",
-      "shadowTitle": "Tall Poppy → Humble Excellence",
-      "shadowText": "Transmutes envy into Humble Excellence. You are allowed to achieve greatness in Australia, but the price of admission is humility—never acting superior or pulling rank on your peers.",
-      "practicalText": "Insisting on paying your round at the pub regardless of income; the CEO who eats in the staff canteen; the surgeon who introduces themselves by first name; treating the cleaner's view with the same baseline respect as the economist's.",
+      "blurb": "Treating everyone as an equal, standing by your mates, and judging people by character rather than status or money",
+      "pillarSummary": "The Egalitarian believes nobody is born better than anyone else. Titles, inherited wealth, and fancy job labels don't buy respect in Australia—character and how you treat the people around you do. Example: When the Prime Minister or a CEO walks into the local pub or footy club, they wait their turn at the bar like everyone else.",
+      "shadowTitle": "Tall Poppy Envy → Humble Excellence",
+      "shadowText": "Turns tall-poppy jealousy into quiet, humble pride. You're welcome to achieve world-class success in Australia, so long as you don't get a big head or start looking down on ordinary people.",
+      "practicalText": "Paying your round at the pub; the boss who eats in the staff lunchroom; introducing yourself by your first name; treating the cleaner with the exact same respect as the surgeon.",
       "qA": "A person's worth in Australia should come from their character, resilience, and loyalty to the people beside them—never from wealth, title, or social rank.",
       "qB": "In the heat of everyday life, I actually treat everyone on a level playing field and stand by my mates rather than pulling rank or looking down on others.",
       "qC": "The people in my everyday circle believe we should treat everyone as equals and actually back one another without pretension.",
-      "qD": "Across Australia today, our society and institutions actually practise genuine peer-to-peer equality rather than rewarding class hierarchy.",
+      "qD": "Across Australia today, our everyday society and institutions actually treat people as genuine equals rather than bowing to wealth, titles, and social class.",
       "tags": [
         "identity",
         "mateship",
@@ -31,7 +31,7 @@ window.KANON_SURVEY_DATA = {
       ],
       "quote": "No spit and polish here... just a quiet confidence in one another.",
       "attribution": "General Sir John Monash, War Letters, 1918",
-      "totality": "The Totality of Australian Identity is a horizontal character defined by the Bond of Mateship and the Struggle of the Battler, who rigidly enforces the Axiom of the Fair Go through the Leveler of Egalitarianism. This identity inhabits a polarized geography, torn between the spiritual Totem of the Bush and the hedonistic Fringe of the Coast, ultimately retreating to the Retreat of the Suburb to escape the silence of the Void. Driven by the existential Imperative to \"Populate or Perish\" and fueled by the Engine of Speculative Luck, the national character operates through a Standard of Pragmatic Common Sense and the Valve of Passive Resistance. Its deep origins lie in the Seed of the Convict and the ancient Matrix of the Songlines, which have evolved into a modern state that projects an Offering of resources to the world while seeking a final Destiny of Sovereignty through the Healing of Reconciliation and the Proxy of Sport.",
+      "totality": "At its core, Australian identity is built on one simple rule: treat everyone as an equal and back your mates when things get tough. We have a healthy skepticism of self-important bosses and politicians, preferring quiet grit over boasting. While our history carries the real scars of convict chains and First Nations dispossession, our shared everyday life is lived in the suburbs, on the coast, and across Country—drawn together by sport, dry humour, and the belief that everyone deserves a fair crack.",
       "coords": {
         "v": 0.48,
         "psi": 0.22
@@ -41,7 +41,7 @@ window.KANON_SURVEY_DATA = {
         "lowA": "You place lower personal weight on Pillar 1 (The Egalitarian) or disagree with how Australia defines Identity.",
         "highB": "In your daily life and community, Pillar 1 (Identity) is thriving and experienced in practice.",
         "lowB": "In daily reality, Pillar 1 (Identity) is eroded, blocked, or out of reach.",
-        "note": "Plane 1 (Who · Metaphysical Domain): The Totality of Australian Identity is a horizontal character defined by the Bond of Mateship and the Struggle of the Battler, who rigidly enforces the Axiom of the Fair Go through the Leveler of Egalitarianism. This identity inhabits a polarized geography, torn between the spiritual Totem of the Bush and the hedonistic Fringe of the Coast, ultimately retreating to the Retreat of the Suburb to escape the silence of the Void. Driven by the existential Imperative to \"Populate or Perish\" and fueled by the Engine of Speculative Luck, the national character operates through a Standard of Pragmatic Common Sense and the Valve of Passive Resistance. Its deep origins lie in the Seed of the Convict and the ancient Matrix of the Songlines, which have evolved into a modern state that projects an Offering of resources to the world while seeking a final Destiny of Sovereignty through the Healing of Reconciliation and the Proxy of Sport."
+        "note": "At its core, Australian identity is built on one simple rule: treat everyone as an equal and back your mates when things get tough. We have a healthy skepticism of self-important bosses and politicians, preferring quiet grit over boasting. While our history carries the real scars of convict chains and First Nations dispossession, our shared everyday life is lived in the suburbs, on the coast, and across Country—drawn together by sport, dry humour, and the belief that everyone deserves a fair crack."
       }
     },
     {
@@ -51,16 +51,16 @@ window.KANON_SURVEY_DATA = {
       "name": "Definition",
       "fullTitle": "Democracy, Law & the Civic Contract",
       "pillar": "The Constituent",
-      "pillarBadge": "Skeptical Civil Duty",
-      "domain": "Possible",
+      "pillarBadge": "Keeping Power Honest",
+      "domain": "Democracy & Law",
       "tau": 14.0,
       "hue": "#D97706",
-      "blurb": "The civic contract, accountable public utilities, democratic voice, and equal standing under law",
-      "pillarSummary": "The Constituent serves as the immune system of the body politic. Rather than worshipping the state as a sacred parent, Australians treat government as a pragmatic public utility bound by contract—and when Faceless Men or insiders try to bypass the public will, the Constituent stands up to hold them to account.",
-      "shadowTitle": "Apathy ('She'll Be Right') → Vigilance",
-      "shadowText": "Transmutes passive 'She'll be right' complacency into active civic vigilance—recognising that the Quiet Life is only protected through noisy democratic accountability.",
-      "practicalText": "Reading the fine print on a council development application and showing up at Town Hall; the union delegate who knows the enterprise agreement by heart; voting carefully and defending independent public institutions.",
-      "qA": "Public institutions, laws, and political leaders should exist strictly as practical utilities to serve empowered citizens—never as masters ruling over passive subjects.",
+      "blurb": "Keeping politicians accountable, clean elections, equal standing under the law, and government that serves the public",
+      "pillarSummary": "Australians don't worship government as a sacred master—we hire it as a practical public service to keep the roads paved, hospitals running, and rules fair. Example: Turning up on Saturday morning to vote in pencil, grab a democracy sausage, and boot out politicians who forget who they work for.",
+      "shadowTitle": "Complacency ('She'll Be Right') → Watchdog Vigilance",
+      "shadowText": "Replaces lazy 'she'll be right' shrugs with active watchdog vigilance—because if ordinary people stop paying attention, backroom lobbyists and powerbrokers quickly take over.",
+      "practicalText": "Independent electoral boundaries (AEC), compulsory Saturday voting, strong anti-corruption watchdogs, and public servants who actually help citizens rather than hiding behind red tape.",
+      "qA": "Governments, public services, and politicians should exist purely to serve everyday Australians—never acting like bosses ruling over us or serving corporate mates.",
       "qB": "In practice, I actively exercise my democratic voice, hold authorities to a fair standard, and refuse to act like a passive subject.",
       "qC": "People in my community expect government to serve ordinary citizens and actively push back against political arrogance.",
       "qD": "In reality today, Australian parliaments, courts, and agencies actually operate as fair, transparent servants of the public rather than serving insiders.",
@@ -74,7 +74,7 @@ window.KANON_SURVEY_DATA = {
       ],
       "quote": "The crimson thread of kinship runs through us all.",
       "attribution": "Henry Parkes, Federation Banquet Speech, 1890",
-      "totality": "The Totality of Australian Definition is a utilitarian architecture that begins with The Independent Australian Briton, a hybrid subject who evolved into a sovereign Constituent within a system of Mateship. This definition is structured by The Deal of Federation, creating a Washminster hybrid that balances the States' House against the People's House under the distant authority of The Governor-General. The motivation of this system is A Bulwark of safety, driven by the desire for The Quiet Life and protected by The White Walls of strict border control. It operates through the discipline of Faceless Men and Compelled Voting, always seeking consensus through The Calculus of preferences. Rooted in the Imperial Act and confirmed by Celebration, the definition ultimately produces a Nanny State that prioritizes safety over liberty, mythologizing the Anzac while maintaining The Great Silence about its origins, ensuring that Peace, Order, and Good Government remain the supreme values of the continent.",
+      "totality": "Australian democracy is practical, not poetic. We view parliaments, courts, and councils as public utilities hired to serve everyday people. We pioneered the secret ballot and compulsory voting so every citizen—not just the rich or noisy—has an equal voice. However, our desire for peace and safety can easily slide into an over-regulated nanny state if we let bureaucrats and party insiders run the show unchecked.",
       "coords": {
         "v": 0.43,
         "psi": 0.15
@@ -84,7 +84,7 @@ window.KANON_SURVEY_DATA = {
         "lowA": "You place lower personal weight on Pillar 2 (The Constituent) or disagree with how Australia defines Definition.",
         "highB": "In your daily life and community, Pillar 2 (Definition) is thriving and experienced in practice.",
         "lowB": "In daily reality, Pillar 2 (Definition) is eroded, blocked, or out of reach.",
-        "note": "Plane 2 (What · Possible Domain): The Totality of Australian Definition is a utilitarian architecture that begins with The Independent Australian Briton, a hybrid subject who evolved into a sovereign Constituent within a system of Mateship. This definition is structured by The Deal of Federation, creating a Washminster hybrid that balances the States' House against the People's House under the distant authority of The Governor-General. The motivation of this system is A Bulwark of safety, driven by the desire for The Quiet Life and protected by The White Walls of strict border control. It operates through the discipline of Faceless Men and Compelled Voting, always seeking consensus through The Calculus of preferences. Rooted in the Imperial Act and confirmed by Celebration, the definition ultimately produces a Nanny State that prioritizes safety over liberty, mythologizing the Anzac while maintaining The Great Silence about its origins, ensuring that Peace, Order, and Good Government remain the supreme values of the continent."
+        "note": "Australian democracy is practical, not poetic. We view parliaments, courts, and councils as public utilities hired to serve everyday people. We pioneered the secret ballot and compulsory voting so every citizen—not just the rich or noisy—has an equal voice. However, our desire for peace and safety can easily slide into an over-regulated nanny state if we let bureaucrats and party insiders run the show unchecked."
       }
     },
     {
@@ -94,15 +94,15 @@ window.KANON_SURVEY_DATA = {
       "name": "Land",
       "fullTitle": "Values of Australian Land",
       "pillar": "The Steward",
-      "pillarBadge": "Ecological Humility",
-      "domain": "Physical",
+      "pillarBadge": "Caring for Country & Home",
+      "domain": "Land & Housing",
       "tau": 3.0,
       "hue": "#16A34A",
-      "blurb": "Continental stewardship, climate adaptation, housing security, and shared public commons",
-      "pillarSummary": "The Steward has ceased fighting the continent. Adopting the deep-time perspective of First Nations Elders, the Steward understands we do not merely own the land as an extractive quarry—we hold and care for a fragile, ancient Country of drought, flood, bush, and open coast.",
-      "shadowTitle": "The Terror of the Void → Respect & Custodianship",
-      "shadowText": "Transmutes colonial fear and quarry-style extraction into ecological humility—connecting with the Red Heart, bush, and suburban commons rather than plundering or pricing people out of shelter.",
-      "practicalText": "Checking the water tank and respecting river flows; backing Indigenous cultural burning in bushfire management; keeping beaches and public parks open to all; defending secure housing as a human foundation rather than a speculative casino.",
+      "blurb": "Looking after our rivers, bushland, and farms for the long haul while making sure every family can afford a secure home",
+      "pillarSummary": "The Steward recognises that Australia is a fragile, sunburnt continent of droughts and flooding rains—not an endless quarry to be dug up and sold off, or a property casino that prices young Australians out of a home. Example: Farmers, towns, and First Nations rangers working together to keep local rivers flowing and bushland safe from mega-fires.",
+      "shadowTitle": "Short-Term Plunder → Long-Term Care",
+      "shadowText": "Replaces the urge to strip-mine the land or flip houses for quick cash with long-term care—respecting ancient First Nations knowledge, protecting rivers and farmland, and treating housing as a human home rather than a tax shelter.",
+      "practicalText": "Secure and affordable housing for families and renters, stopping corporate water theft in the Murray-Darling, cultural burn-offs to prevent catastrophic bushfires, and reliable regional roads and hospitals.",
       "qA": "Living on this continent should mean humble stewardship of its fragile land and water cycles, alongside secure shelter and open public commons for every resident.",
       "qB": "In my own choices and daily habits, I actively care for my local environment, respect natural limits, and back fair access to housing and public space.",
       "qC": "My local community values and practises genuine stewardship of land, water, and neighbourhood housing security.",
@@ -118,7 +118,7 @@ window.KANON_SURVEY_DATA = {
       ],
       "quote": "They call her a young country, but she is very old.",
       "attribution": "Judith Wright, Bullocky, 1946",
-      "totality": "The Totality of Australian Land is a Sunburnt Country of Weird Melancholy, defined by the Sovereignty of the Squatter and the Fiefdom of the Station, yet legally founded on the Void of Terra Nullius. It is an ecology centered on the Red Heart and bounded by the Limit of Goyder's Line, where the Logic of Adaptation (Marsupials) struggles against the Virus of invasion. The climate is a violent engine powered by the Radiation of the Sun and the Drive of Thirst, forcing the civilization to rely on the Victory of the Windmill and the Redemption of the Dam. Infrastructure binds this vastness with the Nerve of the Telegraph and the Spine of the Railway, while the economy digs into the Lode of the ancient Shield using the Method of Excavation. Ultimately, this hostility creates a Rim civilization of Suburbanites who cling to the Comfort of the Sprawl, mediating their relationship with the Terror of the continent through the Ritual of the BBQ.",
+      "totality": "Living on the driest inhabited continent means respecting natural limits. First Nations peoples cared for Country for over 65,000 years, while modern settlement built farms, dams, railways, and coastal suburbs. Today, whether we live in a city apartment, a suburban street, or a remote bush town, our survival depends on clean water, healthy soil, and a secure roof over our heads.",
       "coords": {
         "v": 0.32,
         "psi": 0.15
@@ -128,7 +128,7 @@ window.KANON_SURVEY_DATA = {
         "lowA": "You place lower personal weight on Pillar 3 (The Steward) or disagree with how Australia defines Land.",
         "highB": "In your daily life and community, Pillar 3 (Land) is thriving and experienced in practice.",
         "lowB": "In daily reality, Pillar 3 (Land) is eroded, blocked, or out of reach.",
-        "note": "Plane 3 (Where · Physical Domain): The Totality of Australian Land is a Sunburnt Country of Weird Melancholy, defined by the Sovereignty of the Squatter and the Fiefdom of the Station, yet legally founded on the Void of Terra Nullius. It is an ecology centered on the Red Heart and bounded by the Limit of Goyder's Line, where the Logic of Adaptation (Marsupials) struggles against the Virus of invasion. The climate is a violent engine powered by the Radiation of the Sun and the Drive of Thirst, forcing the civilization to rely on the Victory of the Windmill and the Redemption of the Dam. Infrastructure binds this vastness with the Nerve of the Telegraph and the Spine of the Railway, while the economy digs into the Lode of the ancient Shield using the Method of Excavation. Ultimately, this hostility creates a Rim civilization of Suburbanites who cling to the Comfort of the Sprawl, mediating their relationship with the Terror of the continent through the Ritual of the BBQ."
+        "note": "Living on the driest inhabited continent means respecting natural limits. First Nations peoples cared for Country for over 65,000 years, while modern settlement built farms, dams, railways, and coastal suburbs. Today, whether we live in a city apartment, a suburban street, or a remote bush town, our survival depends on clean water, healthy soil, and a secure roof over our heads."
       }
     },
     {
@@ -138,15 +138,15 @@ window.KANON_SURVEY_DATA = {
       "name": "Drive",
       "fullTitle": "Values of Australian Drive",
       "pillar": "The Volunteer",
-      "pillarBadge": "Silent Agency",
-      "domain": "Lyrical",
+      "pillarBadge": "Pitching In & Fair Play",
+      "domain": "Work, Effort & Community",
       "tau": 1.5,
       "hue": "#0D9488",
-      "blurb": "Reward for honest effort, volunteer solidarity in crisis, protected rest, and the good life",
-      "pillarSummary": "The Volunteer acts without waiting to be ordered. When bushfires or floodwaters rise, they launch the tinny and hold the hose—completing the historical shift from the Convict (forced labour) to the Volunteer (free service), while insisting that hard yakka earns a dignified living wage and protected rest.",
-      "shadowTitle": "Bludging & Burnout → Service & Fair Reciprocity",
-      "shadowText": "Transmutes both 'Bludging' (free-riding on mates) and extractive workaholic burnout into honourable service—where everyone pitches in when needed and everyone is guaranteed the Weekend and a fair living standard.",
-      "practicalText": "Joining the RFS, SES, or Surf Life Saving; launching a tinny when neighbours are flooded; working honestly without performative hustle culture; defending penalty rates, the eight-hour day, and family time.",
+      "blurb": "Honest hard work, volunteering when crisis hits, living wages, and protected time off with family and mates",
+      "pillarSummary": "Australians work to live; we don't live to work. When bushfires or floods hit, ordinary people drop everything to volunteer without asking for a cent—and in return, we expect an economy where an honest week's work pays the bills and leaves time for family and the weekend. Example: Local SES and RFS volunteers working through the night to save a neighbour's home, and workplaces respecting the 38-hour week and weekend penalty rates.",
+      "shadowTitle": "Bludging & Burnout → Fair Effort & Rest",
+      "shadowText": "Rejects both the lazy free-rider who leaves their workmates carrying the load and the greedy corporate rat-race that burns staff out—insisting everyone pulls their weight and everyone gets fair rest.",
+      "practicalText": "A living wage that covers rent and groceries, protected weekends and smoko breaks, backing local surf clubs and volunteer fire brigades, and keeping local pubs, sheds, and sports clubs affordable.",
       "qA": "Every person who puts in an honest effort should receive a living wage, protected rest and family time, and the community backing to have a fair crack at the good life.",
       "qB": "In practice, I pitch in when others need help, respect fair reciprocity, and protect a healthy balance between honest work and rest.",
       "qC": "People around me genuinely volunteer, pitch in during hard times, and respect fair wages and downtime.",
@@ -162,7 +162,7 @@ window.KANON_SURVEY_DATA = {
       ],
       "quote": "Such is life.",
       "attribution": "Ned Kelly, Last Words, 1880",
-      "totality": "The Totality of Australian Drive is a paradox of Apathy (\"She'll be right\") and Ambition (\"Punching above weight\"), fueled by the Engine of Speculative Luck and the Fear of Isolation. It manifests as a Volunteer spirit in crisis but a Knocker spirit in success, strictly enforcing the Leveler of Tall Poppy Syndrome to maintain the Standard of the Middle Class. It seeks the Object of the \"Fair Go\" and the Asset of the Home, validated by the Ritual of the Weekend and the Escape of the Holiday. Rooted in the Stain of the Convict and the Fever of the Gold Rush, it is hardened in the Crucible of the Bush and validated by the Blood of the War. It is enacted by the Digger (endurance), the Battler (struggle), and the Larrikin (irreverence), who operate in the Pub (commons), the Beach (playground), and the Shed (workshop). It uses the Methods of Shouting (reciprocity), Queuing (fairness), and Striking (solidarity), while pulling the Lever of Gambling for hope and the Reserve of Volunteering for survival. It aims for a final Result of the Participant Citizen, the Mass of the Middle Class, and the Safety of the Suburb, achieving Stasis (stability) through Cynicism (the filter). It perpetually battles the Shadow of Cultural Cringe and the Gap of Isolation, relying on the Gift of the Boom to fund a lifestyle it has not earned, ending in the quiet Independence of Sovereignty.",
+      "totality": "What drives everyday Australians is a fair balance between pitching in and enjoying the quiet life. We respect the worker, the carer, and the volunteer who shows up when it counts, and we despise pretension and greed. A healthy economy isn't measured by corporate stock tickers—it's measured by whether ordinary workers can raise a family in security and enjoy their weekend in peace.",
       "coords": {
         "v": 0.41,
         "psi": 0.23
@@ -172,7 +172,7 @@ window.KANON_SURVEY_DATA = {
         "lowA": "You place lower personal weight on Pillar 4 (The Volunteer) or disagree with how Australia defines Drive.",
         "highB": "In your daily life and community, Pillar 4 (Drive) is thriving and experienced in practice.",
         "lowB": "In daily reality, Pillar 4 (Drive) is eroded, blocked, or out of reach.",
-        "note": "Plane 4 (Why · Lyrical Domain): The Totality of Australian Drive is a paradox of Apathy (\"She'll be right\") and Ambition (\"Punching above weight\"), fueled by the Engine of Speculative Luck and the Fear of Isolation. It manifests as a Volunteer spirit in crisis but a Knocker spirit in success, strictly enforcing the Leveler of Tall Poppy Syndrome to maintain the Standard of the Middle Class. It seeks the Object of the \"Fair Go\" and the Asset of the Home, validated by the Ritual of the Weekend and the Escape of the Holiday. Rooted in the Stain of the Convict and the Fever of the Gold Rush, it is hardened in the Crucible of the Bush and validated by the Blood of the War. It is enacted by the Digger (endurance), the Battler (struggle), and the Larrikin (irreverence), who operate in the Pub (commons), the Beach (playground), and the Shed (workshop). It uses the Methods of Shouting (reciprocity), Queuing (fairness), and Striking (solidarity), while pulling the Lever of Gambling for hope and the Reserve of Volunteering for survival. It aims for a final Result of the Participant Citizen, the Mass of the Middle Class, and the Safety of the Suburb, achieving Stasis (stability) through Cynicism (the filter). It perpetually battles the Shadow of Cultural Cringe and the Gap of Isolation, relying on the Gift of the Boom to fund a lifestyle it has not earned, ending in the quiet Independence of Sovereignty."
+        "note": "What drives everyday Australians is a fair balance between pitching in and enjoying the quiet life. We respect the worker, the carer, and the volunteer who shows up when it counts, and we despise pretension and greed. A healthy economy isn't measured by corporate stock tickers—it's measured by whether ordinary workers can raise a family in security and enjoy their weekend in peace."
       }
     },
     {
@@ -182,15 +182,15 @@ window.KANON_SURVEY_DATA = {
       "name": "Method",
       "fullTitle": "Values of Australian Method",
       "pillar": "The Improviser",
-      "pillarBadge": "Pragmatic Genius",
-      "domain": "Logical",
+      "pillarBadge": "Practical Common Sense",
+      "domain": "Ingenuity & Fair Rules",
       "tau": 5.0,
       "hue": "#2563EB",
-      "blurb": "Practical ingenuity, plain-spoken honesty, independent umpires, and humane workplace rules",
-      "pillarSummary": "The Improviser is the spiritual descendant of the Bush Mechanic and CSIRO inventor—judging every method by whether it actually works in reality. Sceptical of grand bureaucratic spin, they combine stringybark ingenuity with the Pub Test and an independent Umpire to keep rules fair and humane.",
-      "shadowTitle": "The Dodgy Shortcut → Pragmatic Innovation",
-      "shadowText": "Transmutes corner-cutting and bureaucratic box-ticking into genuine innovation—cutting red tape and spin ruthlessly while respecting real-world safety and fair arbitration.",
-      "practicalText": "Fixing problems on the spot with practical common sense; speaking plainly so anyone at the pub can verify the claim; backing public science (CSIRO, WiFi, bionic ear, solar) and fair workplace umpires.",
+      "blurb": "Practical problem-solving, world-class science, independent workplace umpires, and cutting through corporate spin",
+      "pillarSummary": "Australians judge any idea by one simple test: does it actually work on the ground? From bush mechanics fixing a pump with fencing wire to CSIRO scientists inventing Wi-Fi, we back practical competence and fair independent umpires over managerial buzzwords. Example: An independent workplace tribunal settling a pay dispute fairly, or a nurse bypassing clunky red tape to care for a patient.",
+      "shadowTitle": "Dodgy Shortcuts & Red Tape → Done Right & Fair",
+      "shadowText": "Replaces both dangerous corner-cutting ('she'll be right' shoddy work) and suffocating bureaucratic box-ticking with practical competence and real safety.",
+      "practicalText": "Funding public science (CSIRO) and TAFE trades, protecting whistleblowers who call out corruption, maintaining an independent workplace umpire, and using plain English instead of corporate spin.",
       "qA": "Problems in work and public life should be solved through plain-spoken honesty, practical ingenuity, and independent umpires—never spin, dodgy shortcuts, or robotic box-ticking.",
       "qB": "When a problem hits, I actually use practical common sense, speak plainly, and play by fair rules rather than hiding behind spin or red tape.",
       "qC": "In my workplace and local circle, people value practical competence, honest talk, and fair play over bureaucratic games.",
@@ -206,7 +206,7 @@ window.KANON_SURVEY_DATA = {
       ],
       "quote": "United we stand, divided we fall.",
       "attribution": "The Eureka Flag, Banner Motto, 1854",
-      "totality": "The Totality of Australian Method is a pragmatic machine operated by The Improviser (Bricoleur) and The Unionist (Collective Operator), under the watch of The Umpire (Arbiter). It employs tools like The Ballot (Silencer for Private Truth) and The Tribunal (Scale for Judicial Wage-Setting) to enforce Equality and Fairness. Born of The System (Convict Administration) and Distance (The Tyranny), it uses The Survey (Grid) to order the land and The Committee (Process) to order the people. Driven by the logic of Utility (\"Does it work?\") and measured by the metric of Fairness (\"Is it fair?\"), it aims for Efficiency but tolerates The Smoko (Pause), The Sickie (Leak), and even The Shortcut (Risk). While it suffers from Red Tape (The Cost of its own complexity), its ultimate output is a stable, peaceful society where The Fair Go is not just a dream, but a bureaucratically administered Product.",
+      "totality": "How we get things done in Australia combines hands-on ingenuity with fair rules. Because we started far from overseas factories, Australians learned to invent—from the stump-jump plough and Royal Flying Doctor Service to solar cells and the bionic ear. At the same time, we built fair institutions like the secret ballot, public schools, and industrial awards so workplaces run on human dignity rather than bullying.",
       "coords": {
         "v": 0.61,
         "psi": 0.35
@@ -216,7 +216,7 @@ window.KANON_SURVEY_DATA = {
         "lowA": "You place lower personal weight on Pillar 5 (The Improviser) or disagree with how Australia defines Method.",
         "highB": "In your daily life and community, Pillar 5 (Method) is thriving and experienced in practice.",
         "lowB": "In daily reality, Pillar 5 (Method) is eroded, blocked, or out of reach.",
-        "note": "Plane 5 (How · Logical Domain): The Totality of Australian Method is a pragmatic machine operated by The Improviser (Bricoleur) and The Unionist (Collective Operator), under the watch of The Umpire (Arbiter). It employs tools like The Ballot (Silencer for Private Truth) and The Tribunal (Scale for Judicial Wage-Setting) to enforce Equality and Fairness. Born of The System (Convict Administration) and Distance (The Tyranny), it uses The Survey (Grid) to order the land and The Committee (Process) to order the people. Driven by the logic of Utility (\"Does it work?\") and measured by the metric of Fairness (\"Is it fair?\"), it aims for Efficiency but tolerates The Smoko (Pause), The Sickie (Leak), and even The Shortcut (Risk). While it suffers from Red Tape (The Cost of its own complexity), its ultimate output is a stable, peaceful society where The Fair Go is not just a dream, but a bureaucratically administered Product."
+        "note": "How we get things done in Australia combines hands-on ingenuity with fair rules. Because we started far from overseas factories, Australians learned to invent—from the stump-jump plough and Royal Flying Doctor Service to solar cells and the bionic ear. At the same time, we built fair institutions like the secret ballot, public schools, and industrial awards so workplaces run on human dignity rather than bullying."
       }
     },
     {
@@ -226,15 +226,15 @@ window.KANON_SURVEY_DATA = {
       "name": "Foundation",
       "fullTitle": "Values of Australian Foundation",
       "pillar": "The Reconciler",
-      "pillarBadge": "Historical Courage",
-      "domain": "Historical",
+      "pillarBadge": "Facing History Honestly",
+      "domain": "Roots & Heritage",
       "tau": 30.0,
       "hue": "#4F46E5",
-      "blurb": "Honest historical reckoning, 65,000 years of continuity, bottom-up democracy, and hard-won rights",
-      "pillarSummary": "The Reconciler faces the full truth of Australian history—not with paralysing guilt or denial, but with active responsibility. They weave the three foundational stories of the nation—the 65,000-year Ancient Raft of First Nations law, the Convict and Eureka rebellion for bottom-up rights, and the postwar Migrant wave—into one honest Commonwealth.",
-      "shadowTitle": "The Great Australian Silence → Truth-Telling",
-      "shadowText": "Transmutes historical amnesia and Terra Nullius denial into courageous Truth-Telling—choosing honest reckoning and Mabo justice over the comfort of whitewashing.",
-      "practicalText": "Holding both truths that 1788 was both Settlement and Invasion; respecting local Elders and native title; defending the hard-won democratic legacy of Eureka, women's suffrage, and the eight-hour day.",
+      "blurb": "Honouring 65,000 years of First Nations heritage, convict and democratic struggles, Anzac memory, and migrant contributions",
+      "pillarSummary": "A mature nation faces its whole story without flinching or making excuses. We bring together the three great streams of Australian history—65,000 years of Indigenous custodianship, the British convict and democratic struggles that won our rights, and the postwar migrants who built modern Australia. Example: Teaching kids the full truth of both pioneering grit and frontier conflicts, and welcoming new citizens as equals.",
+      "shadowTitle": "Historical Amnesia → Honest Reconciliation",
+      "shadowText": "Moves past defensive silence and culture-war point-scoring so we can honour our whole inheritance—Indigenous, British, Anzac, and Migrant—as one shared story.",
+      "practicalText": "Protecting sacred Indigenous sites alongside Anzac memorials, teaching honest Australian history in schools, settling disputes through peaceful arbitration, and helping new migrants belong.",
       "qA": "A mature Australia should face the whole truth of its past—honouring 65,000 years of First Nations continuity alongside convict survival, democratic struggle, and migrant contribution without whitewashing injustice.",
       "qB": "In practice, I actively listen to and respect the full truth of Australian history and defend the hard-won rights inherited from past generations.",
       "qC": "People in my circle believe we should face our full history honestly and actually treat Indigenous, settler, and migrant heritage with respect.",
@@ -250,7 +250,7 @@ window.KANON_SURVEY_DATA = {
       ],
       "quote": "There shall be no slavery in a free land, and consequently no slaves.",
       "attribution": "Governor Arthur Phillip, Founding Mandate, 1787",
-      "totality": "The Totality of Australian Foundation is the act of settling a continent that was already settled, building a new order on the erasure of an old one. It began with the Ancestral Agent who combined the Convict's shame with the Free Settler's aspiration, creating a tension between reluctance and ambition from the start. This cause is rooted in the Historical Sites of our memory, where we struggle to honor both the achievement of the Bridge and the sacredness of Uluru. We defined this cause through Documents and legal fictions, from the lie of Terra Nullius to the correction of Mabo, establishing a government of pragmatism rather than poetry. The Motivation for this cause was survival, redemption, and the fear of an empty continent being seized by others. We achieved this through the Method of self-reliance and collective action, improvising our way to a peaceful federation negotiated by committees, not won by revolution. The Deep Roots of this cause extend back to the Dreaming and the drift of Gondwana, but were ultimately constrained by the arid core that pushes us to the coastal fringe. Ultimately, the Effect of this cause is a legacy of stability and the welfare state, a civil religion of the Digger, and the heavy burden of unfinished reconciliation that pushes every generation into the future.",
+      "totality": "Australia is a young democracy built on an ancient continent. Our story didn't start in 1788—it reaches back over 65,000 years of First Nations life and land care. When British colonisation arrived in chains, ordinary people gradually turned a harsh prison colony into one of the world's oldest continuous democracies through the Eureka rebellion, union solidarity, Federation, and the High Court's recognition of Native Title.",
       "coords": {
         "v": 0.39,
         "psi": 0.37
@@ -260,7 +260,7 @@ window.KANON_SURVEY_DATA = {
         "lowA": "You place lower personal weight on Pillar 6 (The Reconciler) or disagree with how Australia defines Foundation.",
         "highB": "In your daily life and community, Pillar 6 (Foundation) is thriving and experienced in practice.",
         "lowB": "In daily reality, Pillar 6 (Foundation) is eroded, blocked, or out of reach.",
-        "note": "Plane 6 (Cause · Historical Domain): The Totality of Australian Foundation is the act of settling a continent that was already settled, building a new order on the erasure of an old one. It began with the Ancestral Agent who combined the Convict's shame with the Free Settler's aspiration, creating a tension between reluctance and ambition from the start. This cause is rooted in the Historical Sites of our memory, where we struggle to honor both the achievement of the Bridge and the sacredness of Uluru. We defined this cause through Documents and legal fictions, from the lie of Terra Nullius to the correction of Mabo, establishing a government of pragmatism rather than poetry. The Motivation for this cause was survival, redemption, and the fear of an empty continent being seized by others. We achieved this through the Method of self-reliance and collective action, improvising our way to a peaceful federation negotiated by committees, not won by revolution. The Deep Roots of this cause extend back to the Dreaming and the drift of Gondwana, but were ultimately constrained by the arid core that pushes us to the coastal fringe. Ultimately, the Effect of this cause is a legacy of stability and the welfare state, a civil religion of the Digger, and the heavy burden of unfinished reconciliation that pushes every generation into the future."
+        "note": "Australia is a young democracy built on an ancient continent. Our story didn't start in 1788—it reaches back over 65,000 years of First Nations life and land care. When British colonisation arrived in chains, ordinary people gradually turned a harsh prison colony into one of the world's oldest continuous democracies through the Eureka rebellion, union solidarity, Federation, and the High Court's recognition of Native Title."
       }
     },
     {
@@ -270,15 +270,15 @@ window.KANON_SURVEY_DATA = {
       "name": "Result",
       "fullTitle": "Values of Australian Result",
       "pillar": "The Good Neighbour",
-      "pillarBadge": "Regional & Civic Dividend",
-      "domain": "Emotive",
+      "pillarBadge": "Sharing the Commonwealth",
+      "domain": "National Outcomes",
       "tau": 7.0,
       "hue": "#9333EA",
-      "blurb": "Universal care, shared national wealth, intergenerational fairness, and sovereign regional partnership",
-      "pillarSummary": "The Good Neighbour measures the Australian experiment by its real human harvest: whether ordinary citizens enjoy universal healthcare (Medicare), dignified retirement (Superannuation), shared resource wealth, and whether Australia stands as a confident, generous partner in the Indo-Pacific rather than an anxious colonial outpost.",
-      "shadowTitle": "Isolation & Extraction → Shared Commonwealth",
-      "shadowText": "Transmutes island paranoia and private resource plundering into universal civic security at home and constructive neighbourly partnership across the Pacific.",
-      "practicalText": "Protecting universal Medicare, PBS, HECS, and Superannuation so no citizen falls through the floor; ensuring mineral wealth benefits future generations; showing up for Pacific neighbours in crisis as family, not charity.",
+      "blurb": "Universal Medicare, dignified retirement, shared resource wealth, independent watchdogs, and passing on a better Australia",
+      "pillarSummary": "The ultimate test of Australia is the real-life outcome it delivers for ordinary people: can you see a doctor with a Medicare card, buy a home on an ordinary wage, retire with dignity, and trust that our mineral wealth benefits the public rather than offshore tax havens? Example: Walking into a public hospital or GP clinic and getting treated based on medical need, not the size of your credit card.",
+      "shadowTitle": "'I've Got Mine' Greed → Shared Security",
+      "shadowText": "Turns selfish 'I've got mine' greed and private resource plundering into shared national security—where no citizen is left behind and Australia stands as a respected neighbour in the Pacific.",
+      "practicalText": "Universal bulk-billed Medicare and PBS medicines, secure superannuation and pensions, sovereign royalties from gas and mining, independent royal commissions, and affordable housing for the next generation.",
       "qA": "The Australian project should deliver a generous, sovereign commonwealth—universal healthcare, shared resource wealth, intergenerational fairness, and constructive partnership in our region.",
       "qB": "In my own civic choices and voting, I actively back universal care, intergenerational fairness, and Australia acting as a good neighbour.",
       "qC": "My circle believes Australia should share its wealth fairly across generations and actually looks out for neighbours in practice.",
@@ -294,7 +294,7 @@ window.KANON_SURVEY_DATA = {
       ],
       "quote": "The workingman's paradise.",
       "attribution": "William Lane, The Workingman's Paradise, 1892",
-      "totality": "The Totality of Australian Result is the successful creation of a comfortable, fair, and stable society on the edge of an ancient, hostile continent. It produces a Resultant Agent who is quiet, multicultural, coastal, aspirational, and sporting, inheriting the memory of the Digger and completing their identity through citizenship. This agent leaves a Global Footprint of commodities and soft power, dependent on the American alliance while increasingly oriented towards Asia. The Consequence of our definition is a society of home owners and super funds, sustained by Medicare and increasingly powered by the sun, inheriting the biodiversity of Gondwana and enjoying 32 years of unbroken growth. We Evaluate our result through the tension between egalitarianism and aspiration, between extraction and sustainability, between reconciliation and denial. We Judge through the vote, the royal commission, the court, the media, the stats, the pub test, and the budget, using every method available to verify our claims. The Future is uncertain—the energy transition, the republic, the treaty, the Asian century—but the goal is clear: preserve the Good Life for those who come after us. Ultimately, the Final Word is Australia itself: a fair go, a good lifestyle, an island girt by sea, offering a second chance, murmuring \"she'll be right,\" grateful for the land, and hoping to remain one and free.",
+      "totality": "The final measure of our country is whether the Fair Go is real in everyday life or just a slogan on a bumper sticker. Over generations, Australians built world-leading safety nets—Medicare, Superannuation, HECS, and the social safety net—while acting as a generous friend to our Pacific neighbours. Our task today is to stop those hard-won gains from being privatised or priced out of reach for our kids.",
       "coords": {
         "v": 0.43,
         "psi": 0.24
@@ -304,7 +304,7 @@ window.KANON_SURVEY_DATA = {
         "lowA": "You place lower personal weight on Pillar 7 (The Good Neighbour) or disagree with how Australia defines Result.",
         "highB": "In your daily life and community, Pillar 7 (Result) is thriving and experienced in practice.",
         "lowB": "In daily reality, Pillar 7 (Result) is eroded, blocked, or out of reach.",
-        "note": "Plane 7 (Effect · Emotive Domain): The Totality of Australian Result is the successful creation of a comfortable, fair, and stable society on the edge of an ancient, hostile continent. It produces a Resultant Agent who is quiet, multicultural, coastal, aspirational, and sporting, inheriting the memory of the Digger and completing their identity through citizenship. This agent leaves a Global Footprint of commodities and soft power, dependent on the American alliance while increasingly oriented towards Asia. The Consequence of our definition is a society of home owners and super funds, sustained by Medicare and increasingly powered by the sun, inheriting the biodiversity of Gondwana and enjoying 32 years of unbroken growth. We Evaluate our result through the tension between egalitarianism and aspiration, between extraction and sustainability, between reconciliation and denial. We Judge through the vote, the royal commission, the court, the media, the stats, the pub test, and the budget, using every method available to verify our claims. The Future is uncertain—the energy transition, the republic, the treaty, the Asian century—but the goal is clear: preserve the Good Life for those who come after us. Ultimately, the Final Word is Australia itself: a fair go, a good lifestyle, an island girt by sea, offering a second chance, murmuring \"she'll be right,\" grateful for the land, and hoping to remain one and free."
+        "note": "The final measure of our country is whether the Fair Go is real in everyday life or just a slogan on a bumper sticker. Over generations, Australians built world-leading safety nets—Medicare, Superannuation, HECS, and the social safety net—while acting as a generous friend to our Pacific neighbours. Our task today is to stop those hard-won gains from being privatised or priced out of reach for our kids."
       }
     }
   ],
@@ -315,10 +315,10 @@ window.KANON_SURVEY_DATA = {
       "plane": 1,
       "senseIdx": 1,
       "senseCode": "Who",
-      "title": "Australian Character, Mateship & Quiet Grit",
+      "title": "Mateship, Loyalty & Backing the Underdog",
       "matrixTitle": "The Who of the Who (Authenticity/Soul)",
       "shortTitle": "Who.Who · Australian Character, Mateship & Quiet Grit",
-      "narrative": "The Australian Identity begins with Mateship as the unbroken bond between equals, protected by the Larrikin skepticism of authority and forged in the Struggle of the Battler. This horizontal brotherhood was tested and sanctified by the Sacrifice of the Anzac, while the Method of Improvisation (Stringybark) ensured survival in a harsh land. Yet, the identity rests uneasily upon the Root of Custodianship (Indigenous heritage), anchored firmly in the middle by The Forgotten People who maintain the stability of the nation.",
+      "narrative": "Australian character is built on standing by the people beside you when things get tough. It combines everyday loyalty to your mates, a healthy disrespect for pompous authority, and the grit of the working battler. Example: Neighbours and strangers pitching in for 16-hour shifts filling sandbags during a flood without asking who owns the biggest house.",
       "coords": {
         "v": 0.61,
         "psi": 0.33
@@ -346,11 +346,11 @@ window.KANON_SURVEY_DATA = {
       "qC": "The people in my everyday circle genuinely back one another under pressure and judge people by their character rather than their title or bank balance.",
       "qD": "Across Australia today, our wider culture and institutions actually reward quiet grit and mutual loyalty rather than self-promotion and status.",
       "help": {
-        "highA": "You strongly endorse the Australian ethos of Who.Who (Australian Character, Mateship & Quiet Grit), spanning Mateship, The Larrikin, The Battler, The Anzac, and more.",
-        "lowA": "You feel disconnected from or skeptical of the traditional Australian values grouped under Who.Who (Australian Character, Mateship & Quiet Grit).",
-        "highB": "In your everyday Australian life, the promise of Who.Who is genuinely lived, working, and accessible.",
-        "lowB": "In practice, Who.Who feels broken, priced out, or blocked by systemic friction where you live.",
-        "note": "Matrix Sense 1.1 (Who.Who): Synthesises 7 Kanon vectors (Mateship, The Larrikin, The Battler, The Anzac, Stringybark and Greenhide, The Indigenous Custodian, The Forgotten People). The Australian Identity begins with Mateship as the unbroken bond between equals, protected by the Larrikin skepticism of authority and forged in the Struggle of the Battler. This horizontal brotherhood was tested and sanctified by the Sacrifice of the Anzac, while the Method of Improvisation (Stringybark) ensured survival in a harsh land. Yet, the identity rests uneasily upon the Root of Custodianship (Indigenous heritage), anchored firmly in the middle by The Forgotten People who maintain the stability of the nation."
+        "highA": "You strongly support Theme 1.1 (Mateship, Loyalty & Backing the Underdog).",
+        "lowA": "You place lower priority on or disagree with Theme 1.1 (Mateship, Loyalty & Backing the Underdog).",
+        "highB": "In everyday practice, Theme 1.1 (Mateship, Loyalty & Backing the Underdog) is actively upheld.",
+        "lowB": "In everyday reality, Theme 1.1 (Mateship, Loyalty & Backing the Underdog) is struggling, blocked, or failing.",
+        "note": "Australian character is built on standing by the people beside you when things get tough. It combines everyday loyalty to your mates, a healthy disrespect for pompous authority, and the grit of the working battler. Example: Neighbours and strangers pitching in for 16-hour shifts filling sandbags during a flood without asking who owns the biggest house."
       },
       "tags": [
         "mateship",
@@ -369,7 +369,7 @@ window.KANON_SURVEY_DATA = {
       "title": "The Level Playing Field & The Fair Go",
       "matrixTitle": "The What of the Who (Roles/Titles)",
       "shortTitle": "Who.What · The Level Playing Field & The Fair Go",
-      "narrative": "The Australian Value system is built on the Axiom of the Fair Go, enforced by the Leveler of Egalitarianism. To maintain this balance, the society uses the Blade of Tall Poppy Syndrome to cut down those who rise too high, while the Buffer of \"She'll be right\" absorbs the shocks of life. The system filters all ideology through Skepticism (Secular), rooted in the Scar of the Convict Stain which distrusts authority. Ultimately, these values are codified in the Contract of the Commonwealth, ensuring a society dedicated to the common weal.",
+      "narrative": "Our core social rule is simple: give everyone a fair crack, don't pull rank, and keep a level head when things go wrong. We celebrate people who succeed through hard work or talent, but we expect them to stay grounded and treat ordinary people as equals. Example: Expecting a wealthy executive or politician to wait their turn in the queue just like a pensioner or apprentice.",
       "coords": {
         "v": 0.59,
         "psi": -0.09
@@ -397,11 +397,11 @@ window.KANON_SURVEY_DATA = {
       "qC": "The workplaces and local circles I move in actually operate on a level playing field where people speak plainly as equals without demanding deference.",
       "qD": "Across Australia today, our social and economic systems actually keep the playing field level rather than cementing class privilege and elitism.",
       "help": {
-        "highA": "You strongly endorse the Australian ethos of Who.What (The Level Playing Field & The Fair Go), spanning The Fair Go, Tall Poppy Syndrome, Egalitarianism, \"She'll be right\", and more.",
-        "lowA": "You feel disconnected from or skeptical of the traditional Australian values grouped under Who.What (The Level Playing Field & The Fair Go).",
-        "highB": "In your everyday Australian life, the promise of Who.What is genuinely lived, working, and accessible.",
-        "lowB": "In practice, Who.What feels broken, priced out, or blocked by systemic friction where you live.",
-        "note": "Matrix Sense 1.2 (Who.What): Synthesises 7 Kanon vectors (The Fair Go, Tall Poppy Syndrome, Egalitarianism, \"She'll be right\", Secular Skepticism, The Convict Stain, The Commonwealth). The Australian Value system is built on the Axiom of the Fair Go, enforced by the Leveler of Egalitarianism. To maintain this balance, the society uses the Blade of Tall Poppy Syndrome to cut down those who rise too high, while the Buffer of \"She'll be right\" absorbs the shocks of life. The system filters all ideology through Skepticism (Secular), rooted in the Scar of the Convict Stain which distrusts authority. Ultimately, these values are codified in the Contract of the Commonwealth, ensuring a society dedicated to the common weal."
+        "highA": "You strongly support Theme 1.2 (The Level Playing Field & The Fair Go).",
+        "lowA": "You place lower priority on or disagree with Theme 1.2 (The Level Playing Field & The Fair Go).",
+        "highB": "In everyday practice, Theme 1.2 (The Level Playing Field & The Fair Go) is actively upheld.",
+        "lowB": "In everyday reality, Theme 1.2 (The Level Playing Field & The Fair Go) is struggling, blocked, or failing.",
+        "note": "Our core social rule is simple: give everyone a fair crack, don't pull rank, and keep a level head when things go wrong. We celebrate people who succeed through hard work or talent, but we expect them to stay grounded and treat ordinary people as equals. Example: Expecting a wealthy executive or politician to wait their turn in the queue just like a pensioner or apprentice."
       },
       "tags": [
         "fair-go",
@@ -417,10 +417,10 @@ window.KANON_SURVEY_DATA = {
       "plane": 1,
       "senseIdx": 3,
       "senseCode": "Where",
-      "title": "Living Connection to Land, Coast & Country",
+      "title": "Belonging to Bush, Coast, Suburb & Country",
       "matrixTitle": "The Where of the Who (Origins/Location)",
       "shortTitle": "Who.Where · Living Connection to Land, Coast & Country",
-      "narrative": "The Australian Place moves from the spiritual Totem of the Bush to the comfortable Fringe of the Coast, yet always orbiting the silent Void of the Red Centre. The life is governed by the Rhythm of violent cycles and checked by the Constraint of Distance. Built upon the Ghost of Terra Nullius, the society eventually constructed the Retreat of the Suburb as a defense against both the emptiness of the land and the vastness of the world.",
+      "narrative": "Who we are is shaped by where we live—from the quiet suburban backyard and the weekend beach to remote country towns and ancient Indigenous Country. None of these places should be treated as second-class or left behind. Example: Keeping public beaches free and open to everyone rather than locking them behind private billionaire estates.",
       "coords": {
         "v": 0.16,
         "psi": -0.2
@@ -448,11 +448,11 @@ window.KANON_SURVEY_DATA = {
       "qC": "People in my local community feel a grounded connection to our landscape and look after shared public spaces, parks, and beaches.",
       "qD": "Across Australia today, urban planning, housing markets, and public policy actually keep people connected to the coast, bush, and liveable communities rather than locking them out.",
       "help": {
-        "highA": "You strongly endorse the Australian ethos of Who.Where (Living Connection to Land, Coast & Country), spanning The Bush, The Coast, The Red Centre, The Cycle (Drought & Flood), and more.",
-        "lowA": "You feel disconnected from or skeptical of the traditional Australian values grouped under Who.Where (Living Connection to Land, Coast & Country).",
-        "highB": "In your everyday Australian life, the promise of Who.Where is genuinely lived, working, and accessible.",
-        "lowB": "In practice, Who.Where feels broken, priced out, or blocked by systemic friction where you live.",
-        "note": "Matrix Sense 1.3 (Who.Where): Synthesises 7 Kanon vectors (The Bush, The Coast, The Red Centre, The Cycle (Drought & Flood), The Tyranny of Distance, Terra Nullius, The Suburb). The Australian Place moves from the spiritual Totem of the Bush to the comfortable Fringe of the Coast, yet always orbiting the silent Void of the Red Centre. The life is governed by the Rhythm of violent cycles and checked by the Constraint of Distance. Built upon the Ghost of Terra Nullius, the society eventually constructed the Retreat of the Suburb as a defense against both the emptiness of the land and the vastness of the world."
+        "highA": "You strongly support Theme 1.3 (Belonging to Bush, Coast, Suburb & Country).",
+        "lowA": "You place lower priority on or disagree with Theme 1.3 (Belonging to Bush, Coast, Suburb & Country).",
+        "highB": "In everyday practice, Theme 1.3 (Belonging to Bush, Coast, Suburb & Country) is actively upheld.",
+        "lowB": "In everyday reality, Theme 1.3 (Belonging to Bush, Coast, Suburb & Country) is struggling, blocked, or failing.",
+        "note": "Who we are is shaped by where we live—from the quiet suburban backyard and the weekend beach to remote country towns and ancient Indigenous Country. None of these places should be treated as second-class or left behind. Example: Keeping public beaches free and open to everyone rather than locking them behind private billionaire estates."
       },
       "tags": [
         "housing",
@@ -468,10 +468,10 @@ window.KANON_SURVEY_DATA = {
       "plane": 1,
       "senseIdx": 4,
       "senseCode": "Why",
-      "title": "Homegrown Talent & Confidence (Free of Cringe)",
+      "title": "Homegrown Confidence (Dropping the Cultural Cringe)",
       "matrixTitle": "The Why of the Who (Motivations/Drive)",
       "shortTitle": "Who.Why · Homegrown Talent & Confidence (Free of Cringe)",
-      "narrative": "The Australian Drive is fueled by Luck and the existential Imperative of \"Populate or Perish.\" It channels this energy into the Vector of Overachievement (\"Punching Above Weight\"), sparked by the call to Participation (\"Have a Go\"). While the Engine of Speculation (Gold Rush) drives the economy, the Shadow of the Cultural Cringe haunts the intellect. The nation ultimately finds its release in the Proxy of Sport, where success is unambiguous.",
+      "narrative": "Australians love having a genuine crack and competing with the best in the world without needing approval from London or Washington. It means shaking off the old 'Cultural Cringe'—the habit of assuming overseas ideas are automatically better than our own—and backing Australian makers, artists, and inventors. Example: Backing an Australian medical invention or film at home before it wins awards overseas.",
       "coords": {
         "v": 0.38,
         "psi": 0.38
@@ -501,11 +501,11 @@ window.KANON_SURVEY_DATA = {
       "qC": "People in my everyday circle encourage local ambition and give people having a genuine crack fair support rather than cynical tall-poppy knocking.",
       "qD": "Across Australia today, our institutions, media, and investors actually back homegrown capability and creative ambition rather than coasting on passive resource luck.",
       "help": {
-        "highA": "You strongly endorse the Australian ethos of Who.Why (Homegrown Talent & Confidence (Free of Cringe)), spanning Punching Above Weight, The Lucky Country, Populate or Perish, Anteriority [FN], and more.",
-        "lowA": "You feel disconnected from or skeptical of the traditional Australian values grouped under Who.Why (Homegrown Talent & Confidence (Free of Cringe)).",
-        "highB": "In your everyday Australian life, the promise of Who.Why is genuinely lived, working, and accessible.",
-        "lowB": "In practice, Who.Why feels broken, priced out, or blocked by systemic friction where you live.",
-        "note": "Matrix Sense 1.4 (Who.Why): Synthesises 8 Kanon vectors (Punching Above Weight, The Lucky Country, Populate or Perish, Anteriority [FN], \"Have a Go, Ya Mug\", The Cultural Cringe, The Gold Rush, Sport). The Australian Drive is fueled by Luck and the existential Imperative of \"Populate or Perish.\" It channels this energy into the Vector of Overachievement (\"Punching Above Weight\"), sparked by the call to Participation (\"Have a Go\"). While the Engine of Speculation (Gold Rush) drives the economy, the Shadow of the Cultural Cringe haunts the intellect. The nation ultimately finds its release in the Proxy of Sport, where success is unambiguous."
+        "highA": "You strongly support Theme 1.4 (Homegrown Confidence (Dropping the Cultural Cringe)).",
+        "lowA": "You place lower priority on or disagree with Theme 1.4 (Homegrown Confidence (Dropping the Cultural Cringe)).",
+        "highB": "In everyday practice, Theme 1.4 (Homegrown Confidence (Dropping the Cultural Cringe)) is actively upheld.",
+        "lowB": "In everyday reality, Theme 1.4 (Homegrown Confidence (Dropping the Cultural Cringe)) is struggling, blocked, or failing.",
+        "note": "Australians love having a genuine crack and competing with the best in the world without needing approval from London or Washington. It means shaking off the old 'Cultural Cringe'—the habit of assuming overseas ideas are automatically better than our own—and backing Australian makers, artists, and inventors. Example: Backing an Australian medical invention or film at home before it wins awards overseas."
       },
       "tags": [
         "culture-sport",
@@ -521,10 +521,10 @@ window.KANON_SURVEY_DATA = {
       "plane": 1,
       "senseIdx": 5,
       "senseCode": "How",
-      "title": "The Pub Test & Accountability to Ordinary People",
+      "title": "The Pub Test: Plain Talk & Fair Dealing",
       "matrixTitle": "The How of the Who (Methods/Character)",
       "shortTitle": "Who.How · The Pub Test & Accountability to Ordinary People",
-      "narrative": "The Australian Method relies on Common Sense (Standard) and Utility (Tool) to solve problems, ensuring stability through the Duty of Compulsory Voting. It balances the system using the Lever of Collective Action (Union) and the Process of Inquiry (Royal Commission). While offering a Path to Redemption (Ticket of Leave), it allows for the Valve of Resistance (The Sickie) to keep the individual sane within the machine.",
+      "narrative": "Power in Australia should always answer to plain-spoken common sense—what we call the Pub Test. When bosses, bureaucrats, or politicians hide behind tricky legal fine print or spin to rip people off, ordinary Australians push back. Example: Calling out a corporation that makes billions in profit while underpaying its casual staff.",
       "coords": {
         "v": 0.66,
         "psi": 0.3
@@ -552,11 +552,11 @@ window.KANON_SURVEY_DATA = {
       "qC": "In my workplace and community circle, people apply the Pub Test to authority and back coworkers who stand up for fair treatment.",
       "qD": "Across Australia today, governments, corporations, and courts actually answer to plain-English accountability, worker solidarity, and public inquiries.",
       "help": {
-        "highA": "You strongly endorse the Australian ethos of Who.How (The Pub Test & Accountability to Ordinary People), spanning The Pub Test, Compulsory Voting, Pragmatism, The Sickie, and more.",
-        "lowA": "You feel disconnected from or skeptical of the traditional Australian values grouped under Who.How (The Pub Test & Accountability to Ordinary People).",
-        "highB": "In your everyday Australian life, the promise of Who.How is genuinely lived, working, and accessible.",
-        "lowB": "In practice, Who.How feels broken, priced out, or blocked by systemic friction where you live.",
-        "note": "Matrix Sense 1.5 (Who.How): Synthesises 7 Kanon vectors (The Pub Test, Compulsory Voting, Pragmatism, The Sickie, The Royal Commission, The Ticket of Leave, The Union). The Australian Method relies on Common Sense (Standard) and Utility (Tool) to solve problems, ensuring stability through the Duty of Compulsory Voting. It balances the system using the Lever of Collective Action (Union) and the Process of Inquiry (Royal Commission). While offering a Path to Redemption (Ticket of Leave), it allows for the Valve of Resistance (The Sickie) to keep the individual sane within the machine."
+        "highA": "You strongly support Theme 1.5 (The Pub Test: Plain Talk & Fair Dealing).",
+        "lowA": "You place lower priority on or disagree with Theme 1.5 (The Pub Test: Plain Talk & Fair Dealing).",
+        "highB": "In everyday practice, Theme 1.5 (The Pub Test: Plain Talk & Fair Dealing) is actively upheld.",
+        "lowB": "In everyday reality, Theme 1.5 (The Pub Test: Plain Talk & Fair Dealing) is struggling, blocked, or failing.",
+        "note": "Power in Australia should always answer to plain-spoken common sense—what we call the Pub Test. When bosses, bureaucrats, or politicians hide behind tricky legal fine print or spin to rip people off, ordinary Australians push back. Example: Calling out a corporation that makes billions in profit while underpaying its casual staff."
       },
       "tags": [
         "fair-go",
@@ -572,10 +572,10 @@ window.KANON_SURVEY_DATA = {
       "plane": 1,
       "senseIdx": 6,
       "senseCode": "Cause",
-      "title": "Living Heritage: First Nations, Settlers & Migrants",
+      "title": "Three Streams: First Nations, Settlers & Migrants",
       "matrixTitle": "The Cause of the Who (Roots/History)",
       "shortTitle": "Who.Cause · Living Heritage: First Nations, Settlers & Migrants",
-      "narrative": "The Australian Origin is defined by the Seed of the Convict and the Matrix of the Songlines, set against a Backdrop of Deep Time. While the Merger of Federation created the state, the Spark of Eureka created the democracy. The nation began with the Gate of Exclusion (White Australia) but has evolved towards the Future of Diversity.",
+      "narrative": "Modern Australia weaves together three living stories: over 65,000 years of First Nations custodianship, the convict and settler struggles that built our democratic institutions, and the hard-working migrants from every corner of the globe who made Australia home. Example: A country town where the local footy team, Vietnamese bakery, Greek cafe, and Indigenous land council all back the same community fundraiser.",
       "coords": {
         "v": 0.35,
         "psi": 0.25
@@ -609,11 +609,11 @@ window.KANON_SURVEY_DATA = {
       "qC": "In my community circle, people of First Nations, settler, and migrant heritage actually get along and treat each other with everyday respect and inclusion.",
       "qD": "Across Australia today, our national politics and media actually foster honest unity across our Indigenous, British, and multicultural roots rather than stoking division.",
       "help": {
-        "highA": "You strongly endorse the Australian ethos of Who.Cause (Living Heritage: First Nations, Settlers & Migrants), spanning The First Fleet, Continuity [FN], Federation, Exclusion [FN], and more.",
-        "lowA": "You feel disconnected from or skeptical of the traditional Australian values grouped under Who.Cause (Living Heritage: First Nations, Settlers & Migrants).",
-        "highB": "In your everyday Australian life, the promise of Who.Cause is genuinely lived, working, and accessible.",
-        "lowB": "In practice, Who.Cause feels broken, priced out, or blocked by systemic friction where you live.",
-        "note": "Matrix Sense 1.6 (Who.Cause): Synthesises 10 Kanon vectors (The First Fleet, Continuity [FN], Federation, Exclusion [FN], Songlines, Eureka Stockade, White Australia Policy, Survival [FN], Deep Time, Multiculturalism). The Australian Origin is defined by the Seed of the Convict and the Matrix of the Songlines, set against a Backdrop of Deep Time. While the Merger of Federation created the state, the Spark of Eureka created the democracy. The nation began with the Gate of Exclusion (White Australia) but has evolved towards the Future of Diversity."
+        "highA": "You strongly support Theme 1.6 (Three Streams: First Nations, Settlers & Migrants).",
+        "lowA": "You place lower priority on or disagree with Theme 1.6 (Three Streams: First Nations, Settlers & Migrants).",
+        "highB": "In everyday practice, Theme 1.6 (Three Streams: First Nations, Settlers & Migrants) is actively upheld.",
+        "lowB": "In everyday reality, Theme 1.6 (Three Streams: First Nations, Settlers & Migrants) is struggling, blocked, or failing.",
+        "note": "Modern Australia weaves together three living stories: over 65,000 years of First Nations custodianship, the convict and settler struggles that built our democratic institutions, and the hard-working migrants from every corner of the globe who made Australia home. Example: A country town where the local footy team, Vietnamese bakery, Greek cafe, and Indigenous land council all back the same community fundraiser."
       },
       "tags": [
         "culture-sport",
@@ -629,10 +629,10 @@ window.KANON_SURVEY_DATA = {
       "plane": 1,
       "senseIdx": 7,
       "senseCode": "Effect",
-      "title": "Caring for Our Own & Being a Good Regional Neighbour",
+      "title": "Looking After Our Own & Being a Good Neighbour",
       "matrixTitle": "The Effect of the Who (Legacy/Impact)",
       "shortTitle": "Who.Effect · Caring for Our Own & Being a Good Regional Neighbour",
-      "narrative": "The Australian Impact projects the Network of Expats and the Offering of food to the world. It plays the Role of Honest Broker while following the Trajectory of Asian Integration. Providing a Model of social safety (Medicare) and seeking Healing through Reconciliation, it moves towards a Destiny of full Sovereignty.",
+      "narrative": "At its best, Australian identity produces a country that looks after the sick and vulnerable at home while standing as a fair, generous friend in our region—sharing food, disaster aid, and clean energy rather than acting with fear or arrogance. Example: Australian medical and engineering crews flying immediately to help Pacific island neighbours after a cyclone.",
       "coords": {
         "v": 0.66,
         "psi": 0.51
@@ -660,11 +660,11 @@ window.KANON_SURVEY_DATA = {
       "qC": "People in my community circle genuinely care about looking after the vulnerable at home and being a good neighbour in the Asia-Pacific.",
       "qD": "Across Australia today, our national policies actually deliver compassionate care at home and confident, independent bridge-building in the world.",
       "help": {
-        "highA": "You strongly endorse the Australian ethos of Who.Effect (Caring for Our Own & Being a Good Regional Neighbour), spanning The Expat, The Honest Broker, The Food Bowl, The Asian Century, and more.",
-        "lowA": "You feel disconnected from or skeptical of the traditional Australian values grouped under Who.Effect (Caring for Our Own & Being a Good Regional Neighbour).",
-        "highB": "In your everyday Australian life, the promise of Who.Effect is genuinely lived, working, and accessible.",
-        "lowB": "In practice, Who.Effect feels broken, priced out, or blocked by systemic friction where you live.",
-        "note": "Matrix Sense 1.7 (Who.Effect): Synthesises 7 Kanon vectors (The Expat, The Honest Broker, The Food Bowl, The Asian Century, Medicare, The Apology, The Ashes). The Australian Impact projects the Network of Expats and the Offering of food to the world. It plays the Role of Honest Broker while following the Trajectory of Asian Integration. Providing a Model of social safety (Medicare) and seeking Healing through Reconciliation, it moves towards a Destiny of full Sovereignty."
+        "highA": "You strongly support Theme 1.7 (Looking After Our Own & Being a Good Neighbour).",
+        "lowA": "You place lower priority on or disagree with Theme 1.7 (Looking After Our Own & Being a Good Neighbour).",
+        "highB": "In everyday practice, Theme 1.7 (Looking After Our Own & Being a Good Neighbour) is actively upheld.",
+        "lowB": "In everyday reality, Theme 1.7 (Looking After Our Own & Being a Good Neighbour) is struggling, blocked, or failing.",
+        "note": "At its best, Australian identity produces a country that looks after the sick and vulnerable at home while standing as a fair, generous friend in our region—sharing food, disaster aid, and clean energy rather than acting with fear or arrogance. Example: Australian medical and engineering crews flying immediately to help Pacific island neighbours after a cyclone."
       },
       "tags": [
         "mateship",
@@ -680,10 +680,10 @@ window.KANON_SURVEY_DATA = {
       "plane": 2,
       "senseIdx": 1,
       "senseCode": "Who",
-      "title": "The Sovereign Citizen vs. Bureaucratic Overreach",
+      "title": "Empowered Citizens, Not Passive Subjects",
       "matrixTitle": "The Who of the What (Authenticity/Soul)",
       "shortTitle": "What.Who · The Sovereign Citizen vs. Bureaucratic Overreach",
-      "narrative": "The Australian Definition of \"Who\" begins with The Independent Australian Briton, a hybrid soul that evolved into The Constituent (voter) and The Resident (legal equal). This legal framework supports the social structure of The Mate, grounded in the obligation of The Compelled Voter. It acknowledges its dual origin as The Subject of the Crown, aimed ultimately at creating a nation where the citizen is The Servant of a utilitarian state.",
+      "narrative": "In a true democracy, everyday citizens are the bosses of the government—not passive subjects to be bossed around by distant bureaucrats. Public officials are hired to serve the public with respect and transparency. Example: A local council listening to residents and fixing a dangerous intersection instead of hiding behind five years of consultant reports.",
       "coords": {
         "v": 0.63,
         "psi": 0.04
@@ -706,16 +706,16 @@ window.KANON_SURVEY_DATA = {
         "2.1.6",
         "2.1.7"
       ],
-      "qA": "In a true commonwealth, the citizen should be the sovereign partner and employer of the state—never a passive subject to be managed, patronised, or ruled over.",
-      "qB": "When dealing with government agencies, councils, or rules, I actively insist on fair citizen rights and fulfill my civic duties rather than acting like a passive subject.",
+      "qA": "In a true democracy, everyday citizens should be the respected employers of the government—never passive subjects bossed around by unaccountable bureaucrats.",
+      "qB": "In practice, I stay informed, stand up for my rights and my neighbours' rights, and expect public officials to act as accountable public servants.",
       "qC": "People in my community circle understand their rights as citizens and expect public officials to act as public servants, not bosses.",
-      "qD": "Across Australia today, public agencies, councils, and parliaments actually treat ordinary Australians as respected citizens rather than compliance problems.",
+      "qD": "In Australia today, governments and agencies actually treat ordinary citizens as respected partners rather than wrapping them in callous red tape.",
       "help": {
-        "highA": "You strongly endorse the Australian ethos of What.Who (The Sovereign Citizen vs. Bureaucratic Overreach), spanning The Independent Australian Briton, The Constituent, The Resident, The Mate, and more.",
-        "lowA": "You feel disconnected from or skeptical of the traditional Australian values grouped under What.Who (The Sovereign Citizen vs. Bureaucratic Overreach).",
-        "highB": "In your everyday Australian life, the promise of What.Who is genuinely lived, working, and accessible.",
-        "lowB": "In practice, What.Who feels broken, priced out, or blocked by systemic friction where you live.",
-        "note": "Matrix Sense 2.1 (What.Who): Synthesises 7 Kanon vectors (The Independent Australian Briton, The Constituent, The Resident, The Mate, The Compelled Voter, The Subject, The Servant). The Australian Definition of \"Who\" begins with The Independent Australian Briton, a hybrid soul that evolved into The Constituent (voter) and The Resident (legal equal). This legal framework supports the social structure of The Mate, grounded in the obligation of The Compelled Voter. It acknowledges its dual origin as The Subject of the Crown, aimed ultimately at creating a nation where the citizen is The Servant of a utilitarian state."
+        "highA": "You strongly support Theme 2.1 (Empowered Citizens, Not Passive Subjects).",
+        "lowA": "You place lower priority on or disagree with Theme 2.1 (Empowered Citizens, Not Passive Subjects).",
+        "highB": "In everyday practice, Theme 2.1 (Empowered Citizens, Not Passive Subjects) is actively upheld.",
+        "lowB": "In everyday reality, Theme 2.1 (Empowered Citizens, Not Passive Subjects) is struggling, blocked, or failing.",
+        "note": "In a true democracy, everyday citizens are the bosses of the government—not passive subjects to be bossed around by distant bureaucrats. Public officials are hired to serve the public with respect and transparency. Example: A local council listening to residents and fixing a dangerous intersection instead of hiding behind five years of consultant reports."
       },
       "tags": [
         "democracy",
@@ -731,10 +731,10 @@ window.KANON_SURVEY_DATA = {
       "plane": 2,
       "senseIdx": 2,
       "senseCode": "What",
-      "title": "Constitutional Rule of Law & Judicial Independence",
+      "title": "Equal Rule of Law & Independent Courts",
       "matrixTitle": "The What of the What (Roles/Titles)",
       "shortTitle": "What.What · Constitutional Rule of Law & Judicial Independence",
-      "narrative": "The Definition articulates its own form through The Governor-General, representing the Crown, while mandating Peace, Order, and Good Government as its primary goal. It resolves conflict through Supremacy of the Commonwealth and protects the constitution via The Double Majority. The meaning of the text is controlled by The Interpreter (High Court), rooted in the original The Deal between the colonies, yet permanently threatened by The Gridlock of the two houses.",
+      "narrative": "Our Constitution and courts exist to guarantee that nobody—not a Prime Minister, billionaire, police commissioner, or multinational corporation—is above the law. Justice must be independent, fair, and affordable for ordinary people, not just those who can hire expensive silk lawyers. Example: The High Court striking down an unlawful government policy that overstepped constitutional limits.",
       "coords": {
         "v": 0.4,
         "psi": -0.1
@@ -762,11 +762,11 @@ window.KANON_SURVEY_DATA = {
       "qC": "People in my everyday circle value lawful, accountable governance and reject leaders who try to rig the rules or stack the courts.",
       "qD": "Across Australia today, our constitutional checks, courts, and parliamentary rules actually protect citizens from executive overreach and political stitch-ups.",
       "help": {
-        "highA": "You strongly endorse the Australian ethos of What.What (Constitutional Rule of Law & Judicial Independence), spanning The Governor-General, Peace, Order, and Good Government, Supremacy, The Double Majority, and more.",
-        "lowA": "You feel disconnected from or skeptical of the traditional Australian values grouped under What.What (Constitutional Rule of Law & Judicial Independence).",
-        "highB": "In your everyday Australian life, the promise of What.What is genuinely lived, working, and accessible.",
-        "lowB": "In practice, What.What feels broken, priced out, or blocked by systemic friction where you live.",
-        "note": "Matrix Sense 2.2 (What.What): Synthesises 7 Kanon vectors (The Governor-General, Peace, Order, and Good Government, Supremacy, The Double Majority, The Interpreter, The Deal, The Gridlock). The Definition articulates its own form through The Governor-General, representing the Crown, while mandating Peace, Order, and Good Government as its primary goal. It resolves conflict through Supremacy of the Commonwealth and protects the constitution via The Double Majority. The meaning of the text is controlled by The Interpreter (High Court), rooted in the original The Deal between the colonies, yet permanently threatened by The Gridlock of the two houses."
+        "highA": "You strongly support Theme 2.2 (Equal Rule of Law & Independent Courts).",
+        "lowA": "You place lower priority on or disagree with Theme 2.2 (Equal Rule of Law & Independent Courts).",
+        "highB": "In everyday practice, Theme 2.2 (Equal Rule of Law & Independent Courts) is actively upheld.",
+        "lowB": "In everyday reality, Theme 2.2 (Equal Rule of Law & Independent Courts) is struggling, blocked, or failing.",
+        "note": "Our Constitution and courts exist to guarantee that nobody—not a Prime Minister, billionaire, police commissioner, or multinational corporation—is above the law. Justice must be independent, fair, and affordable for ordinary people, not just those who can hire expensive silk lawyers. Example: The High Court striking down an unlawful government policy that overstepped constitutional limits."
       },
       "tags": [
         "mateship",
@@ -782,10 +782,10 @@ window.KANON_SURVEY_DATA = {
       "plane": 2,
       "senseIdx": 3,
       "senseCode": "Where",
-      "title": "Fair Regional Federation & Shared National Revenue",
+      "title": "Fair Deal for Regions, States & Outer Suburbs",
       "matrixTitle": "The Where of the What (Origins/Location)",
       "shortTitle": "What.Where · Fair Regional Federation & Shared National Revenue",
-      "narrative": "The Definition maps power onto the land through The States' House (Senate) and The People's House (Reps), meeting in the neutral Bush Capital. It manages the inequality of the continent through Fiscal Equalization, operating a unique Washminster System. The nation is defined by the static lines of The Colonial Survey, resulting in a fragmented Patchwork Economy.",
+      "narrative": "A fair federation shares national tax revenue so every state, country town, and growing outer suburb gets decent hospitals, schools, and roads—instead of hoarding wealth and decision-making in inner-city capitals. Example: Ensuring a family in regional Tasmania or far north Queensland gets the same quality public hospital care as someone in inner Sydney.",
       "coords": {
         "v": 0.37,
         "psi": 0.09
@@ -813,11 +813,11 @@ window.KANON_SURVEY_DATA = {
       "qC": "People in my local area believe every town and suburb deserves fair public services and support sharing national funding equitably.",
       "qD": "Across Australia today, federal and state funding actually delivers a fair share of hospitals, schools, and transport to regional towns and outer suburbs.",
       "help": {
-        "highA": "You strongly endorse the Australian ethos of What.Where (Fair Regional Federation & Shared National Revenue), spanning The States' House, The People's House, The Bush Capital, Fiscal Equalization, and more.",
-        "lowA": "You feel disconnected from or skeptical of the traditional Australian values grouped under What.Where (Fair Regional Federation & Shared National Revenue).",
-        "highB": "In your everyday Australian life, the promise of What.Where is genuinely lived, working, and accessible.",
-        "lowB": "In practice, What.Where feels broken, priced out, or blocked by systemic friction where you live.",
-        "note": "Matrix Sense 2.3 (What.Where): Synthesises 7 Kanon vectors (The States' House, The People's House, The Bush Capital, Fiscal Equalization, A Washminster System, The Colonial Survey, The Patchwork Economy). The Definition maps power onto the land through The States' House (Senate) and The People's House (Reps), meeting in the neutral Bush Capital. It manages the inequality of the continent through Fiscal Equalization, operating a unique Washminster System. The nation is defined by the static lines of The Colonial Survey, resulting in a fragmented Patchwork Economy."
+        "highA": "You strongly support Theme 2.3 (Fair Deal for Regions, States & Outer Suburbs).",
+        "lowA": "You place lower priority on or disagree with Theme 2.3 (Fair Deal for Regions, States & Outer Suburbs).",
+        "highB": "In everyday practice, Theme 2.3 (Fair Deal for Regions, States & Outer Suburbs) is actively upheld.",
+        "lowB": "In everyday reality, Theme 2.3 (Fair Deal for Regions, States & Outer Suburbs) is struggling, blocked, or failing.",
+        "note": "A fair federation shares national tax revenue so every state, country town, and growing outer suburb gets decent hospitals, schools, and roads—instead of hoarding wealth and decision-making in inner-city capitals. Example: Ensuring a family in regional Tasmania or far north Queensland gets the same quality public hospital care as someone in inner Sydney."
       },
       "tags": [
         "fair-go",
@@ -833,10 +833,10 @@ window.KANON_SURVEY_DATA = {
       "plane": 2,
       "senseIdx": 4,
       "senseCode": "Why",
-      "title": "The Common Wealth: Public Parks, Air & Commons",
+      "title": "The Workingman's Commonwealth & Civic Peace",
       "matrixTitle": "The Why of the What (Motivations/Drive)",
       "shortTitle": "What.Why · The Common Wealth: Public Parks, Air & Commons",
-      "narrative": "The Drive behind the Definition began with The Crimson Thread of kinship, aiming to build The Workingman's Paradise. It was constructed as A Bulwark against the world, internally unified by The Common Market (Free Trade). It maintains peace through The Secular State, having been forged in the fire of The Great Strikes, with the ultimate goal of preserving The Quiet Life.",
+      "narrative": "Australia federated on a practical promise: to build a peaceful, secular democracy where working people enjoy living wages, fair work hours, and freedom from old-world sectarian hatreds. Example: People of all faiths and backgrounds working side by side on the same job site under fair pay and conditions.",
       "coords": {
         "v": 0.42,
         "psi": 0.33
@@ -866,11 +866,11 @@ window.KANON_SURVEY_DATA = {
       "qC": "In my community circle, people keep religion and politics respectful and support a fair living wage for working families.",
       "qD": "Across Australia today, working households can actually rely on the Commonwealth promise of fair wages, civic peace, and a secure standard of living.",
       "help": {
-        "highA": "You strongly endorse the Australian ethos of What.Why (The Common Wealth: Public Parks, Air & Commons), spanning The Crimson Thread, The Workingman's Paradise, A Bulwark, Connection [FN], and more.",
-        "lowA": "You feel disconnected from or skeptical of the traditional Australian values grouped under What.Why (The Common Wealth: Public Parks, Air & Commons).",
-        "highB": "In your everyday Australian life, the promise of What.Why is genuinely lived, working, and accessible.",
-        "lowB": "In practice, What.Why feels broken, priced out, or blocked by systemic friction where you live.",
-        "note": "Matrix Sense 2.4 (What.Why): Synthesises 8 Kanon vectors (The Crimson Thread, The Workingman's Paradise, A Bulwark, Connection [FN], The Common Market, The Secular State, The Great Strikes, The Quiet Life). The Drive behind the Definition began with The Crimson Thread of kinship, aiming to build The Workingman's Paradise. It was constructed as A Bulwark against the world, internally unified by The Common Market (Free Trade). It maintains peace through The Secular State, having been forged in the fire of The Great Strikes, with the ultimate goal of preserving The Quiet Life."
+        "highA": "You strongly support Theme 2.4 (The Workingman's Commonwealth & Civic Peace).",
+        "lowA": "You place lower priority on or disagree with Theme 2.4 (The Workingman's Commonwealth & Civic Peace).",
+        "highB": "In everyday practice, Theme 2.4 (The Workingman's Commonwealth & Civic Peace) is actively upheld.",
+        "lowB": "In everyday reality, Theme 2.4 (The Workingman's Commonwealth & Civic Peace) is struggling, blocked, or failing.",
+        "note": "Australia federated on a practical promise: to build a peaceful, secular democracy where working people enjoy living wages, fair work hours, and freedom from old-world sectarian hatreds. Example: People of all faiths and backgrounds working side by side on the same job site under fair pay and conditions."
       },
       "tags": [
         "mateship",
@@ -886,10 +886,10 @@ window.KANON_SURVEY_DATA = {
       "plane": 2,
       "senseIdx": 5,
       "senseCode": "How",
-      "title": "Free Press, Public Broadcasting & Transparent Truth",
+      "title": "Clean Elections, Secret Ballots & Democratic Voice",
       "matrixTitle": "The How of the What (Methods/Character)",
       "shortTitle": "What.How · Free Press, Public Broadcasting & Transparent Truth",
-      "narrative": "The Definition operates through the discipline of The Faceless Men, validated by the privacy of The Secret Ballot. It filters choices through Preferential Voting and changes its own rules only via The Referendum. It manages the population through The Census, investigates truth via The Royal Commission, and ruthlessly renovates leadership through The Spill.",
+      "narrative": "Our democracy rests on clean, practical voting rules: the secret ballot in pencil, an independent electoral umpire (the AEC), compulsory Saturday turnout, and preferential voting so every voice counts—not big-money donors or party-room coups. Example: Walking into your local primary school on election Saturday, grabbing a snag on bread, and knowing the election count is 100% fair and tamper-proof.",
       "coords": {
         "v": 0.41,
         "psi": 0.5
@@ -917,11 +917,11 @@ window.KANON_SURVEY_DATA = {
       "qC": "People in my everyday circle take democratic voting seriously and are fed up with factional powerbrokers and corporate lobbying.",
       "qD": "Across Australia today, our electoral system and political parties actually deliver leaders and policies chosen by voters rather than factional insiders and big donors.",
       "help": {
-        "highA": "You strongly endorse the Australian ethos of What.How (Free Press, Public Broadcasting & Transparent Truth), spanning The Faceless Men, The Secret Ballot, Preferential Voting, The Referendum, and more.",
-        "lowA": "You feel disconnected from or skeptical of the traditional Australian values grouped under What.How (Free Press, Public Broadcasting & Transparent Truth).",
-        "highB": "In your everyday Australian life, the promise of What.How is genuinely lived, working, and accessible.",
-        "lowB": "In practice, What.How feels broken, priced out, or blocked by systemic friction where you live.",
-        "note": "Matrix Sense 2.5 (What.How): Synthesises 7 Kanon vectors (The Faceless Men, The Secret Ballot, Preferential Voting, The Referendum, The Royal Commission, The Census, The Spill). The Definition operates through the discipline of The Faceless Men, validated by the privacy of The Secret Ballot. It filters choices through Preferential Voting and changes its own rules only via The Referendum. It manages the population through The Census, investigates truth via The Royal Commission, and ruthlessly renovates leadership through The Spill."
+        "highA": "You strongly support Theme 2.5 (Clean Elections, Secret Ballots & Democratic Voice).",
+        "lowA": "You place lower priority on or disagree with Theme 2.5 (Clean Elections, Secret Ballots & Democratic Voice).",
+        "highB": "In everyday practice, Theme 2.5 (Clean Elections, Secret Ballots & Democratic Voice) is actively upheld.",
+        "lowB": "In everyday reality, Theme 2.5 (Clean Elections, Secret Ballots & Democratic Voice) is struggling, blocked, or failing.",
+        "note": "Our democracy rests on clean, practical voting rules: the secret ballot in pencil, an independent electoral umpire (the AEC), compulsory Saturday turnout, and preferential voting so every voice counts—not big-money donors or party-room coups. Example: Walking into your local primary school on election Saturday, grabbing a snag on bread, and knowing the election count is 100% fair and tamper-proof."
       },
       "tags": [
         "work-wages",
@@ -937,10 +937,10 @@ window.KANON_SURVEY_DATA = {
       "plane": 2,
       "senseIdx": 6,
       "senseCode": "Cause",
-      "title": "Treaty, Voice & First Nations Sovereignty",
+      "title": "Essential Public Services Run for the Common Good",
       "matrixTitle": "The Cause of the What (Roots/History)",
       "shortTitle": "What.Cause · Treaty, Voice & First Nations Sovereignty",
-      "narrative": "The Foundation was sparked by The Prophet (Parkes) and legally enacted by The Imperial Act. Its spirit was born at The Stockade, while its necessity was driven by The Slump of the 1890s. The democratic mechanism was invented by The Corowa Plan, implementing a practical State Socialism, and was finally ratified by the people on Federation Day.",
+      "narrative": "Core essentials that everyone relies on—clean water, electricity grids, roads, public transport, and basic banking—should be run for the public good rather than privatised into price-gouging monopolies. Example: Keeping water utilities and local service branches in public hands so regional towns aren't abandoned when profits dip.",
       "coords": {
         "v": 0.56,
         "psi": 0.34
@@ -968,11 +968,11 @@ window.KANON_SURVEY_DATA = {
       "qC": "People in my community circle believe essential utilities belong in public hands or under strict public-interest rules rather than toll-road and energy monopolies.",
       "qD": "Across Australia today, essential services and infrastructure are actually run affordably for the public good rather than privatised price-gouging.",
       "help": {
-        "highA": "You strongly endorse the Australian ethos of What.Cause (Treaty, Voice & First Nations Sovereignty), spanning The Prophet, The Imperial Act, The Stockade, The Slump, and more.",
-        "lowA": "You feel disconnected from or skeptical of the traditional Australian values grouped under What.Cause (Treaty, Voice & First Nations Sovereignty).",
-        "highB": "In your everyday Australian life, the promise of What.Cause is genuinely lived, working, and accessible.",
-        "lowB": "In practice, What.Cause feels broken, priced out, or blocked by systemic friction where you live.",
-        "note": "Matrix Sense 2.6 (What.Cause): Synthesises 7 Kanon vectors (The Prophet, The Imperial Act, The Stockade, The Slump, The Corowa Plan, State Socialism, Federation Day). The Foundation was sparked by The Prophet (Parkes) and legally enacted by The Imperial Act. Its spirit was born at The Stockade, while its necessity was driven by The Slump of the 1890s. The democratic mechanism was invented by The Corowa Plan, implementing a practical State Socialism, and was finally ratified by the people on Federation Day."
+        "highA": "You strongly support Theme 2.6 (Essential Public Services Run for the Common Good).",
+        "lowA": "You place lower priority on or disagree with Theme 2.6 (Essential Public Services Run for the Common Good).",
+        "highB": "In everyday practice, Theme 2.6 (Essential Public Services Run for the Common Good) is actively upheld.",
+        "lowB": "In everyday reality, Theme 2.6 (Essential Public Services Run for the Common Good) is struggling, blocked, or failing.",
+        "note": "Core essentials that everyone relies on—clean water, electricity grids, roads, public transport, and basic banking—should be run for the public good rather than privatised into price-gouging monopolies. Example: Keeping water utilities and local service branches in public hands so regional towns aren't abandoned when profits dip."
       },
       "tags": [
         "work-wages",
@@ -988,10 +988,10 @@ window.KANON_SURVEY_DATA = {
       "plane": 2,
       "senseIdx": 7,
       "senseCode": "Effect",
-      "title": "Universal Civic Franchise & Protected Secret Ballot",
+      "title": "Common-Sense Safety vs. The Nanny State",
       "matrixTitle": "The Effect of the What (Legacy/Impact)",
       "shortTitle": "What.Effect · Universal Civic Franchise & Protected Secret Ballot",
-      "narrative": "The Result of the Definition is the character of The Anzac, living in The Lucky Country. The nation struggles with The Tyranny of Distance and the doubt of The Cultural Cringe, while mythologizing itself through Mateship. It rests upon The Great Silence of Indigenous erasure, creating a safe, comfortable, risk-averse Nanny State.",
+      "narrative": "Australians support sensible rules that save lives—like seatbelts, gun control after Port Arthur, and workplace safety—but we push back hard when petty bureaucracy turns into a revenue-raising 'Nanny State' that treats adults like children. Example: Supporting strict drink-driving laws while opposing ridiculous council red tape that bans kids from climbing trees in the local park.",
       "coords": {
         "v": 0.21,
         "psi": -0.11
@@ -1021,11 +1021,11 @@ window.KANON_SURVEY_DATA = {
       "qC": "People in my local community look out for safety with common sense without acting like wowsers or calling for petty rules on everything.",
       "qD": "Across Australia today, our laws and councils actually strike a healthy balance—keeping people safe and included without burying daily life in revenue-raising fines and red tape.",
       "help": {
-        "highA": "You strongly endorse the Australian ethos of What.Effect (Universal Civic Franchise & Protected Secret Ballot), spanning The Anzac, The Lucky Country, The Tyranny of Distance, The Cultural Cringe, and more.",
-        "lowA": "You feel disconnected from or skeptical of the traditional Australian values grouped under What.Effect (Universal Civic Franchise & Protected Secret Ballot).",
-        "highB": "In your everyday Australian life, the promise of What.Effect is genuinely lived, working, and accessible.",
-        "lowB": "In practice, What.Effect feels broken, priced out, or blocked by systemic friction where you live.",
-        "note": "Matrix Sense 2.7 (What.Effect): Synthesises 8 Kanon vectors (The Anzac, The Lucky Country, The Tyranny of Distance, The Cultural Cringe, Mateship, The Great Silence, Voice [FN], The Nanny State). The Result of the Definition is the character of The Anzac, living in The Lucky Country. The nation struggles with The Tyranny of Distance and the doubt of The Cultural Cringe, while mythologizing itself through Mateship. It rests upon The Great Silence of Indigenous erasure, creating a safe, comfortable, risk-averse Nanny State."
+        "highA": "You strongly support Theme 2.7 (Common-Sense Safety vs. The Nanny State).",
+        "lowA": "You place lower priority on or disagree with Theme 2.7 (Common-Sense Safety vs. The Nanny State).",
+        "highB": "In everyday practice, Theme 2.7 (Common-Sense Safety vs. The Nanny State) is actively upheld.",
+        "lowB": "In everyday reality, Theme 2.7 (Common-Sense Safety vs. The Nanny State) is struggling, blocked, or failing.",
+        "note": "Australians support sensible rules that save lives—like seatbelts, gun control after Port Arthur, and workplace safety—but we push back hard when petty bureaucracy turns into a revenue-raising 'Nanny State' that treats adults like children. Example: Supporting strict drink-driving laws while opposing ridiculous council red tape that bans kids from climbing trees in the local park."
       },
       "tags": [
         "mateship",
@@ -1041,10 +1041,10 @@ window.KANON_SURVEY_DATA = {
       "plane": 3,
       "senseIdx": 1,
       "senseCode": "Who",
-      "title": "Continental Reality: Ancient Shield, Desert & Fire",
+      "title": "Respecting a Sunburnt Country of Fire & Drought",
       "matrixTitle": "The Who of the Where (Authenticity/Soul)",
       "shortTitle": "Where.Who · Continental Reality: Ancient Shield, Desert & Fire",
-      "narrative": "In Plane 3 (Land), Where.Who (Authenticity & Character) maps how Australian land is expressed through The Sunburnt Country (Totem), The Weird Melancholy (Context), The Never-Never (Magnet), The Red Steer (Pulse). The sheer scale and volatility of the Australian continent—its bushfires, droughts, and ancient spirit of place—demand humility, respect, and preparation rather than human arrogance.",
+      "narrative": "The sheer scale and climate extremes of the Australian continent—its long droughts, bushfires, and flooding rains—demand humility and preparation rather than arrogance. Example: Designing towns, farms, and water storage to handle ten-year droughts and summer fire seasons instead of pretending Australia has European weather.",
       "coords": {
         "v": 0.41,
         "psi": -0.31
@@ -1072,11 +1072,11 @@ window.KANON_SURVEY_DATA = {
       "qC": "My local community respects the bush and climate extremes, prepares practically for fire and flood seasons, and backs local emergency volunteers.",
       "qD": "Across Australia today, national planning, building codes, and disaster systems actually adapt to the continent's harsh climate and natural limits.",
       "help": {
-        "highA": "You strongly endorse the Australian ethos of Where.Who (Continental Reality: Ancient Shield, Desert & Fire), spanning The Sunburnt Country, The Weird Melancholy, The Never-Never, The Red Steer, and more.",
-        "lowA": "You feel disconnected from or skeptical of the traditional Australian values grouped under Where.Who (Continental Reality: Ancient Shield, Desert & Fire).",
-        "highB": "In your everyday Australian life, the promise of Where.Who is genuinely lived, working, and accessible.",
-        "lowB": "In practice, Where.Who feels broken, priced out, or blocked by systemic friction where you live.",
-        "note": "Matrix Sense 3.1 (Where.Who): Synthesises 7 Kanon vectors (The Sunburnt Country, The Weird Melancholy, The Never-Never, The Red Steer, The Drought, The Spirit of Place, The Primitive Area). In Plane 3 (Land), Where.Who (Authenticity & Character) maps how Australian land is expressed through The Sunburnt Country (Totem), The Weird Melancholy (Context), The Never-Never (Magnet), The Red Steer (Pulse). The sheer scale and volatility of the Australian continent—its bushfires, droughts, and ancient spirit of place—demand humility, respect, and preparation rather than human arrogance."
+        "highA": "You strongly support Theme 3.1 (Respecting a Sunburnt Country of Fire & Drought).",
+        "lowA": "You place lower priority on or disagree with Theme 3.1 (Respecting a Sunburnt Country of Fire & Drought).",
+        "highB": "In everyday practice, Theme 3.1 (Respecting a Sunburnt Country of Fire & Drought) is actively upheld.",
+        "lowB": "In everyday reality, Theme 3.1 (Respecting a Sunburnt Country of Fire & Drought) is struggling, blocked, or failing.",
+        "note": "The sheer scale and climate extremes of the Australian continent—its long droughts, bushfires, and flooding rains—demand humility and preparation rather than arrogance. Example: Designing towns, farms, and water storage to handle ten-year droughts and summer fire seasons instead of pretending Australia has European weather."
       },
       "tags": [
         "housing",
@@ -1092,10 +1092,10 @@ window.KANON_SURVEY_DATA = {
       "plane": 3,
       "senseIdx": 2,
       "senseCode": "What",
-      "title": "Secure Housing, Land Rights & Suburban Home",
+      "title": "Affordable Homes, Fair Land Use & Native Title",
       "matrixTitle": "The What of the Where (Roles/Titles)",
       "shortTitle": "Where.What · Secure Housing, Land Rights & Suburban Home",
-      "narrative": "In Plane 3 (Land), Where.What (Roles & Definitions) maps how Australian land is expressed through Custodianship (Custodianship), The Crossing (Release), The Grid (Overlay), The Crown (Landlord), while confronting the shadow of The Squatter (Claim), The Void (Law). Land in Australia should be shared fairly for families to live and farm on, while respecting First Nations native title—never locked up by land-banking monopolies or oligarchs.",
+      "narrative": "Land in Australia should provide secure, affordable homes for families and fair ground for farmers while respecting First Nations Native Title—never locked up by land-banking monopolies or property speculators pricing out the next generation. Example: A young nurse or teacher being able to buy or rent a secure home near where they work without spending 60% of their pay on housing.",
       "coords": {
         "v": 0.14,
         "psi": 0.46
@@ -1123,11 +1123,11 @@ window.KANON_SURVEY_DATA = {
       "qC": "People in my everyday circle believe every working person and family should be able to afford a secure home and respect native title.",
       "qD": "Across Australia today, our housing and land laws actually enable ordinary Australians to secure a fair home without being locked out by speculative property monopolies.",
       "help": {
-        "highA": "You strongly endorse the Australian ethos of Where.What (Secure Housing, Land Rights & Suburban Home), spanning The Squatter, The Void, Custodianship [FN], The Crossing, and more.",
-        "lowA": "You feel disconnected from or skeptical of the traditional Australian values grouped under Where.What (Secure Housing, Land Rights & Suburban Home).",
-        "highB": "In your everyday Australian life, the promise of Where.What is genuinely lived, working, and accessible.",
-        "lowB": "In practice, Where.What feels broken, priced out, or blocked by systemic friction where you live.",
-        "note": "Matrix Sense 3.2 (Where.What): Synthesises 7 Kanon vectors (The Squatter, The Void, Custodianship [FN], The Crossing, The Grid, The Crown, The Selector). In Plane 3 (Land), Where.What (Roles & Definitions) maps how Australian land is expressed through Custodianship (Custodianship), The Crossing (Release), The Grid (Overlay), The Crown (Landlord), while confronting the shadow of The Squatter (Claim), The Void (Law). Land in Australia should be shared fairly for families to live and farm on, while respecting First Nations native title—never locked up by land-banking monopolies or oligarchs."
+        "highA": "You strongly support Theme 3.2 (Affordable Homes, Fair Land Use & Native Title).",
+        "lowA": "You place lower priority on or disagree with Theme 3.2 (Affordable Homes, Fair Land Use & Native Title).",
+        "highB": "In everyday practice, Theme 3.2 (Affordable Homes, Fair Land Use & Native Title) is actively upheld.",
+        "lowB": "In everyday reality, Theme 3.2 (Affordable Homes, Fair Land Use & Native Title) is struggling, blocked, or failing.",
+        "note": "Land in Australia should provide secure, affordable homes for families and fair ground for farmers while respecting First Nations Native Title—never locked up by land-banking monopolies or property speculators pricing out the next generation. Example: A young nurse or teacher being able to buy or rent a secure home near where they work without spending 60% of their pay on housing."
       },
       "tags": [
         "housing",
@@ -1143,10 +1143,10 @@ window.KANON_SURVEY_DATA = {
       "plane": 3,
       "senseIdx": 3,
       "senseCode": "Where",
-      "title": "Living with Drought, Flood & Extreme Weather",
+      "title": "Protecting Rivers, Soils & Native Wildlife",
       "matrixTitle": "The Where of the Where (Origins/Location)",
       "shortTitle": "Where.Where · Living with Drought, Flood & Extreme Weather",
-      "narrative": "In Plane 3 (Land), Where.Where (Place & Setting) maps how Australian land is expressed through The Red Heart (Core), Goyder's Line (Limit), The Saltbush (Necessity), The River (Flow), while confronting the shadow of The Plague (Virus). Australia's ancient soils, rivers, and unique native wildlife are irreplaceable treasures that must be protected from over-clearing, water theft, and ecological collapse.",
+      "narrative": "Australia's ancient soils, river systems, and unique wildlife (like the platypus, koala, and remnant bushland) are irreplaceable treasures. Once we clear the bush or drain a river system dry, it doesn't come back. Example: Stopping corporate mega-farms from pumping the Darling River dry so downstream country towns still have clean drinking water and healthy fish.",
       "coords": {
         "v": 0.26,
         "psi": -0.04
@@ -1174,11 +1174,11 @@ window.KANON_SURVEY_DATA = {
       "qC": "People in my local area care for our rivers, parks, soils, and native wildlife rather than treating the environment as a dumping ground.",
       "qD": "Across Australia today, governments and industries actually protect and restore our rivers, soils, bushland, and native species rather than letting them degrade.",
       "help": {
-        "highA": "You strongly endorse the Australian ethos of Where.Where (Living with Drought, Flood & Extreme Weather), spanning The Red Heart, Goyder's Line, The Saltbush, The River, and more.",
-        "lowA": "You feel disconnected from or skeptical of the traditional Australian values grouped under Where.Where (Living with Drought, Flood & Extreme Weather).",
-        "highB": "In your everyday Australian life, the promise of Where.Where is genuinely lived, working, and accessible.",
-        "lowB": "In practice, Where.Where feels broken, priced out, or blocked by systemic friction where you live.",
-        "note": "Matrix Sense 3.3 (Where.Where): Synthesises 7 Kanon vectors (The Red Heart, Goyder's Line, The Saltbush, The River, The Marsupial, Gondwana, The Plague). In Plane 3 (Land), Where.Where (Place & Setting) maps how Australian land is expressed through The Red Heart (Core), Goyder's Line (Limit), The Saltbush (Necessity), The River (Flow), while confronting the shadow of The Plague (Virus). Australia's ancient soils, rivers, and unique native wildlife are irreplaceable treasures that must be protected from over-clearing, water theft, and ecological collapse."
+        "highA": "You strongly support Theme 3.3 (Protecting Rivers, Soils & Native Wildlife).",
+        "lowA": "You place lower priority on or disagree with Theme 3.3 (Protecting Rivers, Soils & Native Wildlife).",
+        "highB": "In everyday practice, Theme 3.3 (Protecting Rivers, Soils & Native Wildlife) is actively upheld.",
+        "lowB": "In everyday reality, Theme 3.3 (Protecting Rivers, Soils & Native Wildlife) is struggling, blocked, or failing.",
+        "note": "Australia's ancient soils, river systems, and unique wildlife (like the platypus, koala, and remnant bushland) are irreplaceable treasures. Once we clear the bush or drain a river system dry, it doesn't come back. Example: Stopping corporate mega-farms from pumping the Darling River dry so downstream country towns still have clean drinking water and healthy fish."
       },
       "tags": [
         "land",
@@ -1194,10 +1194,10 @@ window.KANON_SURVEY_DATA = {
       "plane": 3,
       "senseIdx": 4,
       "senseCode": "Why",
-      "title": "Water Cycles: The Murray-Darling & Great Artesian Basin",
+      "title": "Water Lifelines & Abundant Clean Energy",
       "matrixTitle": "The Why of the Where (Motivations/Drive)",
       "shortTitle": "Where.Why · Water Cycles: The Murray-Darling & Great Artesian Basin",
-      "narrative": "In Plane 3 (Land), Where.Why (Drive & Motivation) maps how Australian land is expressed through The Sun (Engine), The Thirst (Drive), The Wet and The Dry (Rhythm), The Flood (Surge). On the driest inhabited continent, water and abundant solar and wind energy should be managed as shared national lifelines for long-term survival rather than private cartel profit.",
+      "narrative": "As the driest inhabited continent blessed with the world's best sunshine and wind, Australia should manage water and clean energy as shared national lifelines that lower household bills rather than enriching private cartels. Example: Rooftop solar and community batteries cutting power bills for suburban families while keeping reliable power flowing to local industry.",
       "coords": {
         "v": 0.21,
         "psi": 0.07
@@ -1225,11 +1225,11 @@ window.KANON_SURVEY_DATA = {
       "qC": "People in my community circle conserve water when needed and support affordable, reliable clean power for local households.",
       "qD": "Across Australia today, water basins and energy grids are actually managed reliably and affordably for households and farmers rather than hoarded or price-gouged.",
       "help": {
-        "highA": "You strongly endorse the Australian ethos of Where.Why (Water Cycles: The Murray-Darling & Great Artesian Basin), spanning The Sun, The Thirst, The Wet and The Dry, The Flood, and more.",
-        "lowA": "You feel disconnected from or skeptical of the traditional Australian values grouped under Where.Why (Water Cycles: The Murray-Darling & Great Artesian Basin).",
-        "highB": "In your everyday Australian life, the promise of Where.Why is genuinely lived, working, and accessible.",
-        "lowB": "In practice, Where.Why feels broken, priced out, or blocked by systemic friction where you live.",
-        "note": "Matrix Sense 3.4 (Where.Why): Synthesises 7 Kanon vectors (The Sun, The Thirst, The Wet and The Dry, The Flood, The Wind, The Oscillation (El Niño), The Windmill). In Plane 3 (Land), Where.Why (Drive & Motivation) maps how Australian land is expressed through The Sun (Engine), The Thirst (Drive), The Wet and The Dry (Rhythm), The Flood (Surge). On the driest inhabited continent, water and abundant solar and wind energy should be managed as shared national lifelines for long-term survival rather than private cartel profit."
+        "highA": "You strongly support Theme 3.4 (Water Lifelines & Abundant Clean Energy).",
+        "lowA": "You place lower priority on or disagree with Theme 3.4 (Water Lifelines & Abundant Clean Energy).",
+        "highB": "In everyday practice, Theme 3.4 (Water Lifelines & Abundant Clean Energy) is actively upheld.",
+        "lowB": "In everyday reality, Theme 3.4 (Water Lifelines & Abundant Clean Energy) is struggling, blocked, or failing.",
+        "note": "As the driest inhabited continent blessed with the world's best sunshine and wind, Australia should manage water and clean energy as shared national lifelines that lower household bills rather than enriching private cartels. Example: Rooftop solar and community batteries cutting power bills for suburban families while keeping reliable power flowing to local industry."
       },
       "tags": [
         "land-climate",
@@ -1245,10 +1245,10 @@ window.KANON_SURVEY_DATA = {
       "plane": 3,
       "senseIdx": 5,
       "senseCode": "How",
-      "title": "Coastal Ecology, Great Barrier Reef & Oceans",
+      "title": "Bridging the Distance: Regional Roads, Rail & Lifelines",
       "matrixTitle": "The How of the Where (Methods/Character)",
       "shortTitle": "Where.How · Coastal Ecology, Great Barrier Reef & Oceans",
-      "narrative": "In Plane 3 (Land), Where.How (Method & Practice) maps how Australian land is expressed through The Overland Telegraph (Nerve), Songlines (Navigation), The Highway (Path), The Dam (Redemption), while confronting the shadow of The Dingo Fence (Border). Because distance is Australia's great physical challenge, reliable transport, telecommunications, postal, and emergency medical networks must reach every town and suburb regardless of postcode.",
+      "narrative": "Because vast distance is Australia's greatest physical hurdle, reliable roads, rail, telecommunications, postal services, and emergency medicine (like the Royal Flying Doctor Service) are vital lifelines that bind city and bush together. Example: The Royal Flying Doctor landing on a dusty outback airstrip at midnight to save a critically ill farm worker.",
       "coords": {
         "v": 0.59,
         "psi": 0.64
@@ -1278,11 +1278,11 @@ window.KANON_SURVEY_DATA = {
       "qC": "People in my local area look out for isolated neighbours and rely on connected local transport, communications, and medical lifelines.",
       "qD": "Across Australia today, every regional town and outer suburb actually receives dependable roads, public transport, digital coverage, and emergency medical care.",
       "help": {
-        "highA": "You strongly endorse the Australian ethos of Where.How (Coastal Ecology, Great Barrier Reef & Oceans), spanning The Overland Telegraph, Songlines [FN], The Dingo Fence, The Highway, and more.",
-        "lowA": "You feel disconnected from or skeptical of the traditional Australian values grouped under Where.How (Coastal Ecology, Great Barrier Reef & Oceans).",
-        "highB": "In your everyday Australian life, the promise of Where.How is genuinely lived, working, and accessible.",
-        "lowB": "In practice, Where.How feels broken, priced out, or blocked by systemic friction where you live.",
-        "note": "Matrix Sense 3.5 (Where.How): Synthesises 8 Kanon vectors (The Overland Telegraph, Songlines [FN], The Dingo Fence, The Highway, The Dam, The Air, The Railway, The Pipeline). In Plane 3 (Land), Where.How (Method & Practice) maps how Australian land is expressed through The Overland Telegraph (Nerve), Songlines (Navigation), The Highway (Path), The Dam (Redemption), while confronting the shadow of The Dingo Fence (Border). Because distance is Australia's great physical challenge, reliable transport, telecommunications, postal, and emergency medical networks must reach every town and suburb regardless of postcode."
+        "highA": "You strongly support Theme 3.5 (Bridging the Distance: Regional Roads, Rail & Lifelines).",
+        "lowA": "You place lower priority on or disagree with Theme 3.5 (Bridging the Distance: Regional Roads, Rail & Lifelines).",
+        "highB": "In everyday practice, Theme 3.5 (Bridging the Distance: Regional Roads, Rail & Lifelines) is actively upheld.",
+        "lowB": "In everyday reality, Theme 3.5 (Bridging the Distance: Regional Roads, Rail & Lifelines) is struggling, blocked, or failing.",
+        "note": "Because vast distance is Australia's greatest physical hurdle, reliable roads, rail, telecommunications, postal services, and emergency medicine (like the Royal Flying Doctor Service) are vital lifelines that bind city and bush together. Example: The Royal Flying Doctor landing on a dusty outback airstrip at midnight to save a critically ill farm worker."
       },
       "tags": [
         "land-climate",
@@ -1298,10 +1298,10 @@ window.KANON_SURVEY_DATA = {
       "plane": 3,
       "senseIdx": 6,
       "senseCode": "Cause",
-      "title": "First Nations Songlines & Deep Custodial Mapping",
+      "title": "Shared Mineral Wealth vs. Corporate Quarry Plunder",
       "matrixTitle": "The Cause of the Where (Roots/History)",
       "shortTitle": "Where.Cause · First Nations Songlines & Deep Custodial Mapping",
-      "narrative": "In Plane 3 (Land), Where.Cause (Roots & History) maps how Australian land is expressed through The Miner (Archetype), The Gold (Lode), The Shield (Base), The Impact (Origin), while confronting the shadow of The Uranium (Taboo), The Opencut (Method). The mineral and energy wealth dug from beneath Australian soil belongs to all Australians and must fund lasting public prosperity without destroying sacred heritage or local environments.",
+      "narrative": "The iron ore, gold, gas, and critical minerals dug from beneath Australian soil belong to the Australian people. They should fund world-class schools, hospitals, and a national sovereign wealth fund—not vanish offshore tax-free while leaving locals with high power bills and scarred land. Example: Collecting fair public royalties on exported LNG gas instead of letting multinationals pay zero royalty on public resources.",
       "coords": {
         "v": 0.2,
         "psi": 0.2
@@ -1329,11 +1329,11 @@ window.KANON_SURVEY_DATA = {
       "qC": "People in my everyday circle agree that Australia's mining and gas booms should leave lasting wealth for everyday Australians rather than vanishing offshore untaxed.",
       "qD": "Across Australia today, our tax and royalty laws actually capture a fair sovereign dividend from our mineral and gas wealth for the public good.",
       "help": {
-        "highA": "You strongly endorse the Australian ethos of Where.Cause (First Nations Songlines & Deep Custodial Mapping), spanning The Miner, The Gold, The Shield, The Uranium, and more.",
-        "lowA": "You feel disconnected from or skeptical of the traditional Australian values grouped under Where.Cause (First Nations Songlines & Deep Custodial Mapping).",
-        "highB": "In your everyday Australian life, the promise of Where.Cause is genuinely lived, working, and accessible.",
-        "lowB": "In practice, Where.Cause feels broken, priced out, or blocked by systemic friction where you live.",
-        "note": "Matrix Sense 3.6 (Where.Cause): Synthesises 7 Kanon vectors (The Miner, The Gold, The Shield, The Uranium, The Opencut, The Impact, The Wealth). In Plane 3 (Land), Where.Cause (Roots & History) maps how Australian land is expressed through The Miner (Archetype), The Gold (Lode), The Shield (Base), The Impact (Origin), while confronting the shadow of The Uranium (Taboo), The Opencut (Method). The mineral and energy wealth dug from beneath Australian soil belongs to all Australians and must fund lasting public prosperity without destroying sacred heritage or local environments."
+        "highA": "You strongly support Theme 3.6 (Shared Mineral Wealth vs. Corporate Quarry Plunder).",
+        "lowA": "You place lower priority on or disagree with Theme 3.6 (Shared Mineral Wealth vs. Corporate Quarry Plunder).",
+        "highB": "In everyday practice, Theme 3.6 (Shared Mineral Wealth vs. Corporate Quarry Plunder) is actively upheld.",
+        "lowB": "In everyday reality, Theme 3.6 (Shared Mineral Wealth vs. Corporate Quarry Plunder) is struggling, blocked, or failing.",
+        "note": "The iron ore, gold, gas, and critical minerals dug from beneath Australian soil belong to the Australian people. They should fund world-class schools, hospitals, and a national sovereign wealth fund—not vanish offshore tax-free while leaving locals with high power bills and scarred land. Example: Collecting fair public royalties on exported LNG gas instead of letting multinationals pay zero royalty on public resources."
       },
       "tags": [
         "mateship",
@@ -1349,10 +1349,10 @@ window.KANON_SURVEY_DATA = {
       "plane": 3,
       "senseIdx": 7,
       "senseCode": "Effect",
-      "title": "Regional Towns, Remote Bush & Essential Services",
+      "title": "Liveable Suburbs, Parks & Free Public Coastlines",
       "matrixTitle": "The Effect of the Where (Legacy/Impact)",
       "shortTitle": "Where.Effect · Regional Towns, Remote Bush & Essential Services",
-      "narrative": "In Plane 3 (Land), Where.Effect (Legacy & Outcome) maps how Australian land is expressed through The Suburbanite (Reality), The Sprawl (Shape), The Coast (Zone), The Lifestyle (Goal), while confronting the shadow of The Quarantine (Cost). Every Australian town and suburb should offer the physical foundations of a good life: secure homes, green backyards or parks, free public beaches, and welcoming places for neighbours to gather.",
+      "narrative": "Every Australian town and suburb deserves the physical building blocks of a good life: a secure home, green parks, shade trees, local pools, and free public access to the beach and bush. Example: Families spending a hot Saturday at a clean public beach and free council park with public BBQs and shade.",
       "coords": {
         "v": 0.39,
         "psi": -0.04
@@ -1380,11 +1380,11 @@ window.KANON_SURVEY_DATA = {
       "qC": "My suburb or town has a genuine neighbourhood spirit where people share beaches, parks, and local streets respectfully.",
       "qD": "Across Australia today, urban and regional planning actually delivers affordable homes, green public space, and walkable community life rather than car-dependent sprawl.",
       "help": {
-        "highA": "You strongly endorse the Australian ethos of Where.Effect (Regional Towns, Remote Bush & Essential Services), spanning The Suburbanite, The Sprawl, The Coast, The Lifestyle, and more.",
-        "lowA": "You feel disconnected from or skeptical of the traditional Australian values grouped under Where.Effect (Regional Towns, Remote Bush & Essential Services).",
-        "highB": "In your everyday Australian life, the promise of Where.Effect is genuinely lived, working, and accessible.",
-        "lowB": "In practice, Where.Effect feels broken, priced out, or blocked by systemic friction where you live.",
-        "note": "Matrix Sense 3.7 (Where.Effect): Synthesises 7 Kanon vectors (The Suburbanite, The Sprawl, The Coast, The Lifestyle, The BBQ, The Quarantine, The Future). In Plane 3 (Land), Where.Effect (Legacy & Outcome) maps how Australian land is expressed through The Suburbanite (Reality), The Sprawl (Shape), The Coast (Zone), The Lifestyle (Goal), while confronting the shadow of The Quarantine (Cost). Every Australian town and suburb should offer the physical foundations of a good life: secure homes, green backyards or parks, free public beaches, and welcoming places for neighbours to gather."
+        "highA": "You strongly support Theme 3.7 (Liveable Suburbs, Parks & Free Public Coastlines).",
+        "lowA": "You place lower priority on or disagree with Theme 3.7 (Liveable Suburbs, Parks & Free Public Coastlines).",
+        "highB": "In everyday practice, Theme 3.7 (Liveable Suburbs, Parks & Free Public Coastlines) is actively upheld.",
+        "lowB": "In everyday reality, Theme 3.7 (Liveable Suburbs, Parks & Free Public Coastlines) is struggling, blocked, or failing.",
+        "note": "Every Australian town and suburb deserves the physical building blocks of a good life: a secure home, green parks, shade trees, local pools, and free public access to the beach and bush. Example: Families spending a hot Saturday at a clean public beach and free council park with public BBQs and shade."
       },
       "tags": [
         "housing",
@@ -1400,10 +1400,10 @@ window.KANON_SURVEY_DATA = {
       "plane": 4,
       "senseIdx": 1,
       "senseCode": "Who",
-      "title": "Honest Yakka, Working Battlers & Fair Reward",
+      "title": "Volunteers, Carers & Honest Workers Pulling Their Weight",
       "matrixTitle": "The Who of the Why (Authenticity/Soul)",
       "shortTitle": "Why.Who · Honest Yakka, Working Battlers & Fair Reward",
-      "narrative": "In Plane 4 (Drive), Why.Who (Authenticity & Character) maps how Australian drive is expressed through The Volunteer (Volunteer), The Digger (Digger), The Battler (Battler), The Larrikin (Larrikin), while confronting the shadow of The Bludger (Bludger), The Knocker (Knocker), The Gambler (Gambler). We should honour the everyday people who pitch in—the volunteer on the fireline, the carer, and the honest worker—while calling out those who extract wealth without contributing.",
+      "narrative": "We honour the everyday people who keep Australia running—the volunteer firefighter on the hose, the unpaid family carer, and the worker doing an honest shift—while calling out those who bludge on their mates or exploit workers from above. Example: Local volunteers running the weekend junior footy canteen or patrolling the surf beach in red and yellow caps.",
       "coords": {
         "v": 0.2,
         "psi": 0.26
@@ -1431,11 +1431,11 @@ window.KANON_SURVEY_DATA = {
       "qC": "In my workplace and local community, people who pitch in, volunteer, and do the heavy lifting are genuinely backed and appreciated.",
       "qD": "Across Australia today, our economy and tax system actually reward honest workers, carers, and volunteers over corporate rent-seekers and speculators.",
       "help": {
-        "highA": "You strongly endorse the Australian ethos of Why.Who (Honest Yakka, Working Battlers & Fair Reward), spanning The Volunteer, The Bludger, The Knocker, The Digger, and more.",
-        "lowA": "You feel disconnected from or skeptical of the traditional Australian values grouped under Why.Who (Honest Yakka, Working Battlers & Fair Reward).",
-        "highB": "In your everyday Australian life, the promise of Why.Who is genuinely lived, working, and accessible.",
-        "lowB": "In practice, Why.Who feels broken, priced out, or blocked by systemic friction where you live.",
-        "note": "Matrix Sense 4.1 (Why.Who): Synthesises 7 Kanon vectors (The Volunteer, The Bludger, The Knocker, The Digger, The Gambler, The Battler, The Larrikin). In Plane 4 (Drive), Why.Who (Authenticity & Character) maps how Australian drive is expressed through The Volunteer (Volunteer), The Digger (Digger), The Battler (Battler), The Larrikin (Larrikin), while confronting the shadow of The Bludger (Bludger), The Knocker (Knocker), The Gambler (Gambler). We should honour the everyday people who pitch in—the volunteer on the fireline, the carer, and the honest worker—while calling out those who extract wealth without contributing."
+        "highA": "You strongly support Theme 4.1 (Volunteers, Carers & Honest Workers Pulling Their Weight).",
+        "lowA": "You place lower priority on or disagree with Theme 4.1 (Volunteers, Carers & Honest Workers Pulling Their Weight).",
+        "highB": "In everyday practice, Theme 4.1 (Volunteers, Carers & Honest Workers Pulling Their Weight) is actively upheld.",
+        "lowB": "In everyday reality, Theme 4.1 (Volunteers, Carers & Honest Workers Pulling Their Weight) is struggling, blocked, or failing.",
+        "note": "We honour the everyday people who keep Australia running—the volunteer firefighter on the hose, the unpaid family carer, and the worker doing an honest shift—while calling out those who bludge on their mates or exploit workers from above. Example: Local volunteers running the weekend junior footy canteen or patrolling the surf beach in red and yellow caps."
       },
       "tags": [
         "mateship",
@@ -1451,10 +1451,10 @@ window.KANON_SURVEY_DATA = {
       "plane": 4,
       "senseIdx": 2,
       "senseCode": "What",
-      "title": "The Eight-Hour Day, The Weekend & Protected Rest",
+      "title": "A Living Wage, The Eight-Hour Day & The Weekend",
       "matrixTitle": "The What of the Why (Roles/Titles)",
       "shortTitle": "Why.What · The Eight-Hour Day, The Weekend & Protected Rest",
-      "narrative": "In Plane 4 (Drive), Why.What (Roles & Definitions) maps how Australian drive is expressed through The Fair Go (Fair Go), The Weekend (Weekend), The Home (Home), The Holiday (Holiday). The whole point of a productive economy should be a decent human life: a pay packet that covers a family's needs, a secure home, a protected two-day weekend, annual holidays, and a dignified retirement.",
+      "narrative": "Australia pioneered the 8-hour day (8 hours work, 8 hours rest, 8 hours recreation) and the living wage so a full-time worker could support a family in dignity. Economic growth means nothing if ordinary people have to work three jobs just to pay rent. Example: Protecting weekend penalty rates and the right to disconnect when your shift finishes.",
       "coords": {
         "v": 0.69,
         "psi": 0.33
@@ -1482,11 +1482,11 @@ window.KANON_SURVEY_DATA = {
       "qC": "People in my workplace and social circle respect the weekend, family time, and a fair living wage rather than glorifying burnout.",
       "qD": "Across Australia today, working households actually enjoy a pay packet with breathing room, a secure home, a protected weekend, and confidence in retirement.",
       "help": {
-        "highA": "You strongly endorse the Australian ethos of Why.What (The Eight-Hour Day, The Weekend & Protected Rest), spanning The Fair Go, The Weekend, The Home, The Holiday, and more.",
-        "lowA": "You feel disconnected from or skeptical of the traditional Australian values grouped under Why.What (The Eight-Hour Day, The Weekend & Protected Rest).",
-        "highB": "In your everyday Australian life, the promise of Why.What is genuinely lived, working, and accessible.",
-        "lowB": "In practice, Why.What feels broken, priced out, or blocked by systemic friction where you live.",
-        "note": "Matrix Sense 4.2 (Why.What): Synthesises 7 Kanon vectors (The Fair Go, The Weekend, The Home, The Holiday, The Ute, The Pay Packet, The Pension). In Plane 4 (Drive), Why.What (Roles & Definitions) maps how Australian drive is expressed through The Fair Go (Fair Go), The Weekend (Weekend), The Home (Home), The Holiday (Holiday). The whole point of a productive economy should be a decent human life: a pay packet that covers a family's needs, a secure home, a protected two-day weekend, annual holidays, and a dignified retirement."
+        "highA": "You strongly support Theme 4.2 (A Living Wage, The Eight-Hour Day & The Weekend).",
+        "lowA": "You place lower priority on or disagree with Theme 4.2 (A Living Wage, The Eight-Hour Day & The Weekend).",
+        "highB": "In everyday practice, Theme 4.2 (A Living Wage, The Eight-Hour Day & The Weekend) is actively upheld.",
+        "lowB": "In everyday reality, Theme 4.2 (A Living Wage, The Eight-Hour Day & The Weekend) is struggling, blocked, or failing.",
+        "note": "Australia pioneered the 8-hour day (8 hours work, 8 hours rest, 8 hours recreation) and the living wage so a full-time worker could support a family in dignity. Economic growth means nothing if ordinary people have to work three jobs just to pay rent. Example: Protecting weekend penalty rates and the right to disconnect when your shift finishes."
       },
       "tags": [
         "fair-go",
@@ -1502,10 +1502,10 @@ window.KANON_SURVEY_DATA = {
       "plane": 4,
       "senseIdx": 3,
       "senseCode": "Where",
-      "title": "Volunteer Spirit in Crises (RFS, SES & Surf Life Saving)",
+      "title": "Community Gathering Places: Pubs, Clubs & Local Sheds",
       "matrixTitle": "The Where of the Why (Origins/Location)",
       "shortTitle": "Why.Where · Volunteer Spirit in Crises (RFS, SES & Surf Life Saving)",
-      "narrative": "In Plane 4 (Drive), Why.Where (Place & Setting) maps how Australian drive is expressed through The Pub (Pub), The Beach (Beach), Country (Country), The Club (Club), while confronting the shadow of The Mall (Mall). Healthy communities need accessible 'third places' outside work and home—local pubs, surf and sports clubs, community sheds, parks, and beaches—where people can recharge and belong without paying a fortune.",
+      "narrative": "Healthy towns and suburbs need welcoming everyday places outside work and home—the local pub, surf club, men's shed, community garden, and local oval—where people from all walks of life yarn, check in on each other, and beat loneliness. Example: Older retirees and young apprentices working side by side at the local Men's Shed or catching up after Saturday sport.",
       "coords": {
         "v": 0.47,
         "psi": 0.31
@@ -1533,11 +1533,11 @@ window.KANON_SURVEY_DATA = {
       "qC": "My local community keeps its sports clubs, sheds, parks, and gathering spots welcoming and active for locals of all ages.",
       "qD": "Across Australia today, affordable community third places and grassroots clubs are actually protected and accessible rather than priced out or commercialised.",
       "help": {
-        "highA": "You strongly endorse the Australian ethos of Why.Where (Volunteer Spirit in Crises (RFS, SES & Surf Life Saving)), spanning The Pub, The Beach, Country, The Club, and more.",
-        "lowA": "You feel disconnected from or skeptical of the traditional Australian values grouped under Why.Where (Volunteer Spirit in Crises (RFS, SES & Surf Life Saving)).",
-        "highB": "In your everyday Australian life, the promise of Why.Where is genuinely lived, working, and accessible.",
-        "lowB": "In practice, Why.Where feels broken, priced out, or blocked by systemic friction where you live.",
-        "note": "Matrix Sense 4.3 (Why.Where): Synthesises 7 Kanon vectors (The Pub, The Beach, Country, The Club, The Shed, The Field, The Mall). In Plane 4 (Drive), Why.Where (Place & Setting) maps how Australian drive is expressed through The Pub (Pub), The Beach (Beach), Country (Country), The Club (Club), while confronting the shadow of The Mall (Mall). Healthy communities need accessible 'third places' outside work and home—local pubs, surf and sports clubs, community sheds, parks, and beaches—where people can recharge and belong without paying a fortune."
+        "highA": "You strongly support Theme 4.3 (Community Gathering Places: Pubs, Clubs & Local Sheds).",
+        "lowA": "You place lower priority on or disagree with Theme 4.3 (Community Gathering Places: Pubs, Clubs & Local Sheds).",
+        "highB": "In everyday practice, Theme 4.3 (Community Gathering Places: Pubs, Clubs & Local Sheds) is actively upheld.",
+        "lowB": "In everyday reality, Theme 4.3 (Community Gathering Places: Pubs, Clubs & Local Sheds) is struggling, blocked, or failing.",
+        "note": "Healthy towns and suburbs need welcoming everyday places outside work and home—the local pub, surf club, men's shed, community garden, and local oval—where people from all walks of life yarn, check in on each other, and beat loneliness. Example: Older retirees and young apprentices working side by side at the local Men's Shed or catching up after Saturday sport."
       },
       "tags": [
         "mateship",
@@ -1553,10 +1553,10 @@ window.KANON_SURVEY_DATA = {
       "plane": 4,
       "senseIdx": 4,
       "senseCode": "Why",
-      "title": "The Quiet Life: Family, Recreation & Backyard Freedom",
+      "title": "Having a Crack Without Losing Your Humility",
       "matrixTitle": "The Why of the Why (Motivations/Drive)",
       "shortTitle": "Why.Why · The Quiet Life: Family, Recreation & Backyard Freedom",
-      "narrative": "In Plane 4 (Drive), Why.Why (Drive & Motivation) maps how Australian drive is expressed through Mateship (Mateship), She'll Be Right (She'll Be Right), Have a Go (Have a Go), The Good Life (Good Life), while confronting the shadow of Tall Poppy Syndrome (Tall Poppy Syndrome), Cultural Cringe (Cultural Cringe), Fear of Missing Out (FOMO). Healthy ambition means striving for excellence while staying grounded—avoiding both tall-poppy envy that tears achievers down and status-obsessed panic that turns neighbours into rivals.",
+      "narrative": "Healthy Australian drive means striving to do your best—in sport, business, science, or a trade—without turning into an arrogant show-off, and without tearing down honest achievers out of spite. Example: Cheering on a local small business owner who expands their workshop and hires three local kids as apprentices.",
       "coords": {
         "v": 0.13,
         "psi": 0.1
@@ -1584,11 +1584,11 @@ window.KANON_SURVEY_DATA = {
       "qC": "People in my circle celebrate genuine skill and achievement while keeping each other grounded and realistic.",
       "qD": "Across Australia today, people can actually pursue their goals and enjoy life at a humane pace without being driven by housing and cost-of-living panic.",
       "help": {
-        "highA": "You strongly endorse the Australian ethos of Why.Why (The Quiet Life: Family, Recreation & Backyard Freedom), spanning Mateship, Tall Poppy Syndrome, Cultural Cringe, She'll Be Right, and more.",
-        "lowA": "You feel disconnected from or skeptical of the traditional Australian values grouped under Why.Why (The Quiet Life: Family, Recreation & Backyard Freedom).",
-        "highB": "In your everyday Australian life, the promise of Why.Why is genuinely lived, working, and accessible.",
-        "lowB": "In practice, Why.Why feels broken, priced out, or blocked by systemic friction where you live.",
-        "note": "Matrix Sense 4.4 (Why.Why): Synthesises 7 Kanon vectors (Mateship, Tall Poppy Syndrome, Cultural Cringe, She'll Be Right, Have a Go, Fear of Missing Out, The Good Life). In Plane 4 (Drive), Why.Why (Drive & Motivation) maps how Australian drive is expressed through Mateship (Mateship), She'll Be Right (She'll Be Right), Have a Go (Have a Go), The Good Life (Good Life), while confronting the shadow of Tall Poppy Syndrome (Tall Poppy Syndrome), Cultural Cringe (Cultural Cringe), Fear of Missing Out (FOMO). Healthy ambition means striving for excellence while staying grounded—avoiding both tall-poppy envy that tears achievers down and status-obsessed panic that turns neighbours into rivals."
+        "highA": "You strongly support Theme 4.4 (Having a Crack Without Losing Your Humility).",
+        "lowA": "You place lower priority on or disagree with Theme 4.4 (Having a Crack Without Losing Your Humility).",
+        "highB": "In everyday practice, Theme 4.4 (Having a Crack Without Losing Your Humility) is actively upheld.",
+        "lowB": "In everyday reality, Theme 4.4 (Having a Crack Without Losing Your Humility) is struggling, blocked, or failing.",
+        "note": "Healthy Australian drive means striving to do your best—in sport, business, science, or a trade—without turning into an arrogant show-off, and without tearing down honest achievers out of spite. Example: Cheering on a local small business owner who expands their workshop and hires three local kids as apprentices."
       },
       "tags": [
         "mateship",
@@ -1604,10 +1604,10 @@ window.KANON_SURVEY_DATA = {
       "plane": 4,
       "senseIdx": 5,
       "senseCode": "How",
-      "title": "Confronting Complacency ('She'll Be Right') & Greed",
+      "title": "Everyday Fairness: Taking Turns, Shouting & Pitching In",
       "matrixTitle": "The How of the Why (Methods/Character)",
       "shortTitle": "Why.How · Confronting Complacency ('She'll Be Right') & Greed",
-      "narrative": "In Plane 4 (Drive), Why.How (Method & Practice) maps how Australian drive is expressed through Shouting (Shouting), Queuing (Queuing), Striking (Striking), Improvising (Improvising), while confronting the shadow of Sledging (Sledging), Gambling (Gambling). Everyday Australian trust is built on small rituals of reciprocity—taking turns fairly, shouting your round, pitching in, and refusing to let predatory gambling or price-gouging strip-mine our communities.",
+      "narrative": "Everyday trust in Australia is built on small, unspoken habits of fairness: waiting your turn in the queue, shouting your round at the bar, pitching in at the school working bee, and refusing to walk past someone in trouble. Example: Stopping on a country highway to check if a broken-down driver has water and phone reception.",
       "coords": {
         "v": 0.44,
         "psi": 0.44
@@ -1635,11 +1635,11 @@ window.KANON_SURVEY_DATA = {
       "qC": "People around me still practise everyday generosity—shouting their round, helping a neighbour move—without keeping petty score.",
       "qD": "Across Australia today, our communities are actually protected from predatory pokies, relentless betting ads, and corporate price-gouging.",
       "help": {
-        "highA": "You strongly endorse the Australian ethos of Why.How (Confronting Complacency ('She'll Be Right') & Greed), spanning Shouting, Sledging, Queuing, Striking, and more.",
-        "lowA": "You feel disconnected from or skeptical of the traditional Australian values grouped under Why.How (Confronting Complacency ('She'll Be Right') & Greed).",
-        "highB": "In your everyday Australian life, the promise of Why.How is genuinely lived, working, and accessible.",
-        "lowB": "In practice, Why.How feels broken, priced out, or blocked by systemic friction where you live.",
-        "note": "Matrix Sense 4.5 (Why.How): Synthesises 7 Kanon vectors (Shouting, Sledging, Queuing, Striking, Improvising, Gambling, Volunteering). In Plane 4 (Drive), Why.How (Method & Practice) maps how Australian drive is expressed through Shouting (Shouting), Queuing (Queuing), Striking (Striking), Improvising (Improvising), while confronting the shadow of Sledging (Sledging), Gambling (Gambling). Everyday Australian trust is built on small rituals of reciprocity—taking turns fairly, shouting your round, pitching in, and refusing to let predatory gambling or price-gouging strip-mine our communities."
+        "highA": "You strongly support Theme 4.5 (Everyday Fairness: Taking Turns, Shouting & Pitching In).",
+        "lowA": "You place lower priority on or disagree with Theme 4.5 (Everyday Fairness: Taking Turns, Shouting & Pitching In).",
+        "highB": "In everyday practice, Theme 4.5 (Everyday Fairness: Taking Turns, Shouting & Pitching In) is actively upheld.",
+        "lowB": "In everyday reality, Theme 4.5 (Everyday Fairness: Taking Turns, Shouting & Pitching In) is struggling, blocked, or failing.",
+        "note": "Everyday trust in Australia is built on small, unspoken habits of fairness: waiting your turn in the queue, shouting your round at the bar, pitching in at the school working bee, and refusing to walk past someone in trouble. Example: Stopping on a country highway to check if a broken-down driver has water and phone reception."
       },
       "tags": [
         "mateship",
@@ -1655,10 +1655,10 @@ window.KANON_SURVEY_DATA = {
       "plane": 4,
       "senseIdx": 6,
       "senseCode": "Cause",
-      "title": "Sporting Fair Play, Grassroots Clubs & Humour",
+      "title": "Learning from Hard Times: Leaving Nobody Destitute",
       "matrixTitle": "The Cause of the Why (Roots/History)",
       "shortTitle": "Why.Cause · Sporting Fair Play, Grassroots Clubs & Humour",
-      "narrative": "In Plane 4 (Drive), Why.Cause (Roots & History) maps how Australian drive is expressed through Guilt (Guilt), The Gold (The Gold), The Bush (The Bush), Abundance (Abundance), while confronting the shadow of The Stain (The Stain). The memory of past hardships—dispossession, convict chains, wartime sacrifice, and economic depressions—should make us determined never to let any neighbour fall into destitution.",
+      "narrative": "The memory of Australia's hardest chapters—convict chains, wartime sacrifice, the Great Depression, and droughts—taught us that anyone can fall on tough times, and a decent society never leaves a neighbour to starve in the gutter. Example: Maintaining a fair social safety net and emergency disaster relief so a worker who loses their job or home can get back on their feet.",
       "coords": {
         "v": 0.38,
         "psi": 0.18
@@ -1692,11 +1692,11 @@ window.KANON_SURVEY_DATA = {
       "qC": "When people in my local community hit crisis or hardship, neighbours and local networks rally around them with practical support.",
       "qD": "Across Australia today, our welfare safety net and public services actually catch people in hard times with dignity rather than punitive cruelty.",
       "help": {
-        "highA": "You strongly endorse the Australian ethos of Why.Cause (Sporting Fair Play, Grassroots Clubs & Humour), spanning The Stain, Guilt [FN], The Gold, The Bush, and more.",
-        "lowA": "You feel disconnected from or skeptical of the traditional Australian values grouped under Why.Cause (Sporting Fair Play, Grassroots Clubs & Humour).",
-        "highB": "In your everyday Australian life, the promise of Why.Cause is genuinely lived, working, and accessible.",
-        "lowB": "In practice, Why.Cause feels broken, priced out, or blocked by systemic friction where you live.",
-        "note": "Matrix Sense 4.6 (Why.Cause): Synthesises 10 Kanon vectors (The Stain, Guilt [FN], The Gold, The Bush, Abundance [FN], The War, Resistance [FN], The Depression, The Isolation, The Boom). In Plane 4 (Drive), Why.Cause (Roots & History) maps how Australian drive is expressed through Guilt (Guilt), The Gold (The Gold), The Bush (The Bush), Abundance (Abundance), while confronting the shadow of The Stain (The Stain). The memory of past hardships—dispossession, convict chains, wartime sacrifice, and economic depressions—should make us determined never to let any neighbour fall into destitution."
+        "highA": "You strongly support Theme 4.6 (Learning from Hard Times: Leaving Nobody Destitute).",
+        "lowA": "You place lower priority on or disagree with Theme 4.6 (Learning from Hard Times: Leaving Nobody Destitute).",
+        "highB": "In everyday practice, Theme 4.6 (Learning from Hard Times: Leaving Nobody Destitute) is actively upheld.",
+        "lowB": "In everyday reality, Theme 4.6 (Learning from Hard Times: Leaving Nobody Destitute) is struggling, blocked, or failing.",
+        "note": "The memory of Australia's hardest chapters—convict chains, wartime sacrifice, the Great Depression, and droughts—taught us that anyone can fall on tough times, and a decent society never leaves a neighbour to starve in the gutter. Example: Maintaining a fair social safety net and emergency disaster relief so a worker who loses their job or home can get back on their feet."
       },
       "tags": [
         "land-climate",
@@ -1712,10 +1712,10 @@ window.KANON_SURVEY_DATA = {
       "plane": 4,
       "senseIdx": 7,
       "senseCode": "Effect",
-      "title": "Looking After Mates: Battlers Backing Battlers",
+      "title": "Work-Life Balance & A Secure Middle-Class Life",
       "matrixTitle": "The Effect of the Why (Legacy/Impact)",
       "shortTitle": "Why.Effect · Looking After Mates: Battlers Backing Battlers",
-      "narrative": "In Plane 4 (Drive), Why.Effect (Legacy & Outcome) maps how Australian drive is expressed through The Citizen (Citizen), The Middle Class (Middle Class), The Suburb (Suburb), Stability (Stability). When a nation's drive is healthy, the result should be a confident, self-reliant citizenry and broad middle-class stability—not widespread exhaustion and political cynicism.",
+      "narrative": "When a country's economy is healthy, the reward should be a secure, low-stress life for ordinary households—where people aren't crushed by household debt, burnout, or fear of the next bill. Example: Parents being able to knock off on time, afford the weekly grocery shop, and take the kids camping in the school holidays.",
       "coords": {
         "v": 0.54,
         "psi": -0.01
@@ -1743,11 +1743,11 @@ window.KANON_SURVEY_DATA = {
       "qC": "Among my friends, coworkers, and neighbours, there is still a shared belief that we can build a decent, stable life together.",
       "qD": "Across Australia today, our economic and political settings actually produce broad middle-class security and civic confidence rather than burnout and disillusionment.",
       "help": {
-        "highA": "You strongly endorse the Australian ethos of Why.Effect (Looking After Mates: Battlers Backing Battlers), spanning The Citizen, The Middle Class, The Suburb, Stability, and more.",
-        "lowA": "You feel disconnected from or skeptical of the traditional Australian values grouped under Why.Effect (Looking After Mates: Battlers Backing Battlers).",
-        "highB": "In your everyday Australian life, the promise of Why.Effect is genuinely lived, working, and accessible.",
-        "lowB": "In practice, Why.Effect feels broken, priced out, or blocked by systemic friction where you live.",
-        "note": "Matrix Sense 4.7 (Why.Effect): Synthesises 7 Kanon vectors (The Citizen, The Middle Class, The Suburb, Stability, Cynicism, Prosperity, Sovereignty). In Plane 4 (Drive), Why.Effect (Legacy & Outcome) maps how Australian drive is expressed through The Citizen (Citizen), The Middle Class (Middle Class), The Suburb (Suburb), Stability (Stability). When a nation's drive is healthy, the result should be a confident, self-reliant citizenry and broad middle-class stability—not widespread exhaustion and political cynicism."
+        "highA": "You strongly support Theme 4.7 (Work-Life Balance & A Secure Middle-Class Life).",
+        "lowA": "You place lower priority on or disagree with Theme 4.7 (Work-Life Balance & A Secure Middle-Class Life).",
+        "highB": "In everyday practice, Theme 4.7 (Work-Life Balance & A Secure Middle-Class Life) is actively upheld.",
+        "lowB": "In everyday reality, Theme 4.7 (Work-Life Balance & A Secure Middle-Class Life) is struggling, blocked, or failing.",
+        "note": "When a country's economy is healthy, the reward should be a secure, low-stress life for ordinary households—where people aren't crushed by household debt, burnout, or fear of the next bill. Example: Parents being able to knock off on time, afford the weekly grocery shop, and take the kids camping in the school holidays."
       },
       "tags": [
         "democracy",
@@ -1763,10 +1763,10 @@ window.KANON_SURVEY_DATA = {
       "plane": 5,
       "senseIdx": 1,
       "senseCode": "Who",
-      "title": "Stringybark Ingenuity & Practical Bush Mechanics",
+      "title": "Practical Problem-Solvers, Tradies & Honest Whistleblowers",
       "matrixTitle": "The Who of the How (Authenticity/Soul)",
       "shortTitle": "How.Who · Stringybark Ingenuity & Practical Bush Mechanics",
-      "narrative": "The Australian Method is enacted by The Improviser (Bricoleur) and The Unionist (Operator), managed by The Bureaucrat. It is policed by The Umpire and corrected by The Whistleblower. Rooted in the logistics of The Drover, it evolves into the brilliance of The Scientist.",
+      "narrative": "Things work in Australia when we empower hands-on people who know what they're doing—skilled tradespeople, nurses, teachers, engineers, scientists, and honest public servants—and protect whistleblowers who speak up when management covers up wrongdoing. Example: Listening to frontline paramedics and nurses about how to fix hospital ramping rather than hiring million-dollar PR consultants.",
       "coords": {
         "v": 0.69,
         "psi": 0.47
@@ -1794,11 +1794,11 @@ window.KANON_SURVEY_DATA = {
       "qC": "In my workplace and circle, people respect skilled hands-on competence, honest union/worker reps, and independent umpires.",
       "qD": "Across Australia today, our institutions and laws actually protect whistleblowers, independent scientists, and honest umpires so they can do their job without retaliation.",
       "help": {
-        "highA": "You strongly endorse the Australian ethos of How.Who (Stringybark Ingenuity & Practical Bush Mechanics), spanning The Bricoleur, The Unionist, The Public Servant, The Whistleblower, and more.",
-        "lowA": "You feel disconnected from or skeptical of the traditional Australian values grouped under How.Who (Stringybark Ingenuity & Practical Bush Mechanics).",
-        "highB": "In your everyday Australian life, the promise of How.Who is genuinely lived, working, and accessible.",
-        "lowB": "In practice, How.Who feels broken, priced out, or blocked by systemic friction where you live.",
-        "note": "Matrix Sense 5.1 (How.Who): Synthesises 7 Kanon vectors (The Bricoleur, The Unionist, The Public Servant, The Whistleblower, The Umpire, The Drover, The Scientist). The Australian Method is enacted by The Improviser (Bricoleur) and The Unionist (Operator), managed by The Bureaucrat. It is policed by The Umpire and corrected by The Whistleblower. Rooted in the logistics of The Drover, it evolves into the brilliance of The Scientist."
+        "highA": "You strongly support Theme 5.1 (Practical Problem-Solvers, Tradies & Honest Whistleblowers).",
+        "lowA": "You place lower priority on or disagree with Theme 5.1 (Practical Problem-Solvers, Tradies & Honest Whistleblowers).",
+        "highB": "In everyday practice, Theme 5.1 (Practical Problem-Solvers, Tradies & Honest Whistleblowers) is actively upheld.",
+        "lowB": "In everyday reality, Theme 5.1 (Practical Problem-Solvers, Tradies & Honest Whistleblowers) is struggling, blocked, or failing.",
+        "note": "Things work in Australia when we empower hands-on people who know what they're doing—skilled tradespeople, nurses, teachers, engineers, scientists, and honest public servants—and protect whistleblowers who speak up when management covers up wrongdoing. Example: Listening to frontline paramedics and nurses about how to fix hospital ramping rather than hiring million-dollar PR consultants."
       },
       "tags": [
         "mateship",
@@ -1814,10 +1814,10 @@ window.KANON_SURVEY_DATA = {
       "plane": 5,
       "senseIdx": 2,
       "senseCode": "What",
-      "title": "The Independent Umpire & Humane Workplace Awards",
+      "title": "Aussie Inventions & Fair Independent Umpires",
       "matrixTitle": "The What of the How (Roles/Titles)",
       "shortTitle": "How.What · The Independent Umpire & Humane Workplace Awards",
-      "narrative": "The Method employs The Ballot (Silencer) and The Tribunal (Scale) to manage society. It uses The Hoist (Centerpiece) in the home and The Jump Plough (Evasion) in the field. Rooted in The Boomerang (Loop), it connects via Wireless (Link) and remembers via The Black Box (Witness).",
+      "narrative": "From inventing the secret ballot, the stump-jump plough, and the Hills Hoist to flight black boxes and Wi-Fi, Australians excel at practical invention backed by fair, independent umpires in the workplace. Example: CSIRO scientists developing world-first technology in public labs that benefits the whole nation.",
       "coords": {
         "v": 0.79,
         "psi": 0.59
@@ -1845,11 +1845,11 @@ window.KANON_SURVEY_DATA = {
       "qC": "People in my industry and circle take pride in solving problems ingeniously and support fair wage arbitration.",
       "qD": "Across Australia today, government and industry actually invest in homegrown R&D (like CSIRO), sovereign manufacturing, and fair wage-setting.",
       "help": {
-        "highA": "You strongly endorse the Australian ethos of How.What (The Independent Umpire & Humane Workplace Awards), spanning The Ballot Paper, The Wage Case, The Wifi, Hard Yakka, and more.",
-        "lowA": "You feel disconnected from or skeptical of the traditional Australian values grouped under How.What (The Independent Umpire & Humane Workplace Awards).",
-        "highB": "In your everyday Australian life, the promise of How.What is genuinely lived, working, and accessible.",
-        "lowB": "In practice, How.What feels broken, priced out, or blocked by systemic friction where you live.",
-        "note": "Matrix Sense 5.2 (How.What): Synthesises 7 Kanon vectors (The Ballot Paper, The Wage Case, The Wifi, Hard Yakka, The Stump Jump Plough, The Boomerang, The Black Box). The Method employs The Ballot (Silencer) and The Tribunal (Scale) to manage society. It uses The Hoist (Centerpiece) in the home and The Jump Plough (Evasion) in the field. Rooted in The Boomerang (Loop), it connects via Wireless (Link) and remembers via The Black Box (Witness)."
+        "highA": "You strongly support Theme 5.2 (Aussie Inventions & Fair Independent Umpires).",
+        "lowA": "You place lower priority on or disagree with Theme 5.2 (Aussie Inventions & Fair Independent Umpires).",
+        "highB": "In everyday practice, Theme 5.2 (Aussie Inventions & Fair Independent Umpires) is actively upheld.",
+        "lowB": "In everyday reality, Theme 5.2 (Aussie Inventions & Fair Independent Umpires) is struggling, blocked, or failing.",
+        "note": "From inventing the secret ballot, the stump-jump plough, and the Hills Hoist to flight black boxes and Wi-Fi, Australians excel at practical invention backed by fair, independent umpires in the workplace. Example: CSIRO scientists developing world-first technology in public labs that benefits the whole nation."
       },
       "tags": [
         "democracy",
@@ -1865,10 +1865,10 @@ window.KANON_SURVEY_DATA = {
       "plane": 5,
       "senseIdx": 3,
       "senseCode": "Where",
-      "title": "Plain-English Honesty vs. Managerial Jargon & Spin",
+      "title": "Equal Access to Public Schools, Courts & Polling Booths",
       "matrixTitle": "The Where of the How (Origins/Location)",
       "shortTitle": "How.Where · Plain-English Honesty vs. Managerial Jargon & Spin",
-      "narrative": "The Method operates in The Booth (Sanctuary) and on The Picket Line (Blockade). It watches from The Surf Club (Post) and judges in The Court (Oracle). It invents in The Lab (Forge), produces in The Shearing Shed (Factory), and reproduces the culture in The School (Mould).",
+      "narrative": "The everyday places where Australian society operates—the local public school, the Saturday polling booth, the workplace, and the local court—must stay open, well-funded, and welcoming to every citizen regardless of postcode. Example: A child in a working-class suburb or country town having access to great science labs, music, and teachers at their local public school.",
       "coords": {
         "v": 0.71,
         "psi": 0.53
@@ -1896,11 +1896,11 @@ window.KANON_SURVEY_DATA = {
       "qC": "In my local area, public schools, community clubs, and Saturday sausage-sizzle polling booths bring people from all backgrounds together as equals.",
       "qD": "Across Australia today, our public schools, legal system, and civic spaces are actually funded to give every child and citizen an equal chance regardless of wealth.",
       "help": {
-        "highA": "You strongly endorse the Australian ethos of How.Where (Plain-English Honesty vs. Managerial Jargon & Spin), spanning The Polling Booth, The Picket Line, The Surf Club, The Courtroom, and more.",
-        "lowA": "You feel disconnected from or skeptical of the traditional Australian values grouped under How.Where (Plain-English Honesty vs. Managerial Jargon & Spin).",
-        "highB": "In your everyday Australian life, the promise of How.Where is genuinely lived, working, and accessible.",
-        "lowB": "In practice, How.Where feels broken, priced out, or blocked by systemic friction where you live.",
-        "note": "Matrix Sense 5.3 (How.Where): Synthesises 7 Kanon vectors (The Polling Booth, The Picket Line, The Surf Club, The Courtroom, The Lab, The Shearing Shed, The School). The Method operates in The Booth (Sanctuary) and on The Picket Line (Blockade). It watches from The Surf Club (Post) and judges in The Court (Oracle). It invents in The Lab (Forge), produces in The Shearing Shed (Factory), and reproduces the culture in The School (Mould)."
+        "highA": "You strongly support Theme 5.3 (Equal Access to Public Schools, Courts & Polling Booths).",
+        "lowA": "You place lower priority on or disagree with Theme 5.3 (Equal Access to Public Schools, Courts & Polling Booths).",
+        "highB": "In everyday practice, Theme 5.3 (Equal Access to Public Schools, Courts & Polling Booths) is actively upheld.",
+        "lowB": "In everyday reality, Theme 5.3 (Equal Access to Public Schools, Courts & Polling Booths) is struggling, blocked, or failing.",
+        "note": "The everyday places where Australian society operates—the local public school, the Saturday polling booth, the workplace, and the local court—must stay open, well-funded, and welcoming to every citizen regardless of postcode. Example: A child in a working-class suburb or country town having access to great science labs, music, and teachers at their local public school."
       },
       "tags": [
         "culture-sport",
@@ -1916,10 +1916,10 @@ window.KANON_SURVEY_DATA = {
       "plane": 5,
       "senseIdx": 4,
       "senseCode": "Why",
-      "title": "World-Class Public Science (CSIRO, Solar, WiFi, Medicine)",
+      "title": "Workplace Efficiency Balanced with Human Dignity",
       "matrixTitle": "The Why of the How (Motivations/Drive)",
       "shortTitle": "How.Why · World-Class Public Science (CSIRO, Solar, WiFi, Medicine)",
-      "narrative": "The Method is driven by Equality (Driver) and guided by Utility (Logic). Born of Scarcity (Mother), it is measured by Fairness (Metric) and aims for Speed (Goal). Its ultimate imperative is Survival, but its final desire is Comfort—the quiet life of the suburban dream.",
+      "narrative": "Every workplace and public service needs to be run efficiently, but efficiency must never become an excuse to treat workers or citizens like disposable numbers on a spreadsheet (like the Robodebt scandal). Example: Using technology to speed up Medicare rebates while keeping real human staff available to help vulnerable people.",
       "coords": {
         "v": 0.59,
         "psi": 0.34
@@ -1947,11 +1947,11 @@ window.KANON_SURVEY_DATA = {
       "qC": "In my workplace and local services, people balance getting the job done efficiently with giving people a fair, humane hearing.",
       "qD": "Across Australia today, corporate and government systems actually balance competence and efficiency with genuine human fairness.",
       "help": {
-        "highA": "You strongly endorse the Australian ethos of How.Why (World-Class Public Science (CSIRO, Solar, WiFi, Medicine)), spanning Egalitarianism, Pragmatism, Necessity, Fairness, and more.",
-        "lowA": "You feel disconnected from or skeptical of the traditional Australian values grouped under How.Why (World-Class Public Science (CSIRO, Solar, WiFi, Medicine)).",
-        "highB": "In your everyday Australian life, the promise of How.Why is genuinely lived, working, and accessible.",
-        "lowB": "In practice, How.Why feels broken, priced out, or blocked by systemic friction where you live.",
-        "note": "Matrix Sense 5.4 (How.Why): Synthesises 7 Kanon vectors (Egalitarianism, Pragmatism, Necessity, Fairness, Efficiency, Survival, Comfort). The Method is driven by Equality (Driver) and guided by Utility (Logic). Born of Scarcity (Mother), it is measured by Fairness (Metric) and aims for Speed (Goal). Its ultimate imperative is Survival, but its final desire is Comfort—the quiet life of the suburban dream."
+        "highA": "You strongly support Theme 5.4 (Workplace Efficiency Balanced with Human Dignity).",
+        "lowA": "You place lower priority on or disagree with Theme 5.4 (Workplace Efficiency Balanced with Human Dignity).",
+        "highB": "In everyday practice, Theme 5.4 (Workplace Efficiency Balanced with Human Dignity) is actively upheld.",
+        "lowB": "In everyday reality, Theme 5.4 (Workplace Efficiency Balanced with Human Dignity) is struggling, blocked, or failing.",
+        "note": "Every workplace and public service needs to be run efficiently, but efficiency must never become an excuse to treat workers or citizens like disposable numbers on a spreadsheet (like the Robodebt scandal). Example: Using technology to speed up Medicare rebates while keeping real human staff available to help vulnerable people."
       },
       "tags": [
         "fair-go",
@@ -1967,10 +1967,10 @@ window.KANON_SURVEY_DATA = {
       "plane": 5,
       "senseIdx": 5,
       "senseCode": "How",
-      "title": "Standing Up to Bullies: Collective Action & Solidarity",
+      "title": "Humane Work Rhythms: Smoko, Safe Sites & Sick Leave",
       "matrixTitle": "The How of the How (Methods/Character)",
       "shortTitle": "How.How · Standing Up to Bullies: Collective Action & Solidarity",
-      "narrative": "The Method works through The Roster (Clock) and The Committee (Process), punctuated by The Smoko (Pause). It tests via The Trial (Experiment), risks The Shortcut (Shoddy Work), leaks via The Sickie (Worker Resistance), and produces The Report (Paper Trail).",
+      "narrative": "Good work requires humane rhythms: predictable rosters, proper rest breaks (smoko), paid sick leave when you or your kids are crook, and taking the time to do the job safely instead of cutting dangerous corners. Example: Stopping work on a building site when temperatures hit extreme heat or when safety gear is faulty.",
       "coords": {
         "v": 0.34,
         "psi": -0.03
@@ -1998,11 +1998,11 @@ window.KANON_SURVEY_DATA = {
       "qC": "In my workplace and circle, people respect smoko breaks, safe rosters, and fixing real problems rather than cutting dodgy corners.",
       "qD": "Across Australia today, workplace rules and management practices actually enforce humane rosters, safe standards, and real action over box-ticking reports.",
       "help": {
-        "highA": "You strongly endorse the Australian ethos of How.How (Standing Up to Bullies: Collective Action & Solidarity), spanning The Smoko, The Roster, The Sickie, The Meeting, and more.",
-        "lowA": "You feel disconnected from or skeptical of the traditional Australian values grouped under How.How (Standing Up to Bullies: Collective Action & Solidarity).",
-        "highB": "In your everyday Australian life, the promise of How.How is genuinely lived, working, and accessible.",
-        "lowB": "In practice, How.How feels broken, priced out, or blocked by systemic friction where you live.",
-        "note": "Matrix Sense 5.5 (How.How): Synthesises 7 Kanon vectors (The Smoko, The Roster, The Sickie, The Meeting, The Shortcut, The Trial, The Report). The Method works through The Roster (Clock) and The Committee (Process), punctuated by The Smoko (Pause). It tests via The Trial (Experiment), risks The Shortcut (Shoddy Work), leaks via The Sickie (Worker Resistance), and produces The Report (Paper Trail)."
+        "highA": "You strongly support Theme 5.5 (Humane Work Rhythms: Smoko, Safe Sites & Sick Leave).",
+        "lowA": "You place lower priority on or disagree with Theme 5.5 (Humane Work Rhythms: Smoko, Safe Sites & Sick Leave).",
+        "highB": "In everyday practice, Theme 5.5 (Humane Work Rhythms: Smoko, Safe Sites & Sick Leave) is actively upheld.",
+        "lowB": "In everyday reality, Theme 5.5 (Humane Work Rhythms: Smoko, Safe Sites & Sick Leave) is struggling, blocked, or failing.",
+        "note": "Good work requires humane rhythms: predictable rosters, proper rest breaks (smoko), paid sick leave when you or your kids are crook, and taking the time to do the job safely instead of cutting dangerous corners. Example: Stopping work on a building site when temperatures hit extreme heat or when safety gear is faulty."
       },
       "tags": [
         "work-wages",
@@ -2018,10 +2018,10 @@ window.KANON_SURVEY_DATA = {
       "plane": 5,
       "senseIdx": 6,
       "senseCode": "Cause",
-      "title": "Grassroots Consultation & Resolving Gridlock Fairly",
+      "title": "Blending Modern Science with Indigenous Land Knowledge",
       "matrixTitle": "The Cause of the How (Roots/History)",
       "shortTitle": "How.Cause · Grassroots Consultation & Resolving Gridlock Fairly",
-      "narrative": "The Method was blueprinted by The System (Convict Administration) and shaped by The Distance. Rooted in Reason and Chartism, it responded to chaos with Regulation and The Survey (Grid). Its final expression was Union—the Federation that wrote the method into law.",
+      "narrative": "Solving big Australian challenges—like bushfire management, drought resilience, and biodiversity loss—works best when we combine modern engineering and science with 65,000 years of First Nations ecological knowledge. Example: Rural fire brigades and Indigenous rangers teaming up for cool-season cultural burns that prevent mega-fires.",
       "coords": {
         "v": 0.47,
         "psi": 0.36
@@ -2049,11 +2049,11 @@ window.KANON_SURVEY_DATA = {
       "qC": "People in my community circle respect combining practical modern science with First Nations land and fire management.",
       "qD": "Across Australia today, our environmental, fire, and water agencies actually integrate First Nations ecological wisdom alongside modern engineering.",
       "help": {
-        "highA": "You strongly endorse the Australian ethos of How.Cause (Grassroots Consultation & Resolving Gridlock Fairly), spanning The Convict System, Relation [FN], The Distance, Navigation [FN], and more.",
-        "lowA": "You feel disconnected from or skeptical of the traditional Australian values grouped under How.Cause (Grassroots Consultation & Resolving Gridlock Fairly).",
-        "highB": "In your everyday Australian life, the promise of How.Cause is genuinely lived, working, and accessible.",
-        "lowB": "In practice, How.Cause feels broken, priced out, or blocked by systemic friction where you live.",
-        "note": "Matrix Sense 5.6 (How.Cause): Synthesises 7 Kanon vectors (The Convict System, Relation [FN], The Distance, Navigation [FN], The Survey, Flow [FN], The Federation). The Method was blueprinted by The System (Convict Administration) and shaped by The Distance. Rooted in Reason and Chartism, it responded to chaos with Regulation and The Survey (Grid). Its final expression was Union—the Federation that wrote the method into law."
+        "highA": "You strongly support Theme 5.6 (Blending Modern Science with Indigenous Land Knowledge).",
+        "lowA": "You place lower priority on or disagree with Theme 5.6 (Blending Modern Science with Indigenous Land Knowledge).",
+        "highB": "In everyday practice, Theme 5.6 (Blending Modern Science with Indigenous Land Knowledge) is actively upheld.",
+        "lowB": "In everyday reality, Theme 5.6 (Blending Modern Science with Indigenous Land Knowledge) is struggling, blocked, or failing.",
+        "note": "Solving big Australian challenges—like bushfire management, drought resilience, and biodiversity loss—works best when we combine modern engineering and science with 65,000 years of First Nations ecological knowledge. Example: Rural fire brigades and Indigenous rangers teaming up for cool-season cultural burns that prevent mega-fires."
       },
       "tags": [
         "culture-sport",
@@ -2069,10 +2069,10 @@ window.KANON_SURVEY_DATA = {
       "plane": 5,
       "senseIdx": 7,
       "senseCode": "Effect",
-      "title": "Compassionate Discretion over Blind Box-Ticking",
+      "title": "Delivering Real Infrastructure Over Bureaucratic Spin",
       "matrixTitle": "The Effect of the How (Legacy/Impact)",
       "shortTitle": "How.Effect · Compassionate Discretion over Blind Box-Ticking",
-      "narrative": "The Result is a sovereign Voter protected by The Award (Floor), living within the Shell of Infrastructure. The method yields high Efficiency (Yield) and durable Peace (Proof), but at the Cost of Red Tape. Ultimately, it produces The Fair Go—the validation of the entire system.",
+      "narrative": "The bottom-line test of any government or business method is whether it actually builds working infrastructure and fair outcomes—not glossy marketing brochures, endless committees, and ticked boxes that change nothing on the ground. Example: Actually building high-speed rail, dams, or social housing rather than spending $500 million on cancelled feasibility studies.",
       "coords": {
         "v": 0.71,
         "psi": 0.21
@@ -2100,11 +2100,11 @@ window.KANON_SURVEY_DATA = {
       "qC": "People in my circle judge policies by whether they actually help real people on the ground rather than how good they look in a press release.",
       "qD": "Across Australia today, government services and corporate systems actually serve people humanely and effectively instead of trapping them in automated bureaucracy.",
       "help": {
-        "highA": "You strongly endorse the Australian ethos of How.Effect (Compassionate Discretion over Blind Box-Ticking), spanning The Voter, The Award, The Infrastructure, Efficiency (Outcome), and more.",
-        "lowA": "You feel disconnected from or skeptical of the traditional Australian values grouped under How.Effect (Compassionate Discretion over Blind Box-Ticking).",
-        "highB": "In your everyday Australian life, the promise of How.Effect is genuinely lived, working, and accessible.",
-        "lowB": "In practice, How.Effect feels broken, priced out, or blocked by systemic friction where you live.",
-        "note": "Matrix Sense 5.7 (How.Effect): Synthesises 7 Kanon vectors (The Voter, The Award, The Infrastructure, Efficiency (Outcome), Bureaucracy, Peace, The Fair Go (Realized)). The Result is a sovereign Voter protected by The Award (Floor), living within the Shell of Infrastructure. The method yields high Efficiency (Yield) and durable Peace (Proof), but at the Cost of Red Tape. Ultimately, it produces The Fair Go—the validation of the entire system."
+        "highA": "You strongly support Theme 5.7 (Delivering Real Infrastructure Over Bureaucratic Spin).",
+        "lowA": "You place lower priority on or disagree with Theme 5.7 (Delivering Real Infrastructure Over Bureaucratic Spin).",
+        "highB": "In everyday practice, Theme 5.7 (Delivering Real Infrastructure Over Bureaucratic Spin) is actively upheld.",
+        "lowB": "In everyday reality, Theme 5.7 (Delivering Real Infrastructure Over Bureaucratic Spin) is struggling, blocked, or failing.",
+        "note": "The bottom-line test of any government or business method is whether it actually builds working infrastructure and fair outcomes—not glossy marketing brochures, endless committees, and ticked boxes that change nothing on the ground. Example: Actually building high-speed rail, dams, or social housing rather than spending $500 million on cancelled feasibility studies."
       },
       "tags": [
         "housing",
@@ -2120,10 +2120,10 @@ window.KANON_SURVEY_DATA = {
       "plane": 6,
       "senseIdx": 1,
       "senseCode": "Who",
-      "title": "Truth-Telling: Settlement, Frontier Wars & Survival",
+      "title": "Honouring All Who Built & Cared for This Country",
       "matrixTitle": "The Who of the Cause (Authenticity/Soul)",
       "shortTitle": "Cause.Who · Truth-Telling: Settlement, Frontier Wars & Survival",
-      "narrative": "In Plane 6 (Foundation), Cause.Who (Authenticity & Character) maps how Australian foundation is expressed through The Convict (Reluctance), The Free Settler (Aspiration), The Digger (Gold) (Alchemy), The Indigenous Elder (Anteriority), while confronting the shadow of The Colonizer (Dispossession), The Squatter (Usurpation), The Immigrant (White Australia Exclusion) (Exclusion). To understand Australia, we must acknowledge every figure at our foundation—the 65,000-year First Nations Elder, the chained convict, the free settler, the gold digger, and the migrant—while honestly naming colonial dispossession.",
+      "narrative": "To understand Australia, we have to recognise everyone at our foundation: the First Nations Elders who cared for Country for millennia, the convicts who survived the chains, the bush pioneers and diggers, and the migrants who built new lives here. Example: Local heritage trails and school lessons that tell the full story of Indigenous elders, convict road-builders, and pioneer families.",
       "coords": {
         "v": 0.0,
         "psi": 0.27
@@ -2151,11 +2151,11 @@ window.KANON_SURVEY_DATA = {
       "qC": "People in my everyday circle can talk honestly about Australia's history—respecting both pioneer resilience and the truth of Indigenous dispossession.",
       "qD": "Across Australia today, our schools, memorials, and national culture actually honour all of our founding peoples honestly without erasure or culture-war spin.",
       "help": {
-        "highA": "You strongly endorse the Australian ethos of Cause.Who (Truth-Telling: Settlement, Frontier Wars & Survival), spanning The Convict, The Colonizer, The Free Settler, The Squatter, and more.",
-        "lowA": "You feel disconnected from or skeptical of the traditional Australian values grouped under Cause.Who (Truth-Telling: Settlement, Frontier Wars & Survival).",
-        "highB": "In your everyday Australian life, the promise of Cause.Who is genuinely lived, working, and accessible.",
-        "lowB": "In practice, Cause.Who feels broken, priced out, or blocked by systemic friction where you live.",
-        "note": "Matrix Sense 6.1 (Cause.Who): Synthesises 7 Kanon vectors (The Convict, The Colonizer, The Free Settler, The Squatter, The Digger (Gold), The Indigenous Elder, The Immigrant (White Australia Exclusion)). In Plane 6 (Foundation), Cause.Who (Authenticity & Character) maps how Australian foundation is expressed through The Convict (Reluctance), The Free Settler (Aspiration), The Digger (Gold) (Alchemy), The Indigenous Elder (Anteriority), while confronting the shadow of The Colonizer (Dispossession), The Squatter (Usurpation), The Immigrant (White Australia Exclusion) (Exclusion). To understand Australia, we must acknowledge every figure at our foundation—the 65,000-year First Nations Elder, the chained convict, the free settler, the gold digger, and the migrant—while honestly naming colonial dispossession."
+        "highA": "You strongly support Theme 6.1 (Honouring All Who Built & Cared for This Country).",
+        "lowA": "You place lower priority on or disagree with Theme 6.1 (Honouring All Who Built & Cared for This Country).",
+        "highB": "In everyday practice, Theme 6.1 (Honouring All Who Built & Cared for This Country) is actively upheld.",
+        "lowB": "In everyday reality, Theme 6.1 (Honouring All Who Built & Cared for This Country) is struggling, blocked, or failing.",
+        "note": "To understand Australia, we have to recognise everyone at our foundation: the First Nations Elders who cared for Country for millennia, the convicts who survived the chains, the bush pioneers and diggers, and the migrants who built new lives here. Example: Local heritage trails and school lessons that tell the full story of Indigenous elders, convict road-builders, and pioneer families."
       },
       "tags": [
         "housing",
@@ -2171,10 +2171,10 @@ window.KANON_SURVEY_DATA = {
       "plane": 6,
       "senseIdx": 2,
       "senseCode": "What",
-      "title": "Convict Survival & Skepticism of Imported Nobility",
+      "title": "Milestone Laws That Expanded the Fair Go",
       "matrixTitle": "The What of the Cause (Roles/Titles)",
       "shortTitle": "Cause.What · Convict Survival & Skepticism of Imported Nobility",
-      "narrative": "In Plane 6 (Foundation), Cause.What (Roles & Definitions) maps how Australian foundation is expressed through The Constitution (Pragmatism), Federation (Convenience), The Living Wage (Decency), Compulsory Voting (Participation), while confronting the shadow of Terra Nullius (Erasure), The White Australia Policy (Racism). Australia's greatest legal achievements are the milestones that expanded justice—Federation by popular vote, the living wage, compulsory voting, and the overturning of Terra Nullius and White Australia.",
+      "narrative": "Australia's proudest legal moments are the laws and court decisions that widened the circle of fairness—voting rights for women, the Harvester living wage, the 1967 Referendum, and the Mabo Native Title decision—while leaving shameful chapters like the White Australia Policy behind. Example: The 1967 Referendum where over 90% of Australians voted 'Yes' to count Aboriginal people equally in the Constitution.",
       "coords": {
         "v": 0.27,
         "psi": 0.51
@@ -2202,11 +2202,11 @@ window.KANON_SURVEY_DATA = {
       "qC": "People in my circle are proud of Australia's democratic reforms like the secret ballot, compulsory voting, the living wage, and Mabo.",
       "qD": "Across Australia today, our parliaments and courts actively uphold and build upon wage justice, voting equality, multicultural inclusion, and native title.",
       "help": {
-        "highA": "You strongly endorse the Australian ethos of Cause.What (Convict Survival & Skepticism of Imported Nobility), spanning Terra Nullius, The Constitution, Federation, The Living Wage, and more.",
-        "lowA": "You feel disconnected from or skeptical of the traditional Australian values grouped under Cause.What (Convict Survival & Skepticism of Imported Nobility).",
-        "highB": "In your everyday Australian life, the promise of Cause.What is genuinely lived, working, and accessible.",
-        "lowB": "In practice, Cause.What feels broken, priced out, or blocked by systemic friction where you live.",
-        "note": "Matrix Sense 6.2 (Cause.What): Synthesises 7 Kanon vectors (Terra Nullius, The Constitution, Federation, The Living Wage, Compulsory Voting, The White Australia Policy, The Mabo Decision). In Plane 6 (Foundation), Cause.What (Roles & Definitions) maps how Australian foundation is expressed through The Constitution (Pragmatism), Federation (Convenience), The Living Wage (Decency), Compulsory Voting (Participation), while confronting the shadow of Terra Nullius (Erasure), The White Australia Policy (Racism). Australia's greatest legal achievements are the milestones that expanded justice—Federation by popular vote, the living wage, compulsory voting, and the overturning of Terra Nullius and White Australia."
+        "highA": "You strongly support Theme 6.2 (Milestone Laws That Expanded the Fair Go).",
+        "lowA": "You place lower priority on or disagree with Theme 6.2 (Milestone Laws That Expanded the Fair Go).",
+        "highB": "In everyday practice, Theme 6.2 (Milestone Laws That Expanded the Fair Go) is actively upheld.",
+        "lowB": "In everyday reality, Theme 6.2 (Milestone Laws That Expanded the Fair Go) is struggling, blocked, or failing.",
+        "note": "Australia's proudest legal moments are the laws and court decisions that widened the circle of fairness—voting rights for women, the Harvester living wage, the 1967 Referendum, and the Mabo Native Title decision—while leaving shameful chapters like the White Australia Policy behind. Example: The 1967 Referendum where over 90% of Australians voted 'Yes' to count Aboriginal people equally in the Constitution."
       },
       "tags": [
         "indigenous",
@@ -2222,10 +2222,10 @@ window.KANON_SURVEY_DATA = {
       "plane": 6,
       "senseIdx": 3,
       "senseCode": "Where",
-      "title": "Eureka Stockade: Rebellion for Democratic Rights",
+      "title": "Sacred & Historic Places: From Uluru to Eureka & Gallipoli",
       "matrixTitle": "The Where of the Cause (Origins/Location)",
       "shortTitle": "Cause.Where · Eureka Stockade: Rebellion for Democratic Rights",
-      "narrative": "In Plane 6 (Foundation), Cause.Where (Place & Setting) maps how Australian foundation is expressed through Sydney Cove (Ambiguity), The Harbour Bridge (Achievement), Uluru (Sacredness), Gallipoli (ANZAC Cove) (Consecration), while confronting the shadow of The Penal Settlement (Norfolk Island) (Brutality). Australia has a sacred geography of memory—from ancient Indigenous songlines and Uluru to sites of convict pain, Eureka rebellion, wartime sacrifice, and democratic self-government—that must be protected from desecration.",
+      "narrative": "Australia holds a shared landscape of memory—from ancient sacred sites like Uluru and Murujuga rock art to Port Arthur, the Eureka Stockade, Anzac memorials, and the Snowy Mountains Scheme. Protecting these places keeps our national memory alive. Example: Mining companies being strictly barred from blowing up 46,000-year-old Indigenous rock shelters like Juukan Gorge.",
       "coords": {
         "v": 0.44,
         "psi": 0.63
@@ -2253,11 +2253,11 @@ window.KANON_SURVEY_DATA = {
       "qC": "People in my community respect sacred Indigenous sites, local war memorials, and historic civic landmarks.",
       "qD": "Across Australia today, our heritage laws and mining/development approvals actually protect sacred Indigenous Country and historic sites from destruction.",
       "help": {
-        "highA": "You strongly endorse the Australian ethos of Cause.Where (Eureka Stockade: Rebellion for Democratic Rights), spanning Sydney Cove, The Harbour Bridge, Uluru, Gallipoli (ANZAC Cove), and more.",
-        "lowA": "You feel disconnected from or skeptical of the traditional Australian values grouped under Cause.Where (Eureka Stockade: Rebellion for Democratic Rights).",
-        "highB": "In your everyday Australian life, the promise of Cause.Where is genuinely lived, working, and accessible.",
-        "lowB": "In practice, Cause.Where feels broken, priced out, or blocked by systemic friction where you live.",
-        "note": "Matrix Sense 6.3 (Cause.Where): Synthesises 7 Kanon vectors (Sydney Cove, The Harbour Bridge, Uluru, Gallipoli (ANZAC Cove), The Goldfields (Ballarat), The Penal Settlement (Norfolk Island), Parliament House (Canberra)). In Plane 6 (Foundation), Cause.Where (Place & Setting) maps how Australian foundation is expressed through Sydney Cove (Ambiguity), The Harbour Bridge (Achievement), Uluru (Sacredness), Gallipoli (ANZAC Cove) (Consecration), while confronting the shadow of The Penal Settlement (Norfolk Island) (Brutality). Australia has a sacred geography of memory—from ancient Indigenous songlines and Uluru to sites of convict pain, Eureka rebellion, wartime sacrifice, and democratic self-government—that must be protected from desecration."
+        "highA": "You strongly support Theme 6.3 (Sacred & Historic Places: From Uluru to Eureka & Gallipoli).",
+        "lowA": "You place lower priority on or disagree with Theme 6.3 (Sacred & Historic Places: From Uluru to Eureka & Gallipoli).",
+        "highB": "In everyday practice, Theme 6.3 (Sacred & Historic Places: From Uluru to Eureka & Gallipoli) is actively upheld.",
+        "lowB": "In everyday reality, Theme 6.3 (Sacred & Historic Places: From Uluru to Eureka & Gallipoli) is struggling, blocked, or failing.",
+        "note": "Australia holds a shared landscape of memory—from ancient sacred sites like Uluru and Murujuga rock art to Port Arthur, the Eureka Stockade, Anzac memorials, and the Snowy Mountains Scheme. Protecting these places keeps our national memory alive. Example: Mining companies being strictly barred from blowing up 46,000-year-old Indigenous rock shelters like Juukan Gorge."
       },
       "tags": [
         "indigenous",
@@ -2273,10 +2273,10 @@ window.KANON_SURVEY_DATA = {
       "plane": 6,
       "senseIdx": 4,
       "senseCode": "Why",
-      "title": "Overcoming the Great Silence & Honouring Native Title (Mabo)",
+      "title": "Generosity & Solidarity vs. Fear & Complacency",
       "matrixTitle": "The Why of the Cause (Motivations/Drive)",
       "shortTitle": "Cause.Why · Overcoming the Great Silence & Honouring Native Title (Mabo)",
-      "narrative": "In Plane 6 (Foundation), Cause.Why (Drive & Motivation) maps how Australian foundation is expressed through Survival (Endurance), Redemption (Rehabilitation), Distance (Isolation), The Fair Go (Equity), while confronting the shadow of Populate or Perish (Anxiety). Australia's history has always been a contest between two drives: generous solidarity and redemption on one side, versus invasion paranoia and lazy reliance on resource luck on the other.",
+      "narrative": "Throughout our history, Australia has been pulled between two competing instincts: generous mateship and courage on our best days, versus island fear, greed, and 'she'll be right' complacency on our worst days. Example: Choosing to invest mining boom revenues into long-term national nation-building rather than squandering it on short-term tax giveaways.",
       "coords": {
         "v": 0.41,
         "psi": 0.21
@@ -2304,11 +2304,11 @@ window.KANON_SURVEY_DATA = {
       "qC": "People in my everyday circle respond to national challenges with level-headed solidarity rather than panic or blaming minorities.",
       "qD": "Across Australia today, our national leadership and media actually appeal to courage, solidarity, and long-term vision rather than fear-driven politics and resource complacency.",
       "help": {
-        "highA": "You strongly endorse the Australian ethos of Cause.Why (Overcoming the Great Silence & Honouring Native Title (Mabo)), spanning Survival, Redemption, Distance, The Fair Go, and more.",
-        "lowA": "You feel disconnected from or skeptical of the traditional Australian values grouped under Cause.Why (Overcoming the Great Silence & Honouring Native Title (Mabo)).",
-        "highB": "In your everyday Australian life, the promise of Cause.Why is genuinely lived, working, and accessible.",
-        "lowB": "In practice, Cause.Why feels broken, priced out, or blocked by systemic friction where you live.",
-        "note": "Matrix Sense 6.4 (Cause.Why): Synthesises 7 Kanon vectors (Survival, Redemption, Distance, The Fair Go, Mateship, Populate or Perish, The Lucky Country). In Plane 6 (Foundation), Cause.Why (Drive & Motivation) maps how Australian foundation is expressed through Survival (Endurance), Redemption (Rehabilitation), Distance (Isolation), The Fair Go (Equity), while confronting the shadow of Populate or Perish (Anxiety). Australia's history has always been a contest between two drives: generous solidarity and redemption on one side, versus invasion paranoia and lazy reliance on resource luck on the other."
+        "highA": "You strongly support Theme 6.4 (Generosity & Solidarity vs. Fear & Complacency).",
+        "lowA": "You place lower priority on or disagree with Theme 6.4 (Generosity & Solidarity vs. Fear & Complacency).",
+        "highB": "In everyday practice, Theme 6.4 (Generosity & Solidarity vs. Fear & Complacency) is actively upheld.",
+        "lowB": "In everyday reality, Theme 6.4 (Generosity & Solidarity vs. Fear & Complacency) is struggling, blocked, or failing.",
+        "note": "Throughout our history, Australia has been pulled between two competing instincts: generous mateship and courage on our best days, versus island fear, greed, and 'she'll be right' complacency on our worst days. Example: Choosing to invest mining boom revenues into long-term national nation-building rather than squandering it on short-term tax giveaways."
       },
       "tags": [
         "world-region",
@@ -2324,10 +2324,10 @@ window.KANON_SURVEY_DATA = {
       "plane": 6,
       "senseIdx": 5,
       "senseCode": "How",
-      "title": "The Migrant Journey: Postwar Waves & Multicultural Strength",
+      "title": "Settling Disputes Through Fair Rules, Not Violence",
       "matrixTitle": "The How of the Cause (Methods/Character)",
       "shortTitle": "Cause.How · The Migrant Journey: Postwar Waves & Multicultural Strength",
-      "narrative": "In Plane 6 (Foundation), Cause.How (Method & Practice) maps how Australian foundation is expressed through The Bushman (Self-Reliance), The Shearers' Strike (Collective Action), The Bush (as Method) (Improvisation), The Secret Ballot (Privacy), while confronting the shadow of The Colonial Secretary's Office (Deference). Unlike nations forged in civil war, Australia built its best institutions through bush survival skills, organised labour, the secret ballot, industrial arbitration, and constitutional conventions.",
+      "narrative": "Unlike countries torn apart by civil wars, Australia learned after the 1890s strikes and Eureka rebellion to settle fierce arguments through unions, courts, wage tribunals, and the ballot box rather than guns in the street. Example: Workers and employers resolving a major national pay and safety dispute at the Fair Work Commission rather than through violent conflict.",
       "coords": {
         "v": 0.61,
         "psi": 0.41
@@ -2355,11 +2355,11 @@ window.KANON_SURVEY_DATA = {
       "qC": "People in my workplace and local community resolve disputes through fair talk, representation, and agreed rules.",
       "qD": "Across Australia today, major industrial and social disagreements are actually resolved through fair arbitration and democratic reform rather than union-busting or division.",
       "help": {
-        "highA": "You strongly endorse the Australian ethos of Cause.How (The Migrant Journey: Postwar Waves & Multicultural Strength), spanning The Bushman, The Shearers' Strike, The Bush (as Method), The Secret Ballot, and more.",
-        "lowA": "You feel disconnected from or skeptical of the traditional Australian values grouped under Cause.How (The Migrant Journey: Postwar Waves & Multicultural Strength).",
-        "highB": "In your everyday Australian life, the promise of Cause.How is genuinely lived, working, and accessible.",
-        "lowB": "In practice, Cause.How feels broken, priced out, or blocked by systemic friction where you live.",
-        "note": "Matrix Sense 6.5 (Cause.How): Synthesises 7 Kanon vectors (The Bushman, The Shearers' Strike, The Bush (as Method), The Secret Ballot, Compulsory Arbitration, The Colonial Secretary's Office, Peaceful Federation). In Plane 6 (Foundation), Cause.How (Method & Practice) maps how Australian foundation is expressed through The Bushman (Self-Reliance), The Shearers' Strike (Collective Action), The Bush (as Method) (Improvisation), The Secret Ballot (Privacy), while confronting the shadow of The Colonial Secretary's Office (Deference). Unlike nations forged in civil war, Australia built its best institutions through bush survival skills, organised labour, the secret ballot, industrial arbitration, and constitutional conventions."
+        "highA": "You strongly support Theme 6.5 (Settling Disputes Through Fair Rules, Not Violence).",
+        "lowA": "You place lower priority on or disagree with Theme 6.5 (Settling Disputes Through Fair Rules, Not Violence).",
+        "highB": "In everyday practice, Theme 6.5 (Settling Disputes Through Fair Rules, Not Violence) is actively upheld.",
+        "lowB": "In everyday reality, Theme 6.5 (Settling Disputes Through Fair Rules, Not Violence) is struggling, blocked, or failing.",
+        "note": "Unlike countries torn apart by civil wars, Australia learned after the 1890s strikes and Eureka rebellion to settle fierce arguments through unions, courts, wage tribunals, and the ballot box rather than guns in the street. Example: Workers and employers resolving a major national pay and safety dispute at the Fair Work Commission rather than through violent conflict."
       },
       "tags": [
         "land-climate",
@@ -2375,10 +2375,10 @@ window.KANON_SURVEY_DATA = {
       "plane": 6,
       "senseIdx": 6,
       "senseCode": "Cause",
-      "title": "Anzac Sacrifice, Memory & the Reality of War",
+      "title": "Deep Time: 65,000 Years of First Nations History & Ancient Country",
       "matrixTitle": "The Cause of the Cause (Roots/History)",
       "shortTitle": "Cause.Cause · Anzac Sacrifice, Memory & the Reality of War",
-      "narrative": "In Plane 6 (Foundation), Cause.Cause (Roots & History) maps how Australian foundation is expressed through The Dreaming (Mythos), Gondwana (Isolation), The Great Barrier Reef (Life), Fire-Stick Farming (Management), while confronting the shadow of The Megafauna Extinction (Impact). Our history does not begin in 1788; it is anchored in Deep Time—ancient Gondwanan ecosystems, the Great Barrier Reef, and 65,000 years of Indigenous fire-stick farming across an arid continent.",
+      "narrative": "Australian history did not begin in 1788. Our continent is anchored in Deep Time—ancient Gondwanan rainforests, the Great Barrier Reef, and more than 65,000 years of continuous Aboriginal and Torres Strait Islander life, law, and fire-stick farming. Example: Preserving ancient Indigenous fish traps at Brewarrina and rock art in Kakadu that are older than the pyramids.",
       "coords": {
         "v": 0.31,
         "psi": 0.23
@@ -2406,11 +2406,11 @@ window.KANON_SURVEY_DATA = {
       "qC": "People in my circle appreciate the ancient depth of Australia's natural wonders and 65,000-year Indigenous history.",
       "qD": "Across Australia today, our climate, land, and Reef policies actually honour our deep-time ecological inheritance rather than sacrificing it for short-term extraction.",
       "help": {
-        "highA": "You strongly endorse the Australian ethos of Cause.Cause (Anzac Sacrifice, Memory & the Reality of War), spanning The Dreaming, Gondwana, The Great Barrier Reef, The Megafauna Extinction, and more.",
-        "lowA": "You feel disconnected from or skeptical of the traditional Australian values grouped under Cause.Cause (Anzac Sacrifice, Memory & the Reality of War).",
-        "highB": "In your everyday Australian life, the promise of Cause.Cause is genuinely lived, working, and accessible.",
-        "lowB": "In practice, Cause.Cause feels broken, priced out, or blocked by systemic friction where you live.",
-        "note": "Matrix Sense 6.6 (Cause.Cause): Synthesises 7 Kanon vectors (The Dreaming, Gondwana, The Great Barrier Reef, The Megafauna Extinction, Fire-Stick Farming, Plate Tectonics, The Arid Core). In Plane 6 (Foundation), Cause.Cause (Roots & History) maps how Australian foundation is expressed through The Dreaming (Mythos), Gondwana (Isolation), The Great Barrier Reef (Life), Fire-Stick Farming (Management), while confronting the shadow of The Megafauna Extinction (Impact). Our history does not begin in 1788; it is anchored in Deep Time—ancient Gondwanan ecosystems, the Great Barrier Reef, and 65,000 years of Indigenous fire-stick farming across an arid continent."
+        "highA": "You strongly support Theme 6.6 (Deep Time: 65,000 Years of First Nations History & Ancient Country).",
+        "lowA": "You place lower priority on or disagree with Theme 6.6 (Deep Time: 65,000 Years of First Nations History & Ancient Country).",
+        "highB": "In everyday practice, Theme 6.6 (Deep Time: 65,000 Years of First Nations History & Ancient Country) is actively upheld.",
+        "lowB": "In everyday reality, Theme 6.6 (Deep Time: 65,000 Years of First Nations History & Ancient Country) is struggling, blocked, or failing.",
+        "note": "Australian history did not begin in 1788. Our continent is anchored in Deep Time—ancient Gondwanan rainforests, the Great Barrier Reef, and more than 65,000 years of continuous Aboriginal and Torres Strait Islander life, law, and fire-stick farming. Example: Preserving ancient Indigenous fish traps at Brewarrina and rock art in Kakadu that are older than the pyramids."
       },
       "tags": [
         "indigenous",
@@ -2426,10 +2426,10 @@ window.KANON_SURVEY_DATA = {
       "plane": 6,
       "senseIdx": 7,
       "senseCode": "Effect",
-      "title": "The Living Constitution & Intergenerational Legacy",
+      "title": "Healing Unfinished Business & Protecting the Safety Net",
       "matrixTitle": "The Effect of the Cause (Legacy/Impact)",
       "shortTitle": "Cause.Effect · The Living Constitution & Intergenerational Legacy",
-      "narrative": "In Plane 6 (Foundation), Cause.Effect (Legacy & Outcome) maps how Australian foundation is expressed through The Digger (Myth) (Mythologization), Warrior (Resistance), The Suburban House (Privatization), The Welfare State (Guarantee). Our historical inheritance leaves us with both proud achievements—the welfare safety net and civic consensus—and urgent unfinished business in First Nations justice, treaty, and truth-telling.",
+      "narrative": "Every generation inherits both proud achievements—our peaceful democracy and universal safety net—and unfinished business like closing the gap in Indigenous health and life expectancy. We honour our past by fixing what remains broken. Example: Backing community-led Indigenous health clinics and regional jobs programs that genuinely close the gap.",
       "coords": {
         "v": 0.69,
         "psi": 0.3
@@ -2457,11 +2457,11 @@ window.KANON_SURVEY_DATA = {
       "qC": "People in my circle believe we should keep strengthening our social safety net and work in good faith toward lasting First Nations reconciliation.",
       "qD": "Across Australia today, our nation is actually repairing its social safety net and making real, good-faith progress on the unfinished business of reconciliation.",
       "help": {
-        "highA": "You strongly endorse the Australian ethos of Cause.Effect (The Living Constitution & Intergenerational Legacy), spanning The Digger (Myth), Warrior [FN], The Suburban House, The Welfare State, and more.",
-        "lowA": "You feel disconnected from or skeptical of the traditional Australian values grouped under Cause.Effect (The Living Constitution & Intergenerational Legacy).",
-        "highB": "In your everyday Australian life, the promise of Cause.Effect is genuinely lived, working, and accessible.",
-        "lowB": "In practice, Cause.Effect feels broken, priced out, or blocked by systemic friction where you live.",
-        "note": "Matrix Sense 6.7 (Cause.Effect): Synthesises 7 Kanon vectors (The Digger (Myth), Warrior [FN], The Suburban House, The Welfare State, Consensus, The Unfinished Business, Continuity). In Plane 6 (Foundation), Cause.Effect (Legacy & Outcome) maps how Australian foundation is expressed through The Digger (Myth) (Mythologization), Warrior (Resistance), The Suburban House (Privatization), The Welfare State (Guarantee). Our historical inheritance leaves us with both proud achievements—the welfare safety net and civic consensus—and urgent unfinished business in First Nations justice, treaty, and truth-telling."
+        "highA": "You strongly support Theme 6.7 (Healing Unfinished Business & Protecting the Safety Net).",
+        "lowA": "You place lower priority on or disagree with Theme 6.7 (Healing Unfinished Business & Protecting the Safety Net).",
+        "highB": "In everyday practice, Theme 6.7 (Healing Unfinished Business & Protecting the Safety Net) is actively upheld.",
+        "lowB": "In everyday reality, Theme 6.7 (Healing Unfinished Business & Protecting the Safety Net) is struggling, blocked, or failing.",
+        "note": "Every generation inherits both proud achievements—our peaceful democracy and universal safety net—and unfinished business like closing the gap in Indigenous health and life expectancy. We honour our past by fixing what remains broken. Example: Backing community-led Indigenous health clinics and regional jobs programs that genuinely close the gap."
       },
       "tags": [
         "culture-sport",
@@ -2477,10 +2477,10 @@ window.KANON_SURVEY_DATA = {
       "plane": 7,
       "senseIdx": 1,
       "senseCode": "Who",
-      "title": "Universal Care: Medicare, PBS & Public Hospitals",
+      "title": "Quiet Civic Decency vs. 'I've Got Mine' Selfishness",
       "matrixTitle": "The Who of the Effect (Authenticity/Soul)",
       "shortTitle": "Effect.Who · Universal Care: Medicare, PBS & Public Hospitals",
-      "narrative": "In Plane 7 (Result), Effect.Who (Authenticity & Character) maps how Australian result is expressed through The Quiet Australian (Conformity), The Multicultural Citizen (Plurality), The Coastal Dweller (Concentration), The Sports Fanatic (Competition), while confronting the shadow of The Aspirational (Ambition). A healthy Australia should produce citizens who combine quiet civic decency, multicultural openness, and neighbourly care—rejecting the 'I've got mine' selfishness that turns housing and wealth into a zero-sum game.",
+      "narrative": "A healthy Australia produces citizens who combine quiet decency, multicultural warmth, and neighbourly care—rejecting the selfish 'I've got mine, stuff you' mentality that turns neighbours into strangers. Example: Welcoming a newly arrived migrant family to the street and making sure elderly neighbours are checked on during a heatwave.",
       "coords": {
         "v": 0.37,
         "psi": 0.19
@@ -2508,11 +2508,11 @@ window.KANON_SURVEY_DATA = {
       "qC": "In my local community, people across different cultural backgrounds and generations still look out for one another as good neighbours.",
       "qD": "Across Australia today, our tax, housing, and social settings actually foster neighbourly cohesion rather than splintering us into 'I've got mine' competition.",
       "help": {
-        "highA": "You strongly endorse the Australian ethos of Effect.Who (Universal Care: Medicare, PBS & Public Hospitals), spanning The Quiet Australian, The Multicultural Citizen, The Coastal Dweller, The Aspirational, and more.",
-        "lowA": "You feel disconnected from or skeptical of the traditional Australian values grouped under Effect.Who (Universal Care: Medicare, PBS & Public Hospitals).",
-        "highB": "In your everyday Australian life, the promise of Effect.Who is genuinely lived, working, and accessible.",
-        "lowB": "In practice, Effect.Who feels broken, priced out, or blocked by systemic friction where you live.",
-        "note": "Matrix Sense 7.1 (Effect.Who): Synthesises 7 Kanon vectors (The Quiet Australian, The Multicultural Citizen, The Coastal Dweller, The Aspirational, The Sports Fanatic, The Digger's Heir, The Citizen). In Plane 7 (Result), Effect.Who (Authenticity & Character) maps how Australian result is expressed through The Quiet Australian (Conformity), The Multicultural Citizen (Plurality), The Coastal Dweller (Concentration), The Sports Fanatic (Competition), while confronting the shadow of The Aspirational (Ambition). A healthy Australia should produce citizens who combine quiet civic decency, multicultural openness, and neighbourly care—rejecting the 'I've got mine' selfishness that turns housing and wealth into a zero-sum game."
+        "highA": "You strongly support Theme 7.1 (Quiet Civic Decency vs. 'I've Got Mine' Selfishness).",
+        "lowA": "You place lower priority on or disagree with Theme 7.1 (Quiet Civic Decency vs. 'I've Got Mine' Selfishness).",
+        "highB": "In everyday practice, Theme 7.1 (Quiet Civic Decency vs. 'I've Got Mine' Selfishness) is actively upheld.",
+        "lowB": "In everyday reality, Theme 7.1 (Quiet Civic Decency vs. 'I've Got Mine' Selfishness) is struggling, blocked, or failing.",
+        "note": "A healthy Australia produces citizens who combine quiet decency, multicultural warmth, and neighbourly care—rejecting the selfish 'I've got mine, stuff you' mentality that turns neighbours into strangers. Example: Welcoming a newly arrived migrant family to the street and making sure elderly neighbours are checked on during a heatwave."
       },
       "tags": [
         "housing",
@@ -2528,10 +2528,10 @@ window.KANON_SURVEY_DATA = {
       "plane": 7,
       "senseIdx": 2,
       "senseCode": "What",
-      "title": "Secure Retirement: Superannuation & Fair Pensions",
+      "title": "The Commonwealth Dividend: Medicare, Super & Fair Housing",
       "matrixTitle": "The What of the Effect (Roles/Titles)",
       "shortTitle": "Effect.What · Secure Retirement: Superannuation & Fair Pensions",
-      "narrative": "In Plane 7 (Result), Effect.What (Roles & Definitions) maps how Australian result is expressed through The Superannuation Balance (Security), The University Sector (Knowledge), The Medicare Card (Health), The Renewable Transition (Transition), while confronting the shadow of The Home Owner (Property). The tangible dividend of the Australian Commonwealth should be universal and rock-solid: bulk-billed Medicare, secure housing, accessible education, dignified superannuation, clean energy, and thriving biodiversity.",
+      "narrative": "Being an Australian citizen should guarantee rock-solid everyday basics: bulk-billed Medicare when you're sick, affordable PBS medicines, dignified retirement through Superannuation and the Pension, and a fair shot at owning a home. Example: A working family visiting the local GP bulk-billed and picking up life-saving asthma or diabetes medicine for a few dollars.",
       "coords": {
         "v": 0.54,
         "psi": 0.43
@@ -2559,11 +2559,11 @@ window.KANON_SURVEY_DATA = {
       "qC": "In my everyday circle, people rely on and strongly support universal Medicare, affordable education, secure housing, and dignified retirement.",
       "qD": "Across Australia today, our society and institutions actually deliver these core pillars—bulk-billed healthcare, affordable housing, accessible education, and clean energy—in practice.",
       "help": {
-        "highA": "You strongly endorse the Australian ethos of Effect.What (Secure Retirement: Superannuation & Fair Pensions), spanning The Home Owner, The Superannuation Balance, The University Sector, The Medicare Card, and more.",
-        "lowA": "You feel disconnected from or skeptical of the traditional Australian values grouped under Effect.What (Secure Retirement: Superannuation & Fair Pensions).",
-        "highB": "In your everyday Australian life, the promise of Effect.What is genuinely lived, working, and accessible.",
-        "lowB": "In practice, Effect.What feels broken, priced out, or blocked by systemic friction where you live.",
-        "note": "Matrix Sense 7.2 (Effect.What): Synthesises 7 Kanon vectors (The Home Owner, The Superannuation Balance, The University Sector, The Medicare Card, The Renewable Transition, Biodiversity, Stability). In Plane 7 (Result), Effect.What (Roles & Definitions) maps how Australian result is expressed through The Superannuation Balance (Security), The University Sector (Knowledge), The Medicare Card (Health), The Renewable Transition (Transition), while confronting the shadow of The Home Owner (Property). The tangible dividend of the Australian Commonwealth should be universal and rock-solid: bulk-billed Medicare, secure housing, accessible education, dignified superannuation, clean energy, and thriving biodiversity."
+        "highA": "You strongly support Theme 7.2 (The Commonwealth Dividend: Medicare, Super & Fair Housing).",
+        "lowA": "You place lower priority on or disagree with Theme 7.2 (The Commonwealth Dividend: Medicare, Super & Fair Housing).",
+        "highB": "In everyday practice, Theme 7.2 (The Commonwealth Dividend: Medicare, Super & Fair Housing) is actively upheld.",
+        "lowB": "In everyday reality, Theme 7.2 (The Commonwealth Dividend: Medicare, Super & Fair Housing) is struggling, blocked, or failing.",
+        "note": "Being an Australian citizen should guarantee rock-solid everyday basics: bulk-billed Medicare when you're sick, affordable PBS medicines, dignified retirement through Superannuation and the Pension, and a fair shot at owning a home. Example: A working family visiting the local GP bulk-billed and picking up life-saving asthma or diabetes medicine for a few dollars."
       },
       "tags": [
         "fair-go",
@@ -2579,10 +2579,10 @@ window.KANON_SURVEY_DATA = {
       "plane": 7,
       "senseIdx": 3,
       "senseCode": "Where",
-      "title": "Shared Resource Wealth vs. Private Quarry Extraction",
+      "title": "Standing on Our Own Feet as a Respected Pacific Neighbour",
       "matrixTitle": "The Where of the Effect (Origins/Location)",
       "shortTitle": "Effect.Where · Shared Resource Wealth vs. Private Quarry Extraction",
-      "narrative": "In Plane 7 (Result), Effect.Where (Place & Setting) maps how Australian result is expressed through The Australian Diaspora (Network), The Middle Power (Brokerage), Soft Power (Attraction), The Asian Century (Integration), while confronting the shadow of The Commodity (Extraction), The Alliance (Dependence), The Pacific (Proximity). In the wider world, Australia should stand on its own two feet as an independent middle power, a respected Pacific family member, and a value-adding economy—not a passive quarry or uncritical client state.",
+      "narrative": "In world affairs, Australia should stand confidently on its own two feet—acting as an independent voice for peace, a genuine partner to our Pacific Island family, and a nation that adds value to our resources rather than just shipping raw dirt overseas. Example: Processing our own lithium and building clean energy tech onshore in Australia instead of exporting raw ore and buying back expensive batteries.",
       "coords": {
         "v": 0.2,
         "psi": 0.31
@@ -2610,11 +2610,11 @@ window.KANON_SURVEY_DATA = {
       "qC": "People in my circle believe Australia should process more of what we dig up onshore and make our own independent decisions in the world.",
       "qD": "Across Australia today, our foreign and economic policies actually make us an independent, value-adding middle power and trusted Pacific partner.",
       "help": {
-        "highA": "You strongly endorse the Australian ethos of Effect.Where (Shared Resource Wealth vs. Private Quarry Extraction), spanning The Australian Diaspora, The Commodity, The Alliance, The Middle Power, and more.",
-        "lowA": "You feel disconnected from or skeptical of the traditional Australian values grouped under Effect.Where (Shared Resource Wealth vs. Private Quarry Extraction).",
-        "highB": "In your everyday Australian life, the promise of Effect.Where is genuinely lived, working, and accessible.",
-        "lowB": "In practice, Effect.Where feels broken, priced out, or blocked by systemic friction where you live.",
-        "note": "Matrix Sense 7.3 (Effect.Where): Synthesises 7 Kanon vectors (The Australian Diaspora, The Commodity, The Alliance, The Middle Power, Soft Power, The Pacific, The Asian Century). In Plane 7 (Result), Effect.Where (Place & Setting) maps how Australian result is expressed through The Australian Diaspora (Network), The Middle Power (Brokerage), Soft Power (Attraction), The Asian Century (Integration), while confronting the shadow of The Commodity (Extraction), The Alliance (Dependence), The Pacific (Proximity). In the wider world, Australia should stand on its own two feet as an independent middle power, a respected Pacific family member, and a value-adding economy—not a passive quarry or uncritical client state."
+        "highA": "You strongly support Theme 7.3 (Standing on Our Own Feet as a Respected Pacific Neighbour).",
+        "lowA": "You place lower priority on or disagree with Theme 7.3 (Standing on Our Own Feet as a Respected Pacific Neighbour).",
+        "highB": "In everyday practice, Theme 7.3 (Standing on Our Own Feet as a Respected Pacific Neighbour) is actively upheld.",
+        "lowB": "In everyday reality, Theme 7.3 (Standing on Our Own Feet as a Respected Pacific Neighbour) is struggling, blocked, or failing.",
+        "note": "In world affairs, Australia should stand confidently on its own two feet—acting as an independent voice for peace, a genuine partner to our Pacific Island family, and a nation that adds value to our resources rather than just shipping raw dirt overseas. Example: Processing our own lithium and building clean energy tech onshore in Australia instead of exporting raw ore and buying back expensive batteries."
       },
       "tags": [
         "housing",
@@ -2630,10 +2630,10 @@ window.KANON_SURVEY_DATA = {
       "plane": 7,
       "senseIdx": 4,
       "senseCode": "Why",
-      "title": "Affordable Housing & Home Ownership for the Next Generation",
+      "title": "National Crossroads: Putting People Ahead of Raw Market Greed",
       "matrixTitle": "The Why of the Effect (Motivations/Drive)",
       "shortTitle": "Effect.Why · Affordable Housing & Home Ownership for the Next Generation",
-      "narrative": "In Plane 7 (Result), Effect.Why (Drive & Motivation) maps how Australian result is expressed through Egalitarianism vs. Aspiration (Tension), Sustainability vs. Extraction (Responsibility), Urban vs. Regional (Geography), Fair Go vs. Market (Ideology). When forced to choose between competing national directions, Australia must put the Fair Go over raw market rule, sustainability over extraction, regional equity alongside cities, and reconciliation over division.",
+      "narrative": "When faced with big national choices, Australia must put the Fair Go ahead of winner-takes-all market greed, long-term environmental care ahead of quick plunder, and honest truth-telling ahead of division. Example: Reining in supermarket price-gouging, toll-road monopolies, and bank profiteering when families are struggling with the cost of living.",
       "coords": {
         "v": 0.23,
         "psi": -0.13
@@ -2661,11 +2661,11 @@ window.KANON_SURVEY_DATA = {
       "qC": "People in my everyday circle favour a fair balance between economy and human dignity, cities and regions, and unity over division.",
       "qD": "Across Australia today, our national policies actually choose the Fair Go, sustainability, regional equity, and reconciliation over market extraction and division.",
       "help": {
-        "highA": "You strongly endorse the Australian ethos of Effect.Why (Affordable Housing & Home Ownership for the Next Generation), spanning Egalitarianism vs. Aspiration, Sustainability vs. Extraction, Urban vs. Regional, Fair Go vs. Market, and more.",
-        "lowA": "You feel disconnected from or skeptical of the traditional Australian values grouped under Effect.Why (Affordable Housing & Home Ownership for the Next Generation).",
-        "highB": "In your everyday Australian life, the promise of Effect.Why is genuinely lived, working, and accessible.",
-        "lowB": "In practice, Effect.Why feels broken, priced out, or blocked by systemic friction where you live.",
-        "note": "Matrix Sense 7.4 (Effect.Why): Synthesises 7 Kanon vectors (Egalitarianism vs. Aspiration, Sustainability vs. Extraction, Urban vs. Regional, Fair Go vs. Market, Reconciliation vs. Denial, Luck vs. Effort, Unity vs. Division). In Plane 7 (Result), Effect.Why (Drive & Motivation) maps how Australian result is expressed through Egalitarianism vs. Aspiration (Tension), Sustainability vs. Extraction (Responsibility), Urban vs. Regional (Geography), Fair Go vs. Market (Ideology). When forced to choose between competing national directions, Australia must put the Fair Go over raw market rule, sustainability over extraction, regional equity alongside cities, and reconciliation over division."
+        "highA": "You strongly support Theme 7.4 (National Crossroads: Putting People Ahead of Raw Market Greed).",
+        "lowA": "You place lower priority on or disagree with Theme 7.4 (National Crossroads: Putting People Ahead of Raw Market Greed).",
+        "highB": "In everyday practice, Theme 7.4 (National Crossroads: Putting People Ahead of Raw Market Greed) is actively upheld.",
+        "lowB": "In everyday reality, Theme 7.4 (National Crossroads: Putting People Ahead of Raw Market Greed) is struggling, blocked, or failing.",
+        "note": "When faced with big national choices, Australia must put the Fair Go ahead of winner-takes-all market greed, long-term environmental care ahead of quick plunder, and honest truth-telling ahead of division. Example: Reining in supermarket price-gouging, toll-road monopolies, and bank profiteering when families are struggling with the cost of living."
       },
       "tags": [
         "fair-go",
@@ -2681,10 +2681,10 @@ window.KANON_SURVEY_DATA = {
       "plane": 7,
       "senseIdx": 5,
       "senseCode": "How",
-      "title": "Free Public Education, TAFE & Fair University Access",
+      "title": "Watchdogs of Truth: Independent Media, Stats & Royal Commissions",
       "matrixTitle": "The How of the Effect (Methods/Character)",
       "shortTitle": "Effect.How · Free Public Education, TAFE & Fair University Access",
-      "narrative": "In Plane 7 (Result), Effect.How (Method & Practice) maps how Australian result is expressed through The Vote (Choice), The Royal Commission (Inquiry), The High Court (Law), The ABS (Data), while confronting the shadow of The Media (Narrative). A self-governing people needs trustworthy instruments of truth—an independent electoral commission, honest public broadcasting and diverse media, royal commissions with teeth, and transparent economic reporting.",
+      "narrative": "Citizens can only keep governments honest if we have trustworthy watchdogs of truth: an independent electoral commission (AEC), strong public broadcasters (ABC and SBS), accurate ABS statistics, and Royal Commissions with real teeth to expose corruption. Example: A Royal Commission exposing systemic abuse in aged care or banking and forcing real legal reforms.",
       "coords": {
         "v": 0.56,
         "psi": 0.4
@@ -2712,11 +2712,11 @@ window.KANON_SURVEY_DATA = {
       "qC": "People in my circle value honest journalism, independent public broadcasters, and corruption watchdogs with real teeth.",
       "qD": "Across Australia today, our media landscape and integrity watchdogs actually give citizens the unvarnished truth rather than billionaire spin and cover-ups.",
       "help": {
-        "highA": "You strongly endorse the Australian ethos of Effect.How (Free Public Education, TAFE & Fair University Access), spanning The Vote, The Royal Commission, The High Court, The Media, and more.",
-        "lowA": "You feel disconnected from or skeptical of the traditional Australian values grouped under Effect.How (Free Public Education, TAFE & Fair University Access).",
-        "highB": "In your everyday Australian life, the promise of Effect.How is genuinely lived, working, and accessible.",
-        "lowB": "In practice, Effect.How feels broken, priced out, or blocked by systemic friction where you live.",
-        "note": "Matrix Sense 7.5 (Effect.How): Synthesises 7 Kanon vectors (The Vote, The Royal Commission, The High Court, The Media, The ABS, The Pub Test, The Treasury). In Plane 7 (Result), Effect.How (Method & Practice) maps how Australian result is expressed through The Vote (Choice), The Royal Commission (Inquiry), The High Court (Law), The ABS (Data), while confronting the shadow of The Media (Narrative). A self-governing people needs trustworthy instruments of truth—an independent electoral commission, honest public broadcasting and diverse media, royal commissions with teeth, and transparent economic reporting."
+        "highA": "You strongly support Theme 7.5 (Watchdogs of Truth: Independent Media, Stats & Royal Commissions).",
+        "lowA": "You place lower priority on or disagree with Theme 7.5 (Watchdogs of Truth: Independent Media, Stats & Royal Commissions).",
+        "highB": "In everyday practice, Theme 7.5 (Watchdogs of Truth: Independent Media, Stats & Royal Commissions) is actively upheld.",
+        "lowB": "In everyday reality, Theme 7.5 (Watchdogs of Truth: Independent Media, Stats & Royal Commissions) is struggling, blocked, or failing.",
+        "note": "Citizens can only keep governments honest if we have trustworthy watchdogs of truth: an independent electoral commission (AEC), strong public broadcasters (ABC and SBS), accurate ABS statistics, and Royal Commissions with real teeth to expose corruption. Example: A Royal Commission exposing systemic abuse in aged care or banking and forcing real legal reforms."
       },
       "tags": [
         "housing",
@@ -2732,10 +2732,10 @@ window.KANON_SURVEY_DATA = {
       "plane": 7,
       "senseIdx": 6,
       "senseCode": "Cause",
-      "title": "Independent Defence & Confident Regional Diplomacy",
+      "title": "Intergenerational Fairness: Handing On a Better Australia",
       "matrixTitle": "The Cause of the Effect (Roots/History)",
       "shortTitle": "Effect.Cause · Independent Defence & Confident Regional Diplomacy",
-      "narrative": "In Plane 7 (Result), Effect.Cause (Roots & History) maps how Australian result is expressed through The Next Generation (Inheritance), The Energy Transition (Transformation), Northern Australia (Expansion), The Republic (Sovereignty). The ultimate duty of every generation of Australians is to hand on a better commonwealth to the next—completing the clean energy transition, restoring housing fairness, and achieving full constitutional maturity.",
+      "narrative": "The ultimate duty of every generation of Australians is to leave the country in better shape for the kids and grandkids coming after us—fixing the housing lock-out, building clean energy, and protecting our rivers and reef. Example: Reforming housing and tax rules so young Australians working hard today have the same chance to buy a home that their parents had.",
       "coords": {
         "v": 0.66,
         "psi": 0.59
@@ -2763,11 +2763,11 @@ window.KANON_SURVEY_DATA = {
       "qC": "People in my circle care deeply about whether the next generation of Australians can afford a home and inherit a liveable climate.",
       "qD": "Across Australia today, our policies actually ensure young Australians inherit a fairer housing market, a clean energy economy, and a more united nation.",
       "help": {
-        "highA": "You strongly endorse the Australian ethos of Effect.Cause (Independent Defence & Confident Regional Diplomacy), spanning The Next Generation, The Energy Transition, Northern Australia, The Republic, and more.",
-        "lowA": "You feel disconnected from or skeptical of the traditional Australian values grouped under Effect.Cause (Independent Defence & Confident Regional Diplomacy).",
-        "highB": "In your everyday Australian life, the promise of Effect.Cause is genuinely lived, working, and accessible.",
-        "lowB": "In practice, Effect.Cause feels broken, priced out, or blocked by systemic friction where you live.",
-        "note": "Matrix Sense 7.6 (Effect.Cause): Synthesises 7 Kanon vectors (The Next Generation, The Energy Transition, Northern Australia, The Republic, Treaty [FN], Asia, The Good Life). In Plane 7 (Result), Effect.Cause (Roots & History) maps how Australian result is expressed through The Next Generation (Inheritance), The Energy Transition (Transformation), Northern Australia (Expansion), The Republic (Sovereignty). The ultimate duty of every generation of Australians is to hand on a better commonwealth to the next—completing the clean energy transition, restoring housing fairness, and achieving full constitutional maturity."
+        "highA": "You strongly support Theme 7.6 (Intergenerational Fairness: Handing On a Better Australia).",
+        "lowA": "You place lower priority on or disagree with Theme 7.6 (Intergenerational Fairness: Handing On a Better Australia).",
+        "highB": "In everyday practice, Theme 7.6 (Intergenerational Fairness: Handing On a Better Australia) is actively upheld.",
+        "lowB": "In everyday reality, Theme 7.6 (Intergenerational Fairness: Handing On a Better Australia) is struggling, blocked, or failing.",
+        "note": "The ultimate duty of every generation of Australians is to leave the country in better shape for the kids and grandkids coming after us—fixing the housing lock-out, building clean energy, and protecting our rivers and reef. Example: Reforming housing and tax rules so young Australians working hard today have the same chance to buy a home that their parents had."
       },
       "tags": [
         "mateship",
@@ -2783,10 +2783,10 @@ window.KANON_SURVEY_DATA = {
       "plane": 7,
       "senseIdx": 7,
       "senseCode": "Effect",
-      "title": "The Fair Go for Future Australians (Intergenerational Justice)",
+      "title": "The Land of the Second Chance & The Fair Go",
       "matrixTitle": "The Effect of the Effect (Legacy/Impact)",
       "shortTitle": "Effect.Effect · The Fair Go for Future Australians (Intergenerational Justice)",
-      "narrative": "In Plane 7 (Result), Effect.Effect (Legacy & Outcome) maps how Australian result is expressed through The Fair Go (Equity), The Lifestyle (Prosperity), Girt By Sea (Insularity), The Second Chance (Hope), while confronting the shadow of Dispossession (Dispossession). Stripped to its essence, the meaning of Australia is the Land of the Second Chance and the Fair Go—transforming a place of exile and dispossession into a reconciled, egalitarian home where nobody is left behind.",
+      "narrative": "Stripped to its heart, Australia is meant to be the Land of the Second Chance—a country that turned a harsh convict colony into a free, fair, and welcoming home where your background doesn't lock your future. Example: Free TAFE and adult apprenticeships helping a worker whose industry shut down retrain and build a great new career.",
       "coords": {
         "v": 0.44,
         "psi": -0.04
@@ -2816,11 +2816,11 @@ window.KANON_SURVEY_DATA = {
       "qC": "In my community circle, the spirit of the Second Chance and the Fair Go is still alive and practised between neighbours.",
       "qD": "All things considered, the Australia we live in today actually fulfills its highest promise as the Land of the Second Chance and the Fair Go.",
       "help": {
-        "highA": "You strongly endorse the Australian ethos of Effect.Effect (The Fair Go for Future Australians (Intergenerational Justice)), spanning The Fair Go, The Lifestyle, Girt By Sea, The Second Chance, and more.",
-        "lowA": "You feel disconnected from or skeptical of the traditional Australian values grouped under Effect.Effect (The Fair Go for Future Australians (Intergenerational Justice)).",
-        "highB": "In your everyday Australian life, the promise of Effect.Effect is genuinely lived, working, and accessible.",
-        "lowB": "In practice, Effect.Effect feels broken, priced out, or blocked by systemic friction where you live.",
-        "note": "Matrix Sense 7.7 (Effect.Effect): Synthesises 8 Kanon vectors (The Fair Go, The Lifestyle, Girt By Sea, The Second Chance, Dispossession [FN], She'll Be Right, The Land, Australia). In Plane 7 (Result), Effect.Effect (Legacy & Outcome) maps how Australian result is expressed through The Fair Go (Equity), The Lifestyle (Prosperity), Girt By Sea (Insularity), The Second Chance (Hope), while confronting the shadow of Dispossession (Dispossession). Stripped to its essence, the meaning of Australia is the Land of the Second Chance and the Fair Go—transforming a place of exile and dispossession into a reconciled, egalitarian home where nobody is left behind."
+        "highA": "You strongly support Theme 7.7 (The Land of the Second Chance & The Fair Go).",
+        "lowA": "You place lower priority on or disagree with Theme 7.7 (The Land of the Second Chance & The Fair Go).",
+        "highB": "In everyday practice, Theme 7.7 (The Land of the Second Chance & The Fair Go) is actively upheld.",
+        "lowB": "In everyday reality, Theme 7.7 (The Land of the Second Chance & The Fair Go) is struggling, blocked, or failing.",
+        "note": "Stripped to its heart, Australia is meant to be the Land of the Second Chance—a country that turned a harsh convict colony into a free, fair, and welcoming home where your background doesn't lock your future. Example: Free TAFE and adult apprenticeships helping a worker whose industry shut down retrain and build a great new career."
       },
       "tags": [
         "fair-go",
