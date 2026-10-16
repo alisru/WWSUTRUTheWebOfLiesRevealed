@@ -2449,10 +2449,11 @@ function getSenseMultiTierProbe(senseId, probe) {
   const vecs = (VECTORS_BY_SENSE[senseId] || []);
   const t3 = avgNums(vecs.map(v => getAns("V", v.uid, probe)));
 
+  // Strictly key effective score to the active tier (7, 49, or 354) so tiers do not contaminate each other
   let effective = null;
-  if (STATE.tier === 7) effective = t1 ?? t2 ?? t3;
-  else if (STATE.tier === 49) effective = t2 ?? t3 ?? t1;
-  else effective = t3 ?? t2 ?? t1;
+  if (STATE.tier === 7) effective = t1;
+  else if (STATE.tier === 49) effective = t2;
+  else effective = t3;
 
   return { tier1: t1, tier2: t2, tier3: t3, effective };
 }
@@ -2466,8 +2467,8 @@ function computeSenseSummary(senseId) {
   const B = mB.effective; // Personal Actual ("Would")
   const C = mC.effective; // Australian Society ("Systemic Reality")
 
-  const total = avgNums([A, B, C]);
-  const personalMean = avgNums([A, B]);
+  const total = avgNums([A, B]); // Personal Kanon score (Should A & Would B)
+  const personalMean = total;
   const gapAB = (A !== null && B !== null) ? (A - B) : null; // Personal Should-Would Gap
   const gapAC = (A !== null && C !== null) ? (A - C) : null; // Social Contradiction Gap (Should A vs Society C)
   return { A, B, C, D: C, total, personalMean, gapAB, gapAC, gapAD: gapAC, multiA: mA, multiB: mB };
@@ -2478,25 +2479,34 @@ function computePlaneSummary(pNum) {
   const senses = SENSES_BY_PLANE[pNum] || [];
   const senseScores = senses.map(s => ({ sense: s, ...computeSenseSummary(s.id) }));
 
-  const A = avgNums(senseScores.map(x => x.A));
-  const B = avgNums(senseScores.map(x => x.B));
-  const C = avgNums(senseScores.map(x => x.C));
-  const D = C;
-  const total = avgNums(senseScores.map(x => x.total));
-
+  let A = null, B = null, C = null, total = null;
   let totalNodes = 1;
   let answeredNodes = 0;
+
   if (STATE.tier === 7) {
+    A = getAns("P", pNum, "A");
+    B = getAns("P", pNum, "B");
+    C = getAns("P", pNum, "C");
+    total = avgNums([A, B]);
     totalNodes = 1;
-    answeredNodes = isNodeAnswered("P", pNum) ? 1 : (total !== null ? 1 : 0);
+    answeredNodes = isNodeAnswered("P", pNum) ? 1 : 0;
   } else if (STATE.tier === 49) {
+    A = avgNums(senseScores.map(x => x.A));
+    B = avgNums(senseScores.map(x => x.B));
+    C = avgNums(senseScores.map(x => x.C));
+    total = avgNums([A, B]);
     totalNodes = senses.length;
-    answeredNodes = senses.filter(s => isNodeAnswered("S", s.id) || computeSenseSummary(s.id).total !== null).length;
+    answeredNodes = senses.filter(s => isNodeAnswered("S", s.id)).length;
   } else {
     const vecs = activeTierVectors(pNum);
+    A = avgNums(vecs.map(v => getAns("V", v.uid, "A")));
+    B = avgNums(vecs.map(v => getAns("V", v.uid, "B")));
+    C = avgNums(vecs.map(v => getAns("V", v.uid, "C")));
+    total = avgNums([A, B]);
     totalNodes = vecs.length;
     answeredNodes = vecs.filter(v => isNodeAnswered("V", v.uid)).length;
   }
+  const D = C;
 
   return {
     plane,
@@ -2527,9 +2537,9 @@ function computeKanonProfile() {
   const answeredPlanes = planeSummaries.filter(p => p.total !== null);
 
   // Normalize [-5, +5] -> [0, 1] via (val + 5) / 10
-  // Use personal Should/Would mean (or overall total) for personal archetype matching
+  // Use personal Should/Would mean (A & B only) for personal archetype matching so low Society C ratings don't misclassify the user
   const planeNormTotal = planeSummaries.map(p => {
-    const pm = avgNums([p.A, p.B, p.C]);
+    const pm = avgNums([p.A, p.B]);
     const ref = pm !== null ? pm : p.total;
     return ref !== null ? (ref + 5) / 10 : 0.5;
   });
@@ -2538,11 +2548,11 @@ function computeKanonProfile() {
   const avgB = avgNums(planeSummaries.map(p => p.B));
   const avgC = avgNums(planeSummaries.map(p => p.C));
   const avgD = avgC;
-  const avgTot = avgNums(planeSummaries.map(p => p.total));
+  const avgTot = avgNums([avgA, avgB]);
 
   const avgPersonal = avgNums([avgA, avgB]);
   const personalAlignmentPct = avgPersonal !== null ? Math.round(((avgPersonal + 5) / 10) * 100) : null;
-  const alignmentPct = avgTot !== null ? Math.round(((avgTot + 5) / 10) * 100) : null;
+  const alignmentPct = personalAlignmentPct;
   const ethosPct = avgA !== null ? Math.round(((avgA + 5) / 10) * 100) : null;
   const livedPct = avgB !== null ? Math.round(((avgB + 5) / 10) * 100) : null;
   const societyPct = avgC !== null ? Math.round(((avgC + 5) / 10) * 100) : null;
@@ -2555,56 +2565,106 @@ function computeKanonProfile() {
   let hansonAgree = 0, hansonCompared = 0;
   let alboAgree = 0, alboCompared = 0;
 
-  const vecList = activeTierVectors();
-  vecList.forEach(vec => {
-    let a = getAns("V", vec.uid, "A");
-    let b = getAns("V", vec.uid, "B");
-    if (a === null && STATE.tier === 49) a = getAns("S", vec.senseId, "A");
-    if (b === null && STATE.tier === 49) b = getAns("S", vec.senseId, "B");
-    if (a === null && STATE.tier === 7) a = getAns("P", vec.plane, "A");
-    if (b === null && STATE.tier === 7) b = getAns("P", vec.plane, "B");
+  if (STATE.tier === 7) {
+    // Tier 1 (7 Pillars): evaluate strictly against the 7 Pillars (max 7 Hits/Fails)
+    PLANES.forEach(p => {
+      const a = getAns("P", p.n, "A");
+      const b = getAns("P", p.n, "B");
+      const nodeScore = avgNums([a, b]);
+      if (nodeScore !== null) {
+        totalEvaluated++;
+        if (nodeScore >= 1.0) hitCount++;
+        else if (nodeScore <= -1.0) failCount++;
+        else neutralCount++;
+      }
+      const pVecs = activeTierVectors(p.n);
+      const meanV = avgNums(pVecs.map(v => v.coords.v < 0 ? Math.abs(v.coords.v) : v.coords.v)) ?? 0.5;
+      const meanPsi = avgNums(pVecs.map(v => v.coords.v < 0 ? -v.coords.psi : v.coords.psi)) ?? 0.3;
+      if (a !== null) {
+        vA += (a / 5) * meanV;
+        psiA += (a / 5) * meanPsi;
+        sumWA += 1;
+      }
+      if (b !== null) {
+        vB += (b / 5) * meanV;
+        psiB += (b / 5) * meanPsi;
+        sumWB += 1;
+      }
+    });
+  } else if (STATE.tier === 49) {
+    // Tier 2 (49 Senses): evaluate strictly against the 49 Senses (max 49 Hits/Fails)
+    SENSES.forEach(s => {
+      const a = getAns("S", s.id, "A");
+      const b = getAns("S", s.id, "B");
+      const nodeScore = avgNums([a, b]);
+      if (nodeScore !== null) {
+        totalEvaluated++;
+        if (nodeScore >= 1.0) hitCount++;
+        else if (nodeScore <= -1.0) failCount++;
+        else neutralCount++;
+      }
+      const sVecs = VECTORS_BY_SENSE[s.id] || [];
+      const meanV = avgNums(sVecs.map(v => v.coords.v < 0 ? Math.abs(v.coords.v) : v.coords.v)) ?? 0.5;
+      const meanPsi = avgNums(sVecs.map(v => v.coords.v < 0 ? -v.coords.psi : v.coords.psi)) ?? 0.3;
+      if (a !== null) {
+        vA += (a / 5) * meanV;
+        psiA += (a / 5) * meanPsi;
+        sumWA += 1;
+      }
+      if (b !== null) {
+        vB += (b / 5) * meanV;
+        psiB += (b / 5) * meanPsi;
+        sumWB += 1;
+      }
+    });
+  } else {
+    // Tier 3 (354 Vectors): evaluate strictly against the 354 Vectors
+    const vecList = activeTierVectors();
+    vecList.forEach(vec => {
+      const a = getAns("V", vec.uid, "A");
+      const b = getAns("V", vec.uid, "B");
+      const nodeScore = avgNums([a, b]);
+      if (nodeScore !== null) {
+        totalEvaluated++;
+        let userVerdict = "NEUTRAL";
+        if (nodeScore >= 1.0) { hitCount++; userVerdict = "HIT"; }
+        else if (nodeScore <= -1.0) { failCount++; userVerdict = "FAIL"; }
+        else { neutralCount++; }
 
-    const nodeScore = avgNums([a, b]);
-    if (nodeScore !== null) {
-      totalEvaluated++;
-      let userVerdict = "NEUTRAL";
-      if (nodeScore >= 1.0) { hitCount++; userVerdict = "HIT"; }
-      else if (nodeScore <= -1.0) { failCount++; userVerdict = "FAIL"; }
-      else { neutralCount++; }
-
-      if (userVerdict !== "NEUTRAL") {
-        if (vec.hansonVerdict) {
-          hansonCompared++;
-          if (vec.hansonVerdict === userVerdict) hansonAgree++;
-        }
-        if (vec.alboVerdict) {
-          alboCompared++;
-          if (vec.alboVerdict === userVerdict) alboAgree++;
+        if (userVerdict !== "NEUTRAL") {
+          if (vec.hansonVerdict) {
+            hansonCompared++;
+            if (vec.hansonVerdict === userVerdict) hansonAgree++;
+          }
+          if (vec.alboVerdict) {
+            alboCompared++;
+            if (vec.alboVerdict === userVerdict) alboAgree++;
+          }
         }
       }
-    }
 
-    const targetV = vec.coords.v < 0 ? Math.abs(vec.coords.v) : vec.coords.v;
-    const targetPsi = vec.coords.v < 0 ? -vec.coords.psi : vec.coords.psi;
+      const targetV = vec.coords.v < 0 ? Math.abs(vec.coords.v) : vec.coords.v;
+      const targetPsi = vec.coords.v < 0 ? -vec.coords.psi : vec.coords.psi;
 
-    if (a !== null) {
-      const polA = a / 5;
-      vA += polA * targetV;
-      psiA += polA * targetPsi;
-      sumWA += 1;
-    }
-    if (b !== null) {
-      const polB = b / 5;
-      vB += polB * targetV;
-      psiB += polB * targetPsi;
-      sumWB += 1;
-    }
-  });
+      if (a !== null) {
+        const polA = a / 5;
+        vA += polA * targetV;
+        psiA += polA * targetPsi;
+        sumWA += 1;
+      }
+      if (b !== null) {
+        const polB = b / 5;
+        vB += polB * targetV;
+        psiB += polB * targetPsi;
+        sumWB += 1;
+      }
+    });
+  }
 
   const coordsA = sumWA > 0 ? { v: +(vA / sumWA * 1.35).toFixed(2), psi: +(psiA / sumWA * 1.35).toFixed(2) } : { v: 0, psi: 0 };
   const coordsB = sumWB > 0 ? { v: +(vB / sumWB * 1.35).toFixed(2), psi: +(psiB / sumWB * 1.35).toFixed(2) } : coordsA;
 
-  // Personal Should-Would gap (ΔH_personal) & Social Contradiction gap (Should A - Society D)
+  // Personal Should-Would gap (ΔH_personal) & Social Contradiction gap (Should A - Society C)
   const personalGap = (avgA !== null && avgB !== null) ? Math.abs(avgA - avgB) : 0;
   const socialGap = (avgA !== null && avgC !== null) ? (avgA - avgC) : ((avgA !== null && avgB !== null) ? (avgA - avgB) : 0);
   const stressGap = Math.max(socialGap, (avgA !== null && avgB !== null) ? (avgA - avgB) : 0);
@@ -2743,22 +2803,13 @@ function subKeyringSlots(senseId) {
     };
   }
 
-  const pA = getAns("P", sense.plane, "A");
-  const pB = getAns("P", sense.plane, "B");
-  const pC = getAns("P", sense.plane, "C");
+  const mA = getSenseMultiTierProbe(senseId, "A");
+  const mB = getSenseMultiTierProbe(senseId, "B");
+  const mC = getSenseMultiTierProbe(senseId, "C");
 
-  const sA = getAns("S", senseId, "A");
-  const sB = getAns("S", senseId, "B");
-  const sC = getAns("S", senseId, "C");
-
-  const vecs = (VECTORS_BY_SENSE[senseId] || []);
-  const vA = avgNums(vecs.map(v => getAns("V", v.uid, "A")));
-  const vB = avgNums(vecs.map(v => getAns("V", v.uid, "B")));
-  const vC = avgNums(vecs.map(v => getAns("V", v.uid, "C")));
-
-  const effA = vA ?? sA ?? pA;
-  const effB = vB ?? sB ?? pB ?? effA;
-  const effC = vC ?? sC ?? pC ?? effB;
+  const effA = mA.effective;
+  const effB = mB.effective ?? effA;
+  const effC = mC.effective ?? effB;
 
   const layers = [
     { id: "A", label: "Should", v: effA },
@@ -5046,6 +5097,7 @@ function renderResults(app) {
   app.querySelectorAll("[data-keyring-tier]").forEach(btn => {
     btn.addEventListener("click", () => {
       const tier = parseInt(btn.getAttribute("data-keyring-tier"), 10);
+      STATE.tier = tier;
       STATE.keyringTier = tier;
       saveState();
       renderResults(app);
