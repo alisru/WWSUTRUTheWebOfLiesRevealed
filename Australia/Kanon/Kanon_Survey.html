@@ -2725,6 +2725,8 @@ function computeKanonProfile() {
   return {
     planeSummaries,
     answeredPlanes,
+    totalNodes: STATE.tier === 7 ? 7 : (STATE.tier === 49 ? 49 : activeTierVectors().length),
+    answeredNodes: totalEvaluated,
     avgA, avgB, avgC, avgD, avgTot,
     personalGap, socialGap,
     personalAlignmentPct, alignmentPct, ethosPct, livedPct, communityPct, societyPct,
@@ -3946,18 +3948,12 @@ function renderABCDBlockHTML(prefix, id, item, planeHue, extraHeaderHTML = "", e
   const isShadow = item.coords && item.coords.v < 0;
   const isFN = !!item.fn;
 
-  const scA = isShadow ? SCALE_A_SHADOW : SCALE_A;
-  const scB = isShadow ? SCALE_B_SHADOW : SCALE_B;
-  const scC = isShadow ? SCALE_D_SHADOW : SCALE_D; // Uses Systemic Delivery scale for Society C
+  // Use the standard, unambiguous -5..+5 scales for all cards
+  const scA = SCALE_A;
+  const scB = SCALE_B;
+  const scC = SCALE_D; // Uses Systemic Delivery scale for Society C
 
-  const shadowAlertHTML = isShadow ? `
-    <div class="shadow-alert-strip">
-      <strong>⚠️ Shadow / Flaw Vector (${escapeHtml(item.cleanName || item.name || "")} · υ &lt; 0):</strong>
-      This card describes a historical flaw, failure, or shadow in Australian life.
-      Click <strong>+1 to +5 (Green · Reject &amp; Overcome Flaw)</strong> if we should call out and overcome this flaw;
-      click <strong>−1 to −5 (Red · Excuse / Captured by Flaw)</strong> if you excuse it or if society is still trapped inside it.
-    </div>
-  ` : "";
+  const shadowAlertHTML = "";
 
   // Support item.qD as society text if present, else fallback to item.qC
   const promptC = item.qD || item.qC;
@@ -4509,51 +4505,53 @@ function renderReview(app) {
   const prog = computeGlobalProgress();
   app.innerHTML = `
     <section class="card">
-      <div class="eyebrow">Review, Save & Export</div>
-      <h1 style="font-size:1.85rem;margin:4px 0 8px;">Your Saved Kanon Responses</h1>
+      <div class="eyebrow">Review &amp; Progress</div>
+      <h1 style="font-size:1.85rem;margin:4px 0 8px;">Check Your Answers</h1>
       <p style="margin:0 0 16px;color:var(--ink-soft);">
-        All answers are saved locally in your browser (<code>localStorage</code>) and never leave your device.
-        Export a JSON snapshot to save or compare profiles, or import a saved JSON file.
+        Your answers are saved privately on your device. You can review your ratings across each pillar below or jump straight to any section.
       </p>
-      <div style="display:flex;gap:10px;flex-wrap:wrap;">
-        <a class="btn" href="#/results">View Archetype & Keyring Dashboard →</a>
-        <button type="button" class="btn btn-secondary" id="btn-export-json">Export Answers (JSON)</button>
-        <label class="btn btn-secondary" style="cursor:pointer;">
-          Import JSON <input type="file" id="input-import-json" accept="application/json" style="display:none" />
-        </label>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+        <a class="btn" href="#/results">${prog.done >= prog.total ? "View Your Results →" : `View Results (${prog.done}/${prog.total})`}</a>
         <button type="button" class="btn btn-secondary" onclick="window.print()">Print / Save PDF</button>
-        <button type="button" class="btn btn-secondary" id="btn-reset-all" style="color:var(--bad);border-color:var(--bad);">Reset All Answers</button>
+        <button type="button" class="btn btn-secondary" id="btn-export-json">Save Backup File</button>
+        <label class="btn btn-secondary" style="cursor:pointer;margin:0;">
+          Load Saved File <input type="file" id="input-import-json" accept="application/json" style="display:none" />
+        </label>
+        <button type="button" class="btn btn-secondary" id="btn-reset-all" style="color:var(--bad);border-color:var(--bad);">Start Over</button>
       </div>
     </section>
 
     <section class="card" style="margin-top:16px;">
-      <h2 style="margin-bottom:12px;">Plane-by-Plane Summary (${prog.done}/${prog.total} in active Tier ${STATE.tier})</h2>
+      <h2 style="margin-bottom:12px;">Pillar-by-Pillar Progress (${prog.done} of ${prog.total} answered in active Tier ${STATE.tier})</h2>
       <table class="rank-table">
         <thead>
           <tr>
-            <th>Plane</th>
             <th>Pillar</th>
-            <th>Should (A)</th>
-            <th>Would (B)</th>
-            <th>Community (C)</th>
-            <th>Society (D)</th>
-            <th>Mean</th>
+            <th>Core Value</th>
+            <th>Your Ideal (A)</th>
+            <th>Your Practice (B)</th>
+            <th>Australian Society (C)</th>
+            <th>Status</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
           ${PLANES.map(p => {
             const sum = computePlaneSummary(p.n);
+            const isDone = sum.answeredNodes === sum.totalNodes && sum.totalNodes > 0;
             return `
               <tr>
-                <td><strong style="color:${p.hue}">P${p.n} · ${p.name}</strong></td>
-                <td class="mono">${p.pillar}</td>
-                <td class="mono">${fmtSigned(sum.A, 2)}</td>
-                <td class="mono">${fmtSigned(sum.B, 2)}</td>
-                <td class="mono">${fmtSigned(sum.C, 2)}</td>
-                <td class="mono">${fmtSigned(sum.D, 2)}</td>
-                <td class="mono"><strong>${fmtSigned(sum.total, 2)}</strong></td>
-                <td><a href="#/plane/${p.n}" class="mono" style="color:var(--accent)">Edit →</a></td>
+                <td><strong style="color:${p.hue}">Pillar ${p.n}: ${p.name}</strong></td>
+                <td>${p.pillar}</td>
+                <td class="mono">${fmtSigned(sum.A, 1)}</td>
+                <td class="mono">${fmtSigned(sum.B, 1)}</td>
+                <td class="mono">${fmtSigned(sum.C, 1)}</td>
+                <td>
+                  <span class="badge ${isDone ? "badge-hit" : "badge-neutral"}">
+                    ${sum.answeredNodes}/${sum.totalNodes} answered
+                  </span>
+                </td>
+                <td><a href="#/plane/${p.n}" class="mono" style="color:var(--accent);font-weight:700;">${isDone ? "Review →" : "Answer →"}</a></td>
               </tr>
             `;
           }).join("")}
@@ -4681,6 +4679,42 @@ function renderResults(app) {
   ];
   const activeCompare = allCompareTargets.find(t => t.id === STATE.compareTargetId) || allCompareTargets[0];
 
+  const prog = computeGlobalProgress();
+  const isComplete = prog.done >= prog.total && prog.total > 0;
+
+  if (!isComplete) {
+    app.innerHTML = `
+      <section class="card" style="padding:36px 30px;max-width:760px;margin:30px auto;text-align:center;">
+        <div style="font-size:3rem;margin-bottom:12px;">🔒</div>
+        <div class="eyebrow" style="color:var(--accent);">Results Locked · Quiz Incomplete</div>
+        <h1 style="font-size:2rem;margin:6px 0 12px;">Complete All ${prog.total} Questions to Unlock Your Results</h1>
+        <p style="font-size:1.05rem;line-height:1.6;color:var(--ink-soft);margin:0 0 24px;">
+          Like any rigorous values audit, your Archetype match, Hegemony map coordinates, and National Signature require all questions in your active tier (<strong>${prog.done} of ${prog.total} answered</strong>) to avoid distorted or partial results.
+        </p>
+
+        <div style="background:var(--bg-inset);padding:18px 20px;border-radius:12px;border:1px solid var(--rule);margin-bottom:24px;text-align:left;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+            <strong style="font-size:0.95rem;">Active Tier Progress (${STATE.tier === 7 ? "7 Core Pillars" : STATE.tier === 49 ? "49 National Themes" : "354 Topics"})</strong>
+            <span class="mono" style="font-weight:700;color:var(--accent);">${prog.done} / ${prog.total} (${prog.pct}%)</span>
+          </div>
+          <div class="axes-bar-outer" style="height:12px;border-radius:6px;">
+            <div class="axes-bar-inner" style="width:${prog.pct}%;background:var(--accent);height:12px;border-radius:6px;"></div>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+          <a class="btn" href="#/plane/1" style="font-size:1rem;padding:12px 24px;">Continue Quiz (Pillar 1) →</a>
+          <button class="btn btn-secondary" id="res-preset-battler">Preview Demo: "Betrayed Battler"</button>
+          <button class="btn btn-secondary" id="res-preset-guardian">Preview Demo: "Stoic Guardian"</button>
+        </div>
+      </section>
+    `;
+
+    document.getElementById("res-preset-battler")?.addEventListener("click", () => loadPresetProfile("betrayed_battler"));
+    document.getElementById("res-preset-guardian")?.addEventListener("click", () => loadPresetProfile("stoic_guardian"));
+    return;
+  }
+
   app.innerHTML = `
     <nav class="results-jump-bar no-print" aria-label="Jump to result section">
       <span class="mono" style="font-size:0.72rem;color:var(--ink-muted);font-weight:700;">Sections:</span>
@@ -4693,17 +4727,6 @@ function renderResults(app) {
       <a href="#sec-readings">07 · Australian Readings</a>
       <a href="#sec-diagnostics">08 · Blockers & Strain</a>
     </nav>
-
-    ${answeredPlanes.length === 0 ? `
-      <div class="callout callout-warm" style="margin-bottom:18px;">
-        <strong>No answers recorded yet!</strong> Answer the 7 Pillars in <a href="#/plane/1">Plane 1</a> (~2 mins) or click a Demo Preset below to see the full Australian Archetype & Keyring diagnostic in action:
-        <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;">
-          <button class="btn btn-sm" id="res-preset-battler">Load Demo: "The Betrayed Battler"</button>
-          <button class="btn btn-secondary btn-sm" id="res-preset-guardian">Load Demo: "The Stoic Guardian"</button>
-          <button class="btn btn-secondary btn-sm" id="res-preset-hanson">Load Pauline Hanson 354 Audit</button>
-        </div>
-      </div>
-    ` : ""}
 
     <!-- 1. ARCHETYPE HERO CARD -->
     <section class="archetype-hero" id="sec-archetype">
@@ -4723,16 +4746,16 @@ function renderResults(app) {
         </div>
         <div class="archetype-stat-boxes">
           <div class="arch-stat">
-            <div class="num">${profile.personalAlignmentPct !== null ? `${profile.personalAlignmentPct}%` : (profile.alignmentPct !== null ? `${profile.alignmentPct}%` : "—")}</div>
-            <div class="lbl">Personal Kanon Alignment (A &amp; B)</div>
+            <div class="num">${profile.personalAlignmentPct !== null ? `${profile.personalAlignmentPct}%` : "—"}</div>
+            <div class="lbl">Personal Kanon Alignment (${prog.done}/${prog.total} rated)</div>
           </div>
           <div class="arch-stat">
             <div class="num">${profile.ethosPct !== null ? `${profile.ethosPct}%` : "—"} <span style="font-size:0.9rem;color:#94A3B8">vs</span> ${profile.livedPct !== null ? `${profile.livedPct}%` : "—"}</div>
             <div class="lbl">Personal Should (A) vs Would (B)</div>
           </div>
           <div class="arch-stat">
-            <div class="num">${profile.totalEvaluated > 0 ? `${profile.hitCount} Hits / ${profile.failCount} Fails` : "—"}</div>
-            <div class="lbl">Kanon Alignment (${profile.netAlignmentPct >= 0 ? "+" : ""}${profile.netAlignmentPct}% Net Score)</div>
+            <div class="num">${profile.hitCount} Hits / ${profile.failCount} Fails <span style="font-size:0.85rem;color:#94A3B8">(${profile.totalEvaluated} / ${prog.total})</span></div>
+            <div class="lbl">Kanon Alignment (${profile.netAlignmentPct >= 0 ? "+" : ""}${profile.netAlignmentPct}% Net)</div>
           </div>
           <div class="arch-stat">
             <div class="num">${profile.userOverallCoords.v >= 0 ? "+" : ""}${(profile.userOverallCoords.v * 100).toFixed(0)}%</div>
