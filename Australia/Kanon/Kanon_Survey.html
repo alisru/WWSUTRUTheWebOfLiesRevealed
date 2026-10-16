@@ -2055,27 +2055,28 @@ function openNodeInfoSheet(prefix, id) {
     item = PLANE_BY_N[Number(id)];
     if (item) {
       hue = item.hue;
-      headerLabel = `Plane ${item.n} · ${item.code} (${item.domain}) · Pillar: ${item.pillar}`;
+      headerLabel = `Pillar ${item.n} · ${item.pillar}`;
     }
   } else if (prefix === "S") {
     item = SENSE_BY_ID[id];
     if (item) {
       const p = PLANE_BY_N[item.plane];
       hue = p.hue;
-      headerLabel = `Sense ${item.id} · ${item.addr} (Plane ${p.n}: ${p.name})`;
+      headerLabel = `Theme ${item.id} · Pillar ${p.n}: ${p.name}`;
     }
   } else if (prefix === "V") {
     item = VECTOR_BY_UID[id];
     if (item) {
       const p = PLANE_BY_N[item.plane];
       hue = p.hue;
-      headerLabel = `Vector ${item.uid} · ${item.addr} · Role: ${item.role}`;
+      headerLabel = `Topic ${item.uid} · Pillar ${p.n}: ${p.name}`;
     }
   }
 
   if (!item) return;
   const h = item.help || {};
   const title = item.name || item.title;
+  const mainBody = item.description || item.narrative || item.totality || h.note || "";
 
   const portal = document.getElementById("portal-root");
   if (!portal) return;
@@ -2092,34 +2093,19 @@ function openNodeInfoSheet(prefix, id) {
             <cite>— ${escapeHtml(item.attribution || "")}${item.source ? ` (${escapeHtml(item.source)})` : ""}</cite>
           </div>
         ` : ""}
-        <div class="explain-sides-grid">
-          <div class="explain-box is-high">
-            <h4>✓ Rating Positive (+1 to +5 · Strong Support &amp; Living the Standard)</h4>
-            <p>${escapeHtml(h.highA || "")}</p>
-          </div>
-          <div class="explain-box is-low">
-            <h4>✕ Rating Negative (−1 to −5 · Oppose or Disregard the Standard)</h4>
-            <p>${escapeHtml(h.lowA || "")}</p>
-          </div>
-          <div class="explain-box is-high">
-            <h4>✓ Rating Positive (+1 to +5 · Thriving &amp; Delivered in Daily Reality)</h4>
-            <p>${escapeHtml(h.highB || "")}</p>
-          </div>
-          <div class="explain-box is-low">
-            <h4>✕ Rating Negative (−1 to −5 · Broken, Neglected, or Blocked by Systemic Friction)</h4>
-            <p>${escapeHtml(h.lowB || "")}</p>
-          </div>
+        <div style="font-size:0.95rem;line-height:1.65;color:var(--ink);">
+          ${renderGlossaryHTML(mainBody)}
         </div>
-        <div class="callout" style="margin-top:12px;font-size:0.84rem;">
-          <strong>Rating Scale Guide (−5 to +5):</strong>
-          <code>−5 Strongly Oppose / Broken &amp; Exploitative</code> ·
-          <code>0 Neutral / Indifferent / Self-Interest Only</code> ·
-          <code>+5 Strongly Champion / Thriving &amp; Built for All</code>.
-        </div>
-        ${h.note ? `
-          <div class="callout" style="margin-top:10px;font-size:0.86rem;">
-            <strong>Context & Kanon Framing:</strong><br/>
-            ${escapeHtml(h.note)}
+        ${item.coreMeaning ? `
+          <div class="callout" style="margin-top:12px;font-size:0.88rem;">
+            <strong>What This Means in Practice:</strong><br/>
+            ${escapeHtml(item.coreMeaning)}
+          </div>
+        ` : ""}
+        ${item.practicalText ? `
+          <div class="callout" style="margin-top:12px;font-size:0.88rem;">
+            <strong>In Everyday Life:</strong><br/>
+            ${escapeHtml(item.practicalText)}
           </div>
         ` : ""}
       </div>
@@ -4089,16 +4075,19 @@ function renderPlane(app, pNum) {
           ${infoBtnHTML("P", p.n)}
         </div>
       </div>
-      <p style="margin:6px 0 14px;font-size:0.94rem;color:var(--ink-soft);line-height:1.55;">
-        ${escapeHtml(p.pillarSummary || p.blurb)}
-      </p>
+      <div class="node-lore" style="font-size:0.95rem;line-height:1.6;color:var(--ink-soft);padding:14px 18px;background:var(--bg-card);border:1px solid var(--rule);border-radius:10px;margin-bottom:14px;">
+        <p style="margin:0 0 8px;"><strong>The Principle:</strong> ${escapeHtml(p.pillarSummary || p.blurb)}</p>
+        <p style="margin:0;font-size:0.88rem;color:var(--ink-muted);"><strong>In Everyday Life:</strong> ${escapeHtml(p.practicalText || "")}</p>
+      </div>
     `;
     cardsArray = [renderABCDBlockHTML("P", p.n, p, p.hue, headerHTML)];
   } else if (STATE.tier === 49) {
-    cardsArray = planeSenses.map(s => {
+    cardsArray = planeSenses.map((s, sIdx) => {
       const vecs = (VECTORS_BY_SENSE[s.id] || []);
       const expanded = !!STATE.expandedSenses[s.id];
       const vecAnsCount = vecs.filter(v => isNodeAnswered("V", v.uid)).length;
+      const isFocus = STATE.viewMode === "focus";
+      const isLast = sIdx >= planeSenses.length - 1;
 
       const headerHTML = `
         <div class="sense-header">
@@ -4113,47 +4102,66 @@ function renderPlane(app, pNum) {
             ${infoBtnHTML("S", s.id)}
           </div>
         </div>
-        <p style="margin:6px 0 14px;font-size:0.92rem;color:var(--ink-soft);line-height:1.55;">
-          ${renderGlossaryHTML(s.narrative)}
-        </p>
+        <div class="node-lore">
+          <div style="line-height:1.65;">
+            <strong style="color:#111827;font-family:'Merriweather',serif;">The Living Ethos of ${escapeHtml(s.title)}:</strong><br>
+            ${renderGlossaryHTML(s.narrative)}
+          </div>
+        </div>
       `;
 
+      const focusActionHTML = isFocus ? `
+        <div style="margin-top:16px;padding-top:14px;border-top:2px solid var(--rule);display:flex;justify-content:space-between;align-items:center;gap:12px;">
+          ${sIdx <= 0
+            ? `<a class="btn btn-secondary" href="${pNum > 1 ? `#/plane/${pNum - 1}` : "#/hub"}">${pNum > 1 ? `← Pillar ${pNum - 1}` : "← Back to Hub"}</a>`
+            : `<button type="button" class="btn btn-secondary" id="focus-prev-btn">← Back</button>`
+          }
+          <span class="mono" style="font-size:0.85rem;font-weight:700;color:var(--ink-soft);">Question ${sIdx + 1} of ${planeSenses.length}</span>
+          ${isLast
+            ? `<a class="btn" href="${pNum < 7 ? `#/plane/${pNum + 1}` : "#/results"}">${pNum < 7 ? `Answer & Finish Pillar ${p.n} →` : `Answer & View Results →`}</a>`
+            : `<button type="button" class="btn" id="focus-next-btn">Answer & Continue →</button>`
+          }
+        </div>
+      ` : "";
+
       const footerHTML = `
+        ${focusActionHTML}
         <div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
-          <a href="#/search?plane=${p.n}&q=${encodeURIComponent(s.title)}" class="mono" style="font-size:0.78rem;color:var(--ink-soft);text-decoration:none;">
-            🔍 Explore all ${vecs.length} topics in ${s.title} (${vecAnsCount}/${vecs.length} rated) →
-          </a>
+          <button type="button" class="btn btn-secondary btn-sm" data-toggle-sense-vectors="${s.id}">
+            ${expanded ? "▲ Hide" : "▼ View / Rate"} Individual Topics (${vecAnsCount}/${vecs.length} rated)
+          </button>
           <a href="Plane_${p.n}_${p.name === "Cause" ? "Foundation" : p.name}.html" target="_blank" class="mono" style="font-size:0.75rem;color:var(--accent);">Read full ${p.name} chapter ↗</a>
         </div>
+        ${expanded ? `
+          <div style="margin-top:14px;padding-left:14px;border-left:3px solid ${p.hue};">
+            ${vecs.map(v => renderVectorCardHTML(v, p.hue)).join("")}
+          </div>
+        ` : ""}
       `;
 
       return renderABCDBlockHTML("S", s.id, s, p.hue, headerHTML, footerHTML);
     });
   } else {
     const allPlaneVecs = activeTierVectors(pNum);
-    const filteredVecs = allPlaneVecs.filter(v => {
-      if (STATE.planeFilter === "unanswered") return !isNodeAnswered("V", v.uid);
-      if (STATE.planeFilter === "shadow") return v.coords.v < 0;
-      if (STATE.planeFilter === "fn") return v.fn;
-      if (STATE.planeFilter.startsWith(`${pNum}.`)) return v.senseId === STATE.planeFilter;
-      return true;
-    });
-
-    filterBarHTML = `
-      <div class="filter-bar">
-        <div class="filter-chips">
-          <button type="button" class="filter-chip ${STATE.planeFilter === "all" ? "active" : ""}" data-plane-filter="all">All (${allPlaneVecs.length})</button>
-          <button type="button" class="filter-chip ${STATE.planeFilter === "unanswered" ? "active" : ""}" data-plane-filter="unanswered">Unanswered (${allPlaneVecs.filter(v => !isNodeAnswered("V", v.uid)).length})</button>
-          <button type="button" class="filter-chip ${STATE.planeFilter === "shadow" ? "active" : ""}" data-plane-filter="shadow">National Challenges (${allPlaneVecs.filter(v => v.coords.v < 0).length})</button>
-          <button type="button" class="filter-chip ${STATE.planeFilter === "fn" ? "active" : ""}" data-plane-filter="fn">First Nations (${allPlaneVecs.filter(v => v.fn).length})</button>
-          ${planeSenses.map(s => `
-            <button type="button" class="filter-chip ${STATE.planeFilter === s.id ? "active" : ""}" data-plane-filter="${s.id}">Theme ${s.id}</button>
-          `).join("")}
+    filterBarHTML = "";
+    cardsArray = allPlaneVecs.map((v, vIdx) => {
+      const isFocus = STATE.viewMode === "focus";
+      const isLast = vIdx >= allPlaneVecs.length - 1;
+      const focusActionHTML = isFocus ? `
+        <div style="margin-top:16px;padding-top:14px;border-top:2px solid var(--rule);display:flex;justify-content:space-between;align-items:center;gap:12px;">
+          ${vIdx <= 0
+            ? `<a class="btn btn-secondary" href="${pNum > 1 ? `#/plane/${pNum - 1}` : "#/hub"}">${pNum > 1 ? `← Pillar ${pNum - 1}` : "← Back to Hub"}</a>`
+            : `<button type="button" class="btn btn-secondary" id="focus-prev-btn">← Back</button>`
+          }
+          <span class="mono" style="font-size:0.85rem;font-weight:700;color:var(--ink-soft);">Topic ${vIdx + 1} of ${allPlaneVecs.length}</span>
+          ${isLast
+            ? `<a class="btn" href="${pNum < 7 ? `#/plane/${pNum + 1}` : "#/results"}">${pNum < 7 ? `Answer & Finish Pillar ${p.n} →` : `Answer & View Results →`}</a>`
+            : `<button type="button" class="btn" id="focus-next-btn">Answer & Continue →</button>`
+          }
         </div>
-      </div>
-    `;
-
-    cardsArray = filteredVecs.map(v => renderVectorCardHTML(v, p.hue));
+      ` : "";
+      return renderVectorCardHTML(v, p.hue, focusActionHTML);
+    });
   }
 
   const prevLink = pNum > 1 ? `#/plane/${pNum - 1}` : "#/hub";
@@ -4169,38 +4177,14 @@ function renderPlane(app, pNum) {
   let footerNavHTML = "";
 
   if (totalInView === 0) {
-    bodyHTML = filterBarHTML + `<div class="card"><p style="margin:0;color:var(--ink-muted)">No nodes match this filter in Pillar ${p.n}.</p></div>`;
-    footerNavHTML = `
-      <div class="page-footer-nav">
-        <a class="btn btn-secondary" href="${prevLink}">${prevLabel}</a>
-        <a class="btn" href="${nextLink}">${nextLabel}</a>
-      </div>
-    `;
+    bodyHTML = `<div class="card"><p style="margin:0;color:var(--ink-muted)">No nodes in Pillar ${p.n}.</p></div>`;
   } else if (STATE.viewMode === "focus" && totalInView > 1) {
     const idx = STATE.focusIdx;
-    const isLastCard = idx >= totalInView - 1;
     bodyHTML = `
-      ${filterBarHTML}
       ${cardsArray[idx]}
     `;
-    footerNavHTML = `
-      <div class="page-footer-nav" style="margin-top:16px;padding:14px 20px;background:var(--bg-card);border:1px solid var(--rule);border-radius:var(--radius);box-shadow:var(--shadow-sm);">
-        ${idx <= 0
-          ? `<a class="btn btn-secondary" href="${prevLink}">${prevLabel}</a>`
-          : `<button type="button" class="btn btn-secondary" id="focus-prev-btn">← Previous Question</button>`
-        }
-        <div style="display:flex;align-items:center;gap:10px;">
-          <span class="focus-counter">${String(idx + 1).padStart(2, "0")} / ${String(totalInView).padStart(2, "0")}</span>
-          <span class="mono" style="font-size:0.78rem;color:var(--ink-muted);">Pillar ${p.n} (${p.name})</span>
-        </div>
-        ${isLastCard
-          ? `<a class="btn" href="${nextLink}">${pNum < 7 ? `Finish Pillar ${p.n} → Pillar ${pNum + 1}` : `Finish & View Results →`}</a>`
-          : `<button type="button" class="btn" id="focus-next-btn">Next Question →</button>`
-        }
-      </div>
-    `;
   } else {
-    bodyHTML = filterBarHTML + cardsArray.join("");
+    bodyHTML = cardsArray.join("");
     footerNavHTML = `
       <div class="page-footer-nav">
         <a class="btn btn-secondary" href="${prevLink}">${prevLabel}</a>
@@ -4211,32 +4195,72 @@ function renderPlane(app, pNum) {
   }
 
   app.innerHTML = `
-    <div class="plane-banner" style="--plane-color:${p.hue};padding:14px 20px;margin-bottom:14px;">
-      <div class="plane-banner-top" style="align-items:center;">
+    <div class="plane-banner" style="--plane-color:${p.hue}">
+      <div class="plane-banner-top">
         <div>
-          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:2px;">
+          <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:6px;">
             <span class="plane-code-pill">Pillar ${p.n}</span>
-            <h1 style="font-size:1.35rem;margin:0;">${p.name} — ${escapeHtml(p.pillar)}</h1>
+            <span class="eyebrow" style="color:${p.hue};margin:0;">
+              ${escapeHtml(p.pillarBadge || p.pillar)}
+            </span>
           </div>
-          <p style="margin:2px 0 0;color:var(--ink-soft);font-size:0.88rem;">
-            ${renderGlossaryHTML(p.blurb)}
+          <h1 style="font-size:clamp(1.65rem,2.6vw,2.15rem);margin:2px 0 4px;">Pillar ${p.n}: ${p.name} — ${escapeHtml(p.fullTitle || `Values of Australian ${p.name}`)}</h1>
+          <p style="margin:0;color:var(--ink-soft);font-size:0.96rem;">
+            <strong>Core Focus:</strong> ${renderGlossaryHTML(p.blurb)}
           </p>
         </div>
-        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-          ${STATE.tier !== 7 ? `
-            <div class="view-mode-switch" role="group" aria-label="View mode">
-              <button type="button" class="view-mode-btn ${STATE.viewMode === "list" ? "active" : ""}" data-view-mode="list">📋 All</button>
-              <button type="button" class="view-mode-btn ${STATE.viewMode === "focus" ? "active" : ""}" data-view-mode="focus">🎯 Focus</button>
+        <div style="text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:8px;">
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+            ${STATE.tier !== 7 ? `
+              <div class="view-mode-switch" role="group" aria-label="View mode">
+                <button type="button" class="view-mode-btn ${STATE.viewMode === "list" ? "active" : ""}" data-view-mode="list">📋 All</button>
+                <button type="button" class="view-mode-btn ${STATE.viewMode === "focus" ? "active" : ""}" data-view-mode="focus">🎯 Focus</button>
+              </div>
+            ` : ""}
+            <div class="mono" id="plane-live-badge" style="font-size:0.85rem;color:var(--ink-soft);background:#F8FAFC;border:1px solid #E2E8F0;padding:4px 10px;border-radius:8px;font-weight:600;">
+              ${summary.answeredNodes}/${summary.totalNodes} answered
             </div>
-          ` : ""}
-          <div class="mono" id="plane-live-badge" style="font-size:0.82rem;color:var(--ink-soft);background:#F8FAFC;border:1px solid #E2E8F0;padding:4px 10px;border-radius:8px;font-weight:600;">
-            ${summary.answeredNodes}/${summary.totalNodes} answered
           </div>
-          <button type="button" class="info-btn" data-open-info-prefix="P" data-open-info-id="${p.n}" title="Read background &amp; everyday meaning of Pillar ${p.n}">
-            <span>📖 Overview</span>
-          </button>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <a href="Plane_${p.n}_${p.name === "Cause" ? "Foundation" : p.name}.html" target="_blank" class="mono" style="font-size:0.75rem;color:${p.hue};font-weight:700;">Read full chapter ↗</a>
+          </div>
         </div>
       </div>
+
+      <div class="plane-quote-box">
+        "${escapeHtml(p.quote)}"
+        <cite>— ${escapeHtml(p.attribution)}</cite>
+      </div>
+
+      <details class="plane-lore-drawer" ${STATE.tier === 7 ? "open" : ""}>
+        <summary>
+          <span>📖 Background &amp; Everyday Meaning of Pillar ${p.n}: ${escapeHtml(p.name)}</span>
+          <span class="mono" style="font-size:0.74rem;color:var(--ink-muted);">Click to expand / collapse</span>
+        </summary>
+        <div class="plane-lore-drawer-body">
+          <div class="plane-totality-box">
+            <div class="plane-totality-title">
+              <span>The Big Picture</span>
+            </div>
+            <div>${renderGlossaryHTML(p.totality)}</div>
+          </div>
+
+          <div class="plane-pillar-grid">
+            <div class="plane-pillar-col">
+              <strong class="col-head" style="color:${p.hue}">🏛️ The Core Ideal: ${escapeHtml(p.pillar)}</strong>
+              ${renderGlossaryHTML(p.pillarSummary || p.blurb)}
+            </div>
+            <div class="plane-pillar-col">
+              <strong class="col-head" style="color:#B45309">⚖️ The Pitfall to Watch: ${escapeHtml(p.shadowTitle || "")}</strong>
+              ${renderGlossaryHTML(p.shadowText || "")}
+            </div>
+            <div class="plane-pillar-col">
+              <strong class="col-head" style="color:#0F766E">🛠️ In Everyday Practice</strong>
+              ${renderGlossaryHTML(p.practicalText || "")}
+            </div>
+          </div>
+        </div>
+      </details>
     </div>
 
     <div id="plane-nodes-container">
@@ -4303,29 +4327,11 @@ function renderPlane(app, pNum) {
     }
   });
 
-  app.querySelectorAll("[data-plane-filter]").forEach(btn => {
-    btn.addEventListener("click", () => {
-      STATE.planeFilter = btn.getAttribute("data-plane-filter");
-      STATE.focusIdx = 0;
-      saveState();
-      render();
-    });
-  });
-
-  const chk354 = document.getElementById("toggle-354-chk");
-  if (chk354) {
-    chk354.addEventListener("change", () => {
-      STATE.include354 = chk354.checked;
-      saveState();
-      render();
-    });
-  }
-
   // ABCD delegation is bound once globally on document
 }
 
 
-function renderVectorCardHTML(v, planeHue) {
+function renderVectorCardHTML(v, planeHue, extraFooterHTML = "") {
   const isShadow = v.coords.v < 0;
   const headerHTML = `
     <div class="sense-header">
@@ -4341,11 +4347,12 @@ function renderVectorCardHTML(v, planeHue) {
         ${infoBtnHTML("V", v.uid)}
       </div>
     </div>
-    <p style="margin:6px 0 14px;font-size:0.92rem;color:var(--ink-soft);line-height:1.55;">
-      ${renderGlossaryHTML(v.description)}
-    </p>
+    <div class="node-lore">
+      <blockquote>"${escapeHtml(v.quote)}" <cite>— ${escapeHtml(v.attribution)} (${escapeHtml(v.source)})</cite></blockquote>
+      <div>${renderGlossaryHTML(v.description)}</div>
+    </div>
   `;
-  return renderABCDBlockHTML("V", v.uid, v, planeHue, headerHTML);
+  return renderABCDBlockHTML("V", v.uid, v, planeHue, headerHTML, extraFooterHTML);
 }
 
 /* =========================================================================
