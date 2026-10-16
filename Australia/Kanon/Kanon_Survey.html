@@ -4110,26 +4110,18 @@ function renderPlane(app, pNum) {
             ${infoBtnHTML("S", s.id)}
           </div>
         </div>
-        <div class="node-lore">
-          <div style="line-height:1.65;">
-            <strong style="color:#111827;font-family:'Merriweather',serif;">The Living Ethos of ${escapeHtml(s.title)}:</strong><br>
-            ${renderGlossaryHTML(s.narrative)}
-          </div>
-        </div>
+        <p style="margin:6px 0 14px;font-size:0.92rem;color:var(--ink-soft);line-height:1.55;">
+          ${renderGlossaryHTML(s.narrative)}
+        </p>
       `;
 
       const footerHTML = `
         <div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
-          <button type="button" class="btn btn-secondary btn-sm" data-toggle-sense-vectors="${s.id}">
-            ${expanded ? "▲ Hide" : "▼ View / Rate"} Individual Topics (${vecAnsCount}/${vecs.length} rated)
-          </button>
+          <a href="#/search?plane=${p.n}&q=${encodeURIComponent(s.title)}" class="mono" style="font-size:0.78rem;color:var(--ink-soft);text-decoration:none;">
+            🔍 Explore all ${vecs.length} topics in ${s.title} (${vecAnsCount}/${vecs.length} rated) →
+          </a>
           <a href="Plane_${p.n}_${p.name === "Cause" ? "Foundation" : p.name}.html" target="_blank" class="mono" style="font-size:0.75rem;color:var(--accent);">Read full ${p.name} chapter ↗</a>
         </div>
-        ${expanded ? `
-          <div style="margin-top:14px;padding-left:14px;border-left:3px solid ${p.hue};">
-            ${vecs.map(v => renderVectorCardHTML(v, p.hue)).join("")}
-          </div>
-        ` : ""}
       `;
 
       return renderABCDBlockHTML("S", s.id, s, p.hue, headerHTML, footerHTML);
@@ -4216,9 +4208,17 @@ function renderPlane(app, pNum) {
             <strong>Core Focus:</strong> ${renderGlossaryHTML(p.blurb)}
           </p>
         </div>
-        <div style="text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
-          <div class="mono" id="plane-live-badge" style="font-size:0.85rem;color:var(--ink-soft);background:#F8FAFC;border:1px solid #E2E8F0;padding:4px 10px;border-radius:8px;">
-            ${summary.answeredNodes}/${summary.totalNodes} answered
+        <div style="text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:8px;">
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+            ${STATE.tier !== 7 ? `
+              <div class="view-mode-switch" role="group" aria-label="View mode">
+                <button type="button" class="view-mode-btn ${STATE.viewMode === "list" ? "active" : ""}" data-view-mode="list">📋 All</button>
+                <button type="button" class="view-mode-btn ${STATE.viewMode === "focus" ? "active" : ""}" data-view-mode="focus">🎯 Focus</button>
+              </div>
+            ` : ""}
+            <div class="mono" id="plane-live-badge" style="font-size:0.85rem;color:var(--ink-soft);background:#F8FAFC;border:1px solid #E2E8F0;padding:4px 10px;border-radius:8px;font-weight:600;">
+              ${summary.answeredNodes}/${summary.totalNodes} answered
+            </div>
           </div>
           <div style="display:flex;gap:10px;flex-wrap:wrap;">
             <a href="Plane_${p.n}_${p.name === "Cause" ? "Foundation" : p.name}.html" target="_blank" class="mono" style="font-size:0.75rem;color:${p.hue};font-weight:700;">Read full chapter ↗</a>
@@ -4282,14 +4282,7 @@ function renderPlane(app, pNum) {
       </details>
     </div>
 
-      ${STATE.tier !== 7 ? `
-        <div class="legend-sticky" style="justify-content:flex-end;">
-          <div class="view-mode-switch" role="group" aria-label="View mode">
-            <button type="button" class="view-mode-btn ${STATE.viewMode === "list" ? "active" : ""}" data-view-mode="list">📋 All Cards</button>
-            <button type="button" class="view-mode-btn ${STATE.viewMode === "focus" ? "active" : ""}" data-view-mode="focus">🎯 1-at-a-Time Focus</button>
-          </div>
-        </div>
-      ` : ""}
+
 
     <div id="plane-nodes-container">
       ${bodyHTML}
