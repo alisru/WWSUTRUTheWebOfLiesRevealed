@@ -4144,16 +4144,12 @@ function renderPlane(app, pNum) {
         <div class="filter-chips">
           <button type="button" class="filter-chip ${STATE.planeFilter === "all" ? "active" : ""}" data-plane-filter="all">All (${allPlaneVecs.length})</button>
           <button type="button" class="filter-chip ${STATE.planeFilter === "unanswered" ? "active" : ""}" data-plane-filter="unanswered">Unanswered (${allPlaneVecs.filter(v => !isNodeAnswered("V", v.uid)).length})</button>
-          <button type="button" class="filter-chip ${STATE.planeFilter === "shadow" ? "active" : ""}" data-plane-filter="shadow">Shadow / Corrective (${allPlaneVecs.filter(v => v.coords.v < 0).length})</button>
-          <button type="button" class="filter-chip ${STATE.planeFilter === "fn" ? "active" : ""}" data-plane-filter="fn">First Nations [FN] (${allPlaneVecs.filter(v => v.fn).length})</button>
+          <button type="button" class="filter-chip ${STATE.planeFilter === "shadow" ? "active" : ""}" data-plane-filter="shadow">National Challenges (${allPlaneVecs.filter(v => v.coords.v < 0).length})</button>
+          <button type="button" class="filter-chip ${STATE.planeFilter === "fn" ? "active" : ""}" data-plane-filter="fn">First Nations (${allPlaneVecs.filter(v => v.fn).length})</button>
           ${planeSenses.map(s => `
-            <button type="button" class="filter-chip ${STATE.planeFilter === s.id ? "active" : ""}" data-plane-filter="${s.id}">${s.id} ${s.addr}</button>
+            <button type="button" class="filter-chip ${STATE.planeFilter === s.id ? "active" : ""}" data-plane-filter="${s.id}">Theme ${s.id}</button>
           `).join("")}
         </div>
-        <label class="mono" style="font-size:0.74rem;color:var(--ink-soft);display:flex;align-items:center;gap:6px;cursor:pointer;">
-          <input type="checkbox" id="toggle-354-chk" ${STATE.include354 ? "checked" : ""} />
-          Include 354th JSON vector (Overland Telegraph)
-        </label>
       </div>
     `;
 
@@ -4170,30 +4166,48 @@ function renderPlane(app, pNum) {
   if (STATE.focusIdx >= totalInView) STATE.focusIdx = Math.max(0, totalInView - 1);
 
   let bodyHTML = "";
+  let footerNavHTML = "";
+
   if (totalInView === 0) {
-    bodyHTML = filterBarHTML + `<div class="card"><p style="margin:0;color:var(--ink-muted)">No nodes match this filter in Plane ${p.n}.</p></div>`;
+    bodyHTML = filterBarHTML + `<div class="card"><p style="margin:0;color:var(--ink-muted)">No nodes match this filter in Pillar ${p.n}.</p></div>`;
+    footerNavHTML = `
+      <div class="page-footer-nav">
+        <a class="btn btn-secondary" href="${prevLink}">${prevLabel}</a>
+        <a class="btn" href="${nextLink}">${nextLabel}</a>
+      </div>
+    `;
   } else if (STATE.viewMode === "focus" && totalInView > 1) {
     const idx = STATE.focusIdx;
     const isLastCard = idx >= totalInView - 1;
     bodyHTML = `
       ${filterBarHTML}
-      <div class="focus-stepper-bar">
-        <div style="display:flex;align-items:center;gap:12px;">
-          <span class="focus-counter">${String(idx + 1).padStart(2, "0")} / ${String(totalInView).padStart(2, "0")}</span>
-          <span class="mono" style="font-size:0.78rem;color:var(--ink-muted);">Focus Card Mode · Plane ${p.n} (${p.name})</span>
-        </div>
-        <div style="display:flex;gap:8px;align-items:center;">
-          <button type="button" class="btn btn-secondary btn-sm" id="focus-prev-btn" ${idx <= 0 ? "disabled" : ""}>← Previous Card</button>
-          ${isLastCard
-            ? `<a class="btn btn-sm" href="${nextLink}">${pNum < 7 ? `Finish Plane ${p.n} → Plane ${pNum + 1}` : `Finish & View Results →`}</a>`
-            : `<button type="button" class="btn btn-sm" id="focus-next-btn">Next Card →</button>`
-          }
-        </div>
-      </div>
       ${cardsArray[idx]}
+    `;
+    footerNavHTML = `
+      <div class="page-footer-nav" style="margin-top:16px;padding:14px 20px;background:var(--bg-card);border:1px solid var(--rule);border-radius:var(--radius);box-shadow:var(--shadow-sm);">
+        ${idx <= 0
+          ? `<a class="btn btn-secondary" href="${prevLink}">${prevLabel}</a>`
+          : `<button type="button" class="btn btn-secondary" id="focus-prev-btn">← Previous Question</button>`
+        }
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span class="focus-counter">${String(idx + 1).padStart(2, "0")} / ${String(totalInView).padStart(2, "0")}</span>
+          <span class="mono" style="font-size:0.78rem;color:var(--ink-muted);">Pillar ${p.n} (${p.name})</span>
+        </div>
+        ${isLastCard
+          ? `<a class="btn" href="${nextLink}">${pNum < 7 ? `Finish Pillar ${p.n} → Pillar ${pNum + 1}` : `Finish & View Results →`}</a>`
+          : `<button type="button" class="btn" id="focus-next-btn">Next Question →</button>`
+        }
+      </div>
     `;
   } else {
     bodyHTML = filterBarHTML + cardsArray.join("");
+    footerNavHTML = `
+      <div class="page-footer-nav">
+        <a class="btn btn-secondary" href="${prevLink}">${prevLabel}</a>
+        <a class="btn btn-warm" href="#/results">Jump to Results & Archetype</a>
+        <a class="btn" href="${nextLink}">${nextLabel}</a>
+      </div>
+    `;
   }
 
   app.innerHTML = `
@@ -4225,17 +4239,11 @@ function renderPlane(app, pNum) {
       </div>
     </div>
 
-
-
     <div id="plane-nodes-container">
       ${bodyHTML}
     </div>
 
-    <div class="page-footer-nav">
-      <a class="btn btn-secondary" href="${prevLink}">${prevLabel}</a>
-      <a class="btn btn-warm" href="#/results">Jump to Results & Archetype</a>
-      <a class="btn" href="${nextLink}">${nextLabel}</a>
-    </div>
+    ${footerNavHTML}
   `;
 
   bindTierSelectorEvents(app);
@@ -4323,10 +4331,9 @@ function renderVectorCardHTML(v, planeHue) {
     <div class="sense-header">
       <div>
         <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
-          <span class="sense-code">${v.uid}</span>
-          <span class="badge" data-badge-title="Role: ${escapeHtml(v.role)}" data-badge-tip="${escapeHtml(v.coreMeaning)}">${escapeHtml(v.role)}</span>
-          ${v.fn ? `<span class="badge badge-fn" data-badge-title="First Nations Perspective" data-badge-tip="Indigenous perspective on this national theme.">[FN] First Nations Perspective</span>` : ""}
-          ${isShadow ? `<span class="badge badge-shadow" data-badge-title="Shadow / National Flaw" data-badge-tip="This topic represents a recognized national challenge or blind spot. +1 to +5 means actively overcoming it; −1 to −5 means tolerating or falling into it.">National Challenge</span>` : ""}
+          <span class="sense-code">Topic ${v.uid}</span>
+          ${v.fn ? `<span class="badge badge-fn" data-badge-title="First Nations Perspective" data-badge-tip="Indigenous perspective on this national theme.">First Nations</span>` : ""}
+          ${isShadow ? `<span class="badge badge-shadow" data-badge-title="National Challenge" data-badge-tip="This topic represents a recognized national challenge or blind spot. +1 to +5 means actively overcoming it; −1 to −5 means tolerating or falling into it.">National Challenge</span>` : ""}
         </div>
         <h3 class="sense-title" style="margin-top:6px;">${escapeHtml(v.name)}</h3>
       </div>
