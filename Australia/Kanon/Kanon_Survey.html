@@ -3597,6 +3597,7 @@ function renderNav(route) {
       dot: p.hue,
       active: route.page === "plane" && route.planeNum === p.n
     })),
+    { href: "#/archetypes", label: "Archetypes", active: route.page === "archetypes" },
     { href: "#/search", label: "Topics", active: route.page === "search" },
     { href: "#/review", label: "Review", active: route.page === "review" },
     { href: "#/results", label: "Results", active: route.page === "results" }
@@ -3618,7 +3619,7 @@ function parseRoute() {
     const n = Math.min(7, Math.max(1, parseInt(parts[1] || "1", 10) || 1));
     return { page: "plane", planeNum: n };
   }
-  if (["framework", "results", "search", "review"].includes(parts[0])) {
+  if (["framework", "results", "search", "review", "archetypes"].includes(parts[0])) {
     return { page: parts[0] };
   }
   return { page: "hub" };
@@ -3634,18 +3635,19 @@ function render(opts = {}) {
 
   const heroBanner = document.getElementById("site-hero-banner");
   if (heroBanner) {
-    heroBanner.style.display = (["plane", "search", "review"].includes(route.page)) ? "none" : "";
+    heroBanner.style.display = (["plane", "search", "review", "archetypes"].includes(route.page)) ? "none" : "";
   }
 
   renderNav(route);
   const app = document.getElementById("app");
-  app.className = (route.page === "results" || route.page === "hub") ? "wide" : "";
+  app.className = (route.page === "results" || route.page === "hub" || route.page === "archetypes") ? "wide" : "";
 
   if (route.page === "hub") renderHub(app);
   else if (route.page === "framework") renderFramework(app);
   else if (route.page === "plane") renderPlane(app, route.planeNum);
   else if (route.page === "search") renderSearch(app);
   else if (route.page === "review") renderReview(app);
+  else if (route.page === "archetypes") renderArchetypesCatalog(app);
   else if (route.page === "results") renderResults(app);
 
   if (routeChanged) {
@@ -4605,6 +4607,51 @@ function renderReview(app) {
 }
 
 /* =========================================================================
+   VIEW 5.5: ARCHETYPES CATALOG (#/archetypes)
+   ========================================================================= */
+function renderArchetypesCatalog(app) {
+  app.innerHTML = `
+    <section class="card" style="margin-bottom:20px;">
+      <div class="eyebrow">National Archetypes</div>
+      <h1 style="font-size:2.1rem;margin:4px 0 10px;">The 8 Australian Archetypes</h1>
+      <p class="lede" style="margin:0 0 12px;">
+        Each archetype represents a distinct Australian relationship between ideals, everyday habits, and institutional reality.
+        Complete the quiz to calculate your personal percentage match across all 8.
+      </p>
+    </section>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px;">
+      ${ARCHETYPES.map(a => `
+        <article class="card" style="border-top:4px solid ${a.color || 'var(--accent)'};padding:22px;display:flex;flex-direction:column;justify-content:space-between;margin:0;">
+          <div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+              <span class="archetype-badge" style="background:${a.color || 'var(--accent)'};color:#FFF;padding:3px 8px;border-radius:4px;font-size:0.75rem;font-weight:700;">${escapeHtml(a.badge || 'Archetype')}</span>
+            </div>
+            <h2 style="font-size:1.35rem;margin:2px 0 4px;">${escapeHtml(a.name)}</h2>
+            <div style="font-style:italic;font-size:0.92rem;color:var(--ink-soft);margin-bottom:12px;">${escapeHtml(a.subtitle)}</div>
+            ${a.quote ? `<blockquote class="plane-quote-box" style="margin-bottom:12px;font-size:0.86rem;padding:8px 12px;">"${escapeHtml(a.quote)}"</blockquote>` : ''}
+            <p style="font-size:0.9rem;line-height:1.55;color:var(--ink);">${escapeHtml(a.desc)}</p>
+          </div>
+          <div style="margin-top:16px;padding-top:12px;border-top:1px solid var(--rule);">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:0.75rem;font-weight:700;color:var(--ink-muted);margin-bottom:6px;text-transform:uppercase;">Pillar Profile:</div>
+            <div style="display:flex;gap:4px;height:8px;border-radius:4px;overflow:hidden;background:#E2E8F0;">
+              ${(a.pillars || []).map((w, i) => `
+                <div style="flex:1;background:${PLANES[i].hue};opacity:${Math.max(0.2, w)};" title="Pillar ${i+1}: ${Math.round(w*100)}%"></div>
+              `).join('')}
+            </div>
+          </div>
+        </article>
+      `).join('')}
+    </div>
+
+    <div class="page-footer-nav" style="margin-top:24px;">
+      <a class="btn btn-secondary" href="#/hub">← Back to Hub</a>
+      <a class="btn" href="#/plane/1">Take the Quiz to Find Your Match →</a>
+    </div>
+  `;
+}
+
+/* =========================================================================
    VIEW 6: RESULTS, ARCHETYPE & KEYRING DASHBOARD (#/results)
    Includes National Signature, Closeness Modal, Head-to-Head Compare, Books & PNG Export
    ========================================================================= */
@@ -4704,14 +4751,10 @@ function renderResults(app) {
 
         <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
           <a class="btn" href="#/plane/1" style="font-size:1rem;padding:12px 24px;">Continue Quiz (Pillar 1) →</a>
-          <button class="btn btn-secondary" id="res-preset-battler">Preview Demo: "Betrayed Battler"</button>
-          <button class="btn btn-secondary" id="res-preset-guardian">Preview Demo: "Stoic Guardian"</button>
+          <a class="btn btn-secondary" href="#/archetypes" style="font-size:1rem;padding:12px 24px;">See All 8 Archetypes →</a>
         </div>
       </section>
     `;
-
-    document.getElementById("res-preset-battler")?.addEventListener("click", () => loadPresetProfile("betrayed_battler"));
-    document.getElementById("res-preset-guardian")?.addEventListener("click", () => loadPresetProfile("stoic_guardian"));
     return;
   }
 
