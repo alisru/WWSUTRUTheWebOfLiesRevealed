@@ -2074,38 +2074,57 @@ function openNodeInfoSheet(prefix, id) {
   }
 
   if (!item) return;
-  const h = item.help || {};
   const title = item.name || item.title;
-  const mainBody = item.description || item.narrative || item.totality || h.note || "";
+
+  // Rich embodiment texts from dataset
+  const meaningText = item.pillarSummary || item.description || item.narrative || item.totality || "";
+  const practiceText = item.practicalText || item.establishes || item.coreMeaning || "";
+  const shadowText = item.shadowText || "";
+  const shadowTitle = item.shadowTitle || "The Cultural Blind Spot";
 
   const portal = document.getElementById("portal-root");
   if (!portal) return;
 
   portal.innerHTML = `
     <div class="info-sheet-backdrop" id="info-sheet-backdrop">
-      <div class="info-sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title" style="--sheet-accent:${hue}">
+      <div class="info-sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title" style="--sheet-accent:${hue};max-width:640px;">
         <button type="button" class="info-sheet-close" id="info-sheet-close" aria-label="Close">×</button>
         <div class="eyebrow" style="color:${hue}">${escapeHtml(headerLabel)}</div>
-        <h3 id="sheet-title" style="font-size:1.4rem;margin:4px 36px 8px 0;">${escapeHtml(title)}</h3>
+        <h3 id="sheet-title" style="font-size:1.45rem;margin:4px 36px 14px 0;">${escapeHtml(title)}</h3>
+        
         ${item.quote ? `
-          <div class="plane-quote-box" style="margin-bottom:12px;">
+          <blockquote class="plane-quote-box" style="margin-bottom:16px;">
             "${escapeHtml(item.quote)}"
             <cite>— ${escapeHtml(item.attribution || "")}${item.source ? ` (${escapeHtml(item.source)})` : ""}</cite>
-          </div>
+          </blockquote>
         ` : ""}
-        <div style="font-size:0.95rem;line-height:1.65;color:var(--ink);">
-          ${renderGlossaryHTML(mainBody)}
+
+        <div style="margin-bottom:16px;">
+          <h4 style="font-size:0.8rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--ink-muted);margin-bottom:4px;">The Living Standard</h4>
+          <div style="font-size:0.95rem;line-height:1.65;color:var(--ink);">
+            ${renderGlossaryHTML(meaningText)}
+          </div>
         </div>
-        ${item.coreMeaning ? `
-          <div class="callout" style="margin-top:12px;font-size:0.88rem;">
-            <strong>What This Means in Practice:</strong><br/>
-            ${escapeHtml(item.coreMeaning)}
+
+        ${practiceText ? `
+          <div class="explain-box" style="border-left:4px solid var(--accent);background:#F8FAFC;padding:14px 16px;margin-bottom:14px;border-radius:8px;">
+            <h4 style="font-family:'JetBrains Mono',monospace;font-size:0.78rem;text-transform:uppercase;color:var(--accent);margin:0 0 6px;">
+              🛠️ What It Means to Embody &amp; Practise This
+            </h4>
+            <div style="font-size:0.92rem;line-height:1.6;color:var(--ink);">
+              ${renderGlossaryHTML(practiceText)}
+            </div>
           </div>
         ` : ""}
-        ${item.practicalText ? `
-          <div class="callout" style="margin-top:12px;font-size:0.88rem;">
-            <strong>In Everyday Life:</strong><br/>
-            ${escapeHtml(item.practicalText)}
+
+        ${shadowText ? `
+          <div class="explain-box" style="border-left:4px solid #D97706;background:#FFFBEB;padding:14px 16px;border-radius:8px;">
+            <h4 style="font-family:'JetBrains Mono',monospace;font-size:0.78rem;text-transform:uppercase;color:#B45309;margin:0 0 6px;">
+              ⚖️ The Tension &amp; Failure Mode: ${escapeHtml(shadowTitle)}
+            </h4>
+            <div style="font-size:0.92rem;line-height:1.6;color:#78350F;">
+              ${renderGlossaryHTML(shadowText)}
+            </div>
           </div>
         ` : ""}
       </div>
@@ -2345,7 +2364,7 @@ function loadState() {
       return {
         tier: (parsed.tier === 353 ? 354 : (parsed.tier || 49)), // 7, 49, or 354
         include354: true,                                       // unified 354 Kanon vectors
-        viewMode: parsed.viewMode || "list",   // 'list' (all cards in plane) or 'focus' (1 card at a time)
+        viewMode: "focus",                     // Always 1-card-at-a-time focus mode
         focusIdx: parsed.focusIdx || 0,        // active card index in focus mode
         planeFilter: parsed.planeFilter || "all",
         compareTargetId: parsed.compareTargetId || "monash",
@@ -2360,8 +2379,8 @@ function loadState() {
   } catch (e) {}
   return {
     tier: 49,
-    include354: false,
-    viewMode: "list",
+    include354: true,
+    viewMode: "focus",
     focusIdx: 0,
     planeFilter: "all",
     compareTargetId: "monash",
@@ -2410,8 +2429,8 @@ function activeTierVectors(planeNum = null) {
 
 function isNodeAnswered(prefix, id) {
   return (
-    getAns(prefix, id, "A") !== null ||
-    getAns(prefix, id, "B") !== null ||
+    getAns(prefix, id, "A") !== null &&
+    getAns(prefix, id, "B") !== null &&
     getAns(prefix, id, "C") !== null
   );
 }
@@ -3871,7 +3890,7 @@ function renderABCDBlockHTML(prefix, id, item, planeHue, extraHeaderHTML = "", e
   const valB = getAns(prefix, id, "B");
   const valC = getAns(prefix, id, "C");
   const chosenBlockers = getBlockers(prefix, id);
-  const answered = valA !== null || valB !== null || valC !== null;
+  const answered = valA !== null && valB !== null && valC !== null;
 
   const isShadow = item.coords && item.coords.v < 0;
   const isFN = !!item.fn;
@@ -3896,7 +3915,7 @@ function renderABCDBlockHTML(prefix, id, item, planeHue, extraHeaderHTML = "", e
     const selClass = `sel-${probe.toLowerCase()}`;
     const letterClass = `letter-${probe.toLowerCase()}`;
     return `
-      <div class="probe-row">
+      <div class="probe-row" data-probe-row="${probe}">
         <div class="probe-top">
           <span class="probe-letter ${letterClass}">${probe}</span>
           <span class="probe-kind">${kindLabel}</span>
@@ -3920,8 +3939,6 @@ function renderABCDBlockHTML(prefix, id, item, planeHue, extraHeaderHTML = "", e
               `;
             }).join("")}
           </div>
-          <button type="button" class="seg-clear" title="Clear row"
-            data-clear-prefix="${prefix}" data-clear-id="${id}" data-clear-probe="${probe}">clear</button>
         </div>
         ${probe === "C" ? `
           <details class="blocker-disclosure" ${chosenBlockers.length > 0 ? "open" : ""} style="margin-top:8px;">
@@ -3952,6 +3969,34 @@ function renderABCDBlockHTML(prefix, id, item, planeHue, extraHeaderHTML = "", e
   `;
 }
 
+function getMissingProbes(prefix, id) {
+  const missing = [];
+  if (getAns(prefix, id, "A") === null) missing.push("A");
+  if (getAns(prefix, id, "B") === null) missing.push("B");
+  if (getAns(prefix, id, "C") === null) missing.push("C");
+  return missing;
+}
+
+function updateCardAnswerBtnState(card, prefix, id) {
+  if (!card) return;
+  const btn = card.querySelector("[data-answer-next-btn]");
+  if (!btn) return;
+  const missing = getMissingProbes(prefix, id);
+  const complete = missing.length === 0;
+  const readyLabel = btn.getAttribute("data-ready-label") || "Submit Answer & Continue →";
+  if (complete) {
+    btn.textContent = readyLabel;
+    btn.style.opacity = "1";
+    btn.style.background = "var(--accent)";
+    btn.style.borderColor = "var(--accent)";
+  } else {
+    btn.textContent = `Rate ${missing.join(", ")} to Answer (${3 - missing.length}/3)`;
+    btn.style.opacity = "0.65";
+    btn.style.background = "#475569";
+    btn.style.borderColor = "#475569";
+  }
+}
+
 function setupGlobalABCDDelegation() {
   document.addEventListener("click", (e) => {
     // (?) Explain button
@@ -3975,8 +4020,8 @@ function setupGlobalABCDDelegation() {
       const id = segBtn.getAttribute("data-id");
       const probe = segBtn.getAttribute("data-probe");
       const val = parseInt(segBtn.getAttribute("data-val"), 10);
-      const cur = getAns(prefix, id, probe);
-      setAns(prefix, id, probe, cur === val ? null : val);
+      // Do not allow toggling back to null (no blanking out once selected)
+      setAns(prefix, id, probe, val);
 
       const group = segBtn.parentElement;
       const newVal = getAns(prefix, id, probe);
@@ -3987,37 +4032,18 @@ function setupGlobalABCDDelegation() {
         b.classList.toggle(`sel-${probe.toLowerCase()}`, sel);
         b.setAttribute("aria-pressed", sel ? "true" : "false");
       });
+      const probeRow = segBtn.closest(".probe-row");
+      if (probeRow) {
+        probeRow.style.outline = "";
+        probeRow.style.background = "";
+      }
       const card = segBtn.closest(".sense-card");
-      if (card) card.classList.toggle("answered", isNodeAnswered(prefix, id));
+      if (card) {
+        card.classList.toggle("answered", isNodeAnswered(prefix, id));
+        updateCardAnswerBtnState(card, prefix, id);
+      }
 
       // Update live plane badge if visible
-      const route = parseRoute();
-      if (route.page === "plane") {
-        const newSum = computePlaneSummary(route.planeNum);
-        const badge = document.getElementById("plane-live-badge");
-        if (badge) {
-          badge.textContent = `${newSum.answeredNodes}/${newSum.totalNodes} answered`;
-        }
-      }
-      return;
-    }
-
-    const clrBtn = e.target.closest(".seg-clear");
-    if (clrBtn) {
-      const prefix = clrBtn.getAttribute("data-clear-prefix");
-      const id = clrBtn.getAttribute("data-clear-id");
-      const probe = clrBtn.getAttribute("data-clear-probe");
-      setAns(prefix, id, probe, null);
-      const row = clrBtn.closest(".scale-row");
-      if (row) {
-        row.querySelectorAll(".seg-btn").forEach(b => {
-          b.classList.remove("sel", "sel-a", "sel-b", "sel-c", "sel-d");
-          b.setAttribute("aria-pressed", "false");
-        });
-      }
-      const card = clrBtn.closest(".sense-card");
-      if (card) card.classList.toggle("answered", isNodeAnswered(prefix, id));
-
       const route = parseRoute();
       if (route.page === "plane") {
         const newSum = computePlaneSummary(route.planeNum);
@@ -4050,9 +4076,44 @@ function setupGlobalABCDDelegation() {
   });
 }
 
+function makeFocusActionFooterHTML(prefix, id, idx, total, pNum, pN, unitLabel) {
+  const isLast = idx >= total - 1;
+  const missing = getMissingProbes(prefix, id);
+  const complete = missing.length === 0;
+  const readyLabel = isLast
+    ? (pNum < 7 ? `Submit Answer & Finish Pillar ${pN} →` : `Submit Answer & View Results →`)
+    : `Submit Answer & Continue →`;
+  const btnText = complete
+    ? readyLabel
+    : `Rate ${missing.join(", ")} to Answer (${3 - missing.length}/3)`;
+  const btnStyle = complete
+    ? `background:var(--accent);border-color:var(--accent);opacity:1;`
+    : `background:#475569;border-color:#475569;opacity:0.65;`;
+
+  return `
+    <div style="margin-top:16px;padding-top:14px;border-top:2px solid var(--rule);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;">
+      ${idx <= 0
+        ? `<a class="btn btn-secondary" href="${pNum > 1 ? `#/plane/${pNum - 1}` : "#/hub"}">${pNum > 1 ? `← Pillar ${pNum - 1}` : "← Back to Hub"}</a>`
+        : `<button type="button" class="btn btn-secondary" id="focus-prev-btn">← Previous</button>`
+      }
+      <span class="mono" style="font-size:0.85rem;font-weight:700;color:var(--ink-soft);">${unitLabel} ${idx + 1} of ${total}</span>
+      <button type="button" class="btn" id="focus-next-btn"
+        data-answer-next-btn="1"
+        data-prefix="${prefix}"
+        data-id="${id}"
+        data-is-last="${isLast ? "1" : "0"}"
+        data-next-href="${pNum < 7 ? `#/plane/${pNum + 1}` : "#/results"}"
+        data-ready-label="${escapeHtml(readyLabel)}"
+        style="${btnStyle}">
+        ${escapeHtml(btnText)}
+      </button>
+    </div>
+  `;
+}
+
 /* =========================================================================
    VIEW 3: PLANE QUESTIONNAIRE (#/plane/1 .. #/plane/7)
-   Supports both List Mode and Focus Card Mode (1-at-a-time)
+   Always 1-card-at-a-time Focus Mode with strict A/B/C answer validation
    ========================================================================= */
 function renderPlane(app, pNum) {
   const p = PLANE_BY_N[pNum];
@@ -4060,7 +4121,6 @@ function renderPlane(app, pNum) {
   const planeSenses = SENSES_BY_PLANE[pNum] || [];
 
   let cardsArray = [];
-  let filterBarHTML = "";
 
   if (STATE.tier === 7) {
     const headerHTML = `
@@ -4080,14 +4140,13 @@ function renderPlane(app, pNum) {
         <p style="margin:0;font-size:0.88rem;color:var(--ink-muted);"><strong>In Everyday Life:</strong> ${escapeHtml(p.practicalText || "")}</p>
       </div>
     `;
-    cardsArray = [renderABCDBlockHTML("P", p.n, p, p.hue, headerHTML)];
+    const footerHTML = makeFocusActionFooterHTML("P", p.n, 0, 1, pNum, p.n, "Pillar");
+    cardsArray = [renderABCDBlockHTML("P", p.n, p, p.hue, headerHTML, footerHTML)];
   } else if (STATE.tier === 49) {
     cardsArray = planeSenses.map((s, sIdx) => {
       const vecs = (VECTORS_BY_SENSE[s.id] || []);
       const expanded = !!STATE.expandedSenses[s.id];
       const vecAnsCount = vecs.filter(v => isNodeAnswered("V", v.uid)).length;
-      const isFocus = STATE.viewMode === "focus";
-      const isLast = sIdx >= planeSenses.length - 1;
 
       const headerHTML = `
         <div class="sense-header">
@@ -4110,19 +4169,7 @@ function renderPlane(app, pNum) {
         </div>
       `;
 
-      const focusActionHTML = isFocus ? `
-        <div style="margin-top:16px;padding-top:14px;border-top:2px solid var(--rule);display:flex;justify-content:space-between;align-items:center;gap:12px;">
-          ${sIdx <= 0
-            ? `<a class="btn btn-secondary" href="${pNum > 1 ? `#/plane/${pNum - 1}` : "#/hub"}">${pNum > 1 ? `← Pillar ${pNum - 1}` : "← Back to Hub"}</a>`
-            : `<button type="button" class="btn btn-secondary" id="focus-prev-btn">← Back</button>`
-          }
-          <span class="mono" style="font-size:0.85rem;font-weight:700;color:var(--ink-soft);">Question ${sIdx + 1} of ${planeSenses.length}</span>
-          ${isLast
-            ? `<a class="btn" href="${pNum < 7 ? `#/plane/${pNum + 1}` : "#/results"}">${pNum < 7 ? `Answer & Finish Pillar ${p.n} →` : `Answer & View Results →`}</a>`
-            : `<button type="button" class="btn" id="focus-next-btn">Answer & Continue →</button>`
-          }
-        </div>
-      ` : "";
+      const focusActionHTML = makeFocusActionFooterHTML("S", s.id, sIdx, planeSenses.length, pNum, p.n, "Question");
 
       const footerHTML = `
         ${focusActionHTML}
@@ -4143,55 +4190,21 @@ function renderPlane(app, pNum) {
     });
   } else {
     const allPlaneVecs = activeTierVectors(pNum);
-    filterBarHTML = "";
     cardsArray = allPlaneVecs.map((v, vIdx) => {
-      const isFocus = STATE.viewMode === "focus";
-      const isLast = vIdx >= allPlaneVecs.length - 1;
-      const focusActionHTML = isFocus ? `
-        <div style="margin-top:16px;padding-top:14px;border-top:2px solid var(--rule);display:flex;justify-content:space-between;align-items:center;gap:12px;">
-          ${vIdx <= 0
-            ? `<a class="btn btn-secondary" href="${pNum > 1 ? `#/plane/${pNum - 1}` : "#/hub"}">${pNum > 1 ? `← Pillar ${pNum - 1}` : "← Back to Hub"}</a>`
-            : `<button type="button" class="btn btn-secondary" id="focus-prev-btn">← Back</button>`
-          }
-          <span class="mono" style="font-size:0.85rem;font-weight:700;color:var(--ink-soft);">Topic ${vIdx + 1} of ${allPlaneVecs.length}</span>
-          ${isLast
-            ? `<a class="btn" href="${pNum < 7 ? `#/plane/${pNum + 1}` : "#/results"}">${pNum < 7 ? `Answer & Finish Pillar ${p.n} →` : `Answer & View Results →`}</a>`
-            : `<button type="button" class="btn" id="focus-next-btn">Answer & Continue →</button>`
-          }
-        </div>
-      ` : "";
+      const focusActionHTML = makeFocusActionFooterHTML("V", v.uid, vIdx, allPlaneVecs.length, pNum, p.n, "Topic");
       return renderVectorCardHTML(v, p.hue, focusActionHTML);
     });
   }
 
-  const prevLink = pNum > 1 ? `#/plane/${pNum - 1}` : "#/hub";
-  const prevLabel = pNum > 1 ? `← Pillar ${pNum - 1}: ${PLANE_BY_N[pNum - 1].name}` : "← Back to Hub";
-  const nextLink = pNum < 7 ? `#/plane/${pNum + 1}` : "#/results";
-  const nextLabel = pNum < 7 ? `Next: Pillar ${pNum + 1} (${PLANE_BY_N[pNum + 1].name}) →` : "View Results →";
-
-  // Handle Focus Mode (1 card at a time) vs List Mode
   const totalInView = cardsArray.length;
   if (STATE.focusIdx >= totalInView) STATE.focusIdx = Math.max(0, totalInView - 1);
 
   let bodyHTML = "";
-  let footerNavHTML = "";
-
   if (totalInView === 0) {
     bodyHTML = `<div class="card"><p style="margin:0;color:var(--ink-muted)">No nodes in Pillar ${p.n}.</p></div>`;
-  } else if (STATE.viewMode === "focus" && totalInView > 1) {
-    const idx = STATE.focusIdx;
-    bodyHTML = `
-      ${cardsArray[idx]}
-    `;
   } else {
-    bodyHTML = cardsArray.join("");
-    footerNavHTML = `
-      <div class="page-footer-nav">
-        <a class="btn btn-secondary" href="${prevLink}">${prevLabel}</a>
-        <a class="btn btn-warm" href="#/results">Jump to Results & Archetype</a>
-        <a class="btn" href="${nextLink}">${nextLabel}</a>
-      </div>
-    `;
+    const idx = STATE.focusIdx;
+    bodyHTML = cardsArray[idx];
   }
 
   app.innerHTML = `
@@ -4211,12 +4224,6 @@ function renderPlane(app, pNum) {
         </div>
         <div style="text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:8px;">
           <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-            ${STATE.tier !== 7 ? `
-              <div class="view-mode-switch" role="group" aria-label="View mode">
-                <button type="button" class="view-mode-btn ${STATE.viewMode === "list" ? "active" : ""}" data-view-mode="list">📋 All</button>
-                <button type="button" class="view-mode-btn ${STATE.viewMode === "focus" ? "active" : ""}" data-view-mode="focus">🎯 Focus</button>
-              </div>
-            ` : ""}
             <div class="mono" id="plane-live-badge" style="font-size:0.85rem;color:var(--ink-soft);background:#F8FAFC;border:1px solid #E2E8F0;padding:4px 10px;border-radius:8px;font-weight:600;">
               ${summary.answeredNodes}/${summary.totalNodes} answered
             </div>
@@ -4266,8 +4273,6 @@ function renderPlane(app, pNum) {
     <div id="plane-nodes-container">
       ${bodyHTML}
     </div>
-
-    ${footerNavHTML}
   `;
 
   bindTierSelectorEvents(app);
@@ -4277,36 +4282,11 @@ function renderPlane(app, pNum) {
       const sId = btn.getAttribute("data-jump-sense");
       if (STATE.tier === 7) {
         STATE.tier = 49;
-        STATE.viewMode = "list";
-        saveState();
-        render();
-        setTimeout(() => {
-          document.getElementById(`node-S-${sId}`)?.scrollIntoView({ behavior: "smooth", block: "start" });
-        }, 40);
-      } else if (STATE.tier === 49) {
-        if (STATE.viewMode === "focus") {
-          const idx = planeSenses.findIndex(x => x.id === sId);
-          if (idx >= 0) {
-            STATE.focusIdx = idx;
-            saveState();
-            render({ scrollToCards: true });
-          }
-        } else {
-          document.getElementById(`node-S-${sId}`)?.scrollIntoView({ behavior: "smooth", block: "start" });
-        }
-      } else {
-        STATE.planeFilter = sId;
-        STATE.focusIdx = 0;
-        saveState();
-        render({ scrollToCards: true });
       }
-    });
-  });
-
-  app.querySelectorAll("[data-view-mode]").forEach(btn => {
-    btn.addEventListener("click", () => {
-      STATE.viewMode = btn.getAttribute("data-view-mode");
-      STATE.focusIdx = 0;
+      const idx = planeSenses.findIndex(x => x.id === sId);
+      if (idx >= 0) {
+        STATE.focusIdx = idx;
+      }
       saveState();
       render({ scrollToCards: true });
     });
@@ -4319,8 +4299,32 @@ function renderPlane(app, pNum) {
       render({ scrollToCards: true });
     }
   });
-  document.getElementById("focus-next-btn")?.addEventListener("click", () => {
-    if (STATE.focusIdx < totalInView - 1) {
+
+  document.getElementById("focus-next-btn")?.addEventListener("click", (e) => {
+    const btn = e.currentTarget;
+    const prefix = btn.getAttribute("data-prefix");
+    const id = btn.getAttribute("data-id");
+    const missing = getMissingProbes(prefix, id);
+    if (missing.length > 0) {
+      const card = btn.closest(".sense-card");
+      if (card) {
+        missing.forEach(p => {
+          const row = card.querySelector(`[data-probe-row="${p}"]`);
+          if (row) {
+            row.style.outline = "2px solid #DC2626";
+            row.style.background = "#FEF2F2";
+          }
+        });
+        const firstRow = card.querySelector(`[data-probe-row="${missing[0]}"]`);
+        firstRow?.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+      return;
+    }
+
+    const isLast = btn.getAttribute("data-is-last") === "1";
+    if (isLast) {
+      window.location.hash = btn.getAttribute("data-next-href") || "#/results";
+    } else if (STATE.focusIdx < totalInView - 1) {
       STATE.focusIdx++;
       saveState();
       render({ scrollToCards: true });
