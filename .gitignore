@@ -52,3 +52,7 @@ CoreTools/start_litellm.bat
 
 
 
+
+# Tools directories
+tools/
+**/tools/
