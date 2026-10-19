@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Card — The Sovereign Pioneer (The Ideal American)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0F172A;
+        }
+
+        .font-serif {
+            font-family: 'Merriweather', serif;
+        }
+
+        @media print {
+            body {
+                background: white !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col items-center justify-center p-4 sm:p-8 antialiased text-slate-100">
+
+    <!-- Top Action Bar (No Print) -->
+    <div class="no-print w-full max-w-xl flex items-center justify-between mb-6 text-sm">
+        <a href="Archetype_The_Sovereign_Pioneer.html" class="inline-flex items-center text-blue-400 hover:text-blue-300 font-semibold transition">
+            <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            Back to Archetype Profile
+        </a>
+        <div class="flex items-center gap-3">
+            <button onclick="window.print()" class="px-3.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-medium transition shadow-sm flex items-center gap-1.5">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                </svg>
+                Print / Save PDF
+            </button>
+        </div>
+    </div>
+
+    <!-- The Official Archetype Profile Card -->
+    <div class="relative w-full max-w-xl bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950 rounded-3xl shadow-2xl border border-slate-800 overflow-hidden ring-1 ring-white/10">
+        
+        <!-- Subtle Top Heritage Ribbon -->
+        <div class="h-2 w-full bg-gradient-to-r from-blue-600 via-white to-red-600"></div>
+
+        <!-- Card Header -->
+        <div class="p-6 sm:p-8 pb-4 border-b border-slate-800/80">
+            <div class="flex items-center justify-between mb-3">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold bg-blue-950 text-blue-300 border border-blue-800/60 uppercase tracking-widest">
+                    <span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span>
+                    National Kanon Archetype
+                </span>
+                <span class="text-xs font-mono text-slate-400 tracking-wider uppercase">343 Positive Vectors</span>
+            </div>
+            
+            <h1 class="text-3xl sm:text-4xl font-black tracking-tight text-white flex items-baseline justify-between">
+                <span>The Sovereign Pioneer</span>
+            </h1>
+            <p class="text-sm font-medium text-slate-400 mt-1">The Ideal American · Best Self of the Republic</p>
+        </div>
+
+        <!-- Portrait Image Section with Overlay Creed -->
+        <div class="relative w-full aspect-[4/3] sm:aspect-[16/10] overflow-hidden bg-slate-950">
+            <img src="Sovereign_Pioneer.png" alt="The Sovereign Pioneer" class="w-full h-full object-cover object-center filter contrast-[1.05]">
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent"></div>
+            
+            <!-- Floating Creed Box -->
+            <div class="absolute bottom-3 left-4 right-4 sm:bottom-4 sm:left-6 sm:right-6 bg-slate-900/85 backdrop-blur-md rounded-xl p-3 sm:p-4 border border-white/10 shadow-lg">
+                <p class="font-serif italic text-xs sm:text-sm text-slate-200 leading-snug">
+                    "Trust thyself; all are created equal, endowed with the right to build and the duty to dissent."
+                </p>
+            </div>
+        </div>
+
+        <!-- Telemetry & Coordinates Bar -->
+        <div class="grid grid-cols-3 divide-x divide-slate-800 bg-slate-950/80 border-y border-slate-800 text-center py-3">
+            <div>
+                <span class="block text-[10px] font-mono uppercase tracking-wider text-slate-400">Morality (υ)</span>
+                <span class="text-base sm:text-lg font-mono font-black text-emerald-400">+0.9</span>
+                <span class="block text-[9px] text-slate-500">Universal Dignity</span>
+            </div>
+            <div>
+                <span class="block text-[10px] font-mono uppercase tracking-wider text-slate-400">Will (ψ)</span>
+                <span class="text-base sm:text-lg font-mono font-black text-blue-400">+0.9</span>
+                <span class="block text-[9px] text-slate-500">Generative Agency</span>
+            </div>
+            <div>
+                <span class="block text-[10px] font-mono uppercase tracking-wider text-slate-400">Zone Anchor</span>
+                <span class="text-xs sm:text-sm font-bold text-slate-200 mt-0.5 block">Greater Good</span>
+                <span class="block text-[9px] text-slate-500">Horizon (+1, +1)</span>
+            </div>
+        </div>
+
+        <!-- Core Triad of Conduct -->
+        <div class="p-6 sm:p-8 space-y-4">
+            <h2 class="text-xs font-mono font-bold uppercase tracking-widest text-slate-400">Triad of Conduct</h2>
+            
+            <div class="grid grid-cols-1 gap-2.5 text-xs sm:text-sm">
+                <div class="flex items-start gap-3 p-2.5 rounded-lg bg-slate-800/40 border border-slate-800">
+                    <span class="px-2 py-0.5 rounded bg-blue-900/60 text-blue-300 font-mono font-bold text-[11px] uppercase shrink-0 mt-0.5">The Bond</span>
+                    <p class="text-slate-300 leading-relaxed"><strong class="text-white">Radical Horizontality:</strong> Equal before God and the Law. No king above them; no serf below them.</p>
+                </div>
+                
+                <div class="flex items-start gap-3 p-2.5 rounded-lg bg-slate-800/40 border border-slate-800">
+                    <span class="px-2 py-0.5 rounded bg-amber-900/60 text-amber-300 font-mono font-bold text-[11px] uppercase shrink-0 mt-0.5">The Act</span>
+                    <p class="text-slate-300 leading-relaxed"><strong class="text-white">Direct Initiative:</strong> Builds, cultivates, and repairs without waiting for bureaucratic permission.</p>
+                </div>
+
+                <div class="flex items-start gap-3 p-2.5 rounded-lg bg-slate-800/40 border border-slate-800">
+                    <span class="px-2 py-0.5 rounded bg-red-900/60 text-red-300 font-mono font-bold text-[11px] uppercase shrink-0 mt-0.5">The Speech</span>
+                    <p class="text-slate-300 leading-relaxed"><strong class="text-white">Plain Truth:</strong> Grounded common sense and accountability. Sincerity is their shield against demagogues.</p>
+                </div>
+            </div>
+
+            <!-- The 7 Pillars Roster -->
+            <div class="pt-4 border-t border-slate-800/80">
+                <h2 class="text-xs font-mono font-bold uppercase tracking-widest text-slate-400 mb-3">The 7 Pillars of the Ideal</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] sm:text-xs">
+                    <div class="p-2 rounded bg-slate-950/60 border border-slate-800/80 flex items-center justify-between">
+                        <span class="text-slate-400">I. Identity (Who)</span>
+                        <span class="font-bold text-red-400">The Sovereign Individual</span>
+                    </div>
+                    <div class="p-2 rounded bg-slate-950/60 border border-slate-800/80 flex items-center justify-between">
+                        <span class="text-slate-400">II. Definition (What)</span>
+                        <span class="font-bold text-amber-400">The Constitutionalist</span>
+                    </div>
+                    <div class="p-2 rounded bg-slate-950/60 border border-slate-800/80 flex items-center justify-between">
+                        <span class="text-slate-400">III. Land (Where)</span>
+                        <span class="font-bold text-blue-400">The Homesteader</span>
+                    </div>
+                    <div class="p-2 rounded bg-slate-950/60 border border-slate-800/80 flex items-center justify-between">
+                        <span class="text-slate-400">IV. Drive (Why)</span>
+                        <span class="font-bold text-emerald-400">The Enterprise Striver</span>
+                    </div>
+                    <div class="p-2 rounded bg-slate-950/60 border border-slate-800/80 flex items-center justify-between">
+                        <span class="text-slate-400">V. Method (How)</span>
+                        <span class="font-bold text-indigo-400">The Pragmatic Inventor</span>
+                    </div>
+                    <div class="p-2 rounded bg-slate-950/60 border border-slate-800/80 flex items-center justify-between">
+                        <span class="text-slate-400">VI. Cause (Foundation)</span>
+                        <span class="font-bold text-purple-400">The Principled Dissident</span>
+                    </div>
+                    <div class="p-2 rounded bg-slate-950/60 border border-slate-800/80 flex items-center justify-between sm:col-span-2">
+                        <span class="text-slate-400">VII. Effect (Result)</span>
+                        <span class="font-bold text-slate-200">The Emancipator (Beacon of Liberty)</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Card Footer -->
+        <div class="p-4 bg-slate-950 border-t border-slate-800/80 flex items-center justify-between text-[11px] font-mono text-slate-500">
+            <span>Psochic Hegemony · American Kanon</span>
+            <span>Archival Dossier #US-001</span>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
