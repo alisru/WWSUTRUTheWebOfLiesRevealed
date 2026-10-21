@@ -296,7 +296,7 @@ footer.foot{border-top:1.5px solid var(--rule);padding:22px 0 50px;font-size:13.
   <div class="mast-in">
     <a class="brand" href="#/hub">Welfare Survey<span>Seven requirements</span></a>
     <nav class="mini" id="mini" aria-label="Plane progress"></nav>
-    <a href="#/pulse" style="font-family:var(--mono);font-size:11px;padding:4px 9px;border:1px solid var(--rule);border-radius:3px;background:var(--paper-2);color:var(--ink);text-decoration:none;white-space:nowrap;flex:none">⚡ Speed Round</a>
+    <a href="#/pulse" style="font-family:var(--mono);font-size:11px;padding:4px 9px;border:1px solid var(--rule);border-radius:3px;background:var(--paper-2);color:var(--ink);text-decoration:none;white-space:nowrap;flex:none">⚡ Quick Survey</a>
     <a href="#/search" style="font-family:var(--mono);font-size:11px;padding:4px 9px;border:1px solid var(--rule);border-radius:3px;background:var(--paper-2);color:var(--ink);text-decoration:none;white-space:nowrap;flex:none">Search</a>
     <a href="#/framework" style="font-family:var(--mono);font-size:11px;padding:4px 9px;border:1px solid var(--rule);border-radius:3px;background:var(--paper-2);color:var(--ink);text-decoration:none;white-space:nowrap;flex:none">Framework</a>
     <a href="#/results" style="font-family:var(--mono);font-size:11px;padding:4px 9px;border:1px solid var(--rule);border-radius:3px;background:var(--paper-2);color:var(--ink);text-decoration:none;white-space:nowrap;flex:none">Results</a>
@@ -673,6 +673,9 @@ const Store={
 };
 let STATE={};
 let saveTimer=null;
+function flushSave(){ try{ localStorage.setItem(KEY, JSON.stringify(STATE)); }catch(e){} }
+window.addEventListener('beforeunload', flushSave);
+window.addEventListener('pagehide', flushSave);
 function queueSave(){ clearTimeout(saveTimer); saveTimer=setTimeout(async()=>{ await Store.set(STATE); toast('Saved'); renderMini(); },350); }
 function toast(m){ const t=document.getElementById('toast'); t.textContent=m; t.classList.add('on'); setTimeout(()=>t.classList.remove('on'),1300); }
 
@@ -1140,7 +1143,7 @@ function viewPulse(){
   return `
   <div class="planehead" style="border-bottom:2px solid #E2E8F0;padding-bottom:22px">
     <div style="display:inline-flex;align-items:center;gap:6px;padding:4px 12px;background:#EEF2FF;border:1px solid #C7D2FE;color:#4338CA;border-radius:99px;font-size:12.5px;font-weight:700;margin-bottom:10px">
-      &#9889; 2-Minute Speed Round &middot; Baseline Check
+      &#9889; Quick Survey &middot; Baseline Check
     </div>
     <h1 style="color:#0F172A;font-weight:800;letter-spacing:-0.02em">The Seven Vital Planes at a Glance</h1>
     <p style="font-size:16px;color:#475569;max-width:62ch;line-height:1.55">Answer four simple questions for each of the seven life areas: what you <strong>sense</strong>, what you <strong>use</strong>, what you could <strong>offer</strong>, and what you <strong>need</strong>. Takes about 2 to 3 minutes to complete.</p>
@@ -1170,7 +1173,7 @@ function resultsSwitcherHTML(activeTab){
   return `
   <div style="display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap">
     <a class="btn ${activeTab==='pulse'?'':'ghost'}" href="#/pulse-results" style="border-radius:12px;font-size:13.5px;padding:9px 18px;${activeTab==='pulse'?'background:#4F46E5;border-color:#4F46E5;color:#fff;':''}">
-      &#9889; 2-Minute Baseline Diagnostics ${pulseAns ? `(${pulseAns}/28)` : ''}
+      &#9889; Quick Survey Baseline ${pulseAns ? `(${pulseAns}/28)` : ''}
     </a>
     <a class="btn ${activeTab==='matrix'?'':'ghost'}" href="#/results?view=matrix" style="border-radius:12px;font-size:13.5px;padding:9px 18px;${activeTab==='matrix'?'background:#4F46E5;border-color:#4F46E5;color:#fff;':''}">
       &#128376; Full 294-Question Keyring Matrix ${total ? `(${total}/294)` : ''}
@@ -1255,16 +1258,16 @@ function viewPulseResults(){
     ${resultsSwitcherHTML('pulse')}
     <div class="planehead" style="border-bottom:2px solid #DCE4F8;padding-bottom:22px">
       <div style="display:inline-flex;align-items:center;gap:6px;padding:4px 12px;background:#EEF2FF;border:1px solid #C7D2FE;color:#4338CA;border-radius:99px;font-size:12px;font-weight:700;margin-bottom:10px">
-        &#9889; Speed Round &middot; Baseline Diagnostics
+        &#9889; Quick Survey &middot; Baseline Diagnostics
       </div>
       <h1 style="color:#0F172A;font-weight:800;letter-spacing:-0.02em">No Baseline Answers Recorded Yet</h1>
       <p style="font-size:16px;color:#475569;max-width:60ch;line-height:1.55">
-        Complete the 2-minute speed round to generate your personal life balance profile, detect pressure areas, and see your community mutual aid balance.
+        Complete the quick survey to generate your personal life balance profile, detect pressure areas, and see your community mutual aid balance.
       </p>
     </div>
     <div style="margin:30px 0;padding:26px;background:#FFFFFF;border:1.5px solid #DCE4F8;border-radius:16px;text-align:center">
       <p style="font-size:16px;color:#334155;margin-bottom:18px">Answer 4 quick questions for each of the 7 vital areas. Takes about 2 to 3 minutes.</p>
-      <a class="btn" href="#/pulse" style="font-size:15px;padding:12px 24px;border-radius:12px">Start 2-Minute Speed Round &rarr;</a>
+      <a class="btn" href="#/pulse" style="font-size:15px;padding:12px 24px;border-radius:12px">Start Quick Survey &rarr;</a>
     </div>
     <div class="navrow">
       <a class="btn ghost" href="#/hub" style="border-radius:12px">&larr; Back to Hub</a>
@@ -1397,7 +1400,7 @@ function viewPulseResults(){
 
   <div class="planehead" style="border-bottom:2px solid #DCE4F8;padding-bottom:22px">
     <div style="display:inline-flex;align-items:center;gap:6px;padding:4px 12px;background:#EEF2FF;border:1px solid #C7D2FE;color:#4338CA;border-radius:99px;font-size:12px;font-weight:700;margin-bottom:10px">
-      &#9889; Speed Round &middot; Baseline Diagnostics
+      &#9889; Quick Survey &middot; Baseline Diagnostics
     </div>
     <h1 style="color:#0F172A;font-weight:800;letter-spacing:-0.02em">Your 7-Plane Baseline Profile</h1>
     <p style="font-size:16px;color:#475569;max-width:64ch;line-height:1.55">
@@ -1496,7 +1499,7 @@ function viewPulseResults(){
 
   <div class="navrow" style="border-top:2px solid #DCE4F8;padding:24px 0 60px">
     <a class="btn ghost" href="#/hub" style="border-radius:12px">&larr; Back to Hub</a>
-    <a class="btn ghost" href="#/pulse" style="border-radius:12px">Edit Speed Round Ratings</a>
+    <a class="btn ghost" href="#/pulse" style="border-radius:12px">Edit Quick Survey Ratings</a>
     <button class="btn ghost" onclick="window.print()" style="border-radius:12px">&#128438; Export PDF / Print Report</button>
     <a class="btn" href="#/review" style="background:#4F46E5;border-color:#4F46E5;border-radius:12px;box-shadow:0 4px 14px rgba(79,70,229,0.3)">Review &amp; Hand In &rarr;</a>
   </div>`;
@@ -1521,11 +1524,11 @@ function viewHub(){
 
   <div style="margin:0 0 24px;padding:18px 22px;background:#F0F9FF;border:2px solid #BAE6FD;border-left:7px solid #0284C7;border-radius:14px;box-shadow:0 4px 14px rgba(2,132,199,0.06);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px">
     <div>
-      <span style="font-size:12px;font-weight:700;color:#0369A1;padding:3px 10px;background:#E0F2FE;border-radius:99px;display:inline-block;margin-bottom:6px">&#9889; 2-Minute Speed Round &middot; Baseline Check</span>
+      <span style="font-size:12px;font-weight:700;color:#0369A1;padding:3px 10px;background:#E0F2FE;border-radius:99px;display:inline-block;margin-bottom:6px">&#9889; Quick Survey &middot; Baseline Check</span>
       <h2 style="margin:0 0 4px;font-family:var(--disp);font-size:18px;font-weight:700;color:#0C4A6E">Short on time? Take the 7-Plane Baseline Check</h2>
       <p style="margin:0;font-size:14.5px;color:#334155">Seven ABCD questions covering the essentials of each life area: what you sense, use, offer, and need.</p>
     </div>
-    <a class="btn" href="#/pulse" style="background:#0284C7;border-color:#0284C7;font-size:14px;padding:10px 18px;white-space:nowrap;box-shadow:0 4px 12px rgba(2,132,199,0.28)">${pulseAns ? `Continue Speed Round (${pulseAns}/28) &rarr;` : 'Start 2-Minute Speed Round &rarr;'}</a>
+    <a class="btn" href="#/pulse" style="background:#0284C7;border-color:#0284C7;font-size:14px;padding:10px 18px;white-space:nowrap;box-shadow:0 4px 12px rgba(2,132,199,0.28)">${pulseAns ? `Continue Quick Survey (${pulseAns}/28) &rarr;` : 'Start Quick Survey &rarr;'}</a>
   </div>
 
   ${searchBarHTML('')}
@@ -1548,7 +1551,7 @@ function viewHub(){
 
   <div class="hubgrid">
     <a class="tile" href="#/pulse">
-      <h3>&#9889; 2-Minute Speed Round</h3>
+      <h3>&#9889; Quick Survey</h3>
       <p>Rapid baseline check across the 7 vital planes (Sense, Use, Offer, Need).</p>
       <span class="st">${pulseAns ? `${pulseAns}/28 ANSWERED` : 'NOT STARTED'}</span>
     </a>
@@ -1588,14 +1591,14 @@ function segHTML(key,val,labels){
         <input type="radio" name="${key}" id="${key}~${i}" value="${i}"${STATE[key]==String(i)?' checked':''}>
         <label for="${key}~${i}" title="${labels[i-1]}" data-step="${i}">${i}</label>`).join('')}
       <button type="button" class="clr" data-clear="${key}">clear</button>
-      <span class="seg-val" id="lbl-${key}" style="margin-left:6px">${curLabel?`${cur}: ${curLabel}`:''}</span>
+      <span class="seg-val" id="lbl-${key}" style="margin-left:6px">${curLabel||""}</span>
     </div>
   </div>`;
 }
 const AB_L=['Non-existent','Unstable','Adequate','Secure','Flourishing'];
-const CA_L=['Not at all','Rarely','Occasionally','Readily','Freely and often'];
-const DA_L=['Not needed','Would be nice','Would help','Needed','Urgent'];
-const BL_L=['Nothing stops me','Minor friction','Real obstacle','Mostly blocked','Completely blocked'];
+const CA_L=['Never','Rarely','Occasionally','Readily','Freely'];
+const DA_L=['Unneeded','Optional','Helpful','Needed','Urgent'];
+const BL_L=['None','Minor','Moderate','Severe','Blocked'];
 
 function chipsHTML(key,tags){
   return `<div class="chips">
@@ -2065,65 +2068,7 @@ function viewResults(){
     </div>
   </div>
 
-  ${(()=>{
-    const pulseTotal = pulseTotalAnswered();
-    if(!pulseTotal) return '';
-    return `
-    <div class="tail" style="margin-top:22px">
-      <div style="border:1px solid var(--rule);border-radius:4px;background:var(--paper-2);padding:18px 20px">
-        <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:10px;margin-bottom:14px">
-          <div>
-            <span style="font-family:var(--mono);font-size:11px;font-weight:700;color:var(--p2);text-transform:uppercase">Baseline Overview</span>
-            <h3 style="margin:2px 0 0">&#9889; 2-Minute Speed Round Baseline</h3>
-          </div>
-          <span style="font-family:var(--mono);font-size:11px;color:var(--ink-soft);text-transform:uppercase">${pulseTotal} of 28 Answered</span>
-        </div>
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px">
-          ${PULSE_QUESTIONS.map(p => {
-            const a = STATE[`pulse|${p.plane}|A`];
-            const b = STATE[`pulse|${p.plane}|B`];
-            const c = STATE[`pulse|${p.plane}|C`];
-            const d = STATE[`pulse|${p.plane}|D`];
-            const note = STATE[`pulse_note|${p.plane}`];
-            if(!a && !b && !c && !d && !note) return '';
-            return `
-            <div style="background:var(--paper);border:1px solid var(--rule);border-left:4px solid ${HUES[p.plane]};border-radius:3px;padding:12px">
-              <div style="display:flex;justify-content:space-between;margin-bottom:6px">
-                <strong style="font-size:14.5px;color:var(--ink)">Part ${p.plane} &middot; ${esc(p.name)}</strong>
-                <small style="font-family:var(--mono);color:var(--ink-soft)">${esc(p.who)}</small>
-              </div>
-              <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;font-family:var(--mono);font-size:11px;text-align:center;margin:8px 0">
-                <div style="background:var(--paper-2);padding:4px 2px;border-radius:2px">
-                  <span style="color:var(--ink-soft);display:block">Sense</span>
-                  <strong>${a ? a + '/5' : '-'}</strong>
-                </div>
-                <div style="background:var(--paper-2);padding:4px 2px;border-radius:2px">
-                  <span style="color:var(--ink-soft);display:block">Use</span>
-                  <strong>${b ? b + '/5' : '-'}</strong>
-                </div>
-                <div style="background:var(--paper-2);padding:4px 2px;border-radius:2px">
-                  <span style="color:var(--ink-soft);display:block">Offer</span>
-                  <strong>${c ? c + '/5' : '-'}</strong>
-                </div>
-                <div style="background:var(--paper-2);padding:4px 2px;border-radius:2px">
-                  <span style="color:var(--ink-soft);display:block">Need</span>
-                  <strong>${d ? d + '/5' : '-'}</strong>
-                </div>
-              </div>
-              ${note ? `<p style="margin:6px 0 0;font-size:12.5px;color:var(--ink-soft);font-style:italic">&ldquo;${esc(note)}&rdquo;</p>` : ''}
-            </div>`;
-          }).filter(Boolean).join('')}
-        </div>
-        <div style="margin-top:16px;padding:16px 20px;background:#F0F9FF;border:1.5px solid #BAE6FD;border-radius:12px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
-          <div>
-            <span style="font-size:11.5px;font-weight:700;color:#0369A1;background:#E0F2FE;padding:2px 8px;border-radius:99px">&#9889; Dedicated Baseline Report Available</span>
-            <p style="margin:4px 0 0;font-size:14px;color:#0C4A6E">View your 7-plane life balance gauges, pressure point alerts, and mutual aid balance.</p>
-          </div>
-          <a class="btn" href="#/pulse-results" style="font-size:13.5px;padding:8px 16px;border-radius:10px;background:#0284C7;border-color:#0284C7">Open Speed Round Results &rarr;</a>
-        </div>
-      </div>
-    </div>`;
-  })()}
+  
   <div class="navrow">
     <a class="btn ghost" href="#/hub">Back to the start</a>
     <button class="btn ghost" onclick="window.print()">&#128438; Export PDF / Print Report</button>
@@ -2157,10 +2102,10 @@ function viewReview(){
   <section class="tail" style="margin:16px 0 22px;border:1px solid var(--rule);border-left:5px solid var(--p2);border-radius:4px;background:var(--paper-2);padding:16px 20px">
     <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
       <div>
-        <h3 style="margin:0 0 4px;font-size:17px">&#9889; 2-Minute Speed Round (7 Questions)</h3>
-        <p style="margin:0;font-size:14px;color:var(--ink-soft)">${pulseAns ? `${pulseAns} of 28 speed round questions answered across 7 planes.` : 'Rapid baseline check across all 7 life areas.'}</p>
+        <h3 style="margin:0 0 4px;font-size:17px">&#9889; Quick Survey (7 Questions)</h3>
+        <p style="margin:0;font-size:14px;color:var(--ink-soft)">${pulseAns ? `${pulseAns} of 28 quick survey questions answered across 7 planes.` : 'Rapid baseline check across all 7 life areas.'}</p>
       </div>
-      <a class="btn ghost" href="#/pulse" style="font-size:13px;padding:7px 14px">${pulseAns ? 'Edit Speed Round answers &rarr;' : 'Take Speed Round &rarr;'}</a>
+      <a class="btn ghost" href="#/pulse" style="font-size:13px;padding:7px 14px">${pulseAns ? 'Edit Quick Survey answers &rarr;' : 'Take Quick Survey &rarr;'}</a>
     </div>
   </section>
 
@@ -2898,7 +2843,7 @@ document.addEventListener('change',e=>{
     if(lbl){
       const labels=(t.name.includes('|flag|Ca')||t.name.endsWith('|C'))?CA_L:(t.name.includes('|flag|Da')||t.name.endsWith('|D'))?DA_L:(t.name.includes('|flag|Cb')||t.name.includes('|flag|Db'))?BL_L:AB_L;
       const idx=Number(t.value)-1;
-      if(labels[idx]) lbl.textContent=t.value+': '+labels[idx];
+      if(labels[idx]) lbl.textContent=labels[idx];
     }
   }
   else if(t.type==='checkbox'&&t.dataset.check){ STATE[t.dataset.check]=t.checked?1:0; queueSave(); }
@@ -3018,8 +2963,6 @@ window.addEventListener('scroll',()=>{ if(!currentPlane) return; if(spy) return;
   spy=requestAnimationFrame(()=>{ spy=null; markActive(); }); },{passive:true});
 window.addEventListener('hashchange',render);
 
-// Prefill removed — form opens blank.
-try{ localStorage.removeItem('cws:v1'); }catch(e){}
 
 (async()=>{ STATE=await Store.get()||{}; await maybeAutoPullAccount(); render(); })();
 </script>
