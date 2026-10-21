@@ -6,32 +6,35 @@
 <title>Community Welfare Survey</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..800&family=Lexend:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --paper:#EDEEF0; --paper-2:#F6F7F8; --ink:#16202B; --ink-soft:#5A6672;
-  --rule:#D3D7DC; --focus:#1B6BD6;
-  --p1:#6A5A96; --p2:#1F7A6B; --p3:#7A5C3E; --p4:#B98B22;
-  --p5:#2E5B8A; --p6:#8E3552; --p7:#CE6146;
-  --disp:"Bricolage Grotesque",system-ui,sans-serif;
-  --body:"Source Serif 4",Georgia,serif;
-  --mono:"IBM Plex Mono",ui-monospace,monospace;
+  --paper:#EDF2FE; --paper-2:#FFFFFF; --ink:#0F172A; --ink-soft:#475569;
+  --rule:#DCE4F8; --focus:#4F46E5;
+  --p1:#7C3AED; --p2:#0284C7; --p3:#16A34A; --p4:#D97706;
+  --p5:#2563EB; --p6:#E11D48; --p7:#EA580C;
+  --disp:"Lexend",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  --body:"Lexend",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  --mono:"Plus Jakarta Sans","Lexend",system-ui,sans-serif;
 }
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
-body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16.5px;line-height:1.6;-webkit-font-smoothing:antialiased}
+main#view{outline:none}
+main#view:focus,main#view:focus-visible{outline:none!important}
 .wrap{max-width:860px;margin:0 auto;padding:0 20px}
 
 /* ---------- masthead ---------- */
-header.mast{border-bottom:1px solid var(--rule);background:var(--paper);position:sticky;top:0;z-index:40}
+header.mast{border-bottom:1.5px solid #CBD7F0;background:#DCE4F8;position:sticky;top:0;z-index:40}
 .mast-in{max-width:860px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:14px}
-.brand{font-family:var(--disp);font-weight:800;font-size:15px;letter-spacing:-0.01em;text-decoration:none;color:var(--ink);white-space:nowrap}
-.brand span{display:block;font-family:var(--mono);font-size:10px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
-.mini{display:flex;gap:3px;flex:1;min-width:0}
-.mini a{flex:1;height:26px;border-radius:2px;background:var(--paper-2);border:1px solid var(--rule);position:relative;overflow:hidden;text-decoration:none;display:block}
+.brand{font-family:var(--disp);font-weight:700;font-size:16px;letter-spacing:-0.01em;text-decoration:none;color:var(--ink);white-space:nowrap}
+.brand span{display:block;font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.02em;text-transform:none;color:var(--ink-soft)}
+.mini{display:flex;gap:4px;flex:1;min-width:0}
+.mini a{flex:1;height:28px;border-radius:6px;background:var(--paper-2);border:1.5px solid #CBD7F0;position:relative;overflow:hidden;text-decoration:none;display:block;transition:all .15s ease}
+.mini a:hover{transform:translateY(-1px);box-shadow:0 2px 6px rgba(0,0,0,0.06)}
 .mini a i{position:absolute;inset:0 auto 0 0;display:block;opacity:.85}
-.mini a b{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--mono);font-size:10px;font-weight:500;color:var(--ink);mix-blend-mode:multiply}
-.mini a[aria-current]{outline:2px solid var(--ink);outline-offset:1px}
+.mini a b{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--mono);font-size:11px;font-weight:700;color:var(--ink);mix-blend-mode:multiply}
+.mini a[aria-current]{outline:2px solid var(--focus);outline-offset:1px;border-color:var(--focus)}
 
 /* ---------- hub ---------- */
 .hero{padding:44px 0 26px}
@@ -54,8 +57,8 @@ header.mast{border-bottom:1px solid var(--rule);background:var(--paper);position
 
 .hubgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:22px 0 60px}
 @media(max-width:620px){.hubgrid{grid-template-columns:1fr}}
-.tile{display:block;text-decoration:none;color:inherit;border:1px solid var(--rule);background:var(--paper-2);padding:16px;border-radius:3px}
-.tile:hover{border-color:var(--ink)}
+.tile{display:block;text-decoration:none;color:inherit;border:1px solid var(--rule);background:var(--paper-2);padding:18px;border-radius:10px;box-shadow:0 3px 12px rgba(30,36,43,0.03);transition:all .15s ease}
+.tile:hover{border-color:var(--focus);transform:translateY(-1.5px);box-shadow:0 6px 16px rgba(30,36,43,0.07)}
 .tile h3{font-family:var(--disp);font-weight:600;font-size:17px;margin:0 0 4px}
 .tile p{margin:0;font-size:14px;color:var(--ink-soft)}
 .tile .st{font-family:var(--mono);font-size:11px;color:var(--ink-soft);display:block;margin-top:8px}
@@ -93,59 +96,100 @@ details.sub[open]>summary{border-bottom:1px dashed var(--rule)}
 .qtags,.tchips{display:flex;flex-wrap:wrap;gap:6px}
 .qtags{margin-top:2px}
 .tchips{margin:8px 0 18px}
-.qtags a,.tchips a{font-family:var(--mono);font-size:11px;padding:3px 8px;border:1px solid var(--rule);border-radius:99px;background:var(--paper);color:var(--ink);text-decoration:none}
+.qtags a,.tchips a{font-family:var(--mono);font-size:11px;padding:3px 8px;border:1px solid var(--rule);border-radius:99px;background:#F8FAFC;color:var(--ink);text-decoration:none}
 .qtags a:hover,.tchips a:hover{border-color:var(--ink)}
 .tchips small{color:var(--ink-soft);margin-left:5px}
 .topichead{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);margin:28px 0 0}
-.seg{display:flex;flex-direction:column;gap:6px;margin:8px 0 16px}
-.seg-row{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.seg{display:flex;flex-direction:column;gap:8px;margin:8px 0 16px}
+.seg-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .seg-row>input[type=radio],.seg>input[type=radio]{position:absolute;opacity:0;width:0;height:0}
-.seg-row label,.seg label{font-family:var(--mono);font-size:14px;font-weight:600;min-width:44px;height:44px;display:grid;place-items:center;border:1.5px solid var(--rule);background:var(--paper-2);cursor:pointer;border-radius:4px;user-select:none;transition:all .12s}
-.seg-row label:hover,.seg label:hover{border-color:var(--ink-soft);background:var(--paper)}
-.seg-row>input[type=radio]:checked+label,.seg>input[type=radio]:checked+label{background:var(--ink);color:var(--paper);border-color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,0.12)}
-.seg-row>input[type=radio]:focus-visible+label,.seg>input[type=radio]:focus-visible+label{outline:2px solid var(--focus);outline-offset:2px}
-.seg-meta{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;font-family:var(--mono);font-size:12px;color:var(--ink-soft);min-height:18px}
-.seg-val{font-weight:600;color:var(--ink)}
-.seg-scale{display:flex;gap:12px;font-size:11px}
-.seg-actions{display:flex;align-items:center;gap:8px}
-.seg .clr{font-family:var(--mono);font-size:11px;background:none;border:none;color:var(--ink-soft);cursor:pointer;text-decoration:underline;padding:4px 8px;min-height:28px;display:inline-flex;align-items:center}
-.seg .clr:hover{color:var(--ink)}
-.subnotes{margin-top:16px;border-top:1px dashed var(--rule);padding-top:12px}
-.subnotes label{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:6px}
-.subnotes textarea{width:100%;min-height:56px;font-family:var(--body);font-size:14px;padding:8px 10px;border:1px solid var(--rule);background:var(--paper-2);border-radius:3px;color:var(--ink);resize:vertical}
+.seg-row label,.seg label{font-family:var(--body);font-size:14.5px;font-weight:700;min-width:44px;height:44px;display:grid;place-items:center;border:2px solid var(--rule);background:#FFFFFF;cursor:pointer;border-radius:12px;user-select:none;transition:all .14s cubic-bezier(0.4,0,0.2,1);color:#334155}
+.seg-row label:hover,.seg label:hover{
+  border-color:var(--pl, var(--focus));
+  background:#F1F5F9;
+  color:var(--pl, var(--focus));
+  transform:translateY(-2px);
+  box-shadow:0 4px 12px rgba(0,0,0,0.06);
+}
 
-.flags{margin-top:18px;border:1px solid var(--rule);border-radius:3px;background:var(--paper-2)}
-.flags>summary{cursor:pointer;list-style:none;padding:11px 14px;font-family:var(--mono);font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-soft);display:flex;justify-content:space-between;gap:10px}
+/* Sequential fill: all steps up to the chosen value fill with vibrant plane pigment and crisp white text */
+.seg-row:has(input[value="1"]:checked) label[data-step="1"],
+.seg-row:has(input[value="2"]:checked) label:is([data-step="1"], [data-step="2"]),
+.seg-row:has(input[value="3"]:checked) label:is([data-step="1"], [data-step="2"], [data-step="3"]),
+.seg-row:has(input[value="4"]:checked) label:is([data-step="1"], [data-step="2"], [data-step="3"], [data-step="4"]),
+.seg-row:has(input[value="5"]:checked) label:is([data-step="1"], [data-step="2"], [data-step="3"], [data-step="4"], [data-step="5"]),
+.seg-row[data-val="1"] label[data-step="1"],
+.seg-row[data-val="2"] label:is([data-step="1"], [data-step="2"]),
+.seg-row[data-val="3"] label:is([data-step="1"], [data-step="2"], [data-step="3"]),
+.seg-row[data-val="4"] label:is([data-step="1"], [data-step="2"], [data-step="3"], [data-step="4"]),
+.seg-row[data-val="5"] label:is([data-step="1"], [data-step="2"], [data-step="3"], [data-step="4"], [data-step="5"]){
+  background:var(--pl, var(--focus)) !important;
+  color:#FFFFFF !important;
+  border-color:var(--pl, var(--focus)) !important;
+  box-shadow:0 2px 8px rgba(0,0,0,0.12);
+}
+.seg-row>input[type=radio]:checked+label,.seg>input[type=radio]:checked+label{transform:scale(1.05);font-weight:800}
+.seg-row>input[type=radio]:focus-visible+label,.seg>input[type=radio]:focus-visible+label{outline:2px solid var(--focus);outline-offset:2px}
+
+.seg-meta{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;font-family:var(--body);font-size:12.5px;color:var(--ink-soft);min-height:18px}
+.seg-val{font-weight:700;color:var(--pl, var(--ink))}
+.seg-actions{display:flex;align-items:center;gap:8px}
+.seg .clr{font-family:var(--body);font-size:11.5px;font-weight:600;background:none;border:none;color:var(--ink-soft);cursor:pointer;text-decoration:underline;padding:4px 8px;min-height:28px;display:inline-flex;align-items:center}
+.seg .clr:hover{color:var(--ink)}
+.subnotes{margin-top:16px;border-top:1.5px dashed var(--rule);padding-top:12px}
+.subnotes label{display:block;font-family:var(--body);font-size:12px;font-weight:600;color:var(--ink-soft);margin-bottom:6px}
+.subnotes textarea{width:100%;min-height:56px;font-family:var(--body);font-size:14.5px;padding:10px 12px;border:1.5px solid var(--rule);background:#FFFFFF;border-radius:10px;color:var(--ink);resize:vertical;transition:border-color .15s}
+.subnotes textarea:focus{outline:none;border-color:var(--focus)}
+
+.flags{margin-top:18px;border:1.5px solid var(--rule);border-radius:10px;background:var(--paper-2)}
+.flags>summary{cursor:pointer;list-style:none;padding:12px 14px;font-family:var(--body);font-size:12px;font-weight:600;color:var(--ink-soft);display:flex;justify-content:space-between;gap:10px}
 .flags>summary::-webkit-details-marker{display:none}
 .flags>summary:focus-visible{outline:2px solid var(--focus);outline-offset:-2px}
-.flagbody{padding:4px 14px 18px;border-top:1px solid var(--rule)}
-.flagbody h4{font-family:var(--disp);font-weight:600;font-size:15px;margin:16px 0 2px}
+.flagbody{padding:4px 14px 18px;border-top:1.5px solid var(--rule)}
+.flagbody h4{font-family:var(--disp);font-weight:700;font-size:15px;margin:16px 0 2px}
 .chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 4px}
 .chips>input[type=radio]{position:absolute;opacity:0;width:0;height:0}
-.chips label{font-family:var(--mono);font-size:11.5px;padding:5px 9px;border:1px solid var(--rule);background:var(--paper);border-radius:99px;cursor:pointer}
-.chips>input[type=radio]:checked+label{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.chips label{font-family:var(--body);font-size:12px;font-weight:500;padding:6px 12px;border:1.5px solid var(--rule);background:#F8FAFC;border-radius:99px;cursor:pointer;transition:all .15s ease}
+.chips>input[type=radio]:checked+label{background:var(--focus);color:#FFFFFF;border-color:var(--focus);box-shadow:0 2px 8px rgba(79,70,229,0.25)}
 .chips>input[type=radio]:focus-visible+label{outline:2px solid var(--focus);outline-offset:2px}
 .chips input[type=text]{position:static;opacity:1;width:auto;height:auto}
 
 .tail{padding:26px 0 10px}
-.tail h3{font-family:var(--disp);font-weight:600;font-size:19px;margin:0 0 6px}
-textarea{width:100%;min-height:100px;font-family:var(--body);font-size:16px;padding:11px;border:1px solid var(--rule);background:var(--paper-2);border-radius:3px;color:var(--ink);resize:vertical}
+.tail h3{font-family:var(--disp);font-weight:700;font-size:20px;margin:0 0 6px}
+textarea{width:100%;min-height:100px;font-family:var(--body);font-size:15px;padding:12px;border:1.5px solid var(--rule);background:var(--paper-2);border-radius:10px;color:var(--ink);resize:vertical;transition:border-color .15s}
+textarea:focus{outline:none;border-color:var(--focus)}
 .checks{margin:14px 0 0;display:grid;gap:9px}
 .checks label{display:flex;gap:10px;align-items:flex-start;font-size:15.5px;cursor:pointer}
-.checks input{margin-top:5px;width:17px;height:17px;flex:none;accent-color:var(--ink)}
+.checks input{margin-top:5px;width:17px;height:17px;flex:none;accent-color:var(--focus)}
 
-.navrow{display:flex;gap:10px;flex-wrap:wrap;padding:26px 0 70px;border-top:1px solid var(--rule);margin-top:10px}
-.btn{font-family:var(--disp);font-weight:600;font-size:15px;padding:11px 18px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);border-radius:3px;cursor:pointer;text-decoration:none;display:inline-block}
-.btn.ghost{background:none;color:var(--ink)}
-.btn:hover{opacity:.86}
+.navrow{display:flex;gap:12px;flex-wrap:wrap;padding:26px 0 70px;border-top:1.5px solid var(--rule);margin-top:14px}
+.btn{font-family:var(--body);font-weight:700;font-size:15px;padding:12px 22px;border:2px solid var(--focus);background:var(--focus);color:#FFFFFF;border-radius:12px;cursor:pointer;text-decoration:none;display:inline-block;transition:all .15s cubic-bezier(0.4,0,0.2,1);box-shadow:0 3px 10px rgba(79,70,229,0.22)}
+.btn.ghost{background:#FFFFFF;border-color:var(--rule);color:var(--ink);box-shadow:none}
+.btn.ghost:hover{border-color:var(--focus);color:var(--focus);background:#F5F3FF}
+.btn:hover{transform:translateY(-1.5px);box-shadow:0 6px 16px rgba(79,70,229,0.32);opacity:0.96}
 .btn:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
 
-.note{font-size:14.5px;color:var(--ink-soft);border-left:3px solid var(--rule);padding:2px 0 2px 14px;margin:18px 0}
-.saved{position:fixed;left:50%;transform:translateX(-50%);bottom:22px;background:var(--ink);color:var(--paper);font-family:var(--mono);font-size:12px;padding:9px 16px;border-radius:3px;opacity:0;pointer-events:none;transition:opacity .25s;z-index:60}
+.note{font-size:14.5px;color:var(--ink-soft);border-left:3px solid var(--focus);padding:2px 0 2px 14px;margin:18px 0}
+.saved{position:fixed;left:50%;transform:translateX(-50%);bottom:22px;background:var(--ink);color:var(--paper);font-family:var(--body);font-weight:600;font-size:13px;padding:10px 18px;border-radius:99px;opacity:0;pointer-events:none;transition:opacity .25s;z-index:60;box-shadow:0 4px 14px rgba(0,0,0,0.18)}
 .saved.on{opacity:1}
-pre.out{font-family:var(--mono);font-size:11.5px;background:var(--paper-2);border:1px solid var(--rule);padding:14px;border-radius:3px;overflow:auto;max-height:340px;white-space:pre-wrap;word-break:break-all}
-footer.foot{border-top:1px solid var(--rule);padding:22px 0 50px;font-size:13.5px;color:var(--ink-soft)}
-#view:focus{outline:none}
+pre.out{font-family:var(--mono);font-size:12px;background:var(--paper-2);border:1.5px solid var(--rule);padding:14px;border-radius:10px;overflow:auto;max-height:340px;white-space:pre-wrap;word-break:break-all}
+footer.foot{border-top:1.5px solid var(--rule);padding:22px 0 50px;font-size:13.5px;color:var(--ink-soft)}
+/* ---------- 2-minute speed round layout ---------- */
+.pulse-card{border:2px solid var(--rule);border-radius:18px;background:var(--paper-2);padding:22px;margin-bottom:26px;box-shadow:0 4px 18px rgba(0,0,0,0.04);transition:box-shadow .2s ease}
+.pulse-card:hover{box-shadow:0 8px 24px rgba(0,0,0,0.07)}
+.pulse-header{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:16px;padding-bottom:12px;border-bottom:1.5px solid var(--rule)}
+.pulse-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media (max-width: 860px){
+  .pulse-grid{grid-template-columns:1fr;gap:14px}
+}
+.pulse-col{background:#FFFFFF;border:1.5px solid var(--rule);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:16px;box-shadow:0 2px 8px rgba(0,0,0,0.02)}
+.pulse-col-tag{font-family:var(--body);font-size:12px;font-weight:700;color:var(--ink);padding-bottom:8px;border-bottom:1.5px solid var(--rule)}
+.pulse-q-box{display:flex;flex-direction:column;gap:5px}
+.pulse-q-box:not(:last-child){border-bottom:1.5px dashed var(--rule);padding-bottom:14px}
+.pulse-q-head{font-family:var(--body);font-size:12px;color:var(--ink-soft);margin-bottom:4px;line-height:1.4}
+.pulse-q-head strong{color:var(--ink);font-weight:700}
+.pulse-card .q{margin:0 0 6px;font-size:15.5px;line-height:1.4;font-weight:500;color:#1E293B}
+.pulse-card .seg{margin:6px 0 0}
 
 /* ---------- plane layout + sidebar toc ---------- */
 .wrap.wide{max-width:1180px}
@@ -252,6 +296,7 @@ footer.foot{border-top:1px solid var(--rule);padding:22px 0 50px;font-size:13.5p
   <div class="mast-in">
     <a class="brand" href="#/hub">Welfare Survey<span>Seven requirements</span></a>
     <nav class="mini" id="mini" aria-label="Plane progress"></nav>
+    <a href="#/pulse" style="font-family:var(--mono);font-size:11px;padding:4px 9px;border:1px solid var(--rule);border-radius:3px;background:var(--paper-2);color:var(--ink);text-decoration:none;white-space:nowrap;flex:none">⚡ Speed Round</a>
     <a href="#/search" style="font-family:var(--mono);font-size:11px;padding:4px 9px;border:1px solid var(--rule);border-radius:3px;background:var(--paper-2);color:var(--ink);text-decoration:none;white-space:nowrap;flex:none">Search</a>
     <a href="#/framework" style="font-family:var(--mono);font-size:11px;padding:4px 9px;border:1px solid var(--rule);border-radius:3px;background:var(--paper-2);color:var(--ink);text-decoration:none;white-space:nowrap;flex:none">Framework</a>
     <a href="#/results" style="font-family:var(--mono);font-size:11px;padding:4px 9px;border:1px solid var(--rule);border-radius:3px;background:var(--paper-2);color:var(--ink);text-decoration:none;white-space:nowrap;flex:none">Results</a>
@@ -604,7 +649,7 @@ async function maybeAutoPullAccount() {
   }
 }
 
-const HUES = {1:'#6A5A96',2:'#1F7A6B',3:'#7A5C3E',4:'#B98B22',5:'#2E5B8A',6:'#8E3552',7:'#CE6146'};
+const HUES = {1:'#7C3AED', 2:'#0284C7', 3:'#16A34A', 4:'#D97706', 5:'#2563EB', 6:'#E11D48', 7:'#EA580C'};
 const CORE_PER_PLANE = 7*3*2;
 
 const GIVE_TAGS = ["no time","money/cost","transport","health/energy","care duties","skills/confidence","permission/legal","no one to give it to"];
@@ -913,10 +958,10 @@ function childListHTML(){
 
 function explainerHTML(){
   return `
-  <section class="tail" style="margin:0 0 24px;border:1px solid var(--rule);border-radius:4px;background:var(--paper-2);padding:18px 20px">
+  <section class="tail" style="margin:0 0 24px;border:1.5px solid #DCE4F8;border-radius:16px;background:#FFFFFF;padding:22px 24px;box-shadow:0 4px 18px rgba(15,23,42,0.03)">
     <div style="display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:8px">
-      <h3 style="margin:0;font-size:18px">Why This Survey Is Different</h3>
-      <a href="#/framework" style="font-family:var(--mono);font-size:12px;color:var(--focus);text-decoration:none;font-weight:500">Read Full Framework &rarr;</a>
+      <h3 style="margin:0;font-size:19px;font-weight:700">Why This Survey Is Different</h3>
+      <a href="#/framework" style="font-family:var(--body);font-size:12.5px;color:var(--focus);text-decoration:none;font-weight:600">Read Full Framework &rarr;</a>
     </div>
     <p style="margin:0 0 10px;font-size:15px;color:var(--ink)">Real human well-being is about much more than just calories and a roof over your head. When governments only measure basic poverty, they miss what truly makes or breaks a community: <strong>dignity, purpose, rest, a real say in decisions, fair rules, and genuine care</strong>.</p>
     <p style="margin:0 0 10px;font-size:14.5px;color:var(--ink-soft)">This survey looks at your whole life across seven vital requirements:</p>
@@ -929,21 +974,539 @@ function explainerHTML(){
       <li><strong>6. Truth &amp; Courage (Cause):</strong> Living by honest principles, equal justice, and standing up together.</li>
       <li><strong>7. Care &amp; Nourishment (Effect):</strong> Good fresh food daily, emotional support, and neighbours to count on.</li>
     </ul>
-    <div style="margin:14px 0 16px;padding:12px 14px;background:var(--paper);border:1px solid var(--rule);border-radius:3px;font-size:13.5px;color:var(--ink-soft);line-height:1.5">
+    <div style="margin:14px 0 16px;padding:14px 16px;background:#F0F4FC;border:1.5px solid #DCE4F8;border-radius:10px;font-size:13.5px;color:var(--ink-soft);line-height:1.55">
       <strong style="color:var(--ink);display:block;margin-bottom:4px">&#x1F6E1;&#xFE0F; Your Privacy &amp; Community Ownership Guarantee</strong>
       This survey is built by and for the community, not government bureaucrats or corporations. <strong>Your data is never sold or shared with advertisers.</strong> Everything you answer stays safely on your own phone or computer by default. Saving your answers to our secure database is completely optional, and you can download or delete your answers at any time.
     </div>
     <div style="display:flex;gap:10px;flex-wrap:wrap">
-      <a href="#/framework" class="btn" style="font-size:13px;padding:8px 15px">Explore the 7&times;4 Survival Matrix</a>
-      <a href="#/results" class="btn ghost" style="font-size:13px;padding:8px 15px">View Keyring Plot</a>
+      <a href="#/framework" class="btn" style="font-size:13.5px;padding:9px 16px;border-radius:10px">Explore the 7&times;4 Survival Matrix</a>
+      <a href="#/results" class="btn ghost" style="font-size:13.5px;padding:9px 16px;border-radius:10px">View Keyring Plot</a>
     </div>
   </section>`;
+}
+
+/* ---------- 7 ABCD Speed Round (Pulse Check) ---------- */
+const PULSE_QUESTIONS = [
+  {
+    plane: 1,
+    name: "Dignity & Recognition",
+    who: "Who",
+    blurb: "Who you are, respect, and equal standing",
+    a: "I **feel** respected and treated like an equal in my daily life.",
+    b: "I can **live** as who I am without having to hide or pretend just to get by.",
+    c: "I could **stand up for** or back someone who is being ignored, mistreated, or pushed around.",
+    d: "I **need** someone in my corner to back me up against unfair treatment or being put down."
+  },
+  {
+    plane: 2,
+    name: "Purpose & Opportunity",
+    who: "What",
+    blurb: "Goals, learning, work, and personal growth",
+    a: "I have a clear **sense** of what I want to do with my life and where I am heading.",
+    b: "I am **making real progress** each day toward my work, training, or personal goals.",
+    c: "I could **mentor**, teach a skill, or help open a door for someone trying to get ahead.",
+    d: "I **need** practical advice, training, or someone to open a door so I can get ahead."
+  },
+  {
+    plane: 3,
+    name: "Home & Environment",
+    who: "Where",
+    blurb: "Shelter, safety, utilities, and quiet space",
+    a: "I **know** my home has reliable power, clean water, and is safe from bad weather.",
+    b: "I **live** in a secure home without worry of being kicked out, broken into, or living in damp.",
+    c: "I could **lend a hand** with home repairs, heating, cooling, or offer a temporary place to stay.",
+    d: "I **need** urgent help with home repairs, power bills, or finding a safe place to live."
+  },
+  {
+    plane: 4,
+    name: "Rest & Joy",
+    who: "Why",
+    blurb: "Sleep, downtime, recreation, and mental recovery",
+    a: "I have enough **free time** and quiet space away from work, chores, and constant demands.",
+    b: "I regularly get **good sleep** and have time for fun, hobbies, or just relaxing.",
+    c: "I could **help out with chores or errands** so someone else can get a decent break.",
+    d: "I **need** a proper break, a quiet place to sleep, or relief from exhaustion."
+  },
+  {
+    plane: 5,
+    name: "Voice & Power",
+    who: "How",
+    blurb: "Agency, rights, legal standing, and standing up to bullies",
+    a: "I **know** my rights and have enough independence and money to make my own choices.",
+    b: "I have a **real say** over what happens to me and can stand up to bad bosses, landlords, or bureaucrats.",
+    c: "I could **advocate** for someone, lend my gear or vehicle, or back them against an unfair decision.",
+    d: "I **need** someone to back me in a dispute, help me deal with red tape, or lend me essential gear."
+  },
+  {
+    plane: 6,
+    name: "Truth & Courage",
+    who: "Cause",
+    blurb: "Honesty, moral backbone, and clean conscience",
+    a: "I **see** people around here being honest, keeping their word, and standing up for what is right.",
+    b: "I can **earn my living** with a clean conscience without being forced to lie, cheat, or compromise.",
+    c: "I could **stand by someone** through a tough fight or help make sure the truth comes out.",
+    d: "I **need** someone with backbone to stand with me through a hard fight or help me get a fair hearing."
+  },
+  {
+    plane: 7,
+    name: "Care & Nourishment",
+    who: "Effect",
+    blurb: "Food security, emotional support, and emergency help",
+    a: "I **know** I can get good, fresh food and have people nearby who genuinely care about me.",
+    b: "I **eat well every day** and have friends or neighbors I can count on if things go wrong.",
+    c: "I could **share food**, cook meals, give a lift, or check in on someone doing it tough.",
+    d: "I **need** groceries, practical help in an emergency, or someone to talk to when life gets overwhelming."
+  }
+];
+
+const PLANE_THEMES = {
+  1: { hue: '#7C3AED', bg: '#F8F6FD', border: '#DDD6FE', text: '#5B21B6', badgeBg: '#EDE9FE', tagBg: '#F3E8FF' }, // Iris Amethyst (Dignity)
+  2: { hue: '#0284C7', bg: '#F0F9FF', border: '#BAE6FD', text: '#0369A1', badgeBg: '#E0F2FE', tagBg: '#E0F2FE' }, // Sky Azure (Purpose)
+  3: { hue: '#16A34A', bg: '#F0FDF4', border: '#BBF7D0', text: '#15803D', badgeBg: '#DCFCE7', tagBg: '#DCFCE7' }, // Meadow Clover (Home)
+  4: { hue: '#D97706', bg: '#FFFBEB', border: '#FDE68A', text: '#B45309', badgeBg: '#FEF3C7', tagBg: '#FEF3C7' }, // Honey Gold (Rest)
+  5: { hue: '#2563EB', bg: '#EFF6FF', border: '#BFDBFE', text: '#1D4ED8', badgeBg: '#DBEAFE', tagBg: '#DBEAFE' }, // Cobalt Royal (Power)
+  6: { hue: '#E11D48', bg: '#FFF1F2', border: '#FECDD3', text: '#BE123C', badgeBg: '#FFE4E6', tagBg: '#FFE4E6' }, // Wild Rose (Truth)
+  7: { hue: '#EA580C', bg: '#FFF7ED', border: '#FFEDD5', text: '#C2410C', badgeBg: '#FFEDD5', tagBg: '#FFEDD5' }  // Tangerine Glow (Care)
+};
+
+function pulsePlaneAnswered(n){
+  return ['A','B','C','D'].filter(v=>STATE[`pulse|${n}|${v}`]).length;
+}
+function pulseTotalAnswered(){
+  return PULSE_QUESTIONS.reduce((acc,p)=>acc+pulsePlaneAnswered(p.plane),0);
+}
+
+function viewPulse(){
+  const answeredTotal = pulseTotalAnswered();
+  const pct = Math.round((answeredTotal / 28) * 100);
+
+  const cards = PULSE_QUESTIONS.map(p => {
+    const ansCount = pulsePlaneAnswered(p.plane);
+    const planeDone = ansCount === 4;
+    const th = PLANE_THEMES[p.plane] || { hue: HUES[p.plane], bg: '#FFFFFF', border: '#E2E8F0', text: '#1E293B', badgeBg: '#F1F5F9' };
+
+    return `
+    <article class="pulse-card" style="--pl:${th.hue};background:${th.bg};border:2px solid ${th.border};border-left:8px solid ${th.hue};border-radius:18px;box-shadow:0 4px 18px rgba(0,0,0,0.03);margin-bottom:28px">
+      <div class="pulse-header" style="border-bottom:1.5px solid ${th.border}">
+        <div>
+          <span style="display:inline-block;padding:3px 10px;border-radius:99px;background:${th.badgeBg};color:${th.text};font-size:12px;font-weight:700">Part ${p.plane} &middot; ${esc(p.who)}</span>
+          <h2 style="margin:6px 0 4px;font-family:var(--disp);font-size:24px;font-weight:700;color:${th.text}">${esc(p.name)}</h2>
+          <p style="margin:0;font-size:15px;color:#475569;line-height:1.45">${esc(p.blurb)}</p>
+        </div>
+        <div class="pulse-badge" style="font-size:13px;font-weight:600;padding:6px 14px;border-radius:99px;background:#FFFFFF;border:1.5px solid ${th.border};color:${th.text};box-shadow:0 2px 6px rgba(0,0,0,0.03)">
+          ${planeDone ? '&#10003; Complete' : `${ansCount}/4 answered`}
+        </div>
+      </div>
+
+      <div class="pulse-grid">
+        <div class="pulse-col" style="background:#FFFFFF;border:1.5px solid ${th.border};border-radius:14px;box-shadow:0 2px 10px rgba(0,0,0,0.02)">
+          <div class="pulse-col-tag" style="color:${th.text};border-bottom:1.5px solid ${th.border};font-size:12px;font-weight:700;letter-spacing:0">1. Lived Reality &middot; Sense &amp; Use</div>
+          <div class="pulse-q-box" style="border-color:${th.border}">
+            <p class="q" style="font-weight:500;color:#1E293B"><span style="display:inline-block;font-size:11.5px;font-weight:700;color:${th.text};background:${th.badgeBg};padding:2px 8px;border-radius:6px;margin-right:8px">A</span>${fmtQ(p.a)}</p>
+            ${segHTML(`pulse|${p.plane}|A`, null, AB_L)}
+          </div>
+          <div class="pulse-q-box" style="border-color:${th.border}">
+            <p class="q" style="font-weight:500;color:#1E293B"><span style="display:inline-block;font-size:11.5px;font-weight:700;color:${th.text};background:${th.badgeBg};padding:2px 8px;border-radius:6px;margin-right:8px">B</span>${fmtQ(p.b)}</p>
+            ${segHTML(`pulse|${p.plane}|B`, null, AB_L)}
+          </div>
+        </div>
+
+        <div class="pulse-col" style="background:#FFFFFF;border:1.5px solid ${th.border};border-radius:14px;box-shadow:0 2px 10px rgba(0,0,0,0.02)">
+          <div class="pulse-col-tag" style="color:${th.text};border-bottom:1.5px solid ${th.border};font-size:12px;font-weight:700;letter-spacing:0">2. Community Exchange &middot; Offer &amp; Need</div>
+          <div class="pulse-q-box" style="border-color:${th.border}">
+            <p class="q" style="font-weight:500;color:#1E293B"><span style="display:inline-block;font-size:11.5px;font-weight:700;color:${th.text};background:${th.badgeBg};padding:2px 8px;border-radius:6px;margin-right:8px">C</span>${fmtQ(p.c)}</p>
+            ${segHTML(`pulse|${p.plane}|C`, null, CA_L)}
+          </div>
+          <div class="pulse-q-box" style="border-color:${th.border}">
+            <p class="q" style="font-weight:500;color:#1E293B"><span style="display:inline-block;font-size:11.5px;font-weight:700;color:${th.text};background:${th.badgeBg};padding:2px 8px;border-radius:6px;margin-right:8px">D</span>${fmtQ(p.d)}</p>
+            ${segHTML(`pulse|${p.plane}|D`, null, DA_L)}
+          </div>
+        </div>
+      </div>
+
+      <div class="subnotes" style="margin-top:16px;padding:14px;background:#FFFFFF;border:1.5px solid ${th.border};border-radius:12px">
+        <label for="pnote_${p.plane}" style="color:${th.text};font-weight:700;font-size:12.5px;letter-spacing:0;text-transform:none">Notes on ${esc(p.name)} <span style="font-weight:400;color:#64748B">(optional thoughts or context)</span>:</label>
+        <textarea id="pnote_${p.plane}" data-text="pulse_note|${p.plane}" style="min-height:52px;border:1.5px solid ${th.border};border-radius:8px;padding:10px;font-family:var(--body);font-size:14.5px" placeholder="Add any details, context, or specific notes&hellip;">${esc(STATE['pulse_note|'+p.plane]||'')}</textarea>
+      </div>
+
+      <div style="margin-top:12px;padding-top:10px;border-top:1.5px dashed ${th.border};display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+        <a href="#/plane/${p.plane}" style="font-size:13px;font-weight:600;color:${th.text};text-decoration:none">
+          Explore all 42 detailed questions for Part ${p.plane} (${esc(p.name)}) &rarr;
+        </a>
+      </div>
+    </article>`;
+  }).join('');
+
+  return `
+  <div class="planehead" style="border-bottom:2px solid #E2E8F0;padding-bottom:22px">
+    <div style="display:inline-flex;align-items:center;gap:6px;padding:4px 12px;background:#EEF2FF;border:1px solid #C7D2FE;color:#4338CA;border-radius:99px;font-size:12.5px;font-weight:700;margin-bottom:10px">
+      &#9889; 2-Minute Speed Round &middot; Baseline Check
+    </div>
+    <h1 style="color:#0F172A;font-weight:800;letter-spacing:-0.02em">The Seven Vital Planes at a Glance</h1>
+    <p style="font-size:16px;color:#475569;max-width:62ch;line-height:1.55">Answer four simple questions for each of the seven life areas: what you <strong>sense</strong>, what you <strong>use</strong>, what you could <strong>offer</strong>, and what you <strong>need</strong>. Takes about 2 to 3 minutes to complete.</p>
+    <div style="margin-top:18px;display:flex;align-items:center;gap:14px;font-size:13px;font-weight:600">
+      <div style="flex:1;max-width:320px;height:12px;background:#E2E8F0;border-radius:99px;overflow:hidden;box-shadow:inset 0 1px 3px rgba(0,0,0,0.1)">
+        <div id="pulse_prog" style="width:${pct}%;height:100%;background:linear-gradient(90deg, #7C3AED 0%, #0284C7 20%, #16A34A 40%, #D97706 60%, #2563EB 75%, #E11D48 90%, #EA580C 100%);border-radius:99px;transition:width .3s ease"></div>
+      </div>
+      <span id="pulse_prog_txt" style="color:#334155">${answeredTotal} of 28 answered (${pct}%)</span>
+    </div>
+  </div>
+
+  <div style="margin:28px 0">
+    ${cards}
+  </div>
+
+  <div class="navrow" style="border-top:2px solid #E2E8F0;padding:24px 0 60px">
+    <a class="btn ghost" href="#/hub" style="border-radius:12px">&larr; Back to Survey Hub</a>
+    <a class="btn" href="#/pulse-results" style="background:#4F46E5;border-color:#4F46E5;border-radius:12px;box-shadow:0 4px 14px rgba(79,70,229,0.3)">View Baseline Diagnostics &rarr;</a>
+    <a class="btn" href="#/review" style="background:#4F46E5;border-color:#4F46E5;border-radius:12px;box-shadow:0 4px 14px rgba(79,70,229,0.3)">Review &amp; Hand In &rarr;</a>
+  </div>`;
+}
+
+
+function resultsSwitcherHTML(activeTab){
+  const pulseAns = pulseTotalAnswered();
+  const total = DATA.planes.reduce((a,p)=>a+planeAnswered(p.n),0);
+  return `
+  <div style="display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap">
+    <a class="btn ${activeTab==='pulse'?'':'ghost'}" href="#/pulse-results" style="border-radius:12px;font-size:13.5px;padding:9px 18px;${activeTab==='pulse'?'background:#4F46E5;border-color:#4F46E5;color:#fff;':''}">
+      &#9889; 2-Minute Baseline Diagnostics ${pulseAns ? `(${pulseAns}/28)` : ''}
+    </a>
+    <a class="btn ${activeTab==='matrix'?'':'ghost'}" href="#/results?view=matrix" style="border-radius:12px;font-size:13.5px;padding:9px 18px;${activeTab==='matrix'?'background:#4F46E5;border-color:#4F46E5;color:#fff;':''}">
+      &#128376; Full 294-Question Keyring Matrix ${total ? `(${total}/294)` : ''}
+    </a>
+  </div>`;
+}
+
+function pulseDiagnostics(){
+  const planes = PULSE_QUESTIONS.map(p => {
+    const a = Number(STATE[`pulse|${p.plane}|A`]) || 0;
+    const b = Number(STATE[`pulse|${p.plane}|B`]) || 0;
+    const c = Number(STATE[`pulse|${p.plane}|C`]) || 0;
+    const d = Number(STATE[`pulse|${p.plane}|D`]) || 0;
+    const note = STATE[`pulse_note|${p.plane}`] || '';
+    const answeredCount = [a, b, c, d].filter(Boolean).length;
+    
+    const livedSum = (a ? a : 0) + (b ? b : 0);
+    const livedCount = (a ? 1 : 0) + (b ? 1 : 0);
+    const livedAvg = livedCount ? (livedSum / livedCount) : 0;
+    const livedPct = livedCount ? Math.round(((livedAvg - 1) / 4) * 100) : null;
+    
+    const exchangeDiff = (c && d) ? (c - d) : null;
+    const awarenessGap = (a && b && (a - b >= 2));
+
+    return {
+      plane: p.plane,
+      name: p.name,
+      who: p.who,
+      blurb: p.blurb,
+      a, b, c, d,
+      offerText: p.c,
+      needText: p.d,
+      note,
+      answeredCount,
+      livedAvg,
+      livedPct,
+      exchangeDiff,
+      awarenessGap,
+      hue: HUES[p.plane] || '#4F46E5',
+      theme: PLANE_THEMES[p.plane]
+    };
+  });
+
+  const answeredPlanes = planes.filter(p => p.livedPct !== null);
+  const totalAnswered = planes.reduce((acc, p) => acc + p.answeredCount, 0);
+
+  const overallPct = answeredPlanes.length 
+    ? Math.round(answeredPlanes.reduce((acc, p) => acc + p.livedPct, 0) / answeredPlanes.length)
+    : null;
+
+  const sortedByHealth = [...answeredPlanes].sort((x, y) => y.livedAvg - x.livedAvg);
+  const strongest = sortedByHealth.length ? sortedByHealth[0] : null;
+  const weakest = sortedByHealth.length ? sortedByHealth[sortedByHealth.length - 1] : null;
+
+  const offers = planes.filter(p => p.c >= 3).sort((x, y) => y.c - x.c);
+  const needs = planes.filter(p => p.d >= 3).sort((x, y) => y.d - x.d);
+  const totalOfferSum = planes.reduce((acc, p) => acc + p.c, 0);
+  const totalNeedSum = planes.reduce((acc, p) => acc + p.d, 0);
+  const netExchange = totalOfferSum - totalNeedSum;
+
+  return {
+    planes,
+    totalAnswered,
+    answeredPlanesCount: answeredPlanes.length,
+    overallPct,
+    strongest,
+    weakest,
+    offers,
+    needs,
+    totalOfferSum,
+    totalNeedSum,
+    netExchange
+  };
+}
+
+function viewPulseResults(){
+  const diag = pulseDiagnostics();
+  const pulseAns = diag.totalAnswered;
+
+  if (pulseAns === 0) {
+    return `
+    ${resultsSwitcherHTML('pulse')}
+    <div class="planehead" style="border-bottom:2px solid #DCE4F8;padding-bottom:22px">
+      <div style="display:inline-flex;align-items:center;gap:6px;padding:4px 12px;background:#EEF2FF;border:1px solid #C7D2FE;color:#4338CA;border-radius:99px;font-size:12px;font-weight:700;margin-bottom:10px">
+        &#9889; Speed Round &middot; Baseline Diagnostics
+      </div>
+      <h1 style="color:#0F172A;font-weight:800;letter-spacing:-0.02em">No Baseline Answers Recorded Yet</h1>
+      <p style="font-size:16px;color:#475569;max-width:60ch;line-height:1.55">
+        Complete the 2-minute speed round to generate your personal life balance profile, detect pressure areas, and see your community mutual aid balance.
+      </p>
+    </div>
+    <div style="margin:30px 0;padding:26px;background:#FFFFFF;border:1.5px solid #DCE4F8;border-radius:16px;text-align:center">
+      <p style="font-size:16px;color:#334155;margin-bottom:18px">Answer 4 quick questions for each of the 7 vital areas. Takes about 2 to 3 minutes.</p>
+      <a class="btn" href="#/pulse" style="font-size:15px;padding:12px 24px;border-radius:12px">Start 2-Minute Speed Round &rarr;</a>
+    </div>
+    <div class="navrow">
+      <a class="btn ghost" href="#/hub" style="border-radius:12px">&larr; Back to Hub</a>
+    </div>`;
+  }
+
+  const ov = diag.overallPct;
+  let statusBadge = { label: 'Incomplete', color: '#64748B', bg: '#F1F5F9', desc: 'Answer more questions to reveal your life balance profile.' };
+  if (ov !== null) {
+    if (ov >= 85) statusBadge = { label: 'Thriving Foundation', color: '#16A34A', bg: '#DCFCE7', desc: 'High safety margins and strong resilience across key domains.' };
+    else if (ov >= 65) statusBadge = { label: 'Stable Baseline', color: '#0284C7', bg: '#E0F2FE', desc: 'Secure day-to-day standing with manageable life pressures.' };
+    else if (ov >= 45) statusBadge = { label: 'Moderate Strain', color: '#D97706', bg: '#FEF3C7', desc: 'Vulnerable to life shocks; specific lifelines under active stress.' };
+    else statusBadge = { label: 'Critical Strain', color: '#E11D48', bg: '#FFE4E6', desc: 'Systemic lifeline deficits requiring immediate community support.' };
+  }
+
+  let exchangeBadge = { label: 'Balanced Exchange', color: '#0284C7', bg: '#E0F2FE', desc: 'Your offers and needs are in healthy proportion.' };
+  if (diag.netExchange >= 3) {
+    exchangeBadge = { label: 'Net Contributor / Surplus Capacity', color: '#16A34A', bg: '#DCFCE7', desc: 'You have significant capacity and willingness to uplift neighbors in need.' };
+  } else if (diag.netExchange <= -3) {
+    exchangeBadge = { label: 'Support Needed / Sanctuary Phase', color: '#EA580C', bg: '#FFEDD5', desc: 'You are carrying heavy strain and could greatly benefit from mutual aid lifelines.' };
+  }
+
+  const planeCards = diag.planes.map(p => {
+    const th = p.theme || { hue: p.hue, bg: '#F8FAFC', border: '#DCE4F8', text: '#0F172A', badgeBg: '#EEF2FF' };
+    const pct = p.livedPct !== null ? p.livedPct : 0;
+    
+    let planeStatus = { text: 'Unanswered', color: '#94A3B8' };
+    if (p.livedPct !== null) {
+      if (pct >= 85) planeStatus = { text: 'Thriving (5/5)', color: '#16A34A' };
+      else if (pct >= 65) planeStatus = { text: 'Stable (4/5)', color: '#0284C7' };
+      else if (pct >= 45) planeStatus = { text: 'Moderate Strain (3/5)', color: '#D97706' };
+      else planeStatus = { text: 'Critical Deficit (1-2/5)', color: '#E11D48' };
+    }
+
+    return `
+    <article style="background:#FFFFFF;border:1.5px solid ${th.border};border-left:7px solid ${th.hue};border-radius:16px;padding:20px;margin-bottom:18px;box-shadow:0 3px 12px rgba(15,23,42,0.03)">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px;margin-bottom:12px">
+        <div>
+          <span style="font-size:11.5px;font-weight:700;color:${th.text};background:${th.badgeBg};padding:3px 10px;border-radius:99px">Part ${p.plane} &middot; ${esc(p.who)}</span>
+          <h3 style="margin:6px 0 2px;font-size:20px;font-weight:700;color:${th.text}">${esc(p.name)}</h3>
+          <p style="margin:0;font-size:14px;color:#64748B">${esc(p.blurb)}</p>
+        </div>
+        <div style="text-align:right">
+          <span style="font-size:12px;font-weight:700;color:${planeStatus.color};background:#FFFFFF;border:1.5px solid ${th.border};padding:4px 10px;border-radius:99px">
+            ${planeStatus.text}
+          </span>
+          <div style="font-size:18px;font-weight:800;color:${th.text};margin-top:4px">
+            ${p.livedAvg ? p.livedAvg.toFixed(1) + ' / 5' : '—'}
+          </div>
+        </div>
+      </div>
+
+      <div style="margin:12px 0 14px">
+        <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:600;color:#475569;margin-bottom:4px">
+          <span>Lived Reality Gauge</span>
+          <span>${pct}%</span>
+        </div>
+        <div style="height:10px;background:#E2E8F0;border-radius:99px;overflow:hidden">
+          <div style="width:${pct}%;height:100%;background:${th.hue};border-radius:99px;transition:width .4s ease"></div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;font-size:12px">
+        <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:8px;padding:8px 10px">
+          <span style="color:#64748B;display:block">A. Sense (Awareness)</span>
+          <strong style="font-size:14px;color:#0F172A">${p.a ? p.a + ' / 5' : '—'}</strong>
+        </div>
+        <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:8px;padding:8px 10px">
+          <span style="color:#64748B;display:block">B. Use (Reliance)</span>
+          <strong style="font-size:14px;color:#0F172A">${p.b ? p.b + ' / 5' : '—'}</strong>
+        </div>
+        <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:8px;padding:8px 10px">
+          <span style="color:#64748B;display:block">C. Offer (Give)</span>
+          <strong style="font-size:14px;color:#15803D">${p.c ? p.c + ' / 5' : '—'}</strong>
+        </div>
+        <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:8px;padding:8px 10px">
+          <span style="color:#64748B;display:block">D. Need (Demand)</span>
+          <strong style="font-size:14px;color:#C2410C">${p.d ? p.d + ' / 5' : '—'}</strong>
+        </div>
+      </div>
+
+      ${p.awarenessGap ? `
+      <div style="margin-top:10px;padding:8px 12px;background:#FEF3C7;border:1px solid #FDE68A;border-radius:8px;font-size:12.5px;color:#92400E">
+        <strong>&#9889; Awareness Gap:</strong> You know this exists (${p.a}/5), but are currently unable to rely on or live it daily (${p.b}/5).
+      </div>` : ''}
+
+      ${p.note ? `
+      <div style="margin-top:10px;padding:8px 12px;background:#F8FAFC;border-left:3px solid ${th.hue};border-radius:4px;font-size:13px;color:#475569;font-style:italic">
+        &ldquo;${esc(p.note)}&rdquo;
+      </div>` : ''}
+    </article>`;
+  }).join('');
+
+  const offersHTML = diag.offers.length ? diag.offers.map(o => `
+    <div style="padding:10px 12px;background:#F0FDF4;border:1.5px solid #BBF7D0;border-radius:10px;margin-bottom:8px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px">
+        <strong style="color:#15803D;font-size:13px">Part ${o.plane} &middot; ${esc(o.name)}</strong>
+        <span style="font-size:12px;font-weight:700;color:#15803D;background:#DCFCE7;padding:2px 8px;border-radius:99px">${o.c} / 5</span>
+      </div>
+      <p style="margin:0;font-size:13.5px;color:#166534;line-height:1.4">${fmtQ(o.offerText)}</p>
+    </div>
+  `).join('') : `<p style="font-size:14px;color:#64748B;font-style:italic">No high offers recorded (rated 3 or higher).</p>`;
+
+  const needsHTML = diag.needs.length ? diag.needs.map(n => `
+    <div style="padding:10px 12px;background:#FFF7ED;border:1.5px solid #FFEDD5;border-radius:10px;margin-bottom:8px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px">
+        <strong style="color:#C2410C;font-size:13px">Part ${n.plane} &middot; ${esc(n.name)}</strong>
+        <span style="font-size:12px;font-weight:700;color:#C2410C;background:#FFEDD5;padding:2px 8px;border-radius:99px">${n.d} / 5</span>
+      </div>
+      <p style="margin:0;font-size:13.5px;color:#9A3412;line-height:1.4">${fmtQ(n.needText)}</p>
+    </div>
+  `).join('') : `<p style="font-size:14px;color:#64748B;font-style:italic">No high needs recorded (rated 3 or higher).</p>`;
+
+  return `
+  ${resultsSwitcherHTML('pulse')}
+
+  <div class="print-header">
+    <div style="border-bottom:2px solid #16202B;padding-bottom:8px;margin-bottom:14px;display:flex;justify-content:space-between;align-items:flex-end">
+      <div>
+        <h1 style="margin:0;font-size:22px;font-family:var(--disp);color:#16202B">Community Baseline Diagnostic Report</h1>
+        <p style="margin:2px 0 0;font-size:12px;color:#5A6672;font-family:var(--mono)">7 Vital Planes Baseline Assessment &middot; Executive Diagnostics</p>
+      </div>
+      <div style="text-align:right;font-size:11px;font-family:var(--mono);color:#16202B">
+        <div><strong>Respondent:</strong> ${esc(STATE['label|name']||'Anonymous')}</div>
+        <div><strong>Location:</strong> ${esc(STATE['label|location']||'Unspecified')}</div>
+        <div><strong>Date:</strong> ${new Date().toLocaleDateString('en-AU',{year:'numeric',month:'short',day:'numeric'})}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="planehead" style="border-bottom:2px solid #DCE4F8;padding-bottom:22px">
+    <div style="display:inline-flex;align-items:center;gap:6px;padding:4px 12px;background:#EEF2FF;border:1px solid #C7D2FE;color:#4338CA;border-radius:99px;font-size:12px;font-weight:700;margin-bottom:10px">
+      &#9889; Speed Round &middot; Baseline Diagnostics
+    </div>
+    <h1 style="color:#0F172A;font-weight:800;letter-spacing:-0.02em">Your 7-Plane Baseline Profile</h1>
+    <p style="font-size:16px;color:#475569;max-width:64ch;line-height:1.55">
+      Synthesized from your 2-minute baseline check. Evaluates your lived security, flags vulnerability bottlenecks, and matches your community mutual aid exchange.
+    </p>
+
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:18px">
+      <div style="background:#FFFFFF;border:1.5px solid #DCE4F8;border-radius:14px;padding:12px 18px;box-shadow:0 2px 8px rgba(15,23,42,0.03);flex:1;min-width:200px">
+        <span style="font-size:11.5px;font-weight:700;color:#64748B;text-transform:uppercase;letter-spacing:0.04em;display:block">Lived Life Balance</span>
+        <div style="display:flex;align-items:baseline;gap:8px;margin-top:4px">
+          <strong style="font-size:22px;color:${statusBadge.color}">${ov !== null ? ov + '%' : '—'}</strong>
+          <span style="font-size:12px;font-weight:700;color:${statusBadge.color};background:${statusBadge.bg};padding:2px 8px;border-radius:99px">${statusBadge.label}</span>
+        </div>
+        <p style="margin:4px 0 0;font-size:12.5px;color:#64748B">${statusBadge.desc}</p>
+      </div>
+
+      <div style="background:#FFFFFF;border:1.5px solid #DCE4F8;border-radius:14px;padding:12px 18px;box-shadow:0 2px 8px rgba(15,23,42,0.03);flex:1;min-width:200px">
+        <span style="font-size:11.5px;font-weight:700;color:#64748B;text-transform:uppercase;letter-spacing:0.04em;display:block">Mutual Aid Balance</span>
+        <div style="display:flex;align-items:baseline;gap:8px;margin-top:4px">
+          <strong style="font-size:22px;color:${exchangeBadge.color}">${diag.netExchange > 0 ? '+' + diag.netExchange : diag.netExchange}</strong>
+          <span style="font-size:12px;font-weight:700;color:${exchangeBadge.color};background:${exchangeBadge.bg};padding:2px 8px;border-radius:99px">${exchangeBadge.label}</span>
+        </div>
+        <p style="margin:4px 0 0;font-size:12.5px;color:#64748B">${exchangeBadge.desc}</p>
+      </div>
+
+      <div style="background:#FFFFFF;border:1.5px solid #DCE4F8;border-radius:14px;padding:12px 18px;box-shadow:0 2px 8px rgba(15,23,42,0.03);flex:none">
+        <span style="font-size:11.5px;font-weight:700;color:#64748B;text-transform:uppercase;letter-spacing:0.04em;display:block">Baseline Coverage</span>
+        <strong style="font-size:22px;color:#0F172A;display:block;margin-top:4px">${pulseAns} / 28</strong>
+        <p style="margin:4px 0 0;font-size:12.5px;color:#64748B">Questions answered</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin:24px 0">
+    <div style="background:#FFFFFF;border:1.5px solid #BBF7D0;border-left:5px solid #16A34A;border-radius:14px;padding:16px 18px;box-shadow:0 3px 12px rgba(22,163,74,0.04)">
+      <span style="font-size:11px;font-weight:700;color:#15803D;text-transform:uppercase;letter-spacing:0.04em">&#x2714; Strongest Lifeline</span>
+      <h4 style="margin:6px 0 4px;font-size:17px;color:#14532D">${diag.strongest ? `Part ${diag.strongest.plane}: ${esc(diag.strongest.name)}` : 'None yet'}</h4>
+      <p style="margin:0;font-size:13.5px;color:#166534">${diag.strongest ? `Rating ${diag.strongest.livedAvg.toFixed(1)}/5. This area provides your sturdiest daily anchor and foundation.` : 'Complete more questions to detect your top asset.'}</p>
+    </div>
+
+    <div style="background:#FFFFFF;border:1.5px solid #FECDD3;border-left:5px solid #E11D48;border-radius:14px;padding:16px 18px;box-shadow:0 3px 12px rgba(225,29,72,0.04)">
+      <span style="font-size:11px;font-weight:700;color:#BE123C;text-transform:uppercase;letter-spacing:0.04em">&#x26A0; Primary Pressure Area</span>
+      <h4 style="margin:6px 0 4px;font-size:17px;color:#881337">${diag.weakest ? `Part ${diag.weakest.plane}: ${esc(diag.weakest.name)}` : 'None yet'}</h4>
+      <p style="margin:0;font-size:13.5px;color:#9F1239">${diag.weakest ? `Rating ${diag.weakest.livedAvg.toFixed(1)}/5. This is your primary vulnerability where strain or fatigue accumulates.` : 'Complete more questions to identify pressure areas.'}</p>
+    </div>
+
+    <div style="background:#FFFFFF;border:1.5px solid #BAE6FD;border-left:5px solid #0284C7;border-radius:14px;padding:16px 18px;box-shadow:0 3px 12px rgba(2,132,199,0.04)">
+      <span style="font-size:11px;font-weight:700;color:#0369A1;text-transform:uppercase;letter-spacing:0.04em">&#x1F91D; Top Community Gift</span>
+      <h4 style="margin:6px 0 4px;font-size:17px;color:#0C4A6E">${diag.offers.length ? `Part ${diag.offers[0].plane}: ${esc(diag.offers[0].name)}` : 'Not recorded'}</h4>
+      <p style="margin:0;font-size:13.5px;color:#075985">${diag.offers.length ? `Offer score ${diag.offers[0].c}/5. Your highest capacity to uplift, share, or mentor in the community.` : 'Rate what you could offer (Question C) to surface gifts.'}</p>
+    </div>
+  </div>
+
+  <div style="background:#FFFFFF;border:1.5px solid #DCE4F8;border-radius:16px;padding:22px;margin:28px 0;box-shadow:0 4px 16px rgba(15,23,42,0.03)">
+    <div style="margin-bottom:16px;border-bottom:1.5px solid #DCE4F8;padding-bottom:12px">
+      <span style="font-size:12px;font-weight:700;color:#4338CA;background:#EEF2FF;padding:3px 10px;border-radius:99px">&#x1F91D; Community Exchange Profile</span>
+      <h3 style="margin:6px 0 4px;font-size:20px;font-weight:700;color:#0F172A">Your Mutual Aid Gifts &amp; Needs</h3>
+      <p style="margin:0;font-size:14.5px;color:#475569">
+        This maps what you are willing to give versus where you could use a hand. In a healthy neighborhood, our surplus covers another's deficit.
+      </p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px">
+      <div>
+        <h4 style="margin:0 0 10px;font-size:15px;color:#15803D;display:flex;align-items:center;gap:6px">
+          <span>&#x25B2; What You Can Offer (Surplus)</span>
+        </h4>
+        ${offersHTML}
+      </div>
+      <div>
+        <h4 style="margin:0 0 10px;font-size:15px;color:#C2410C;display:flex;align-items:center;gap:6px">
+          <span>&#x25BC; Where You Need Support (Deficit)</span>
+        </h4>
+        ${needsHTML}
+      </div>
+    </div>
+  </div>
+
+  <div style="margin:30px 0">
+    <div style="margin-bottom:18px">
+      <h3 style="margin:0 0 4px;font-size:21px;font-weight:800;color:#0F172A">The Seven Vital Planes Breakdown</h3>
+      <p style="margin:0;font-size:15px;color:#475569">Detailed gauge of each vital area: Lived Reality (Sense &amp; Use), Exchange (Offer &amp; Need), and context notes.</p>
+    </div>
+    ${planeCards}
+  </div>
+
+  ${diag.weakest ? `
+  <div style="margin:26px 0;padding:20px 24px;background:#F0F9FF;border:2px solid #BAE6FD;border-left:7px solid #0284C7;border-radius:16px;box-shadow:0 4px 14px rgba(2,132,199,0.06);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px">
+    <div>
+      <span style="font-size:11.5px;font-weight:700;color:#0369A1;padding:3px 9px;background:#E0F2FE;border-radius:99px;display:inline-block;margin-bottom:4px">Recommended Deep-Dive</span>
+      <h4 style="margin:0 0 4px;font-size:18px;color:#0C4A6E">Want to explore Part ${diag.weakest.plane} (${esc(diag.weakest.name)}) in full?</h4>
+      <p style="margin:0;font-size:14px;color:#334155">Answer all 6 sub-indicators to pinpoint specific domestic, personal, or community obstacles.</p>
+    </div>
+    <a class="btn" href="#/plane/${diag.weakest.plane}" style="background:#0284C7;border-color:#0284C7;font-size:14px;padding:10px 18px;border-radius:10px;white-space:nowrap">Explore Part ${diag.weakest.plane} Details &rarr;</a>
+  </div>` : ''}
+
+  <div class="navrow" style="border-top:2px solid #DCE4F8;padding:24px 0 60px">
+    <a class="btn ghost" href="#/hub" style="border-radius:12px">&larr; Back to Hub</a>
+    <a class="btn ghost" href="#/pulse" style="border-radius:12px">Edit Speed Round Ratings</a>
+    <button class="btn ghost" onclick="window.print()" style="border-radius:12px">&#128438; Export PDF / Print Report</button>
+    <a class="btn" href="#/review" style="background:#4F46E5;border-color:#4F46E5;border-radius:12px;box-shadow:0 4px 14px rgba(79,70,229,0.3)">Review &amp; Hand In &rarr;</a>
+  </div>`;
 }
 
 function viewHub(){
   const total=DATA.planes.reduce((a,p)=>a+planeAnswered(p.n),0);
   const pct=Math.round(total/(CORE_PER_PLANE*7)*100);
   const started=total>0;
+  const pulseAns=pulseTotalAnswered();
   return `
   <section class="hero">
     <h1>A Community Survey of What We Have and What We Need</h1>
@@ -955,6 +1518,15 @@ function viewHub(){
   ${accountHTML()}
   ${labelHTML()}
   ${childListHTML()}
+
+  <div style="margin:0 0 24px;padding:18px 22px;background:#F0F9FF;border:2px solid #BAE6FD;border-left:7px solid #0284C7;border-radius:14px;box-shadow:0 4px 14px rgba(2,132,199,0.06);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px">
+    <div>
+      <span style="font-size:12px;font-weight:700;color:#0369A1;padding:3px 10px;background:#E0F2FE;border-radius:99px;display:inline-block;margin-bottom:6px">&#9889; 2-Minute Speed Round &middot; Baseline Check</span>
+      <h2 style="margin:0 0 4px;font-family:var(--disp);font-size:18px;font-weight:700;color:#0C4A6E">Short on time? Take the 7-Plane Baseline Check</h2>
+      <p style="margin:0;font-size:14.5px;color:#334155">Seven ABCD questions covering the essentials of each life area: what you sense, use, offer, and need.</p>
+    </div>
+    <a class="btn" href="#/pulse" style="background:#0284C7;border-color:#0284C7;font-size:14px;padding:10px 18px;white-space:nowrap;box-shadow:0 4px 12px rgba(2,132,199,0.28)">${pulseAns ? `Continue Speed Round (${pulseAns}/28) &rarr;` : 'Start 2-Minute Speed Round &rarr;'}</a>
+  </div>
 
   ${searchBarHTML('')}
   ${topicChipsHTML(['housing','food','clothing','education','work','health','money','safety','belonging','self-differentiation'])}
@@ -975,6 +1547,11 @@ function viewHub(){
   </nav>
 
   <div class="hubgrid">
+    <a class="tile" href="#/pulse">
+      <h3>&#9889; 2-Minute Speed Round</h3>
+      <p>Rapid baseline check across the 7 vital planes (Sense, Use, Offer, Need).</p>
+      <span class="st">${pulseAns ? `${pulseAns}/28 ANSWERED` : 'NOT STARTED'}</span>
+    </a>
     <a class="tile" href="#/framework">
       <h3>The Survival Matrix</h3>
       <p>The 7×4 architecture, dependency cascades, and the Plane Misidentification Error.</p>
@@ -1006,15 +1583,12 @@ function segHTML(key,val,labels){
   const cur=STATE[key]?Number(STATE[key]):null;
   const curLabel=cur&&labels&&labels[cur-1]?labels[cur-1]:'';
   return `<div class="seg" role="group" id="seg-${key}">
-    <div class="seg-row">
+    <div class="seg-row" data-val="${cur||0}">
       ${[1,2,3,4,5].map(i=>`
         <input type="radio" name="${key}" id="${key}~${i}" value="${i}"${STATE[key]==String(i)?' checked':''}>
-        <label for="${key}~${i}" title="${labels[i-1]}">${i}</label>`).join('')}
+        <label for="${key}~${i}" title="${labels[i-1]}" data-step="${i}">${i}</label>`).join('')}
       <button type="button" class="clr" data-clear="${key}">clear</button>
-    </div>
-    <div class="seg-meta">
-      <span class="seg-scale"><small>1: ${labels[0]}</small> &nbsp;·&nbsp; <small>5: ${labels[4]}</small></span>
-      <span class="seg-val" id="lbl-${key}">${curLabel?`Selected: ${curLabel}`:''}</span>
+      <span class="seg-val" id="lbl-${key}" style="margin-left:6px">${curLabel?`${cur}: ${curLabel}`:''}</span>
     </div>
   </div>`;
 }
@@ -1039,7 +1613,7 @@ function subHTML(s, idx){
       <span class="sid">${s.id}</span>
       <span class="snm">${esc(s.name)}</span>
       <span class="sdot">${done===6?'✓ ':''}${done}/6${fl?' +'+fl:''}</span>
-      <span class="saddr">${esc(s.src)} &rarr; ${esc(s.dst)}</span>
+      <span class="saddr">${esc(s.src)}</span>
     </summary>
     <div class="subbody">
       ${s.scales.map(sc=>`
@@ -1090,7 +1664,7 @@ function viewPlane(n){
     <p style="margin-top:6px">Do you <strong>know</strong> this exists or is available? Do you actually <strong>live, use, or rely on</strong> it in daily life?</p>
     ${searchBarHTML('')}
   </div>
-  <div class="planegrid">
+  <div class="planegrid" style="--pl:${HUES[n]}">
   ${tocHTML(p)}
   <div>
   ${tocMobHTML(p)}
@@ -1358,7 +1932,7 @@ function viewResults(){
   const rowHTML=(r)=>{
     const m=r.metrics;
     const rk=m.risk;
-    const badgeBg=rk>=70?'#8E3552':(rk>=40?'#B98B22':'#1F7A6B');
+    const badgeBg=rk>=70?'#E11D48':(rk>=40?'#D97706':'#16A34A');
     const badgeText=rk>=70?`${rk}% RISK`:(rk>=40?`${rk}% STRAIN`:`${rk}% STABLE`);
     const abTxt=(m.aMean!=null&&m.bMean!=null)?`A:${m.aMean.toFixed(1)} B:${m.bMean.toFixed(1)}`:'';
     
@@ -1375,6 +1949,7 @@ function viewResults(){
   };
 
   return `
+  ${resultsSwitcherHTML('matrix')}
   <div class="print-header">
     <div style="border-bottom:2px solid #16202B;padding-bottom:8px;margin-bottom:14px;display:flex;justify-content:space-between;align-items:flex-end">
       <div>
@@ -1409,11 +1984,11 @@ function viewResults(){
       ${(()=>{
         const v = sys.multViability;
         let vStat;
-        if(v >= 85) vStat = { label: 'Thriving / High Resilience', color: '#1F7A6B', benchmark: 'Top 15% (Well-Resourced & Balanced)', desc: 'All 7 vital areas are well-supported with strong safety buffers.' };
-        else if(v >= 65) vStat = { label: 'Stable / Typical Baseline', color: '#1F7A6B', benchmark: 'Typical Working Adult (~60–75%)', desc: 'Core needs met; managing standard life and time pressures.' };
-        else if(v >= 45) vStat = { label: 'Moderate Strain / Coping', color: '#B98B22', benchmark: 'Typical Under Living-Cost Pressure (~45–60%)', desc: 'Living with active economic or time pressure; vulnerable to sudden shocks (rent hikes, illness).' };
-        else if(v >= 25) vStat = { label: 'High Risk / Active Deficit', color: '#C05621', benchmark: 'Below Baseline (Action Needed)', desc: 'One or more vital lifelines (housing, sleep, or income) are severely compromised.' };
-        else vStat = { label: 'Critical Systemic Breakdown', color: '#8E3552', benchmark: 'Crisis Threshold (< 25%)', desc: 'Multiple compounding failures across vital survival planes.' };
+        if(v >= 85) vStat = { label: 'Thriving / High Resilience', color: '#16A34A', benchmark: 'Top 15% (Well-Resourced & Balanced)', desc: 'All 7 vital areas are well-supported with strong safety buffers.' };
+        else if(v >= 65) vStat = { label: 'Stable / Typical Baseline', color: '#16A34A', benchmark: 'Typical Working Adult (~60–75%)', desc: 'Core needs met; managing standard life and time pressures.' };
+        else if(v >= 45) vStat = { label: 'Moderate Strain / Coping', color: '#D97706', benchmark: 'Typical Under Living-Cost Pressure (~45–60%)', desc: 'Living with active economic or time pressure; vulnerable to sudden shocks (rent hikes, illness).' };
+        else if(v >= 25) vStat = { label: 'High Risk / Active Deficit', color: '#EA580C', benchmark: 'Below Baseline (Action Needed)', desc: 'One or more vital lifelines (housing, sleep, or income) are severely compromised.' };
+        else vStat = { label: 'Critical Systemic Breakdown', color: '#E11D48', benchmark: 'Crisis Threshold (< 25%)', desc: 'Multiple compounding failures across vital survival planes.' };
 
         return `
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:16px">
@@ -1448,8 +2023,8 @@ function viewResults(){
       })()}
 
       ${sys.worstChokepoint?`
-      <div style="border-left:4px solid #8E3552;background:var(--paper);padding:12px 14px;border-radius:0 3px 3px 0;font-size:14px">
-        <strong style="color:#8E3552;font-size:14.5px">Chain Reaction Alert: Strain starting in Plane ${sys.worstChokepoint.plane.n} (${sys.worstChokepoint.plane.name})</strong>
+      <div style="border-left:4px solid #E11D48;background:var(--paper);padding:12px 14px;border-radius:0 3px 3px 0;font-size:14px">
+        <strong style="color:#E11D48;font-size:14.5px">Chain Reaction Alert: Strain starting in Plane ${sys.worstChokepoint.plane.n} (${sys.worstChokepoint.plane.name})</strong>
         <p style="margin:4px 0 0;color:var(--ink-soft);line-height:1.5">Problems don't stay in isolation. When your <strong>${sys.worstChokepoint.plane.name}</strong> is under strain, it creates friction that drains your ability to sustain <strong>Plane ${sys.worstChokepoint.impacted.n} (${sys.worstChokepoint.impacted.name})</strong>. Relieving pressure at ${sys.worstChokepoint.plane.name} will have the biggest ripple effect across your life.</p>
       </div>`:''}
     </div>
@@ -1489,6 +2064,66 @@ function viewResults(){
         </div>`).join('')}
     </div>
   </div>
+
+  ${(()=>{
+    const pulseTotal = pulseTotalAnswered();
+    if(!pulseTotal) return '';
+    return `
+    <div class="tail" style="margin-top:22px">
+      <div style="border:1px solid var(--rule);border-radius:4px;background:var(--paper-2);padding:18px 20px">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:10px;margin-bottom:14px">
+          <div>
+            <span style="font-family:var(--mono);font-size:11px;font-weight:700;color:var(--p2);text-transform:uppercase">Baseline Overview</span>
+            <h3 style="margin:2px 0 0">&#9889; 2-Minute Speed Round Baseline</h3>
+          </div>
+          <span style="font-family:var(--mono);font-size:11px;color:var(--ink-soft);text-transform:uppercase">${pulseTotal} of 28 Answered</span>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px">
+          ${PULSE_QUESTIONS.map(p => {
+            const a = STATE[`pulse|${p.plane}|A`];
+            const b = STATE[`pulse|${p.plane}|B`];
+            const c = STATE[`pulse|${p.plane}|C`];
+            const d = STATE[`pulse|${p.plane}|D`];
+            const note = STATE[`pulse_note|${p.plane}`];
+            if(!a && !b && !c && !d && !note) return '';
+            return `
+            <div style="background:var(--paper);border:1px solid var(--rule);border-left:4px solid ${HUES[p.plane]};border-radius:3px;padding:12px">
+              <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+                <strong style="font-size:14.5px;color:var(--ink)">Part ${p.plane} &middot; ${esc(p.name)}</strong>
+                <small style="font-family:var(--mono);color:var(--ink-soft)">${esc(p.who)}</small>
+              </div>
+              <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;font-family:var(--mono);font-size:11px;text-align:center;margin:8px 0">
+                <div style="background:var(--paper-2);padding:4px 2px;border-radius:2px">
+                  <span style="color:var(--ink-soft);display:block">Sense</span>
+                  <strong>${a ? a + '/5' : '-'}</strong>
+                </div>
+                <div style="background:var(--paper-2);padding:4px 2px;border-radius:2px">
+                  <span style="color:var(--ink-soft);display:block">Use</span>
+                  <strong>${b ? b + '/5' : '-'}</strong>
+                </div>
+                <div style="background:var(--paper-2);padding:4px 2px;border-radius:2px">
+                  <span style="color:var(--ink-soft);display:block">Offer</span>
+                  <strong>${c ? c + '/5' : '-'}</strong>
+                </div>
+                <div style="background:var(--paper-2);padding:4px 2px;border-radius:2px">
+                  <span style="color:var(--ink-soft);display:block">Need</span>
+                  <strong>${d ? d + '/5' : '-'}</strong>
+                </div>
+              </div>
+              ${note ? `<p style="margin:6px 0 0;font-size:12.5px;color:var(--ink-soft);font-style:italic">&ldquo;${esc(note)}&rdquo;</p>` : ''}
+            </div>`;
+          }).filter(Boolean).join('')}
+        </div>
+        <div style="margin-top:16px;padding:16px 20px;background:#F0F9FF;border:1.5px solid #BAE6FD;border-radius:12px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+          <div>
+            <span style="font-size:11.5px;font-weight:700;color:#0369A1;background:#E0F2FE;padding:2px 8px;border-radius:99px">&#9889; Dedicated Baseline Report Available</span>
+            <p style="margin:4px 0 0;font-size:14px;color:#0C4A6E">View your 7-plane life balance gauges, pressure point alerts, and mutual aid balance.</p>
+          </div>
+          <a class="btn" href="#/pulse-results" style="font-size:13.5px;padding:8px 16px;border-radius:10px;background:#0284C7;border-color:#0284C7">Open Speed Round Results &rarr;</a>
+        </div>
+      </div>
+    </div>`;
+  })()}
   <div class="navrow">
     <a class="btn ghost" href="#/hub">Back to the start</a>
     <button class="btn ghost" onclick="window.print()">&#128438; Export PDF / Print Report</button>
@@ -1498,6 +2133,7 @@ function viewResults(){
 
 function viewReview(){
   const total=DATA.planes.reduce((a,p)=>a+planeAnswered(p.n),0);
+  const pulseAns=pulseTotalAnswered();
   const rows=DATA.planes.map(p=>{
     const pc=planePct(p.n),fl=flagCount(p.n);
     const openTxt=STATE['open|'+p.n]?'yes':'—';
@@ -1517,6 +2153,17 @@ function viewReview(){
     <p>${total} answers recorded. Tap any part to go back and change it. Nothing is sent until you press Submit below.</p>
   </div>
   <nav class="bands">${rows}</nav>
+
+  <section class="tail" style="margin:16px 0 22px;border:1px solid var(--rule);border-left:5px solid var(--p2);border-radius:4px;background:var(--paper-2);padding:16px 20px">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+      <div>
+        <h3 style="margin:0 0 4px;font-size:17px">&#9889; 2-Minute Speed Round (7 Questions)</h3>
+        <p style="margin:0;font-size:14px;color:var(--ink-soft)">${pulseAns ? `${pulseAns} of 28 speed round questions answered across 7 planes.` : 'Rapid baseline check across all 7 life areas.'}</p>
+      </div>
+      <a class="btn ghost" href="#/pulse" style="font-size:13px;padding:7px 14px">${pulseAns ? 'Edit Speed Round answers &rarr;' : 'Take Speed Round &rarr;'}</a>
+    </div>
+  </section>
+
   ${accountHTML()}
   ${labelHTML()}
   ${childListHTML()}
@@ -1580,6 +2227,26 @@ function buildExport(){
       text: STATE['feedback|text'] || ''
     };
   }
+  out.speed_round = {};
+  PULSE_QUESTIONS.forEach(p=>{
+    const a = STATE[`pulse|${p.plane}|A`] ? +STATE[`pulse|${p.plane}|A`] : null;
+    const b = STATE[`pulse|${p.plane}|B`] ? +STATE[`pulse|${p.plane}|B`] : null;
+    const c = STATE[`pulse|${p.plane}|C`] ? +STATE[`pulse|${p.plane}|C`] : null;
+    const d = STATE[`pulse|${p.plane}|D`] ? +STATE[`pulse|${p.plane}|D`] : null;
+    const note = STATE[`pulse_note|${p.plane}`] || null;
+    if(a || b || c || d || note){
+      out.speed_round[p.plane] = {
+        plane: p.plane,
+        name: p.name,
+        axis: p.who,
+        A: a,
+        B: b,
+        C: c,
+        D: d,
+        note: note
+      };
+    }
+  });
   DATA.planes.forEach(p=>{
     const pl={name:p.name,answered:planeAnswered(p.n),of:CORE_PER_PLANE,sub_indicators:{},open_response:STATE['open|'+p.n]||null,
       consent:{follow_up:!!STATE['consent|'+p.n+'|support'],contribute:!!STATE['consent|'+p.n+'|contribute']}};
@@ -1827,24 +2494,24 @@ function viewFramework(){
         <div style="background:var(--paper);border:1px solid var(--rule);border-radius:3px;padding:12px">
           <strong style="font-size:14px;color:var(--ink);display:block;margin-bottom:6px">2. Life Balance Benchmark Ranges</strong>
           <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px;font-size:12.5px">
-            <div style="border-left:3px solid #1F7A6B;padding:6px 8px;background:var(--paper-2)">
-              <strong style="color:#1F7A6B">85% – 100%</strong>: <strong>Thriving</strong><br>
+            <div style="border-left:3px solid #16A34A;padding:6px 8px;background:var(--paper-2)">
+              <strong style="color:#16A34A">85% – 100%</strong>: <strong>Thriving</strong><br>
               <span style="color:var(--ink-soft)">Top 15%. High safety margins across all 7 domains.</span>
             </div>
-            <div style="border-left:3px solid #1F7A6B;padding:6px 8px;background:var(--paper-2)">
-              <strong style="color:#1F7A6B">65% – 84%</strong>: <strong>Stable Baseline</strong><br>
+            <div style="border-left:3px solid #16A34A;padding:6px 8px;background:var(--paper-2)">
+              <strong style="color:#16A34A">65% – 84%</strong>: <strong>Stable Baseline</strong><br>
               <span style="color:var(--ink-soft)">Typical for working adults; managing time/work stress.</span>
             </div>
-            <div style="border-left:3px solid #B98B22;padding:6px 8px;background:var(--paper-2)">
-              <strong style="color:#B98B22">45% – 64%</strong>: <strong>Moderate Strain</strong><br>
+            <div style="border-left:3px solid #D97706;padding:6px 8px;background:var(--paper-2)">
+              <strong style="color:#D97706">45% – 64%</strong>: <strong>Moderate Strain</strong><br>
               <span style="color:var(--ink-soft)">Typical under living-cost pressure; vulnerable to shocks.</span>
             </div>
-            <div style="border-left:3px solid #C05621;padding:6px 8px;background:var(--paper-2)">
-              <strong style="color:#C05621">25% – 44%</strong>: <strong>High Risk</strong><br>
+            <div style="border-left:3px solid #EA580C;padding:6px 8px;background:var(--paper-2)">
+              <strong style="color:#EA580C">25% – 44%</strong>: <strong>High Risk</strong><br>
               <span style="color:var(--ink-soft)">Active lifeline deficit in housing, sleep, or income.</span>
             </div>
-            <div style="border-left:3px solid #8E3552;padding:6px 8px;background:var(--paper-2)">
-              <strong style="color:#8E3552">&lt; 25%</strong>: <strong>Critical Emergency</strong><br>
+            <div style="border-left:3px solid #E11D48;padding:6px 8px;background:var(--paper-2)">
+              <strong style="color:#E11D48">&lt; 25%</strong>: <strong>Critical Emergency</strong><br>
               <span style="color:var(--ink-soft)">Compound systemic breakdown across multiple planes.</span>
             </div>
           </div>
@@ -1974,7 +2641,7 @@ function searchSubHTML(items){
   }).join('');
   return `<details class="sub" id="s${s.id}" open>
     <summary><span class="sid">${s.id}</span><span class="snm">${esc(s.name)}</span><span class="sdot">${done}/6${fl?' +'+fl:''}</span>
-      <span class="saddr">${esc(s.src)} &rarr; ${esc(s.dst)}</span></summary>
+      <span class="saddr">${esc(s.src)}</span></summary>
     <div class="subbody">${body}
       <p class="note"><a href="#/plane/${s.id.split('.')[0]}/${s.id}">See all of ${s.id} on its part page →</a></p></div>
   </details>`;
@@ -2052,8 +2719,18 @@ function render(){
   v.className='wrap';
   if(h.startsWith('#/plane/')){ m=+h.split('/')[2]; currentPlane=m; v.className='wrap wide'; v.innerHTML=viewPlane(m); }
   else if(h.startsWith('#/search')){ currentPlane=null; v.className='wrap wide'; let sq=''; try{ sq=decodeURIComponent(h.slice(9)); }catch(e){ sq=h.slice(9); } v.innerHTML=viewSearch(sq); const qb=document.getElementById('qbox'); if(qb&&!sq) qb.focus(); }
+  else if(h.startsWith('#/pulse-results') || h.startsWith('#/speed-results')){ currentPlane=null; v.className='wrap wide'; v.innerHTML=viewPulseResults(); }
+  else if(h.startsWith('#/pulse') || h.startsWith('#/speed')){ currentPlane=null; v.className='wrap wide'; v.innerHTML=viewPulse(); }
   else if(h.startsWith('#/extras')) v.innerHTML=viewExtras();
-  else if(h.startsWith('#/results')) v.innerHTML=viewResults();
+  else if(h.startsWith('#/results')){
+    const total=DATA.planes.reduce((a,p)=>a+planeAnswered(p.n),0);
+    const pulseAns=pulseTotalAnswered();
+    if (total === 0 && pulseAns > 0 && !location.hash.includes('view=matrix')) {
+      currentPlane=null; v.className='wrap wide'; v.innerHTML=viewPulseResults();
+    } else {
+      v.innerHTML=viewResults();
+    }
+  }
   else if(h.startsWith('#/framework') || h.startsWith('#/matrix')) v.innerHTML=viewFramework();
   else if(h.startsWith('#/review')){ v.innerHTML=viewReview(); wireReview(); }
   else { currentPlane=null; v.innerHTML=viewHub(); }
@@ -2214,12 +2891,14 @@ function wireLabel(){
 document.addEventListener('change',e=>{
   const t=e.target;
   if(t.type==='radio'){
+    const row=t.closest('.seg-row');
+    if(row) row.dataset.val=t.value;
     STATE[t.name]=t.value; queueSave(); syncCounts(t); if(currentPlane) refreshToc();
     const lbl=document.getElementById('lbl-'+t.name);
     if(lbl){
-      const labels=t.name.includes('|flag|Ca')?CA_L:t.name.includes('|flag|Da')?DA_L:(t.name.includes('|flag|Cb')||t.name.includes('|flag|Db'))?BL_L:AB_L;
+      const labels=(t.name.includes('|flag|Ca')||t.name.endsWith('|C'))?CA_L:(t.name.includes('|flag|Da')||t.name.endsWith('|D'))?DA_L:(t.name.includes('|flag|Cb')||t.name.includes('|flag|Db'))?BL_L:AB_L;
       const idx=Number(t.value)-1;
-      if(labels[idx]) lbl.textContent='Selected: '+labels[idx];
+      if(labels[idx]) lbl.textContent=t.value+': '+labels[idx];
     }
   }
   else if(t.type==='checkbox'&&t.dataset.check){ STATE[t.dataset.check]=t.checked?1:0; queueSave(); }
@@ -2285,6 +2964,8 @@ document.addEventListener('click',e=>{
     const b=e.target.closest('[data-clear]'); if(!b) return;
   const k=b.dataset.clear;
   delete STATE[k]; delete STATE[k+'|last'];
+  const row=b.closest('.seg')?b.closest('.seg').querySelector('.seg-row'):null;
+  if(row) row.dataset.val='0';
   document.querySelectorAll(`input[name="${CSS.escape(k)}"]`).forEach(r=>r.checked=false);
   const li=document.querySelector(`input[data-last="${CSS.escape(k)}"]`); if(li) li.value='';
   queueSave(); syncCounts(b); if(currentPlane) refreshToc();
@@ -2292,22 +2973,43 @@ document.addEventListener('click',e=>{
   toast('Cleared');
 });
 function syncCounts(node){
-  const d=node.closest('details.sub'); if(!d) return;
-  const id=d.id.slice(1);
-  const done=['Micro','Meso','Macro'].reduce((a,sc)=>a+(STATE[`${id}|${sc}|A`]?1:0)+(STATE[`${id}|${sc}|B`]?1:0),0);
-  const fl=['Ca','Cb','Da','Db'].filter(v=>STATE[`${id}|flag|${v}`]).length;
-  const dot=d.querySelector('.sdot'); if(dot) dot.textContent=`${done===6?'✓ ':''}${done}/6${fl?' +'+fl:''}`;
-  const fs=d.querySelector('.flags>summary span:last-child'); if(fs) fs.textContent=fl?fl+' set':'tap to open';
-  if(done===6 && currentPlane){
-    const nextSub=d.nextElementSibling;
-    if(nextSub && nextSub.classList.contains('sub') && !nextSub.open){
-      setTimeout(()=>{
-        if(!nextSub.open){
-          nextSub.open=true;
-          const y=nextSub.getBoundingClientRect().top+window.scrollY-84;
-          window.scrollTo({top:y,behavior:'smooth'});
-        }
-      }, 350);
+  const d=node.closest('details.sub');
+  if(d){
+    const id=d.id.slice(1);
+    const done=['Micro','Meso','Macro'].reduce((a,sc)=>a+(STATE[`${id}|${sc}|A`]?1:0)+(STATE[`${id}|${sc}|B`]?1:0),0);
+    const fl=['Ca','Cb','Da','Db'].filter(v=>STATE[`${id}|flag|${v}`]).length;
+    const dot=d.querySelector('.sdot'); if(dot) dot.textContent=`${done===6?'✓ ':''}${done}/6${fl?' +'+fl:''}`;
+    const fs=d.querySelector('.flags>summary span:last-child'); if(fs) fs.textContent=fl?fl+' set':'tap to open';
+    if(done===6 && currentPlane){
+      const nextSub=d.nextElementSibling;
+      if(nextSub && nextSub.classList.contains('sub') && !nextSub.open){
+        setTimeout(()=>{
+          if(!nextSub.open){
+            nextSub.open=true;
+            const y=nextSub.getBoundingClientRect().top+window.scrollY-84;
+            window.scrollTo({top:y,behavior:'smooth'});
+          }
+        }, 350);
+      }
+    }
+  }
+  const pc=node.closest('.pulse-card');
+  if(pc){
+    const key=(node.name||(node.dataset?node.dataset.clear:'')||'');
+    const m=key.match(/^pulse\|(\d)/);
+    if(m){
+      const pNum=+m[1];
+      const ansCount=pulsePlaneAnswered(pNum);
+      const badge=pc.querySelector('.pulse-badge');
+      if(badge) badge.textContent=`${ansCount===4?'✓ ':''}${ansCount}/4 answered`;
+    }
+    const prog=document.getElementById('pulse_prog');
+    const progTxt=document.getElementById('pulse_prog_txt');
+    if(prog && progTxt){
+      const tot=pulseTotalAnswered();
+      const pct=Math.round((tot/28)*100);
+      prog.style.width=pct+'%';
+      progTxt.textContent=`${tot} of 28 answered (${pct}%)`;
     }
   }
 }
