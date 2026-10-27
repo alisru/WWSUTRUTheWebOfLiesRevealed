@@ -903,6 +903,9 @@ function renderMini(){
 
 /* ---------- views ---------- */
 function esc(s){ return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function fmtClean(s){
+  return esc(s).replace(/\[\[(.*?)\]\]/g, '$1').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+}
 function fmtQ(s, qKey){
   let out = esc(s).replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
   out = out.replace(/\[\[(.*?)\]\]/g, (match, phrase) => {
@@ -1354,14 +1357,22 @@ function resultsSwitcherHTML(activeTab){
 
 function pulseDiagnostics(){
   const planes = PULSE_QUESTIONS.map(p => {
-    const a = Number(STATE[`pulse|${p.plane}|A`]) || 0;
-    const b = Number(STATE[`pulse|${p.plane}|B`]) || 0;
-    const c = Number(STATE[`pulse|${p.plane}|C`]) || 0;
-    const d = Number(STATE[`pulse|${p.plane}|D`]) || 0;
+    const aVal = STATE[`pulse|${p.plane}|A`];
+    const bVal = STATE[`pulse|${p.plane}|B`];
+    const cVal = STATE[`pulse|${p.plane}|C`];
+    const dVal = STATE[`pulse|${p.plane}|D`];
+
+    const a = (aVal && aVal !== 'NA') ? Number(aVal) : 0;
+    const b = (bVal && bVal !== 'NA') ? Number(bVal) : 0;
+    const c = (cVal && cVal !== 'NA') ? Number(cVal) : 0;
+    const d = (dVal && dVal !== 'NA') ? Number(dVal) : 0;
     const note = STATE[`pulse_note|${p.plane}`] || '';
     const offerTags = getSelectedPulseTags(p.plane, 'C');
     const needTags = getSelectedPulseTags(p.plane, 'D');
-    const answeredCount = [a, b, c, d].filter(Boolean).length;
+
+    // Count both valid numeric answers and 'NA' answers so totals match pulseTotalAnswered()
+    const isAnswered = v => v !== undefined && v !== null && v !== '';
+    const answeredCount = [aVal, bVal, cVal, dVal].filter(isAnswered).length;
     
     const livedSum = (a ? a : 0) + (b ? b : 0);
     const livedCount = (a ? 1 : 0) + (b ? 1 : 0);
@@ -1379,6 +1390,7 @@ function pulseDiagnostics(){
       who: p.who,
       blurb: p.blurb,
       a, b, c, d,
+      aVal, bVal, cVal, dVal,
       offerText: p.c,
       needText: p.d,
       offerTags,
@@ -1403,9 +1415,23 @@ function pulseDiagnostics(){
     ? Math.round(answeredPlanes.reduce((acc, p) => acc + p.livedPct, 0) / answeredPlanes.length)
     : null;
 
+  const rawAvg = answeredPlanes.length
+    ? (answeredPlanes.reduce((acc, p) => acc + p.livedAvg, 0) / answeredPlanes.length)
+    : 0;
+
+  // Tie-handling for strongest lifelines
   const sortedByHealth = [...answeredPlanes].sort((x, y) => y.livedAvg - x.livedAvg);
-  const strongest = sortedByHealth.length ? sortedByHealth[0] : null;
-  const weakest = sortedByHealth.length ? sortedByHealth[sortedByHealth.length - 1] : null;
+  const maxHealth = sortedByHealth.length ? sortedByHealth[0].livedAvg : null;
+  const strongestList = maxHealth !== null ? sortedByHealth.filter(p => Math.abs(p.livedAvg - maxHealth) < 0.05) : [];
+  const strongest = strongestList.length ? strongestList[0] : null;
+
+  const minHealth = sortedByHealth.length ? sortedByHealth[sortedByHealth.length - 1].livedAvg : null;
+  const weakestList = minHealth !== null ? sortedByHealth.filter(p => Math.abs(p.livedAvg - minHealth) < 0.05) : [];
+  const weakest = weakestList.length ? weakestList[0] : null;
+
+  // Bottleneck detection (vital plane with livedAvg <= 2.5 or urgent need d >= 4)
+  const bottlenecks = answeredPlanes.filter(p => p.livedAvg > 0 && p.livedAvg <= 2.5);
+  const urgentNeeds = answeredPlanes.filter(p => p.d >= 4);
 
   // Capture any offer or need that has either a numeric rating or selected tag
   const offers = planes.filter(p => p.c >= 1 || p.offerTags.length > 0).sort((x, y) => (y.c || 0) - (x.c || 0));
@@ -1419,8 +1445,13 @@ function pulseDiagnostics(){
     totalAnswered,
     answeredPlanesCount: answeredPlanes.length,
     overallPct,
+    rawAvg,
     strongest,
+    strongestList,
     weakest,
+    weakestList,
+    bottlenecks,
+    urgentNeeds,
     offers,
     needs,
     totalOfferSum,
@@ -1457,17 +1488,62 @@ function viewPulseResults(){
   const ov = diag.overallPct;
   let statusBadge = { label: 'Incomplete', color: '#64748B', bg: '#F1F5F9', desc: 'Answer more questions to reveal your life balance profile.' };
   if (ov !== null) {
-    if (ov >= 85) statusBadge = { label: 'Doing Great', color: '#16A34A', bg: '#DCFCE7', desc: 'You have strong safety buffers and low stress across your daily life.' };
-    else if (ov >= 65) statusBadge = { label: 'Doing Okay', color: '#0284C7', bg: '#E0F2FE', desc: 'Your main needs are met and you are managing everyday life well.' };
-    else if (ov >= 45) statusBadge = { label: 'Under Stress', color: '#D97706', bg: '#FEF3C7', desc: 'You are carrying heavy strain and a sudden shock could cause real trouble.' };
-    else statusBadge = { label: 'In Crisis', color: '#E11D48', bg: '#FFE4E6', desc: 'Core lifelines are broken or missing. You need immediate support.' };
+    const bNames = diag.bottlenecks.map(b => b.name).join(', ');
+    const uNames = diag.urgentNeeds.map(u => u.name).join(', ');
+
+    if (diag.bottlenecks.length > 0) {
+      if (ov >= 65) {
+        statusBadge = {
+          label: 'Doing Okay (Bottleneck Flagged)',
+          color: '#D97706',
+          bg: '#FEF3C7',
+          desc: 'Several strong foundations, but acute strain in ' + bNames + ' requires attention.'
+        };
+      } else if (ov >= 45) {
+        statusBadge = {
+          label: 'Under Stress',
+          color: '#D97706',
+          bg: '#FEF3C7',
+          desc: 'Living under active pressure, with critical strain in ' + bNames + '.'
+        };
+      } else {
+        statusBadge = {
+          label: 'In Crisis',
+          color: '#E11D48',
+          bg: '#FFE4E6',
+          desc: 'Multiple vital lifelines (' + (bNames || 'essential needs') + ') have broken down.'
+        };
+      }
+    } else if (diag.urgentNeeds.length > 0) {
+      statusBadge = {
+        label: 'Managing (Urgent Need Flagged)',
+        color: '#0284C7',
+        bg: '#E0F2FE',
+        desc: 'Day-to-day baseline is stable, but an urgent community support request was flagged in ' + uNames + '.'
+      };
+    } else {
+      if (ov >= 85) statusBadge = { label: 'Doing Great', color: '#16A34A', bg: '#DCFCE7', desc: 'All evaluated areas are well-supported with healthy daily margins.' };
+      else if (ov >= 65) statusBadge = { label: 'Doing Okay', color: '#0284C7', bg: '#E0F2FE', desc: 'Core needs met; managing everyday life well with no acute deficits.' };
+      else if (ov >= 45) statusBadge = { label: 'Under Stress', color: '#D97706', bg: '#FEF3C7', desc: 'You are carrying heavy strain and a sudden shock could cause real trouble.' };
+      else statusBadge = { label: 'In Crisis', color: '#E11D48', bg: '#FFE4E6', desc: 'Core lifelines are broken or missing. You need immediate support.' };
+    }
   }
 
-  let exchangeBadge = { label: 'In Balance', color: '#0284C7', bg: '#E0F2FE', desc: 'What you are able to give and what you need are about even.' };
+  let exchangeBadge = { label: 'In Balance', color: '#0284C7', bg: '#E0F2FE', desc: 'What you can offer (' + diag.totalOfferSum + ' pts) and what you need (' + diag.totalNeedSum + ' pts) are roughly equal.' };
   if (diag.netExchange >= 3) {
-    exchangeBadge = { label: 'Can Help Others', color: '#16A34A', bg: '#DCFCE7', desc: 'You have extra time, skills, or capacity to lend a hand to neighbors.' };
+    exchangeBadge = {
+      label: 'Can Help Others',
+      color: '#16A34A',
+      bg: '#DCFCE7',
+      desc: 'Surplus capacity (+' + diag.netExchange + '): ' + diag.totalOfferSum + ' offer pts across ' + diag.offers.length + ' areas vs ' + diag.totalNeedSum + ' need pts across ' + diag.needs.length + ' areas.'
+    };
   } else if (diag.netExchange <= -3) {
-    exchangeBadge = { label: 'Needs Help', color: '#EA580C', bg: '#FFEDD5', desc: 'You are carrying a lot right now and could really use a hand from others.' };
+    exchangeBadge = {
+      label: 'Needs Help',
+      color: '#EA580C',
+      bg: '#FFEDD5',
+      desc: 'Support needed (' + diag.netExchange + '): ' + diag.totalNeedSum + ' need pts across ' + diag.needs.length + ' areas outweigh ' + diag.totalOfferSum + ' offer pts.'
+    };
   }
 
   // --- CLEAN, DE-JARGONIZED 7 VITAL PLANES MATRIX ---
@@ -1476,11 +1552,19 @@ function viewPulseResults(){
     const pct = p.livedPct !== null ? p.livedPct : 0;
     
     let planeStatus = { text: 'Unanswered', color: '#94A3B8', bg: '#F1F5F9', desc: 'No questions answered yet.' };
-    if (p.livedPct !== null) {
-      if (pct >= 85) planeStatus = { text: 'Doing Great (5/5)', color: '#16A34A', bg: '#DCFCE7', desc: 'Strong footing and healthy daily security.' };
-      else if (pct >= 65) planeStatus = { text: 'Doing Okay (4/5)', color: '#0284C7', bg: '#E0F2FE', desc: 'Main needs met; getting through each week.' };
-      else if (pct >= 45) planeStatus = { text: 'Under Stress (3/5)', color: '#D97706', bg: '#FEF3C7', desc: 'Living with constant pressure and little room for error.' };
-      else planeStatus = { text: 'Struggling (1-2/5)', color: '#E11D48', bg: '#FFE4E6', desc: 'This lifeline is broken and needs urgent community backup.' };
+    if (p.livedAvg > 0) {
+      if (p.livedAvg >= 4.25) planeStatus = { text: 'Doing Great', color: '#16A34A', bg: '#DCFCE7', desc: 'Strong footing and healthy daily security.' };
+      else if (p.livedAvg >= 3.25) planeStatus = { text: 'Doing Okay', color: '#0284C7', bg: '#E0F2FE', desc: 'Main needs met; getting through each week.' };
+      else if (p.livedAvg >= 2.25) planeStatus = { text: 'Under Stress', color: '#D97706', bg: '#FEF3C7', desc: 'Living with constant pressure and little room for error.' };
+      else {
+        if (p.d >= 4) {
+          planeStatus = { text: 'Struggling', color: '#E11D48', bg: '#FFE4E6', desc: 'Vital lifeline is compromised and active community backup is requested.' };
+        } else if (p.d >= 1 && p.d <= 2) {
+          planeStatus = { text: 'Struggling', color: '#E11D48', bg: '#FFE4E6', desc: 'Low daily security, but assistance request is currently low (managing independently or low immediate demand).' };
+        } else {
+          planeStatus = { text: 'Struggling', color: '#E11D48', bg: '#FFE4E6', desc: 'Vital lifeline is compromised; vulnerable to acute breakdown.' };
+        }
+      }
     }
 
     return `
@@ -1551,7 +1635,10 @@ function viewPulseResults(){
             ${p.needTags.length ? `
               <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px">
                 ${p.needTags.map(t => `<span style="display:inline-flex;align-items:center;padding:3px 9px;border-radius:99px;font-size:12px;font-weight:700;background:#C2410C;color:#FFFFFF;box-shadow:0 1px 3px rgba(194,65,12,0.25)">✓ ${esc(t)}</span>`).join('')}
-              </div>` : `<p style="margin:0;font-size:12.5px;color:#9A3412">No specific need tags selected.</p>`}
+              </div>` : `${p.d >= 4 ? `
+              <div style="margin-top:6px;padding:6px 10px;background:#FFE4E6;border:1px solid #FECDD3;border-radius:8px;font-size:12px;color:#9F1239;font-weight:600">
+                ⚠️ Urgent Unspecified Need: Rated ${DA_L[p.d-1]} (${p.d}/5) without specific tags. Add details in the notes below so organizers know how to help.
+              </div>` : `<p style="margin:0;font-size:12.5px;color:#9A3412">No specific need tags selected.</p>`}`}
           </div>
         </div>
       </div>` : ''}
@@ -1574,7 +1661,7 @@ function viewPulseResults(){
           ${o.c ? `${CA_L[o.c - 1]} (${o.c}/5)` : 'Offer Flagged'}
         </span>
       </div>
-      <p style="margin:0 0 8px;font-size:13.5px;color:#166534;line-height:1.45">${fmtQ(o.offerText, `pulse|${o.plane}|C`)}</p>
+      <p style="margin:0 0 8px;font-size:13.5px;color:#166534;line-height:1.45">${fmtClean(o.offerText)}</p>
       ${o.offerTags.length ? `
         <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px">
           ${o.offerTags.map(t => `<span style="display:inline-flex;align-items:center;padding:3px 9px;border-radius:99px;font-size:12px;font-weight:700;background:#15803D;color:#FFFFFF;box-shadow:0 1px 3px rgba(21,128,61,0.25)">✓ ${esc(t)}</span>`).join('')}
@@ -1590,7 +1677,7 @@ function viewPulseResults(){
           ${n.d ? `${DA_L[n.d - 1]} (${n.d}/5)` : 'Need Flagged'}
         </span>
       </div>
-      <p style="margin:0 0 8px;font-size:13.5px;color:#9A3412;line-height:1.45">${fmtQ(n.needText, `pulse|${n.plane}|D`)}</p>
+      <p style="margin:0 0 8px;font-size:13.5px;color:#9A3412;line-height:1.45">${fmtClean(n.needText)}</p>
       ${n.needTags.length ? `
         <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px">
           ${n.needTags.map(t => `<span style="display:inline-flex;align-items:center;padding:3px 9px;border-radius:99px;font-size:12px;font-weight:700;background:#C2410C;color:#FFFFFF;box-shadow:0 1px 3px rgba(194,65,12,0.25)">✓ ${esc(t)}</span>`).join('')}
@@ -1628,16 +1715,16 @@ function viewPulseResults(){
       <div style="background:#FFFFFF;border:1.5px solid #DCE4F8;border-radius:14px;padding:12px 18px;box-shadow:0 2px 8px rgba(15,23,42,0.03);flex:1;min-width:200px">
         <span style="font-size:11.5px;font-weight:700;color:#64748B;text-transform:uppercase;letter-spacing:0.04em;display:block">Lived Life Balance</span>
         <div style="display:flex;align-items:baseline;gap:8px;margin-top:4px">
-          <strong style="font-size:22px;color:${statusBadge.color}">${ov !== null ? ov + '%' : '—'}</strong>
-          <span style="font-size:12px;font-weight:700;color:${statusBadge.color};background:${statusBadge.bg};padding:2px 8px;border-radius:99px">${statusBadge.label}</span>
+          <strong style="font-size:22px;color:${statusBadge.color}">${diag.rawAvg ? diag.rawAvg.toFixed(1) + ' / 5' : '—'}</strong>
+          <span style="font-size:12px;font-weight:700;color:${statusBadge.color};background:${statusBadge.bg};padding:2px 8px;border-radius:99px">${ov !== null ? ov + '% Viability' : '—'} &middot; ${statusBadge.label}</span>
         </div>
-        <p style="margin:4px 0 0;font-size:12.5px;color:#64748B">${statusBadge.desc}</p>
+        <p style="margin:4px 0 0;font-size:12.5px;color:#64748B">${statusBadge.desc}${diag.answeredPlanesCount < 7 ? ` &middot; <span style="font-weight:600;color:#334155">(Based on ${diag.answeredPlanesCount} of 7 planes assessed)</span>` : ''}</p>
       </div>
 
       <div style="background:#FFFFFF;border:1.5px solid #DCE4F8;border-radius:14px;padding:12px 18px;box-shadow:0 2px 8px rgba(15,23,42,0.03);flex:1;min-width:200px">
         <span style="font-size:11.5px;font-weight:700;color:#64748B;text-transform:uppercase;letter-spacing:0.04em;display:block">Mutual Aid Balance</span>
         <div style="display:flex;align-items:baseline;gap:8px;margin-top:4px">
-          <strong style="font-size:22px;color:${exchangeBadge.color}">${diag.netExchange > 0 ? '+' + diag.netExchange : diag.netExchange}</strong>
+          <strong style="font-size:22px;color:${exchangeBadge.color}">${diag.netExchange > 0 ? '+' + diag.netExchange : diag.netExchange} pts</strong>
           <span style="font-size:12px;font-weight:700;color:${exchangeBadge.color};background:${exchangeBadge.bg};padding:2px 8px;border-radius:99px">${exchangeBadge.label}</span>
         </div>
         <p style="margin:4px 0 0;font-size:12.5px;color:#64748B">${exchangeBadge.desc}</p>
@@ -1646,16 +1733,24 @@ function viewPulseResults(){
       <div style="background:#FFFFFF;border:1.5px solid #DCE4F8;border-radius:14px;padding:12px 18px;box-shadow:0 2px 8px rgba(15,23,42,0.03);flex:none">
         <span style="font-size:11.5px;font-weight:700;color:#64748B;text-transform:uppercase;letter-spacing:0.04em;display:block">Baseline Coverage</span>
         <strong style="font-size:22px;color:#0F172A;display:block;margin-top:4px">${pulseAns} / 28</strong>
-        <p style="margin:4px 0 0;font-size:12.5px;color:#64748B">Questions answered</p>
+        <p style="margin:4px 0 0;font-size:12.5px;color:#64748B">${diag.answeredPlanesCount} of 7 planes assessed</p>
       </div>
     </div>
   </div>
 
   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin:24px 0">
     <div style="background:#FFFFFF;border:1.5px solid #BBF7D0;border-left:5px solid #16A34A;border-radius:14px;padding:16px 18px;box-shadow:0 3px 12px rgba(22,163,74,0.04)">
-      <span style="font-size:11px;font-weight:700;color:#15803D;text-transform:uppercase;letter-spacing:0.04em">&#x2714; Strongest Lifeline</span>
-      <h4 style="margin:6px 0 4px;font-size:17px;color:#14532D">${diag.strongest ? `Part ${diag.strongest.plane}: ${esc(diag.strongest.name)}` : 'None yet'}</h4>
-      <p style="margin:0;font-size:13.5px;color:#166534">${diag.strongest ? `Rating ${diag.strongest.livedAvg.toFixed(1)}/5. This area provides your sturdiest daily anchor and foundation.` : 'Complete more questions to detect your top asset.'}</p>
+      <span style="font-size:11px;font-weight:700;color:#15803D;text-transform:uppercase;letter-spacing:0.04em">&#x2714; ${diag.strongestList.length > 1 ? 'Strongest Foundations (Tied)' : 'Strongest Lifeline'}</span>
+      <h4 style="margin:6px 0 4px;font-size:17px;color:#14532D">
+        ${diag.strongestList.length > 1 
+          ? diag.strongestList.map(s => `Part ${s.plane}: ${esc(s.name)}`).join(' & ') 
+          : (diag.strongest ? `Part ${diag.strongest.plane}: ${esc(diag.strongest.name)}` : 'None yet')}
+      </h4>
+      <p style="margin:0;font-size:13.5px;color:#166534">
+        ${diag.strongestList.length > 1 
+          ? `Both rated ${diag.strongest.livedAvg.toFixed(1)}/5. These areas provide your sturdiest daily anchors.` 
+          : (diag.strongest ? `Rating ${diag.strongest.livedAvg.toFixed(1)}/5. This area provides your sturdiest daily anchor and foundation.` : 'Complete more questions to detect your top asset.')}
+      </p>
     </div>
 
     <div style="background:#FFFFFF;border:1.5px solid #FECDD3;border-left:5px solid #E11D48;border-radius:14px;padding:16px 18px;box-shadow:0 3px 12px rgba(225,29,72,0.04)">
@@ -1664,11 +1759,24 @@ function viewPulseResults(){
       <p style="margin:0;font-size:13.5px;color:#9F1239">${diag.weakest ? `Rating ${diag.weakest.livedAvg.toFixed(1)}/5. This is your primary vulnerability where strain or fatigue accumulates.` : 'Complete more questions to identify pressure areas.'}</p>
     </div>
 
-    <div style="background:#FFFFFF;border:1.5px solid #BAE6FD;border-left:5px solid #0284C7;border-radius:14px;padding:16px 18px;box-shadow:0 3px 12px rgba(2,132,199,0.04)">
-      <span style="font-size:11px;font-weight:700;color:#0369A1;text-transform:uppercase;letter-spacing:0.04em">&#x1F91D; Top Community Gift</span>
-      <h4 style="margin:6px 0 4px;font-size:17px;color:#0C4A6E">${diag.offers.length ? `Part ${diag.offers[0].plane}: ${esc(diag.offers[0].name)}` : 'Not recorded'}</h4>
-      <p style="margin:0;font-size:13.5px;color:#075985">${diag.offers.length ? `Offer rating ${diag.offers[0].c ? diag.offers[0].c + '/5' : 'Flagged'}. Capacity to uplift and support neighbors.` : 'Rate what you could offer (Question C) to surface gifts.'}</p>
-    </div>
+    ${(()=>{
+      const topOffer = diag.offers.length ? diag.offers[0] : null;
+      const hasSpecificOffer = topOffer && topOffer.offerTags.length > 0;
+      const topOfferLabel = hasSpecificOffer ? 'Top Community Gift' : 'Highest Stated Offer Capacity';
+      const topOfferTitle = topOffer 
+        ? `Part ${topOffer.plane}: ${esc(topOffer.name)}${hasSpecificOffer ? '' : ' (Unspecified)'}`
+        : 'Not recorded';
+      const topOfferDesc = topOffer
+        ? (hasSpecificOffer 
+            ? `Readiness ${topOffer.c ? topOffer.c + '/5' : 'Flagged'}. Specific gifts: ${topOffer.offerTags.map(t=>esc(t)).join(', ')}.`
+            : `Highest stated offer capacity (${topOffer.c ? topOffer.c + '/5' : 'Flagged'} readiness), but no specific task tags were selected yet.`)
+        : 'Rate what you could offer (Question C) to surface gifts.';
+      return `<div style="background:#FFFFFF;border:1.5px solid #BAE6FD;border-left:5px solid #0284C7;border-radius:14px;padding:16px 18px;box-shadow:0 3px 12px rgba(2,132,199,0.04)">
+        <span style="font-size:11px;font-weight:700;color:#0369A1;text-transform:uppercase;letter-spacing:0.04em">&#x1F91D; ${topOfferLabel}</span>
+        <h4 style="margin:6px 0 4px;font-size:17px;color:#0C4A6E">${topOfferTitle}</h4>
+        <p style="margin:0;font-size:13.5px;color:#075985">${topOfferDesc}</p>
+      </div>`;
+    })()}
   </div>
 
   <!-- MUTUAL AID OFFERS AND NEEDS SECTION -->
@@ -1679,6 +1787,9 @@ function viewPulseResults(){
       <p style="margin:0;font-size:14.5px;color:#475569">
         This maps what you are willing to give versus where you could use a hand. In a healthy neighborhood, our surplus covers another's deficit.
       </p>
+      <div style="margin:12px 0 0;padding:10px 14px;background:#F8FAFC;border:1px solid #CBD5E1;border-left:4px solid #4F46E5;border-radius:8px;font-size:12.5px;color:#334155;line-height:1.5">
+        <strong>Mutual Aid Resources Are Non-Fungible:</strong> Your stated offers (<strong>${diag.totalOfferSum} pts across ${diag.offers.length} areas</strong>) and requested lifelines (<strong>${diag.totalNeedSum} pts across ${diag.needs.length} areas</strong>) are distinct human needs, not interchangeable points. Having the capacity to help others in one area (like tools or cooking) does not cancel out your own unmet needs in another (like transport, rest, or career guidance).
+      </div>
     </div>
 
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px">
@@ -2387,21 +2498,18 @@ function viewReview(){
 
   <div class="tail">
     <h3>Hand it in &amp; Export</h3>
-    <p id="submitlead" style="color:var(--ink-soft);font-size:15px;margin:0 0 12px">${currentResponseId()?'You already sent a response under this name. Pressing the button below updates that same response with your current answers in the database.':'Submit to send your answers to the database for community mutual-aid coordination. You can also export a beautiful PDF report or download raw JSON for your personal records.'}</p>
+    <p id="submitlead" style="color:var(--ink-soft);font-size:15px;margin:0 0 12px">${currentResponseId()?'You already sent a response under this name. Pressing the button below updates that same response with your current answers in the database.':'Submit to send your answers to the database for community mutual-aid coordination. You can also save or print a clean report for your personal records.'}</p>
     <div class="navrow" style="border:none;padding:0 0 10px;gap:8px;flex-wrap:wrap">
       <button class="btn" id="submit">${currentResponseId()?'Update my answers in database':'Submit my answers to database'}</button>
       <button class="btn ghost" id="btn_pdf">&#128438; Save or Print</button>
-      <button class="btn ghost" id="dl">&#128190; Download JSON</button>
-      <button class="btn ghost" id="cp">&#128203; Copy JSON</button>
     </div>
-    <p id="submitmsg" style="color:var(--ink-soft);font-size:14px;margin:0 0 18px">${currentResponseId()?'Sent. Changing answers and pressing Update revises this same response — it won\'t create a duplicate.':'Submitting sends your answers in; downloading or printing keeps a copy for yourself. Both are optional, and neither is required to use the rest of the site.'}</p>
+    <p id="submitmsg" style="color:var(--ink-soft);font-size:14px;margin:0 0 18px">${currentResponseId()?'Sent. Changing answers and pressing Update revises this same response — it won\'t create a duplicate.':'Submitting sends your answers in; saving or printing keeps a clean copy for yourself. Both are optional, and neither is required to use the rest of the site.'}</p>
     <div class="navrow" style="border:none;padding:0 0 18px;gap:10px;flex-wrap:wrap">
       ${currentResponseId() || STATE['label|name'] ? `
         <button class="btn ghost" id="del_current" style="border-color:#C05621;color:#C05621">Delete this response (${esc(STATE['label|name']||'current')})</button>
       ` : ''}
       <button class="btn ghost" id="wipe" style="border-color:#8E3552;color:#8E3552">Erase everything on this device</button>
     </div>
-    <pre class="out" id="preview"></pre>
   </div>
   <div class="navrow"><a class="btn ghost" href="#/hub">Back to the start</a><a class="btn ghost" href="#/results">See results →</a></div>`;
 }
@@ -2419,28 +2527,32 @@ function buildExport(){
   }
   out.speed_round = {};
   PULSE_QUESTIONS.forEach(p=>{
-    const a = STATE[`pulse|${p.plane}|A`] ? +STATE[`pulse|${p.plane}|A`] : null;
-    const b = STATE[`pulse|${p.plane}|B`] ? +STATE[`pulse|${p.plane}|B`] : null;
-    const c = STATE[`pulse|${p.plane}|C`] ? +STATE[`pulse|${p.plane}|C`] : null;
-    const d = STATE[`pulse|${p.plane}|D`] ? +STATE[`pulse|${p.plane}|D`] : null;
+    const aVal = STATE[`pulse|${p.plane}|A`];
+    const bVal = STATE[`pulse|${p.plane}|B`];
+    const cVal = STATE[`pulse|${p.plane}|C`];
+    const dVal = STATE[`pulse|${p.plane}|D`];
+    const a = aVal === 'NA' ? 'NA' : (aVal ? +aVal : null);
+    const b = bVal === 'NA' ? 'NA' : (bVal ? +bVal : null);
+    const c = cVal === 'NA' ? 'NA' : (cVal ? +cVal : null);
+    const d = dVal === 'NA' ? 'NA' : (dVal ? +dVal : null);
     const note = STATE[`pulse_note|${p.plane}`] || null;
-    if(a || b || c || d || note){
-      
-      const tags = [];
-      ['C','D'].forEach(k => {
-        const arr = k==='C' ? (PULSE_OFFER_TAGS[p.plane]||[]) : (PULSE_NEED_TAGS[p.plane]||[]);
-        arr.forEach((t, idx) => {
-          if (STATE[`pulse_tag|${p.plane}|${k}|${idx}`]) tags.push({ kind: k, tag: t });
-        });
-      });
-      
-      const flagged = [];
-      Object.keys(STATE).forEach(k => {
-        if (k.startsWith(`pulse|${p.plane}|`) && k.includes('|tag|') && STATE[k]) {
-          const parts = k.split('|');
-          flagged.push({ q: parts[2], tag: parts[4] });
-        }
-      });
+
+    const offerTags = getSelectedPulseTags(p.plane, 'C');
+    const needTags = getSelectedPulseTags(p.plane, 'D');
+    const tags = [
+      ...offerTags.map(t => ({ kind: 'C', tag: t })),
+      ...needTags.map(t => ({ kind: 'D', tag: t }))
+    ];
+
+    const flagged = [];
+    Object.keys(STATE).forEach(k => {
+      if (k.startsWith(`pulse|${p.plane}|`) && k.includes('|tag|') && STATE[k]) {
+        const parts = k.split('|');
+        flagged.push({ q: parts[2], tag: parts[4] });
+      }
+    });
+
+    if(a !== null || b !== null || c !== null || d !== null || note || tags.length){
       out.speed_round[p.plane] = {
         highlighted_tags: flagged,
         tags: tags,
@@ -2455,6 +2567,7 @@ function buildExport(){
       };
     }
   });
+
   DATA.planes.forEach(p=>{
     const pl={name:p.name,answered:planeAnswered(p.n),of:CORE_PER_PLANE,sub_indicators:{},open_response:STATE['open|'+p.n]||null,
       consent:{follow_up:!!STATE['consent|'+p.n+'|support'],contribute:!!STATE['consent|'+p.n+'|contribute']}};
