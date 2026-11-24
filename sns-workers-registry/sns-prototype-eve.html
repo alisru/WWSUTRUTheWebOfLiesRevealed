@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SNS Registry — Eve's Matriarch Edition (15M/85F)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Bricolage+Grotesque:opsz,wght@12..96,600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --sand: #FAF7F2;
+  --card-bg: #FFFFFF;
+  --earth-ink: #2C241D;
+  --earth-soft: #6E6259;
+  --border-subtle: #E8E0D5;
+  --border-strong: #C4B5A5;
+  --warm-terracotta: #C85A32;
+  --terracotta-soft: rgba(200, 90, 50, 0.12);
+  --sage-olive: #3F6F58;
+  --sage-soft: rgba(63, 111, 88, 0.12);
+  --gold-wheat: #D9822B;
+  --sky-dusk: #486581;
+  --shadow-warm: 0 4px 20px rgba(60, 40, 20, 0.06);
+  --shadow-hover: 0 10px 28px rgba(60, 40, 20, 0.11);
+  --font-display: "Bricolage Grotesque", Georgia, serif;
+  --font-body: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-quote: "Newsreader", Georgia, serif;
+  --font-mono: "JetBrains Mono", monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--sand);
+  color: var(--earth-ink);
+  font-family: var(--font-body);
+  font-size: 15.5px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  padding-bottom: 90px;
+}
+
+/* Masthead */
+header.eve-mast {
+  background: #FFFDF9;
+  border-bottom: 1.5px solid var(--border-subtle);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow: 0 2px 12px rgba(44, 36, 29, 0.04);
+}
+.mast-wrap {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 14px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.brand-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.ratio-pill {
+  background: var(--terracotta-soft);
+  color: var(--warm-terracotta);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 9px;
+  border-radius: 99px;
+  border: 1px solid rgba(200, 90, 50, 0.25);
+}
+.brand-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--earth-ink);
+  letter-spacing: -0.02em;
+}
+.brand-title span {
+  font-family: var(--font-quote);
+  font-style: italic;
+  font-size: 14px;
+  color: var(--earth-soft);
+  margin-left: 6px;
+  font-weight: 400;
+}
+.town-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #F4EFEB;
+  border: 1px solid var(--border-subtle);
+  padding: 7px 14px;
+  border-radius: 99px;
+  font-size: 13.5px;
+  font-weight: 600;
+}
+.town-pill select {
+  background: transparent;
+  border: none;
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--earth-ink);
+  cursor: pointer;
+  outline: none;
+}
+.btn-open-share {
+  background: var(--warm-terracotta);
+  color: #FFF;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 14px;
+  padding: 10px 20px;
+  border-radius: 99px;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 14px rgba(200, 90, 50, 0.28);
+  transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.btn-open-share:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(200, 90, 50, 0.38);
+  background: #B64D27;
+}
+
+/* Layout */
+.container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 24px 20px;
+}
+
+/* Reciprocal Match Weaver (Highlight Banner) */
+.weaver-card {
+  background: linear-gradient(135deg, #FFFDF8 0%, #F5EFE6 100%);
+  border: 1.5px solid var(--border-strong);
+  border-radius: 18px;
+  padding: 20px 24px;
+  margin-bottom: 26px;
+  box-shadow: var(--shadow-warm);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.weaver-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.weaver-head h2 {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--earth-ink);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.weaver-sub {
+  font-family: var(--font-quote);
+  font-size: 15px;
+  font-style: italic;
+  color: var(--earth-soft);
+}
+.loop-row {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 16px;
+  background: #FFF;
+  border: 1.5px dashed var(--border-strong);
+  border-radius: 12px;
+  padding: 14px 18px;
+}
+@media (max-width: 768px) {
+  .loop-row { grid-template-columns: 1fr; text-align: center; }
+  .loop-icon { transform: rotate(90deg); margin: 6px 0; }
+}
+.party-box {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.party-name {
+  font-weight: 700;
+  font-size: 14.5px;
+  color: var(--earth-ink);
+}
+.party-give {
+  font-size: 13.5px;
+  color: var(--sage-olive);
+  font-weight: 600;
+}
+.party-need {
+  font-size: 13.5px;
+  color: var(--warm-terracotta);
+  font-weight: 600;
+}
+.loop-icon {
+  font-size: 22px;
+  color: var(--gold-wheat);
+}
+
+/* Control Hub & Nav Tabs */
+.hub-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+}
+.tab-pills {
+  display: flex;
+  gap: 6px;
+  background: #EFE8DF;
+  padding: 5px;
+  border-radius: 99px;
+}
+.tab-btn {
+  background: transparent;
+  border: none;
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--earth-soft);
+  padding: 8px 18px;
+  border-radius: 99px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.tab-btn.active {
+  background: #FFF;
+  color: var(--earth-ink);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.search-pill {
+  flex: 1;
+  max-width: 360px;
+  position: relative;
+}
+.search-pill input {
+  width: 100%;
+  background: #FFF;
+  border: 1px solid var(--border-subtle);
+  border-radius: 99px;
+  padding: 9px 16px 9px 38px;
+  font-size: 14px;
+  color: var(--earth-ink);
+  outline: none;
+}
+.search-pill input:focus { border-color: var(--warm-terracotta); }
+.search-ico {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--earth-soft);
+  font-size: 13px;
+}
+
+/* 7 Planes of Life Wheel / Chips */
+.planes-carousel {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+  scrollbar-width: thin;
+}
+.plane-chip {
+  flex: 0 0 auto;
+  background: #FFF;
+  border: 1.5px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 9px 14px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 135px;
+  transition: all 0.15s ease;
+}
+.plane-chip:hover {
+  border-color: var(--warm-terracotta);
+  transform: translateY(-1.5px);
+}
+.plane-chip.active {
+  border-color: var(--warm-terracotta);
+  background: var(--terracotta-soft);
+}
+.plane-chip-num {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--warm-terracotta);
+  text-transform: uppercase;
+}
+.plane-chip-title {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--earth-ink);
+}
+.plane-chip-sub {
+  font-size: 11px;
+  color: var(--earth-soft);
+  white-space: nowrap;
+}
+
+/* Cards Stream */
+.stream-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(370px, 1fr));
+  gap: 20px;
+}
+@media (max-width: 440px) {
+  .stream-grid { grid-template-columns: 1fr; }
+}
+.post-canvas {
+  background: var(--card-bg);
+  border: 1.5px solid var(--border-subtle);
+  border-radius: 16px;
+  padding: 22px;
+  box-shadow: var(--shadow-warm);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  position: relative;
+  transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.2s;
+}
+.post-canvas:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+  border-color: var(--border-strong);
+}
+
+.canvas-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+}
+.author-lockup {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.author-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 99px;
+  background: #EFE6DC;
+  display: grid;
+  place-items: center;
+  font-size: 18px;
+  border: 1px solid var(--border-strong);
+}
+.author-meta h4 {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--earth-ink);
+}
+.author-meta p {
+  font-size: 12px;
+  color: var(--earth-soft);
+}
+.kind-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 99px;
+}
+.kind-need { background: var(--terracotta-soft); color: var(--warm-terracotta); }
+.kind-offer { background: var(--sage-soft); color: var(--sage-olive); }
+.kind-both { background: rgba(217, 130, 43, 0.15); color: var(--gold-wheat); }
+
+.plane-badge-small {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--sky-dusk);
+  background: #F0F4F8;
+  padding: 2px 8px;
+  border-radius: 6px;
+  align-self: flex-start;
+}
+
+.post-title {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.3;
+  color: var(--earth-ink);
+}
+.post-story {
+  font-family: var(--font-body);
+  font-size: 14.5px;
+  color: #4A3E35;
+  line-height: 1.55;
+  flex: 1;
+}
+
+/* Reciprocal Dual Pill inside Card */
+.dual-exchange-box {
+  background: #FAF7F2;
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.exchange-line {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 13px;
+}
+.exchange-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+.label-give { background: var(--sage-soft); color: var(--sage-olive); }
+.label-ask { background: var(--terracotta-soft); color: var(--warm-terracotta); }
+.exchange-val {
+  font-weight: 600;
+  color: var(--earth-ink);
+  flex: 1;
+}
+
+.card-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px dashed var(--border-subtle);
+  padding-top: 12px;
+  font-size: 12.5px;
+}
+.warm-vouches {
+  color: var(--gold-wheat);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.btn-connect {
+  background: #FFF;
+  border: 1.5px solid var(--border-strong);
+  color: var(--earth-ink);
+  font-weight: 700;
+  font-size: 13px;
+  padding: 8px 16px;
+  border-radius: 99px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.btn-connect:hover {
+  background: var(--warm-terracotta);
+  border-color: var(--warm-terracotta);
+  color: #FFF;
+}
+
+/* Modal Guided Flow */
+.guided-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(44, 36, 29, 0.65);
+  backdrop-filter: blur(4px);
+  display: none;
+  place-items: center;
+  z-index: 100;
+  padding: 20px;
+}
+.guided-modal.active { display: grid; }
+.guided-box {
+  background: #FFFDF9;
+  border: 2px solid var(--border-strong);
+  border-radius: 20px;
+  max-width: 640px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 28px;
+  box-shadow: 0 16px 40px rgba(0,0,0,0.2);
+}
+.modal-prompt-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 800;
+  margin-bottom: 6px;
+  color: var(--earth-ink);
+}
+.modal-prompt-sub {
+  font-family: var(--font-quote);
+  font-style: italic;
+  color: var(--earth-soft);
+  font-size: 15px;
+  margin-bottom: 20px;
+}
+.guided-field {
+  margin-bottom: 18px;
+}
+.guided-field label {
+  display: block;
+  font-weight: 700;
+  font-size: 13.5px;
+  margin-bottom: 6px;
+  color: var(--earth-ink);
+}
+.guided-field input, .guided-field select, .guided-field textarea {
+  width: 100%;
+  background: #FFF;
+  border: 1.5px solid var(--border-subtle);
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-family: var(--font-body);
+  font-size: 14.5px;
+  color: var(--earth-ink);
+}
+.guided-field input:focus, .guided-field select:focus, .guided-field textarea:focus {
+  border-color: var(--warm-terracotta);
+  outline: none;
+}
+</style>
+</head>
+<body>
+
+<header class="eve-mast">
+  <div class="mast-wrap">
+    <div class="brand-box">
+      <span class="ratio-pill">15M / 85F Matriarch</span>
+      <h1 class="brand-title">SNS WEAVER <span>The Community Tapestry</span></h1>
+    </div>
+
+    <div class="town-pill">
+      <span>🏡 Small Town:</span>
+      <select id="townSelect" onchange="renderAll()">
+        <option value="2830">Dubbo NSW (2830)</option>
+        <option value="2821">Narromine NSW (2821)</option>
+        <option value="2820">Wellington NSW (2820)</option>
+        <option value="2827">Gilgandra NSW (2827)</option>
+      </select>
+    </div>
+
+    <button class="btn-open-share" onclick="openShareModal()">
+      <span>🤝 Share Need or Offer</span>
+    </button>
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- Reciprocal Match Weaver (Highlighting mutual aid loops) -->
+  <section class="weaver-card">
+    <div class="weaver-head">
+      <h2>🕸️ The Reciprocal Match Weaver</h2>
+      <span class="weaver-sub">Where local surplus naturally meets local deficit</span>
+    </div>
+    <div class="loop-row" id="weaverRow">
+      <div class="party-box">
+        <span class="party-name">Jack R. (Narromine · 15 km)</span>
+        <span class="party-give">🟢 Offers: Tractor Slashing & Paddock Mowing</span>
+        <span class="party-need">🔴 Needs: Help with Farm BAS & Bookkeeping</span>
+      </div>
+      <div class="loop-icon">⇄</div>
+      <div class="party-box">
+        <span class="party-name">Claire M. (Narromine · 8 km)</span>
+        <span class="party-give">🟢 Offers: Registered Bookkeeper & Payroll</span>
+        <span class="party-need">🔴 Needs: Firebreak cleared around horse paddocks</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Navigation Hub -->
+  <div class="hub-nav">
+    <div class="tab-pills">
+      <button class="tab-btn active" id="tab-all" onclick="setKindTab('all')">All Stories</button>
+      <button class="tab-btn" id="tab-needs" onclick="setKindTab('need')">Hands Needed</button>
+      <button class="tab-btn" id="tab-offers" onclick="setKindTab('offer')">Hands Offered</button>
+      <button class="tab-btn" id="tab-both" onclick="setKindTab('both')">Reciprocal Trades</button>
+    </div>
+
+    <div class="search-pill">
+      <span class="search-ico">🌱</span>
+      <input type="text" id="searchInput" placeholder="Search people, care, trades, lodging..." oninput="renderAll()">
+    </div>
+  </div>
+
+  <!-- The 7 Planes of Life Wheel -->
+  <div class="planes-carousel" id="planesWheel">
+    <!-- Populated by JS -->
+  </div>
+
+  <!-- Feed Grid -->
+  <div class="stream-grid" id="streamGrid">
+    <!-- Populated by JS -->
+  </div>
+
+</main>
+
+<!-- Guided Modal for Sharing -->
+<div class="guided-modal" id="shareModal">
+  <div class="guided-box">
+    <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+      <div>
+        <h3 class="modal-prompt-title">Join the Community Tapestry</h3>
+        <p class="modal-prompt-sub">Every neighbor has something they need, and something they can share.</p>
+      </div>
+      <button onclick="closeShareModal()" style="background:none; border:none; font-size:24px; cursor:pointer; color:var(--earth-soft);">&times;</button>
+    </div>
+
+    <form id="shareForm" onsubmit="handleShareSubmit(event)">
+      <div class="guided-field">
+        <label>Your Name & Local Town</label>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+          <input type="text" id="formName" placeholder="e.g. Maggie Higgins" required>
+          <select id="formTown">
+            <option value="2830">Dubbo NSW (2830)</option>
+            <option value="2821">Narromine NSW (2821)</option>
+            <option value="2820">Wellington NSW (2820)</option>
+            <option value="2827">Gilgandra NSW (2827)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="guided-field">
+        <label>Primary Life Plane</label>
+        <select id="formPlane" required>
+          <option value="Q1">Q1 Who — Welcome, Trust & Dignity</option>
+          <option value="Q2" selected>Q2 What — Work, Skills & Craft</option>
+          <option value="Q3">Q3 Where — Warm Haven, Tools & Lodging</option>
+          <option value="Q4">Q4 Why — Rest, Relief & Rejuvenation</option>
+          <option value="Q5">Q5 How — Fair Terms, Direct Voice & Trade</option>
+          <option value="Q6">Q6 Cause — Intergenerational Craft & Story</option>
+          <option value="Q7">Q7 Effect — Safety Net of Care & Emergency</option>
+        </select>
+      </div>
+
+      <div class="guided-field">
+        <label>Story Headline</label>
+        <input type="text" id="formTitle" placeholder="e.g. Spare Cottage on Farm available for quiet caretaker" required>
+      </div>
+
+      <div class="guided-field">
+        <label>The Human Context (What is happening?)</label>
+        <textarea id="formStory" rows="3" placeholder="Tell the town your story plainly. No corporate buzzwords." required></textarea>
+      </div>
+
+      <div class="guided-field">
+        <label>What Can You Offer? (Surplus)</label>
+        <input type="text" id="formGive" placeholder="e.g. 10 hours/wk gardening, machinery repair, or friendly check-in">
+      </div>
+
+      <div class="guided-field">
+        <label>What Do You Need? (Deficit)</label>
+        <input type="text" id="formAsk" placeholder="e.g. Affordable cottage rent, lift into town on Thursdays, or welding help">
+      </div>
+
+      <div class="guided-field">
+        <label>Direct Contact (Kept Safe & Direct)</label>
+        <input type="text" id="formContact" placeholder="e.g. Phone 0411 998 221 or Ask for Maggie at town bakery" required>
+      </div>
+
+      <div style="display:flex; justify-content:flex-end; gap:12px; margin-top:20px;">
+        <button type="button" class="btn-connect" onclick="closeShareModal()">Cancel</button>
+        <button type="submit" class="btn-open-share">Weave Into Town Feed</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+const EVE_PLANES = [
+  { id: 'ALL', num: 'All', title: 'Whole Canvas', sub: 'Every plane active' },
+  { id: 'Q1', num: 'Q1 Who', title: 'Belonging & Trust', sub: 'Vouching, identity' },
+  { id: 'Q2', num: 'Q2 What', title: 'Craft & Purpose', sub: 'Work, skills exchange' },
+  { id: 'Q3', num: 'Q3 Where', title: 'Haven & Tools', sub: 'Lodging, gear, shelter' },
+  { id: 'Q4', num: 'Q4 Why', title: 'Rest & Relief', sub: 'Breathers, shift cover' },
+  { id: 'Q5', num: 'Q5 How', title: 'Fair Ground', sub: 'Direct barter, equality' },
+  { id: 'Q6', num: 'Q6 Cause', title: 'Town Living Memory', sub: 'Craft handover' },
+  { id: 'Q7', num: 'Q7 Effect', title: 'Hands of Care', sub: 'Hot meals, emergencies' }
+];
+
+const EVE_SEED_POSTS = [
+  {
+    id: "eve-201",
+    author: "Grace & Tom Miller",
+    avatar: "🌾",
+    town: "Narromine",
+    postcode: "2821",
+    plane: "Q4",
+    kind: "both",
+    title: "Need 3 Days Milking Relief so we can take the kids to the coast",
+    story: "Haven't had a weekend off the farm in 18 months. Need someone comfortable with dairy cows for 3 dawn milkings. In return, you can stay in our self-contained guest cottage, take home full pantry staples, or we can trade harvest machinery hours.",
+    give: "Free guest cottage stay + $400 cash + grass-fed beef quarter",
+    ask: "3 days reliable dairy relief milking",
+    vouches: 12,
+    contact: "Tom Miller (0419 223 881)",
+    time: "Yesterday"
+  },
+  {
+    id: "eve-202",
+    author: "Sarah Jenkins (Solo Mum)",
+    avatar: "🌻",
+    town: "Dubbo",
+    postcode: "2830",
+    plane: "Q7",
+    kind: "need",
+    title: "After-school care swap for two lively boys (ages 6 & 8)",
+    story: "I work 3pm-7pm nursing shifts twice a week. I cannot afford $70/day corporate after-school care. Looking for a local family to take my boys for those 4 hours. In exchange, I can do your weekend meal prep, home baking, or night-shift pharmacy runs.",
+    give: "Weekly bulk home-cooked dinners & pantry baking",
+    ask: "After-school supervision Tue & Thu afternoon",
+    vouches: 9,
+    contact: "Sarah J. (0422 109 432)",
+    time: "2 days ago"
+  },
+  {
+    id: "eve-203",
+    author: "Uncle Ray (Retired Shearer)",
+    avatar: "🪵",
+    town: "Wellington",
+    postcode: "2820",
+    plane: "Q6",
+    kind: "offer",
+    title: "Teaching hands to sharpen hand shears, grind combs & repair leather gear",
+    story: "Sitting on 50 years of station gear and sharpening benches. Rather than letting the trade die with me, I want to teach any young bloke or girl who wants to learn the proper way to set up tools without ruining steel.",
+    give: "Free weekly workshop & trade mentorship",
+    ask: "Company over a pot of tea & someone to help lift heavy timber",
+    vouches: 16,
+    contact: "Ray Henderson (Meet at Wellington Mens Shed)",
+    time: "3 days ago"
+  },
+  {
+    id: "eve-204",
+    author: "Ben 'Rusty' Taylor",
+    avatar: "🔧",
+    town: "Dubbo",
+    postcode: "2830",
+    plane: "Q3",
+    kind: "both",
+    title: "Caravan site & workshop access in exchange for fencing help",
+    story: "Have 40 acres just outside town with an insulated shed and full 3-phase power. Looking for a travelling worker or grey nomad who wants a quiet place to park their van for winter in exchange for helping me replace 400m of boundary fencing.",
+    give: "Free powered caravan site, hot shower & workshop tools",
+    ask: "8 hours per week timber post and wire fencing",
+    vouches: 14,
+    contact: "Rusty (0401 774 219)",
+    time: "4 days ago"
+  },
+  {
+    id: "eve-205",
+    author: "Elderly Neighbor Martha",
+    avatar: "🧶",
+    town: "Gilgandra",
+    postcode: "2827",
+    plane: "Q1",
+    kind: "need",
+    title: "Someone to sit on front porch on Thursdays & help read fine print letters",
+    story: "My eyesight is failing and the bureaucratic council and power bills give me a headache. I don't need charity, just someone honest to drink a cup of tea and tell me what the government letters actually say.",
+    give: "Fresh citrus lemons, homemade jams & genuine old town stories",
+    ask: "1 hour every fortnight reading bills and mail",
+    vouches: 21,
+    contact: "Drop by 14 Bridge St or call daughter Jenny (0411 009 887)",
+    time: "5 days ago"
+  },
+  {
+    id: "eve-206",
+    author: "Leo & Nina (Organic Growers)",
+    avatar: "🥦",
+    town: "Narromine",
+    postcode: "2821",
+    plane: "Q2",
+    kind: "offer",
+    title: "Crates of fresh seasonal greens ready for harvest hands",
+    story: "Excess pumpkin, kale, and stone fruit coming on this week. We have more than we can pack. If anyone in town needs good food or wants to learn market gardening, come pick with us for 2 hours and take home whatever you can carry.",
+    give: "Abundant farm-fresh organic produce & seed varieties",
+    ask: "2 hours harvesting helping hands",
+    vouches: 11,
+    contact: "Leo at River Flat Gardens (0439 881 772)",
+    time: "6 days ago"
+  }
+];
+
+let activeTab = 'all';
+let activePlane = 'ALL';
+let evePosts = [];
+
+function initEve() {
+  const stored = localStorage.getItem('sns_eve_posts');
+  if (stored) {
+    try { evePosts = JSON.parse(stored); } catch(e) { evePosts = EVE_SEED_POSTS; }
+  } else {
+    evePosts = EVE_SEED_POSTS;
+    saveEve();
+  }
+  renderPlanesWheel();
+  renderAll();
+}
+
+function saveEve() {
+  localStorage.setItem('sns_eve_posts', JSON.stringify(evePosts));
+}
+
+function renderPlanesWheel() {
+  const wheel = document.getElementById('planesWheel');
+  wheel.innerHTML = EVE_PLANES.map(p => `
+    <div class="plane-chip ${activePlane === p.id ? 'active' : ''}" onclick="selectPlane('${p.id}')">
+      <span class="plane-chip-num">${p.num}</span>
+      <span class="plane-chip-title">${p.title}</span>
+      <span class="plane-chip-sub">${p.sub}</span>
+    </div>
+  `).join('');
+}
+
+function selectPlane(id) {
+  activePlane = id;
+  renderPlanesWheel();
+  renderAll();
+}
+
+function setKindTab(kind) {
+  activeTab = kind;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  if (kind === 'all') document.getElementById('tab-all').classList.add('active');
+  if (kind === 'need') document.getElementById('tab-needs').classList.add('active');
+  if (kind === 'offer') document.getElementById('tab-offers').classList.add('active');
+  if (kind === 'both') document.getElementById('tab-both').classList.add('active');
+  renderAll();
+}
+
+function renderAll() {
+  const grid = document.getElementById('streamGrid');
+  const search = document.getElementById('searchInput').value.toLowerCase().trim();
+  const town = document.getElementById('townSelect').value;
+
+  const filtered = evePosts.filter(p => {
+    if (activeTab !== 'all' && p.kind !== activeTab) return false;
+    if (activePlane !== 'ALL' && p.plane !== activePlane) return false;
+    if (search) {
+      const match = (p.title + ' ' + p.story + ' ' + p.author + ' ' + (p.give || '') + ' ' + (p.ask || '')).toLowerCase();
+      if (!match.includes(search)) return false;
+    }
+    return true;
+  });
+
+  if (filtered.length === 0) {
+    grid.innerHTML = `
+      <div style="grid-column:1/-1; text-align:center; padding:50px 20px; background:#FFF; border:1.5px dashed var(--border-strong); border-radius:18px;">
+        <h4 style="font-family:var(--font-display); font-size:20px; margin-bottom:8px;">No stories match this thread yet</h4>
+        <p style="color:var(--earth-soft); margin-bottom:18px;">Be the neighbor who starts this thread in your town.</p>
+        <button class="btn-open-share" onclick="openShareModal()">Weave a New Story</button>
+      </div>
+    `;
+    return;
+  }
+
+  grid.innerHTML = filtered.map(p => {
+    let kindLabel = '🤝 Mutual Exchange';
+    let kindClass = 'kind-both';
+    if (p.kind === 'need') { kindLabel = '🔴 Hand Needed'; kindClass = 'kind-need'; }
+    if (p.kind === 'offer') { kindLabel = '🟢 Hand Offered'; kindClass = 'kind-offer'; }
+
+    const pMeta = EVE_PLANES.find(pl => pl.id === p.plane) || { title: p.plane };
+
+    return `
+      <article class="post-canvas">
+        <div class="canvas-header">
+          <div class="author-lockup">
+            <div class="author-avatar">${p.avatar || '🌱'}</div>
+            <div class="author-meta">
+              <h4>${escapeHtml(p.author)}</h4>
+              <p>📍 ${escapeHtml(p.town)} NSW · ${p.time}</p>
+            </div>
+          </div>
+          <span class="kind-badge ${kindClass}">${kindLabel}</span>
+        </div>
+
+        <span class="plane-badge-small">${p.plane}: ${pMeta.title}</span>
+
+        <h3 class="post-title">${escapeHtml(p.title)}</h3>
+        <p class="post-story">${escapeHtml(p.story)}</p>
+
+        <div class="dual-exchange-box">
+          ${p.give ? `
+            <div class="exchange-line">
+              <span class="exchange-label label-give">Gives</span>
+              <span class="exchange-val">${escapeHtml(p.give)}</span>
+            </div>
+          ` : ''}
+          ${p.ask ? `
+            <div class="exchange-line">
+              <span class="exchange-label label-ask">Asks</span>
+              <span class="exchange-val">${escapeHtml(p.ask)}</span>
+            </div>
+          ` : ''}
+        </div>
+
+        <div class="card-foot">
+          <span class="warm-vouches">💛 ${p.vouches} local neighbors vouch</span>
+          <button class="btn-connect" onclick="connectPrompt('${escapeHtml(p.author)}', '${escapeHtml(p.contact)}')">
+            Reach Out
+          </button>
+        </div>
+      </article>
+    `;
+  }).join('');
+}
+
+function connectPrompt(author, contact) {
+  alert(`Connecting with ${author}:\n\n${contact}\n\nHonor each other's time and speak plainly as neighbors.`);
+}
+
+function openShareModal() {
+  document.getElementById('shareModal').classList.add('active');
+}
+function closeShareModal() {
+  document.getElementById('shareModal').classList.remove('active');
+  document.getElementById('shareForm').reset();
+}
+
+function handleShareSubmit(e) {
+  e.preventDefault();
+  const name = document.getElementById('formName').value.trim();
+  const postcode = document.getElementById('formTown').value;
+  const plane = document.getElementById('formPlane').value;
+  const title = document.getElementById('formTitle').value.trim();
+  const story = document.getElementById('formStory').value.trim();
+  const give = document.getElementById('formGive').value.trim();
+  const ask = document.getElementById('formAsk').value.trim();
+  const contact = document.getElementById('formContact').value.trim();
+
+  let kind = 'both';
+  if (give && !ask) kind = 'offer';
+  if (!give && ask) kind = 'need';
+
+  const townNames = { '2830': 'Dubbo', '2821': 'Narromine', '2820': 'Wellington', '2827': 'Gilgandra' };
+
+  const newPost = {
+    id: "eve-" + Date.now(),
+    author: name,
+    avatar: "🤝",
+    town: townNames[postcode] || 'Regional NSW',
+    postcode,
+    plane,
+    kind,
+    title,
+    story,
+    give: give || null,
+    ask: ask || null,
+    vouches: 1,
+    contact,
+    time: "Just now"
+  };
+
+  evePosts.unshift(newPost);
+  saveEve();
+  closeShareModal();
+  renderAll();
+}
+
+function escapeHtml(str) {
+  return String(str).replace(/[&<>'"]/g, tag => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
+  }[tag] || tag));
+}
+
+window.addEventListener('DOMContentLoaded', initEve);
+</script>
+</body>
+</html>

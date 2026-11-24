@@ -202,6 +202,12 @@ details.sub[open]>summary{border-bottom:1px dashed var(--rule)}
 .seg .clr,.seg .na-btn{font-family:var(--body);font-size:11px;font-weight:600;background:#F1F5F9;border:1px solid #CBD5E1;border-radius:6px;color:#475569;cursor:pointer;padding:2px 8px;min-height:24px;display:inline-flex;align-items:center;transition:all .1s ease}
 .seg .clr:hover,.seg .na-btn:hover{background:#E2E8F0;color:#0F172A}
 .seg-row[data-val="NA"] .na-btn{background:var(--ink);color:#FFFFFF;border-color:var(--ink)}
+.seg .zero-btn{font-family:var(--body);font-size:11px;font-weight:700;background:#F1F5F9;border:1px solid #CBD5E1;border-radius:6px;color:#334155;cursor:pointer;padding:2px 8px;min-height:24px;display:inline-flex;align-items:center;transition:all .1s ease}
+.seg .zero-btn:hover{background:#E2E8F0;color:#0F172A}
+.seg-row[data-val="CANNOT"] .zero-btn,.seg-row[data-val="NONE"] .zero-btn{background:#334155;color:#FFFFFF;border-color:#1E293B;box-shadow:0 1px 4px rgba(15,23,42,0.2)}
+.info-pip-btn{position:relative;display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:99px;border:1.5px solid #64748B;background:#F8FAFC;color:#334155;font-family:var(--body);font-size:13px;font-weight:800;font-style:italic;cursor:pointer;padding:0;margin-left:8px;vertical-align:middle;line-height:1;transition:all .12s ease}
+.info-pip-btn::after{content:"";position:absolute;inset:-9px;border-radius:99px}
+.info-pip-btn:hover{background:#4F46E5;border-color:#4F46E5;color:#FFFFFF;transform:scale(1.08)}
 .seg-row[data-val="NA"] .seg-btns label{opacity:0.35}
 .seg .clr:hover{color:var(--ink)}
 .subnotes{margin-top:16px;border-top:1.5px dashed var(--rule);padding-top:12px}
@@ -254,6 +260,9 @@ footer.foot{border-top:1.5px solid var(--rule);padding:22px 0 50px;font-size:13.
 .pulse-col-tag{font-family:var(--body);font-size:12px;font-weight:700;color:var(--ink);padding-bottom:8px;border-bottom:1.5px solid var(--rule)}
 .pulse-q-box{display:flex;flex-direction:column;gap:5px}
 .pulse-q-box:not(:last-child){border-bottom:1.5px dashed var(--rule);padding-bottom:14px}
+.pulse-q-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.pulse-q-head .q{margin:0;flex:1;min-width:0}
+.pulse-q-head .info-pip-btn{flex:none;margin-left:0;margin-top:1px}
 .pulse-q-head{font-family:var(--body);font-size:12px;color:var(--ink-soft);margin-bottom:4px;line-height:1.4}
 .pulse-q-head strong{color:var(--ink);font-weight:700}
 .pulse-card .q{margin:0 0 6px;font-size:15.5px;line-height:1.4;font-weight:500;color:#1E293B}
@@ -366,6 +375,7 @@ footer.foot{border-top:1.5px solid var(--rule);padding:22px 0 50px;font-size:13.
     <nav class="mini" id="mini" aria-label="Plane progress"></nav>
     <a href="#/pulse" style="font-family:var(--mono);font-size:11px;padding:4px 9px;border:1px solid var(--rule);border-radius:3px;background:var(--paper-2);color:var(--ink);text-decoration:none;white-space:nowrap;flex:none">⚡ Quick Survey</a>
     <a href="#/search" style="font-family:var(--mono);font-size:11px;padding:4px 9px;border:1px solid var(--rule);border-radius:3px;background:var(--paper-2);color:var(--ink);text-decoration:none;white-space:nowrap;flex:none">Search</a>
+    <a href="#/guide" style="font-family:var(--mono);font-size:11px;padding:4px 9px;border:1px solid var(--rule);border-radius:3px;background:var(--paper-2);color:var(--ink);text-decoration:none;white-space:nowrap;flex:none">Guide</a>
     <a href="#/framework" style="font-family:var(--mono);font-size:11px;padding:4px 9px;border:1px solid var(--rule);border-radius:3px;background:var(--paper-2);color:var(--ink);text-decoration:none;white-space:nowrap;flex:none">Framework</a>
     <a href="#/results" style="font-family:var(--mono);font-size:11px;padding:4px 9px;border:1px solid var(--rule);border-radius:3px;background:var(--paper-2);color:var(--ink);text-decoration:none;white-space:nowrap;flex:none">Results</a>
   </div>
@@ -399,6 +409,17 @@ footer.foot{border-top:1.5px solid var(--rule);padding:22px 0 50px;font-size:13.
   <div style="display:flex;justify-content:flex-end;gap:10px">
     <button class="btn ghost" id="close_feedback_btn">Close</button>
     <button class="btn" id="save_feedback_btn">Save Feedback</button>
+  </div>
+</dialog>
+<dialog id="info_dialog" style="max-width:560px;width:92%;border:1.5px solid #CBD5E1;border-radius:14px;background:#FFFFFF;padding:22px 24px;box-shadow:0 16px 44px rgba(15,23,42,0.24);color:#0F172A;margin:auto">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;border-bottom:1px solid #E2E8F0;padding-bottom:10px">
+    <h3 id="info_dialog_title" style="margin:0;font-size:18px;font-weight:800;color:#0F172A">Scoring Guide</h3>
+    <button type="button" id="close_info_x" style="background:none;border:none;font-size:22px;cursor:pointer;color:#64748B;padding:0 4px;line-height:1">&times;</button>
+  </div>
+  <div id="info_dialog_body" style="font-size:14px;line-height:1.55;color:#334155"></div>
+  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-top:16px;padding-top:12px;border-top:1px solid #E2E8F0">
+    <a href="#/guide" id="info_full_guide_link" style="font-size:13.5px;font-weight:700;color:#4F46E5;text-decoration:none">Open Full Scoring Guide &rarr;</a>
+    <button type="button" class="btn" id="close_info_btn" style="padding:7px 16px;font-size:13.5px;border-radius:8px">Got it</button>
   </div>
 </dialog>
 <div class="saved" id="toast" role="status" aria-live="polite">Saved</div>
@@ -1108,11 +1129,11 @@ const PULSE_QUESTIONS = [
     plane: 3,
     name: "Home & Environment",
     who: "Shelter",
-    blurb: "Shelter, essential utilities, and safe living conditions",
-    a: "My home has reliable power, water, heating, and is safe from weather.",
-    b: "I have secure housing without fear of sudden eviction or unaffordable rent.",
+    blurb: "Affordable rent, secure housing, and safe living conditions",
+    a: "I have a safe place to stay with reliable power, water, heating, and shelter from weather.",
+    b: "I have a stable place to live and can cover rent or housing costs without fear of being forced out.",
     c: "I could help with [[basic home repairs]], [[yard work]], or offer an [[emergency spare bed]].",
-    d: "I need help with [[urgent home repairs]], [[high power bills]], or [[finding secure housing]]."
+    d: "I need help with [[an emergency place to stay]], [[paying rent or housing costs]], [[high power bills]], or [[urgent home repairs]]."
   },
   {
     plane: 4,
@@ -1155,6 +1176,317 @@ const PULSE_QUESTIONS = [
     d: "I need [[groceries or emergency food]], [[a lift or transport]], or [[someone to talk to in hard times]]."
   }
 ];
+
+const PULSE_GUIDES = {
+  1: {
+    A: {
+      intro: "Think about how people treat you in everyday places — at work, in shops, at clinics, or with agencies.",
+      examples: [
+        { label: "1 · Not at all", text: "Often looked down on, mocked, ignored, or treated unfairly." },
+        { label: "2 · A bit", text: "Treated okay in a few places, but frequently disrespected or dismissed." },
+        { label: "3 · Partly", text: "Respected by some people, while others still talk down to you." },
+        { label: "4 · Mostly", text: "Generally treated with fairness and respect, with only rare rude moments." },
+        { label: "5 · Completely", text: "Treated with steady dignity and equal respect everywhere you go." }
+      ]
+    },
+    B: {
+      intro: "Can you speak, dress, or live openly as yourself in your neighbourhood without hiding to stay safe?",
+      examples: [
+        { label: "1 · Not at all", text: "Have to hide who you are all the time out of fear of abuse, backlash, or losing work." },
+        { label: "2 · A bit", text: "Only safe to be yourself behind closed doors or with one or two trusted people." },
+        { label: "3 · Partly", text: "Comfortable in some circles, but still guarded or hiding parts of yourself in public." },
+        { label: "4 · Mostly", text: "Free to be yourself in most spaces, with just a few awkward places." },
+        { label: "5 · Completely", text: "Completely safe and accepted as yourself in daily community life." }
+      ]
+    },
+    C: {
+      intro: "Could you step in if someone is being picked on, or help a newcomer feel welcome? Tap the words that match.",
+      examples: [
+        { label: "Cannot (0 pts)", text: "Too drained, unsafe, or stretched thin to step in for others right now." },
+        { label: "1 · Rarely", text: "Could only speak up in a serious situation or help out in a rare moment." },
+        { label: "2 · Sometimes", text: "Can welcome a new face or back someone up now and then when free." },
+        { label: "3 · Often", text: "Regularly make newcomers feel included or quietly check on people." },
+        { label: "4 · Usually", text: "Almost always ready to back someone up or speak against bullying." },
+        { label: "5 · Always", text: "Consistently stand up for others and actively welcome newcomers anytime." }
+      ]
+    },
+    D: {
+      intro: "Do you need someone in your corner or support with feeling left out? Tap the highlighted words to mark exact needs.",
+      examples: [
+        { label: "None (0 pts)", text: "Feel respected and included; no extra support needed here right now." },
+        { label: "1 · Minor", text: "Occasional loneliness or awkwardness, but nothing urgent." },
+        { label: "2 · Low", text: "Would appreciate friendly company or someone to have your back." },
+        { label: "3 · Moderate", text: "Feeling isolated or pushed around is weighing on you week to week." },
+        { label: "4 · High", text: "Facing ongoing disrespect or isolation that is taking a real toll." },
+        { label: "5 · Urgent", text: "Need help today — dealing with active bullying, harassment, or severe isolation." }
+      ]
+    }
+  },
+  2: {
+    A: {
+      intro: "Do you have real ways to learn skills, find decent work, or build a steady future where you are?",
+      examples: [
+        { label: "1 · Not at all", text: "Completely locked out — no local jobs, training, or real paths forward." },
+        { label: "2 · A bit", text: "Very few options; stuck in dead-end work or facing big barriers to learning." },
+        { label: "3 · Partly", text: "A few opportunities exist, though cost, transport, or time make them hard to reach." },
+        { label: "4 · Mostly", text: "Decent paths for work or learning are open to you with minor hurdles." },
+        { label: "5 · Completely", text: "Clear, reachable opportunities to learn, earn, and grow." }
+      ]
+    },
+    B: {
+      intro: "Are you actually moving forward on your work, study, or personal goals week to week?",
+      examples: [
+        { label: "1 · Not at all", text: "Stuck in pure survival mode with zero room to move forward." },
+        { label: "2 · A bit", text: "Barely making progress; constant setbacks keep knocking you back." },
+        { label: "3 · Partly", text: "Slow or uneven progress — moving forward some weeks, stalled in others." },
+        { label: "4 · Mostly", text: "Making steady headway on your plans most of the time." },
+        { label: "5 · Completely", text: "Actively building your goals and seeing real progress every week." }
+      ]
+    },
+    C: {
+      intro: "Could you teach a practical skill, share job/study advice, or put in a good word for someone?",
+      examples: [
+        { label: "Cannot (0 pts)", text: "No spare time, energy, or contacts to mentor or help with work right now." },
+        { label: "1 · Rarely", text: "Could give occasional quick advice if someone specifically asks." },
+        { label: "2 · Sometimes", text: "Can look over a resume, share a tip, or show a skill a few times a year." },
+        { label: "3 · Often", text: "Happy to teach a skill or pass on job leads every month or so." },
+        { label: "4 · Usually", text: "Most weeks you can spare time to guide someone or open a door." },
+        { label: "5 · Always", text: "Always ready to mentor, teach, or vouch for people looking for a start." }
+      ]
+    },
+    D: {
+      intro: "Do you need job training, career advice, or someone to open a door? Tap the highlighted words that fit.",
+      examples: [
+        { label: "None (0 pts)", text: "Work, study, and personal direction are in a good place right now." },
+        { label: "1 · Minor", text: "Just curious about new skills or ideas; no rush at all." },
+        { label: "2 · Low", text: "Could use a few tips, contacts, or advice when convenient." },
+        { label: "3 · Moderate", text: "Feeling stuck; training or a leg-up would make a real difference." },
+        { label: "4 · High", text: "Out of work or stuck in unsustainable work and urgently needing a new path." },
+        { label: "5 · Urgent", text: "Need help today — losing income/work or stuck without a way to support yourself." }
+      ]
+    }
+  },
+  3: {
+    A: {
+      intro: "Check the physical condition of your living space right now (power, water, heating/cooling, leaks, mould, locks).",
+      examples: [
+        { label: "1 · Not at all", text: "Sleeping rough, in a car, or in unsafe shelter; power/water cut off, or no heating/cooling in extreme weather." },
+        { label: "2 · A bit", text: "Frequent outages, cold or damp rooms, unfixed leaks/mould, or weak locks and windows." },
+        { label: "3 · Partly", text: "Most basics work, but one big thing is broken or unreliable (like poor heating or slow repairs)." },
+        { label: "4 · Mostly", text: "Power, water, and shelter work well most of the time, with only small maintenance jobs." },
+        { label: "5 · Completely", text: "Warm, dry, safe from weather, with reliable power and clean water every day." }
+      ]
+    },
+    B: {
+      intro: "This is about having a stable place to live — whether you have housing, can afford rent, and can stay without being forced out.",
+      examples: [
+        { label: "1 · Not at all", text: "Homeless, couch-surfing, facing eviction, or skipping food/medicine just to pay rent." },
+        { label: "2 · A bit", text: "In temporary accommodation, or rent takes almost everything so one bill/sick day risks losing shelter." },
+        { label: "3 · Partly", text: "Managing to pay right now, but rent eats too much of your budget or your lease feels uncertain." },
+        { label: "4 · Mostly", text: "Rent is manageable most months, and you feel fairly settled where you live." },
+        { label: "5 · Completely", text: "Housing costs fit comfortably in your budget and you have real long-term security." }
+      ]
+    },
+    C: {
+      intro: "What practical help around housing, repairs, or temporary shelter could you offer a neighbour?",
+      examples: [
+        { label: "Cannot (0 pts)", text: "No tools, time, health, or spare space to help with housing or repairs right now." },
+        { label: "1 · Rarely", text: "Could only help in a real emergency (e.g., lending a couch for a night or a one-off small fix)." },
+        { label: "2 · Sometimes", text: "Could help a few times a year with simple yard work or small repairs when free." },
+        { label: "3 · Often", text: "Could regularly lend a hand with mowing, odd jobs, or emergency shelter every month or so." },
+        { label: "4 · Usually", text: "Most weeks you have time, tools, or space ready if a neighbour needs a hand." },
+        { label: "5 · Always", text: "Always happy and ready to pitch in with repairs, yard work, or emergency housing." }
+      ]
+    },
+    D: {
+      intro: "What rent, utility, repair, or housing help do you need right now? Tap the highlighted words to mark exact needs.",
+      examples: [
+        { label: "None (0 pts)", text: "Housing, rent, bills, and repairs are all sorted right now." },
+        { label: "1 · Minor", text: "A small nagging issue (like a minor repair or slightly high bill), no rush at all." },
+        { label: "2 · Low", text: "Things are tight or a fix is overdue; a hand or advice would help soon." },
+        { label: "3 · Moderate", text: "Rent, bills, or disrepair are making each week noticeably harder." },
+        { label: "4 · High", text: "Falling behind on rent/bills or living with an urgent repair problem causing real stress." },
+        { label: "5 · Urgent", text: "Need help today — sleeping rough, nowhere safe to stay tonight, eviction, power/water shutoff, or critical repair emergency." }
+      ]
+    }
+  },
+  4: {
+    A: {
+      intro: "Do you get real, unpressured time off away from paid work, caring duties, and money worries?",
+      examples: [
+        { label: "1 · Not at all", text: "Running non-stop from waking up to collapsing; zero real time off." },
+        { label: "2 · A bit", text: "Get an occasional short breather, but demands pile right back on." },
+        { label: "3 · Partly", text: "Some downtime on weekends or evenings, though still often rushed." },
+        { label: "4 · Mostly", text: "Usually get enough breathing room each week to unwind." },
+        { label: "5 · Completely", text: "Plenty of genuine free time to rest and reset without guilt." }
+      ]
+    },
+    B: {
+      intro: "Are you sleeping deeply and getting time for fun, hobbies, or simply enjoying life with people you like?",
+      examples: [
+        { label: "1 · Not at all", text: "Chronically exhausted, poor sleep every night, and zero time for fun." },
+        { label: "2 · A bit", text: "Waking up tired most days; rarely have energy for hobbies or friends." },
+        { label: "3 · Partly", text: "Sleep and downtime are hit-and-miss depending on the week." },
+        { label: "4 · Mostly", text: "Sleeping fairly well and making time for hobbies or friends most weeks." },
+        { label: "5 · Completely", text: "Well-rested, sleeping soundly, and regularly enjoying life." }
+      ]
+    },
+    C: {
+      intro: "Could you help with babysitting, pet sitting, or household chores so someone else can get a break?",
+      examples: [
+        { label: "Cannot (0 pts)", text: "Too exhausted or busy with your own duties to cover for others right now." },
+        { label: "1 · Rarely", text: "Could step in for an hour or two in a rare emergency." },
+        { label: "2 · Sometimes", text: "Can mind kids, feed a pet, or do a chore a few times a year." },
+        { label: "3 · Often", text: "Happy to swap babysitting or help with chores once a month or so." },
+        { label: "4 · Usually", text: "Most weeks you have spare energy to give a neighbour a break." },
+        { label: "5 · Always", text: "Always happy to help with childcare, pet sitting, or chores anytime." }
+      ]
+    },
+    D: {
+      intro: "Do you need relief from caring/chores or a quiet place for catch-up sleep? Tap what fits best.",
+      examples: [
+        { label: "None (0 pts)", text: "Rest, sleep, and workload are manageable right now." },
+        { label: "1 · Minor", text: "A bit tired after a busy patch, no rush for help." },
+        { label: "2 · Low", text: "An afternoon off or a hand with chores would be really nice." },
+        { label: "3 · Moderate", text: "Exhaustion is building up week to week with no break in sight." },
+        { label: "4 · High", text: "Running on empty — caring duties or noise are stopping real recovery." },
+        { label: "5 · Urgent", text: "Need help today — near burnout or desperate for safe, quiet sleep." }
+      ]
+    }
+  },
+  5: {
+    A: {
+      intro: "Do you know your basic rights (as a renter, worker, or resident) and feel free to make your own choices?",
+      examples: [
+        { label: "1 · Not at all", text: "Kept in the dark about your rights, or someone else controls your money/choices." },
+        { label: "2 · A bit", text: "Know a few basics, but often confused by rules or pressured into things." },
+        { label: "3 · Partly", text: "Understand some rights, though unsure how to use them in tricky situations." },
+        { label: "4 · Mostly", text: "Clear on your rights and free to run your own life most of the time." },
+        { label: "5 · Completely", text: "Well-informed, independent, and confident making your own decisions." }
+      ]
+    },
+    B: {
+      intro: "When a landlord, boss, or government agency pushes you around, can you speak up and get a fair say?",
+      examples: [
+        { label: "1 · Not at all", text: "Completely powerless — afraid to speak up for fear of retaliation or losing housing/pay." },
+        { label: "2 · A bit", text: "Try to push back sometimes, but usually ignored or steamrolled." },
+        { label: "3 · Partly", text: "Can stand your ground on small things, though big disputes feel overwhelming." },
+        { label: "4 · Mostly", text: "Able to advocate for yourself and usually get heard." },
+        { label: "5 · Completely", text: "Strong voice, real say in decisions, and able to hold your ground." }
+      ]
+    },
+    C: {
+      intro: "Could you lend tools or gear, lend a vehicle, or help someone through confusing paperwork?",
+      examples: [
+        { label: "Cannot (0 pts)", text: "Don't have spare tools, a vehicle, or time/confidence for forms right now." },
+        { label: "1 · Rarely", text: "Could lend a tool or help with a quick form in a rare pinch." },
+        { label: "2 · Sometimes", text: "Happy to lend gear or help read a letter a few times a year." },
+        { label: "3 · Often", text: "Can regularly help neighbours with paperwork or borrowable gear." },
+        { label: "4 · Usually", text: "Most weeks you are glad to lend tools, a vehicle, or form help." },
+        { label: "5 · Always", text: "Always ready to share gear, transport, or help tackle tough paperwork." }
+      ]
+    },
+    D: {
+      intro: "Do you need help with forms, a tenancy/work dispute, or borrowing tools? Tap the matching words.",
+      examples: [
+        { label: "None (0 pts)", text: "Paperwork, rights, and gear access are all sorted right now." },
+        { label: "1 · Minor", text: "A small form or tool need sitting in the background; no rush." },
+        { label: "2 · Low", text: "Could use a second pair of eyes on a form or to borrow a tool soon." },
+        { label: "3 · Moderate", text: "Confusing paperwork or an unresolved dispute is dragging on." },
+        { label: "4 · High", text: "Facing serious pushback from a landlord, boss, or agency and need backup." },
+        { label: "5 · Urgent", text: "Need help today — looming deadline, tribunal/eviction hearing, or cut-off notice." }
+      ]
+    }
+  },
+  6: {
+    A: {
+      intro: "Around you, do people, neighbours, and local businesses keep their word and deal honestly?",
+      examples: [
+        { label: "1 · Not at all", text: "Widespread dishonesty, broken promises, or people taking advantage of others." },
+        { label: "2 · A bit", text: "Only a couple of people you trust; most dealings feel risky." },
+        { label: "3 · Partly", text: "Mix of honest people and unreliable ones; you stay cautious." },
+        { label: "4 · Mostly", text: "Most people and places around you act fairly and keep their word." },
+        { label: "5 · Completely", text: "High community trust — people follow through and deal straight." }
+      ]
+    },
+    B: {
+      intro: "Can you earn your living and go about daily life without being forced to lie, cut corners, or hurt others?",
+      examples: [
+        { label: "1 · Not at all", text: "Forced by survival or a boss to do things that deeply go against your conscience." },
+        { label: "2 · A bit", text: "Often pressured to look the other way or compromise your values to get by." },
+        { label: "3 · Partly", text: "Mostly honest, though sometimes trapped in grey areas at work or with agencies." },
+        { label: "4 · Mostly", text: "Able to live and work honestly with rare compromises." },
+        { label: "5 · Completely", text: "Fully able to live and earn with a clean conscience every day." }
+      ]
+    },
+    C: {
+      intro: "Would you act as a character reference, verify facts, or bear witness for someone treated unfairly?",
+      examples: [
+        { label: "Cannot (0 pts)", text: "Not in a safe or able position to act as a witness or reference right now." },
+        { label: "1 · Rarely", text: "Would only step forward in a very clear, serious emergency." },
+        { label: "2 · Sometimes", text: "Could write a reference or confirm facts occasionally if asked." },
+        { label: "3 · Often", text: "Willing to vouch for honest people or verify facts when needed." },
+        { label: "4 · Usually", text: "Almost always willing to stand up for the truth and back someone up." },
+        { label: "5 · Always", text: "Always ready to bear witness, give a reference, and stand by the facts." }
+      ]
+    },
+    D: {
+      intro: "Do you need an honest witness, someone with backbone beside you, or support getting a fair hearing?",
+      examples: [
+        { label: "None (0 pts)", text: "No dispute, unfair accusation, or witness need right now." },
+        { label: "1 · Minor", text: "A small misunderstanding or reference needed later; no rush." },
+        { label: "2 · Low", text: "Would help to have a character reference or someone to double-check facts." },
+        { label: "3 · Moderate", text: "Being treated unfairly or disbelieved is making life harder." },
+        { label: "4 · High", text: "Facing a serious dispute where you need a witness or someone in your corner." },
+        { label: "5 · Urgent", text: "Need help today — urgent hearing, false accusation, or immediate witness needed." }
+      ]
+    }
+  },
+  7: {
+    A: {
+      intro: "Can you afford and physically reach fresh, healthy food near where you live without going short?",
+      examples: [
+        { label: "1 · Not at all", text: "Skipping meals, going hungry, or relying entirely on emergency food parcels." },
+        { label: "2 · A bit", text: "Often running out of food before payday or stuck with cheap, unhealthy options." },
+        { label: "3 · Partly", text: "Enough calories most days, though fresh food is hard to afford or reach." },
+        { label: "4 · Mostly", text: "Steady access to good food most weeks, with only occasional budget squeezes." },
+        { label: "5 · Completely", text: "Reliable, affordable, healthy food at home every single day." }
+      ]
+    },
+    B: {
+      intro: "If you get sick, stranded, or hit a sudden crisis today, is there someone nearby you can actually call?",
+      examples: [
+        { label: "1 · Not at all", text: "Completely on your own — nobody nearby you could call in an emergency." },
+        { label: "2 · A bit", text: "Have one or two contacts, though they are far away or hard to rely on." },
+        { label: "3 · Partly", text: "Could probably find help for a small favour, unsure in a big crisis." },
+        { label: "4 · Mostly", text: "Have trustworthy friends or neighbours nearby who usually pick up." },
+        { label: "5 · Completely", text: "Strong local circle you can count on immediately if anything goes wrong." }
+      ]
+    },
+    C: {
+      intro: "Could you cook or share meals, give someone a lift, or check in on a neighbour doing it tough?",
+      examples: [
+        { label: "Cannot (0 pts)", text: "Short on food, transport, or energy to care for others right now." },
+        { label: "1 · Rarely", text: "Could drop off a meal or give a lift in a rare emergency." },
+        { label: "2 · Sometimes", text: "Can cook an extra portion or check in on someone now and then." },
+        { label: "3 · Often", text: "Happy to share meals, give lifts, or check in every few weeks." },
+        { label: "4 · Usually", text: "Most weeks you have room to cook extra, drive someone, or visit." },
+        { label: "5 · Always", text: "Always ready to share food, offer lifts, or look after neighbours." }
+      ]
+    },
+    D: {
+      intro: "Do you need groceries, a lift/transport, or someone steady to talk to in hard times? Tap what matches.",
+      examples: [
+        { label: "None (0 pts)", text: "Food, transport, and day-to-day support are all okay right now." },
+        { label: "1 · Minor", text: "Could occasionally use a lift or a friendly chat, no rush." },
+        { label: "2 · Low", text: "Groceries are tight or getting around is awkward; a hand would help." },
+        { label: "3 · Moderate", text: "Regularly struggling with food costs, transport, or carrying things alone." },
+        { label: "4 · High", text: "Short on food, stranded without transport, or overwhelmed emotionally." },
+        { label: "5 · Urgent", text: "Need help today — out of food, stranded, or in an acute crisis needing immediate care." }
+      ]
+    }
+  }
+};
 
 const PLANE_THEMES = {
   1: { hue: '#7C3AED', bg: '#F8F6FD', border: '#DDD6FE', text: '#5B21B6', badgeBg: '#EDE9FE', tagBg: '#F3E8FF' }, // Iris Amethyst (Dignity)
@@ -1232,25 +1564,37 @@ function viewPulse(){
 
       <div class="pulse-grid">
         <div class="pulse-col" style="background:#FFFFFF;border:1.5px solid ${th.border};border-radius:14px;box-shadow:0 2px 10px rgba(0,0,0,0.02)">
-          <div class="pulse-col-tag" style="color:${th.text};border-bottom:1.5px solid ${th.border};font-size:12px;font-weight:700;letter-spacing:0">1. Lived Reality &middot; Awareness &amp; Practice</div>
+          <div class="pulse-col-tag" style="color:${th.text};border-bottom:1.5px solid ${th.border};font-size:12px;font-weight:700;letter-spacing:0">1. Lived Reality &middot; Awareness &amp; Practice <button type="button" class="info-pip-btn" data-infoguide="ab" aria-label="How to score Awareness and Practice" title="How to score these">i</button></div>
           <div class="pulse-q-box" style="border-color:${th.border}">
-            <p class="q" style="font-weight:500;color:#1E293B"><span style="display:inline-block;font-size:11.5px;font-weight:700;color:${th.text};background:${th.badgeBg};padding:2px 8px;border-radius:6px;margin-right:8px">A</span>${fmtQ(p.a, `pulse|${p.plane}|A`)}</p>
+            <div class="pulse-q-head">
+              <p class="q" style="font-weight:500;color:#1E293B"><span style="display:inline-block;font-size:11.5px;font-weight:700;color:${th.text};background:${th.badgeBg};padding:2px 8px;border-radius:6px;margin-right:8px">A</span>${fmtQ(p.a, `pulse|${p.plane}|A`)}</p>
+              <button type="button" class="info-pip-btn" data-infoguide="q:${p.plane}:A" aria-label="Context guide for Question A" title="What this means in context">i</button>
+            </div>
             ${segHTML(`pulse|${p.plane}|A`, null, AB_L)}
           </div>
           <div class="pulse-q-box" style="border-color:${th.border}">
-            <p class="q" style="font-weight:500;color:#1E293B"><span style="display:inline-block;font-size:11.5px;font-weight:700;color:${th.text};background:${th.badgeBg};padding:2px 8px;border-radius:6px;margin-right:8px">B</span>${fmtQ(p.b, `pulse|${p.plane}|B`)}</p>
+            <div class="pulse-q-head">
+              <p class="q" style="font-weight:500;color:#1E293B"><span style="display:inline-block;font-size:11.5px;font-weight:700;color:${th.text};background:${th.badgeBg};padding:2px 8px;border-radius:6px;margin-right:8px">B</span>${fmtQ(p.b, `pulse|${p.plane}|B`)}</p>
+              <button type="button" class="info-pip-btn" data-infoguide="q:${p.plane}:B" aria-label="Context guide for Question B" title="What this means in context">i</button>
+            </div>
             ${segHTML(`pulse|${p.plane}|B`, null, AB_L)}
           </div>
         </div>
 
         <div class="pulse-col" style="background:#FFFFFF;border:1.5px solid ${th.border};border-radius:14px;box-shadow:0 2px 10px rgba(0,0,0,0.02)">
-          <div class="pulse-col-tag" style="color:${th.text};border-bottom:1.5px solid ${th.border};font-size:12px;font-weight:700;letter-spacing:0">2. Community Exchange &middot; Offer &amp; Need</div>
+          <div class="pulse-col-tag" style="color:${th.text};border-bottom:1.5px solid ${th.border};font-size:12px;font-weight:700;letter-spacing:0">2. Community Exchange &middot; Offer &amp; Need <button type="button" class="info-pip-btn" data-infoguide="cd" aria-label="How to score Offers and Needs" title="How to score Offers &amp; Needs">i</button></div>
           <div class="pulse-q-box" style="border-color:${th.border}">
-            <p class="q" style="font-weight:500;color:#1E293B"><span style="display:inline-block;font-size:11.5px;font-weight:700;color:${th.text};background:${th.badgeBg};padding:2px 8px;border-radius:6px;margin-right:8px">C</span>${fmtQ(p.c, `pulse|${p.plane}|C`)}</p>
+            <div class="pulse-q-head">
+              <p class="q" style="font-weight:500;color:#1E293B"><span style="display:inline-block;font-size:11.5px;font-weight:700;color:${th.text};background:${th.badgeBg};padding:2px 8px;border-radius:6px;margin-right:8px">C</span>${fmtQ(p.c, `pulse|${p.plane}|C`)}</p>
+              <button type="button" class="info-pip-btn" data-infoguide="q:${p.plane}:C" aria-label="Context guide for Question C" title="What this means in context">i</button>
+            </div>
             ${segHTML(`pulse|${p.plane}|C`, null, CA_L)}
           </div>
           <div class="pulse-q-box" style="border-color:${th.border}">
-            <p class="q" style="font-weight:500;color:#1E293B"><span style="display:inline-block;font-size:11.5px;font-weight:700;color:${th.text};background:${th.badgeBg};padding:2px 8px;border-radius:6px;margin-right:8px">D</span>${fmtQ(p.d, `pulse|${p.plane}|D`)}</p>
+            <div class="pulse-q-head">
+              <p class="q" style="font-weight:500;color:#1E293B"><span style="display:inline-block;font-size:11.5px;font-weight:700;color:${th.text};background:${th.badgeBg};padding:2px 8px;border-radius:6px;margin-right:8px">D</span>${fmtQ(p.d, `pulse|${p.plane}|D`)}</p>
+              <button type="button" class="info-pip-btn" data-infoguide="q:${p.plane}:D" aria-label="Context guide for Question D" title="What this means in context">i</button>
+            </div>
             ${segHTML(`pulse|${p.plane}|D`, null, DA_L)}
           </div>
         </div>
@@ -1362,10 +1706,11 @@ function pulseDiagnostics(){
     const cVal = STATE[`pulse|${p.plane}|C`];
     const dVal = STATE[`pulse|${p.plane}|D`];
 
-    const a = (aVal && aVal !== 'NA') ? Number(aVal) : 0;
-    const b = (bVal && bVal !== 'NA') ? Number(bVal) : 0;
-    const c = (cVal && cVal !== 'NA') ? Number(cVal) : 0;
-    const d = (dVal && dVal !== 'NA') ? Number(dVal) : 0;
+    const isNonNum = v => !v || v === 'NA' || v === 'CANNOT' || v === 'NONE';
+    const a = !isNonNum(aVal) ? Number(aVal) : 0;
+    const b = !isNonNum(bVal) ? Number(bVal) : 0;
+    const c = !isNonNum(cVal) ? Number(cVal) : 0;
+    const d = !isNonNum(dVal) ? Number(dVal) : 0;
     const note = STATE[`pulse_note|${p.plane}`] || '';
     const offerTags = getSelectedPulseTags(p.plane, 'C');
     const needTags = getSelectedPulseTags(p.plane, 'D');
@@ -1713,7 +2058,7 @@ function viewPulseResults(){
 
     <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:18px">
       <div style="background:#FFFFFF;border:1.5px solid #DCE4F8;border-radius:14px;padding:12px 18px;box-shadow:0 2px 8px rgba(15,23,42,0.03);flex:1;min-width:200px">
-        <span style="font-size:11.5px;font-weight:700;color:#64748B;text-transform:uppercase;letter-spacing:0.04em;display:block">Lived Life Balance</span>
+        <span style="font-size:11.5px;font-weight:700;color:#64748B;text-transform:uppercase;letter-spacing:0.04em;display:block">Lived Life Balance <button type="button" class="info-pip-btn" data-infoguide="results" aria-label="What this score means" title="What this score means">i</button></span>
         <div style="display:flex;align-items:baseline;gap:8px;margin-top:4px">
           <strong style="font-size:22px;color:${statusBadge.color}">${diag.rawAvg ? diag.rawAvg.toFixed(1) + ' / 5' : '—'}</strong>
           <span style="font-size:12px;font-weight:700;color:${statusBadge.color};background:${statusBadge.bg};padding:2px 8px;border-radius:99px">${ov !== null ? ov + '% Viability' : '—'} &middot; ${statusBadge.label}</span>
@@ -1722,7 +2067,7 @@ function viewPulseResults(){
       </div>
 
       <div style="background:#FFFFFF;border:1.5px solid #DCE4F8;border-radius:14px;padding:12px 18px;box-shadow:0 2px 8px rgba(15,23,42,0.03);flex:1;min-width:200px">
-        <span style="font-size:11.5px;font-weight:700;color:#64748B;text-transform:uppercase;letter-spacing:0.04em;display:block">Mutual Aid Balance</span>
+        <span style="font-size:11.5px;font-weight:700;color:#64748B;text-transform:uppercase;letter-spacing:0.04em;display:block">Mutual Aid Balance <button type="button" class="info-pip-btn" data-infoguide="results" aria-label="What mutual aid balance means" title="What mutual aid balance means">i</button></span>
         <div style="display:flex;align-items:baseline;gap:8px;margin-top:4px">
           <strong style="font-size:22px;color:${exchangeBadge.color}">${diag.netExchange > 0 ? '+' + diag.netExchange : diag.netExchange} pts</strong>
           <span style="font-size:12px;font-weight:700;color:${exchangeBadge.color};background:${exchangeBadge.bg};padding:2px 8px;border-radius:99px">${exchangeBadge.label}</span>
@@ -1917,12 +2262,17 @@ function viewHub(){
 function segHTML(key,val,labels){
   const curRaw = STATE[key];
   const isNA = curRaw === 'NA';
-  const cur = (!isNA && curRaw) ? Number(curRaw) : null;
-  const curLabel = isNA ? 'Does not apply' : (cur && labels && labels[cur-1] ? labels[cur-1] : '');
+  const zeroOpt = labels === CA_L
+    ? { value: 'CANNOT', label: 'Cannot', text: 'Cannot offer this' }
+    : (labels === DA_L ? { value: 'NONE', label: 'None', text: 'No need right now' } : null);
+  const isZero = zeroOpt && curRaw === zeroOpt.value;
+  const cur = (!isNA && !isZero && curRaw) ? Number(curRaw) : null;
+  const curLabel = isNA ? 'Does not apply' : (isZero ? zeroOpt.text : (cur && labels && labels[cur-1] ? labels[cur-1] : ''));
   const startLbl = labels ? labels[0] : '1';
   const endLbl = labels ? labels[4] : '5';
+  const rowVal = isNA ? 'NA' : (isZero ? zeroOpt.value : (cur || 0));
   return `<div class="seg" role="group" id="seg-${key}" aria-label="Rating for ${key}">
-    <div class="seg-row" data-val="${isNA ? 'NA' : (cur || 0)}">
+    <div class="seg-row" data-val="${rowVal}">
       <div class="seg-btns">
         ${[1,2,3,4,5].map(i=>`
           <input type="radio" name="${key}" id="${key}~${i}" value="${i}"${STATE[key]==String(i)?' checked':''}>
@@ -1935,6 +2285,7 @@ function segHTML(key,val,labels){
           <span>5: ${endLbl}</span>
         </div>
         <div class="seg-actions">
+          ${zeroOpt ? `<button type="button" class="zero-btn" data-zero="${zeroOpt.value}" data-zero-key="${key}" title="${zeroOpt.text}">${zeroOpt.label}</button>` : ''}
           <button type="button" class="na-btn" data-na="${key}" title="Mark as Not Applicable">N/A</button>
           <button type="button" class="clr" data-clear="${key}">clear</button>
         </div>
@@ -1943,8 +2294,8 @@ function segHTML(key,val,labels){
   </div>`;
 }
 const AB_L=['Not at all','A bit','Partly','Mostly','Completely'];
-const CA_L=['Cannot','Hardly','Sometimes','Regularly','Readily'];
-const DA_L=['None','Low','Moderate','High','Urgent'];
+const CA_L=['Rarely','Sometimes','Often','Usually','Always'];
+const DA_L=['Minor','Low','Moderate','High','Urgent'];
 const BL_L=['None','Minor','Moderate','Severe','Total'];
 
 function chipsHTML(key,tags){
@@ -2533,8 +2884,8 @@ function buildExport(){
     const dVal = STATE[`pulse|${p.plane}|D`];
     const a = aVal === 'NA' ? 'NA' : (aVal ? +aVal : null);
     const b = bVal === 'NA' ? 'NA' : (bVal ? +bVal : null);
-    const c = cVal === 'NA' ? 'NA' : (cVal ? +cVal : null);
-    const d = dVal === 'NA' ? 'NA' : (dVal ? +dVal : null);
+    const c = (cVal === 'NA' || cVal === 'CANNOT') ? cVal : (cVal ? +cVal : null);
+    const d = (dVal === 'NA' || dVal === 'NONE') ? dVal : (dVal ? +dVal : null);
     const note = STATE[`pulse_note|${p.plane}`] || null;
 
     const offerTags = getSelectedPulseTags(p.plane, 'C');
@@ -2661,6 +3012,78 @@ function wireAccount(){
     STATE={ _response_ids: STATE['_response_ids'] };
     queueSave(); render(); toast('Started a new one');
   };
+}
+
+function viewGuide(){
+  return `
+  <div class="planehead" style="border-bottom:2px solid #DCE4F8;padding-bottom:20px">
+    <p class="eyebrow">How to Answer &amp; Read Your Scores</p>
+    <h1 style="color:#0F172A;font-weight:800;letter-spacing:-0.02em">Survey &amp; Scoring Guide</h1>
+    <p style="font-size:16px;color:#475569;max-width:64ch;line-height:1.55">
+      This survey is written in plain everyday English. There are no right or wrong answers, and you can skip anything that does not fit your life.
+    </p>
+  </div>
+
+  <section style="margin:24px 0;display:grid;gap:18px">
+    <div style="background:#FFFFFF;border:1.5px solid #DCE4F8;border-left:6px solid #4F46E5;border-radius:14px;padding:20px">
+      <h2 style="margin:0 0 8px;font-size:19px;color:#0F172A">1. Daily Life Questions (A &amp; B: Awareness &amp; Practice)</h2>
+      <p style="margin:0 0 12px;font-size:14.5px;color:#475569">
+        <strong>A (Awareness)</strong> asks if you know what is available or where things stand. <strong>B (Practice)</strong> asks if it actually works in your real day-to-day life.
+      </p>
+      <div style="display:grid;gap:6px;font-size:14px;color:#334155">
+        <div><strong>1 &middot; Not at all:</strong> Missing, broken, or never happens.</div>
+        <div><strong>2 &middot; A bit:</strong> Very little, or barely enough to get by.</div>
+        <div><strong>3 &middot; Partly:</strong> Happens sometimes, or covers about half of what you need.</div>
+        <div><strong>4 &middot; Mostly:</strong> Usually solid, with only small gaps.</div>
+        <div><strong>5 &middot; Completely:</strong> Reliable, steady, and working well every day.</div>
+      </div>
+    </div>
+
+    <div style="background:#FFFFFF;border:1.5px solid #BBF7D0;border-left:6px solid #16A34A;border-radius:14px;padding:20px">
+      <h2 style="margin:0 0 8px;font-size:19px;color:#14532D">2. What You Can Offer (Question C)</h2>
+      <p style="margin:0 0 12px;font-size:14.5px;color:#166534">
+        Tap any highlighted words inside the sentence to pick exact ways you could help (like <em>yard work</em> or <em>giving a lift</em>). Then pick <strong>Cannot</strong> or rate how often you are available:
+      </p>
+      <div style="display:grid;gap:6px;font-size:14px;color:#14532D">
+        <div><strong>Cannot button (0 pts):</strong> You are not able to offer this right now. Does not count as an offer.</div>
+        <div><strong>1 &middot; Rarely:</strong> Only in an emergency or if nobody else can step in.</div>
+        <div><strong>2 &middot; Sometimes:</strong> A few times a year when you happen to be free.</div>
+        <div><strong>3 &middot; Often:</strong> Steady help every month or so.</div>
+        <div><strong>4 &middot; Usually:</strong> Available most weeks when needed.</div>
+        <div><strong>5 &middot; Always:</strong> Ready and happy to help anytime.</div>
+      </div>
+    </div>
+
+    <div style="background:#FFFFFF;border:1.5px solid #FED7AA;border-left:6px solid #EA580C;border-radius:14px;padding:20px">
+      <h2 style="margin:0 0 8px;font-size:19px;color:#7C2D12">3. Where You Need Support (Question D)</h2>
+      <p style="margin:0 0 12px;font-size:14.5px;color:#9A3412">
+        Tap any highlighted words inside the sentence to mark exact things you need. Then pick <strong>None</strong> or rate how urgent it is:
+      </p>
+      <div style="display:grid;gap:6px;font-size:14px;color:#7C2D12">
+        <div><strong>None button (0 pts):</strong> No help needed here right now.</div>
+        <div><strong>1 &middot; Minor:</strong> It is a thing in my life, but no rush at all.</div>
+        <div><strong>2 &middot; Low:</strong> Would be nice to have a hand when possible.</div>
+        <div><strong>3 &middot; Moderate:</strong> Making things harder week to week.</div>
+        <div><strong>4 &middot; High:</strong> Causing real stress right now.</div>
+        <div><strong>5 &middot; Urgent:</strong> I need help for today or right now.</div>
+      </div>
+    </div>
+
+    <div style="background:#F8FAFC;border:1.5px solid #CBD5E1;border-radius:14px;padding:20px">
+      <h2 style="margin:0 0 8px;font-size:18px;color:#0F172A">4. Reading Your Results</h2>
+      <ul style="margin:0;padding-left:20px;display:grid;gap:8px;font-size:14px;color:#334155;line-height:1.5">
+        <li><strong>Viability % vs /5 Score:</strong> On the 1&ndash;5 scale, <strong>1/5 = 0%</strong> (missing) and <strong>5/5 = 100%</strong> (full security). So an average of 4.0/5 equals 75% Viability.</li>
+        <li><strong>Bottleneck Alerts:</strong> Good scores in one part of life do not cancel out a crisis in another. If any core area is struggling, your headline flags that bottleneck right away.</li>
+        <li><strong>Mutual Aid is Non-Fungible:</strong> Being able to offer food or yard work does not erase your own need for transport, rest, or housing help. Offers and needs are kept separate so nothing gets hidden.</li>
+        <li><strong>N/A &amp; Clear:</strong> Use <strong>N/A</strong> if a question simply does not apply to your situation, or <strong>clear</strong> to undo an answer.</li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="navrow">
+    <a class="btn" href="#/pulse" style="border-radius:10px">&larr; Back to Quick Survey</a>
+    <a class="btn ghost" href="#/hub" style="border-radius:10px">Back to Hub</a>
+  </div>`;
 }
 
 function viewFramework(){
@@ -3052,6 +3475,7 @@ function render(){
       v.innerHTML=viewResults();
     }
   }
+  else if(h.startsWith('#/guide')) v.innerHTML=viewGuide();
   else if(h.startsWith('#/framework') || h.startsWith('#/matrix')) v.innerHTML=viewFramework();
   else if(h.startsWith('#/review')){ v.innerHTML=viewReview(); wireReview(); }
   else { currentPlane=null; v.innerHTML=viewHub(); }
@@ -3070,6 +3494,108 @@ function render(){
   }
   v.focus({preventScroll:true}); 
   if(currentPlane) markActive();
+}
+
+function openInfoGuide(topic){
+  const dlg = document.getElementById('info_dialog');
+  const titleEl = document.getElementById('info_dialog_title');
+  const bodyEl = document.getElementById('info_dialog_body');
+  if(!dlg || !titleEl || !bodyEl) return;
+
+  if(topic && topic.startsWith('q:')){
+    const [, pStr, qLet] = topic.split(':');
+    const pNum = Number(pStr);
+    const pObj = PULSE_QUESTIONS.find(x => x.plane === pNum);
+    const guideEntry = (PULSE_GUIDES[pNum] && PULSE_GUIDES[pNum][qLet]) || '';
+    const qRole = qLet === 'A' ? 'Awareness' : qLet === 'B' ? 'Practice' : qLet === 'C' ? 'What You Can Offer' : 'Where You Need Support';
+    titleEl.textContent = `Part ${pNum} (${pObj ? esc(pObj.who) : ''}) · Question ${qLet}: ${qRole}`;
+    if(guideEntry && typeof guideEntry === 'object' && Array.isArray(guideEntry.examples)){
+      const boxBg = qLet === 'C' ? '#F0FDF4' : (qLet === 'D' ? '#FFF7ED' : '#F8FAFC');
+      const boxBorder = qLet === 'C' ? '#BBF7D0' : (qLet === 'D' ? '#FED7AA' : '#E2E8F0');
+      const boxColor = qLet === 'C' ? '#14532D' : (qLet === 'D' ? '#7C2D12' : '#1E293B');
+      bodyEl.innerHTML = `
+        <p style="margin:0 0 12px;font-size:14.5px;color:#0F172A;line-height:1.55">${esc(guideEntry.intro)}</p>
+        <div style="display:grid;gap:7px;background:${boxBg};padding:12px 14px;border-radius:10px;border:1px solid ${boxBorder};color:${boxColor};font-size:13px;line-height:1.45">
+          ${guideEntry.examples.map(ex => `<div><strong>${esc(ex.label)}:</strong> ${esc(ex.text)}</div>`).join('')}
+        </div>`;
+    } else {
+      let scaleBox = '';
+      if(qLet === 'A' || qLet === 'B'){
+        scaleBox = `<div style="display:grid;gap:4px;background:#F8FAFC;padding:10px 12px;border-radius:8px;border:1px solid #E2E8F0;font-size:13px">
+          <div><strong>1 · Not at all</strong> &rarr; <strong>2 · A bit</strong> &rarr; <strong>3 · Partly</strong> &rarr; <strong>4 · Mostly</strong> &rarr; <strong>5 · Completely</strong></div>
+          <div style="color:#64748B">Use <strong>N/A</strong> if this does not apply to your life.</div>
+        </div>`;
+      } else if(qLet === 'C'){
+        scaleBox = `<div style="background:#F0FDF4;padding:10px 12px;border-radius:8px;border:1px solid #BBF7D0;color:#14532D;font-size:13px">
+          <strong>Cannot</strong> = Not able right now (0 pts)<br>
+          <strong>1 · Rarely</strong> &rarr; <strong>2 · Sometimes</strong> &rarr; <strong>3 · Often</strong> &rarr; <strong>4 · Usually</strong> &rarr; <strong>5 · Always</strong>
+        </div>`;
+      } else {
+        scaleBox = `<div style="background:#FFF7ED;padding:10px 12px;border-radius:8px;border:1px solid #FED7AA;color:#7C2D12;font-size:13px">
+          <strong>None</strong> = No need right now (0 pts)<br>
+          <strong>1 · Minor</strong> (in my life, no rush) &rarr; <strong>5 · Urgent</strong> (need help for today)
+        </div>`;
+      }
+      bodyEl.innerHTML = `
+        <p style="margin:0 0 12px;font-size:14.5px;color:#0F172A;line-height:1.55">${esc(guideEntry)}</p>
+        ${scaleBox}`;
+    }
+  } else if(topic === 'ab'){
+    titleEl.textContent = 'Scoring: Daily Life (Awareness & Practice)';
+    bodyEl.innerHTML = `
+      <p style="margin:0 0 10px"><strong>A (Awareness)</strong> asks if you know where things stand. <strong>B (Practice)</strong> asks if it actually happens in your everyday life.</p>
+      <div style="display:grid;gap:5px;background:#F8FAFC;padding:12px;border-radius:8px;border:1px solid #E2E8F0">
+        <div><strong>1 &middot; Not at all:</strong> Missing, broken, or never happens.</div>
+        <div><strong>2 &middot; A bit:</strong> Very little, or barely enough.</div>
+        <div><strong>3 &middot; Partly:</strong> Happens sometimes, or covers half.</div>
+        <div><strong>4 &middot; Mostly:</strong> Usually true, with small gaps.</div>
+        <div><strong>5 &middot; Completely:</strong> Steady and working well every day.</div>
+      </div>
+      <p style="margin:10px 0 0;font-size:13px;color:#64748B">Use <strong>N/A</strong> if a question does not fit your life, or <strong>clear</strong> to undo.</p>`;
+  } else if(topic === 'cd'){
+    titleEl.textContent = 'Scoring: Offers & Needs';
+    bodyEl.innerHTML = `
+      <p style="margin:0 0 10px">Tap highlighted chips inside the sentence to pick exact items, then pick <strong>Cannot</strong> / <strong>None</strong> or rate 1&ndash;5.</p>
+      <div style="display:grid;gap:5px;background:#F0FDF4;padding:12px;border-radius:8px;border:1px solid #BBF7D0;margin-bottom:10px;color:#14532D">
+        <div style="margin-bottom:2px"><strong>C &middot; What You Can Offer:</strong></div>
+        <div><strong>Cannot:</strong> Not able to offer this right now (0 pts).</div>
+        <div><strong>1 &middot; Rarely:</strong> Only in an emergency or if nobody else can step in.</div>
+        <div><strong>2 &middot; Sometimes:</strong> A few times a year when you happen to be free.</div>
+        <div><strong>3 &middot; Often:</strong> Steady help every month or so.</div>
+        <div><strong>4 &middot; Usually:</strong> Available most weeks when needed.</div>
+        <div><strong>5 &middot; Always:</strong> Ready and happy to help anytime.</div>
+      </div>
+      <div style="display:grid;gap:5px;background:#FFF7ED;padding:12px;border-radius:8px;border:1px solid #FED7AA;color:#7C2D12">
+        <div style="margin-bottom:2px"><strong>D &middot; Where You Need Support:</strong></div>
+        <div><strong>None:</strong> No help needed here right now (0 pts).</div>
+        <div><strong>1 &middot; Minor:</strong> It is a thing in my life, no rush at all.</div>
+        <div><strong>2 &middot; Low:</strong> Would be nice to have a hand when possible.</div>
+        <div><strong>3 &middot; Moderate:</strong> Making things harder week to week.</div>
+        <div><strong>4 &middot; High:</strong> Causing real stress right now.</div>
+        <div><strong>5 &middot; Urgent:</strong> I need help for today or right now.</div>
+      </div>
+      <p style="margin:10px 0 0;font-size:13px;color:#64748B">Use <strong>N/A</strong> if a question does not fit your life, or <strong>clear</strong> to undo.</p>`;
+  } else {
+    titleEl.textContent = 'How to Read Your Results';
+    bodyEl.innerHTML = `
+      <div style="display:grid;gap:8px">
+        <p style="margin:0"><strong>Viability % vs /5 Score:</strong> 1/5 = 0% and 5/5 = 100%, so a 4.0/5 average equals 75% Viability.</p>
+        <p style="margin:0"><strong>Bottleneck Flag:</strong> Doing well in one area never hides a crisis in another. Any struggling area is flagged directly in your headline.</p>
+        <p style="margin:0"><strong>Non-Fungible Aid:</strong> Having skills to offer (like yard work) does not cancel out your own unmet needs (like transport or housing).</p>
+      </div>`;
+  }
+
+  const closeBtn = document.getElementById('close_info_btn');
+  const closeX = document.getElementById('close_info_x');
+  const fullLink = document.getElementById('info_full_guide_link');
+  const closeIt = () => { if(typeof dlg.close === 'function') dlg.close(); else dlg.removeAttribute('open'); };
+  if(closeBtn) closeBtn.onclick = closeIt;
+  if(closeX) closeX.onclick = closeIt;
+  if(fullLink) fullLink.onclick = closeIt;
+  dlg.onclick = e => { if(e.target === dlg) closeIt(); };
+
+  if(typeof dlg.showModal === 'function') dlg.showModal();
+  else dlg.setAttribute('open','');
 }
 
 function wireGlobalFeedback(){
@@ -3326,6 +3852,26 @@ document.addEventListener('click',e=>{
     it.classList.toggle('active', !!STATE[k]);
     it.textContent = it.textContent.replace(/\s*✓$/, '') + (STATE[k] ? ' ✓' : '');
     queueSave();
+    return;
+  }
+  const inf=e.target.closest('[data-infoguide]');
+  if(inf){
+    e.preventDefault();
+    e.stopPropagation();
+    openInfoGuide(inf.dataset.infoguide);
+    return;
+  }
+  const zr=e.target.closest('[data-zero]');
+  if(zr){
+    const k=zr.dataset.zeroKey;
+    const zVal=zr.dataset.zero;
+    STATE[k]=zVal; delete STATE[k+'|last'];
+    const row=zr.closest('.seg')?zr.closest('.seg').querySelector('.seg-row'):null;
+    if(row) row.dataset.val=zVal;
+    document.querySelectorAll(`input[name="${CSS.escape(k)}"]`).forEach(r=>r.checked=false);
+    queueSave(); syncCounts(zr); if(currentPlane) refreshToc();
+    const lbl=document.getElementById('lbl-'+k);
+    if(lbl) lbl.textContent = zVal === 'CANNOT' ? 'Cannot offer this' : 'No need right now';
     return;
   }
   const na=e.target.closest('[data-na]');

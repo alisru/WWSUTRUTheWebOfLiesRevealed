@@ -1,81 +1,175 @@
 <!DOCTYPE html>
 <html lang="en-AU">
-
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Surveys</title>
-  <link rel="stylesheet" href="assets/survey.css">
-  <style>
-    .startgrid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-      max-width: 720px;
-      margin-top: 20px
-    }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Psochic Hegemony — Surveys & Philosophy Platform</title>
+<link rel="stylesheet" href="assets/survey.css">
+<style>
+.mast-nav { display: flex; align-items: center; gap: 18px; margin-left: auto; }
+.mast-nav a { color: var(--ink-soft); text-decoration: none; font-size: 13.5px; font-weight: 500; transition: color .2s ease; }
+.mast-nav a:hover, .mast-nav a.active { color: var(--ink); }
 
-    @media(max-width:620px) {
-      .startgrid {
-        grid-template-columns: 1fr
-      }
-    }
+.portal-hero { padding: 40px 0 28px; border-bottom: 1px solid var(--rule); margin-bottom: 32px; }
+.portal-hero h1 { font-size: clamp(28px, 5vw, 44px); line-height: 1.1; margin: 0 0 12px; }
+.portal-sub { font-size: 17px; color: var(--ink-soft); max-width: 68ch; line-height: 1.55; }
 
-    .starttile {
-      border: 1px solid var(--rule);
-      background: var(--panel);
-      border-radius: 8px;
-      padding: 18px
-    }
+.survey-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
+  margin-top: 24px;
+}
+.survey-tile {
+  border: 1px solid var(--rule);
+  background: var(--panel);
+  border-radius: 8px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  transition: transform .15s ease, border-color .15s ease;
+}
+.survey-tile:hover {
+  border-color: var(--focus);
+  transform: translateY(-2px);
+}
+.survey-tile .tile-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+.survey-tile h2 {
+  margin: 0;
+  font-size: 20px;
+  letter-spacing: -.01em;
+}
+.survey-tile p {
+  margin: 0 0 18px;
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  flex: 1;
+  line-height: 1.55;
+}
+.badge-tag {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  padding: 4px 8px;
+  border-radius: 99px;
+  border: 1px solid var(--rule);
+  color: var(--ink-soft);
+  background: var(--panel-2);
+}
+.badge-tag.highlight {
+  color: var(--gg);
+  border-color: var(--gg);
+  background: rgba(59, 222, 132, 0.08);
+}
+.badge-tag.visceral {
+  color: var(--focus);
+  border-color: var(--focus);
+  background: rgba(48, 200, 224, 0.08);
+}
 
-    .starttile h2 {
-      margin: 0 0 6px;
-      font-size: 19px
-    }
-
-    .starttile p {
-      margin: 0 0 14px;
-      font-size: 13px;
-      color: var(--ink-soft)
-    }
-  </style>
+.feature-banner {
+  background: linear-gradient(135deg, var(--panel-2) 0%, var(--panel) 100%);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  padding: 28px;
+  margin-top: 36px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.feature-banner h3 { margin: 0 0 8px; font-size: 21px; }
+.feature-banner p { margin: 0; font-size: 14px; color: var(--ink-soft); max-width: 60ch; }
+</style>
 </head>
-
 <body>
-  <header class="mast">
-    <div class="mast-in">
-      <div class="brand">Surveys<span>The Web Of Lies Revealed</span></div>
-    </div>
-  </header>
-  <main class="wrap">
-    <h1>Open surveys</h1>
-    <p class="prose">Nothing here talks to a server until you answer one and submit.</p>
 
-    <!--
-    Plain hand-edited list -- there is no server here to scan the folder for
-    survey files, so add one card per exported survey, same as any other
-    index page in this repo. Copy the block below for each one.
-  -->
-    <div class="startgrid">
+<header class="mast">
+  <div class="mast-in wide">
+    <div class="brand">The Psochic Hegemony<span>The Scales of Judgement</span></div>
+    <nav class="mast-nav">
+      <a href="index.html" class="active">Surveys & Tests</a>
+      <a href="explainer.html">Philosophy & Theory</a>
+      <a href="explainer.html#sandbox">Interactive Map</a>
+      <a href="privacy.html">Privacy</a>
+    </nav>
+  </div>
+</header>
 
-      <div class="starttile">
-        <h2>Judgement</h2>
-        <p>The Psochic Hegemony — judging ideas, concepts and people through relative morality.</p>
-        <a class="btn" href="hegemony-survey.html">Start</a>
+<main class="wrap wide">
+  <section class="portal-hero">
+    <div class="eyebrow">The Web Of Lies Revealed · Civic & Epistemic Research</div>
+    <h1>The Psochic Hegemony Portal</h1>
+    <p class="portal-sub">An empirical platform for testing human moral perception, visceral alignment, and social scale. Grounded in the two-axis coordinate system of Relative Morality (&upsilon;) and Kinetic Will (&psi;).</p>
+  </section>
+
+  <h2 style="font-size: 20px; margin-top: 10px;">Available Tests & Experiments</h2>
+  <p class="prose">All responses are anonymous and processed locally until you choose to submit.</p>
+
+  <div class="survey-grid">
+
+    <!-- Tile 1: Fruit Basket -->
+    <div class="survey-tile">
+      <div class="tile-head">
+        <h2>Fruit Basket & Perception Test</h2>
+        <span class="badge-tag visceral">Calibration & Scale</span>
       </div>
-      <div class="starttile">
-        <h2>Feeling about Judgement Bot</h2>
-        <p>A 1-question survey to ask how you feel about <a href="https://bsky.app/profile/judgement-bot.bsky.social" target="_blank">Judgement Bot</a>.</p>
-        <a class="btn" href="judgement-bot-feeling.html">Start</a>
+      <p>Visual moral calibration using ripe and rotten fruit baskets. Features the forced moral inversion test (visceral bodily resistance), desert scarcity valuation, and human emotion & group scaling (autism, prosopagnosia, and threat perception).</p>
+      <div>
+        <a class="btn" href="fruit-basket-survey.html">Start Test</a>
       </div>
-
     </div>
-  </main>
 
-  <footer class="survey-footer wrap">
-    <div><strong>The Web Of Lies Revealed</strong> &middot; Civic & Hegemony Research</div>
-    <div><a href="privacy.html">Privacy Policy</a></div>
-  </footer>
+    <!-- Tile 2: Core Judgement Survey -->
+    <div class="survey-tile">
+      <div class="tile-head">
+        <h2>Core Judgement Survey</h2>
+        <span class="badge-tag highlight">Flagship · 13 Topics</span>
+      </div>
+      <p>The comprehensive 13-topic relative morality evaluation. Includes Desert Sustenance calibration, Money & Economy, Welfare Control, Trust & Betrayal, Power, Work Merit, Knowledge Suppression, Political Compass, and MBTI Social Physics.</p>
+      <div>
+        <a class="btn" href="hegemony-survey.html">Start Survey</a>
+      </div>
+    </div>
+
+    <!-- Tile 3: Judgement Bot Pulse -->
+    <div class="survey-tile">
+      <div class="tile-head">
+        <h2>Feeling About Judgement Bot</h2>
+        <span class="badge-tag">Community Pulse</span>
+      </div>
+      <p>A quick 1-question test measuring sentiment, perception, and calibration toward the autonomous Bluesky Judgement Bot.</p>
+      <div>
+        <a class="btn ghost" href="judgement-bot-feeling.html">Start Quick Survey</a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="feature-banner">
+    <div>
+      <div class="eyebrow" style="color:var(--focus)">Deep Dive Documentation</div>
+      <h3>The Philosophy Explainer & Interactive Sandbox</h3>
+      <p>Explore the complete theoretical framework: the Geometry of Definitions, the 4 Quadrants, the Perceptual Inversion (the 0.5 Ego Zone), and test any coordinate live on the interactive Hegemony Map.</p>
+    </div>
+    <div style="display:flex; gap:10px; flex-wrap:wrap">
+      <a class="btn" href="explainer.html">Read Theory Explainer</a>
+      <a class="btn ghost" href="explainer.html#sandbox">Launch Sandbox</a>
+    </div>
+  </div>
+</main>
+
+<footer class="survey-footer wrap wide">
+  <div><strong>The Web Of Lies Revealed</strong> &middot; Civic & Hegemony Research</div>
+  <div><a href="explainer.html">Philosophy Explainer</a> &middot; <a href="privacy.html">Privacy Policy</a></div>
+</footer>
+
 </body>
-
 </html>

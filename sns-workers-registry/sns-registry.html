@@ -1,0 +1,2513 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Social Needs Service Registry — Community Workers &amp; Mutual Aid</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<style>
+:root {
+  /* Default Warm Organic Theme (Eve) */
+  --bg-page: #FAF7F2;
+  --bg-card: #FFFFFF;
+  --bg-panel: #F4EFEB;
+  --text-main: #2C241D;
+  --text-soft: #6E6259;
+  --border-subtle: #E8E0D5;
+  --border-strong: #C4B5A5;
+  --accent-need: #C85A32;
+  --accent-need-bg: rgba(200, 90, 50, 0.12);
+  --accent-offer: #2E7D5B;
+  --accent-offer-bg: rgba(46, 125, 91, 0.12);
+  --accent-loop: #D9822B;
+  --accent-loop-bg: rgba(217, 130, 43, 0.14);
+  --blue: #2563EB;
+  --shadow-card: 0 4px 18px rgba(60, 40, 20, 0.05);
+  --shadow-hover: 0 10px 26px rgba(60, 40, 20, 0.10);
+  --font-disp: "Bricolage Grotesque", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-body: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+}
+
+/* High-Contrast Sunlight Mode (Adam) */
+body.sunlight-mode {
+  --bg-page: #0F172A;
+  --bg-card: #1E293B;
+  --bg-panel: #141E33;
+  --text-main: #F8FAFC;
+  --text-soft: #94A3B8;
+  --border-subtle: #334155;
+  --border-strong: #475569;
+  --accent-need: #EF4444;
+  --accent-need-bg: rgba(239, 68, 68, 0.20);
+  --accent-offer: #10B981;
+  --accent-offer-bg: rgba(16, 185, 129, 0.20);
+  --accent-loop: #F59E0B;
+  --accent-loop-bg: rgba(245, 158, 11, 0.20);
+  --blue: #38BDF8;
+  --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.4);
+  --shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.6);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg-page);
+  color: var(--text-main);
+  font-family: var(--font-body);
+  font-size: 15.5px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  padding-bottom: 90px;
+  transition: background 0.2s, color 0.2s;
+}
+
+/* Masthead */
+header.mast {
+  background: var(--bg-card);
+  border-bottom: 2px solid var(--border-subtle);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow: 0 2px 14px rgba(0,0,0,0.04);
+}
+.mast-in {
+  max-width: 1260px;
+  margin: 0 auto;
+  padding: 12px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.brand-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.brand-title {
+  font-family: var(--font-disp);
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text-main);
+}
+.brand-title span {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--blue);
+  margin-left: 6px;
+}
+.geo-rack {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--bg-panel);
+  border: 1px solid var(--border-subtle);
+  padding: 6px 14px;
+  border-radius: 99px;
+  font-size: 13.5px;
+}
+.geo-rack select {
+  background: transparent;
+  border: none;
+  font-family: var(--font-body);
+  font-weight: 700;
+  color: var(--text-main);
+  cursor: pointer;
+  outline: none;
+}
+.geo-rack select option {
+  background: var(--bg-card);
+  color: var(--text-main);
+}
+
+.action-buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.btn {
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  font-weight: 700;
+  padding: 9px 18px;
+  border-radius: 99px;
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+}
+.btn:hover { transform: translateY(-1.5px); }
+.btn-primary {
+  background: var(--accent-need);
+  color: #FFF;
+  box-shadow: 0 4px 14px rgba(200, 90, 50, 0.25);
+}
+.btn-sunlight {
+  background: transparent;
+  border-color: var(--border-strong);
+  color: var(--text-main);
+}
+.btn-sunlight:hover { background: var(--bg-panel); }
+
+/* Main Container */
+.container {
+  max-width: 1260px;
+  margin: 0 auto;
+  padding: 24px 20px;
+}
+
+/* The Reciprocal Match Weaver Banner (Eve's Signature) */
+.weaver-banner {
+  background: var(--bg-card);
+  border: 2px solid var(--accent-loop);
+  border-radius: 16px;
+  padding: 18px 24px;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.weaver-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.weaver-title {
+  font-family: var(--font-disp);
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.weaver-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  background: var(--accent-loop-bg);
+  color: var(--accent-loop);
+  padding: 3px 10px;
+  border-radius: 99px;
+  border: 1px solid var(--accent-loop);
+}
+.weaver-grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 18px;
+  background: var(--bg-panel);
+  border-radius: 12px;
+  padding: 14px 18px;
+}
+@media (max-width: 768px) {
+  .weaver-grid { grid-template-columns: 1fr; text-align: center; }
+  .weaver-swap-icon { transform: rotate(90deg); margin: 6px 0; }
+}
+.weaver-col {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.weaver-person {
+  font-weight: 800;
+  font-size: 14px;
+  color: var(--text-main);
+}
+.weaver-give {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accent-offer);
+}
+.weaver-need {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accent-need);
+}
+.weaver-swap-icon {
+  font-size: 24px;
+  color: var(--accent-loop);
+}
+
+/* Control Hub & Search */
+.control-hub {
+  background: var(--bg-card);
+  border: 1.5px solid var(--border-subtle);
+  border-radius: 16px;
+  padding: 16px 20px;
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.hub-row-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.search-pill {
+  flex: 1;
+  min-width: 260px;
+  position: relative;
+}
+.search-pill input {
+  width: 100%;
+  background: var(--bg-panel);
+  border: 1px solid var(--border-subtle);
+  border-radius: 99px;
+  padding: 10px 18px 10px 40px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--text-main);
+  outline: none;
+}
+.search-pill input:focus { border-color: var(--blue); }
+.search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-soft);
+  font-size: 14px;
+}
+.quick-tabs {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.tab-chip {
+  background: var(--bg-panel);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-soft);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 700;
+  padding: 8px 14px;
+  border-radius: 99px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.tab-chip:hover { border-color: var(--text-main); color: var(--text-main); }
+.tab-chip.active { background: var(--text-main); color: var(--bg-page); border-color: var(--text-main); }
+
+/* The 7 Planes Navigation Carousel */
+.planes-belt {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-top: 10px;
+  border-top: 1px dashed var(--border-subtle);
+  scrollbar-width: thin;
+}
+.plane-pill {
+  flex: 0 0 auto;
+  background: var(--bg-panel);
+  border: 1px solid var(--border-subtle);
+  padding: 8px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s;
+}
+.plane-pill:hover { border-color: var(--blue); }
+.plane-pill.active {
+  background: var(--bg-card);
+  border-color: var(--blue);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.plane-pill .p-code {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--blue);
+  display: block;
+}
+.plane-pill .p-label {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--text-main);
+  white-space: nowrap;
+}
+
+/* Stream Cards Grid */
+.stream-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  gap: 20px;
+}
+@media (max-width: 440px) {
+  .stream-grid { grid-template-columns: 1fr; }
+}
+.card {
+  background: var(--bg-card);
+  border: 1.5px solid var(--border-subtle);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+  border-color: var(--border-strong);
+}
+.card.is-urgent {
+  border-color: var(--accent-need);
+  box-shadow: 0 0 16px rgba(239, 68, 68, 0.15);
+}
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+}
+.author-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.author-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 99px;
+  background: var(--bg-panel);
+  display: grid;
+  place-items: center;
+  font-size: 18px;
+  border: 1px solid var(--border-strong);
+}
+.author-info h4 {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--text-main);
+}
+.author-info p {
+  font-size: 12px;
+  color: var(--text-soft);
+  font-family: var(--font-mono);
+}
+.tag-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 99px;
+  text-transform: uppercase;
+}
+.tag-need { background: var(--accent-need-bg); color: var(--accent-need); }
+.tag-offer { background: var(--accent-offer-bg); color: var(--accent-offer); }
+.tag-loop { background: var(--accent-loop-bg); color: var(--accent-loop); }
+
+.card-title {
+  font-family: var(--font-disp);
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.3;
+  color: var(--text-main);
+}
+.card-story {
+  font-size: 14.5px;
+  color: var(--text-main);
+  line-height: 1.5;
+  flex: 1;
+}
+
+/* Dual Exchange Rack on every card (Eve's anti-stigma core) */
+.dual-exchange-rack {
+  background: var(--bg-panel);
+  border-radius: 10px;
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+  border: 1px solid var(--border-subtle);
+}
+.dual-line {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+.dual-badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+.badge-give { background: var(--accent-offer-bg); color: var(--accent-offer); }
+.badge-ask { background: var(--accent-need-bg); color: var(--accent-need); }
+.dual-text { font-weight: 600; color: var(--text-main); flex: 1; }
+
+.card-meta-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: var(--text-soft);
+  border-top: 1px dashed var(--border-subtle);
+  padding-top: 10px;
+}
+.vouch-stat {
+  font-weight: 700;
+  color: var(--accent-loop);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.card-actions {
+  display: flex;
+  gap: 8px;
+}
+.btn-connect {
+  flex: 1;
+  background: var(--bg-panel);
+  border: 1.5px solid var(--border-strong);
+  color: var(--text-main);
+  font-weight: 700;
+  font-size: 13px;
+  padding: 8px;
+  border-radius: 99px;
+  cursor: pointer;
+  text-align: center;
+}
+.btn-connect:hover {
+  background: var(--blue);
+  color: #FFF;
+  border-color: var(--blue);
+}
+.btn-vouch-mini {
+  background: transparent;
+  border: 1.5px solid var(--border-strong);
+  color: var(--text-soft);
+  font-weight: 700;
+  font-size: 12px;
+  padding: 8px 12px;
+  border-radius: 99px;
+  cursor: pointer;
+}
+.btn-vouch-mini:hover { color: var(--accent-loop); border-color: var(--accent-loop); }
+
+/* Modal Flow */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(3px);
+  display: none;
+  place-items: center;
+  z-index: 100;
+  padding: 20px;
+}
+.modal-overlay.open { display: grid; }
+.modal-card {
+  background: var(--bg-card);
+  border: 2px solid var(--border-strong);
+  border-radius: 20px;
+  max-width: 640px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 26px;
+  box-shadow: 0 16px 40px rgba(0,0,0,0.25);
+}
+.modal-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 18px;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 12px;
+}
+.modal-head h3 {
+  font-family: var(--font-disp);
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text-main);
+}
+.form-field { margin-bottom: 16px; }
+.form-field label {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 6px;
+}
+.form-field input, .form-field select, .form-field textarea {
+  width: 100%;
+  background: var(--bg-panel);
+  border: 1.5px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--text-main);
+}
+.form-field input:focus, .form-field select:focus, .form-field textarea:focus {
+  border-color: var(--blue);
+  outline: none;
+}
+
+/* Account & Profile Modal Extensions */
+.user-chip-btn {
+  background: var(--bg-panel);
+  border: 1.5px solid var(--border-strong);
+  color: var(--text-main);
+  font-weight: 700;
+  font-size: 13px;
+  padding: 8px 14px;
+  border-radius: 99px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s;
+}
+.user-chip-btn:hover { border-color: var(--blue); color: var(--blue); }
+
+.survey-box-rack {
+  background: var(--bg-panel);
+  border: 1.5px solid var(--border-subtle);
+  border-radius: 14px;
+  padding: 16px;
+  margin-top: 14px;
+}
+.plane-score-row {
+  display: grid;
+  grid-template-columns: 140px 1fr 90px 80px;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px dashed var(--border-subtle);
+  font-size: 13px;
+}
+.plane-score-row:last-child { border-bottom: none; }
+.plane-bar-track {
+  height: 8px;
+  background: rgba(0,0,0,0.08);
+  border-radius: 99px;
+  overflow: hidden;
+}
+body.sunlight-mode .plane-bar-track { background: rgba(255,255,255,0.12); }
+.plane-bar-fill {
+  height: 100%;
+  border-radius: 99px;
+  transition: width 0.4s ease;
+}
+.privacy-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 99px;
+  cursor: pointer;
+  border: 1px solid var(--border-strong);
+  text-align: center;
+}
+.privacy-badge.is-public { background: var(--accent-offer-bg); color: var(--accent-offer); border-color: var(--accent-offer); }
+.privacy-badge.is-private { background: var(--bg-card); color: var(--text-soft); }
+
+.survey-import-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  padding: 12px;
+  margin-top: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.survey-import-card strong { font-size: 13px; color: var(--text-main); }
+.survey-import-card p { font-size: 12px; color: var(--text-soft); margin: 2px 0 0; }
+.btn-import-act {
+  background: var(--accent-offer);
+  color: #FFF;
+  border: none;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 99px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.btn-import-act:hover { opacity: 0.9; }
+</style>
+</head>
+<body>
+
+<header class="mast">
+  <div class="mast-in">
+    <div class="brand-group">
+      <h1 class="brand-title">Social Needs Service Registry <span>Community Workers &amp; Mutual Aid</span></h1>
+    </div>
+
+    <div class="geo-rack">
+      <span>📍 Town:</span>
+      <select id="townSelect" onchange="applyFilters()">
+        <option value="2830">Dubbo NSW (2830)</option>
+        <option value="2821">Narromine NSW (2821)</option>
+        <option value="2820">Wellington NSW (2820)</option>
+        <option value="2827">Gilgandra NSW (2827)</option>
+      </select>
+      <span style="color:var(--border-strong)">|</span>
+      <span>Radius:</span>
+      <select id="radiusSelect" onchange="applyFilters()">
+        <option value="15">Within 15 km</option>
+        <option value="30">Within 30 km</option>
+        <option value="60" selected>Within 60 km (District)</option>
+        <option value="120">Within 120 km (Regional)</option>
+      </select>
+      <span style="color:var(--border-strong)">|</span>
+      <span>Sort:</span>
+      <select id="sortSelect" onchange="applyFilters()">
+        <option value="newest" selected>🕒 Newest</option>
+        <option value="urgent">⚡ Urgent 24h</option>
+        <option value="nearest">📍 Nearest</option>
+      </select>
+    </div>
+
+    <div class="action-buttons">
+      <a href="../welfare-survey.html" class="btn btn-sunlight" title="Open the Community Welfare Survey" style="text-decoration:none;">📋 Welfare Survey</a>
+      <button class="user-chip-btn" onclick="openProfileModal()" id="profileNavBtn">👤 <span id="navProfileName">Profile &amp; Survey</span></button>
+      <button class="user-chip-btn" onclick="openAuthModal()" id="authNavBtn">🔑 <span id="navAuthLabel">Account</span></button>
+      <button class="btn btn-sunlight" onclick="toggleSunlightMode()" id="sunlightBtn">☀️ Sunlight Mode</button>
+      <button class="btn btn-primary" onclick="openShareModal()">🤝 Share Need or Offer</button>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- Bridge to the Welfare Survey -->
+  <aside style="background:var(--bg-panel); border:1.5px solid var(--border-subtle); border-radius:14px; padding:12px 18px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:center; gap:14px; flex-wrap:wrap;">
+    <div style="display:flex; align-items:center; gap:12px;">
+      <span style="font-size:22px;">📋</span>
+      <div>
+        <strong style="font-size:14px; color:var(--text-main);">Connected to the Community Welfare Survey</strong>
+        <p style="font-size:12.5px; color:var(--text-soft); margin:0;">Diagnose your household baseline across the 7 Core Survival Requirements, then post what you need and what you can offer here.</p>
+      </div>
+    </div>
+    <a href="../welfare-survey.html" class="btn btn-sunlight" style="font-size:13px; padding:7px 16px; text-decoration:none;">Take the Survey &rarr;</a>
+  </aside>
+
+  <!-- Reciprocal Match Weaver (Dynamically detected from real entered posts) -->
+  <section class="weaver-banner" id="weaverBanner">
+    <div class="weaver-header">
+      <div class="weaver-title">
+        <span>🕸️ The Reciprocal Match Weaver</span>
+        <span class="weaver-badge" id="weaverBadge">0 Active Loops</span>
+      </div>
+      <span style="font-size:12.5px; color:var(--text-soft);">Scans entered needs &amp; offers for circular mutual aid</span>
+    </div>
+    <div id="weaverContent">
+      <!-- Populated dynamically by JS -->
+    </div>
+  </section>
+
+  <!-- Filter & Search Hub -->
+  <div class="control-hub">
+    <div class="hub-row-top">
+      <div class="search-pill" style="position:relative;">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="searchInput" placeholder="Search skills, tractor work, lodging, care, tools..." oninput="applyFilters()" style="padding-right:30px;">
+        <button id="searchClearBtn" onclick="clearSearch()" style="position:absolute; right:10px; top:50%; transform:translateY(-50%); background:none; border:none; color:var(--text-soft); font-size:16px; cursor:pointer; display:none;" title="Clear search">&times;</button>
+      </div>
+
+      <div class="quick-tabs">
+        <button class="tab-chip active" id="tab-all" onclick="setKindTab('all')">All Stories (<span id="tabCountAll">0</span>)</button>
+        <button class="tab-chip" id="tab-need" onclick="setKindTab('need')">🔴 Urgent Needs (<span id="tabCountNeed">0</span>)</button>
+        <button class="tab-chip" id="tab-offer" onclick="setKindTab('offer')">🟢 Hands Offered (<span id="tabCountOffer">0</span>)</button>
+        <button class="tab-chip" id="tab-loop" onclick="setKindTab('loop')">🤝 Reciprocal Trades (<span id="tabCountLoop">0</span>)</button>
+      </div>
+    </div>
+
+    <!-- The 7 Planes Nav Belt -->
+    <div class="planes-belt" id="planesBelt">
+      <!-- Populated by JS -->
+    </div>
+  </div>
+
+  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+    <div style="font-family:var(--font-mono); font-size:12px; color:var(--text-soft);" id="resultsStats">
+      Showing 10 local stories
+    </div>
+    <div style="font-family:var(--font-mono); font-size:11.5px; color:var(--accent-offer); display:flex; align-items:center; gap:6px;">
+      <span>🛡️ 0% Platform Commission · 100% Peer-to-Peer</span>
+    </div>
+  </div>
+
+  <!-- Cards Grid -->
+  <div class="stream-grid" id="streamGrid">
+    <!-- Populated by JS -->
+  </div>
+
+</main>
+
+<!-- Unified Modal Form -->
+<div class="modal-overlay" id="shareModal">
+  <div class="modal-card">
+    <div class="modal-head">
+      <div>
+        <h3>Weave Into the Community Registry</h3>
+        <p style="font-size:13px; color:var(--text-soft);">State what you can offer, what you need, or both. No shame, no middleman.</p>
+      </div>
+      <button onclick="closeShareModal()" style="background:none; border:none; font-size:24px; cursor:pointer; color:var(--text-soft);">&times;</button>
+    </div>
+
+    <form id="shareForm" onsubmit="handleFormSubmit(event)">
+      <!-- Pull from Welfare Survey Picker -->
+      <div class="form-field" id="surveyImportPickerBox" style="background:var(--bg-panel); border:1.5px solid var(--border-subtle); border-radius:12px; padding:12px 14px; margin-bottom:14px; display:none;">
+        <label style="font-weight:700; color:var(--text-main); font-size:12.5px; display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+          <span>📋 Autofill from Your Verified Welfare Survey</span>
+          <span style="font-size:11px; font-weight:700; color:var(--accent-offer);" id="surveyImportBadge">Active Answers</span>
+        </label>
+        <select id="surveyImportSelect" onchange="handleSurveySelectChange()" style="font-size:12.5px; width:100%; padding:8px 10px; border-radius:8px; border:1px solid var(--border-strong); background:var(--bg-card); color:var(--text-main);">
+          <option value="">-- Choose an answer, offer, or need to autofill --</option>
+        </select>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+        <div class="form-field">
+          <label>Your Name / Household</label>
+          <input type="text" id="formAuthor" placeholder="Your name or family handle" required>
+        </div>
+        <div class="form-field">
+          <label>Town / Postcode</label>
+          <select id="formTown">
+            <option value="2830">Dubbo NSW (2830)</option>
+            <option value="2821">Narromine NSW (2821)</option>
+            <option value="2820">Wellington NSW (2820)</option>
+            <option value="2827">Gilgandra NSW (2827)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-field">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+          <label style="margin:0;">Primary Life Plane (7 Planes of Reality)</label>
+          <span id="semanticDetectTag" style="font-size:11px; font-family:var(--font-mono); color:var(--accent-offer); display:none; font-weight:700;">⚡ Auto-detected</span>
+        </div>
+        <select id="formPlane" required>
+          <option value="Q1">Q1 Who (Recognition, Vouching, Reputation, Dignity)</option>
+          <option value="Q2" selected>Q2 What (Work, Trades, Seasonal Labor, Skills)</option>
+          <option value="Q3">Q3 Where (Equipment, Vehicles, Lodging, Shelter, Gear)</option>
+          <option value="Q4">Q4 Why (Relief Shifts, Rest, Burnout, Childcare)</option>
+          <option value="Q5">Q5 How (Direct Terms, Legal Voice, Tenancy, Paperwork)</option>
+          <option value="Q6">Q6 Cause (Apprenticeship, Tool Continuity, Truth, Witness)</option>
+          <option value="Q7">Q7 Effect (Emergency Crisis, Food, Transport, Storm Recovery)</option>
+        </select>
+      </div>
+
+      <div class="form-field">
+        <label>Title</label>
+        <input type="text" id="formTitle" placeholder="Summary of what is needed or available" oninput="detectSemanticPlane()" required>
+      </div>
+
+      <div class="form-field">
+        <label>The Human Context &amp; Details</label>
+        <textarea id="formStory" rows="3" placeholder="Tell your neighbors what is happening plainly..." oninput="detectSemanticPlane()" required></textarea>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+        <div class="form-field">
+          <label>🟢 What You Can Offer (Surplus)</label>
+          <input type="text" id="formGive" placeholder="What you can provide (e.g. transport, tractor hours, tools)" oninput="detectSemanticPlane()">
+        </div>
+        <div class="form-field">
+          <label>🔴 What You Need (Deficit)</label>
+          <input type="text" id="formAsk" placeholder="What you need (e.g. relief shift, lift, fencing help)" oninput="detectSemanticPlane()">
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+        <div class="form-field">
+          <label>Urgency</label>
+          <select id="formUrgency">
+            <option value="24h">Immediate (24 hours)</option>
+            <option value="48h">Urgent (48 hours)</option>
+            <option value="7d" selected>This Week (7 days)</option>
+            <option value="ongoing">Flexible / Ongoing</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label>Direct Contact (SMS / Phone)</label>
+          <input type="text" id="formContact" placeholder="Your phone number or contact channel" required>
+        </div>
+      </div>
+
+      <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:16px;">
+        <button type="button" class="btn btn-sunlight" onclick="closeShareModal()">Cancel</button>
+        <button type="submit" class="btn btn-primary">Publish Story</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Profile & Welfare Survey Results Modal -->
+<div class="modal-overlay" id="profileModal">
+  <div class="modal-card" style="max-width:760px;">
+    <div class="modal-head">
+      <div>
+        <h3 id="profileModalHeading">Community Member Profile</h3>
+        <p style="font-size:13px; color:var(--text-soft);">Manage your identity, survey baseline results, and privacy visibility.</p>
+      </div>
+      <button onclick="closeProfileModal()" style="background:none; border:none; font-size:24px; cursor:pointer; color:var(--text-soft);">&times;</button>
+    </div>
+
+    <!-- Section 1: Personal Profile Details -->
+    <div style="background:var(--bg-panel); border:1.5px solid var(--border-subtle); border-radius:14px; padding:18px; margin-bottom:20px;">
+      <h4 style="font-size:15px; font-weight:800; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center;">
+        <span>👤 Local Profile Details</span>
+        <span style="font-size:11.5px; font-weight:700; color:var(--accent-offer);" id="profileVouchStat">💛 0 Vouchers</span>
+      </h4>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+        <div class="form-field">
+          <label>Display Name</label>
+          <input type="text" id="profNameInput" placeholder="Your name or station handle">
+        </div>
+        <div class="form-field">
+          <label>Home Town / Postcode</label>
+          <select id="profTownInput">
+            <option value="2830">Dubbo NSW (2830)</option>
+            <option value="2821">Narromine NSW (2821)</option>
+            <option value="2820">Wellington NSW (2820)</option>
+            <option value="2827">Gilgandra NSW (2827)</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-field">
+        <label>Bio / Skills &amp; Station Capacity</label>
+        <input type="text" id="profBioInput" placeholder="Your trade, skills, equipment, or community role">
+      </div>
+      <div class="form-field">
+        <label>Preferred Contact (Direct Phone / SMS)</label>
+        <input type="text" id="profContactInput" placeholder="Your mobile / phone number">
+      </div>
+      <div style="display:flex; justify-content:flex-end;">
+        <button class="btn btn-primary" onclick="saveProfileChanges()" style="font-size:12.5px; padding:6px 16px;">Save Profile Info</button>
+      </div>
+    </div>
+
+    <!-- Section 2: Welfare Survey Integration & Privacy -->
+    <div style="background:var(--bg-panel); border:1.5px solid var(--border-subtle); border-radius:14px; padding:18px; margin-bottom:20px;">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px; flex-wrap:wrap; gap:8px;">
+        <div>
+          <h4 style="font-size:15px; font-weight:800; color:var(--text-main); margin-bottom:2px;">
+            📋 Welfare Survey Diagnostic Results
+          </h4>
+          <p style="font-size:12.5px; color:var(--text-soft); margin:0;">
+            Synchronized with <a href="../welfare-survey.html" target="_blank" style="color:var(--blue); font-weight:700;">Community Welfare Survey</a>. Control which planes are visible on your public registry posts.
+          </p>
+        </div>
+        <div style="display:flex; align-items:center; gap:8px;">
+          <input type="checkbox" id="masterSurveyShareToggle" onchange="toggleMasterSurveyShare()" style="width:16px; height:16px; accent-color:var(--accent-offer); cursor:pointer;">
+          <label for="masterSurveyShareToggle" style="font-size:12px; font-weight:700; cursor:pointer;">Share on Profile</label>
+        </div>
+      </div>
+
+      <!-- Live Plane Score Breakdown -->
+      <div id="surveyScoresContainer">
+        <div style="text-align:center; padding:20px; color:var(--text-soft); font-size:13px;">
+          Loading survey scores...
+        </div>
+      </div>
+
+      <!-- Actionable Survey Needs & Offers (Importable into registry) -->
+      <div style="margin-top:16px; border-top:1px dashed var(--border-subtle); padding-top:12px;">
+        <h5 style="font-size:13px; font-weight:800; color:var(--text-main); margin-bottom:6px;">
+          ⚡ Active Survey Offers &amp; Needs Ready to Share
+        </h5>
+        <div id="surveyFlaggedList">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 3: My Active Registry Posts -->
+    <div>
+      <h4 style="font-size:15px; font-weight:800; margin-bottom:8px;">My Active Registry Stories</h4>
+      <div id="myPostsList" style="display:flex; flex-direction:column; gap:8px;">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Account Auth Modal -->
+<div class="modal-overlay" id="authModal">
+  <div class="modal-card" style="max-width:480px;">
+    <div class="modal-head">
+      <div>
+        <h3>Community Account</h3>
+        <p style="font-size:13px; color:var(--text-soft);">Sign in, register, or link your local anonymous session.</p>
+      </div>
+      <button onclick="closeAuthModal()" style="background:none; border:none; font-size:24px; cursor:pointer; color:var(--text-soft);">&times;</button>
+    </div>
+
+    <div style="background:var(--bg-panel); border:1px solid var(--border-subtle); border-radius:10px; padding:12px; margin-bottom:16px; font-size:13px;">
+      <div style="font-weight:700; color:var(--text-main); margin-bottom:4px;" id="authStatusText">Checking session...</div>
+      <div style="color:var(--text-soft); font-size:12px;" id="authIdText"></div>
+    </div>
+
+    <!-- Google Authentication Button matching Welfare Survey -->
+    <div style="margin-bottom:16px;">
+      <button type="button" class="btn btn-sunlight" onclick="signInWithGoogle()" style="width:100%; display:flex; align-items:center; justify-content:center; gap:10px; padding:10px; font-weight:700; border:1.5px solid var(--border-strong);">
+        <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.616z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.258c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332C2.438 15.983 5.482 18 9 18z"/><path fill="#FBBC05" d="M3.964 10.707c-.18-.54-.282-1.117-.282-1.707s.102-1.167.282-1.707V4.961H.957C.347 6.175 0 7.55 0 9s.347 2.825.957 4.039l3.007-2.332z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.961L3.964 7.293C4.672 5.166 6.656 3.58 9 3.58z"/></svg>
+        Continue with Google
+      </button>
+      <div style="display:flex; align-items:center; gap:10px; margin-top:14px;">
+        <div style="flex:1; height:1px; background:var(--border-subtle);"></div>
+        <span style="font-size:11px; color:var(--text-soft); font-weight:700;">OR USE COMMUNITY EMAIL</span>
+        <div style="flex:1; height:1px; background:var(--border-subtle);"></div>
+      </div>
+    </div>
+
+    <form id="authForm" onsubmit="handleAuthSubmit(event)">
+      <div class="form-field">
+        <label>Email Address</label>
+        <input type="email" id="authEmail" placeholder="e.g. name@smalltown.com.au" required>
+      </div>
+
+      <div class="form-field">
+        <label>Password</label>
+        <input type="password" id="authPassword" placeholder="Minimum 6 characters" required>
+      </div>
+
+      <div style="display:flex; gap:10px; margin-top:20px;">
+        <button type="submit" class="btn btn-primary" style="flex:1;" id="authActionBtn">Sign In / Link Account</button>
+      </div>
+    </form>
+
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:16px; border-top:1px dashed var(--border-subtle); padding-top:12px;">
+      <button class="btn btn-sunlight" onclick="signOutAccount()" id="signOutBtn" style="font-size:12px; padding:6px 12px; display:none;">Sign Out</button>
+      <button class="btn btn-sunlight" onclick="closeAuthModal()" style="font-size:12px; padding:6px 12px; margin-left:auto;">Close</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// --- Supabase Client (Shared with Welfare Survey) ---
+const SUPABASE_URL = 'https://iaudayzofxrgzwutittm.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_WlfhOxEkAGDwAk5oZV2YrA_BIFfI0XN';
+let supa = null;
+try {
+  if (window.supabase) {
+    supa = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  }
+} catch (e) { console.error('Supabase client init failed', e); }
+
+const PLANES = [
+  { id: 'ALL', code: 'ALL', name: 'All 7 Planes', color: '#2563EB' },
+  { id: 'Q1', code: 'Q1 Who', name: 'Recognition & Trust', color: '#7C3AED' },
+  { id: 'Q2', code: 'Q2 What', name: 'Work & Purpose', color: '#0284C7' },
+  { id: 'Q3', code: 'Q3 Where', name: 'Shelter & Gear', color: '#16A34A' },
+  { id: 'Q4', code: 'Q4 Why', name: 'Refreshment & Rest', color: '#D97706' },
+  { id: 'Q5', code: 'Q5 How', name: 'Power & Direct Terms', color: '#2563EB' },
+  { id: 'Q6', code: 'Q6 Cause', name: 'Morale & Heritage', color: '#E11D48' },
+  { id: 'Q7', code: 'Q7 Effect', name: 'Sustenance & Net', color: '#EA580C' },
+];
+
+// 7 Quick Survey (Pulse Check) Questions and Offer/Need Definitions from Welfare Survey
+const PULSE_QUESTIONS = [
+  {
+    plane: 1,
+    name: "Recognition & Respect",
+    who: "Dignity",
+    a: "I am treated with dignity and equal respect in my day-to-day life.",
+    b: "I can be myself in this community without having to hide who I am.",
+    c: "I could [[back someone being bullied]] or [[help newcomers feel welcome]].",
+    d: "I could use [[someone in my corner]] or [[support with feeling isolated]]."
+  },
+  {
+    plane: 2,
+    name: "Purpose & Opportunity",
+    who: "Purpose",
+    a: "I have clear avenues to learn, work, or build the future I want.",
+    b: "I am making steady progress toward my personal or work goals.",
+    c: "I could [[teach a practical skill]], [[give job or study advice]], or [[put in a good word]].",
+    d: "I need [[practical job training]], [[study or career advice]], or [[someone to open a door]]."
+  },
+  {
+    plane: 3,
+    name: "Home & Environment",
+    who: "Shelter",
+    a: "My home has reliable power, water, heating, and is safe from weather.",
+    b: "I have secure housing without fear of sudden eviction or unaffordable rent.",
+    c: "I could help with [[basic home repairs]], [[yard work]], or offer an [[emergency spare bed]].",
+    d: "I need help with [[urgent home repairs]], [[high power bills]], or [[finding secure housing]]."
+  },
+  {
+    plane: 4,
+    name: "Rest & Joy",
+    who: "Recovery",
+    a: "I have enough genuine free time to rest and recharge away from constant demands.",
+    b: "I regularly get good sleep and time for fun, hobbies, or seeing friends.",
+    c: "I could help with [[babysitting or childcare]], [[pet sitting]], or [[household chores]].",
+    d: "I need [[relief from caregiving or chores]] or a [[quiet place for catch-up sleep]]."
+  },
+  {
+    plane: 5,
+    name: "Voice & Power",
+    who: "Agency",
+    a: "I know my basic legal rights and have enough independence to make my own choices.",
+    b: "I have a real say in decisions affecting my life and can stand my ground.",
+    c: "I could [[lend tools or gear]], [[lend a vehicle]], or [[help with paperwork]].",
+    d: "I need [[help with confusing paperwork]], [[backup in a tenancy dispute]], or to [[borrow tools or gear]]."
+  },
+  {
+    plane: 6,
+    name: "Truth & Courage",
+    who: "Integrity",
+    a: "People in this community generally keep their word, act honestly, and can be trusted.",
+    b: "I can earn my living and go about my day with a clean conscience.",
+    c: "I would [[act as a character reference]], [[verify facts and tell the truth]], or [[bear witness]].",
+    d: "I need an [[independent witness]], [[someone with backbone to stand by me]], or [[support getting a fair hearing]]."
+  },
+  {
+    plane: 7,
+    name: "Care & Nourishment",
+    who: "Care",
+    a: "I have reliable access to nutritious, affordable food where I live.",
+    b: "I have trustworthy friends or neighbors nearby I can turn to if things go wrong.",
+    c: "I could [[cook or share meals]], [[give someone a lift]], or [[check in on someone doing it tough]].",
+    d: "I need [[groceries or emergency food]], [[a lift or transport]], or [[someone to talk to in hard times]]."
+  }
+];
+
+let currentKindTab = 'all';
+let currentPlane = 'ALL';
+let allPosts = [];
+let currentSession = null;
+
+// User Profile — Clean, unconfigured state (strictly user-entered)
+let userProfile = {
+  id: "",
+  displayName: "",
+  town: "2830",
+  bio: "",
+  contact: "",
+  vouches: 0,
+  shareSurveyOnProfile: true,
+  planePrivacy: {
+    Q1: 'public',
+    Q2: 'public',
+    Q3: 'public',
+    Q4: 'public',
+    Q5: 'public',
+    Q6: 'public',
+    Q7: 'public'
+  }
+};
+
+async function init() {
+  loadProfileFromStorage();
+  loadEnteredPosts();
+  renderPlanesBelt();
+  applyFilters();
+  renderWeaverBanner();
+  initModalListeners();
+  await initSession();
+}
+
+function loadEnteredPosts() {
+  try {
+    const stored = localStorage.getItem('sns_entered_posts');
+    if (stored) {
+      allPosts = JSON.parse(stored) || [];
+    } else {
+      allPosts = [];
+    }
+  } catch(e) {
+    allPosts = [];
+  }
+}
+
+function savePosts() {
+  localStorage.setItem('sns_entered_posts', JSON.stringify(allPosts));
+  renderWeaverBanner();
+}
+
+function loadProfileFromStorage() {
+  const saved = localStorage.getItem('sns_user_profile');
+  if (saved) {
+    try { userProfile = Object.assign(userProfile, JSON.parse(saved)); } catch(e){}
+  }
+  if (!userProfile.id) {
+    userProfile.id = 'usr-' + Math.random().toString(36).substring(2, 9) + Date.now().toString(36);
+    saveProfileToStorage();
+  }
+  updateProfileNavBadge();
+}
+
+function saveProfileToStorage() {
+  localStorage.setItem('sns_user_profile', JSON.stringify(userProfile));
+  updateProfileNavBadge();
+}
+
+function updateProfileNavBadge() {
+  const nameEl = document.getElementById('navProfileName');
+  if (nameEl) nameEl.textContent = userProfile.displayName ? `${userProfile.displayName} (Profile)` : "My Profile & Survey";
+}
+
+// --- Session & Supabase Auth ---
+async function signInWithGoogle() {
+  if (!supa) { alert('Supabase is not configured yet.'); return; }
+  const { error } = await supa.auth.signInWithOAuth({
+    provider: 'google',
+    options: { redirectTo: window.location.origin + window.location.pathname + window.location.search },
+  });
+  if (error) alert(error.message);
+}
+
+async function maybeAutoPullAccount() {
+  if (!supa) return;
+  try {
+    const { data: { session } } = await supa.auth.getSession();
+    if (session && session.user) {
+      currentSession = session;
+      updateAuthUI(session);
+      const meta = session.user.user_metadata || {};
+      const fullName = meta.full_name || meta.name || '';
+      if (!userProfile.displayName && fullName) {
+        userProfile.displayName = fullName;
+        saveProfileToStorage();
+      }
+    }
+  } catch(e) {
+    console.warn("maybeAutoPullAccount error:", e);
+  }
+}
+
+async function ensureSession() {
+  if (!supa) return null;
+  try {
+    let { data: { session } } = await supa.auth.getSession();
+    if (!session) {
+      const { data, error } = await supa.auth.signInAnonymously();
+      if (!error && data) session = data.session;
+    }
+    return session;
+  } catch(e) {
+    console.warn("ensureSession failed:", e);
+    return null;
+  }
+}
+
+async function initSession() {
+  if (!supa) {
+    updateAuthUI(null);
+    return;
+  }
+  try {
+    currentSession = await ensureSession();
+    updateAuthUI(currentSession);
+    await maybeAutoPullAccount();
+  } catch(e) {
+    console.error("Session check error", e);
+    updateAuthUI(null);
+  }
+}
+
+function updateAuthUI(session) {
+  const authLabel = document.getElementById('navAuthLabel');
+  const authStatusText = document.getElementById('authStatusText');
+  const authIdText = document.getElementById('authIdText');
+  const signOutBtn = document.getElementById('signOutBtn');
+  const authActionBtn = document.getElementById('authActionBtn');
+
+  if (session && session.user && !session.user.is_anonymous) {
+    if (authLabel) authLabel.textContent = session.user.email.split('@')[0];
+    if (authStatusText) authStatusText.textContent = `Signed in as ${session.user.email}`;
+    if (authIdText) authIdText.textContent = `Verified Respondent ID: ${session.user.id}`;
+    if (signOutBtn) signOutBtn.style.display = 'inline-block';
+    if (authActionBtn) authActionBtn.textContent = 'Account Linked';
+  } else if (session && session.user && session.user.is_anonymous) {
+    if (authLabel) authLabel.textContent = "Guest Session";
+    if (authStatusText) authStatusText.textContent = "Anonymous Device Session Active (Cryptographically Verified)";
+    if (authIdText) authIdText.textContent = `Connected to Supabase via device UID: ${session.user.id}`;
+    if (signOutBtn) signOutBtn.style.display = 'none';
+    if (authActionBtn) authActionBtn.textContent = 'Sign In / Link Permanent Email';
+  } else {
+    if (authLabel) authLabel.textContent = "Account / Sign In";
+    if (authStatusText) authStatusText.textContent = "No active remote session (Using local browser storage)";
+    if (authIdText) authIdText.textContent = "Sign in to sync your welfare survey results across all your devices.";
+    if (signOutBtn) signOutBtn.style.display = 'none';
+    if (authActionBtn) authActionBtn.textContent = 'Sign In with Email';
+  }
+}
+
+async function handleAuthSubmit(e) {
+  e.preventDefault();
+  const email = document.getElementById('authEmail').value.trim();
+  const password = document.getElementById('authPassword').value;
+  if (!supa) { alert("Supabase client is not loaded."); return; }
+
+  // 1. Attempt password sign-in
+  const { data: signInData, error: signInError } = await supa.auth.signInWithPassword({ email, password });
+  if (!signInError && signInData.session) {
+    currentSession = signInData.session;
+    updateAuthUI(currentSession);
+    showToast(`Welcome back, ${email}! Your account and survey responses are connected.`, "success");
+    closeAuthModal();
+    renderSurveySection();
+    return;
+  }
+
+  // 2. If login failed because user doesn't exist, try signup / link
+  const { data: signUpData, error: signUpError } = await supa.auth.signUp({ email, password });
+  if (!signUpError && signUpData.user) {
+    currentSession = signUpData.session || currentSession;
+    updateAuthUI(currentSession);
+    showToast(`Account created for ${email}. Check email or sign in.`, "success");
+    closeAuthModal();
+    renderSurveySection();
+  } else {
+    alert(`Authentication message: ${signUpError ? signUpError.message : signInError.message}`);
+  }
+}
+
+async function signOutAccount() {
+  if (supa) await supa.auth.signOut();
+  currentSession = null;
+  updateAuthUI(null);
+  showToast("Signed out successfully.", "info");
+  closeAuthModal();
+  renderSurveySection();
+}
+
+// --- Real Welfare Survey Data Fetching (Supabase & Local) ---
+async function fetchUserSurveyData() {
+  // 1. Query Supabase for real responses owned by the current respondent
+  if (supa) {
+    try {
+      const session = await ensureSession();
+      if (session && session.user) {
+        const { data, error } = await supa.from('responses')
+          .select('id, label_name, label_location, raw, submitted_at')
+          .eq('respondent_id', session.user.id)
+          .order('submitted_at', { ascending: false });
+
+        if (!error && data && data.length > 0) {
+          return parseSurveyPayload(data[0].raw, 'supabase', data[0]);
+        }
+      }
+    } catch(e) {
+      console.warn("Error querying Supabase responses:", e);
+    }
+  }
+
+  // 2. Check local storage from welfare-survey.html (KEY='cws:v1')
+  try {
+    const raw = localStorage.getItem('cws:v1');
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (parsed && typeof parsed === 'object') {
+        const keys = Object.keys(parsed);
+        const hasPulse = keys.some(k => k.startsWith('pulse|'));
+        const hasDeep = keys.some(k => k.includes('|Micro|') || k.includes('|Meso|') || k.includes('|Macro|'));
+        if (hasPulse || hasDeep || keys.length > 2) {
+          return parseSurveyLocalState(parsed, 'local');
+        }
+      }
+    }
+  } catch(e){}
+
+  // 3. No fake mock state! If no real survey has been taken, report empty.
+  return { ok: false, reason: 'empty' };
+}
+
+function parseSurveyPayload(raw, source, meta) {
+  const scores = {};
+  const offers = [];
+  const needs = [];
+  let totalPulseAnswered = 0;
+  let totalDeepAnswered = 0;
+
+  for (let n = 1; n <= 7; n++) {
+    const pl = raw.planes && raw.planes[String(n)];
+    let deepTotal = 0;
+    let deepCount = 0;
+
+    if (pl && pl.sub_indicators) {
+      Object.entries(pl.sub_indicators).forEach(([subId, sub]) => {
+        if (sub.scales) {
+          ['Micro', 'Meso', 'Macro'].forEach(sc => {
+            const pair = sub.scales[sc];
+            if (pair) {
+              if (pair.A != null && pair.A !== 'NA' && !isNaN(pair.A)) { deepTotal += Number(pair.A); deepCount++; totalDeepAnswered++; }
+              if (pair.B != null && pair.B !== 'NA' && !isNaN(pair.B)) { deepTotal += Number(pair.B); deepCount++; totalDeepAnswered++; }
+            }
+          });
+        }
+        if (sub.flags) {
+          if (sub.flags.Ca && Number(sub.flags.Ca) >= 3) {
+            offers.push({
+              subId,
+              plane: `Q${n}`,
+              planeName: PLANES.find(p => p.id === `Q${n}`)?.name || `Q${n}`,
+              val: sub.flags.Ca,
+              isPulse: false,
+              text: sub.flags.Ca_text || `Practical contribution capability in node ${subId}`
+            });
+          }
+          if (sub.flags.Cb && Number(sub.flags.Cb) >= 3) {
+            offers.push({
+              subId: `${subId}b`,
+              plane: `Q${n}`,
+              planeName: PLANES.find(p => p.id === `Q${n}`)?.name || `Q${n}`,
+              val: sub.flags.Cb,
+              isPulse: false,
+              text: sub.flags.Cb_text || `Secondary contribution in node ${subId}`
+            });
+          }
+          if (sub.flags.Da && Number(sub.flags.Da) >= 3) {
+            needs.push({
+              subId,
+              plane: `Q${n}`,
+              planeName: PLANES.find(p => p.id === `Q${n}`)?.name || `Q${n}`,
+              val: sub.flags.Da,
+              isPulse: false,
+              text: sub.flags.Da_text || `Urgent need declared under node ${subId}`
+            });
+          }
+          if (sub.flags.Db && Number(sub.flags.Db) >= 3) {
+            needs.push({
+              subId: `${subId}b`,
+              plane: `Q${n}`,
+              planeName: PLANES.find(p => p.id === `Q${n}`)?.name || `Q${n}`,
+              val: sub.flags.Db,
+              isPulse: false,
+              text: sub.flags.Db_text || `Secondary requirement declared under node ${subId}`
+            });
+          }
+        }
+      });
+    }
+
+    // Quick Survey (Pulse Check)
+    const sp = raw.speed_round && (raw.speed_round[String(n)] || raw.speed_round[n]);
+    let pulseTotal = 0;
+    let pulseCount = 0;
+    if (sp) {
+      if (sp.A != null && sp.A !== 'NA' && !isNaN(sp.A) && Number(sp.A) > 0) {
+        pulseTotal += Number(sp.A); pulseCount++; totalPulseAnswered++;
+      }
+      if (sp.B != null && sp.B !== 'NA' && !isNaN(sp.B) && Number(sp.B) > 0) {
+        pulseTotal += Number(sp.B); pulseCount++; totalPulseAnswered++;
+      }
+      if (sp.C != null && sp.C !== 'NA' && !isNaN(sp.C) && Number(sp.C) > 0) {
+        totalPulseAnswered++;
+      }
+      if (sp.D != null && sp.D !== 'NA' && !isNaN(sp.D) && Number(sp.D) > 0) {
+        totalPulseAnswered++;
+      }
+
+      // Quick Offer (C)
+      const cScore = Number(sp.C) || 0;
+      const cTags = (sp.tags || []).filter(t => t.kind === 'C').map(t => t.tag);
+      const cNote = sp.note || '';
+      if (cScore >= 3 || cTags.length > 0) {
+        const pDef = PULSE_QUESTIONS.find(x => x.plane === n);
+        let desc = pDef ? pDef.c.replace(/\[\[/g, '').replace(/\]\]/g, '') : `Offer capacity on Q${n}`;
+        if (cTags.length > 0) desc += ` [Focus: ${cTags.join(', ')}]`;
+        if (cNote) desc += ` (Note: ${cNote})`;
+        offers.push({
+          subId: `Quick-${n}`,
+          plane: `Q${n}`,
+          planeName: pDef?.name || `Q${n}`,
+          val: cScore || 3,
+          isPulse: true,
+          tags: cTags,
+          text: desc
+        });
+      }
+
+      // Quick Need (D)
+      const dScore = Number(sp.D) || 0;
+      const dTags = (sp.tags || []).filter(t => t.kind === 'D').map(t => t.tag);
+      const dNote = sp.note || '';
+      if (dScore >= 3 || dTags.length > 0) {
+        const pDef = PULSE_QUESTIONS.find(x => x.plane === n);
+        let desc = pDef ? pDef.d.replace(/\[\[/g, '').replace(/\]\]/g, '') : `Need assistance on Q${n}`;
+        if (dTags.length > 0) desc += ` [Focus: ${dTags.join(', ')}]`;
+        if (dNote) desc += ` (Note: ${dNote})`;
+        needs.push({
+          subId: `Quick-${n}`,
+          plane: `Q${n}`,
+          planeName: pDef?.name || `Q${n}`,
+          val: dScore || 3,
+          isPulse: true,
+          tags: dTags,
+          text: desc
+        });
+      }
+    }
+
+    if (deepCount > 0 && pulseCount > 0) {
+      scores[`Q${n}`] = Math.round(((deepTotal + pulseTotal) / ((deepCount + pulseCount) * 5)) * 100);
+    } else if (deepCount > 0) {
+      scores[`Q${n}`] = Math.round((deepTotal / (deepCount * 5)) * 100);
+    } else if (pulseCount > 0) {
+      scores[`Q${n}`] = Math.round((pulseTotal / (pulseCount * 5)) * 100);
+    } else {
+      scores[`Q${n}`] = 0;
+    }
+  }
+
+  return {
+    ok: true,
+    source,
+    meta: meta || {},
+    label: (raw.label && raw.label.name) || (meta && meta.label_name) || "Respondent",
+    location: (raw.label && raw.label.location) || (meta && meta.label_location) || "Regional NSW",
+    submittedAt: (meta && meta.submitted_at) || raw.saved_at || new Date().toISOString(),
+    scores,
+    offers,
+    needs,
+    pulseCount: totalPulseAnswered,
+    deepCount: totalDeepAnswered
+  };
+}
+
+function parseSurveyLocalState(state, source) {
+  const scores = {};
+  const offers = [];
+  const needs = [];
+  let totalPulseAnswered = 0;
+  let totalDeepAnswered = 0;
+
+  for (let n = 1; n <= 7; n++) {
+    const prefix = `${n}.`;
+    let deepTotal = 0;
+    let deepCount = 0;
+
+    Object.keys(state).forEach(k => {
+      if (k.startsWith(prefix) && (k.endsWith('|A') || k.endsWith('|B'))) {
+        const val = Number(state[k]);
+        if (!isNaN(val) && val > 0) {
+          deepTotal += val;
+          deepCount++;
+          totalDeepAnswered++;
+        }
+      }
+      if (k.startsWith(prefix) && k.includes('|flag|Ca')) {
+        const subId = k.split('|')[0];
+        const val = Number(state[k]);
+        if (val >= 3) {
+          offers.push({
+            subId,
+            plane: `Q${n}`,
+            planeName: PLANES.find(p => p.id === `Q${n}`)?.name || `Q${n}`,
+            val,
+            isPulse: false,
+            text: state[`${subId}|flag|Ca_text`] || `Offer capacity in node ${subId}`
+          });
+        }
+      }
+      if (k.startsWith(prefix) && k.includes('|flag|Cb')) {
+        const subId = k.split('|')[0];
+        const val = Number(state[k]);
+        if (val >= 3) {
+          offers.push({
+            subId: `${subId}b`,
+            plane: `Q${n}`,
+            planeName: PLANES.find(p => p.id === `Q${n}`)?.name || `Q${n}`,
+            val,
+            isPulse: false,
+            text: state[`${subId}|flag|Cb_text`] || `Secondary offer capacity in node ${subId}`
+          });
+        }
+      }
+      if (k.startsWith(prefix) && k.includes('|flag|Da')) {
+        const subId = k.split('|')[0];
+        const val = Number(state[k]);
+        if (val >= 3) {
+          needs.push({
+            subId,
+            plane: `Q${n}`,
+            planeName: PLANES.find(p => p.id === `Q${n}`)?.name || `Q${n}`,
+            val,
+            isPulse: false,
+            text: state[`${subId}|flag|Da_text`] || `Urgent requirement declared in node ${subId}`
+          });
+        }
+      }
+      if (k.startsWith(prefix) && k.includes('|flag|Db')) {
+        const subId = k.split('|')[0];
+        const val = Number(state[k]);
+        if (val >= 3) {
+          needs.push({
+            subId: `${subId}b`,
+            plane: `Q${n}`,
+            planeName: PLANES.find(p => p.id === `Q${n}`)?.name || `Q${n}`,
+            val,
+            isPulse: false,
+            text: state[`${subId}|flag|Db_text`] || `Secondary requirement declared in node ${subId}`
+          });
+        }
+      }
+    });
+
+    // Extract Pulse Answers for plane n
+    let pulseTotal = 0;
+    let pulseCount = 0;
+    const aVal = state[`pulse|${n}|A`];
+    const bVal = state[`pulse|${n}|B`];
+    const cVal = state[`pulse|${n}|C`];
+    const dVal = state[`pulse|${n}|D`];
+    const note = state[`pulse_note|${n}`] || '';
+
+    if (aVal && aVal !== 'NA' && !isNaN(Number(aVal)) && Number(aVal) > 0) {
+      pulseTotal += Number(aVal); pulseCount++; totalPulseAnswered++;
+    }
+    if (bVal && bVal !== 'NA' && !isNaN(Number(bVal)) && Number(bVal) > 0) {
+      pulseTotal += Number(bVal); pulseCount++; totalPulseAnswered++;
+    }
+    if (cVal && cVal !== 'NA' && !isNaN(Number(cVal)) && Number(cVal) > 0) {
+      totalPulseAnswered++;
+    }
+    if (dVal && dVal !== 'NA' && !isNaN(Number(dVal)) && Number(dVal) > 0) {
+      totalPulseAnswered++;
+    }
+
+    // Extract Pulse Tags for plane n
+    const pDef = PULSE_QUESTIONS.find(x => x.plane === n);
+    const cTags = [];
+    const dTags = [];
+    if (pDef) {
+      Object.keys(state).forEach(k => {
+        if (k.startsWith(`pulse|${n}|C|tag|`) || k.startsWith(`pulse|${n}|c|tag|`)) {
+          if (state[k]) cTags.push(k.split('|tag|')[1].replace(/_/g, ' '));
+        }
+        if (k.startsWith(`pulse|${n}|D|tag|`) || k.startsWith(`pulse|${n}|d|tag|`)) {
+          if (state[k]) dTags.push(k.split('|tag|')[1].replace(/_/g, ' '));
+        }
+      });
+      [0, 1, 2, 3].forEach(idx => {
+        if (state[`pulse_tag|${n}|C|${idx}`]) {
+          const matches = [...pDef.c.matchAll(/\[\[(.*?)\]\]/g)];
+          if (matches[idx]) cTags.push(matches[idx][1]);
+        }
+        if (state[`pulse_tag|${n}|D|${idx}`]) {
+          const matches = [...pDef.d.matchAll(/\[\[(.*?)\]\]/g)];
+          if (matches[idx]) dTags.push(matches[idx][1]);
+        }
+      });
+    }
+
+    // Quick Offer (C)
+    const cScore = Number(cVal) || 0;
+    if (cScore >= 3 || cTags.length > 0 || (cVal && note)) {
+      let desc = pDef ? pDef.c.replace(/\[\[/g, '').replace(/\]\]/g, '') : `Offer capacity on Q${n}`;
+      if (cTags.length > 0) desc += ` [Focus: ${[...new Set(cTags)].join(', ')}]`;
+      if (note) desc += ` (Note: ${note})`;
+      offers.push({
+        subId: `Quick-${n}`,
+        plane: `Q${n}`,
+        planeName: pDef?.name || `Q${n}`,
+        val: cScore || 3,
+        isPulse: true,
+        tags: [...new Set(cTags)],
+        text: desc
+      });
+    }
+
+    // Quick Need (D)
+    const dScore = Number(dVal) || 0;
+    if (dScore >= 3 || dTags.length > 0 || (dVal && note)) {
+      let desc = pDef ? pDef.d.replace(/\[\[/g, '').replace(/\]\]/g, '') : `Need assistance on Q${n}`;
+      if (dTags.length > 0) desc += ` [Focus: ${[...new Set(dTags)].join(', ')}]`;
+      if (note) desc += ` (Note: ${note})`;
+      needs.push({
+        subId: `Quick-${n}`,
+        plane: `Q${n}`,
+        planeName: pDef?.name || `Q${n}`,
+        val: dScore || 3,
+        isPulse: true,
+        tags: [...new Set(dTags)],
+        text: desc
+      });
+    }
+
+    if (deepCount > 0 && pulseCount > 0) {
+      scores[`Q${n}`] = Math.round(((deepTotal + pulseTotal) / ((deepCount + pulseCount) * 5)) * 100);
+    } else if (deepCount > 0) {
+      scores[`Q${n}`] = Math.round((deepTotal / (deepCount * 5)) * 100);
+    } else if (pulseCount > 0) {
+      scores[`Q${n}`] = Math.round((pulseTotal / (pulseCount * 5)) * 100);
+    } else {
+      scores[`Q${n}`] = 0;
+    }
+  }
+
+  return {
+    ok: true,
+    source,
+    label: state['label|name'] || "Local Respondent",
+    location: state['label|location'] || "Regional NSW",
+    submittedAt: new Date().toISOString(),
+    scores,
+    offers,
+    needs,
+    pulseCount: totalPulseAnswered,
+    deepCount: totalDeepAnswered
+  };
+}
+
+async function renderSurveySection() {
+  const container = document.getElementById('surveyScoresContainer');
+  const flaggedContainer = document.getElementById('surveyFlaggedList');
+  container.innerHTML = `<div style="text-align:center; padding:18px; color:var(--text-soft); font-size:13px;">Checking Supabase &amp; local storage for real survey data...</div>`;
+
+  const surveyData = await fetchUserSurveyData();
+
+  const masterShare = userProfile.shareSurveyOnProfile !== false;
+  const toggleEl = document.getElementById('masterSurveyShareToggle');
+  if (toggleEl) toggleEl.checked = masterShare;
+
+  if (!surveyData.ok) {
+    // Clean Empty State — No cosplay data
+    container.innerHTML = `
+      <div style="background:var(--bg-panel); border:1.5px dashed var(--border-strong); border-radius:14px; padding:22px; text-align:center;">
+        <div style="font-size:30px; margin-bottom:8px;">📋</div>
+        <h4 style="font-size:15.5px; font-weight:800; color:var(--text-main); margin-bottom:6px;">No Survey Data Recorded for this Account</h4>
+        <p style="font-size:13px; color:var(--text-soft); max-width:460px; margin:0 auto 16px;">
+          You haven't completed a Community Welfare Survey under this account or browser session yet. Take the survey to establish your 7-plane capacity baseline and export real offers or needs to the registry.
+        </p>
+        <div style="display:flex; justify-content:center; gap:10px; flex-wrap:wrap;">
+          <a href="../welfare-survey.html" target="_blank" class="btn btn-primary" style="text-decoration:none;">📋 Open Welfare Survey</a>
+        </div>
+      </div>
+    `;
+    flaggedContainer.innerHTML = `<p style="font-size:12.5px; color:var(--text-soft); padding:8px 0;">No active survey offers or needs to display.</p>`;
+    return;
+  }
+
+  const planeNames = {
+    Q1: "Recognition (Identity & Trust)",
+    Q2: "Purpose (Work & Skills)",
+    Q3: "Shelter (Physical & Gear)",
+    Q4: "Refreshment (Rest & Relief)",
+    Q5: "Power (Direct Terms & Voice)",
+    Q6: "Morale (Fortitude & Craft)",
+    Q7: "Sustenance (Emergency Net)"
+  };
+
+  let html = `
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; padding-bottom:8px; border-bottom:1px solid var(--border-subtle); flex-wrap:wrap; gap:8px;">
+      <span style="font-family:var(--font-mono); font-size:11px; color:var(--accent-offer); font-weight:700;">
+        🟢 Real Survey Loaded: ${surveyData.source.toUpperCase()} (${escapeHtml(surveyData.label)})
+      </span>
+      <span style="font-family:var(--font-mono); font-size:11px; color:var(--text-soft);">
+        Date: ${new Date(surveyData.submittedAt).toLocaleDateString()}
+      </span>
+    </div>
+    <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-bottom:12px;">
+      ${surveyData.pulseCount > 0 ? `
+        <span style="font-family:var(--font-mono); font-size:11px; background:#FEF3C7; color:#92400E; padding:3px 8px; border-radius:6px; font-weight:700; border:1px solid #FDE68A;">
+          ⚡ Quick Survey: ${surveyData.pulseCount} answered
+        </span>
+      ` : ''}
+      ${surveyData.deepCount > 0 ? `
+        <span style="font-family:var(--font-mono); font-size:11px; background:#EDE9FE; color:#5B21B6; padding:3px 8px; border-radius:6px; font-weight:700; border:1px solid #DDD6FE;">
+          📋 Detailed Nodes: ${surveyData.deepCount} answered
+        </span>
+      ` : ''}
+      <button class="btn btn-sunlight" onclick="renderSurveySection()" style="margin-left:auto; font-size:11px; padding:3px 10px;" title="Re-sync survey data from storage">
+        🔄 Re-Sync
+      </button>
+    </div>
+    <div class="survey-box-rack">
+  `;
+
+  Object.keys(surveyData.scores).forEach(qKey => {
+    const pct = surveyData.scores[qKey];
+    const isPublic = userProfile.planePrivacy[qKey] !== 'private';
+    const pInfo = PLANES.find(p => p.id === qKey) || { color: '#2563EB' };
+
+    html += `
+      <div class="plane-score-row">
+        <strong style="color:var(--text-main); font-size:12.5px;">${qKey}: ${planeNames[qKey].split(' ')[0]}</strong>
+        <div class="plane-bar-track">
+          <div class="plane-bar-fill" style="width:${pct}%; background:${pInfo.color};"></div>
+        </div>
+        <span style="font-family:var(--font-mono); font-size:11.5px; text-align:right; font-weight:700;">
+          ${pct}% capacity
+        </span>
+        <button type="button" class="privacy-badge ${isPublic ? 'is-public' : 'is-private'}" onclick="togglePlanePrivacy('${qKey}')">
+          ${isPublic ? 'Public 🌐' : 'Private 🔒'}
+        </button>
+      </div>
+    `;
+  });
+  html += `</div>`;
+  container.innerHTML = html;
+
+  // Render Real Flagged Items (Offers & Needs)
+  let flaggedHtml = '';
+  if (surveyData.offers.length > 0 || surveyData.needs.length > 0) {
+    surveyData.offers.forEach(off => {
+      const typeLabel = off.isPulse ? `⚡ Quick Survey Offer` : `📋 Detailed Diagnostic Offer`;
+      flaggedHtml += `
+        <div class="survey-import-card">
+          <div>
+            <strong style="color:var(--accent-offer); font-size:12.5px;">
+              🟢 ${typeLabel} (${off.subId} · ${off.plane})
+            </strong>
+            <p style="font-size:13px; margin:3px 0 0;">${escapeHtml(off.text)}</p>
+          </div>
+          <button class="btn-import-act" onclick="importSurveyFlag('${off.subId}', 'offer', '${escapeHtml(off.text).replace(/'/g, "\\'")}')">
+            + Post Offer
+          </button>
+        </div>
+      `;
+    });
+    surveyData.needs.forEach(nd => {
+      const typeLabel = nd.isPulse ? `⚡ Quick Survey Need` : `📋 Detailed Diagnostic Need`;
+      flaggedHtml += `
+        <div class="survey-import-card">
+          <div>
+            <strong style="color:var(--accent-need); font-size:12.5px;">
+              🔴 ${typeLabel} (${nd.subId} · ${nd.plane})
+            </strong>
+            <p style="font-size:13px; margin:3px 0 0;">${escapeHtml(nd.text)}</p>
+          </div>
+          <button class="btn-import-act" style="background:var(--accent-need);" onclick="importSurveyFlag('${nd.subId}', 'need', '${escapeHtml(nd.text).replace(/'/g, "\\'")}')">
+            + Post Need
+          </button>
+        </div>
+      `;
+    });
+  } else {
+    flaggedHtml = `
+      <p style="font-size:12.5px; color:var(--text-soft); padding:8px 0;">
+        Your survey is saved, but you haven't declared specific Ca/Cb (Offer) or Da/Db (Need) flags yet.
+      </p>
+    `;
+  }
+  flaggedContainer.innerHTML = flaggedHtml;
+}
+
+function togglePlanePrivacy(planeKey) {
+  const current = userProfile.planePrivacy[planeKey];
+  userProfile.planePrivacy[planeKey] = (current === 'private') ? 'public' : 'private';
+  saveProfileToStorage();
+  renderSurveySection();
+}
+
+function toggleMasterSurveyShare() {
+  userProfile.shareSurveyOnProfile = document.getElementById('masterSurveyShareToggle').checked;
+  saveProfileToStorage();
+  applyFilters();
+}
+
+function importSurveyFlag(subId, type, text) {
+  closeProfileModal();
+  openShareModal();
+
+  const pNum = subId.replace(/^Quick-/, '').split('.')[0];
+  const qMap = { '1': 'Q1', '2': 'Q2', '3': 'Q3', '4': 'Q4', '5': 'Q5', '6': 'Q6', '7': 'Q7' };
+  const targetPlane = qMap[pNum] || 'Q2';
+  const isPulse = subId.startsWith('Quick-');
+  const sourceName = isPulse ? `Quick Survey (Plane ${pNum})` : `Welfare Survey Diagnostic (${subId})`;
+
+  document.getElementById('formPlane').value = targetPlane;
+  document.getElementById('formTitle').value = `${type === 'offer' ? 'Available' : 'Needed'}: ${text.slice(0, 50)}...`;
+  document.getElementById('formStory').value = `Directly exported from my verified ${sourceName}:\n\n"${text}"`;
+
+  if (type === 'offer') {
+    document.getElementById('formGive').value = text;
+    document.getElementById('formAsk').value = "";
+  } else {
+    document.getElementById('formAsk').value = text;
+    document.getElementById('formGive').value = "";
+  }
+}
+
+// --- Profile Modal Controls ---
+function openProfileModal() {
+  document.getElementById('profNameInput').value = userProfile.displayName || '';
+  document.getElementById('profTownInput').value = userProfile.town || '2830';
+  document.getElementById('profBioInput').value = userProfile.bio || '';
+  document.getElementById('profContactInput').value = userProfile.contact || '';
+  document.getElementById('profileVouchStat').textContent = `💛 ${userProfile.vouches || 0} Community Vouchers`;
+
+  renderSurveySection();
+  renderMyPostsList();
+  document.getElementById('profileModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeProfileModal() {
+  document.getElementById('profileModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function saveProfileChanges() {
+  userProfile.displayName = document.getElementById('profNameInput').value.trim();
+  userProfile.town = document.getElementById('profTownInput').value;
+  userProfile.bio = document.getElementById('profBioInput').value.trim();
+  userProfile.contact = document.getElementById('profContactInput').value.trim();
+  saveProfileToStorage();
+  alert("Profile information saved.");
+  applyFilters();
+}
+
+function renderMyPostsList() {
+  const container = document.getElementById('myPostsList');
+  const myName = (userProfile.displayName || '').toLowerCase();
+  const myPosts = allPosts.filter(p => (p.author || '').toLowerCase().includes(myName) || p.author === 'You');
+
+  if (myPosts.length === 0) {
+    container.innerHTML = `<p style="font-size:12.5px; color:var(--text-soft); padding:8px 0;">You haven't posted any stories under this name yet.</p>`;
+    return;
+  }
+
+  container.innerHTML = myPosts.map(p => `
+    <div style="background:var(--bg-card); border:1px solid var(--border-subtle); border-radius:10px; padding:10px 14px; display:flex; justify-content:space-between; align-items:center; gap:10px;">
+      <div>
+        <strong style="font-size:13.5px; color:var(--text-main);">${escapeHtml(p.title)}</strong>
+        <p style="font-size:12px; color:var(--text-soft); margin:2px 0 0;">${p.town} · ${p.urgency.toUpperCase()}</p>
+      </div>
+      <button class="btn btn-sunlight" onclick="deleteMyPost('${p.id}')" style="font-size:11.5px; padding:4px 10px; color:var(--accent-need);">Remove</button>
+    </div>
+  `).join('');
+}
+
+function deleteMyPost(id) {
+  if (confirm("Remove this listing from the registry?")) {
+    allPosts = allPosts.filter(p => p.id !== id);
+    savePosts();
+    renderMyPostsList();
+    applyFilters();
+  }
+}
+
+// --- Auth Modal Controls ---
+function openAuthModal() {
+  document.getElementById('authModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeAuthModal() {
+  document.getElementById('authModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// --- Modal Overlay & Escape Key Dismissal ---
+function initModalListeners() {
+  const modalOverlays = ['shareModal', 'profileModal', 'authModal'];
+  modalOverlays.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.addEventListener('click', (e) => {
+      if (e.target === el) {
+        if (id === 'shareModal') closeShareModal();
+        else if (id === 'profileModal') closeProfileModal();
+        else if (id === 'authModal') closeAuthModal();
+      }
+    });
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' || e.key === 'Esc') {
+      closeShareModal();
+      closeProfileModal();
+      closeAuthModal();
+    }
+  });
+}
+
+// --- Dynamic Reciprocal Match Weaver (Scans real entered posts) ---
+function renderWeaverBanner() {
+  const content = document.getElementById('weaverContent');
+  const badge = document.getElementById('weaverBadge');
+  if (!content) return;
+
+  // Search through all entered posts to find reciprocal pairs (Person A gives X & asks Y <-> Person B gives Y & asks X)
+  const mutualPosts = allPosts.filter(p => p.give && p.ask);
+  let pairs = [];
+
+  for (let i = 0; i < allPosts.length; i++) {
+    for (let j = i + 1; j < allPosts.length; j++) {
+      const a = allPosts[i];
+      const b = allPosts[j];
+      if (a.give && a.ask && b.give && b.ask && a.author !== b.author) {
+        pairs.push([a, b]);
+      }
+    }
+  }
+
+  if (pairs.length > 0) {
+    const [p1, p2] = pairs[0];
+    badge.textContent = `${pairs.length} Active Local Loop${pairs.length > 1 ? 's' : ''}`;
+    content.innerHTML = `
+      <div class="weaver-grid">
+        <div class="weaver-col">
+          <span class="weaver-person">${escapeHtml(p1.author)} (${escapeHtml(p1.town)})</span>
+          <span class="weaver-give">🟢 Gives: ${escapeHtml(p1.give)}</span>
+          <span class="weaver-need">🔴 Asks: ${escapeHtml(p1.ask)}</span>
+        </div>
+        <div class="weaver-swap-icon">⇄</div>
+        <div class="weaver-col">
+          <span class="weaver-person">${escapeHtml(p2.author)} (${escapeHtml(p2.town)})</span>
+          <span class="weaver-give">🟢 Gives: ${escapeHtml(p2.give)}</span>
+          <span class="weaver-need">🔴 Asks: ${escapeHtml(p2.ask)}</span>
+        </div>
+      </div>
+    `;
+  } else if (mutualPosts.length > 0) {
+    const single = mutualPosts[0];
+    badge.textContent = `1 Candidate Loop`;
+    content.innerHTML = `
+      <div class="weaver-grid" style="grid-template-columns: 1fr;">
+        <div class="weaver-col">
+          <span class="weaver-person">${escapeHtml(single.author)} (${escapeHtml(single.town)}) — Awaiting Reciprocal Partner</span>
+          <span class="weaver-give">🟢 Can Give: ${escapeHtml(single.give)}</span>
+          <span class="weaver-need">🔴 Looking For: ${escapeHtml(single.ask)}</span>
+        </div>
+      </div>
+    `;
+  } else {
+    badge.textContent = `0 Active Loops`;
+    content.innerHTML = `
+      <div style="background:var(--bg-panel); border-radius:10px; padding:14px 18px; text-align:center; color:var(--text-soft); font-size:13px;">
+        <em>No reciprocal trade loops detected yet. As real neighbors register what they can give and what they need, the Weaver dynamically identifies circular aid matches here.</em>
+      </div>
+    `;
+  }
+}
+
+function toggleSunlightMode() {
+  document.body.classList.toggle('sunlight-mode');
+  const isDark = document.body.classList.contains('sunlight-mode');
+  document.getElementById('sunlightBtn').textContent = isDark ? "🌾 Earth Mode" : "☀️ Sunlight Mode";
+}
+
+function renderPlanesBelt() {
+  const belt = document.getElementById('planesBelt');
+  belt.innerHTML = PLANES.map(p => `
+    <div class="plane-pill ${currentPlane === p.id ? 'active' : ''}" onclick="selectPlane('${p.id}')">
+      <span class="p-code">${p.code}</span>
+      <span class="p-label">${p.name}</span>
+    </div>
+  `).join('');
+}
+
+function selectPlane(id) {
+  currentPlane = id;
+  renderPlanesBelt();
+  applyFilters();
+}
+
+function setKindTab(kind) {
+  currentKindTab = kind;
+  document.querySelectorAll('.tab-chip').forEach(c => c.classList.remove('active'));
+  if (kind === 'all') document.getElementById('tab-all').classList.add('active');
+  if (kind === 'need') document.getElementById('tab-need').classList.add('active');
+  if (kind === 'offer') document.getElementById('tab-offer').classList.add('active');
+  if (kind === 'loop') document.getElementById('tab-loop').classList.add('active');
+  applyFilters();
+}
+
+// Deterministic NSW regional highway distance matrix (km) between towns
+const TOWN_DISTANCES_KM = {
+  '2830': { '2830': 0, '2821': 39, '2820': 48, '2827': 66 },
+  '2821': { '2830': 39, '2821': 0, '2820': 82, '2827': 95 },
+  '2820': { '2830': 48, '2821': 82, '2820': 0, '2827': 105 },
+  '2827': { '2830': 66, '2821': 95, '2820': 105, '2827': 0 }
+};
+
+function getDistanceKm(postcode) {
+  const currentTown = document.getElementById('townSelect') ? document.getElementById('townSelect').value : '2830';
+  if (TOWN_DISTANCES_KM[currentTown] && TOWN_DISTANCES_KM[currentTown][postcode] !== undefined) {
+    return TOWN_DISTANCES_KM[currentTown][postcode];
+  }
+  return 0;
+}
+
+// Semantic auto-detection keywords mapping to the 7 Planes of Reality
+const SEMANTIC_KEYWORDS = {
+  Q7: ['transport', 'lift', 'ride', 'driver', 'driving', 'groceries', 'food', 'meal', 'meals', 'cook', 'cooking', 'hunger', 'crisis', 'emergency', 'distress', 'mental health', 'flood', 'fire', 'storm', 'ambulance', 'hospital', 'medicine', 'prescription', 'first aid', 'neighbourly'],
+  Q4: ['rest', 'sleep', 'burnout', 'exhausted', 'relief', 'downtime', 'babysit', 'babysitting', 'childcare', 'kids', 'pet sitting', 'dog walk', 'chores', 'cleaning', 'laundry', 'catch-up', 'respite', 'break'],
+  Q3: ['house', 'housing', 'home', 'shelter', 'rent', 'rental', 'eviction', 'spare bed', 'room', 'lodging', 'accommodation', 'power bill', 'electricity', 'water', 'heating', 'plumbing', 'roof', 'fence', 'fencing', 'tools', 'chainsaw', 'welder', 'generator', 'pump', 'trailer', 'ute', 'truck', 'tractor', 'machinery', 'slasher'],
+  Q2: ['work', 'job', 'skills', 'skill', 'trade', 'apprentice', 'training', 'career', 'study', 'course', 'employ', 'hire', 'header', 'harvest', 'boilermaker', 'mechanic', 'carpenter', 'farm hand', 'station hand'],
+  Q5: ['legal', 'lawyer', 'rights', 'court', 'paperwork', 'centrelink', 'tenancy', 'landlord', 'dispute', 'contract', 'council', 'permit', 'bureaucracy', 'agency', 'forms'],
+  Q6: ['truth', 'witness', 'whistleblower', 'conscience', 'honesty', 'promise', 'courage', 'integrity', 'tradition', 'heritage', 'craft', 'morale', 'character reference'],
+  Q1: ['bully', 'bullied', 'welcome', 'isolated', 'lonely', 'identity', 'dignity', 'respect', 'vouch', 'standing', 'newcomer', 'acceptance', 'belonging']
+};
+
+function detectSemanticPlane() {
+  const text = (
+    (document.getElementById('formTitle')?.value || '') + ' ' +
+    (document.getElementById('formGive')?.value || '') + ' ' +
+    (document.getElementById('formAsk')?.value || '') + ' ' +
+    (document.getElementById('formStory')?.value || '')
+  ).toLowerCase();
+
+  for (const [qKey, words] of Object.entries(SEMANTIC_KEYWORDS)) {
+    for (const word of words) {
+      const regex = new RegExp(`\\b${word}\\b`, 'i');
+      if (regex.test(text)) {
+        const planeEl = document.getElementById('formPlane');
+        if (planeEl && planeEl.value !== qKey) {
+          planeEl.value = qKey;
+          const tag = document.getElementById('semanticDetectTag');
+          if (tag) {
+            tag.textContent = `⚡ Auto-detected: ${qKey} (matched "${word}")`;
+            tag.style.display = 'inline';
+          }
+        }
+        return;
+      }
+    }
+  }
+}
+
+async function populateSurveyImportPicker() {
+  const box = document.getElementById('surveyImportPickerBox');
+  const sel = document.getElementById('surveyImportSelect');
+  if (!box || !sel) return;
+
+  const surveyData = await fetchUserSurveyData();
+  if (!surveyData.ok || (!surveyData.offers.length && !surveyData.needs.length)) {
+    box.style.display = 'none';
+    return;
+  }
+
+  box.style.display = 'block';
+  sel.innerHTML = `<option value="">-- Choose an answer, offer, or need to autofill (${surveyData.offers.length + surveyData.needs.length} available) --</option>`;
+
+  if (surveyData.offers.length > 0) {
+    const grp = document.createElement('optgroup');
+    grp.label = "🟢 Your Verified Welfare Survey Offers";
+    surveyData.offers.forEach((off, idx) => {
+      const opt = document.createElement('option');
+      opt.value = `offer|${idx}`;
+      opt.textContent = `Offer [${off.plane}]: ${off.text.slice(0, 68)}...`;
+      grp.appendChild(opt);
+    });
+    sel.appendChild(grp);
+  }
+
+  if (surveyData.needs.length > 0) {
+    const grp = document.createElement('optgroup');
+    grp.label = "🔴 Your Verified Welfare Survey Needs";
+    surveyData.needs.forEach((nd, idx) => {
+      const opt = document.createElement('option');
+      opt.value = `need|${idx}`;
+      opt.textContent = `Need [${nd.plane}]: ${nd.text.slice(0, 68)}...`;
+      grp.appendChild(opt);
+    });
+    sel.appendChild(grp);
+  }
+
+  window._cachedSurveyImport = surveyData;
+}
+
+function handleSurveySelectChange() {
+  const sel = document.getElementById('surveyImportSelect');
+  const val = sel.value;
+  if (!val || !window._cachedSurveyImport) return;
+
+  const [type, idxStr] = val.split('|');
+  const idx = parseInt(idxStr);
+  const item = (type === 'offer') ? window._cachedSurveyImport.offers[idx] : window._cachedSurveyImport.needs[idx];
+  if (!item) return;
+
+  document.getElementById('formPlane').value = item.plane;
+  document.getElementById('formTitle').value = `${type === 'offer' ? 'Available' : 'Needed'}: ${item.text.slice(0, 50)}...`;
+  document.getElementById('formStory').value = `Directly exported from my verified Welfare Survey answer (${item.subId}):\n\n"${item.text}"`;
+
+  if (type === 'offer') {
+    document.getElementById('formGive').value = item.text;
+    document.getElementById('formAsk').value = '';
+  } else {
+    document.getElementById('formAsk').value = item.text;
+    document.getElementById('formGive').value = '';
+  }
+
+  const tag = document.getElementById('semanticDetectTag');
+  if (tag) {
+    tag.textContent = `⚡ Survey Imported: ${item.plane}`;
+    tag.style.display = 'inline';
+  }
+
+  showToast(`Autofilled from verified survey: ${item.plane}`, 'success');
+}
+
+function applyFilters() {
+  const searchEl = document.getElementById('searchInput');
+  const search = searchEl ? searchEl.value.toLowerCase().trim() : '';
+  const clearBtn = document.getElementById('searchClearBtn');
+  if (clearBtn) clearBtn.style.display = search ? 'block' : 'none';
+
+  const radius = parseInt(document.getElementById('radiusSelect')?.value || '60');
+  const sortMode = document.getElementById('sortSelect')?.value || 'newest';
+
+  // Update dynamic counters
+  const countAll = allPosts.length;
+  const countNeed = allPosts.filter(p => p.kind === 'need').length;
+  const countOffer = allPosts.filter(p => p.kind === 'offer').length;
+  const countLoop = allPosts.filter(p => p.kind === 'loop' || (p.give && p.ask)).length;
+
+  if (document.getElementById('tabCountAll')) document.getElementById('tabCountAll').textContent = countAll;
+  if (document.getElementById('tabCountNeed')) document.getElementById('tabCountNeed').textContent = countNeed;
+  if (document.getElementById('tabCountOffer')) document.getElementById('tabCountOffer').textContent = countOffer;
+  if (document.getElementById('tabCountLoop')) document.getElementById('tabCountLoop').textContent = countLoop;
+
+  let filtered = allPosts.filter(p => {
+    if (currentKindTab !== 'all' && p.kind !== currentKindTab) return false;
+    if (currentPlane !== 'ALL' && p.plane !== currentPlane) return false;
+    const dist = getDistanceKm(p.postcode);
+    if (dist > radius) return false;
+    if (search) {
+      const match = (p.title + ' ' + p.story + ' ' + p.author + ' ' + (p.give || '') + ' ' + (p.ask || '')).toLowerCase();
+      if (!match.includes(search)) return false;
+    }
+    return true;
+  });
+
+  // Sorting
+  if (sortMode === 'urgent') {
+    const urgencyWeight = { '24h': 1, '48h': 2, '7d': 3, 'ongoing': 4 };
+    filtered.sort((a, b) => (urgencyWeight[a.urgency] || 5) - (urgencyWeight[b.urgency] || 5));
+  } else if (sortMode === 'nearest') {
+    filtered.sort((a, b) => getDistanceKm(a.postcode) - getDistanceKm(b.postcode));
+  } else {
+    // Newest first
+    filtered.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+  }
+
+  document.getElementById('resultsStats').textContent = `Showing ${filtered.length} of ${allPosts.length} regional stories`;
+  renderCards(filtered);
+}
+
+function renderCards(list) {
+  const grid = document.getElementById('streamGrid');
+  if (allPosts.length === 0) {
+    grid.innerHTML = `
+      <div style="grid-column:1/-1; text-align:center; padding:50px 20px; background:var(--bg-card); border:1.5px dashed var(--border-strong); border-radius:16px;">
+        <div style="font-size:36px; margin-bottom:10px;">🌾</div>
+        <h4 style="font-family:var(--font-disp); font-size:20px; margin-bottom:8px;">No Needs or Offers Registered Yet</h4>
+        <p style="color:var(--text-soft); font-size:14px; max-width:480px; margin:0 auto 18px;">
+          This registry only displays real listings entered by actual community members. Be the first neighbor to post what you need or what you can offer.
+        </p>
+        <button class="btn btn-primary" onclick="openShareModal()">+ Register First Need or Offer</button>
+      </div>
+    `;
+    return;
+  }
+
+  if (list.length === 0) {
+    grid.innerHTML = `
+      <div style="grid-column:1/-1; text-align:center; padding:50px 20px; background:var(--bg-card); border:1.5px dashed var(--border-strong); border-radius:16px;">
+        <h4 style="font-family:var(--font-disp); font-size:18px; margin-bottom:8px;">No listings match this filter</h4>
+        <p style="color:var(--text-soft); font-size:14px; margin-bottom:16px;">Try expanding your distance radius or search terms.</p>
+        <button class="btn btn-primary" onclick="resetAllFilters()">↺ Reset All Filters</button>
+      </div>
+    `;
+    return;
+  }
+
+  grid.innerHTML = list.map(item => {
+    const isUrgent = item.urgency === '24h';
+    const isResolved = item.status === 'resolved';
+    let kindBadge = '🤝 Mutual Loop';
+    let kindClass = 'tag-loop';
+    if (item.kind === 'need') { kindBadge = '🔴 Need'; kindClass = 'tag-need'; }
+    if (item.kind === 'offer') { kindBadge = '🟢 Offer'; kindClass = 'tag-offer'; }
+
+    const pMeta = PLANES.find(pl => pl.id === item.plane) || { code: item.plane, name: '' };
+    const dist = getDistanceKm(item.postcode);
+    const distText = dist === 0 ? "Local / In town" : `${dist} km out`;
+
+    return `
+      <article class="card ${isUrgent ? 'is-urgent' : ''} ${isResolved ? 'is-resolved' : ''}" style="${isResolved ? 'opacity:0.85; border-color:var(--accent-offer);' : ''}">
+        <div class="card-top">
+          <div class="author-box">
+            <div class="author-avatar">${item.avatar || '🤝'}</div>
+            <div class="author-info">
+              <h4>${escapeHtml(item.author)}</h4>
+              <p>📍 ${escapeHtml(item.town)} (${distText})</p>
+            </div>
+          </div>
+          ${isResolved ? `
+            <span class="tag-badge" style="background:#DCFCE7; color:#15803D; border:1px solid #BBF7D0;">✅ Fulfilled</span>
+          ` : `
+            <span class="tag-badge ${kindClass}">
+              ${isUrgent ? '⚡ 24H URGENT' : kindBadge}
+            </span>
+          `}
+        </div>
+
+        <span style="font-family:var(--font-mono); font-size:11px; color:var(--blue);">
+          ${pMeta.code}: ${pMeta.name}
+        </span>
+
+        <h3 class="card-title">${escapeHtml(item.title)}</h3>
+        <p class="card-story">${escapeHtml(item.story)}</p>
+
+        <div class="dual-exchange-rack">
+          ${item.give ? `
+            <div class="dual-line">
+              <span class="dual-badge badge-give">Gives</span>
+              <span class="dual-text">${escapeHtml(item.give)}</span>
+            </div>
+          ` : ''}
+          ${item.ask ? `
+            <div class="dual-line">
+              <span class="dual-badge badge-ask">Asks</span>
+              <span class="dual-text">${escapeHtml(item.ask)}</span>
+            </div>
+          ` : ''}
+        </div>
+
+        <div class="card-meta-line">
+          <span class="vouch-stat">💛 ${item.vouches || 0} local vouchers</span>
+          <button class="btn-vouch-mini" onclick="vouchPost('${item.id}')">Vouch +1</button>
+        </div>
+
+        <div class="card-actions" style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+          ${item.contact ? `
+            <a href="tel:${cleanPhone(item.contact)}" class="btn-connect" style="text-decoration:none; display:inline-flex; align-items:center; gap:6px; flex:1; justify-content:center;">
+              📞 Call ${escapeHtml(item.contact)}
+            </a>
+            <a href="sms:${cleanPhone(item.contact)}" class="btn btn-sunlight" style="padding:10px 14px; font-size:12.5px; text-decoration:none; display:inline-flex; align-items:center; gap:4px;" title="Send SMS">
+              💬 SMS
+            </a>
+            <button class="btn btn-sunlight" onclick="copyContact('${escapeHtml(item.contact)}')" style="padding:10px 14px; font-size:12.5px;" title="Copy Phone Number">
+              📋
+            </button>
+          ` : ''}
+          <button class="btn btn-sunlight" onclick="sharePost('${item.id}')" style="padding:10px 14px; font-size:12.5px;" title="Share listing link">
+            🔗 Share
+          </button>
+        </div>
+      </article>
+    `;
+  }).join('');
+}
+
+function cleanPhone(str) {
+  if (!str) return '';
+  return str.replace(/[^0-9+]/g, '');
+}
+
+function copyContact(contact) {
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(contact).then(() => {
+      showToast(`Copied contact to clipboard: ${contact}`, 'success');
+    }).catch(() => {
+      prompt("Copy contact details:", contact);
+    });
+  } else {
+    prompt("Copy contact details:", contact);
+  }
+}
+
+function sharePost(id) {
+  const item = allPosts.find(p => p.id === id);
+  if (!item) return;
+  const shareText = `[Community Registry] ${item.title} (${item.town})\n${item.story}\nContact: ${item.contact}`;
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(shareText).then(() => {
+      showToast("Listing summary copied to clipboard!", 'success');
+    }).catch(() => {
+      prompt("Copy listing to share:", shareText);
+    });
+  } else {
+    prompt("Copy listing to share:", shareText);
+  }
+}
+
+function vouchPost(id) {
+  const item = allPosts.find(p => p.id === id);
+  if (item) {
+    item.vouches = (item.vouches || 0) + 1;
+    savePosts();
+    applyFilters();
+    showToast("Vouched +1 for this neighbor", "success");
+  }
+}
+
+async function openShareModal() {
+  // Pre-fill Name, Contact, and Town from userProfile, survey baseline, or Supabase session
+  let name = userProfile.displayName;
+  let contact = userProfile.contact;
+  let town = userProfile.town || '2830';
+
+  if (!name || !contact) {
+    const survey = await fetchUserSurveyData();
+    if (survey && survey.ok) {
+      if (!name && survey.label && survey.label !== 'Respondent' && survey.label !== 'Local Respondent') {
+        name = survey.label;
+        userProfile.displayName = name;
+      }
+      if (!contact && survey.contact) {
+        contact = survey.contact;
+        userProfile.contact = contact;
+      }
+      if (survey.location) {
+        const match = survey.location.match(/\b(2830|2821|2820|2827)\b/);
+        if (match) town = match[1];
+      }
+    }
+  }
+
+  if (!name && currentSession && currentSession.user) {
+    name = currentSession.user.user_metadata?.full_name || currentSession.user.user_metadata?.name || currentSession.user.email?.split('@')[0] || '';
+    if (name) userProfile.displayName = name;
+  }
+
+  // Pre-fill fields
+  if (name) document.getElementById('formAuthor').value = name;
+  if (contact) document.getElementById('formContact').value = contact;
+  if (town) document.getElementById('formTown').value = town;
+
+  await populateSurveyImportPicker();
+
+  document.getElementById('shareModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeShareModal() {
+  document.getElementById('shareModal').classList.remove('open');
+  document.getElementById('shareForm').reset();
+  const tag = document.getElementById('semanticDetectTag');
+  if (tag) tag.style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+function handleFormSubmit(e) {
+  e.preventDefault();
+  const author = document.getElementById('formAuthor').value.trim();
+  const postcode = document.getElementById('formTown').value;
+  const plane = document.getElementById('formPlane').value;
+  const title = document.getElementById('formTitle').value.trim();
+  const story = document.getElementById('formStory').value.trim();
+  const give = document.getElementById('formGive').value.trim();
+  const ask = document.getElementById('formAsk').value.trim();
+  const urgency = document.getElementById('formUrgency').value;
+  const contact = document.getElementById('formContact').value.trim();
+
+  // Remember profile details so user never has to re-type
+  userProfile.displayName = author;
+  userProfile.contact = contact;
+  userProfile.town = postcode;
+  saveProfileToStorage();
+
+  let kind = 'loop';
+  if (give && !ask) kind = 'offer';
+  if (!give && ask) kind = 'need';
+
+  const townNames = { '2830': 'Dubbo', '2821': 'Narromine', '2820': 'Wellington', '2827': 'Gilgandra' };
+
+  const newEntry = {
+    id: "sns-" + Date.now(),
+    userId: userProfile.id,
+    author,
+    avatar: "🤝",
+    town: townNames[postcode] || 'Regional NSW',
+    postcode,
+    plane,
+    kind,
+    urgency,
+    title,
+    story,
+    give: give || null,
+    ask: ask || null,
+    vouches: 0,
+    status: 'active',
+    createdAt: Date.now(),
+    contact
+  };
+
+  allPosts.unshift(newEntry);
+  savePosts();
+  closeShareModal();
+
+  // Center town view on newly posted listing and clear search so it is IMMEDIATELY visible!
+  const townSelect = document.getElementById('townSelect');
+  if (townSelect) townSelect.value = postcode;
+  currentKindTab = 'all';
+  currentPlane = 'ALL';
+  const searchEl = document.getElementById('searchInput');
+  if (searchEl) searchEl.value = '';
+  document.querySelectorAll('.tab-chip').forEach(c => c.classList.remove('active'));
+  const allTab = document.getElementById('tab-all');
+  if (allTab) allTab.classList.add('active');
+  renderPlanesBelt();
+
+  applyFilters();
+  renderWeaverBanner();
+  showToast(`Published listing in ${townNames[postcode] || postcode}!`, "success");
+}
+
+function showToast(message, type = 'info') {
+  let toast = document.getElementById('snsToast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'snsToast';
+    toast.style.cssText = `
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #1E293B;
+      color: #FFFFFF;
+      padding: 12px 18px;
+      border-radius: 12px;
+      font-size: 13.5px;
+      font-weight: 600;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.28);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
+      opacity: 0;
+      transform: translateY(20px);
+      pointer-events: none;
+    `;
+    document.body.appendChild(toast);
+  }
+  toast.innerHTML = (type === 'success' ? '✅ ' : 'ℹ️ ') + message;
+  toast.style.opacity = '1';
+  toast.style.transform = 'translateY(0)';
+  clearTimeout(toast._timeout);
+  toast._timeout = setTimeout(() => {
+    toast.style.opacity = '0';
+    toast.style.transform = 'translateY(20px)';
+  }, 3000);
+}
+
+function escapeHtml(str) {
+  return String(str).replace(/[&<>'"]/g, tag => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
+  }[tag] || tag));
+}
+
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

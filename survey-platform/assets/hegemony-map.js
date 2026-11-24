@@ -17,10 +17,10 @@
   // Straight out of canonicalAnchors in hegemony_map.html, with the colours
   // darkened for a white ground.
   const ANCHORS = [
-    { key: 'gg', label: 'Greater Good', sub: 'Productive · The Good Truth', u:  1, will:  1, color: '#0d6b2f' },
-    { key: 'le', label: 'Lesser Evil',  sub: 'Reductive · The Bad Lie',    u: -1, will:  1, color: '#9c3a20' },
-    { key: 'ge', label: 'Greater Evil', sub: 'Regressive · The Bad Truth', u: -1, will: -1, color: '#b81f1f' },
-    { key: 'lg', label: 'Lesser Good',  sub: 'Constructive · The Good Lie',   u:  1, will: -1, color: '#15708c' },
+    { key: 'gg', label: 'Greater Good', sub: 'The Good Truth', modal: 'can be',   u:  1, will:  1, color: '#0d6b2f' },
+    { key: 'le', label: 'Lesser Evil',  sub: 'The Bad Lie',    modal: "can't be", u: -1, will:  1, color: '#9c3a20' },
+    { key: 'ge', label: 'Greater Evil', sub: 'The Bad Truth',  modal: "won't be", u: -1, will: -1, color: '#b81f1f' },
+    { key: 'lg', label: 'Lesser Good',  sub: 'The Good Lie',   modal: 'may be',   u:  1, will: -1, color: '#15708c' },
   ];
 
   // The 2 Preferences at +-1u, 0will.
@@ -131,7 +131,7 @@
 
   function draw(opts) {
     const o = opts || {};
-    const isNonInverted = (o.variant === 'non_inverted' || o.variant === 'outer' || o.hideInner === true || o.inversion === false || o.nonInverted === true);
+    const isNonInverted = o.inversion === false || (o.variant === 'outer' && o.inversion !== true) || o.hideInner === true;
 
     const svg = el('svg', {
       class: 'hgm', viewBox: `0 0 ${S} ${S}`, role: 'application',
@@ -230,22 +230,51 @@
 
     for (const a of ANCHORS) {
       const [px, py] = toPx(a.u, a.will);
-      svg.appendChild(el('circle', { cx: px, cy: py, r: 9, fill: a.color,
-        'fill-opacity': 0.30, stroke: a.color, 'stroke-width': 1.8 }));
-      text({ x: px, y: py - 15, fill: a.color, 'font-size': 9.5,
+      let r = 9;
+      let sw = 1.8;
+      let labelSize = 9.5;
+
+      if (a.key === 'gg' || a.key === 'le' || a.key === 'ge') {
+        r *= 1.05;
+        sw *= 1.05;
+        labelSize *= 1.05;
+      } else if (a.key === 'lg') {
+        r *= 0.95;
+        sw *= 0.95;
+        labelSize *= 0.95;
+      }
+
+      svg.appendChild(el('circle', { cx: px, cy: py, r, fill: a.color,
+        'fill-opacity': 0.30, stroke: a.color, 'stroke-width': sw }));
+      text({ x: px, y: py - 15, fill: a.color, 'font-size': labelSize,
              'text-anchor': 'middle', 'font-weight': 'bold' }, a.label);
-      text({ x: px, y: py + 21, fill: '#4b5563', 'fill-opacity': '0.65', 'font-size': 7,
+      text({ x: px, y: py + 21, fill: '#4b5563', 'fill-opacity': '0.50', 'font-size': 7,
              'text-anchor': 'middle', 'stroke-width': 2.2 }, a.sub);
+      if (a.modal) {
+        text({ x: px, y: py + 31, fill: a.color, 'fill-opacity': '0.65', 'font-size': 7.5,
+               'text-anchor': 'middle', 'font-weight': 'bold', 'stroke-width': 2.2 }, `'${a.modal}'`);
+      }
     }
 
     // --- OVERLAY: Axis Labels, Corner Quadrants & Numeric Ticks (rendered directly along center axes) ---
     // Corner quadrant headers (faded ~50% as background guides)
     text({ x: 10,     y: 22,     fill: '#0d6b2f', opacity: '0.50', 'font-size': 9, 'text-anchor': 'start',
            'letter-spacing': '.10em', 'font-weight': 'bold' }, 'PRODUCTIVE');
+    text({ x: 10,     y: 34,     fill: '#0d6b2f', opacity: '0.65', 'font-size': 8.5, 'text-anchor': 'start',
+           'font-weight': 'bold' }, "'will be'");
+
     text({ x: S - 10, y: 22,     fill: '#9c3a20', opacity: '0.50', 'font-size': 9, 'text-anchor': 'end',
            'letter-spacing': '.10em', 'font-weight': 'bold' }, 'REDUCTIVE');
+    text({ x: S - 10, y: 34,     fill: '#9c3a20', opacity: '0.65', 'font-size': 8.5, 'text-anchor': 'end',
+           'font-weight': 'bold' }, "'is not'");
+
+    text({ x: 10,     y: S - 24, fill: '#15708c', opacity: '0.65', 'font-size': 8.5, 'text-anchor': 'start',
+           'font-weight': 'bold' }, "'is like'");
     text({ x: 10,     y: S - 12, fill: '#15708c', opacity: '0.50', 'font-size': 9, 'text-anchor': 'start',
            'letter-spacing': '.10em', 'font-weight': 'bold' }, 'CONSTRUCTIVE');
+
+    text({ x: S - 10, y: S - 24, fill: '#b81f1f', opacity: '0.65', 'font-size': 8.5, 'text-anchor': 'end',
+           'font-weight': 'bold' }, "'was like'");
     text({ x: S - 10, y: S - 12, fill: '#b81f1f', opacity: '0.50', 'font-size': 9, 'text-anchor': 'end',
            'letter-spacing': '.10em', 'font-weight': 'bold' }, 'REGRESSIVE');
 
@@ -259,7 +288,7 @@
     text({ x: cx + 7, y: 14,     fill: '#374151', 'fill-opacity': '0.75', 'font-size': 9, 'font-weight': 'bold', 'text-anchor': 'start',
            'letter-spacing': '.08em' }, 'ACTIVE  +2ψ');
     text({ x: cx + 7, y: S - 6,  fill: '#374151', 'fill-opacity': '0.75', 'font-size': 9, 'font-weight': 'bold', 'text-anchor': 'start',
-           'letter-spacing': '.08em' }, '-2ψ  SUPPRESSIVE');
+           'letter-spacing': '.08em' }, '-2ψ  COUNTERACTIVE');
     text({ x: cx + 7, y: 103,    fill: '#4b5563', 'fill-opacity': '0.60', 'font-size': 8, 'font-weight': 'bold', 'text-anchor': 'start' }, '+1ψ');
     text({ x: cx + 7, y: 303,    fill: '#4b5563', 'fill-opacity': '0.60', 'font-size': 8, 'font-weight': 'bold', 'text-anchor': 'start' }, '-1ψ');
 
@@ -349,29 +378,49 @@
         });
         g.insertBefore(plate, t);
       } else {
-        // Standard Point mode rendering
+        // Standard Point or Image Sprite mode rendering
         const [px, py] = toPx(p.u, p.will);
         const g = el('g', { class: 'tok' + (readonly ? ' ro' : ''), 'data-token': tok.id,
           tabindex: readonly ? '-1' : '0', role: 'button',
           'aria-label': `${tok.label}, ${quadrantFullName(p.u, p.will)}${readonly ? '' : '. Drag to move.'}` });
-        g.appendChild(el('circle', { cx: px, cy: py, r: 11, fill: 'transparent' }));
-        g.appendChild(el('circle', { cx: px, cy: py, r: 6.5, fill: col,
-          stroke: '#ffffff', 'stroke-width': 2 }));
 
-        const flip = px > S - 110;
-        const t = el('text', { x: px + (flip ? -13 : 13), y: py + 3.5,
-          fill: '#16202b', 'font-size': 8.5, 'font-weight': 'bold',
-          'text-anchor': flip ? 'end' : 'start' });
-        t.textContent = tok.label;
-        g.appendChild(t);
-        layer.appendChild(g);
+        if (tok.image) {
+          const w = tok.imageWidth || tok.imageSize || 48;
+          const h = tok.imageHeight || (w * (tok.aspectRatio || 1.15));
 
-        const bb = t.getBBox();
-        const plate = el('rect', { x: bb.x - 3, y: bb.y - 2,
-          width: bb.width + 6, height: bb.height + 4, rx: 2,
-          fill: '#ffffff', 'fill-opacity': 0.88,
-          stroke: col, 'stroke-opacity': 0.5, 'stroke-width': 0.7 });
-        g.insertBefore(plate, t);
+          const imgEl = el('image', {
+            href: tok.image,
+            x: px - w / 2,
+            y: py - h / 2,
+            width: w,
+            height: h,
+            preserveAspectRatio: 'xMidYMid meet',
+            style: 'filter: drop-shadow(0 4px 8px rgba(0,0,0,0.35)); pointer-events: auto;'
+          });
+          g.appendChild(imgEl);
+
+          // Clean image sprite without intrusive center dot
+          layer.appendChild(g);
+        } else {
+          g.appendChild(el('circle', { cx: px, cy: py, r: 11, fill: 'transparent' }));
+          g.appendChild(el('circle', { cx: px, cy: py, r: 6.5, fill: col,
+            stroke: '#ffffff', 'stroke-width': 2 }));
+
+          const flip = px > S - 110;
+          const t = el('text', { x: px + (flip ? -13 : 13), y: py + 3.5,
+            fill: '#16202b', 'font-size': 8.5, 'font-weight': 'bold',
+            'text-anchor': flip ? 'end' : 'start' });
+          t.textContent = tok.label;
+          g.appendChild(t);
+          layer.appendChild(g);
+
+          const bb = t.getBBox();
+          const plate = el('rect', { x: bb.x - 3, y: bb.y - 2,
+            width: bb.width + 6, height: bb.height + 4, rx: 2,
+            fill: '#ffffff', 'fill-opacity': 0.88,
+            stroke: col, 'stroke-opacity': 0.5, 'stroke-width': 0.7 });
+          g.insertBefore(plate, t);
+        }
       }
     }
   }

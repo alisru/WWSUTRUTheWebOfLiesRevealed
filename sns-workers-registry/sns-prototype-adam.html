@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SNS Registry — Adam's Patriarch Edition (85M/15F)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0F172A;
+  --surface: #1E293B;
+  --surface-raised: #334155;
+  --border: #475569;
+  --border-focus: #38BDF8;
+  --text-main: #F8FAFC;
+  --text-muted: #94A3B8;
+  --accent-need: #EF4444;
+  --accent-need-bg: rgba(239, 68, 68, 0.15);
+  --accent-offer: #10B981;
+  --accent-offer-bg: rgba(16, 185, 129, 0.15);
+  --amber: #F59E0B;
+  --blue: #38BDF8;
+  --font-main: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--text-main);
+  font-family: var(--font-main);
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  padding-bottom: 80px;
+}
+/* Masthead */
+header.mast {
+  background: var(--surface);
+  border-bottom: 2px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+}
+.mast-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 12px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.brand-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.badge-arch {
+  background: #3B82F6;
+  color: #FFF;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+}
+.brand h1 {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.brand h1 span {
+  color: var(--blue);
+  font-size: 13px;
+  font-weight: 600;
+  font-family: var(--font-mono);
+}
+.geo-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--bg);
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+.geo-controls select, .geo-controls input {
+  background: transparent;
+  color: var(--text-main);
+  border: none;
+  font-family: var(--font-main);
+  font-size: 14px;
+  font-weight: 600;
+  outline: none;
+  cursor: pointer;
+}
+.geo-controls select option {
+  background: var(--surface);
+  color: var(--text-main);
+}
+.btn {
+  background: var(--blue);
+  color: #0F172A;
+  font-weight: 700;
+  font-size: 14px;
+  padding: 9px 18px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+  font-family: var(--font-main);
+}
+.btn:hover { background: #7DD3FC; transform: translateY(-1px); }
+.btn-emergency {
+  background: var(--accent-need);
+  color: #FFF;
+}
+.btn-emergency:hover { background: #DC2626; }
+
+/* Container & Filter Bar */
+.wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 20px;
+}
+.control-rack {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.rack-row-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.search-box {
+  flex: 1;
+  min-width: 260px;
+  position: relative;
+}
+.search-box input {
+  width: 100%;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text-main);
+  padding: 10px 14px 10px 38px;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+}
+.search-box input:focus { border-color: var(--blue); }
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+}
+.type-filter-group {
+  display: flex;
+  gap: 6px;
+}
+.filter-chip {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.filter-chip:hover { border-color: var(--text-main); color: var(--text-main); }
+.filter-chip.active-all { background: var(--surface-raised); color: var(--text-main); border-color: var(--blue); }
+.filter-chip.active-need { background: var(--accent-need-bg); color: var(--accent-need); border-color: var(--accent-need); }
+.filter-chip.active-offer { background: var(--accent-offer-bg); color: var(--accent-offer); border-color: var(--accent-offer); }
+
+/* The 7 Planes Grid Selector */
+.planes-nav {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  border-top: 1px solid var(--border);
+  padding-top: 14px;
+}
+@media (max-width: 900px) {
+  .planes-nav { grid-template-columns: repeat(4, 1fr); }
+}
+@media (max-width: 600px) {
+  .planes-nav { grid-template-columns: repeat(2, 1fr); }
+}
+.plane-btn {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  padding: 8px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s;
+}
+.plane-btn:hover { border-color: var(--blue); }
+.plane-btn.active {
+  background: var(--surface-raised);
+  border-color: var(--blue);
+  box-shadow: inset 0 0 0 1px var(--blue);
+}
+.plane-btn .q-code {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--blue);
+  display: block;
+}
+.plane-btn .plane-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.plane-btn .plane-count {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-muted);
+}
+
+/* Post Cards Grid */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 16px;
+}
+@media (max-width: 420px) {
+  .grid { grid-template-columns: 1fr; }
+}
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+  transition: transform 0.15s, border-color 0.15s;
+}
+.card:hover {
+  transform: translateY(-2px);
+  border-color: var(--surface-raised);
+}
+.card.is-need { border-left: 4px solid var(--accent-need); }
+.card.is-offer { border-left: 4px solid var(--accent-offer); }
+.card.is-urgent { box-shadow: 0 0 15px rgba(239, 68, 68, 0.2); }
+
+.card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+}
+.flag-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+.flag-need { background: var(--accent-need-bg); color: var(--accent-need); border: 1px solid var(--accent-need); }
+.flag-offer { background: var(--accent-offer-bg); color: var(--accent-offer); border: 1px solid var(--accent-offer); }
+
+.plane-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--blue);
+  background: rgba(56, 189, 248, 0.1);
+  padding: 2px 7px;
+  border-radius: 4px;
+  border: 1px solid rgba(56, 189, 248, 0.25);
+}
+
+.card-title {
+  font-size: 17px;
+  font-weight: 800;
+  line-height: 1.3;
+  color: var(--text-main);
+}
+.card-desc {
+  font-size: 14px;
+  color: #CBD5E1;
+  flex: 1;
+}
+.card-meta-rack {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  background: var(--bg);
+  padding: 10px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+.meta-item strong {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.meta-item span {
+  font-weight: 700;
+  color: var(--text-main);
+}
+.vouch-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px dashed var(--border);
+  padding-top: 10px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.vouch-count {
+  color: var(--amber);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.card-actions {
+  display: flex;
+  gap: 8px;
+}
+.btn-contact {
+  flex: 1;
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  color: var(--text-main);
+  font-weight: 700;
+  font-size: 13px;
+  padding: 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: center;
+}
+.btn-contact:hover {
+  background: var(--blue);
+  color: #0F172A;
+  border-color: var(--blue);
+}
+.btn-vouch {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--amber);
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 700;
+}
+.btn-vouch:hover { background: rgba(245, 158, 11, 0.15); }
+
+/* Modal Form */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  display: none;
+  place-items: center;
+  z-index: 100;
+  padding: 20px;
+}
+.modal-overlay.open { display: grid; }
+.modal {
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  max-width: 620px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 24px;
+}
+.modal-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 12px;
+}
+.form-group {
+  margin-bottom: 16px;
+}
+.form-group label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+.form-group input, .form-group select, .form-group textarea {
+  width: 100%;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text-main);
+  padding: 10px 12px;
+  border-radius: 6px;
+  font-family: var(--font-main);
+  font-size: 14px;
+}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+  border-color: var(--blue);
+  outline: none;
+}
+.radio-chips {
+  display: flex;
+  gap: 10px;
+}
+.radio-chips label {
+  flex: 1;
+  text-align: center;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 13px;
+  background: var(--bg);
+}
+.radio-chips input { display: none; }
+.radio-chips input:checked + label {
+  border-color: var(--blue);
+  background: var(--surface-raised);
+  color: var(--blue);
+}
+</style>
+</head>
+<body>
+
+<header class="mast">
+  <div class="mast-inner">
+    <div class="brand-group">
+      <span class="badge-arch">85M / 15F</span>
+      <div class="brand">
+        <h1>SNS REGISTRY <span>v1.0 Patriarch Edition</span></h1>
+      </div>
+    </div>
+
+    <div class="geo-controls">
+      <span>📍</span>
+      <select id="townSelect" onchange="applyFilters()">
+        <option value="2830">Dubbo NSW (2830)</option>
+        <option value="2821">Narromine NSW (2821)</option>
+        <option value="2820">Wellington NSW (2820)</option>
+        <option value="2827">Gilgandra NSW (2827)</option>
+      </select>
+      <span style="color:var(--border)">|</span>
+      <span>Radius:</span>
+      <select id="radiusSelect" onchange="applyFilters()">
+        <option value="25">Within 25 km</option>
+        <option value="50" selected>Within 50 km</option>
+        <option value="100">Within 100 km</option>
+      </select>
+    </div>
+
+    <div style="display:flex; gap:8px;">
+      <button class="btn btn-emergency" onclick="openPostModal('Q7')">⚡ Post Emergency Need</button>
+      <button class="btn" onclick="openPostModal()">+ Register Work / Need</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="control-rack">
+    <div class="rack-row-top">
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="searchInput" placeholder="Search skills, tractor work, welding, lodging, relief..." oninput="applyFilters()">
+      </div>
+
+      <div class="type-filter-group">
+        <button class="filter-chip active-all" id="btn-all" onclick="setTypeFilter('all')">ALL ENTRIES</button>
+        <button class="filter-chip" id="btn-need" onclick="setTypeFilter('need')">🔴 URGENT NEEDS</button>
+        <button class="filter-chip" id="btn-offer" onclick="setTypeFilter('offer')">🟢 AVAILABLE OFFERS</button>
+      </div>
+    </div>
+
+    <div class="planes-nav" id="planesNav">
+      <!-- Generated dynamically -->
+    </div>
+  </div>
+
+  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+    <div style="font-family:var(--font-mono); font-size:12px; color:var(--text-muted);" id="resultsStats">
+      Showing 0 listings
+    </div>
+    <div style="font-family:var(--font-mono); font-size:11px; color:var(--accent-offer); display:flex; align-items:center; gap:6px;">
+      <span>🛡️ 0% Commission · Direct Peer-to-Peer Terms</span>
+    </div>
+  </div>
+
+  <div class="grid" id="cardsGrid">
+    <!-- Populated by JS -->
+  </div>
+</main>
+
+<!-- Modal for New Post -->
+<div class="modal-overlay" id="postModal">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 style="font-size:18px; font-weight:800;">Register Community Need or Offer</h3>
+      <button onclick="closePostModal()" style="background:none;border:none;color:var(--text-muted);font-size:20px;cursor:pointer;">&times;</button>
+    </div>
+
+    <form id="newPostForm" onsubmit="handleFormSubmit(event)">
+      <div class="form-group">
+        <label>Entry Type</label>
+        <div class="radio-chips">
+          <input type="radio" name="postType" id="typeNeed" value="need" checked>
+          <label for="typeNeed" style="border-color:var(--accent-need); color:var(--accent-need);">🔴 Urgent Need (What I Require)</label>
+          <input type="radio" name="postType" id="typeOffer" value="offer">
+          <label for="typeOffer" style="border-color:var(--accent-offer); color:var(--accent-offer);">🟢 Available Offer (What I Can Do/Lend)</label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>7-Plane Life & Work Category</label>
+        <select id="formPlane" required>
+          <option value="Q1">Q1 Who (Recognition, Vouching, Reputation)</option>
+          <option value="Q2" selected>Q2 What (Work, Trades, Seasonal Labor)</option>
+          <option value="Q3">Q3 Where (Equipment, Vehicles, Worker Lodging/Sites)</option>
+          <option value="Q4">Q4 Why (Relief Shifts, Rest, Burnout Prevention)</option>
+          <option value="Q5">Q5 How (Direct Contracts, Legal Help, Power)</option>
+          <option value="Q6">Q6 Cause (Apprenticeship, Tool Continuity, Tradition)</option>
+          <option value="Q7">Q7 Effect (Emergency Crisis, Storm Recovery, Childcare)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Listing Title</label>
+        <input type="text" id="formTitle" placeholder="e.g. Header Operator Needed for 48h Grain Harvest" required>
+      </div>
+
+      <div class="form-group">
+        <label>Description & Scope</label>
+        <textarea id="formDesc" rows="3" placeholder="Exact details: tractor model, location, hours, what gear is needed..." required></textarea>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+        <div class="form-group">
+          <label>Compensation / Exchange</label>
+          <input type="text" id="formComp" placeholder="e.g. $45/hr or Trade for Fencing" required>
+        </div>
+        <div class="form-group">
+          <label>Urgency / Timeframe</label>
+          <select id="formUrgency">
+            <option value="24h">Immediate (Next 24h)</option>
+            <option value="48h">Urgent (48h)</option>
+            <option value="7d" selected>This Week (7 Days)</option>
+            <option value="ongoing">Ongoing / Flexible</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+        <div class="form-group">
+          <label>Town / Postcode</label>
+          <select id="formPostcode">
+            <option value="2830">Dubbo NSW (2830)</option>
+            <option value="2821">Narromine NSW (2821)</option>
+            <option value="2820">Wellington NSW (2820)</option>
+            <option value="2827">Gilgandra NSW (2827)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Direct Contact (SMS / Phone / VHF)</label>
+          <input type="text" id="formContact" placeholder="e.g. 0412 345 678 (Dave)" required>
+        </div>
+      </div>
+
+      <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:16px;">
+        <button type="button" class="btn" style="background:var(--surface-raised); color:var(--text-main);" onclick="closePostModal()">Cancel</button>
+        <button type="submit" class="btn">Publish to Registry</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+const PLANES = [
+  { id: 'Q1', code: 'Q1 Who', name: 'Recognition & Trust', desc: 'Vouching, trade reputation' },
+  { id: 'Q2', code: 'Q2 What', name: 'Work & Trades', desc: 'Seasonal labor, trades' },
+  { id: 'Q3', code: 'Q3 Where', name: 'Gear & Lodging', desc: 'Tools, sites, transport' },
+  { id: 'Q4', code: 'Q4 Why', name: 'Relief & Downtime', desc: 'Shift cover, rest' },
+  { id: 'Q5', code: 'Q5 How', name: 'Direct Terms', desc: 'Agreements, advocacy' },
+  { id: 'Q6', code: 'Q6 Cause', name: 'Apprenticeship', desc: 'Knowledge handover' },
+  { id: 'Q7', code: 'Q7 Effect', name: 'Emergency Dispatch', desc: 'Crisis, storm, urgent' },
+];
+
+const INITIAL_DATA = [
+  {
+    id: "adam-101",
+    type: "need",
+    plane: "Q2",
+    title: "Header Driver Needed for Wheat Harvest",
+    desc: "Looking for an experienced operator on John Deere S680. 1000 acres ready to go before Tuesday rain.",
+    comp: "$45/hr + meals provided",
+    urgency: "48h",
+    postcode: "2821",
+    townName: "Narromine",
+    distanceKm: 18,
+    contact: "0429 881 204 (Mick)",
+    vouches: 4,
+    created: Date.now() - 3600000 * 4
+  },
+  {
+    id: "adam-102",
+    type: "offer",
+    plane: "Q2",
+    title: "Mobile Boilermaker & Field Welder",
+    desc: "Fully equipped LandCruiser with Miller diesel welder, oxy gear, and tools. Available for header repairs, cattle yards, and machinery rebuilds.",
+    comp: "Standard day rate or trade for sheep",
+    urgency: "ongoing",
+    postcode: "2830",
+    townName: "Dubbo",
+    distanceKm: 5,
+    contact: "0418 732 991 (Brett)",
+    vouches: 7,
+    created: Date.now() - 3600000 * 12
+  },
+  {
+    id: "adam-103",
+    type: "offer",
+    plane: "Q3",
+    title: "Caravan Site with Power/Water for Seasonal Worker",
+    desc: "Safe powered site with private shower block on property. In exchange for 6 hrs/week tractor slashing and paddock mowing.",
+    comp: "Free Board in exchange for light maintenance",
+    urgency: "7d",
+    postcode: "2820",
+    townName: "Wellington",
+    distanceKm: 28,
+    contact: "0403 119 448 (Colleen)",
+    vouches: 5,
+    created: Date.now() - 3600000 * 24
+  },
+  {
+    id: "adam-104",
+    type: "need",
+    plane: "Q4",
+    title: "Weekend Relief Milker for Dairy",
+    desc: "Family needs weekend relief for 120 cows so we can attend family funeral. Must know 16-aside herringbone shed.",
+    comp: "$350/weekend flat rate",
+    urgency: "48h",
+    postcode: "2830",
+    townName: "Dubbo",
+    distanceKm: 14,
+    contact: "0433 902 115 (Garth)",
+    vouches: 6,
+    created: Date.now() - 3600000 * 8
+  },
+  {
+    id: "adam-105",
+    type: "need",
+    plane: "Q7",
+    title: "Emergency Sandbagging Crew — River Flat",
+    desc: "Creek backing up onto lower homestead sheds. Need 3 strong bodies with boots for 3 hours this afternoon.",
+    comp: "Hot meal, cold beer & mutual aid",
+    urgency: "24h",
+    postcode: "2827",
+    townName: "Gilgandra",
+    distanceKm: 38,
+    contact: "0411 200 892 (Jim)",
+    vouches: 9,
+    created: Date.now() - 3600000 * 2
+  },
+  {
+    id: "adam-106",
+    type: "offer",
+    plane: "Q6",
+    title: "Retired Builder Teaching Roofing & Framing",
+    desc: "40 years licensed carpenter. Willing to mentor young local apprentice or owner-builder through timber framing and pitching.",
+    comp: "Free / Handing down trade",
+    urgency: "ongoing",
+    postcode: "2830",
+    townName: "Dubbo",
+    distanceKm: 4,
+    contact: "0499 654 321 (Ted)",
+    vouches: 11,
+    created: Date.now() - 3600000 * 48
+  },
+  {
+    id: "adam-107",
+    type: "offer",
+    plane: "Q5",
+    title: "Independent Farm Bookkeeper (BAS & Payroll)",
+    desc: "Help local family farms untangle single-touch payroll, diesel fuel rebates, and contractor agreements. No corporate overhead.",
+    comp: "Fair hourly rate or bartered produce",
+    urgency: "7d",
+    postcode: "2821",
+    townName: "Narromine",
+    distanceKm: 22,
+    contact: "0408 554 229 (Wendy)",
+    vouches: 8,
+    created: Date.now() - 3600000 * 36
+  },
+  {
+    id: "adam-108",
+    type: "need",
+    plane: "Q3",
+    title: "Need 4-Tonne Excavator with Operator",
+    desc: "Need 200m dam silt cleared out before winter rains fill it. Clean clay bottom.",
+    comp: "Cash $140/hr wet hire",
+    urgency: "7d",
+    postcode: "2820",
+    townName: "Wellington",
+    distanceKm: 31,
+    contact: "0422 719 303 (Trevor)",
+    vouches: 3,
+    created: Date.now() - 3600000 * 18
+  }
+];
+
+let currentTypeFilter = 'all';
+let currentPlaneFilter = 'ALL';
+let posts = [];
+
+function init() {
+  const stored = localStorage.getItem('sns_adam_posts');
+  if (stored) {
+    try { posts = JSON.parse(stored); } catch(e) { posts = INITIAL_DATA; }
+  } else {
+    posts = INITIAL_DATA;
+    savePosts();
+  }
+  renderPlaneButtons();
+  applyFilters();
+}
+
+function savePosts() {
+  localStorage.setItem('sns_adam_posts', JSON.stringify(posts));
+}
+
+function renderPlaneButtons() {
+  const container = document.getElementById('planesNav');
+  let html = `
+    <button class="plane-btn ${currentPlaneFilter === 'ALL' ? 'active' : ''}" onclick="setPlaneFilter('ALL')">
+      <span class="q-code">ALL</span>
+      <span class="plane-label">All 7 Planes</span>
+      <span class="plane-count">${posts.length}</span>
+    </button>
+  `;
+  PLANES.forEach(p => {
+    const count = posts.filter(item => item.plane === p.id).length;
+    html += `
+      <button class="plane-btn ${currentPlaneFilter === p.id ? 'active' : ''}" onclick="setPlaneFilter('${p.id}')">
+        <span class="q-code">${p.id}</span>
+        <span class="plane-label">${p.name}</span>
+        <span class="plane-count">${count}</span>
+      </button>
+    `;
+  });
+  container.innerHTML = html;
+}
+
+function setTypeFilter(type) {
+  currentTypeFilter = type;
+  document.getElementById('btn-all').className = 'filter-chip' + (type === 'all' ? ' active-all' : '');
+  document.getElementById('btn-need').className = 'filter-chip' + (type === 'need' ? ' active-need' : '');
+  document.getElementById('btn-offer').className = 'filter-chip' + (type === 'offer' ? ' active-offer' : '');
+  applyFilters();
+}
+
+function setPlaneFilter(planeId) {
+  currentPlaneFilter = planeId;
+  renderPlaneButtons();
+  applyFilters();
+}
+
+function applyFilters() {
+  const search = document.getElementById('searchInput').value.toLowerCase().trim();
+  const radius = parseInt(document.getElementById('radiusSelect').value);
+  
+  const filtered = posts.filter(item => {
+    if (currentTypeFilter !== 'all' && item.type !== currentTypeFilter) return false;
+    if (currentPlaneFilter !== 'ALL' && item.plane !== currentPlaneFilter) return false;
+    if (item.distanceKm > radius) return false;
+    if (search) {
+      const haystack = (item.title + ' ' + item.desc + ' ' + item.comp + ' ' + item.townName).toLowerCase();
+      if (!haystack.includes(search)) return false;
+    }
+    return true;
+  });
+
+  document.getElementById('resultsStats').textContent = `Showing ${filtered.length} of ${posts.length} local listings`;
+  renderCards(filtered);
+}
+
+function renderCards(list) {
+  const grid = document.getElementById('cardsGrid');
+  if (list.length === 0) {
+    grid.innerHTML = `
+      <div style="grid-column:1/-1; text-align:center; padding:50px 20px; background:var(--surface); border:1px dashed var(--border); border-radius:10px;">
+        <h4 style="font-size:18px; margin-bottom:8px;">No matching listings within range</h4>
+        <p style="color:var(--text-muted); font-size:14px; margin-bottom:16px;">Try expanding your distance radius or clearing filters.</p>
+        <button class="btn" onclick="openPostModal()">Be the first to post a need or offer</button>
+      </div>
+    `;
+    return;
+  }
+
+  grid.innerHTML = list.map(item => {
+    const isNeed = item.type === 'need';
+    const isUrgent = item.urgency === '24h';
+    const pInfo = PLANES.find(p => p.id === item.plane) || { code: item.plane, name: '' };
+    return `
+      <div class="card ${isNeed ? 'is-need' : 'is-offer'} ${isUrgent ? 'is-urgent' : ''}">
+        <div class="card-head">
+          <span class="flag-badge ${isNeed ? 'flag-need' : 'flag-offer'}">
+            ${isNeed ? '🔴 NEED' : '🟢 OFFER'} · ${item.urgency.toUpperCase()}
+          </span>
+          <span class="plane-tag">${pInfo.code}: ${pInfo.name}</span>
+        </div>
+
+        <h3 class="card-title">${escapeHtml(item.title)}</h3>
+        <p class="card-desc">${escapeHtml(item.desc)}</p>
+
+        <div class="card-meta-rack">
+          <div class="meta-item">
+            <strong>Compensation / Terms</strong>
+            <span>${escapeHtml(item.comp)}</span>
+          </div>
+          <div class="meta-item">
+            <strong>Location & Range</strong>
+            <span>${escapeHtml(item.townName)} (${item.distanceKm} km out)</span>
+          </div>
+        </div>
+
+        <div class="vouch-bar">
+          <span class="vouch-count">🛡️ ${item.vouches} local vouchers</span>
+          <button class="btn-vouch" onclick="vouchPost('${item.id}')">Vouch +1</button>
+        </div>
+
+        <div class="card-actions">
+          <button class="btn-contact" onclick="revealContact('${item.id}')" id="contact-btn-${item.id}">
+            📞 Direct Contact: ${escapeHtml(item.contact)}
+          </button>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function revealContact(id) {
+  const item = posts.find(p => p.id === id);
+  if (item) {
+    alert(`Direct Contact Details:\n${item.contact}\n\nTown: ${item.townName}\nTerms: ${item.comp}\n\nRemember: 0% middleman fees. Direct agreements only.`);
+  }
+}
+
+function vouchPost(id) {
+  const item = posts.find(p => p.id === id);
+  if (item) {
+    item.vouches += 1;
+    savePosts();
+    renderPlaneButtons();
+    applyFilters();
+  }
+}
+
+function openPostModal(planeCode) {
+  if (planeCode) {
+    document.getElementById('formPlane').value = planeCode;
+    document.getElementById('typeNeed').checked = true;
+    document.getElementById('formUrgency').value = '24h';
+  }
+  document.getElementById('postModal').classList.add('open');
+}
+
+function closePostModal() {
+  document.getElementById('postModal').classList.remove('open');
+  document.getElementById('newPostForm').reset();
+}
+
+function handleFormSubmit(e) {
+  e.preventDefault();
+  const type = document.querySelector('input[name="postType"]:checked').value;
+  const plane = document.getElementById('formPlane').value;
+  const title = document.getElementById('formTitle').value.trim();
+  const desc = document.getElementById('formDesc').value.trim();
+  const comp = document.getElementById('formComp').value.trim();
+  const urgency = document.getElementById('formUrgency').value;
+  const postcode = document.getElementById('formPostcode').value;
+  const contact = document.getElementById('formContact').value.trim();
+
+  const townNames = { '2830': 'Dubbo', '2821': 'Narromine', '2820': 'Wellington', '2827': 'Gilgandra' };
+
+  const newPost = {
+    id: "adam-" + Date.now(),
+    type,
+    plane,
+    title,
+    desc,
+    comp,
+    urgency,
+    postcode,
+    townName: townNames[postcode] || 'Regional NSW',
+    distanceKm: Math.floor(Math.random() * 25) + 5,
+    contact,
+    vouches: 1,
+    created: Date.now()
+  };
+
+  posts.unshift(newPost);
+  savePosts();
+  closePostModal();
+  renderPlaneButtons();
+  applyFilters();
+}
+
+function escapeHtml(str) {
+  return String(str).replace(/[&<>'"]/g, tag => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
+  }[tag] || tag));
+}
+
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

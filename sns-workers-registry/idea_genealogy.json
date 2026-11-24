@@ -1,0 +1,62 @@
+{
+  "generation": 1,
+  "timestamp": "2026-10-24T16:59:00+11:00",
+  "archetypes": {
+    "adam": {
+      "name": "Adam - Epistemic Patriarch",
+      "ratio": "85M/15F",
+      "epistemic_bias": "Successful -> Verified",
+      "prototype_file": "sns-prototype-adam.html",
+      "core_strengths": [
+        "High-contrast sunlight-readable industrial UI",
+        "Strict radius and distance calculation (km radius filter)",
+        "Hardened categorical schema (Q1-Q7 with explicit codes)",
+        "Zero-commission peer-to-peer terms transparency",
+        "High-urgency emergency dispatch trigger (24h/48h auto-expiry)"
+      ],
+      "failure_risks": [
+        "Risk of feeling clinical or transactional (like a rugged classifieds board)",
+        "Less emphasis on relational dignity or reducing the shame of asking"
+      ]
+    },
+    "eve": {
+      "name": "Eve - Epistemic Matriarch",
+      "ratio": "15M/85F",
+      "epistemic_bias": "Interesting -> Works",
+      "prototype_file": "sns-prototype-eve.html",
+      "core_strengths": [
+        "Reciprocal Match Weaver (automatic loop matching: Jack needs A/gives B <-> Claire gives A/needs B)",
+        "Dual-sided post cards showing 'Gives' and 'Asks' simultaneously to erase charity stigma",
+        "Story-driven micro-narratives ('The Human Context')",
+        "Tactile, warm earth/linen palette tailored for community welcome",
+        "Gentle guided onboarding"
+      ],
+      "failure_risks": [
+        "Softer spatial constraints (less emphasis on exact kilometer radius)",
+        "Lower visual contrast under bright direct sunlight in outdoor work conditions"
+      ]
+    }
+  },
+  "synthesis_target": {
+    "unified_file": "sns-registry.html",
+    "inherited_from_adam": [
+      "Rugged 15km/25km/50km/100km radius filtering engine",
+      "Strict 7-Plane categorical Q-tags (Q1-Q7)",
+      "High-contrast mode option and explicit day rate/compensation tags",
+      "Emergency 24h dispatch status"
+    ],
+    "inherited_from_eve": [
+      "Reciprocal Match Weaver algorithm (dual-sided loops)",
+      "Dual Give/Ask structure on every card to eradicate charity stigma",
+      "Warm human storytelling context alongside technical specs",
+      "Dignified neighbor-to-neighbor vouching"
+    ],
+    "account_and_survey_bridge": {
+      "supabase_url": "https://iaudayzofxrgzwutittm.supabase.co",
+      "auth_type": "Supabase Anonymous Session + Email Password Link",
+      "survey_storage": "Direct query of Supabase 'responses' table & local 'cws:v1'",
+      "privacy_mechanics": "Per-plane Public/Private toggle and master profile capability badge",
+      "real_data_policy": "Zero synthetic fallbacks; authentic Supabase live pipeline verified"
+    }
+  }
+}

@@ -1,0 +1,188 @@
+Command exited with code 0.
+
+Command output:
+819:         </select>
+820:       </div>
+822:       <div class="form-field">
+823:         <label>Title</label>
+824:         <input type="text" id="formTitle" placeholder="Summary of what is needed or available" oninput="detectSemanticPlane()" required>
+825:       </div>
+827:       <div class="form-field">
+828:         <label>The Human Context &amp; Details</label>
+829:         <textarea id="formStory" rows="3" placeholder="Tell your neighbors what is happening plainly..." oninput="detectSemanticPlane()" required></textarea>
+830:       </div>
+832:       <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+833:         <div class="form-field">
+834:           <label>🟢 What You Can Offer (Surplus)</label>
+835:           <input type="text" id="formGive" placeholder="What you can provide (e.g. transport, tractor hours, tools)" oninput="detectSemanticPlane()">
+836:         </div>
+837:         <div class="form-field">
+838:           <label>🔴 What You Need (Deficit)</label>
+839:           <input type="text" id="formAsk" placeholder="What you need (e.g. relief shift, lift, fencing help)" oninput="detectSemanticPlane()">
+840:         </div>
+841:       </div>
+843:       <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+844:         <div class="form-field">
+845:           <label>Urgency</label>
+846:           <select id="formUrgency">
+847:             <option value="24h">Immediate (24 hours)</option>
+848:             <option value="48h">Urgent (48 hours)</option>
+849:             <option value="7d" selected>This Week (7 days)</option>
+850:             <option value="ongoing">Flexible / Ongoing</option>
+851:           </select>
+852:         </div>
+853:         <div class="form-field">
+854:           <label>Direct Contact (SMS / Phone)</label>
+855:           <input type="text" id="formContact" placeholder="Your phone number or contact channel" required>
+856:         </div>
+857:       </div>
+859:       <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:16px;">
+824:         <input type="text" id="formTitle" placeholder="Summary of what is needed or available" oninput="detectSemanticPlane()" required>
+825:       </div>
+827:       <div class="form-field">
+828:         <label>The Human Context &amp; Details</label>
+829:         <textarea id="formStory" rows="3" placeholder="Tell your neighbors what is happening plainly..." oninput="detectSemanticPlane()" required></textarea>
+830:       </div>
+832:       <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+833:         <div class="form-field">
+834:           <label>🟢 What You Can Offer (Surplus)</label>
+835:           <input type="text" id="formGive" placeholder="What you can provide (e.g. transport, tractor hours, tools)" oninput="detectSemanticPlane()">
+836:         </div>
+837:         <div class="form-field">
+838:           <label>🔴 What You Need (Deficit)</label>
+839:           <input type="text" id="formAsk" placeholder="What you need (e.g. relief shift, lift, fencing help)" oninput="detectSemanticPlane()">
+840:         </div>
+841:       </div>
+843:       <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+844:         <div class="form-field">
+845:           <label>Urgency</label>
+846:           <select id="formUrgency">
+847:             <option value="24h">Immediate (24 hours)</option>
+848:             <option value="48h">Urgent (48 hours)</option>
+849:             <option value="7d" selected>This Week (7 days)</option>
+850:             <option value="ongoing">Flexible / Ongoing</option>
+851:           </select>
+852:         </div>
+853:         <div class="form-field">
+854:           <label>Direct Contact (SMS / Phone)</label>
+855:           <input type="text" id="formContact" placeholder="Your phone number or contact channel" required>
+856:         </div>
+857:       </div>
+859:       <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:16px;">
+860:         <button type="button" class="btn btn-sunlight" onclick="closeShareModal()">Cancel</button>
+861:         <button type="submit" class="btn btn-primary">Publish Story</button>
+862:       </div>
+863:     </form>
+864:   </div>
+830:       </div>
+832:       <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+833:         <div class="form-field">
+834:           <label>🟢 What You Can Offer (Surplus)</label>
+835:           <input type="text" id="formGive" placeholder="What you can provide (e.g. transport, tractor hours, tools)" oninput="detectSemanticPlane()">
+836:         </div>
+837:         <div class="form-field">
+838:           <label>🔴 What You Need (Deficit)</label>
+839:           <input type="text" id="formAsk" placeholder="What you need (e.g. relief shift, lift, fencing help)" oninput="detectSemanticPlane()">
+840:         </div>
+841:       </div>
+843:       <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+844:         <div class="form-field">
+845:           <label>Urgency</label>
+846:           <select id="formUrgency">
+847:             <option value="24h">Immediate (24 hours)</option>
+848:             <option value="48h">Urgent (48 hours)</option>
+849:             <option value="7d" selected>This Week (7 days)</option>
+850:             <option value="ongoing">Flexible / Ongoing</option>
+851:           </select>
+852:         </div>
+853:         <div class="form-field">
+854:           <label>Direct Contact (SMS / Phone)</label>
+855:           <input type="text" id="formContact" placeholder="Your phone number or contact channel" required>
+856:         </div>
+857:       </div>
+859:       <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:16px;">
+860:         <button type="button" class="btn btn-sunlight" onclick="closeShareModal()">Cancel</button>
+861:         <button type="submit" class="btn btn-primary">Publish Story</button>
+862:       </div>
+863:     </form>
+864:   </div>
+865: </div>
+867: <!-- Profile & Welfare Survey Results Modal -->
+868: <div class="modal-overlay" id="profileModal">
+869:   <div class="modal-card" style="max-width:760px;">
+870:     <div class="modal-head">
+834:           <label>🟢 What You Can Offer (Surplus)</label>
+835:           <input type="text" id="formGive" placeholder="What you can provide (e.g. transport, tractor hours, tools)" oninput="detectSemanticPlane()">
+836:         </div>
+837:         <div class="form-field">
+838:           <label>🔴 What You Need (Deficit)</label>
+839:           <input type="text" id="formAsk" placeholder="What you need (e.g. relief shift, lift, fencing help)" oninput="detectSemanticPlane()">
+840:         </div>
+841:       </div>
+843:       <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+844:         <div class="form-field">
+845:           <label>Urgency</label>
+846:           <select id="formUrgency">
+847:             <option value="24h">Immediate (24 hours)</option>
+848:             <option value="48h">Urgent (48 hours)</option>
+849:             <option value="7d" selected>This Week (7 days)</option>
+850:             <option value="ongoing">Flexible / Ongoing</option>
+851:           </select>
+852:         </div>
+853:         <div class="form-field">
+854:           <label>Direct Contact (SMS / Phone)</label>
+855:           <input type="text" id="formContact" placeholder="Your phone number or contact channel" required>
+856:         </div>
+857:       </div>
+859:       <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:16px;">
+860:         <button type="button" class="btn btn-sunlight" onclick="closeShareModal()">Cancel</button>
+861:         <button type="submit" class="btn btn-primary">Publish Story</button>
+862:       </div>
+863:     </form>
+864:   </div>
+865: </div>
+867: <!-- Profile & Welfare Survey Results Modal -->
+868: <div class="modal-overlay" id="profileModal">
+869:   <div class="modal-card" style="max-width:760px;">
+870:     <div class="modal-head">
+871:       <div>
+872:         <h3 id="profileModalHeading">Community Member Profile</h3>
+873:         <p style="font-size:13px; color:var(--text-soft);">Manage your identity, survey baseline results, and privacy visibility.</p>
+874:       </div>
+2027:   Q5: ['legal', 'lawyer', 'rights', 'court', 'paperwork', 'centrelink', 'tenancy', 'landlord', 'dispute', 'contract', 'council', 'permit', 'bureaucracy', 'agency', 'forms'],
+2028:   Q6: ['truth', 'witness', 'whistleblower', 'conscience', 'honesty', 'promise', 'courage', 'integrity', 'tradition', 'heritage', 'craft', 'morale', 'character reference'],
+2029:   Q1: ['bully', 'bullied', 'welcome', 'isolated', 'lonely', 'identity', 'dignity', 'respect', 'vouch', 'standing', 'newcomer', 'acceptance', 'belonging']
+2030: };
+2032: function detectSemanticPlane() {
+2033:   const text = (
+2034:     (document.getElementById('formTitle')?.value || '') + ' ' +
+2035:     (document.getElementById('formGive')?.value || '') + ' ' +
+2036:     (document.getElementById('formAsk')?.value || '') + ' ' +
+2037:     (document.getElementById('formStory')?.value || '')
+2038:   ).toLowerCase();
+2040:   for (const [qKey, words] of Object.entries(SEMANTIC_KEYWORDS)) {
+2041:     for (const word of words) {
+2042:       const regex = new RegExp(`\\b${word}\\b`, 'i');
+2043:       if (regex.test(text)) {
+2044:         const planeEl = document.getElementById('formPlane');
+2045:         if (planeEl && planeEl.value !== qKey) {
+2046:           planeEl.value = qKey;
+2047:           const tag = document.getElementById('semanticDetectTag');
+2048:           if (tag) {
+2049:             tag.textContent = `⚡ Auto-detected: ${qKey} (matched "${word}")`;
+2050:             tag.style.display = 'inline';
+2051:           }
+2052:         }
+2053:         return;
+2054:       }
+2055:     }
+2056:   }
+2057: }
+2059: async function populateSurveyImportPicker() {
+2060:   const box = document.getElementById('surveyImportPickerBox');
+2061:   const sel = document.getElementById('surveyImportSelect');
+2062:   if (!box || !sel) return;
+2064:   const surveyData = await fetchUserSurveyData();
+2065:   if (!surveyData.ok || (!surveyData.offers.length && !surveyData.needs.length)) {
+2066:     box.style.display = 'none';
+2067:     return;
